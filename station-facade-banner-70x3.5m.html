@@ -1,0 +1,323 @@
+<title>محطة درب · واجهة تأجيرية 70×3.5م — الطائف</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg-1:#181614; --bg-2:#100E0C; --bg-3:#0A0908;          /* near-black warm ground */
+  --logo-grey:#58595B;
+  --orange:#EE8630; --orange-2:#DA711C; --orange-3:#B85A12;
+  --gold:#D3A048; --gold-soft:#E7C079; --gold-dim:#8C6A34;
+  --white:#FFFFFF; --soft:#D6D2C9; --soft-2:#9C978C;
+  /* page chrome */
+  --pageink:#26272A; --pagebg:#EEEDEC; --panel:#fff; --line:#DCDBD9; --muted:#6E6F72;
+}
+@media (prefers-color-scheme:dark){
+  :root{--pageink:#ECECEE; --pagebg:#161718; --panel:#212224; --line:#333537; --muted:#9A9B9E}
+}
+:root[data-theme="light"]{--pageink:#26272A; --pagebg:#EEEDEC; --panel:#fff; --line:#DCDBD9; --muted:#6E6F72}
+:root[data-theme="dark"]{--pageink:#ECECEE; --pagebg:#161718; --panel:#212224; --line:#333537; --muted:#9A9B9E}
+*{box-sizing:border-box}
+body{margin:0; direction:rtl; background:var(--pagebg); color:var(--pageink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif}
+.page{max-width:1160px; margin:0 auto; padding:22px 20px 60px}
+.top{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-block-end:14px}
+.top h1{font-size:19px; margin:0; font-weight:800}
+.top .spec{font-size:13px; color:var(--muted); background:var(--panel); border:1px solid var(--line);
+  padding:5px 12px; border-radius:100px}
+.top .sep{flex:1}
+.toggle{background:var(--panel); color:var(--muted); border:1px solid var(--line); border-radius:100px;
+  padding:6px 13px; font:inherit; font-size:13px; cursor:pointer}
+.toggle:hover{color:var(--orange-2)}
+.hint{font-size:13px; color:var(--muted); margin-block-end:10px}
+.hint b{color:var(--orange-2)}
+
+/* ===== horizontal scroll stage for the 20:1 strip ===== */
+.stage{overflow-x:auto; overflow-y:hidden; border-radius:14px; border:1px solid var(--line);
+  box-shadow:0 20px 50px -26px rgba(0,0,0,.6); background:var(--bg-3)}
+.stage::-webkit-scrollbar{height:12px}
+.stage::-webkit-scrollbar-thumb{background:var(--orange-3); border-radius:100px}
+
+/* banner: on-screen 6400 x 320  (represents 70m x 3.5m, ratio 20:1) */
+.banner{position:relative; inline-size:6400px; block-size:320px; color:var(--white); isolation:isolate;
+  background:
+    radial-gradient(50% 130% at 82% 0%, rgba(238,134,48,.16), transparent 60%),
+    radial-gradient(60% 140% at 20% 110%, rgba(211,160,72,.10), transparent 60%),
+    linear-gradient(160deg,var(--bg-1),var(--bg-2) 60%,var(--bg-3))}
+/* top edge glow like lit hoarding */
+.banner::before{content:""; position:absolute; inset-inline:0; inset-block-start:0; block-size:3px; z-index:6;
+  background:linear-gradient(90deg,transparent,rgba(231,192,121,.55),transparent)}
+
+/* decorative scenery + ornament border */
+.scene{position:absolute; inset-inline:0; inset-block-end:0; block-size:210px; z-index:0; opacity:.55}
+.ornament{position:absolute; inset-inline:0; inset-block-end:26px; block-size:16px; z-index:1; opacity:.75}
+.baseline{position:absolute; inset-inline:0; inset-block-end:22px; block-size:2px; z-index:1;
+  background:linear-gradient(90deg,transparent,var(--gold) 8%,var(--gold) 92%,transparent)}
+
+/* content flow (RTL: right -> left) */
+.flow{position:relative; z-index:3; block-size:100%; display:flex; align-items:center}
+.zone{display:flex; flex-direction:column; justify-content:center; padding-block:30px; block-size:100%}
+.vsep{inline-size:3px; align-self:center; block-size:210px; border-radius:3px;
+  background:linear-gradient(var(--gold-dim),transparent); opacity:.5; flex:none}
+
+/* brand */
+.z-brand{inline-size:1180px; padding-inline:70px 40px; gap:22px}
+.logo{display:inline-flex; align-items:center; gap:30px; background:var(--logo-grey);
+  border:6px solid var(--orange); border-radius:56px; padding:22px 40px}
+.logo .lt{display:flex; flex-direction:column; align-items:flex-start; line-height:.98}
+.logo .lt .ar{font-size:66px; font-weight:800; letter-spacing:2px; color:var(--white)}
+.logo .lt .en{font-size:46px; font-weight:800; letter-spacing:3px; color:var(--white)}
+.logo .mk{inline-size:132px; block-size:104px; flex:none}
+.tagline{font-size:64px; font-weight:800; color:var(--white)}
+.tagline b{color:var(--orange)}
+
+/* cta */
+.z-cta{inline-size:1560px; padding-inline:56px; gap:16px}
+.cta-lead{font-size:44px; font-weight:800; color:var(--white)}
+.cta-sub{font-size:34px; font-weight:700; color:var(--orange)}
+.cta-row{display:flex; align-items:center; gap:34px; margin-block-start:8px}
+.qr{flex:none; inline-size:196px; block-size:196px; background:#fff; border-radius:18px; padding:14px;
+  display:grid; place-items:center; box-shadow:0 12px 30px -12px rgba(0,0,0,.7)}
+.qr .qbox{inline-size:100%; block-size:100%; border-radius:6px;
+  background:
+    conic-gradient(from 0deg,#1b1b1b 25%,#fff 0 50%,#1b1b1b 0 75%,#fff 0) 0 0/30px 30px,
+    linear-gradient(#1b1b1b,#1b1b1b) center/56% 56% no-repeat}
+.contacts{display:flex; flex-direction:column; gap:12px}
+.contacts .ph{font-size:52px; font-weight:800; direction:ltr; text-align:start; letter-spacing:1px}
+.contacts .ph.two{color:var(--gold-soft)}
+.contacts .em{font-size:28px; font-weight:700; color:var(--soft); direction:ltr; text-align:start;
+  display:flex; align-items:center; gap:12px}
+.code{font-size:20px; color:var(--soft-2); direction:ltr; text-align:start; letter-spacing:3px}
+
+/* services */
+.z-serv{inline-size:1180px; padding-inline:50px; gap:22px}
+.serv-t{font-size:30px; font-weight:800; color:var(--gold-soft); letter-spacing:1px}
+.serv-grid{display:grid; grid-template-columns:repeat(3,auto); gap:30px 46px}
+.svc{display:flex; align-items:center; gap:16px}
+.svc .icn{inline-size:56px; block-size:56px; color:var(--gold-soft); flex:none}
+.svc span{font-size:30px; font-weight:700; color:var(--white); white-space:nowrap}
+
+/* render */
+.z-render{inline-size:1520px; padding-inline:44px; align-items:center}
+.render-frame{position:relative; inline-size:100%; block-size:232px; border-radius:20px; overflow:hidden;
+  border:2px solid rgba(231,192,121,.4); box-shadow:0 16px 40px -18px rgba(0,0,0,.8)}
+.render-frame svg{position:absolute; inset:0; inline-size:100%; block-size:100%}
+.render-tag{position:absolute; inset-block-start:12px; inset-inline-start:12px; z-index:2; font-size:17px;
+  font-weight:800; color:#fff; background:rgba(184,90,18,.85); padding:6px 14px; border-radius:100px}
+
+/* headline */
+.z-head{flex:1; padding-inline:56px 70px; align-items:flex-start; gap:16px}
+.eyebrow{display:inline-flex; align-items:center; gap:14px; font-size:26px; font-weight:800;
+  letter-spacing:3px; color:var(--gold-soft)}
+.eyebrow::before{content:""; inline-size:50px; block-size:3px; background:var(--gold)}
+.headline{font-size:96px; font-weight:800; line-height:1.0; letter-spacing:-1px; margin:0}
+.headline .hl{color:var(--orange)}
+.place{font-size:38px; font-weight:700; color:var(--white); margin:0}
+.place b{color:var(--gold-soft)}
+
+/* ===== spec panel ===== */
+.specs{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px; margin-block-start:26px}
+.spec-card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px}
+.spec-card .t{font-size:12.5px; letter-spacing:1.5px; font-weight:800; color:var(--orange-2); text-transform:uppercase}
+.spec-card .v{font-size:22px; font-weight:800; margin-block-start:6px; font-variant-numeric:tabular-nums}
+.spec-card .d{font-size:13px; color:var(--muted); margin-block-start:4px}
+.note{margin-block-start:22px; background:linear-gradient(150deg,rgba(238,134,48,.12),transparent);
+  border:1px solid var(--line); border-inline-start:4px solid var(--orange); border-radius:14px; padding:18px 20px}
+.note h3{margin:0 0 10px; font-size:16px; color:var(--orange-2)}
+.note ul{margin:0; padding-inline-start:20px; display:grid; gap:7px; font-size:14.5px; line-height:1.6}
+.swatches{display:flex; gap:10px; margin-block-start:14px; flex-wrap:wrap}
+.sw{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted);
+  background:var(--panel); border:1px solid var(--line); padding:6px 12px; border-radius:100px}
+.sw i{inline-size:15px; block-size:15px; border-radius:5px; display:inline-block}
+@media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
+</style>
+
+<div class="page">
+  <div class="top">
+    <h1>واجهة محطة درب — الطائف · بنر تأجيري</h1>
+    <span class="spec">📐 70م × 3.5م · نسبة 20:1</span>
+    <span class="sep"></span>
+    <button class="toggle" id="tg">◐ الوضع</button>
+  </div>
+  <p class="hint">بأسلوب هوية درب (خلفية داكنة + زخارف ذهبية + برتقالي) — <b>اسحب أفقياً</b> لرؤية كامل الواجهة (يمين ← يسار).</p>
+
+  <div class="stage">
+    <div class="banner">
+
+      <!-- decorative scenery: Taif identity — highland mountains + Taif roses + juniper trees, gold line-art -->
+      <svg class="scene" viewBox="0 0 6400 210" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <!-- عرعر / juniper: rounded highland tree -->
+          <g id="juniper">
+            <path d="M0,62 L0,100" fill="none" stroke="#B9863E" stroke-width="2.4"/>
+            <path d="M0,62 C-22,62 -30,44 -18,34 C-24,20 -8,8 6,16 C20,4 40,18 30,34 C40,46 28,64 10,60 C6,66 -6,66 0,62 Z"
+                  fill="none" stroke="#D3A048" stroke-width="2.2" stroke-linejoin="round"/>
+            <path d="M-8,40 C-2,44 6,42 10,36 M-4,52 C2,54 8,50 12,46" fill="none" stroke="#B9863E" stroke-width="1.4"/>
+          </g>
+          <!-- ورد الطائف / Taif rose: bloom on a leafy stem -->
+          <g id="rose">
+            <circle cx="0" cy="0" r="6.5" fill="none" stroke="#D3A048" stroke-width="1.8"/>
+            <path d="M0,-6.5 A6.5 6.5 0 0 1 6.5 0 A6.5 6.5 0 0 1 0 6.5" fill="none" stroke="#D3A048" stroke-width="1.6"/>
+            <path d="M-11,0 A11 11 0 0 1 0 -11 A11 11 0 0 1 11 0" fill="none" stroke="#C88A46" stroke-width="1.5"/>
+            <circle cx="0" cy="0" r="2.4" fill="none" stroke="#E7C079" stroke-width="1.4"/>
+            <path d="M0,7 L0,30" fill="none" stroke="#B9863E" stroke-width="1.8"/>
+            <path d="M0,16 C10,13 15,18 12,25 C5,25 0,21 0,16 Z" fill="none" stroke="#C88A46" stroke-width="1.4"/>
+            <path d="M0,21 C-10,18 -15,23 -12,30 C-5,30 0,26 0,21 Z" fill="none" stroke="#C88A46" stroke-width="1.4"/>
+          </g>
+        </defs>
+        <!-- highland mountain range (Sarawat) — Taif is a mountain city -->
+        <path d="M0,140 L340,52 L560,110 L820,28 L1120,112 L1380,44 L1700,122 L2020,36 L2340,112 L2660,58
+                 L2980,122 L3300,40 L3660,118 L3980,46 L4340,122 L4700,42 L5060,118 L5420,52 L5780,122 L6120,58 L6400,112"
+              fill="none" stroke="#C89150" stroke-width="2.6"/>
+        <path d="M0,172 L480,108 L960,164 L1480,100 L2000,166 L2520,106 L3060,168 L3580,102 L4120,166 L4660,108 L5200,168 L5740,110 L6400,158"
+              fill="none" stroke="#8C6A34" stroke-width="2"/>
+        <!-- roses dominate (city of roses), junipers between -->
+        <use href="#juniper" x="360" y="96"/><use href="#juniper" x="1560" y="98"/><use href="#juniper" x="2760" y="96"/>
+        <use href="#juniper" x="3960" y="98"/><use href="#juniper" x="5160" y="96"/>
+        <use href="#rose" x="720" y="182"/><use href="#rose" x="1120" y="186"/><use href="#rose" x="1920" y="182"/>
+        <use href="#rose" x="2320" y="186"/><use href="#rose" x="3120" y="182"/><use href="#rose" x="3520" y="186"/>
+        <use href="#rose" x="4320" y="182"/><use href="#rose" x="4720" y="186"/><use href="#rose" x="5520" y="182"/>
+        <use href="#rose" x="5920" y="186"/><use href="#rose" x="6220" y="182"/>
+      </svg>
+      <!-- Sadu-style ornament border -->
+      <svg class="ornament" viewBox="0 0 640 16" preserveAspectRatio="none" aria-hidden="true">
+        <pattern id="sadu" width="32" height="16" patternUnits="userSpaceOnUse">
+          <path d="M0,8 L8,2 L16,8 L24,2 L32,8 M0,8 L8,14 L16,8 L24,14 L32,8" fill="none" stroke="#D3A048" stroke-width="1.4"/>
+          <circle cx="16" cy="8" r="1.6" fill="#E7C079"/>
+        </pattern>
+        <rect width="640" height="16" fill="url(#sadu)"/>
+      </svg>
+      <div class="baseline"></div>
+
+      <div class="flow">
+        <!-- BRAND (right) -->
+        <div class="zone z-brand">
+          <div class="logo">
+            <span class="lt"><span class="ar">درب</span><span class="en">Darb</span></span>
+            <svg class="mk" viewBox="0 0 132 104" aria-hidden="true">
+              <path d="M16 84 H92 a26 26 0 0 0 26-26 V30 a16 16 0 0 0-16-16 H62"
+                    fill="none" stroke="#EE8630" stroke-width="23" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="tagline">الاختيار <b>الأول</b></div>
+        </div>
+
+        <div class="vsep"></div>
+
+        <!-- CTA / PARTNERSHIP -->
+        <div class="zone z-cta">
+          <div class="cta-lead">كن شريكًا لنا وشاركنا النجاح</div>
+          <div class="cta-sub">للتأجير والاستفسار</div>
+          <div class="cta-row">
+            <div class="qr"><div class="qbox"></div></div>
+            <div class="contacts">
+              <span class="ph">053 600 8383</span>
+              <span class="ph two">920 005804</span>
+              <span class="em">✉ DarbREM@Darbstations.com.sa</span>
+              <span class="code">CODE · 1200669792</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="vsep"></div>
+
+        <!-- SERVICES -->
+        <div class="zone z-serv">
+          <div class="serv-t">وحدات متاحة للتأجير</div>
+          <div class="serv-grid">
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v7a2 2 0 0 0 2 2v9M6 3v5M9 3v5M18 3c-1.5 0-2 3-2 6s.5 4 2 4v8"/></svg><span>مطاعم</span></div>
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5zM17 9h2a2 2 0 0 1 0 4h-2M6 3v2M10 3v2M14 3v2"/></svg><span>مقاهٍ</span></div>
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13l2-5a3 3 0 0 1 3-2h8a3 3 0 0 1 3 2l2 5v5h-3v-2H6v2H3zM6 16h.01M18 16h.01"/></svg><span>خدمات سيارات</span></div>
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h16l-1 12H5zM8 8V6a4 4 0 0 1 8 0v2"/></svg><span>متاجر</span></div>
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M4 21h13M8 7h6M17 8l2 2v7a2 2 0 0 0 2-2V9l-3-3"/></svg><span>وقود وديزل</span></div>
+            <div class="svc"><svg class="icn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L5 13h6l-1 9 8-11h-6z"/></svg><span>شواحن كهربائية</span></div>
+          </div>
+        </div>
+
+        <div class="vsep"></div>
+
+        <!-- STATION RENDER (placeholder for real image) -->
+        <div class="zone z-render">
+          <div class="render-frame">
+            <span class="render-tag">استبدلها بصورة رندر محطة الطائف</span>
+            <svg viewBox="0 0 600 232" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <defs>
+                <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#3a2f2a"/><stop offset="1" stop-color="#1a1512"/>
+                </linearGradient>
+                <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#e79a4e" stop-opacity=".5"/><stop offset="1" stop-color="#e79a4e" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <rect width="600" height="232" fill="url(#sky)"/>
+              <rect width="600" height="140" fill="url(#dusk)"/>
+              <!-- mountains -->
+              <path d="M0,120 L120,70 L200,100 L320,55 L430,105 L520,72 L600,110 L600,232 L0,232 Z" fill="#2a221d"/>
+              <path d="M0,150 L150,110 L280,150 L400,108 L520,150 L600,120 L600,232 L0,232 Z" fill="#211a16"/>
+              <!-- ground -->
+              <rect y="176" width="600" height="56" fill="#15100d"/>
+              <!-- canopy -->
+              <rect x="70" y="92" width="440" height="26" rx="6" fill="#2f3033"/>
+              <rect x="70" y="92" width="440" height="8" rx="4" fill="#EE8630"/>
+              <rect x="360" y="70" width="150" height="34" rx="10" fill="#141414" stroke="#EE8630" stroke-width="2.5"/>
+              <text x="435" y="93" text-anchor="middle" fill="#fff" font-size="17" font-weight="800" font-family="Tahoma">درب Darb</text>
+              <!-- pillars -->
+              <rect x="120" y="118" width="10" height="60" fill="#3a3b3e"/>
+              <rect x="250" y="118" width="10" height="60" fill="#3a3b3e"/>
+              <rect x="380" y="118" width="10" height="60" fill="#3a3b3e"/>
+              <rect x="470" y="118" width="10" height="60" fill="#3a3b3e"/>
+              <!-- pumps -->
+              <rect x="180" y="150" width="16" height="28" rx="3" fill="#EE8630"/>
+              <rect x="310" y="150" width="16" height="28" rx="3" fill="#EE8630"/>
+              <!-- roses -->
+              <circle cx="60" cy="196" r="6" fill="#c04e6e"/><circle cx="80" cy="202" r="5" fill="#d8557a"/>
+              <circle cx="540" cy="198" r="6" fill="#c04e6e"/><circle cx="520" cy="203" r="5" fill="#d8557a"/>
+              <!-- canopy lights -->
+              <g fill="#ffd98a"><circle cx="150" cy="112" r="2"/><circle cx="200" cy="112" r="2"/><circle cx="250" cy="112" r="2"/><circle cx="300" cy="112" r="2"/><circle cx="350" cy="112" r="2"/><circle cx="410" cy="112" r="2"/><circle cx="460" cy="112" r="2"/></g>
+            </svg>
+          </div>
+        </div>
+
+        <div class="vsep"></div>
+
+        <!-- HEADLINE (left) -->
+        <div class="zone z-head">
+          <span class="eyebrow">فرصة استثمارية · موسم الطائف</span>
+          <h2 class="headline">تجربة تواكب <span class="hl">المستقبل</span></h2>
+          <p class="place">على طريق مطار الطائف · <b>حي شِهار</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- specs -->
+  <div class="specs">
+    <div class="spec-card"><div class="t">المقاس النهائي</div><div class="v">7000 × 350 سم</div><div class="d">70م عرض × 3.5م ارتفاع (20:1)</div></div>
+    <div class="spec-card"><div class="t">ملف الطباعة</div><div class="v">1:10 → 700×35 سم</div><div class="d">يُكبّر ×10 عند المطبعة</div></div>
+    <div class="spec-card"><div class="t">الدقة</div><div class="v">‎~25–40 DPI ‎@ 1:1</div><div class="d">كافٍ للمشاهدة من مسافة</div></div>
+    <div class="spec-card"><div class="t">الألوان</div><div class="v">CMYK + هدر 5سم</div><div class="d">أسود · برتقالي · ذهبي</div></div>
+  </div>
+
+  <div class="swatches">
+    <span class="sw"><i style="background:#EE8630"></i> برتقالي درب · EE8630</span>
+    <span class="sw"><i style="background:#D3A048"></i> ذهبي الزخارف · D3A048</span>
+    <span class="sw"><i style="background:#100E0C"></i> خلفية داكنة · 100E0C</span>
+    <span class="sw"><i style="background:#58595B"></i> رمادي الشعار · 58595B</span>
+  </div>
+
+  <div class="note">
+    <h3>ملاحظات التنفيذ</h3>
+    <ul>
+      <li><b>مطابق لهوية بنراتكم بهوية الطائف:</b> خلفية شبه سوداء + زخارف ذهبية (ورد الطائف + جبال السروات + أشجار العرعر) بدل النخيل + إطار سدو + برتقالي درب.</li>
+      <li><b>صورة المحطة:</b> الإطار الآن رسم توضيحي — استبدله بصورة رندر محطة الطائف (اللي أرسلتها) بجودة عالية عند التنفيذ النهائي.</li>
+      <li><b>الشعار:</b> إعادة تجسيد تقريبية — ضع ملف الشعار المتجه الأصلي (SVG/AI) للحدّة الكاملة.</li>
+      <li><b>بيانات التواصل حقيقية</b> من النموذج: 053 600 8383 · 920 005804 · DarbREM@Darbstations.com.sa · CODE 1200669792. راجعها وأخبرني بأي تعديل.</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement,b=document.getElementById('tg');
+  function cur(){var d=root.getAttribute('data-theme');return d?d:(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+  b.addEventListener('click',function(){root.setAttribute('data-theme',cur()==='dark'?'light':'dark');});
+})();
+</script>
