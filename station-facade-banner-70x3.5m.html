@@ -237,41 +237,50 @@ body{margin:0; direction:rtl; background:var(--pagebg); color:var(--pageink);
         <!-- STATION RENDER (placeholder for real image) -->
         <div class="zone z-render">
           <div class="render-frame">
-            <span class="render-tag">استبدلها بصورة رندر محطة الطائف</span>
+            <span class="render-tag">◇ مكان صورة رندر محطة الطائف (تُدرج بالتنفيذ)</span>
             <svg viewBox="0 0 600 232" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
               <defs>
                 <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#3a2f2a"/><stop offset="1" stop-color="#1a1512"/>
+                  <stop offset="0" stop-color="#f0c88f"/><stop offset=".5" stop-color="#d9a66a"/><stop offset="1" stop-color="#3a2f2a"/>
                 </linearGradient>
-                <linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0" stop-color="#e79a4e" stop-opacity=".5"/><stop offset="1" stop-color="#e79a4e" stop-opacity="0"/>
+                <linearGradient id="mtn1" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#b7854a"/><stop offset="1" stop-color="#8a6338"/>
                 </linearGradient>
               </defs>
               <rect width="600" height="232" fill="url(#sky)"/>
-              <rect width="600" height="140" fill="url(#dusk)"/>
-              <!-- mountains -->
-              <path d="M0,120 L120,70 L200,100 L320,55 L430,105 L520,72 L600,110 L600,232 L0,232 Z" fill="#2a221d"/>
-              <path d="M0,150 L150,110 L280,150 L400,108 L520,150 L600,120 L600,232 L0,232 Z" fill="#211a16"/>
-              <!-- ground -->
-              <rect y="176" width="600" height="56" fill="#15100d"/>
-              <!-- canopy -->
-              <rect x="70" y="92" width="440" height="26" rx="6" fill="#2f3033"/>
-              <rect x="70" y="92" width="440" height="8" rx="4" fill="#EE8630"/>
-              <rect x="360" y="70" width="150" height="34" rx="10" fill="#141414" stroke="#EE8630" stroke-width="2.5"/>
-              <text x="435" y="93" text-anchor="middle" fill="#fff" font-size="17" font-weight="800" font-family="Tahoma">درب Darb</text>
+              <!-- golden-lit Taif mountains -->
+              <path d="M0,118 L90,66 L170,98 L270,50 L360,96 L440,58 L520,100 L600,70 L600,150 L0,150 Z" fill="url(#mtn1)"/>
+              <path d="M0,138 L120,104 L240,140 L360,100 L470,140 L600,110 L600,170 L0,170 Z" fill="#6f4f2c" opacity=".85"/>
+              <!-- ground / forecourt -->
+              <rect y="150" width="600" height="82" fill="#181310"/>
+              <rect y="150" width="600" height="5" fill="#3a2b1f"/>
+              <!-- side convenience building (right) -->
+              <rect x="470" y="120" width="130" height="40" fill="#20191410"/>
+              <rect x="470" y="120" width="130" height="40" fill="#231b15"/>
+              <rect x="470" y="120" width="130" height="6" fill="#EE8630"/>
+              <!-- angled canopy: low-left to high-right -->
+              <path d="M40,120 L360,86 L560,78 L560,96 L360,104 L40,138 Z" fill="#33343700"/>
+              <path d="M40,122 L360,88 L560,80 L560,100 L360,108 L40,142 Z" fill="#34353a"/>
+              <path d="M40,122 L360,88 L560,80 L560,86 L360,94 L40,128 Z" fill="#c9ccd1"/>
+              <path d="M40,138 L360,104 L560,96 L560,100 L360,108 L40,142 Z" fill="#EE8630"/>
+              <!-- big Darb sign at right end -->
+              <rect x="452" y="60" width="132" height="34" rx="12" fill="#151515" stroke="#EE8630" stroke-width="2.6"/>
+              <text x="512" y="82" text-anchor="middle" fill="#fff" font-size="15" font-weight="800" font-family="Tahoma">درب Darb</text>
+              <path d="M556 86 h14 a6 6 0 0 0 6-6 v-6 a4 4 0 0 0-4-4 h-6" fill="none" stroke="#EE8630" stroke-width="5" stroke-linecap="round"/>
               <!-- pillars -->
-              <rect x="120" y="118" width="10" height="60" fill="#3a3b3e"/>
-              <rect x="250" y="118" width="10" height="60" fill="#3a3b3e"/>
-              <rect x="380" y="118" width="10" height="60" fill="#3a3b3e"/>
-              <rect x="470" y="118" width="10" height="60" fill="#3a3b3e"/>
-              <!-- pumps -->
-              <rect x="180" y="150" width="16" height="28" rx="3" fill="#EE8630"/>
-              <rect x="310" y="150" width="16" height="28" rx="3" fill="#EE8630"/>
-              <!-- roses -->
-              <circle cx="60" cy="196" r="6" fill="#c04e6e"/><circle cx="80" cy="202" r="5" fill="#d8557a"/>
-              <circle cx="540" cy="198" r="6" fill="#c04e6e"/><circle cx="520" cy="203" r="5" fill="#d8557a"/>
-              <!-- canopy lights -->
-              <g fill="#ffd98a"><circle cx="150" cy="112" r="2"/><circle cx="200" cy="112" r="2"/><circle cx="250" cy="112" r="2"/><circle cx="300" cy="112" r="2"/><circle cx="350" cy="112" r="2"/><circle cx="410" cy="112" r="2"/><circle cx="460" cy="112" r="2"/></g>
+              <g fill="#c7c3bd"><rect x="150" y="108" width="7" height="52"/><rect x="250" y="102" width="7" height="58"/><rect x="350" y="98" width="7" height="62"/><rect x="440" y="94" width="7" height="66"/></g>
+              <!-- pumps (orange) -->
+              <rect x="200" y="132" width="13" height="26" rx="3" fill="#EE8630"/>
+              <rect x="300" y="128" width="13" height="28" rx="3" fill="#EE8630"/>
+              <!-- car -->
+              <rect x="380" y="146" width="46" height="15" rx="6" fill="#9a9a9c"/><rect x="392" y="140" width="24" height="10" rx="4" fill="#b4b4b6"/>
+              <!-- rose bushes + petals foreground -->
+              <g><circle cx="30" cy="176" r="9" fill="#2f5d3a"/><circle cx="26" cy="172" r="4" fill="#d8557a"/><circle cx="36" cy="178" r="4" fill="#c04e6e"/></g>
+              <g><circle cx="95" cy="182" r="9" fill="#2f5d3a"/><circle cx="92" cy="178" r="4" fill="#d8557a"/><circle cx="100" cy="184" r="4" fill="#c04e6e"/></g>
+              <g><circle cx="165" cy="184" r="9" fill="#2f5d3a"/><circle cx="162" cy="180" r="4" fill="#d8557a"/></g>
+              <g fill="#d8557a" opacity=".8"><circle cx="60" cy="212" r="2"/><circle cx="130" cy="220" r="2"/><circle cx="210" cy="214" r="2"/><circle cx="300" cy="222" r="2"/><circle cx="400" cy="216" r="2"/></g>
+              <!-- canopy under-lights -->
+              <g fill="#ffe6ad"><circle cx="150" cy="120" r="1.6"/><circle cx="220" cy="114" r="1.6"/><circle cx="290" cy="108" r="1.6"/><circle cx="360" cy="103" r="1.6"/><circle cx="430" cy="98" r="1.6"/></g>
             </svg>
           </div>
         </div>
