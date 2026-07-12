@@ -1,0 +1,635 @@
+<title>محطة درب · حائل — تحليل موقع شارع الأمير سعود</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#F8F6F1; --paper-2:#EFEAE0; --ink:#20231F; --ink-2:#5C6156; --ink-3:#8B8F84;
+  --line:#DEDACE; --surface:#FFFFFF;
+  --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green:#1B7A4B; --green-2:#4E9E74;
+  --violet:#5C4B8A; --violet-2:#7A66B0; --gold:#C79A3A; --rose:#C6486B;
+  --hero-1:#2B2440; --hero-2:#1B1730; --hero-3:#0E0B1C;
+  --shadow:0 18px 40px -22px rgba(30,25,55,.5);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#12101A; --paper-2:#191624; --ink:#EEEAF4; --ink-2:#B4AEC5; --ink-3:#847E96;
+    --line:#2B2639; --surface:#1E1A2B;
+    --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#39281A;
+    --green-2:#5FB689; --violet:#8E7CC4; --violet-2:#A594D6; --gold:#D9B45B; --rose:#E27795;
+    --hero-1:#242038; --hero-2:#151226; --hero-3:#0A0814;
+    --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#F8F6F1; --paper-2:#EFEAE0; --ink:#20231F; --ink-2:#5C6156; --ink-3:#8B8F84;
+  --line:#DEDACE; --surface:#FFFFFF; --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green-2:#4E9E74; --violet:#5C4B8A; --violet-2:#7A66B0; --gold:#C79A3A; --rose:#C6486B;
+  --hero-1:#2B2440; --hero-2:#1B1730; --hero-3:#0E0B1C;
+  --shadow:0 18px 40px -22px rgba(30,25,55,.5);
+}
+:root[data-theme="dark"]{
+  --paper:#12101A; --paper-2:#191624; --ink:#EEEAF4; --ink-2:#B4AEC5; --ink-3:#847E96;
+  --line:#2B2639; --surface:#1E1A2B; --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#39281A;
+  --green-2:#5FB689; --violet:#8E7CC4; --violet-2:#A594D6; --gold:#D9B45B; --rose:#E27795;
+  --hero-1:#242038; --hero-2:#151226; --hero-3:#0A0814;
+  --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  line-height:1.6; font-feature-settings:"kern";
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; line-height:1.18; margin:0}
+p{margin:0}
+
+/* ============ THEME TOGGLE ============ */
+.toggle{position:fixed; inset-block-start:14px; inset-inline-start:14px; z-index:40;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--line);
+  border-radius:100px; padding:7px 14px; font:inherit; font-size:13px; cursor:pointer;
+  box-shadow:var(--shadow)}
+.toggle:hover{color:var(--amber)}
+.toggle:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+
+/* ============ HERO / BANNER ============ */
+.banner{position:relative; overflow:hidden; color:#F1EEF7;
+  background:
+    radial-gradient(120% 90% at 82% -10%, rgba(232,118,12,.32), transparent 55%),
+    radial-gradient(80% 70% at 8% 118%, rgba(122,102,176,.35), transparent 60%),
+    linear-gradient(160deg,var(--hero-1),var(--hero-2) 55%,var(--hero-3));
+  border-block-end:1px solid rgba(232,118,12,.35)}
+.ridge{position:absolute; inset-inline:0; inset-block-end:0; height:190px; z-index:1;
+  opacity:.92; pointer-events:none}
+.ridge path{fill:none; stroke-linejoin:round}
+.grain{position:absolute; inset:0; z-index:0; opacity:.06; mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px);
+  background-size:4px 4px}
+.banner .wrap{position:relative; z-index:3; padding-block:clamp(34px,7vw,74px) clamp(150px,20vw,180px)}
+
+.brandbar{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.mark{display:inline-flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.3px}
+.mark .glyph{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:0 8px 18px -8px rgba(232,118,12,.8);
+  font-size:22px}
+.mark b{font-size:20px}
+.mark span{display:block; font-size:11.5px; font-weight:600; color:#CBBFE8; letter-spacing:2px}
+.brandbar .sep{flex:1}
+.brandbar .place{font-size:13px; color:#D8CFEC; border:1px solid rgba(255,255,255,.18);
+  padding:6px 13px; border-radius:100px; background:rgba(0,0,0,.18)}
+
+.eyebrow{margin-block-start:clamp(26px,5vw,48px); display:inline-flex; align-items:center; gap:9px;
+  font-size:13px; letter-spacing:3px; font-weight:700; color:var(--gold); text-transform:uppercase}
+.eyebrow::before{content:""; inline-size:26px; block-size:2px; background:var(--gold)}
+.headline{margin-block-start:16px; font-size:clamp(30px,6vw,56px); font-weight:800; letter-spacing:-.5px}
+.headline .hl{color:var(--amber); position:relative; white-space:nowrap}
+.sub{margin-block-start:16px; max-width:62ch; font-size:clamp(15px,2.1vw,19px); color:#DDD4EF; line-height:1.7}
+.chips{margin-block-start:22px; display:flex; gap:10px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:#EAE3F6;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+  padding:8px 14px; border-radius:100px}
+.chip .dot{inline-size:8px; block-size:8px; border-radius:50%}
+.cta{margin-block-start:28px; display:flex; gap:12px; flex-wrap:wrap; align-items:center}
+.btn{display:inline-flex; align-items:center; gap:9px; font:inherit; font-weight:800; font-size:15.5px;
+  padding:14px 26px; border-radius:100px; text-decoration:none; cursor:pointer; border:1px solid transparent}
+.btn-primary{background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff;
+  box-shadow:0 14px 30px -14px rgba(232,118,12,.9)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:transparent; color:#F1EEF7; border-color:rgba(255,255,255,.28)}
+.btn-ghost:hover{border-color:var(--amber); color:#fff}
+.btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+
+/* ============ SECTION SCAFFOLD ============ */
+section{padding-block:clamp(46px,7vw,80px)}
+.sec-head{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; margin-block-end:8px}
+.kicker{font-size:12.5px; letter-spacing:2.5px; font-weight:800; color:var(--amber); text-transform:uppercase}
+.sec-title{font-size:clamp(22px,3.6vw,32px); font-weight:800; margin-block:6px 0}
+.sec-note{color:var(--ink-2); max-width:66ch; margin-block-start:10px; font-size:15.5px}
+
+/* stats band over hero curve */
+.stats-band{margin-block-start:clamp(-120px,-14vw,-96px); position:relative; z-index:5}
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:14px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:20px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.stat::after{content:""; position:absolute; inset-block-start:0; inset-inline-end:0; inline-size:46px; block-size:46px;
+  background:radial-gradient(circle at 100% 0,var(--amber-soft),transparent 70%)}
+.stat .num{font-size:clamp(26px,4vw,34px); font-weight:800; color:var(--amber-2); letter-spacing:-.5px}
+.stat .num small{font-size:.5em; font-weight:700; color:var(--ink-2)}
+.stat .lbl{margin-block-start:4px; font-size:13.5px; color:var(--ink-2); font-weight:600}
+.stat .cap{margin-block-start:8px; font-size:12px; color:var(--ink-3)}
+
+/* ============ LOCATION ============ */
+.two{display:grid; grid-template-columns:1.1fr .9fr; gap:28px; align-items:start}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+.feat{display:grid; gap:12px; margin-block-start:20px; padding:0; margin-inline:0}
+.feat li{list-style:none; display:flex; gap:13px; align-items:flex-start;
+  background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:15px 16px}
+.feat .ic{flex:none; inline-size:34px; block-size:34px; border-radius:10px; display:grid; place-items:center;
+  background:var(--amber-soft); color:var(--amber-2); font-size:17px}
+.feat b{display:block; font-size:15.5px; margin-block-end:2px}
+.feat span{color:var(--ink-2); font-size:14px}
+.mapcard{background:linear-gradient(160deg,var(--hero-1),var(--hero-3)); border-radius:var(--r);
+  padding:24px; color:#E6DFF4; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.mapcard h3{font-size:18px; color:#fff}
+.mapcard .coord{margin-block-start:6px; font-size:13px; color:var(--gold); letter-spacing:.4px}
+.mapmini{margin-block:18px 4px; position:relative; block-size:150px; border-radius:12px;
+  background:
+    linear-gradient(rgba(255,255,255,.05),rgba(255,255,255,.05)),
+    repeating-linear-gradient(0deg,transparent 0 27px,rgba(255,255,255,.07) 27px 28px),
+    repeating-linear-gradient(90deg,transparent 0 27px,rgba(255,255,255,.07) 27px 28px),
+    var(--hero-2);
+  border:1px solid rgba(255,255,255,.12); overflow:hidden}
+.road{position:absolute; height:9px; background:linear-gradient(90deg,var(--amber),#B44E05);
+  inset-inline:-6%; inset-block-start:44%; transform:rotate(-4deg); border-radius:6px; box-shadow:0 0 0 3px rgba(232,118,12,.15)}
+.road::after{content:"شارع الأمير سعود بن عبدالمحسن"; position:absolute; inset-inline-start:12px; inset-block-start:-20px;
+  font-size:11px; color:#F2C48B; white-space:nowrap}
+.pin{position:absolute; inset-inline-start:50%; inset-block-start:52%; transform:translate(50%,-50%); text-align:center}
+.pin .p{inline-size:20px; block-size:20px; border-radius:50% 50% 50% 0; background:var(--rose);
+  transform:rotate(45deg); box-shadow:0 0 0 6px rgba(198,72,107,.25); margin-inline:auto}
+.pin .t{margin-block-start:8px; font-size:12px; font-weight:700; color:#fff}
+.mapcard .around{display:flex; gap:8px; flex-wrap:wrap; margin-block-start:12px}
+.mapcard .around span{font-size:12.5px; padding:5px 11px; border-radius:100px;
+  background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14)}
+
+/* ============ ANALYSIS CARDS ============ */
+.alt{background:var(--paper-2)}
+.viz-grid{display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-block-start:24px}
+@media(max-width:760px){.viz-grid{grid-template-columns:1fr}}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:22px;
+  box-shadow:var(--shadow)}
+.card h3{font-size:16.5px; margin-block-end:4px}
+.card .csub{font-size:13px; color:var(--ink-3); margin-block-end:18px}
+
+/* split proportion bar */
+.split{display:flex; block-size:40px; border-radius:10px; overflow:hidden; border:1px solid var(--line)}
+.split .seg{display:flex; align-items:center; justify-content:center; color:#fff; font-size:13.5px; font-weight:800}
+.legend{display:flex; gap:18px; margin-block-start:14px; flex-wrap:wrap}
+.legend .li{display:flex; align-items:center; gap:8px; font-size:13.5px; color:var(--ink-2)}
+.legend .sw{inline-size:12px; block-size:12px; border-radius:4px}
+
+/* hourly / seasonal bars */
+.season{display:grid; grid-template-columns:repeat(12,1fr); gap:6px; align-items:end; block-size:150px}
+.season .bar{position:relative; background:var(--amber); border-radius:5px 5px 0 0; min-block-size:6px}
+.season .bar.peak{background:var(--amber-2)}
+.season .bar.now{background:var(--rose)}
+.season-x{display:grid; grid-template-columns:repeat(12,1fr); gap:6px; margin-block-start:8px}
+.season-x span{font-size:10.5px; color:var(--ink-3); text-align:center}
+.baseline{block-size:2px; background:var(--line)}
+.hours{display:grid; grid-template-columns:repeat(8,1fr); gap:6px; align-items:end; block-size:130px}
+.hours .bar{background:var(--violet-2); border-radius:5px 5px 0 0; min-block-size:6px}
+.hours .bar.peak{background:var(--violet)}
+.hours-x{display:grid; grid-template-columns:repeat(8,1fr); gap:6px; margin-block-start:8px}
+.hours-x span{font-size:10.5px; color:var(--ink-3); text-align:center}
+
+/* audience rows */
+.agerow{display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center; margin-block-end:12px}
+.agerow .a-lbl{font-size:13.5px; color:var(--ink-2); inline-size:110px}
+.agerow .track{background:var(--paper-2); border-radius:100px; block-size:12px; overflow:hidden}
+.agerow .fill{block-size:100%; border-radius:100px; background:var(--green-2)}
+.agerow .a-val{font-size:13.5px; font-weight:800; color:var(--ink); inline-size:44px; text-align:end}
+
+.insight{margin-block-start:26px; background:linear-gradient(150deg,var(--amber-soft),transparent);
+  border:1px solid var(--line); border-inline-start:4px solid var(--amber); border-radius:14px; padding:20px 22px}
+.insight h3{font-size:16px; color:var(--amber-2); margin-block-end:10px}
+.insight ul{margin:0; padding-inline-start:20px; color:var(--ink); display:grid; gap:7px; font-size:14.5px}
+
+/* ============ SWOT-ish strengths grid ============ */
+.sw-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-block-start:22px}
+.sw{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px; position:relative}
+.sw .s-ic{font-size:24px}
+.sw h3{font-size:16.5px; margin-block:12px 6px}
+.sw p{font-size:14px; color:var(--ink-2)}
+.sw .tag{position:absolute; inset-block-start:16px; inset-inline-start:16px; font-size:11.5px; font-weight:800;
+  padding:3px 10px; border-radius:100px}
+.tag-s{color:var(--green); background:color-mix(in srgb,var(--green) 14%,transparent)}
+.tag-o{color:var(--violet); background:color-mix(in srgb,var(--violet) 14%,transparent)}
+.tag-w{color:var(--rose); background:color-mix(in srgb,var(--rose) 14%,transparent)}
+
+/* ============ READINESS / VERDICT ============ */
+.score{display:flex; align-items:center; gap:22px; flex-wrap:wrap; margin-block-start:22px}
+.gauge{flex:none; inline-size:132px; block-size:132px; border-radius:50%; display:grid; place-items:center;
+  background:conic-gradient(var(--green) 0 88%, var(--paper-2) 88% 100%); box-shadow:var(--shadow)}
+.gauge .in{inline-size:104px; block-size:104px; border-radius:50%; background:var(--surface); display:grid; place-items:center; text-align:center}
+.gauge b{font-size:30px; color:var(--green); display:block; line-height:1}
+.gauge span{font-size:11px; color:var(--ink-3)}
+.crit{flex:1; min-inline-size:260px; display:grid; gap:10px}
+.crow{display:grid; grid-template-columns:auto 1fr auto; gap:12px; align-items:center}
+.crow .c-lbl{font-size:13.5px; color:var(--ink-2); inline-size:150px}
+.crow .track{background:var(--paper-2); border-radius:100px; block-size:10px; overflow:hidden}
+.crow .fill{block-size:100%; border-radius:100px; background:var(--green-2)}
+.crow .c-val{font-size:13px; font-weight:800; inline-size:40px; text-align:end}
+
+/* ============ CAMPAIGN TIMELINE ============ */
+.phases{display:grid; gap:14px; margin-block-start:24px; counter-reset:ph}
+.phase{display:grid; grid-template-columns:auto 1fr; gap:16px; background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--r); padding:20px}
+.phase .n{counter-increment:ph; flex:none; inline-size:44px; block-size:44px; border-radius:12px;
+  display:grid; place-items:center; font-weight:800; font-size:18px; color:#fff;
+  background:linear-gradient(150deg,var(--amber),#B44E05)}
+.phase .n::before{content:counter(ph)}
+.phase h3{font-size:16.5px}
+.phase .ph-when{font-size:12.5px; color:var(--gold); font-weight:700; margin-block-start:2px}
+.phase p{margin-block-start:8px; font-size:14.5px; color:var(--ink-2)}
+.phase ul{margin:10px 0 0; padding-inline-start:20px; display:grid; gap:6px; font-size:14px; color:var(--ink-2)}
+.kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin-block-start:22px}
+.kpi{background:var(--surface); border:1px dashed var(--line); border-radius:14px; padding:16px; text-align:center}
+.kpi b{display:block; font-size:20px; color:var(--violet)}
+.kpi span{font-size:12.5px; color:var(--ink-2)}
+
+.src{margin-block-start:20px; font-size:12px; color:var(--ink-3)}
+.src a{color:var(--ink-2)}
+
+/* ============ CTA FOOTER ============ */
+.foot{background:linear-gradient(160deg,var(--hero-1),var(--hero-3)); color:#E6DFF4; text-align:center}
+.foot h2{font-size:clamp(24px,4vw,36px); color:#fff; font-weight:800}
+.foot p{margin-block-start:12px; color:#D3C9E8; max-width:52ch; margin-inline:auto; font-size:16px}
+.foot .cta{justify-content:center; margin-block-start:26px}
+.foot .contacts{margin-block-start:26px; display:flex; gap:22px; justify-content:center; flex-wrap:wrap;
+  font-size:14.5px; color:#CBBFE8}
+.foot .contacts b{color:#fff}
+.finmark{margin-block-start:34px; padding-block-start:20px; border-block-start:1px solid rgba(255,255,255,.12);
+  font-size:12.5px; color:#A99DC5}
+@media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<button class="toggle" id="tg" aria-label="تبديل الوضع الليلي">◐ الوضع</button>
+
+<!-- ============================ BANNER / HERO ============================ -->
+<header class="banner">
+  <div class="grain"></div>
+  <svg class="ridge" viewBox="0 0 1200 190" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,145 L100,70 L180,125 L290,55 L400,120 L520,45 L640,115 L760,60 L880,130 L1000,75 L1110,125 L1200,90"
+          stroke="rgba(142,124,196,.4)" stroke-width="2"/>
+    <path d="M0,190 L0,165 L140,110 L290,160 L420,100 L560,152 L700,92 L840,148 L980,102 L1120,150 L1200,115 L1200,190 Z"
+          fill="rgba(10,8,20,.6)" stroke="none"/>
+  </svg>
+  <div class="wrap">
+    <div class="brandbar">
+      <span class="mark">
+        <span class="glyph">🛣️</span>
+        <span><b>محطة درب</b><span>DARB STATION</span></span>
+      </span>
+      <span class="sep"></span>
+      <span class="place">📍 حائل · شارع الأمير سعود بن عبدالمحسن — حي النقرة</span>
+    </div>
+
+    <span class="eyebrow">تحليل موقع · دراسة افتتاح</span>
+    <h1 class="headline">محطة درب على <span class="hl">أكثر شوارع حائل تجارةً</span></h1>
+    <p class="sub">تحليل شامل لموقع المحطة على <b>شارع الأمير سعود بن عبدالمحسن</b> بحي النقرة —
+    الشارع الذي تصفه أمانة منطقة حائل بأنه الأكثر احتضاناً للمحلات التجارية في المدينة بواقع
+    <b>802 منشأة تجارية</b> على جانبيه، في قلب أسرع مناطق المملكة نمواً سكانياً.</p>
+
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:var(--amber)"></span> شريان تجاري رئيسي</span>
+      <span class="chip"><span class="dot" style="background:var(--green-2)"></span> محيط سكني كثيف وراقٍ</span>
+      <span class="chip"><span class="dot" style="background:var(--violet-2)"></span> أعلى نمو سكاني بالمملكة</span>
+    </div>
+
+    <div class="cta">
+      <a class="btn btn-primary" href="#campaign">سيناريو حملة الافتتاح ◀</a>
+      <a class="btn btn-ghost" href="#location">تحليل الموقع والمحيط</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ STATS BAND ============================ -->
+<section class="stats-band" aria-label="مؤشرات الموقع" style="padding-block:0">
+  <div class="wrap">
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="num tnum">802</div>
+        <div class="lbl">منشأة تجارية على الشارع</div>
+        <div class="cap">أمانة حائل — أكثر شوارع المدينة نشاطاً تجارياً</div>
+      </div>
+      <div class="stat">
+        <div class="num tnum">499<small> ألف</small></div>
+        <div class="lbl">سكان مدينة حائل</div>
+        <div class="cap">تعداد 2022 — من أصل 746 ألف بالمنطقة</div>
+      </div>
+      <div class="stat">
+        <div class="num tnum">41<small>%</small></div>
+        <div class="lbl">نمو سكاني (2010–2022)</div>
+        <div class="cap">الأعلى بين مناطق المملكة كافة</div>
+      </div>
+      <div class="stat">
+        <div class="num tnum">71<small>%</small></div>
+        <div class="lbl">نسبة السعوديين</div>
+        <div class="cap">قاعدة عملاء محلية عائلية مستقرة</div>
+      </div>
+      <div class="stat">
+        <div class="num tnum">450<small> ألف</small></div>
+        <div class="lbl">زائر لموسم رالي حائل</div>
+        <div class="cap">فعاليات 2025 — ذروة شتوية سنوية متكررة</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 1) LOCATION & SURROUNDINGS ============================ -->
+<section id="location">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <div class="sec-head"><span class="kicker">١ · تحليل الموقع والمناطق المحيطة</span></div>
+        <h2 class="sec-title">قلب المحور التجاري الغربي لحائل</h2>
+        <p class="sec-note">تقع المحطة على شارع الأمير سعود بن عبدالمحسن الممتد بين دوّار الأسمنت ودوّار الشهداء،
+        داخل حي النقرة — من أرقى أحياء غرب حائل وأكثرها طلباً سكنياً وتجارياً. الموقع يجمع بين حركة العبور اليومية
+        على شريان رئيسي وبين كثافة سكانية عائلية مباشرة خلف الواجهة التجارية.</p>
+        <ul class="feat">
+          <li><span class="ic">🛣️</span><div><b>واجهة على أنشط شارع تجاري بالمدينة</b><span>802 منشأة تجارية على الجانبين: مطاعم، مقاهٍ، معارض، وخدمات — تدفّق زبائن جاهز طوال اليوم.</span></div></li>
+          <li><span class="ic">🏘️</span><div><b>حي النقرة والأحياء المجاورة</b><span>حي راقٍ بفلل وشقق حديثة، قريب من مسجد الراجحي ومراكز التسوق (جراد مول، العثيم مول) — قدرة شرائية جيدة وطلب يومي ثابت.</span></div></li>
+          <li><span class="ic">🚧</span><div><b>شارع قيد التطوير والسفلتة</b><span>أعمال تحديث مستمرة من الأمانة على امتداد الشارع — بنية أفضل وانسيابية مرورية أعلى بعد الإنجاز، مع تحسّن مستمر في المشهد الحضري.</span></div></li>
+          <li><span class="ic">🎓</span><div><b>قرب المرافق الكبرى</b><span>نحو 12 دقيقة عن جامعة حائل جنوباً، ودقائق عن وسط المدينة — المحطة على مسار انتقال يومي للطلاب والموظفين.</span></div></li>
+          <li><span class="ic">🏁</span><div><b>بوابة موسم حائل الشتوي</b><span>المدينة تستضيف رالي حائل الدولي وفعاليات موسمية تجذب مئات آلاف الزوّار — موجات طلب إضافية على الوقود والخدمات.</span></div></li>
+        </ul>
+      </div>
+
+      <div class="mapcard">
+        <h3>موقع المحطة</h3>
+        <div class="coord tnum">27.46852° N, 41.64977° E</div>
+        <div class="mapmini" aria-hidden="true">
+          <div class="road"></div>
+          <div class="pin"><div class="p"></div><div class="t">المحطة</div></div>
+        </div>
+        <div class="around">
+          <span>↗ وسط المدينة دقائق معدودة</span>
+          <span>↓ جامعة حائل ~12 دقيقة</span>
+          <span>جوار: النقرة · صلاح الدين · المنتزه</span>
+          <span>بين دوّار الأسمنت ودوّار الشهداء</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 2) AUDIENCE & TRAFFIC ============================ -->
+<section class="alt" id="audience">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">٢ · الفئة المستهدفة وحركة المرور</span></div>
+    <h2 class="sec-title">مَن يمرّ أمام المحطة؟ ومتى؟</h2>
+    <p class="sec-note">جمهور الموقع مزيج من ثلاث شرائح: سكان الأحياء المجاورة (الطلب اليومي الثابت)،
+    وروّاد الشارع التجاري مساءً (مطاعم ومقاهٍ وتسوّق)، وحركة العبور بين غرب المدينة ووسطها.</p>
+
+    <div class="viz-grid">
+      <!-- Nationality split -->
+      <div class="card">
+        <h3>تركيبة السكان حسب الجنسية</h3>
+        <p class="csub">مدينة حائل · تعداد 2022 (498,575 نسمة)</p>
+        <div class="split">
+          <div class="seg" style="flex:66.2; background:var(--amber-2)">سعوديون 66%</div>
+          <div class="seg" style="flex:33.8; background:var(--green)">مقيمون 34%</div>
+        </div>
+        <div class="legend">
+          <span class="li"><span class="sw" style="background:var(--amber-2)"></span> سعوديون — 329,941</span>
+          <span class="li"><span class="sw" style="background:var(--green)"></span> غير سعوديين — 168,634</span>
+        </div>
+        <p class="csub" style="margin-block-start:16px">غالبية سعودية عائلية في الأحياء الغربية الراقية — وفي المنطقة ككل بلغ النمو السكاني 41.3% خلال عقد، وهو الأعلى بالمملكة: سوق يكبر كل سنة.</p>
+      </div>
+
+      <!-- Audience segments -->
+      <div class="card">
+        <h3>الشرائح المستهدفة (تقدير وزن الطلب)</h3>
+        <p class="csub">توزيع تقديري لمصادر الحركة أمام المحطة</p>
+        <div class="agerow"><span class="a-lbl">سكان الأحياء المجاورة</span><div class="track"><div class="fill" style="width:45%"></div></div><span class="a-val tnum">~45%</span></div>
+        <div class="agerow"><span class="a-lbl">روّاد الشارع التجاري</span><div class="track"><div class="fill" style="width:30%; background:var(--violet-2)"></div></div><span class="a-val tnum">~30%</span></div>
+        <div class="agerow"><span class="a-lbl">حركة عبور يومية</span><div class="track"><div class="fill" style="width:18%; background:var(--amber)"></div></div><span class="a-val tnum">~18%</span></div>
+        <div class="agerow"><span class="a-lbl">زوّار مواسم وفعاليات</span><div class="track"><div class="fill" style="width:7%; background:var(--rose)"></div></div><span class="a-val tnum">~7%</span></div>
+        <p class="csub" style="margin-block-start:14px">جمهور شاب (التركيبة السعودية وطنياً غالبيتها تحت 30 عاماً) + عائلات الحي: مزيج مثالي لوقود + متجر + قهوة مختصة + خدمات سيارات.</p>
+      </div>
+    </div>
+
+    <div class="viz-grid">
+      <!-- Daily rhythm -->
+      <div class="card">
+        <h3>إيقاع الحركة اليومي على الشارع</h3>
+        <p class="csub">نمط نسبي تقديري — الشوارع التجارية في حائل تبلغ ذروتها مساءً</p>
+        <div class="hours" aria-hidden="true">
+          <div class="bar" style="height:25%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar" style="height:45%"></div>
+          <div class="bar" style="height:60%"></div>
+          <div class="bar peak" style="height:78%"></div>
+          <div class="bar peak" style="height:100%"></div>
+          <div class="bar peak" style="height:92%"></div>
+          <div class="bar" style="height:48%"></div>
+        </div>
+        <div class="baseline"></div>
+        <div class="hours-x">
+          <span>فجراً</span><span>7–9ص</span><span>ظهراً</span><span>عصراً</span><span>مغرب</span><span>8–10م</span><span>10–12م</span><span>متأخر</span>
+        </div>
+        <p class="csub" style="margin-block-start:12px">ذروتان: صباحية (دوام ومدارس) ومسائية ممتدة (8–12 ليلاً) مع نشاط المطاعم والمقاهي — نافذة الحملات المثلى مسائية.</p>
+      </div>
+
+      <!-- Seasonality -->
+      <div class="card">
+        <h3>موسمية الطلب على مدار السنة</h3>
+        <p class="csub">مؤشر نسبي تقديري — ذروة حائل شتوية (موسم الرالي والفعاليات)</p>
+        <div class="season" aria-hidden="true">
+          <div class="bar peak" style="height:95%"></div>
+          <div class="bar peak" style="height:100%"></div>
+          <div class="bar" style="height:72%"></div>
+          <div class="bar" style="height:58%"></div>
+          <div class="bar" style="height:48%"></div>
+          <div class="bar" style="height:42%"></div>
+          <div class="bar now" style="height:40%"></div>
+          <div class="bar" style="height:44%"></div>
+          <div class="bar" style="height:55%"></div>
+          <div class="bar peak" style="height:75%"></div>
+          <div class="bar peak" style="height:85%"></div>
+          <div class="bar peak" style="height:92%"></div>
+        </div>
+        <div class="baseline"></div>
+        <div class="season-x">
+          <span>ينا</span><span>فبر</span><span>مار</span><span>أبر</span><span>ماي</span><span>يون</span>
+          <span>يول</span><span>أغس</span><span>سبت</span><span>أكت</span><span>نوف</span><span>ديس</span>
+        </div>
+        <div class="legend">
+          <span class="li"><span class="sw" style="background:var(--rose)"></span> يوليو — الشهر الحالي</span>
+          <span class="li"><span class="sw" style="background:var(--amber-2)"></span> الموسم الشتوي (أكتوبر→فبراير)</span>
+          <span class="li"><span class="sw" style="background:var(--amber)"></span> بقية السنة</span>
+        </div>
+        <p class="csub" style="margin-block-start:12px">عكس الطائف تماماً: ذروة حائل شتوية. الطلب الأساسي المحلي مستقر صيفاً (المدينة سكنية لا مصيف)، والموجة الموسمية تأتي مع الرالي والفعاليات الشتوية.</p>
+      </div>
+    </div>
+
+    <div class="insight">
+      <h3>خلاصة الجمهور — لمن نوجّه الرسالة؟</h3>
+      <ul>
+        <li><b>الشريحة الأساسية:</b> عائلات وشباب حي النقرة والأحياء الغربية — يتزوّدون بالوقود أسبوعياً قرب المنزل، ويقرّرون بالولاء والسعر وجودة الخدمة.</li>
+        <li><b>الشريحة الثانية:</b> روّاد الشارع التجاري مساءً — فرصة البيع المتقاطع (وقود أثناء مشوار العشاء/القهوة) ورسائل اللافتات الليلية.</li>
+        <li><b>الشريحة الثالثة:</b> العابرون يومياً بين غرب المدينة والوسط والجامعة — يكسبهم سرعة الخدمة ووضوح الواجهة.</li>
+        <li><b>التوقيت الذهبي:</b> المساء (8–12 ليلاً) طوال السنة، والموسم الشتوي (أكتوبر–فبراير) للذروة الكبرى.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3) STRENGTHS & OPPORTUNITIES ============================ -->
+<section id="swot">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">٣ · أبرز نقاط القوة والفرص التسويقية</span></div>
+    <h2 class="sec-title">لماذا هذا الموقع ورقة رابحة؟</h2>
+
+    <div class="sw-grid">
+      <div class="sw"><span class="tag tag-s">قوة</span><div class="s-ic">🏪</div>
+        <h3>كثافة تجارية جاهزة</h3><p>802 منشأة على الشارع تعني حركة زبائن قائمة لا تحتاج بناءها من الصفر — المحطة تلتقط تدفّقاً موجوداً أصلاً.</p></div>
+      <div class="sw"><span class="tag tag-s">قوة</span><div class="s-ic">🏘️</div>
+        <h3>عمق سكني مباشر</h3><p>أحياء راقية خلف الواجهة مباشرة تضمن طلباً يومياً ثابتاً على الوقود والمتجر لا يعتمد على المواسم.</p></div>
+      <div class="sw"><span class="tag tag-s">قوة</span><div class="s-ic">📈</div>
+        <h3>سوق ينمو أسرع من أي منطقة</h3><p>نمو سكاني 41.3% في عقد (الأول على المملكة) — كل سنة تضيف آلاف العملاء الجدد لنطاق الخدمة.</p></div>
+      <div class="sw"><span class="tag tag-o">فرصة</span><div class="s-ic">🌙</div>
+        <h3>اقتصاد الليل</h3><p>ذروة الشارع مسائية وممتدة — عروض ليلية، إضاءة واجهة مميزة، وشراكات مع مقاهي ومطاعم الشارع (اشترِ قهوة، اكسب خصم وقود).</p></div>
+      <div class="sw"><span class="tag tag-o">فرصة</span><div class="s-ic">🏁</div>
+        <h3>ركوب موجة موسم حائل</h3><p>رالي حائل الدولي وفعاليات الشتاء تجذب مئات آلاف الزوّار — حملات "محطة الرالي" ورعاية محلية ترفع الوعي بالعلامة إقليمياً.</p></div>
+      <div class="sw"><span class="tag tag-o">فرصة</span><div class="s-ic">📲</div>
+        <h3>ولاء رقمي مبكر</h3><p>سوق حائل أقل تشبّعاً ببرامج الولاء من المدن الكبرى — أول من يبني قاعدة أعضاء عبر التطبيق/واتساب يحتفظ بها طويلاً.</p></div>
+      <div class="sw"><span class="tag tag-w">انتبه</span><div class="s-ic">🚧</div>
+        <h3>أعمال تطوير الشارع</h3><p>السفلتة والتحديث الجارية قد تربك الوصول مؤقتاً — تُدار بالتنسيق مع جدول الأمانة واختيار توقيت افتتاح بعد اكتمال المقطع المجاور.</p></div>
+      <div class="sw"><span class="tag tag-w">انتبه</span><div class="s-ic">⛽</div>
+        <h3>منافسة محطات قائمة</h3><p>شارع بهذا النشاط يستقطب مشغّلين آخرين — التمايز بالخدمة السريعة والمتجر والنظافة أهم من حرب أسعار.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 4) OPENING READINESS ============================ -->
+<section class="alt" id="readiness">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">٤ · مدى ملاءمة الموقع لحملة افتتاح</span></div>
+    <h2 class="sec-title">الحكم: موقع مؤهل بدرجة عالية لافتتاح مدوٍّ</h2>
+    <p class="sec-note">حملة الافتتاح تنجح حيث يتوفر: جمهور كثيف قريب، ظهور بصري قوي، وسهولة وصول.
+    الموقع يحقق الثلاثة — مع اشتراط واحد: مزامنة التوقيت مع اكتمال أعمال تطوير الشارع في المقطع المجاور للمحطة.</p>
+
+    <div class="score">
+      <div class="gauge" role="img" aria-label="درجة الملاءمة 88 من 100">
+        <div class="in"><div><b class="tnum">88</b><span>/100 ملاءمة</span></div></div>
+      </div>
+      <div class="crit">
+        <div class="crow"><span class="c-lbl">كثافة الجمهور المحيط</span><div class="track"><div class="fill" style="width:95%"></div></div><span class="c-val tnum">95</span></div>
+        <div class="crow"><span class="c-lbl">الظهور البصري للواجهة</span><div class="track"><div class="fill" style="width:90%"></div></div><span class="c-val tnum">90</span></div>
+        <div class="crow"><span class="c-lbl">سهولة الوصول والمواقف</span><div class="track"><div class="fill" style="width:80%"></div></div><span class="c-val tnum">80</span></div>
+        <div class="crow"><span class="c-lbl">قابلية الانتشار الشفهي</span><div class="track"><div class="fill" style="width:90%"></div></div><span class="c-val tnum">90</span></div>
+        <div class="crow"><span class="c-lbl">جاهزية محيط الأعمال (تطوير الشارع)</span><div class="track"><div class="fill" style="width:70%; background:var(--gold)"></div></div><span class="c-val tnum">70</span></div>
+      </div>
+    </div>
+
+    <div class="insight">
+      <h3>توصيات التوقيت</h3>
+      <ul>
+        <li><b>الخيار الأمثل:</b> افتتاح مع بداية الموسم الشتوي (أكتوبر–نوفمبر) — ذروة الحركة، طقس مثالي للفعاليات الخارجية، وقبل موسم الرالي لركوب موجته.</li>
+        <li><b>خيار أسرع:</b> افتتاح صيفي مسائي (بعد المغرب) يستثمر إيقاع الشارع الليلي — أقل زخماً لكنه يبني القاعدة قبل الموسم.</li>
+        <li><b>شرط تشغيلي:</b> التأكد من اكتمال سفلتة المقطع أمام المحطة وتأمين مداخل/مخارج سالكة قبل إطلاق أي حملة جماهيرية.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 5) FREE FUEL CAMPAIGN ============================ -->
+<section id="campaign">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">٥ · سيناريو مقترح — حملة البنزين المجاني</span></div>
+    <h2 class="sec-title">«عبّي مجاناً على درب» 🎉</h2>
+    <p class="sec-note">حملة افتتاح على ثلاث مراحل مدتها 10 أيام، مصممة لإيقاع شارع الأمير سعود المسائي،
+    وبآلية قسائم مسبقة تضبط الزحام وتحوّل كل لتر مجاني إلى عضو مسجّل في قاعدة العملاء.</p>
+
+    <div class="phases">
+      <div class="phase">
+        <span class="n"></span>
+        <div>
+          <h3>التشويق — «شيء كبير قادم لشارع الأمير سعود»</h3>
+          <div class="ph-when">الأيام 1–4 · قبل الافتتاح</div>
+          <p>بناء الترقّب دون كشف العرض كاملاً، وحصر الطلب في قنوات قابلة للقياس.</p>
+          <ul>
+            <li>ستارة واجهة ضخمة على المحطة بعدّاد تنازلي + إضاءة ليلية لافتة (الشارع ذروته مساءً).</li>
+            <li>إعلانات جيو-مستهدفة (سناب شات، تيك توك، إنستغرام) على نطاق 5 كم حول الإحداثيات، ورسالة: «سجّل رقمك واستلم قسيمة تعبئة مجانية يوم الافتتاح».</li>
+            <li>مشاهير حائل المحليون (أكل/سيارات) يلمّحون للموقع دون كشف العلامة.</li>
+            <li>الهدف: 3,000–5,000 تسجيل مسبق عبر واتساب/نموذج قصير — كل مسجّل يحصل على QR بموعد زمني محدد.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <span class="n"></span>
+        <div>
+          <h3>عطلة الافتتاح — البنزين المجاني</h3>
+          <div class="ph-when">الأيام 5–7 · خميس→سبت، من العصر حتى منتصف الليل</div>
+          <p>ثلاث ليالٍ من التعبئة المجانية المنضبطة بالقسائم — ضجة كبيرة بتكلفة محسوبة وزحام مُدار.</p>
+          <ul>
+            <li><b>الآلية:</b> أول 150 سيارة/ليلة بقسيمة QR مسبقة → تعبئة مجانية بسقف 50 ريالاً للسيارة (تكلفة وقود تقديرية ≈ 22,500 ريال لثلاث ليالٍ).</li>
+            <li><b>لغير الحاصلين على قسيمة:</b> خصم فوري + قهوة مجانية من متجر المحطة — لا أحد يغادر خالي اليدين.</li>
+            <li><b>إدارة الزحام:</b> مواعيد QR بشرائح ساعة، مسار مخصص للقسائم منفصل عن المضخات العادية، منظّمو حركة بالتنسيق مع المرور، وعدّ مباشر على شاشة «كم سيارة عبّت مجاناً».</li>
+            <li><b>صناعة المحتوى:</b> ركن تصوير، مسابقة «وثّق تعبئتك المجانية» بهاشتاق #عبي_مجانا_على_درب، وبث مباشر مع مؤثر ليلة الخميس.</li>
+            <li><b>فعاليات عائلية:</b> ركن أطفال وقهوة حائلية مسائية — تحويل التعبئة إلى مناسبة لسكان النقرة.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="phase">
+        <span class="n"></span>
+        <div>
+          <h3>التثبيت — من زائر الافتتاح إلى عميل دائم</h3>
+          <div class="ph-when">الأيام 8–10 وما بعدها</div>
+          <p>تحويل موجة الافتتاح إلى ولاء — هنا يُسترد استثمار البنزين المجاني.</p>
+          <ul>
+            <li>كل من عبّأ مجاناً يستلم «بطاقة درب» رقمية: التعبئة الخامسة بخصم، وقهوة مجانية شهرية.</li>
+            <li>رسائل واتساب أسبوعية للمسجّلين (3–5 آلاف رقم) بعروض المتجر وغسيل السيارات.</li>
+            <li>شراكات متبادلة مع مطاعم ومقاهي الشارع: فاتورتهم = خصم وقود، وفاتورة المحطة = خصم عندهم.</li>
+            <li>التمهيد لحملة الموسم الشتوي: «درب — محطة الرالي الرسمية لأهل حائل».</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><b class="tnum">450</b><span>سيارة تعبئة مجانية (3 ليالٍ)</span></div>
+      <div class="kpi"><b class="tnum">~22.5 ألف ﷼</b><span>تكلفة الوقود المجاني التقديرية</span></div>
+      <div class="kpi"><b class="tnum">5,000+</b><span>عضو مسجّل بقاعدة العملاء</span></div>
+      <div class="kpi"><b class="tnum">1M+</b><span>وصول مستهدف على منصات التواصل</span></div>
+      <div class="kpi"><b class="tnum">30%</b><span>هدف عودة زوّار الافتتاح خلال شهر</span></div>
+    </div>
+
+    <div class="insight">
+      <h3>لماذا يناسب هذا السيناريو هذا الموقع تحديداً؟</h3>
+      <ul>
+        <li><b>القسائم المسبقة</b> تحمي شارعاً تجارياً مزدحماً أصلاً من اختناق مروري يسيء للجيران وللعلامة — الزحام «المنظم» دعاية، والعشوائي أزمة.</li>
+        <li><b>التوقيت المسائي</b> يطابق ذروة الشارع الطبيعية (8–12 ليلاً) بدل معاكستها — الجمهور موجود أصلاً على بعد أمتار.</li>
+        <li><b>سقف الـ50 ريالاً</b> يجعل التكلفة متوقعة ويوسّع عدد المستفيدين — 450 قصة «عبّيت مجاناً» أقوى تسويقياً من 100 خزان ممتلئ.</li>
+        <li><b>الاسترداد مضمون التصميم:</b> الهدف الحقيقي ليس التعبئة المجانية بل قاعدة الأرقام المسجّلة وبطاقات الولاء — أصل تسويقي يعمل سنوات.</li>
+      </ul>
+    </div>
+
+    <p class="src">المصادر: الهيئة العامة للإحصاء (تعداد السعودية 2022 — منطقة حائل: 746,406 نسمة، مدينة حائل: 498,575)، أمانة منطقة حائل (شارع الأمير سعود بن عبدالمحسن — 802 منشأة تجارية، أعمال التطوير بين دوّار الأسمنت ودوّار الشهداء)، واس/الرياض (زوّار فعاليات رالي حائل). أرقام الإيقاع اليومي والموسمية وأوزان الشرائح مؤشرات تقديرية للاسترشاد لا رصد ميداني، وأرقام الحملة (عدد السيارات، السقف، التكلفة) نموذج قابل للمعايرة حسب الميزانية.</p>
+  </div>
+</section>
+
+<!-- ============================ CTA FOOTER ============================ -->
+<section class="foot">
+  <div class="wrap">
+    <h2>حائل جاهزة… والموقع جاهز</h2>
+    <p>شارع الأمير سعود بن عبدالمحسن يمنح محطة درب جمهوراً حاضراً وذروة ليلية وموسماً شتوياً استثنائياً — يبقى الافتتاح الذي يليق به.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="#campaign">اعتماد سيناريو الحملة ◀</a>
+      <a class="btn btn-ghost" href="#location">مراجعة التحليل</a>
+    </div>
+    <div class="contacts">
+      <span>📍 <b>الموقع:</b> شارع الأمير سعود بن عبدالمحسن، حي النقرة، حائل</span>
+      <span>🧭 <b>الإحداثيات:</b> <span class="tnum">27.46852, 41.64977</span></span>
+    </div>
+    <div class="finmark">محطة درب · DARB STATION — حائل، المملكة العربية السعودية</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('tg');
+  function cur(){var d=root.getAttribute('data-theme'); if(d) return d;
+    return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+  btn.addEventListener('click',function(){
+    var next=cur()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+  });
+})();
+</script>
