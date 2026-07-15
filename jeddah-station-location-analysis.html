@@ -1,0 +1,317 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · جدة الملك عبدالعزيز — تحليل الموقع + حملة الافتتاح</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.bar{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.idea{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.idea .in{background:var(--amber);color:#0a0f16;font-weight:800;border-radius:8px;min-width:34px;height:34px;display:grid;place-items:center;font-size:15px}
+.idea h5{font-size:13.5px;margin-bottom:2px}
+.idea p{font-size:12.5px;color:var(--muted)}
+.idea .when{font-size:10.5px;color:var(--amber);font-weight:700}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot,.ideas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Launch Playbook · إدارة التسويق درب</div>
+   <h1>محطة جدة الملك عبدالعزيز — تحليل الموقع + خطة حملة الافتتاح<span class="sub">طريق الملك عبدالعزيز · شمال جدة (نطاق المرجان/النهضة/الشاطئ → أبحر) · محافظة جدة</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=21.604892,39.120489" target="_blank">21.604892, 39.120489</a><br>
+   <span style="color:var(--sub)">درب / جدة — الملك عبدالعزيز</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>واجهة على أهم شرايين جدة (~27 كم من أبحر إلى قلب المدينة) داخل أغنى أحياء الشمال — أكبر سوق مطلق في شبكة درب حتى اليوم.</b>
+  النقطة تقع على <b>طريق الملك عبدالعزيز</b> في النطاق الشمالي الراقي (المرجان، النهضة، الشاطئ، البساتين) على مسار الحركة اليومية بين <b>أبحر الجنوبية/الشمالية</b> ومركز المدينة — تدفّق مزدوج: تنقّل الموظفين صباحاً ومساءً، وموجات نهاية الأسبوع نحو الواجهات البحرية وأبحر.
+  جدة <b>3.75 مليون نسمة</b>، والمرجع من شبكتنا نفسها: <b>جدة النسيم تبيع ~45 ألف لتر/يوم</b> — أعلى محطات درب إطلاقاً — والاجاويد ~19 ألفاً. المنافسة في الشمال أكثف من أي ملف سابق (كل العلامات الوطنية حاضرة)، لذا المعادلة هنا: <b>حصة أصغر من كعكة أضخم بكثير</b> — والافتتاح المدوّي هو ما يقتطعها.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان محافظة جدة</div><div class="v">3.75M</div><div class="u">تعداد 2022 · سعوديون ~45.5% · مقيمون ~54.5%</div></div>
+  <div class="kpi"><div class="l">المحور</div><div class="v">27 كم</div><div class="u">طريق الملك عبدالعزيز — شريان الشمال ↔ الوسط</div></div>
+  <div class="kpi"><div class="l">سقف مدني محقق بالشبكة</div><div class="v">45K</div><div class="u">لتر/يوم — جدة النسيم (مايو 2026)</div></div>
+  <div class="kpi"><div class="l">مستوى المنافسة</div><div class="v" style="color:var(--red)">عالٍ</div><div class="u">كل العلامات الوطنية بالشمال — التمايز بالخدمة</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=39.060,21.570,39.190,21.645&marker=21.604892,39.120489&layer=mapnik"></iframe>
+ <div class="note">الموقع على <b>طريق الملك عبدالعزيز</b> شمال جدة — نطاق أحياء <b>المرجان والنهضة والشاطئ والبساتين</b>، على بوابة الحركة نحو <b>أبحر الجنوبية والشمالية</b> شمالاً والكورنيش الشمالي غرباً. المحور يخدم: تنقّلاً يومياً كثيفاً (سكان الشمال ↔ مراكز العمل)، وترفيهاً أسبوعياً (شواطئ أبحر والواجهات البحرية)، وقرباً من مول العرب وجامعة الملك عبدالعزيز... <b>(يُثبَّت المشهد الدقيق للجوار بالمسح الميداني)</b>.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الملف الديموغرافي للنطاق</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المحافظة</h4><div class="big">3,751,722</div><small>تعداد 2022 — ثاني أكبر مدن المملكة وبوابة الحرمين</small></div>
+  <div class="card"><h4>طابع النطاق الشمالي</h4><div class="big" style="font-size:16px">راقٍ عائلي</div><small>المرجان/الشاطئ/النهضة/أبحر — من أعلى أحياء جدة دخلاً وأسعاراً عقارية</small></div>
+  <div class="card"><h4>قدرة الإنفاق</h4><div class="big" style="font-size:16px">عالية</div><small>حساسية سعر أدنى — الولاء يُكسب بالخدمة والسرعة والنظافة والمتجر</small></div>
+  <div class="card"><h4>مزيج المنتجات المتوقع</h4><div class="big" style="font-size:16px">ميل أعلى لـ95</div><small>سيارات أحدث وفئة أعلى من متوسط الشبكة → هامش أفضل لكل لتر</small></div>
+  <div class="card"><h4>نمط المرور</h4><div class="big" style="font-size:16px">ذروتان + ويكند</div><small>تنقّل صباحي/مسائي كثيف + موجات الجمعة/السبت نحو أبحر والواجهات</small></div>
+  <div class="card"><h4>الموسمية</h4><div class="big" style="font-size:16px">شبه ثابتة</div><small>مدينة كبرى بطلب مستقر + مواسم جدة والصيف البحري ترفع حركة الشمال</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>شبكة درب في جدة — خط المعايرة الفعلي (مايو 2026)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المحطة الشقيقة</th><th>لترات مايو</th><th>لتر/يوم</th><th>الدلالة للموقع الجديد</th></tr>
+   <tr class="b"><td>جدة النسيم MK015</td><td class="mono">1,401,779</td><td class="mono">45,219</td><td><b>سقف الشبكة كلها — يثبت عمق سوق جدة لموقع واحد</b></td></tr>
+   <tr><td>الاجاويد MK071</td><td class="mono">602,458</td><td class="mono">19,434</td><td>مستوى محقق لموقع حيّي جيد داخل المدينة</td></tr>
+   <tr><td>الكوثر MK100</td><td class="mono">277,145</td><td class="mono">8,940</td><td>أرضية الطلب لموقع أصغر — حدّنا الأدنى المرجعي</td></tr>
+  </table>
+  <div class="note"><b>القراءة:</b> مدى جدة المحقق فعلياً 9K–45K لتر/يوم. موقع الملك عبدالعزيز الشمالي (شرياني + جوار راقٍ كثيف) يستهدف منطقياً النصف الأعلى من هذا المدى على المدى المتوسط — والنموذج المالي أدناه يبدأ متحفظاً دون الاجاويد ويتدرج نحوه.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">60K–100K</td><td>كثافة شمال جدة أعلى من كل الملفات السابقة</td></tr>
+   <tr><td>سكان نطاق 3 دقائق (~1.5كم)</td><td class="mono">25K–40K</td><td>المرجان/النهضة وأطراف الشاطئ والبساتين</td></tr>
+   <tr><td>مركبات نطاق 3 دقائق</td><td class="mono">15K–25K</td><td>ملكية سيارات مرتفعة (غالباً أكثر من سيارة للأسرة)</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">6K–10K</td><td>سكنية + عبور المحور + موجات الويكند</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>20–30%</b></td><td>منافسة كثيفة — الهدف العملي: 400–600 تعبئة/يوم (~18–27K لتر)</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير بعد التشغيل. الهدف العملي (18–27 ألف لتر/يوم على 6–12 شهراً) يقع بين الاجاويد والنسيم المحققتين فعلياً — طموح لكنه داخل مدى مثبت في المدينة نفسها.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطات وطنية على الملك عبدالعزيز نفسه (الدريس/ساسكو/بترومين/نفط)</td><td class="mono">0.5–3كم*</td><td>على الامتداد</td><td>7.0 <span class="tag r">عالٍ</span></td><td>محور بهذا الحجم مخدوم من الجميع — الفصل الاتجاهي (خط شمالي/جنوبي) يحدد المنافس الحقيقي</td></tr>
+  <tr><td>محطات المحاور الموازية (الأمير سلطان/صاري/الأمير نايف)</td><td class="mono">1–4كم*</td><td>شرق/غرب</td><td>5.0 <span class="tag a">متوسط</span></td><td>تتقاسم سكان الأحياء لا حركة المحور</td></tr>
+  <tr><td>محطات مداخل أبحر</td><td class="mono">4–8كم*</td><td>شمال</td><td>4.0 <span class="tag g">منخفض–متوسط</span></td><td>تلتقط الويكند قبلنا أو بعدنا حسب اتجاه الرحلة</td></tr>
+  <tr><td><b>درب / جدة الملك عبدالعزيز (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>على المحور نفسه داخل الجوار السكني الراقي</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> نطاقات تقديرية — <b>المسح الميداني إلزامي</b> وأولويته هنا قصوى: على طريق مزدوج بهذا العرض، <b>اتجاه خط المحطة (شمالي أم جنوبي)</b> يحدد جمهورها الفعلي (رايح الدوام أم راجع منه) ويوجّه توقيت العروض اليومية بالكامل.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/الملك عبدالعزيز</th><th>منافسو المحور</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag a">متوسط — نطاق سكني أكثر منه لوجستي</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>✓</td><td><span class="tag r">عالية — رطوبة الساحل وجمهور يعتني بسيارته</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag a">متوسط — سلة أعلى قيمة في الشمال</span></td></tr>
+  <tr><td>مأكولات/قهوة مختصة</td><td>~</td><td>~</td><td><span class="tag r">عالية جداً — جمهور القهوة المختصة الأكثف بالمملكة</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>✓</td><td><span class="tag a">متوسط — الجميع يقدمها؛ التمايز بسرعتها</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag r">عالية — يلتقط ذروتي الدوام دون نزول</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. في سوق عالي المنافسة ومنخفض حساسية السعر، <b>الخدمة هي الحملة الدائمة</b>: قهوة مختصة درايف ثرو + مغسلة سريعة + متجر قوي تصنع سبب التفضيل الذي لا يستطيع المنافس نسخه بخصم.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">06</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>واجهة على شريان 27 كم يربط أبحر بقلب جدة — تدفّق ضخم مضمون</li>
+   <li>جوار سكني راقٍ عالي الإنفاق (المرجان/الشاطئ/النهضة/البساتين)</li>
+   <li>أكبر سوق مطلق بالشبكة (3.75M) بمدى محقق 9–45 ألف لتر/يوم</li>
+   <li>ميل متوقع أعلى لبنزين 95 → هامش أفضل لكل لتر</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>أكثف منافسة في السلسلة — كل العلامات الوطنية على المحور نفسه</li>
+   <li>حساسية سعر منخفضة تعني أن العرض وحده لا يبني ولاءً</li>
+   <li>وعي علامة درب في جدة الشمالية محدود</li>
+   <li>الخدمات المميِّزة (قهوة/مغسلة/درايف ثرو) غير مفعّلة بعد</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة افتتاح مدوّية تخترق الضجيج (برنامج الأسبوع الكامل أدناه)</li>
+   <li>موجات ويكند أبحر — عروض «عبّي وأنت رايح البحر» أسبوعية</li>
+   <li>أساطيل التوصيل الكثيفة بشمال جدة — عقود B2B ومحطة استراحة مناديب</li>
+   <li>القهوة المختصة درايف ثرو — أعلى جمهور لها بالمملكة في هذا النطاق</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>ردّ سريع ومنظم من علامات وطنية ذات جيوب أعمق</li>
+   <li>أعمال تطوير محاور جدة قد تغيّر أنماط الحركة</li>
+   <li>إيجارات وتكاليف تشغيل أعلى تضغط هامش الصافي</li>
+   <li>جمهور مرتفع التوقعات — أي تجربة خدمة سيئة تنتشر بسرعة</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · حملة الافتتاح: السيناريو المالي + برنامج الأفكار</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: نفّذ الافتتاح كحدث أسبوع كامل — العرض يفتح الباب والخدمة تُبقي العميل</h3>
+  <p>في سوق جدة الشمالية، حملة «أول 100 سيارة» وحدها إعلانٌ ليوم — لكن المطلوب اختراق وعي مدينة ضخمة. لذا نوصي بتحويل الافتتاح إلى <b>برنامج أسبوع كامل</b> (10 أفكار مفصّلة أدناه): يبدأ بعرض <b>50 ريالاً لأول 100 سيارة</b> كصاعق إعلامي (تكلفة كلية ~11 ألف ريال فقط)، وتتوزع بقية الأيام على شرائح المحور (موظفون، عائلات أبحر، أساطيل توصيل)، وينتهي ببنية ولاء دائمة. الاسترداد المتوقع للسيناريو الأساسي خلال <b>~6 أيام</b> — والمكسب الاستراتيجي قاعدة أرقام وعادة أسبوعية في أغنى نطاقات جدة.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة الأساسية</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (أساسي)</div><div class="v">~16,000</div><div class="u">لتر/يوم · مقابل ~9K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.32M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~6 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض الرئيسي</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR بمواعيد + مسار مخصص (محور مزدحم أصلاً)</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950) — تُرفع إذا اعتُمد مؤثر جداوي</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير الشبكة — متحفظ لجدة (ميل 95 أعلى يرفعه واقعياً)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>معيار الشبكة</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">9K→12K→15K لتر/يوم</td><td>مسنود بالشقيقات: يبدأ عند مستوى الكوثر ويتدرج دون الاجاويد</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ. الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. سقف الواقعية: النسيم تثبت أن جدة تتسع لـ45 ألف لتر/يوم لموقع واحد — جدولنا كله دون نصف هذا السقف.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>9,000</td><td>12,000</td><td>15,000</td><td class="mono">1,080,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>13,000</td><td>15,500</td><td>17,500</td><td class="mono">1,380,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>16,000</td><td>19,000</td><td>22,000</td><td class="mono">1,710,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>19,000</td><td>24,000</td><td>29,000</td><td class="mono">2,160,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">300,000</td><td class="mono">630,000</td><td class="mono">45,000</td><td class="mono">75,000</td><td class="mono">105,000</td><td>5.8×</td><td>~11 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">630,000</td><td class="mono">1,323,000</td><td class="mono">94,500</td><td class="mono">157,500</td><td class="mono">220,500</td><td>13.3×</td><td>~6 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">1,080,000</td><td class="mono">2,268,000</td><td class="mono">162,000</td><td class="mono">270,000</td><td class="mono">378,000</td><td>23.5×</td><td>~4 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. حتى المتفائل (29 ألفاً بالشهر الثالث) يبقى دون ثلثي سقف النسيم المحقق — الجدول محافظ بمقاييس جدة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">09</span><h2>برنامج أسبوع الافتتاح — 10 أفكار ومقترحات جاهزة للتنفيذ</h2></div>
+ <div class="ideas">
+  <div class="idea"><span class="in">1</span><div><span class="when">قبل الافتتاح بأسبوع</span><h5>ستارة التشويق والعد التنازلي</h5><p>تغليف الواجهة بستارة ضخمة «شيء كبير قادم لطريق الملك عبدالعزيز» + عدّاد أيام مضيء ليلاً — المحور يمر عليه مئات الآلاف أسبوعياً، الواجهة نفسها أكبر لوحة إعلانية مجانية.</p></div></div>
+  <div class="idea"><span class="in">2</span><div><span class="when">قبل الافتتاح 48 ساعة</span><h5>التسجيل المسبق بقسائم QR</h5><p>إعلانات جيو-مستهدفة (سناب/تيك توك/إنستغرام، نطاق 7 كم) : «سجّل رقمك — أول 100 سيارة تعبّي بـ50 ريالاً مجاناً». كل مسجّل = رقم جوال في قاعدة الولاء قبل أن تفتح المحطة أصلاً.</p></div></div>
+  <div class="idea"><span class="in">3</span><div><span class="when">يوم الافتتاح — الخميس مساءً</span><h5>الصاعق: أول 100 سيارة × 50 ريالاً</h5><p>مسار مخصص للقسائم + منظّمو حركة (المحور لا يحتمل عشوائية) + شاشة عدّاد مباشر «كم سيارة عبّت مجاناً» + بث مباشر. التكلفة 5,000 ريال — والمشهد نفسه هو الإعلان.</p></div></div>
+  <div class="idea"><span class="in">4</span><div><span class="when">يوم الافتتاح</span><h5>قسيمة «الحظ الثاني» لما بعد المئة</h5><p>من تجاوز العدّاد لا يغادر خالياً: خصم فوري + قهوة مجانية + قسيمة عودة بخصم على التعبئة القادمة — تحويل خيبة الطابور إلى زيارة ثانية مضمونة.</p></div></div>
+  <div class="idea"><span class="in">5</span><div><span class="when">الجمعة والسبت</span><h5>«عبّي وأنت رايح البحر»</h5><p>عرض الويكند لموجة أبحر: ماء بارد وثلج مجاني مع كل تعبئة 100+ ريال، وركن تصوير عائلي. يستهدف أضخم نمط حركة أسبوعي على هذا المحور تحديداً.</p></div></div>
+  <div class="idea"><span class="in">6</span><div><span class="when">الأحد–الثلاثاء</span><h5>أيام الدوام: قهوة الذروة</h5><p>قهوة مجانية مع أي تعبئة 6–9 صباحاً — بناء عادة «فطور المحطة» لموظفي الشمال العائدين للمركز. لو تفعّل درايف ثرو لاحقاً، هذه العادة جاهزة له.</p></div></div>
+  <div class="idea"><span class="in">7</span><div><span class="when">الأربعاء</span><h5>يوم الأساطيل والمناديب</h5><p>شمال جدة يعجّ بأساطيل التوصيل: خصم أسطول + كرت «محطة المناديب» (ماء + استراحة + أولوية مسار). عقد B2B واحد = مئات التعبئات الشهرية الثابتة.</p></div></div>
+  <div class="idea"><span class="in">8</span><div><span class="when">طوال الأسبوع</span><h5>عجلة الحظ عند 100+ ريال</h5><p>لكل تعبئة 100 ريال فأكثر: لفّة على عجلة جوائز (غسلة، قهوة، قسيمة 20 ريالاً، تعبئة مجانية كبرى واحدة يومياً) — يرفع متوسط الفاتورة ويصنع محتوى تصوير تلقائياً.</p></div></div>
+  <div class="idea"><span class="in">9</span><div><span class="when">طوال الأسبوع</span><h5>مؤثر جداوي + تغطية مباشرة</h5><p>استنساخ نموذج تعاقد «سناب برزان» (حائل) بمؤثر تغطيات جداوي: إعلان مسبق + حضور يوم الافتتاح + جولة ويكند أبحر. جمهور جدة أضخم — والعقد يقاس بنفس لوحة قياس حائل.</p></div></div>
+  <div class="idea"><span class="in">10</span><div><span class="when">من اليوم الأول — دائم</span><h5>بنية الولاء قبل انتهاء الحماس</h5><p>كل عرض مشروط برقم جوال → واتساب أسبوعي بعرض متجدد + كرت ختم (الخامسة بخصم). في سوق منخفض حساسية السعر، <b>العادة والخدمة</b> هما ما يبقى بعد أسبوع الافتتاح.</p></div></div>
+ </div>
+ <div class="note"><b>ترتيب الأولوية إن ضاقت الميزانية:</b> (3) الصاعق + (2) التسجيل المسبق + (10) بنية الولاء = الحد الأدنى الذي لا يُتنازل عنه (~11 ألف ريال). ثم تُضاف (5) ويكند أبحر و(9) المؤثر كطبقة ثانية (~10–20 ألفاً إضافية حسب أجر المؤثر)، والبقية أفكار تشغيلية شبه مجانية.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">10</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>ردّ منظم من العلامات الوطنية على المحور</td><td><span class="tag r">مرتفع — يُواجه بالخدمة لا بحرب أسعار</span></td></tr>
+   <tr><td>زحام «أول 100» يعطّل محوراً رئيسياً</td><td><span class="tag a">متوسط — قسائم بمواعيد + تنسيق مروري مسبق</span></td></tr>
+   <tr><td>تلاشٍ بعد الأسبوع في جمهور غير حسّاس للسعر</td><td><span class="tag a">متوسط — بنية الولاء والخدمة (الفكرة 10) هي الجواب</span></td></tr>
+   <tr><td>تجربة خدمة سيئة تنتشر في مجتمع رقمي كثيف</td><td><span class="tag a">متوسط — جاهزية تشغيل كاملة شرط إطلاق</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً لكل عرض</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>متابعة واتساب أسبوعية (قنوات درب القائمة)</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم من اليوم الأول</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود أساطيل توصيل B2B (الفكرة 7)</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني: المنافسون + اتجاه خط المحطة على الطريق المزدوج</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ حملة الافتتاح كبرنامج أسبوع كامل.</b> العرض الرئيسي (50 ريالاً لأول 100 سيارة = ~11 ألف ريال) يسترد تكلفته خلال ~6 أيام بالسيناريو الأساسي (~1.32 مليون ريال إيراداً إضافياً في 3 أشهر) — لكن قيمة جدة الحقيقية في المدى الطويل: كل نقطة حصة في هذا النطاق تعادل أضعاف نظيرتها في أسواقنا الأخرى، والنسيم (45 ألف لتر/يوم) تثبت أن السقف بعيد.
+  <br><br><b>العبرة المعدَّلة لجدة:</b> في أسواقنا الصغيرة كان العرض هو البطل؛ هنا العرض مجرد صافرة البداية — <b>الخدمة (قهوة/مغسلة/سرعة/متجر) هي الحملة الدائمة</b>، وبنية الولاء من اليوم الأول هي ما يحوّل أغنى جمهور بالمملكة من مجرّبين إلى معتادين. بدونهما يُتوقّع أداء قرب السيناريو المحافظ رغم ضخامة المحور.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (محافظة جدة 3,751,722 · سعوديون ~45.5%) · The Saudi Times وأدلة عقارية (طريق الملك عبدالعزيز جدة ~27 كم من أبحر جنوباً؛ أحياء المرجان/النهضة/الشاطئ/البساتين/أبحر الجنوبية) · تقرير المبيعات اليومية درب حتى 31/05/2026 (جدة النسيم MK015: 1,401,779 لتراً مايو ≈ 45.2 ألف لتر/يوم · الاجاويد MK071: 602,458 · الكوثر MK100: 277,145 · سعر اللتر المدمج وميزانيات محايل/القسوم كمرجع معايِر) · عرض اتفاقية المؤثر (حائل) كنموذج قابل للاستنساخ.
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي؛ الهامش الصافي افتراضي. جدول المنافسين وتفاصيل الجوار نطاقات تقديرية من مصادر مفتوحة — <b>المسح الميداني قبل الإطلاق إلزامي</b>، وأهم مخرجاته هنا تحديد اتجاه خط المحطة على الطريق المزدوج.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + خطة حملة الافتتاح — جدة طريق الملك عبدالعزيز (الشمال)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[9000,12000,15000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[13000,15500,17500],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[16000,19000,22000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[19000,24000,29000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
