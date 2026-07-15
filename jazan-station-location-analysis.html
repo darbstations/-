@@ -1,0 +1,296 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · جازان الملك فهد — تحليل الموقع + سيناريو الحملة</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.bar{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Financial Scenario · إدارة التسويق درب</div>
+   <h1>محطة جازان الملك فهد — تحليل الموقع + سيناريو حملة البنزين المجاني<span class="sub">طريق الملك فهد · شمال مدينة جيزان (نطاق المحمدية/الرحاب) · منطقة جازان</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=16.968177,42.567823" target="_blank">16.968177, 42.567823</a><br>
+   <span style="color:var(--sub)">درب / جازان — الملك فهد</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>موقع على العمود الفقري الشمالي لمدينة جيزان، داخل منطقة تملك فيها درب أقوى حضور مثبت بالأرقام في شبكتها كلها.</b>
+  المحطة على <b>طريق الملك فهد</b> — الشريان الرابط بين وسط جيزان وامتدادها الشمالي الحديث (المحمدية، الرحاب، النور، النسيم) وصولاً إلى محور صبيا/طريق الساحل — في نطاق نموّ عمراني نشط تطوّره الأمانة (حديقة طريق الملك فهد).
+  الفرادة هنا: <b>جازان ليست سوقاً جديدة على درب</b> — خمس محطات شقيقة عاملة بالمنطقة تعطينا خط معايرة فعلياً: كرنيش جيزان تبيع <b>~23 ألف لتر/يوم</b> داخل المدينة نفسها، وصبيا ~17 ألفاً، والقسوم قفزت <b>×3.6 بعد حملة إطلاقها</b> (145 ألفاً → 527 ألف لتر). المحطة الجديدة تسدّ فجوة الشمال وتكتمل بها تغطية المدينة — وحملة الافتتاح تعمل على أرض مجرَّبة لا مجهولة.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان مدينة جيزان</div><div class="v">200,911</div><div class="u">تعداد 2022 · المنطقة 1.40 مليون (71.4% سعوديون)</div></div>
+  <div class="kpi"><div class="l">عنقود درب في جازان</div><div class="v">5 محطات</div><div class="u">كرنيش · صبيا ×2 · الروابي · صامطة (+القسوم)</div></div>
+  <div class="kpi"><div class="l">سقف مدني محقق فعلياً</div><div class="v">23K</div><div class="u">لتر/يوم — كرنيش جيزان (مايو 2026)</div></div>
+  <div class="kpi"><div class="l">مرجع حملة الإطلاق بالمنطقة</div><div class="v">×3.6</div><div class="u">القسوم: 145K → 527K لتر خلال شهر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=42.500,16.935,42.640,17.000&marker=16.968177,42.567823&layer=mapnik"></iframe>
+ <div class="note">الموقع على <b>طريق الملك فهد</b> في القطاع الشمالي لمدينة جيزان — نطاق المحمدية/الرحاب والأحياء الحديثة (النور، النسيم)، بين وسط المدينة جنوباً ومحور صبيا/طريق الساحل شمالاً، وقريب من محاور الوصول للمدينة الجامعية (جامعة جازان) شمال شرق. الطريق يخدم حركة يومية مزدوجة: سكان الأحياء الشمالية ↔ وسط المدينة والكورنيش، وعبور إقليمي نحو صبيا والدرب وطريق الساحل إلى جدة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الملف الديموغرافي للنطاق</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المدينة</h4><div class="big">200,911</div><small>تعداد 2022 — سعوديون 116,985 (58.2%) · مقيمون 83,926</small></div>
+  <div class="card"><h4>سكان المنطقة</h4><div class="big">1.40M</div><small>سعوديون 71.4% — ثقل سكاني كبير تخدمه جيزان كعاصمة إدارية وتجارية</small></div>
+  <div class="card"><h4>التصنيف العقاري</h4><div class="big" style="font-size:15px">امتداد شمالي حديث</div><small>المحمدية، الرحاب، النور، النسيم — أحياء نموّ جديدة على الطريق نفسه</small></div>
+  <div class="card"><h4>قدرة الإنفاق</h4><div class="big" style="font-size:16px">متوسطة</div><small>شريحة شابة حسّاسة للسعر — الأكثر استجابة للعروض (نمط القسوم/محايل)</small></div>
+  <div class="card"><h4>نمط المرور</h4><div class="big" style="font-size:16px">شرياني مزدوج</div><small>تنقّل يومي شمال↔وسط + عبور إقليمي نحو صبيا/الساحل · ذروة مسائية (مناخ حار رطب)</small></div>
+  <div class="card"><h4>الموسمية</h4><div class="big" style="font-size:16px">شتوية + مستقرة</div><small>شتاء جازان السياحي (نوفمبر–مارس) فوق طلب مدني ثابت — بيانات محطاتنا تُظهر قوة أبريل–مايو أيضاً</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>شبكة درب في جازان — خط المعايرة الفعلي (مايو 2026)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المحطة الشقيقة</th><th>لترات مايو</th><th>لتر/يوم</th><th>الدلالة للموقع الجديد</th></tr>
+   <tr><td>كرنيش جيزان JA069</td><td class="mono">717,742</td><td class="mono">23,153</td><td>سقف الطلب المدني المحقق داخل المدينة نفسها</td></tr>
+   <tr><td>صبيا JA061</td><td class="mono">530,594</td><td class="mono">17,116</td><td>قوة المحور الشمالي الذي يتصل به موقعنا</td></tr>
+   <tr class="b"><td>القسوم JA041 (أُطلقت بحملة)</td><td class="mono">526,648</td><td class="mono">16,989</td><td><b>شهرها الكامل الأول بعد الإطلاق — ×3.6 على أبريل</b></td></tr>
+   <tr><td>صبيا نخلان JA053</td><td class="mono">453,428</td><td class="mono">14,627</td><td>عمق الطلب في الضواحي الشمالية</td></tr>
+   <tr><td>الروابي جيزان JA056</td><td class="mono">245,146</td><td class="mono">7,908</td><td>أرضية الطلب لموقع حيّي داخل المدينة</td></tr>
+  </table>
+  <div class="note"><b>لماذا هذا الجدول هو الأهم في الملف:</b> لا نحتاج تخمين خط أساس جازان — محطاتنا الخمس ترسم المدى الفعلي (8K–23K لتر/يوم). موقع الملك فهد (شرياني + أحياء حديثة) يقع منطقياً بين الروابي والكرنيش، وحملة القسوم تثبت أن الإطلاق المدعوم في هذه المنطقة يصل بالمحطة إلى ~17K لتر/يوم من شهرها الأول. أرقام المزيج في جازان تدعم الجدوى: أحجام قوية بلا موسمية حادة.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">30K–50K</td><td>المحمدية + الرحاب + أطراف النور/النسيم</td></tr>
+   <tr><td>سكان نطاق 3 دقائق (~1.5كم)</td><td class="mono">12K–20K</td><td>النطاق الأساسي — امتداد يكتظ تدريجياً</td></tr>
+   <tr><td>مركبات نطاق 3 دقائق</td><td class="mono">7K–12K</td><td>اعتماد كامل على السيارة</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">3K–5K</td><td>سكنية + تنقّل يومي للوسط + عبور صبيا/الساحل</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>900–1,700 تعبئة/يوم</b></td><td>30–40% — شمال المدينة أقل تشبّعاً من الوسط والكورنيش</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير على الحركة الفعلية بعد التشغيل. الهدف العملي أدنى من هذا السقف بكثير: <b>350–550 تعبئة/يوم (~16–25 ألف لتر)</b> — وهو مدى محقق فعلياً في محطات درب بالمنطقة نفسها (القسوم ~17 ألفاً والكرنيش ~23 ألف لتر/يوم)، ما يجعل أهداف النموذج المالي أدناه مسنودة بمبيعات شقيقة لا بافتراضات.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطة محروقات — طريق الملك فهد</td><td class="mono">على الطريق*</td><td>جنوب (باتجاه الوسط)</td><td>5.5 <span class="tag a">متوسط</span></td><td>منافس معروف على الشريان نفسه (مرصود على خرائط الملاحة) — يُحدَّد بعده واتجاه خطه ميدانياً</td></tr>
+  <tr><td>محطات وسط المدينة والكورنيش</td><td class="mono">4–8كم*</td><td>جنوب/غرب</td><td>4.0 <span class="tag g">منخفض–متوسط</span></td><td>بينها كرنيش جيزان (درب) — تكامل شبكي لا تنافس</td></tr>
+  <tr><td>محطات محور صبيا/طريق الساحل</td><td class="mono">5–15كم*</td><td>شمال</td><td>3.5 <span class="tag g">منخفض</span></td><td>بينها صبيا والقسوم (درب) — العابر يجد درب في الاتجاهين</td></tr>
+  <tr><td><b>درب / جازان الملك فهد (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>يسدّ فجوة الشمال بين الكورنيش ومحور صبيا</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> المسافات نطاقات تقديرية — <b>المسح الميداني قبل الإطلاق إلزامي</b>. ميزة بنيوية فريدة: وجود محطتي درب على طرفي المحور (كرنيش جنوباً، صبيا/القسوم شمالاً) يحوّل المنافسة إلى <b>تغطية ممر كامل بعلامة واحدة</b> — عرض موحّد وولاء مشترك عبر الثلاث.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/الملك فهد</th><th>منافسو النطاق</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag r">عالية — شاحنات محور الساحل ومشاريع البنية الشمالية</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>~</td><td><span class="tag r">عالية — الغبار والرطوبة الساحلية يرفعان التكرار</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag a">متوسط</span></td></tr>
+  <tr><td>مأكولات/قهوة</td><td>~</td><td>~</td><td><span class="tag r">عالية (فرصة بيضاء بالقطاع الشمالي)</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>~</td><td><span class="tag r">عالية — حياة جازان ليلية بامتياز (مناخ حار نهاراً)</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag r">عالية (غير منتشر بالنطاق)</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. مناخ جازان يجعل <b>الليل هو النهار التجاري</b> — خدمة 24 ساعة + إضاءة واجهة قوية + قهوة درايف ثرو تلتقط موجة السهر والمتنزهين العائدين من الكورنيش عبر الملك فهد.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">06</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>واجهة على العمود الفقري الشمالي للمدينة (تنقّل يومي + عبور إقليمي)</li>
+   <li>عنقود درب القائم بجازان: معرفة سوق + لوجستيات + علامة مألوفة محلياً</li>
+   <li>أحياء حديثة تنمو على الطريق نفسه (المحمدية، الرحاب، النور، النسيم)</li>
+   <li>خط معايرة فعلي من 5 محطات شقيقة — قرارات على أرقام لا افتراضات</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>القطاع الشمالي أقل كثافة حالياً من الوسط — الطلب المطلق يتشكّل</li>
+   <li>منافس معروف على الشريان نفسه (محطة محروقات)</li>
+   <li>الخدمات المميِّزة (قهوة/مغسلة/درايف ثرو) غير مفعّلة بعد</li>
+   <li>صيف حار رطب يضغط حركة النهار — الاعتماد على المساء</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة بنزين مجاني افتتاحية — نموذج القسوم (×3.6) منفّذ في المنطقة نفسها</li>
+   <li>تسويق عنقودي: عرض موحّد وولاء مشترك عبر كرنيش/صبيا/القسوم/الملك فهد</li>
+   <li>موسم شتاء جازان (نوفمبر–مارس) موجة سياحية سنوية فوق الطلب الثابت</li>
+   <li>تطوير الأمانة لحديقة طريق الملك فهد يرفع جاذبية المحور نفسه</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>ردّ المنافس القريب بحرب عروض على الشريان نفسه</li>
+   <li>شريحة حسّاسة للسعر قد تتنقّل خلف العروض بلا آلية احتفاظ</li>
+   <li>تباطؤ اكتمال الأحياء الشمالية يؤجل جزءاً من الطلب المتوقع</li>
+   <li>ظروف مناخية (رطوبة/غبار) ترفع كلفة صيانة الواجهة والمعدات</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · السيناريو المالي للحملة</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: تنفيذ الحملة — أدنى مخاطرة في الشبكة لأن المنطقة مجرَّبة بالأرقام</h3>
+  <p>جازان هي الحالة الوحيدة التي تُطلق فيها درب محطة داخل <b>عنقود قائم من 5 محطات بأرقام فعلية</b>: نعرف سقف المدينة (كرنيش ~23 ألف لتر/يوم)، ونعرف أثر حملة الإطلاق محلياً (القسوم ×3.6 خلال شهر)، ونملك قنوات الواتساب والجمهور المحلي جاهزة. العرض: <b>50 ريالاً لأول 100 سيارة</b> — تكلفة كلية <b>~11 ألف ريال</b>، واسترداد متوقع خلال <b>~أسبوع</b>. التوقيت الأمثل: الإطلاق الآن لبناء القاعدة الحيّية صيفاً (ذروة مسائية)، ثم موجة تسويقية ثانية مع افتتاح موسم شتاء جازان (نوفمبر) — والشرط الدائم: آلية الاحتفاظ الكاملة + مسح ميداني يثبّت موقع المنافس القريب واتجاه خطه.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (متوقع)</div><div class="v">~14,000</div><div class="u">لتر/يوم (أساسي) · مقابل ~7K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.45M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~6 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR/مسار مخصص لضبط الزحام</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950) — القسوم في المنطقة نفسها</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير مبيعات الشبكة (إجمالي ريالات ÷ لترات)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>اعتماد كامل على السيارة</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">7K→9K→11K لتر/يوم</td><td>مسنود بالشقيقات: فوق أرضية الروابي (7.9K) ودون صبيا (17K) — موقع شرياني بأحياء تنمو</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ (موثوق). الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. مرجع الواقعية المزدوج: القسوم بلغت ~17K لتر/يوم من شهرها الأول بعد الإطلاق، والكرنيش يثبت أن مدينة جيزان تتّسع لـ23K+ لموقع واحد.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>7,000</td><td>9,000</td><td>11,000</td><td class="mono">810,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>11,000</td><td>13,000</td><td>14,000</td><td class="mono">1,140,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>14,000</td><td>17,000</td><td>19,000</td><td class="mono">1,500,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>17,000</td><td>21,000</td><td>25,000</td><td class="mono">1,890,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">330,000</td><td class="mono">693,000</td><td class="mono">49,500</td><td class="mono">82,500</td><td class="mono">115,500</td><td>6.5×</td><td>~11 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">690,000</td><td class="mono">1,449,000</td><td class="mono">103,500</td><td class="mono">172,500</td><td class="mono">241,500</td><td>14.7×</td><td>~6 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">1,080,000</td><td class="mono">2,268,000</td><td class="mono">162,000</td><td class="mono">270,000</td><td class="mono">378,000</td><td>23.5×</td><td>~4 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. مصداقية الجدول: السيناريو الأساسي (14→19K) يوازي مسار القسوم الفعلي بعد إطلاقها، والمتفائل (25K بالشهر الثالث) يبقى بجوار سقف الكرنيش المحقق (23K) في مدينة يعرفها فريقنا. العرض المضغوط (100 سيارة) يُعوَّض بتوثيق رقمي مكثف وقسائم «حظ ثانٍ»، وبترويج متقاطع من محطات العنقود (لافتات وعروض مشتركة في كرنيش/صبيا/القسوم).</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">09</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>ردّ المنافس القريب على الشريان بحرب عروض</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>تلاشٍ جزئي بعد العرض بلا آلية احتفاظ</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>تباطؤ إشغال الأحياء الشمالية يؤخر خط الأساس</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>تكانيبالية (Cannibalization) محدودة مع كرنيش جيزان</td><td><span class="tag g">منخفض — 8كم+ وجمهور مختلف</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً للعرض</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>متابعة واتساب عبر قاعدة جازان القائمة (عنقود 5 محطات)</td><td><span class="tag g">حاسم — ميزة لا تملكها مواقعنا الجديدة الأخرى</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم صالح في كل محطات العنقود</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود أساطيل/شاحنات محور الساحل</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني (المنافس المجاور + اتجاهات الخطوط) قبل الإطلاق</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ الحملة.</b> بتكلفة ~11 ألف ريال (50 ريالاً لأول 100 سيارة + التشغيل)، يعطي السيناريو الأساسي إيراداً إضافياً ~1.45 مليون ريال خلال 3 أشهر واسترداداً خلال ~6 أيام. هذا أدنى ملفات المخاطرة في السلسلة: الطلب مثبت بأرقام خمس شقيقات، وأثر حملة الإطلاق مقاس محلياً (القسوم ×3.6)، والبنية التسويقية (واتساب/فريق/لوجستيات) قائمة بالمنطقة.
+  <br><br><b>العبرة:</b> قوة هذا الموقع ليست فيه وحده بل في العنقود — كرت ولاء واحد صالح في أربع محطات على امتداد الممر جيزان↔صبيا يجعل التبديل للمنافس خسارة مزايا لا مجرد تغيير محطة. تُطلق الحملة الآن لبناء القاعدة الحيّية، وتُجدَّد موجة ثانية مع افتتاح موسم شتاء جازان في نوفمبر.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (مدينة/محافظة جازان 200,911: سعوديون 116,985 · منطقة جازان 1,404,997: سعوديون 71.4%) · تقرير المبيعات اليومية درب حتى 31/05/2026 (كرنيش جيزان JA069: 717,742 لتراً مايو · صبيا JA061: 530,594 · القسوم JA041: 145,524 أبريل → 526,648 مايو · صبيا نخلان JA053: 453,428 · الروابي JA056: 245,146 · سعر اللتر المدمج وميزانيات محايل/القسوم) · واس/أمانة جازان (تطوير حديقة طريق الملك فهد بجيزان) · أدلة أحياء جيزان (المحمدية، الرحاب، النور، النسيم، الشاطئ على طريق الملك فهد) · خرائط الملاحة (محطة محروقات على طريق الملك فهد).
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي بعد الإطلاق؛ الهامش الصافي افتراضي. تحديد الحي الدقيق للإحداثيات وجدول المنافسين نطاقات تقديرية من مصادر مفتوحة — <b>المسح الميداني قبل الإطلاق إلزامي</b>.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + سيناريو مالي — جازان طريق الملك فهد (الشمال)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[7000,9000,11000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[11000,13000,14000],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[14000,17000,19000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[17000,21000,25000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
