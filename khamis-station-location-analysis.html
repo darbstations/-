@@ -1,0 +1,281 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · خميس مشيط — تحليل الموقع + سيناريو الحملة</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.bar{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Financial Scenario · إدارة التسويق درب</div>
+   <h1>محطة خميس مشيط — تحليل الموقع + سيناريو حملة البنزين المجاني<span class="sub">نطاق ضمك · التوسّع الشمالي لخميس مشيط · منطقة عسير</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=18.377303,42.714916" target="_blank">18.377303, 42.714916</a><br>
+   <span style="color:var(--sub)">درب / خميس مشيط</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>توسّع شمالي بطلب يتشكّل داخل ثاني أكبر مدن الجنوب + موسم عسير في ذروته الآن → مرشّح قوي لحملة افتتاح فورية.</b>
+  الموقع في النطاق الشمالي لخميس مشيط (محيط حي ضمك — نادي وحديقة ضمك)، حيث يتمدد العمران الجديد على المحور الرابط بين المدينة وطريق الرياض. المعادلة تجمع أفضل ما في ملفَّي نجران وحائل: <b>حي ناشئ أقل تشبّعاً بالمحطات</b> (فرصة هيمنة مبكرة كنجران المركب) داخل <b>سوق ضخم</b> — محافظة بـ<b>601 ألف نسمة</b> ومنطقة تستقبل <b>7.5 مليون سائح سنوياً</b> ذروتهم الصيفية الآن (~1.4 مليون زائر في يونيو–يوليو وحدهما).
+  والأهم: <b>النموذج مثبت في المنطقة نفسها بأرقام درب</b> — محطة محايل عسير قفزت بعد حملة إطلاقها من 72 ألف لتر (أبريل) إلى <b>660 ألف لتر (مايو)</b> حسب تقرير مبيعات الشبكة. خميس مشيط سوق أكبر من محايل بمراحل.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان محافظة خميس مشيط</div><div class="v">601,305</div><div class="u">تعداد 2022 · سعوديون 62.8% · عسير 2.02M</div></div>
+  <div class="kpi"><div class="l">موسم عسير الصيفي</div><div class="v" style="color:var(--green)">الذروة الآن</div><div class="u">~1.4 مليون زائر (يونيو–يوليو) · «أبرد وأقرب»</div></div>
+  <div class="kpi"><div class="l">مستوى المنافسة بالنطاق</div><div class="v" style="color:var(--green)">منخفض–متوسط</div><div class="u">توسّع ناشئ · مسح ميداني موصى به</div></div>
+  <div class="kpi"><div class="l">المرجع المعايِر</div><div class="v">×9</div><div class="u">قفزة محايل عسير بعد حملة الإطلاق (72K→660K لتر)</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=42.650,18.345,42.780,18.410&marker=18.377303,42.714916&layer=mapnik"></iframe>
+ <div class="note">الموقع في <b>التوسّع الشمالي لخميس مشيط</b> (نطاق ضمك)، على مسار الحركة بين أحياء الشمال الناشئة ووسط المدينة، وقريب من محور طريق الرياض — بوابة قوافل المسافرين والشاحنات بين عسير والوسط. جنوبه الأحياء الراقية المكتملة (الموسى، الوسام، الراقي) على طرق الأمير سلطان/الملك فهد. <b>خميس مشيط نقطة عبور إلزامية</b> بين أبها والرياض وبين عسير الداخل.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الملف الديموغرافي للنطاق</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المحافظة</h4><div class="big">601,305</div><small>تعداد 2022 — سعوديون 377,737 (62.8%) · مقيمون 223,568</small></div>
+  <div class="card"><h4>الطابع السكاني</h4><div class="big" style="font-size:16px">عائلي شاب + عسكري</div><small>قاعدة الملك خالد الجوية — أكبر مشغّل بالمدينة: رواتب ثابتة وطلب غير موسمي</small></div>
+  <div class="card"><h4>التصنيف العقاري</h4><div class="big" style="font-size:15px">توسّع شمالي ناشئ</div><small>ضمك وما حوله: فلل وشقق حديثة، أسعار أقل من المركز → جذب شباب العائلات</small></div>
+  <div class="card"><h4>قدرة الإنفاق</h4><div class="big" style="font-size:16px">متوسطة</div><small>شريحة حسّاسة للسعر تتجاوب بقوة مع العروض (نمط محايل)</small></div>
+  <div class="card"><h4>نمط المرور</h4><div class="big" style="font-size:16px">سكني + عبور إقليمي</div><small>محور الشمال ↔ المركز + حركة طريق الرياض · اعتماد كامل على السيارة</small></div>
+  <div class="card"><h4>الموسمية</h4><div class="big" style="font-size:16px">صيفية (الآن)</div><small>عسير: 7.5M سائح/سنة · الذروة يونيو→سبتمبر — عكس ملف حائل تماماً</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">25K–40K</td><td>ضمك + أطراف الأحياء الشمالية — كثافة تتزايد مع التوسّع</td></tr>
+   <tr><td>سكان نطاق 3 دقائق (~1.5كم)</td><td class="mono">10K–18K</td><td>النطاق الأساسي (ناشئ — ينمو سنوياً)</td></tr>
+   <tr><td>مركبات نطاق 3 دقائق</td><td class="mono">6K–10K</td><td>اعتماد كامل على السيارة</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">2.5K–4K</td><td>سكنية + عبور شمالي + موجة الموسم صيفاً</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>800–1,600 تعبئة/يوم</b></td><td>30–40% — نطاق أقل تشبّعاً بالمحطات من مركز المدينة</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير على الحركة الفعلية بعد التشغيل. المنطق: خميس مشيط أكبر من نجران المركب سوقاً، والنطاق الشمالي أقرب لملف «حي ناشئ» منه لشارع مشبع — حصة مستهدفة أعلى من حائل (25–35%) وأدنى من هيمنة نجران (50–60%). النموذج المالي يعتمد منحنى التقاط متحفظاً لا هذا السقف.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطات محور طريق الرياض (علامات وطنية)</td><td class="mono">1–3كم*</td><td>شمال/شرق</td><td>5.5 <span class="tag a">متوسط</span></td><td>تخدم العبور الإقليمي — منافسة على المسافرين لا على سكان النطاق</td></tr>
+  <tr><td>محطات الأحياء الشمالية الناشئة</td><td class="mono">1–3كم*</td><td>محيط سكني</td><td>4.5 <span class="tag a">متوسط</span></td><td>تغطية متناثرة — النطاق لم يُشبع بعد</td></tr>
+  <tr><td>محطات المركز (طرق الملك فهد/الأمير سلطان)</td><td class="mono">4–7كم*</td><td>جنوب</td><td>3.5 <span class="tag g">منخفض</span></td><td>خارج نطاق الجذب المباشر</td></tr>
+  <tr><td><b>درب / خميس مشيط (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>مركزي في التوسّع الشمالي — أقرب نقطة تعبئة لسكانه المتزايدين</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> المسافات نطاقات تقديرية — <b>المسح الميداني قبل الإطلاق إلزامي</b> لتثبيت الجدول وتحديد أقرب منافس مباشر واتجاهه (كما صُحّح ملف نجران ميدانياً باتجاهات السير).</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/خميس مشيط</th><th>منافسو النطاق</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag r">عالية — حركة شاحنات طريق الرياض + مقاولات التوسّع العمراني</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>~</td><td><span class="tag a">متوسط</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag a">متوسط</span></td></tr>
+  <tr><td>مأكولات/قهوة</td><td>~</td><td>~</td><td><span class="tag r">عالية (فرصة بيضاء بالنطاق الناشئ)</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>~</td><td><span class="tag r">عالية — طقس عسير المعتدل يمدّ السهرات صيفاً</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag r">عالية (غير منتشر بالنطاق)</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. النطاق الناشئ يفتقر للخدمات المكتملة — <b>ركن قهوة/درايف ثرو + ديزل موثوق</b> يحوّلان المحطة إلى مركز خدمة الحي قبل أن يصل المنافسون، ويلتقطان سائحي الموسم العابرين نحو أبها والسودة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>نطاق ناشئ أقل تشبّعاً بالمحطات داخل مدينة كبيرة (601 ألف بالمحافظة)</li>
+   <li>ازدواج الطلب: سكني متنامٍ + عبور إقليمي (خميس عقدة طرق الجنوب)</li>
+   <li>قاعدة الملك خالد الجوية ترسّخ طلباً ثابتاً غير موسمي</li>
+   <li>طقس معتدل صيفاً يرفع الحركة المسائية والسياحية معاً</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>كثافة النطاق الحالية أقل من أحياء المركز — الطلب يتشكّل ولم يكتمل</li>
+   <li>وعي علامة درب في خميس مشيط يحتاج بناء من الصفر</li>
+   <li>الخدمات المميِّزة (قهوة/درايف ثرو/مغسلة) غير مفعّلة بعد</li>
+   <li>بُعد نسبي عن التجمّعات التجارية المكتملة جنوباً</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة بنزين مجاني افتتاحية في ذروة الموسم — نموذج محايل المجاور (×9) مثبت بأرقام درب</li>
+   <li>هيمنة مبكرة على حي يكبر سنوياً — من يصل أولاً يملك الولاء</li>
+   <li>موجة صيف عسير (~1.4M زائر يونيو–يوليو) تمر عبر خميس مشيط الآن</li>
+   <li>عقود أساطيل/مقاولات مع ورش التوسّع العمراني بالنطاق</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>العلامات الوطنية قد تتوسّع للنطاق نفسه مع نموّه — سباق زمن</li>
+   <li>شريحة حسّاسة للسعر قد تتنقّل خلف العروض بلا آلية احتفاظ</li>
+   <li>انحسار الموجة السياحية بعد سبتمبر يكشف خط الأساس الحقيقي</li>
+   <li>اكتمال البنية (طرق/سفلتة) في التوسّعات الجديدة قد يتأخر</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · السيناريو المالي للحملة</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: تنفيذ الحملة فوراً — الموسم في ذروته والنموذج مثبت في المنطقة نفسها</h3>
+  <p>كل شروط النجاح البنيوية متحققة: طلب يتشكّل في نطاق ناشئ (نمط نجران) + سوق مطلق ضخم بموجة سياحية جارية الآن (ميزة لا تملكها نجران ولا حائل) + مرجع معايرة من نفس المنطقة بأرقام درب الفعلية — <b>محايل عسير: 72 ألف لتر (أبريل) → 660 ألفاً (مايو) بعد حملة الإطلاق</b>. العرض: <b>50 ريالاً لأول 100 سيارة</b> — تكلفة كلية <b>~11 ألف ريال</b> واسترداد متوقع خلال <b>~أسبوع</b>. <b>التوقيت حاسم:</b> كل أسبوع تأخير يُفقد الحملة جزءاً من موجة الصيف (الذروة حتى سبتمبر)؛ والشرط الدائم: آلية احتفاظ كاملة (جوال + واتساب + قسيمة عودة + أساطيل) لتثبيت المكتسَب بعد انحسار الموسم.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (متوقع)</div><div class="v">~13,000</div><div class="u">لتر/يوم (أساسي) · مقابل ~6K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.45M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~6 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">06</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR/مسار مخصص لضبط الزحام</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950)</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير مبيعات الشبكة (إجمالي ريالات ÷ لترات)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>اعتماد كامل على السيارة</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">6K→8K→10K لتر/يوم</td><td>التقاط عضوي في نطاق ناشئ بمدينة كبيرة + دعم الموسم — أعلى من نجران وأدنى من شريان حائل القائم</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ (موثوق). الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. مرجع الواقعية: محايل عسير بلغت ~21 ألف لتر/يوم في أول شهر كامل بعد الإطلاق (660 ألفاً ÷ 31) — أهدافنا هنا أدنى من ذلك رغم أن خميس مشيط سوق أكبر.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>6,000</td><td>8,000</td><td>10,000</td><td class="mono">720,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>10,000</td><td>12,000</td><td>13,000</td><td class="mono">1,050,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>13,000</td><td>16,000</td><td>18,000</td><td class="mono">1,410,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>16,000</td><td>20,000</td><td>24,000</td><td class="mono">1,800,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">330,000</td><td class="mono">693,000</td><td class="mono">49,500</td><td class="mono">82,500</td><td class="mono">115,500</td><td>6.5×</td><td>~11 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">690,000</td><td class="mono">1,449,000</td><td class="mono">103,500</td><td class="mono">172,500</td><td class="mono">241,500</td><td>14.7×</td><td>~6 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">1,080,000</td><td class="mono">2,268,000</td><td class="mono">162,000</td><td class="mono">270,000</td><td class="mono">378,000</td><td>23.5×</td><td>~4 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. حتى السيناريو المتفائل (24 ألف لتر/يوم بالشهر الثالث) يبقى قريباً من مستوى محايل عسير الفعلي بعد إطلاقها (~21 ألفاً) — أي أن الجدول كله داخل حدود مثبتة إقليمياً. العرض المضغوط (100 سيارة) يُعوَّض بتوثيق رقمي مكثف (بث مباشر + هاشتاق + مؤثر محلي) وقسائم «حظ ثانٍ» لمن فاتته المئة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>تلاشٍ جزئي بعد انحسار الموسم في سبتمبر</td><td><span class="tag a">متوسط — يُدار بآلية الاحتفاظ</span></td></tr>
+   <tr><td>الشريحة الحسّاسة للسعر تتنقّل خلف العروض</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>ردّ العلامات الوطنية على محور طريق الرياض</td><td><span class="tag g">منخفض — جمهورها عابر لا سكني</span></td></tr>
+   <tr><td>زحام «أول 100» يوم الافتتاح</td><td><span class="tag g">منخفض — قسائم بمواعيد ومسار مخصص</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً للعرض</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>متابعة عبر حملات واتساب (موجودة)</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم — تثبيت العادة قبل نهاية الموسم</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود أساطيل/مقاولات التوسّع العمراني بالنطاق</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني للمنافسين + فحص جاهزية المضخات قبل الإطلاق</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ الحملة دون تأخير.</b> بتكلفة ~11 ألف ريال (50 ريالاً لأول 100 سيارة + التشغيل) ومخاطرة منخفضة، يعطي السيناريو الأساسي إيراداً إضافياً ~1.45 مليون ريال خلال 3 أشهر واسترداداً خلال ~6 أيام. تجمع خميس مشيط الشمالية شرطَي النجاح معاً: <b>طلب يتشكّل</b> (درس الحقو محسوم — الحملة تضخّم طلباً موجوداً، والموجة السياحية تجري الآن) و<b>نموذج منفَّذ ومقاس في نفس المنطقة</b> (محايل ×9 بأرقام تقرير المبيعات).
+  <br><br><b>العبرة:</b> الأفضلية هنا للسرعة — الموسم يبلغ ذروته حتى سبتمبر، والافتتاح داخل الموجة يشتري وعياً بنصف تكلفته خارجها؛ ثم تتكفل آلية الاحتفاظ (جوال + واتساب + قسيمة عودة + أساطيل) بتحويل زوّار الصيف وسكان الحي الجدد إلى خط أساس دائم قبل الشتاء. في غيابها يُتوقّع ارتداد نحو السيناريو المحافظ بعد سبتمبر.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (محافظة خميس مشيط 601,305: سعوديون 377,737 · منطقة عسير 2,024,285) · واس/وزارة السياحة (صيف عسير «أبرد وأقرب»: ~1.4 مليون زائر يونيو–يوليو 2025 · عسير 7.5 مليون سائح 2024 — الرابعة بالمملكة) · أدلة أحياء خميس مشيط (ضمك، الموسى، الوسام، الراقي — التوسّع الشمالي وطرق الأمير سلطان/الملك فهد) · تقرير المبيعات اليومية درب حتى 31/05/2026 (محايل عسير AS153: 72,153 لتر أبريل → 660,084 لتر مايو · القسوم: 145,524 → 526,648 · سعر اللتر المدمج وميزانيات محايل/القسوم كمرجع معايِر).
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي بعد الإطلاق؛ الهامش الصافي افتراضي. تحديد الحي الدقيق للإحداثيات وجدول المنافسين نطاقات تقديرية من مصادر مفتوحة — <b>المسح الميداني قبل الإطلاق إلزامي</b>.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + سيناريو مالي — خميس مشيط (التوسّع الشمالي/ضمك)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[6000,8000,10000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[10000,12000,13000],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[13000,16000,18000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[16000,20000,24000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
