@@ -1,0 +1,319 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · مكة شارع الستين — تحليل الموقع + حملة الافتتاح</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.bar{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.idea{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.idea .in{background:var(--amber);color:#0a0f16;font-weight:800;border-radius:8px;min-width:34px;height:34px;display:grid;place-items:center;font-size:15px}
+.idea h5{font-size:13.5px;margin-bottom:2px}
+.idea p{font-size:12.5px;color:var(--muted)}
+.idea .when{font-size:10.5px;color:var(--amber);font-weight:700}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot,.ideas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Launch Playbook · إدارة التسويق درب</div>
+   <h1>محطة مكة شارع الستين — تحليل الموقع + خطة حملة الافتتاح<span class="sub">شارع الستين (فيصل بن بدر / شارع المدارس) · غرب مكة المكرمة · نطاق النزهة/الرصيفة</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=21.425024,39.786216" target="_blank">21.425024, 39.786216</a><br>
+   <span style="color:var(--sub)">درب / مكة — الستين</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>افتتاح في قلب أرض درب الأم — المحور الغربي لمكة الذي تُثبت شقيقاتنا أنه من أغزر ممرات الوقود بالمملكة.</b>
+  الموقع على <b>شارع الستين</b> (المخطط رسمياً «فيصل بن بدر» ويُعرف بشارع المدارس) — الشريان الغربي الرابط بين <b>طريق جدة السريع وحي الرصيفة</b> على مشارف المنطقة المركزية (~2–4 كم من الحرم)، في نطاق النزهة/الرصيفة الكثيف سكنياً والمزدحم بفنادق المعتمرين.
+  المعايرة هنا ليست تقديراً بل جوار مباشر: <b>الرصيفة 24.7 ألف لتر/يوم، الرصيفة مسار 22.3 ألفاً، بطحاء قريش 26.1 ألفاً — والعمرة على المحور الغربي نفسه 100.9 ألف لتر/يوم</b> (أضخم محطات الشبكة إطلاقاً). درب تملك في مكة أكثر من 20 محطة وخبرة حملات ناجحة («نموذج مكة» المعتمد داخلياً) — الافتتاح هنا تشغيل معادلة مجرَّبة في أغزر بقعة نعرفها، وتوقيته مثالي مع انطلاق موسم العمرة الجديد بعد الحج.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان مكة المكرمة</div><div class="v">~2.4M</div><div class="u">تعداد 2022 · فوقهم ملايين المعتمرين والحجاج سنوياً</div></div>
+  <div class="kpi"><div class="l">عنقود درب في مكة</div><div class="v">20+</div><div class="u">محطة شقيقة — أقوى حضور للعلامة بالمملكة</div></div>
+  <div class="kpi"><div class="l">سقف المحور الغربي المحقق</div><div class="v">101K</div><div class="u">لتر/يوم — محطة العمرة (مايو 2026)</div></div>
+  <div class="kpi"><div class="l">الجوار المباشر المحقق</div><div class="v">22–26K</div><div class="u">لتر/يوم — الرصيفة/مسار/بطحاء قريش</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=39.730,21.395,39.845,21.455&marker=21.425024,39.786216&layer=mapnik"></iframe>
+ <div class="note">الموقع على <b>شارع الستين</b> غرب مكة — محور مزدوج الوظيفة: <b>سكني كثيف</b> (النزهة، الرصيفة، الزاهر، العتيبية — أحياء شعبية-متوسطة عالية الكثافة) و<b>ممر زوّار</b> يربط القادمين من طريق جدة (المطار وميناء جدة — شريان المعتمرين الأول) بالمنطقة المركزية والفنادق المنتشرة على الشارع نفسه. حركة على مدار الساعة لا تنام — مكة مدينة 24 ساعة بطبيعتها.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الملف الديموغرافي للنطاق</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المدينة</h4><div class="big">~2.43M</div><small>تعداد 2022 — منطقة مكة 8.02M (سعوديون 51.8%)</small></div>
+  <div class="card"><h4>الطبقة الثانية: الزوّار</h4><div class="big" style="font-size:16px">ملايين المعتمرين</div><small>طلب فوق-سكاني لا يملكه أي سوق آخر — ذروات رمضان والحج والإجازات</small></div>
+  <div class="card"><h4>طابع النطاق</h4><div class="big" style="font-size:15px">كثيف مختلط</div><small>سكن عائلي متوسط + فنادق معتمرين + خدمات نقل — أعلى كثافة استخدام سيارة</small></div>
+  <div class="card"><h4>قدرة الإنفاق</h4><div class="big" style="font-size:16px">متوسطة</div><small>شريحة حسّاسة للسعر (نمط 91 الغالب بمحطات مكة) — تستجيب بقوة للعروض</small></div>
+  <div class="card"><h4>نمط المرور</h4><div class="big" style="font-size:16px">مستمر 24 ساعة</div><small>تنقّل سكني + نقل معتمرين (حافلات صغيرة/تكاسي/تطبيقات) + عبور طريق جدة ↔ المركزية</small></div>
+  <div class="card"><h4>الموسمية</h4><div class="big" style="font-size:16px">ذروات حادة</div><small>رمضان (×1.2–1.5 بشقيقات مكة) + الحج + الإجازات — والقاع نفسه مرتفع</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>عنقود درب في غرب مكة — خط المعايرة الفعلي (مايو 2026)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المحطة الشقيقة</th><th>لترات مايو</th><th>لتر/يوم</th><th>الدلالة للموقع الجديد</th></tr>
+   <tr class="b"><td>العمرة MK07 (المحور الغربي)</td><td class="mono">3,127,972</td><td class="mono">100,902</td><td><b>أضخم محطة بالشبكة — يثبت غزارة ممر طريق جدة ↔ الحرم</b></td></tr>
+   <tr><td>بطحاء قريش MK022</td><td class="mono">810,080</td><td class="mono">26,132</td><td>مستوى محقق لموقع حيّي غربي</td></tr>
+   <tr><td>الرصيفة MK016</td><td class="mono">764,401</td><td class="mono">24,658</td><td>الجار المباشر لنطاقنا — نفس الجمهور</td></tr>
+   <tr><td>الرصيفة مسار MK018</td><td class="mono">690,081</td><td class="mono">22,261</td><td>يؤكد أن النطاق يتّسع لأكثر من محطة درب</td></tr>
+   <tr><td>ممشى الشوقية MK020</td><td class="mono">777,493</td><td class="mono">25,080</td><td>عمق الطلب في الأحياء الغربية-الجنوبية</td></tr>
+  </table>
+  <div class="note"><b>القراءة الأهم في الملف:</b> ثلاث محطات درب تعمل فعلاً في جوار الموقع بمدى 22–26 ألف لتر/يوم لكلٍّ منها — أي أن النطاق مثبت الغزارة ويتّسع لإضافة جديدة، خصوصاً أن شارع الستين نفسه (بفنادقه وربطه المباشر بين طريق جدة والرصيفة) غير مخدوم من درب بعد. الانتباه الوحيد: هندسة العرض بحيث تضيف المحطة الجديدة حصة من المنافسين لا من الشقيقات (تفصيلها في المخاطر).</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">80K–120K</td><td>أعلى كثافة في السلسلة كلها — أحياء غرب مكة المكتظة</td></tr>
+   <tr><td>سكان نطاق 3 دقائق (~1.5كم)</td><td class="mono">35K–55K</td><td>النزهة/الرصيفة وأطراف الزاهر</td></tr>
+   <tr><td>مركبات + أسطول زوّار نشط</td><td class="mono">20K–30K</td><td>سيارات خاصة + تكاسي/تطبيقات + فانات نقل معتمرين</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">7K–12K</td><td>سكنية + نقل زوّار + عبور طريق جدة</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>20–30%</b></td><td>الهدف العملي: 450–650 تعبئة/يوم (~20–29K لتر) — مستوى الجوار المحقق</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير بعد التشغيل — لكن الهدف العملي (20–29 ألف لتر/يوم خلال 6–12 شهراً) هو حرفياً المستوى الذي تعمل عنده الرصيفة وبطحاء قريش اليوم. لا نفترض شيئاً غير مثبت في الجوار المباشر.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطات منافسة على الستين/الرصيفة (وطنية ومحلية)</td><td class="mono">0.5–2كم*</td><td>على المحور</td><td>6.0 <span class="tag a">متوسط–عالٍ</span></td><td>نطاق غزير يستقطب الجميع — الفصل الاتجاهي يحدد المواجهة المباشرة</td></tr>
+  <tr><td><b>شقيقات درب (الرصيفة/مسار/بطحاء قريش)</b></td><td class="mono">1.5–4كم*</td><td>محيط</td><td>3.0 <span class="tag g">تكامل مُدار</span></td><td>خطر تداخل داخلي محدود — يُدار بعرض موحّد وولاء مشترك لا بتنافس أسعار</td></tr>
+  <tr><td>محطات طريق جدة السريع</td><td class="mono">2–5كم*</td><td>غرب</td><td>4.5 <span class="tag a">متوسط</span></td><td>تلتقط العابرين قبل دخولهم الشبكة الداخلية</td></tr>
+  <tr><td><b>درب / الستين (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>يسدّ فجوة درب الوحيدة على محور الستين نفسه</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> نطاقات تقديرية — <b>المسح الميداني إلزامي</b>، وأولويته المزدوجة هنا: تثبيت المنافسين المباشرين على الستين، وقياس التداخل المحتمل مع الشقيقات الثلاث (يُضبط بحدود جغرافية لعروض الواتساب حتى لا نموّل انتقال عملائنا بين محطاتنا).</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/الستين</th><th>منافسو النطاق</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag r">عالية — حافلات وفانات نقل المعتمرين على الشارع نفسه</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>~</td><td><span class="tag r">عالية — أساطيل النقل تغسل يومياً (واجهة نظيفة = سمعة الحملة)</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag r">عالية — سلة الزائر (ماء/وجبات خفيفة/شواحن) تدور أسرع من أي متجر حيّي</span></td></tr>
+  <tr><td>مأكولات/قهوة</td><td>~</td><td>~</td><td><span class="tag a">متوسط — منافسة مطاعم الشارع كثيفة؛ الفرصة قهوة سريعة للسائقين</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>✓</td><td><span class="tag r">عالية جداً — مكة لا تنام؛ الفجر ذروة حقيقية هنا</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag a">متوسط — الأولوية لسرعة المضخات ودورة المسار</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. خصوصية مكة: <b>السرعة هي الخدمة الملك</b> — سائق الفان يعبّي بين رحلتي معتمرين، والتاكسي بين مشوارين؛ مسار سريع + دفع رقمي فوري + متجر زائر قوي أهم من أي كماليات.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">06</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>محور مثبت الغزارة — الجوار المباشر يبيع 22–26 ألف لتر/يوم لكل محطة</li>
+   <li>طلب مزدوج فريد: كثافة سكنية عالية + ملايين الزوّار سنوياً</li>
+   <li>أقوى حضور لعلامة درب بالمملكة (20+ محطة) — وعي جاهز لا يُبنى من الصفر</li>
+   <li>حركة 24 ساعة بذروات متعددة (فجر/مغرب/ليل) توزّع الضغط والإيراد</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>منافسة كثيفة على المحور + خطر تداخل مع الشقيقات إن لم يُدَر العرض جغرافياً</li>
+   <li>ازدحام الستين قد يجعل الدخول/الخروج عنق الزجاجة — هندسة المداخل حاسمة</li>
+   <li>شريحة حسّاسة للسعر — الهامش يُبنى بالمتجر والخدمات لا بالوقود وحده</li>
+   <li>تشغيل مكثف (24 ساعة + ذروات حادة) يتطلب طاقماً أكبر من البداية</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة افتتاح على «نموذج مكة» المجرَّب داخلياً — والموسم الجديد للعمرة ينطلق الآن</li>
+   <li>فنادق الستين قناة توزيع فريدة: قسائم لضيوفها وسائقيها</li>
+   <li>عقود B2B مع مكاتب نقل المعتمرين والتكاسي — إيراد ثابت غير موسمي</li>
+   <li>كرت ولاء موحّد عبر عنقود مكة العشرين — شبكة يعجز أي منافس عن مجاراتها</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>ردّ منافسي المحور بحرب عروض في نطاق حسّاس للسعر</li>
+   <li>تنظيمات مرورية/مشاريع تطوير المنطقة المركزية قد تغيّر مسارات الحركة</li>
+   <li>تقلب الذروات الموسمية يتطلب تخطيط مخزون ووقوداً دقيقاً</li>
+   <li>أي تعثر تشغيلي في الذروة (طوابير طويلة) يضرب السمعة في أكثف سوق</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · حملة الافتتاح: السيناريو المالي + برنامج الأفكار</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: نفّذ الافتتاح الآن مع انطلاقة موسم العمرة الجديد — المعادلة مجرَّبة والجوار مثبت</h3>
+  <p>هذا أقل افتتاح مخاطرةً في السلسلة من حيث المعرفة بالسوق: «نموذج مكة» للحملات مطبَّق سابقاً في محطاتنا، والجوار المباشر يثبت المدى (22–26 ألف لتر/يوم)، والتوقيت ذهبي — موسم العمرة الجديد ينطلق بعد الحج وذروة رمضان القادمة (يناير–فبراير 2027) تمنح الحملة أفقاً تصاعدياً. العرض: <b>50 ريالاً لأول 100 سيارة</b> بتكلفة كلية <b>~11 ألف ريال</b> واسترداد متوقع <b>~6 أيام</b>. الشرطان الحاسمان: <b>هندسة مرورية محكمة</b> ليوم الافتتاح على شارع مزدحم أصلاً، و<b>حدود جغرافية للعروض</b> تمنع تحويل عملاء الرصيفة/بطحاء قريش إلى الموقع الجديد بدل انتزاع حصة المنافسين.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة الأساسية</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (أساسي)</div><div class="v">~15,000</div><div class="u">لتر/يوم · مقابل ~8K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.32M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~6 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض الرئيسي</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR بمواعيد + خطة مرورية منسقة (شارع مزدحم)</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950) — فريق مكة قائم يخفضها عملياً</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير الشبكة (إجمالي ريالات ÷ لترات)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>معيار الشبكة — الفانات والتكاسي ترفعه عملياً</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">8K→11K→14K لتر/يوم</td><td>متحفظ عمداً: يبدأ عند ثلث مستوى الجوار المحقق ويتدرج نحو نصفه</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ. الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. سقف الواقعية مريح جداً: الجوار المباشر يعمل عند 22–26 ألف لتر/يوم، والعمرة عند 101 ألف — جدولنا كله في النصف الأدنى من المثبت.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>8,000</td><td>11,000</td><td>14,000</td><td class="mono">990,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>12,000</td><td>14,000</td><td>16,000</td><td class="mono">1,260,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>15,000</td><td>18,000</td><td>21,000</td><td class="mono">1,620,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>18,000</td><td>23,000</td><td>28,000</td><td class="mono">2,070,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">270,000</td><td class="mono">567,000</td><td class="mono">40,500</td><td class="mono">67,500</td><td class="mono">94,500</td><td>5.1×</td><td>~11 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">630,000</td><td class="mono">1,323,000</td><td class="mono">94,500</td><td class="mono">157,500</td><td class="mono">220,500</td><td>13.3×</td><td>~6 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">1,080,000</td><td class="mono">2,268,000</td><td class="mono">162,000</td><td class="mono">270,000</td><td class="mono">378,000</td><td>23.5×</td><td>~4 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. حتى المتفائل (28 ألفاً بالشهر الثالث) يوازي فقط مستوى بطحاء قريش الجارة اليوم — وذروة رمضان 2027 غير مسعّرة في الجدول أصلاً (رافعة مجانية قادمة).</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">09</span><h2>برنامج أسبوع الافتتاح — 10 أفكار ومقترحات جاهزة للتنفيذ</h2></div>
+ <div class="ideas">
+  <div class="idea"><span class="in">1</span><div><span class="when">قبل الافتتاح بأسبوع</span><h5>ستارة التشويق على أزحم واجهة</h5><p>تغليف الواجهة بستارة «درب وصلت للستين» + عدّاد تنازلي مضيء — عشرات آلاف العابرين يومياً يشاهدونها مجاناً، والحسابات المكية المحلية ستلتقطها تلقائياً.</p></div></div>
+  <div class="idea"><span class="in">2</span><div><span class="when">قبل الافتتاح 48 ساعة</span><h5>تسجيل مسبق بقسائم QR بمواعيد</h5><p>إعلانات جيو-مستهدفة (نطاق 5 كم: النزهة/الرصيفة/الزاهر): «سجّل رقمك — أول 100 سيارة تعبّي بـ50 ريالاً مجاناً». شرائح مواعيد ساعية إلزامية — الستين لا يحتمل طابوراً عشوائياً.</p></div></div>
+  <div class="idea"><span class="in">3</span><div><span class="when">يوم الافتتاح — الخميس بعد العشاء</span><h5>الصاعق: أول 100 سيارة × 50 ريالاً</h5><p>مسار قسائم منفصل + منظمو حركة بالتنسيق مع المرور + شاشة عدّاد مباشر + بث حي. التوقيت الليلي يوافق إيقاع مكة ويخفف حرارة يوليو.</p></div></div>
+  <div class="idea"><span class="in">4</span><div><span class="when">يوم الافتتاح</span><h5>قسيمة «الحظ الثاني»</h5><p>لما بعد المئة: خصم فوري + ماء بارد + قسيمة عودة بخصم على التعبئة القادمة — الطابور الخائب يتحول لزيارات الأسبوع التالي.</p></div></div>
+  <div class="idea"><span class="in">5</span><div><span class="when">الجمعة–السبت</span><h5>«باقة الزائر» مع كل تعبئة 100+</h5><p>ماء بارد + مناديل + خريطة مواقف المركزية — هدية عملية لضيوف فنادق الستين وسائقيهم، تصنع انطباع «محطة الزوّار» من اليوم الأول.</p></div></div>
+  <div class="idea"><span class="in">6</span><div><span class="when">من الأسبوع الأول</span><h5>شراكة فنادق الستين</h5><p>قسائم خصم تُوزَّع في استقبال الفنادق لضيوفها وسائقي حملاتهم — قناة توزيع لا يملكها أي منافس على الشارع، وتكلفتها طباعة ورق فقط.</p></div></div>
+  <div class="idea"><span class="in">7</span><div><span class="when">الأحد–الأربعاء</span><h5>أيام الأساطيل: التكاسي والفانات</h5><p>كرت «سائق الستين»: خصم ثابت + ماء مجاني + أولوية مسار لسائقي التطبيقات وفانات المعتمرين — 20 سائقاً منتظماً = مئات التعبئات شهرياً، وديزل الحافلات الصغيرة فرصة B2B موازية.</p></div></div>
+  <div class="idea"><span class="in">8</span><div><span class="when">طوال الأسبوع</span><h5>عرض الفجر</h5><p>قهوة مجانية مع أي تعبئة 4–7 فجراً — ذروة مكية حقيقية لا يستهدفها أحد، وتبني عادة يومية لجمهور الصلاة والمشاوير المبكرة.</p></div></div>
+  <div class="idea"><span class="in">9</span><div><span class="when">طوال الأسبوع</span><h5>مؤثر/حساب مكي + بث مباشر</h5><p>استنساخ نموذج تعاقد «سناب برزان» (حائل) بحساب تغطيات مكي — الإعلان المسبق + حضور الافتتاح، ويُقاس بنفس لوحة KPIs المعتمدة.</p></div></div>
+  <div class="idea"><span class="in">10</span><div><span class="when">من اليوم الأول — دائم</span><h5>الولاء العنقودي: كرت واحد لعشرين محطة</h5><p>رقم الجوال شرط كل عرض → واتساب أسبوعي، وكرت ختم صالح في كل محطات درب مكة — ميزة بنيوية يعجز أي منافس منفرد عن مجاراتها، مع حدود جغرافية للعروض تحمي الشقيقات من التداخل.</p></div></div>
+ </div>
+ <div class="note"><b>ترتيب الأولوية إن ضاقت الميزانية:</b> (3) الصاعق + (2) التسجيل المسبق + (10) الولاء العنقودي = الحد الأدنى (~11 ألف ريال). ثم (6) شراكة الفنادق و(7) الأساطيل — وهما شبه مجانيتين وأثرهما الأطول عمراً. (5) و(8) تشغيليات رخيصة، و(9) المؤثر طبقة أخيرة حسب الأجر.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">10</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>زحام يوم الافتتاح يعطّل شارعاً حرجاً مرورياً</td><td><span class="tag r">الأعلى — قسائم بمواعيد + تنسيق مروري مسبق إلزامي</span></td></tr>
+   <tr><td>تداخل داخلي: العرض يسحب عملاء الرصيفة/بطحاء قريش</td><td><span class="tag a">متوسط — حدود جغرافية للإعلانات وقياس أثر الشقيقات أسبوعياً</span></td></tr>
+   <tr><td>ردّ منافسي المحور بحرب عروض</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>تلاشٍ بعد العرض في شريحة حسّاسة للسعر</td><td><span class="tag a">متوسط — الولاء العنقودي هو الجواب</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً لكل عرض</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>متابعة واتساب عبر قاعدة مكة الأضخم لدينا</td><td><span class="tag g">حاسم — ميزة عنقود قائمة</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم عنقودي من اليوم الأول</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود B2B نقل معتمرين/تكاسي + شراكات فنادق</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني + خطة مرورية معتمدة + قياس تداخل الشقيقات</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ حملة الافتتاح الآن.</b> بتكلفة ~11 ألف ريال، يعطي السيناريو الأساسي إيراداً إضافياً ~1.32 مليون ريال خلال 3 أشهر واسترداداً خلال ~6 أيام — وكل أرقام الجدول في النصف الأدنى من مستويات مثبتة في الجوار المباشر (الرصيفة 24.7K، بطحاء قريش 26.1K، العمرة 101K لتر/يوم).
+  <br><br><b>العبرة المكية:</b> ميزة هذا الافتتاح ليست العرض بل <b>العنقود</b> — عشرون محطة تسبقه بالوعي والقنوات والخبرة، وموسم العمرة الجديد يبدأ الآن ورمضان 2027 في الأفق. المطلوب من الحملة شيء واحد: تعريف محور الستين بأن درب وصلت إليه — والعنقود يتكفل بالباقي. الخطران الوحيدان تشغيليان لا تسويقيان: مرور يوم الافتتاح، وتداخل الشقيقات — وكلاهما مضبوط بالتصميم أعلاه.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (منطقة مكة 8,021,463 · سعوديون 51.8% · مدينة مكة ~2.43 مليون) · مصادر محلية مكية (شارع الستين = مخطط فيصل بن بدر/شارع المدارس — يربط طريق جدة بحي الرصيفة ويمر بالنزهة، ~2 كم من الحرم، فنادق معتمرين على امتداده) · تقرير المبيعات اليومية درب حتى 31/05/2026 (العمرة MK07: 3,127,972 لتراً مايو ≈ 100.9 ألف لتر/يوم · بطحاء قريش MK022: 810,080 · الرصيفة MK016: 764,401 · الرصيفة مسار MK018: 690,081 · ممشى الشوقية MK020: 777,493 · سعر اللتر المدمج وميزانيات محايل/القسوم) · «نموذج مكة» لحملات الإطلاق (ملفات درب الداخلية).
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي؛ الهامش الصافي افتراضي. جدول المنافسين نطاقات تقديرية — <b>المسح الميداني والخطة المرورية المعتمدة شرطا إطلاق</b>، ويُضاف قياس أسبوعي لمبيعات الشقيقات الثلاث لرصد أي تداخل.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + خطة حملة الافتتاح — مكة شارع الستين (النزهة/الرصيفة)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[8000,11000,14000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[12000,14000,16000],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[15000,18000,21000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[18000,23000,28000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
