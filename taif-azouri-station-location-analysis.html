@@ -1,0 +1,332 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · الطائف الأزوري — تحليل الموقع + حملة الافتتاح</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.bar{height:8px;border-radius:4px;background:var(--panel2);overflow:hidden;margin-top:6px}
+.bar span{display:block;height:100%}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.idea{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.idea .in{background:var(--amber);color:#0a0f16;font-weight:800;border-radius:8px;min-width:34px;height:34px;display:grid;place-items:center;font-size:15px}
+.idea h5{font-size:13.5px;margin-bottom:2px}
+.idea p{font-size:12.5px;color:var(--muted)}
+.idea .when{font-size:10.5px;color:var(--amber);font-weight:700}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot,.ideas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Launch Playbook · إدارة التسويق درب</div>
+   <h1>محطة الطائف الأزوري — تحليل الموقع + خطة حملة الافتتاح<span class="sub">حي الأزوري · نطاق الحوية (شمال الطائف) · محور المطار/طريق الرياض</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=21.332027,40.436602" target="_blank">21.332027, 40.436602</a><br>
+   <span style="color:var(--sub)">درب / الطائف — الأزوري</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>توسّع شمالي حيوي داخل ثاني أقوى عناقيد درب — وموسم الصيف الطائفي في ذروته الآن.</b>
+  الموقع في <b>حي الأزوري</b> ضمن نطاق <b>الحوية — شمال الطائف</b>: التوسّع الأسرع نمواً بالمحافظة (أكثر من 15 حياً سكنياً على ~80 كم²) على المحور الرابط بين وسط الطائف والمطار وطريق الرياض/السيل — وبقربه موقع <b>سوق عكاظ</b> ومهرجاناته الصيفية.
+  المعادلة تجمع ثلاثة عوامل مثبتة: <b>عنقود طائفي من 9 شقيقات</b> يتراوح أداؤها الفعلي بين 10 و76 ألف لتر/يوم (عاصفة الصحراء وحدها 76.4 ألفاً)، <b>موسمية صيفية في ذروتها الآن</b> (الطائف عاصمة المصايف — يوليو وأغسطس القمة، والحركة تتضاعف بالزوّار)، و<b>حي ناشئ</b> يقلّ فيه التشبّع عن أحياء الوسط. حملة الافتتاح داخل الموجة الصيفية تشتري وعياً بنصف تكلفته خارجها.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان محافظة الطائف</div><div class="v">913K</div><div class="u">تعداد 2022 · سعوديون 72.3% — ثالث محافظات المملكة</div></div>
+  <div class="kpi"><div class="l">الموسم</div><div class="v" style="color:var(--green)">الذروة الآن</div><div class="u">يوليو–أغسطس قمة المصيف + مهرجانات عكاظ قريباً</div></div>
+  <div class="kpi"><div class="l">عنقود درب في الطائف</div><div class="v">9 محطات</div><div class="u">ثاني أقوى حضور للعلامة بعد مكة</div></div>
+  <div class="kpi"><div class="l">سقف العنقود المحقق</div><div class="v">76K</div><div class="u">لتر/يوم — عاصفة الصحراء (مايو 2026)</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=40.380,21.300,40.500,21.365&marker=21.332027,40.436602&layer=mapnik"></iframe>
+ <div class="note">الموقع في <b>حي الأزوري</b> على المحور الشمالي للطائف — بين وسط المدينة جنوباً ونطاق الحوية/المطار وطريق الرياض (السيل) شمالاً. النطاق يجمع: سكناً عائلياً متنامياً (أحياء الحوية الخمسة عشر)، وحركة عبور إقليمية (طريق الرياض ↔ الطائف ↔ مكة)، وموجات المصطافين صيفاً نحو المصايف والفعاليات (سوق عكاظ في السيل). <b>(يُثبَّت المشهد الدقيق للجوار والمداخل بالمسح الميداني)</b></div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الملف الديموغرافي للنطاق</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المحافظة</h4><div class="big">913,374</div><small>تعداد 2022 — سعوديون 72.3% (660,760) · قاعدة عائلية مستقرة</small></div>
+  <div class="card"><h4>الطبقة الموسمية</h4><div class="big" style="font-size:16px">مصطافو الصيف</div><small>الطائف وجهة المصايف الأولى — الحركة تقفز بالزوّار يونيو→سبتمبر</small></div>
+  <div class="card"><h4>طابع النطاق</h4><div class="big" style="font-size:15px">توسّع عائلي ناشئ</div><small>الحوية: من ضاحية إلى «شمال الطائف» — مرافق حكومية وسكن جديد</small></div>
+  <div class="card"><h4>قدرة الإنفاق</h4><div class="big" style="font-size:16px">متوسطة</div><small>عائلات شابة حسّاسة للسعر — تستجيب بقوة للعروض (نمط الشبكة)</small></div>
+  <div class="card"><h4>نمط المرور</h4><div class="big" style="font-size:16px">حيّي + عبور</div><small>تنقّل يومي للوسط + محور المطار/الرياض + موجات نهاية الأسبوع للمصايف</small></div>
+  <div class="card"><h4>الموسمية</h4><div class="big" style="font-size:16px">صيفية حادة</div><small>الذروة الآن — وسوق عكاظ (أغسطس) يضيف موجة فعاليات في نطاقنا تحديداً</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>عنقود درب في الطائف — خط المعايرة الفعلي (مايو 2026)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المحطة الشقيقة</th><th>لترات مايو</th><th>لتر/يوم</th><th>الدلالة للموقع الجديد</th></tr>
+   <tr class="b"><td>عاصفة الصحراء MK004</td><td class="mono">2,369,579</td><td class="mono">76,438</td><td><b>سقف الطائف — يثبت غزارة محاور العبور الطائفية</b></td></tr>
+   <tr><td>الحليس MK046</td><td class="mono">1,668,867</td><td class="mono">53,834</td><td>قوة الأطراف النامية — ليس الوسط وحده من يبيع</td></tr>
+   <tr><td>الشيباني MK005</td><td class="mono">1,428,971</td><td class="mono">46,096</td><td>مستوى محقق لمحور حضري رئيسي</td></tr>
+   <tr><td>جنوب الطائف MK006 · احلى مساء MK028</td><td class="mono">1.17M · 1.12M</td><td class="mono">36–38K</td><td>مدى المواقع الحيّية القوية</td></tr>
+   <tr><td>السواط MK063 · الجمعية MK035</td><td class="mono">919K · 820K</td><td class="mono">26–30K</td><td>المدى الواقعي لموقع حيّي متوسط — <b>هدفنا العملي</b></td></tr>
+   <tr><td>الملك خالد MK093 · البيعة MK099</td><td class="mono">511K · 307K</td><td class="mono">10–16K</td><td>أرضية الطلب للمواقع الأصغر</td></tr>
+  </table>
+  <div class="note"><b>القراءة:</b> تسع شقيقات ترسم مدى الطائف المحقق (10–76 ألف لتر/يوم) وتؤكد أن الأطراف النامية (الحليس 54 ألفاً) قد تتفوق على الوسط. موقع الأزوري (حيّي ناشئ على محور عبور) يستهدف منطقياً مدى السواط/الجمعية (26–30 ألفاً) خلال سنة — والنموذج المالي أدناه يبدأ من ثلث هذا الهدف تحفظاً.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">30K–50K</td><td>الأزوري وجيرانه من أحياء الحوية — كثافة تتزايد سنوياً</td></tr>
+   <tr><td>سكان نطاق 3 دقائق (~1.5كم)</td><td class="mono">12K–20K</td><td>النطاق الأساسي الناشئ</td></tr>
+   <tr><td>مركبات نطاق 3 دقائق</td><td class="mono">7K–12K</td><td>اعتماد كامل على السيارة + سيارات المصطافين صيفاً</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">3K–5K</td><td>سكنية + عبور المحور + موجة الموسم (الذروة الآن)</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>30–40%</b></td><td>نطاق أقل تشبّعاً من الوسط — الهدف العملي 400–600 تعبئة/يوم (~18–27K لتر)</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير بعد التشغيل. الهدف العملي (18–27 ألف لتر/يوم خلال 6–12 شهراً) هو حرفياً مدى السواط/الجمعية المحقق في العنقود نفسه — لا نفترض ما لم تثبته شقيقة طائفية.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطات محور الحوية/طريق المطار (وطنية ومحلية)</td><td class="mono">1–3كم*</td><td>شمال/جنوب المحور</td><td>5.5 <span class="tag a">متوسط</span></td><td>المحور مخدوم لكن دون تشبّع أحياء الوسط</td></tr>
+  <tr><td>محطات طريق الرياض/السيل</td><td class="mono">3–8كم*</td><td>شمال شرق</td><td>4.5 <span class="tag a">متوسط</span></td><td>تلتقط العبور الإقليمي قبل دخول المدينة</td></tr>
+  <tr><td>محطات الوسط (بينها شقيقات درب)</td><td class="mono">5–10كم*</td><td>جنوب</td><td>3.5 <span class="tag g">منخفض</span></td><td>خارج نطاق الجذب المباشر — تكامل عنقودي</td></tr>
+  <tr><td><b>درب / الأزوري (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>يسدّ فجوة درب في الشمال الناشئ — العنقود كله جنوباً</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> نطاقات تقديرية — <b>المسح الميداني قبل الإطلاق إلزامي</b> لتثبيت المنافس المباشر واتجاه خطه. نقطة استراتيجية: شقيقات الطائف التسع كلها في الوسط والجنوب تقريباً — <b>الأزوري يفتح للعلامة جبهة الشمال</b> حيث يتجه النمو السكاني.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/الأزوري</th><th>منافسو النطاق</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag a">متوسط — مقاولات التوسّع العمراني بالحوية</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>~</td><td><span class="tag a">متوسط</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag r">عالية — سلة المصطاف صيفاً (ماء/ثلج/تموين رحلات)</span></td></tr>
+  <tr><td>مأكولات/قهوة</td><td>~</td><td>~</td><td><span class="tag r">عالية (فرصة بيضاء في الشمال الناشئ)</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>~</td><td><span class="tag r">عالية — طقس الطائف المعتدل يمدّ السهرات للفجر صيفاً</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag r">عالية (غير منتشر بالنطاق)</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. طقس الطائف هو المنتج الحقيقي صيفاً — الحركة المسائية تمتد للفجر، و<b>متجر رحلات قوي + قهوة</b> يحوّلان محطة الحي إلى محطة انطلاق المصطافين نحو الهدا/الشفا وفعاليات عكاظ.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">06</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>حي ناشئ في أسرع محاور الطائف نمواً (الحوية — 15+ حياً)</li>
+   <li>عنقود من 9 شقيقات: وعي علامة قائم + فريق ولوجستيات جاهزة</li>
+   <li>موسمية صيفية في ذروتها الآن + سوق عكاظ في النطاق (أغسطس)</li>
+   <li>محور عبور المطار/طريق الرياض يضيف طلباً فوق السكني</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>كثافة النطاق الحالية أقل من الوسط — الطلب يكتمل تدريجياً</li>
+   <li>الخدمات المميِّزة (قهوة/درايف ثرو/مغسلة) غير مفعّلة بعد</li>
+   <li>انحسار الموسم بعد سبتمبر يكشف خط الأساس الحقيقي</li>
+   <li>بُعد نسبي عن مراكز الجذب التجارية المكتملة</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة افتتاح داخل ذروة الموسم — وعي بنصف التكلفة</li>
+   <li>هيمنة مبكرة على شمال الطائف قبل وصول المنافسين الكبار</li>
+   <li>موجة عكاظ والفعاليات الصيفية — عروض «طريق المهرجان»</li>
+   <li>الولاء العنقودي: كرت واحد صالح في 10 محطات طائفية</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>العلامات الوطنية قد تسابقنا للشمال الناشئ نفسه</li>
+   <li>شريحة حسّاسة للسعر تتنقل خلف العروض بلا آلية احتفاظ</li>
+   <li>تلاشي ما بعد الموسم إن لم تُثبَّت العادة قبل سبتمبر</li>
+   <li>اكتمال بنية الأحياء الجديدة قد يتأخر عن التوقعات</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · حملة الافتتاح: السيناريو المالي + التصور التنفيذي</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: نفّذ فوراً داخل ذروة الموسم — كل أسبوع تأخير يحرق جزءاً من الموجة</h3>
+  <p>الطائف الآن في قمة موسمها (يوليو–أغسطس) وسوق عكاظ على الأبواب — هذه أثمن نافذة إطلاق في السنة كلها. العرض: <b>50 ريالاً لأول 100 سيارة</b> بتكلفة كلية <b>~11 ألف ريال</b> واسترداد متوقع <b>~6 أيام</b> (أساسي). المعادلة مجرَّبة (محايل/القسوم/نموذج مكة) والعنقود الطائفي يوفر الفريق والقنوات جاهزة. <b>الهدف المزدوج:</b> التقاط موجة المصطافين الجارية الآن، وتثبيت عادة سكان الحوية قبل انحسار الموسم في سبتمبر — فيصبح الشتاء اختبار الاحتفاظ لا اختبار الوعي.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة الأساسية</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (أساسي)</div><div class="v">~14,000</div><div class="u">لتر/يوم · مقابل ~7K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.45M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~6 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض الرئيسي</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR بمواعيد + مسار مخصص</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950) — فريق الطائف القائم يخفضها</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير الشبكة (إجمالي ريالات ÷ لترات)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>معيار الشبكة — رحلات المصايف ترفعه صيفاً</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">7K→9K→11K لتر/يوم</td><td>ناشئ + دعم الموسم — يبدأ دون أرضية البيعة قرباً من واقع حي جديد</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ. الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. سقف الواقعية: الهدف النهائي (26–30 ألفاً) هو مستوى السواط/الجمعية اليوم، وجدول الحملة كله دونه.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>7,000</td><td>9,000</td><td>11,000</td><td class="mono">810,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>11,000</td><td>13,000</td><td>14,000</td><td class="mono">1,140,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>14,000</td><td>17,000</td><td>19,000</td><td class="mono">1,500,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>17,000</td><td>21,000</td><td>25,000</td><td class="mono">1,890,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">330,000</td><td class="mono">693,000</td><td class="mono">49,500</td><td class="mono">82,500</td><td class="mono">115,500</td><td>6.5×</td><td>~11 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">690,000</td><td class="mono">1,449,000</td><td class="mono">103,500</td><td class="mono">172,500</td><td class="mono">241,500</td><td>14.7×</td><td>~6 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">1,080,000</td><td class="mono">2,268,000</td><td class="mono">162,000</td><td class="mono">270,000</td><td class="mono">378,000</td><td>23.5×</td><td>~4 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. حتى المتفائل (25 ألفاً بالشهر الثالث) يبقى دون مستوى الجمعية/السواط المحقق — والذروة الصيفية الجارية رافعة غير مسعّرة تدفع النتائج نحو الأعلى.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">09</span><h2>التصور التنفيذي — يوم الحملة ساعة بساعة + 10 أفكار للبرنامج</h2></div>
+ <div class="card" style="margin-bottom:14px">
+  <h4>⏱️ خطة تنفيذ يوم الافتتاح (الخميس)</h4>
+  <table>
+   <tr><th>الوقت</th><th>النشاط</th><th>المسؤول</th></tr>
+   <tr><td class="mono">16:00–18:00</td><td>تجهيز: فحص المضخات والأنظمة، تركيب اللافتات والشاشة، بروفة مسار القسائم، وصول منظمي الحركة</td><td>التشغيل</td></tr>
+   <tr><td class="mono">18:00–19:00</td><td>رسالة واتساب/SMS تذكيرية للمسجّلين بمواعيد شرائحهم + انطلاق العد التنازلي على الحسابات</td><td>التسويق</td></tr>
+   <tr class="b"><td class="mono">19:30</td><td><b>الافتتاح: أول سيارة تعبّي مجاناً — بث مباشر + عدّاد الشاشة يبدأ</b></td><td>الجميع</td></tr>
+   <tr><td class="mono">19:30–23:30</td><td>صرف المئة على 4 شرائح (25 سيارة/ساعة) — مسار قسائم منفصل، والتقاط جوال كل مستفيد، وعرض «الحظ الثاني» لغيرهم</td><td>التشغيل + التسويق</td></tr>
+   <tr><td class="mono">23:30–00:30</td><td>سحب جائزة الليلة الكبرى (تعبئة شهر مجانية بالقرعة بين الحضور) + إعلان عروض الجمعة</td><td>التسويق</td></tr>
+   <tr><td class="mono">اليوم التالي 10:00</td><td>مراجعة الأرقام: لترات اليوم، أرقام ملتقطة، تكلفة فعلية — وضبط بقية الأسبوع عليها</td><td>إدارة التسويق</td></tr>
+  </table>
+ </div>
+ <div class="ideas">
+  <div class="idea"><span class="in">1</span><div><span class="when">قبل الافتتاح بأسبوع</span><h5>ستارة التشويق على المحور</h5><p>«درب وصلت لشمال الطائف» + عدّاد تنازلي مضيء — عابرو محور الحوية/المطار يرونها يومياً مجاناً.</p></div></div>
+  <div class="idea"><span class="in">2</span><div><span class="when">قبل الافتتاح 48 ساعة</span><h5>تسجيل مسبق بقسائم QR بمواعيد</h5><p>إعلانات جيو-مستهدفة (نطاق 5 كم: الأزوري وأحياء الحوية): «سجّل — أول 100 سيارة تعبّي بـ50 ريالاً مجاناً» بشرائح ساعية.</p></div></div>
+  <div class="idea"><span class="in">3</span><div><span class="when">يوم الافتتاح</span><h5>الصاعق + شاشة العدّاد المباشر</h5><p>تفاصيل التنفيذ في الجدول أعلاه — المشهد الليلي بطقس الطائف هو الإعلان نفسه.</p></div></div>
+  <div class="idea"><span class="in">4</span><div><span class="when">يوم الافتتاح</span><h5>قسيمة «الحظ الثاني»</h5><p>لما بعد المئة: خصم فوري + قهوة + قسيمة عودة — الطابور الخائب يعود الأسبوع القادم بدل أن يغضب.</p></div></div>
+  <div class="idea"><span class="in">5</span><div><span class="when">الجمعة–السبت</span><h5>«عبّي وأنت طالع المصيف»</h5><p>باقة رحلة (ماء بارد + ثلج + كيس نفايات للسيارة) مع كل تعبئة 100+ ريال — تستهدف موجة الهدا/الشفا الأسبوعية مباشرة.</p></div></div>
+  <div class="idea"><span class="in">6</span><div><span class="when">أغسطس</span><h5>«محطة طريق عكاظ»</h5><p>ربط الهوية بموسم سوق عكاظ القريب: عروض أيام الفعاليات + لافتة اتجاهات للمهرجان — نلتقط تدفق الفعاليات الأقرب لنا من كل الشقيقات.</p></div></div>
+  <div class="idea"><span class="in">7</span><div><span class="when">الأحد–الأربعاء</span><h5>قهوة الفجر والمساء البارد</h5><p>قهوة مجانية مع التعبئة 5–8 صباحاً و9–11 مساءً — بناء عادتين يوميتين على إيقاع طقس الطائف.</p></div></div>
+  <div class="idea"><span class="in">8</span><div><span class="when">طوال الأسبوع</span><h5>عجلة الحظ عند 100+ ريال</h5><p>جوائز فورية (غسلة/قهوة/قسيمة 20 ريالاً/تعبئة كبرى يومية) — ترفع متوسط الفاتورة وتصنع محتوى.</p></div></div>
+  <div class="idea"><span class="in">9</span><div><span class="when">طوال الأسبوع</span><h5>مؤثر طائفي + بث مباشر</h5><p>استنساخ نموذج تعاقد «سناب برزان» (حائل) بحساب تغطيات طائفي، بنفس لوحة القياس وبوابة القرار.</p></div></div>
+  <div class="idea"><span class="in">10</span><div><span class="when">من اليوم الأول — دائم</span><h5>الولاء العنقودي الطائفي</h5><p>رقم الجوال شرط كل عرض → واتساب أسبوعي + كرت ختم صالح في محطات درب الطائف العشر — ميزة لا يجاريها منافس منفرد، وهي صمام الاحتفاظ بعد انحسار الموسم.</p></div></div>
+ </div>
+ <div class="note"><b>ترتيب الأولوية إن ضاقت الميزانية:</b> (3) الصاعق + (2) التسجيل + (10) الولاء = الحد الأدنى (~11 ألف ريال). ثم (5) باقة المصيف و(6) عكاظ — وهما جوهر التميّز الموسمي لهذا الموقع تحديداً. البقية تشغيليات رخيصة تُضاف تدريجياً.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">10</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>تلاشٍ بعد انحسار الموسم في سبتمبر</td><td><span class="tag a">متوسط — الولاء العنقودي + تثبيت عادة الحي قبلها</span></td></tr>
+   <tr><td>ردّ منافسي المحور بحرب عروض</td><td><span class="tag a">متوسط</span></td></tr>
+   <tr><td>زحام يوم الافتتاح</td><td><span class="tag g">منخفض — قسائم بشرائح ساعية + مسار منفصل</span></td></tr>
+   <tr><td>بطء اكتمال الأحياء الجديدة حول الموقع</td><td><span class="tag a">متوسط — يعوضه عبور المحور والموسم</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً لكل عرض</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>متابعة واتساب عبر قاعدة الطائف القائمة (9 شقيقات)</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم عنقودي</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود مقاولات/أساطيل التوسّع العمراني بالحوية</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني + فحص جاهزية قبل الإطلاق</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ الحملة فوراً.</b> بتكلفة ~11 ألف ريال، يعطي السيناريو الأساسي إيراداً إضافياً ~1.45 مليون ريال خلال 3 أشهر واسترداداً خلال ~6 أيام — وكل الأهداف دون مستويات محققة فعلاً في العنقود الطائفي نفسه (السواط والجمعية 26–30 ألف لتر/يوم).
+  <br><br><b>العبرة الطائفية:</b> هذا الموقع يشتري لدرب شيئين بثمن واحد — <b>موجة الصيف الجارية الآن</b> (مصطافون + عكاظ) و<b>جبهة الشمال الناشئة</b> التي يتجه إليها نمو المدينة قبل وصول المنافسين الكبار. الحملة تلتقط الأولى، والولاء العنقودي يثبّت الثانية — وشرط النجاح الوحيد هو السرعة: الإطلاق في يوليو–أغسطس لا بعدهما.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (محافظة الطائف 913,374 · سعوديون 72.3%) · مصادر محلية (الحوية: شمال الطائف الناشئ — 15+ حياً على ~80 كم² وتضم مرافق حكومية ومحور المطار/طريق الرياض؛ سوق عكاظ في نطاق السيل القريب) · تقرير المبيعات اليومية درب حتى 31/05/2026 (شقيقات الطائف التسع — مايو: عاصفة الصحراء 2,369,579 لتراً · الحليس 1,668,867 · الشيباني 1,428,971 · جنوب الطائف 1,166,250 · احلى مساء 1,123,996 · السواط 918,522 · الجمعية 819,747 · الملك خالد 510,660 · البيعة 306,610 · سعر اللتر المدمج وميزانيات محايل/القسوم كمرجع معايِر).
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي؛ الهامش الصافي افتراضي. جدول المنافسين وحدود الحي نطاقات تقديرية من مصادر مفتوحة — <b>المسح الميداني قبل الإطلاق إلزامي</b>.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + خطة حملة الافتتاح — الطائف حي الأزوري (الحوية/الشمال)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[7000,9000,11000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[11000,13000,14000],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[14000,17000,19000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[17000,21000,25000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
