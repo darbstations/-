@@ -42,7 +42,7 @@ header p{color:#b9b3aa;font-size:13px;margin-top:6px}
 .toolbar input:focus,.toolbar select:focus{border-color:var(--orange)}
 .toolbar input{width:230px}
 .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
-table{border-collapse:collapse;width:100%;min-width:900px;font-size:13.5px}
+table{border-collapse:collapse;width:100%;min-width:1150px;font-size:13.5px}
 thead th{background:#FBF9F5;border-bottom:2px solid var(--line2);padding:10px 12px;font-size:12.5px;color:var(--ink2);font-weight:600;text-align:right;white-space:nowrap;position:sticky;top:0;z-index:2}
 thead th .sub{display:block;font-size:10.5px;color:var(--ink3);font-weight:500}
 th.sortable{cursor:pointer;user-select:none}
@@ -58,6 +58,9 @@ td.st{min-width:190px}
 td.st b{font-weight:600;display:block}
 td.st .code{font-size:11px;color:var(--ink3);letter-spacing:.5px}
 .star{color:var(--orange);font-weight:700;margin-inline-start:3px;cursor:help}
+td.pos{color:var(--good);font-weight:600}
+td.neg{color:var(--bad);font-weight:600}
+td .vs{display:block;font-size:10px;color:var(--ink3);font-weight:400}
 tfoot td{background:#FBF9F5;border-top:2px solid var(--line2);padding:11px 12px;font-weight:700;white-space:nowrap}
 tfoot td.num{text-align:left;direction:ltr;font-variant-numeric:tabular-nums}
 .note{font-size:12px;color:var(--ink3);margin-top:12px;line-height:1.8}
@@ -94,234 +97,293 @@ footer{text-align:center;color:var(--ink3);font-size:12px;padding:10px 0 34px}
           <tr>
             <th>اسم المحطة</th>
             <th class="num sortable" data-key="m1">شهر 1<span class="sub">يناير</span></th><th class="num sortable" data-key="m2">شهر 2<span class="sub">فبراير</span></th><th class="num sortable" data-key="m3">شهر 3<span class="sub">مارس</span></th><th class="num sortable" data-key="m4">شهر 4<span class="sub">أبريل</span></th><th class="num sortable" data-key="m5">شهر 5<span class="sub">مايو</span></th><th class="num sortable" data-key="m6">شهر 6<span class="sub">يونيو</span></th>
+            <th class="num sortable" data-key="diff">الزيادة / النقصان<span class="sub">يونيو مقابل أول شهر كامل</span></th>
+            <th class="num sortable" data-key="pct">التغير ٪<span class="sub">25 زيادة · 25 نقصان</span></th>
           </tr>
         </thead>
         <tbody>
-<tr data-name="العمرة الجديدة MK007" data-region="مكة" data-total="49590690.27" data-m1="8881211.49" data-m2="8680077.83" data-m3="10212807.73" data-m4="7752203.43" data-m5="6723075.08" data-m6="7341314.71">
+<tr data-name="العمرة الجديدة MK007" data-region="مكة" data-total="49590690.27" data-diff="-1539897" data-pct="-17.34" data-m1="8881211.49" data-m2="8680077.83" data-m3="10212807.73" data-m4="7752203.43" data-m5="6723075.08" data-m6="7341314.71">
   <td class="st"><b>العمرة الجديدة</b><span class="code">MK007 · مكة</span></td>
   <td class="num">8,881,211</td><td class="num">8,680,078</td><td class="num">10,212,808</td><td class="num">7,752,203</td><td class="num">6,723,075</td><td class="num">7,341,315</td>
+  <td class="num neg">▼ -1,539,897<span class="vs">مقابل يناير</span></td><td class="num neg">-17.3٪</td>
 </tr>
-<tr data-name="طريق الليث - الفضيلة MK289" data-region="جدة" data-total="28047703.77" data-m1="3771325.64" data-m2="4110167.18" data-m3="3989475.14" data-m4="5133934.78" data-m5="5736967.9" data-m6="5305833.13">
+<tr data-name="طريق الليث - الفضيلة MK289" data-region="جدة" data-total="28047703.77" data-diff="1195666" data-pct="29.09" data-m1="3771325.64" data-m2="4110167.18" data-m3="3989475.14" data-m4="5133934.78" data-m5="5736967.9" data-m6="5305833.13">
   <td class="st"><b>طريق الليث - الفضيلة<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-01-06">*</span></b><span class="code">MK289 · جدة</span></td>
   <td class="num">3,771,326</td><td class="num">4,110,167</td><td class="num">3,989,475</td><td class="num">5,133,935</td><td class="num">5,736,968</td><td class="num">5,305,833</td>
+  <td class="num pos">▲ +1,195,666<span class="vs">مقابل فبراير</span></td><td class="num pos">+29.1٪</td>
 </tr>
-<tr data-name="العزيزية MK072" data-region="مكة" data-total="20528974.82" data-m1="3940038.3" data-m2="3616938.32" data-m3="3804162.87" data-m4="2864344.71" data-m5="3157910.49" data-m6="3145580.13">
+<tr data-name="العزيزية MK072" data-region="مكة" data-total="20528974.82" data-diff="-794458" data-pct="-20.16" data-m1="3940038.3" data-m2="3616938.32" data-m3="3804162.87" data-m4="2864344.71" data-m5="3157910.49" data-m6="3145580.13">
   <td class="st"><b>العزيزية</b><span class="code">MK072 · مكة</span></td>
   <td class="num">3,940,038</td><td class="num">3,616,938</td><td class="num">3,804,163</td><td class="num">2,864,345</td><td class="num">3,157,910</td><td class="num">3,145,580</td>
+  <td class="num neg">▼ -794,458<span class="vs">مقابل يناير</span></td><td class="num neg">-20.2٪</td>
 </tr>
-<tr data-name="العوالي MK003" data-region="مكة" data-total="20001381.67" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="7131882.52" data-m5="6726001.57" data-m6="6143497.58">
+<tr data-name="العوالي MK003" data-region="مكة" data-total="20001381.67" data-diff="-988385" data-pct="-13.86" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="7131882.52" data-m5="6726001.57" data-m6="6143497.58">
   <td class="st"><b>العوالي</b><span class="code">MK003 · مكة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">7,131,883</td><td class="num">6,726,002</td><td class="num">6,143,498</td>
+  <td class="num neg">▼ -988,385<span class="vs">مقابل أبريل</span></td><td class="num neg">-13.9٪</td>
 </tr>
-<tr data-name="القادسية MK047" data-region="مكة" data-total="18281399.31" data-m1="3298883.2" data-m2="3091288.99" data-m3="3129144.25" data-m4="2957060.49" data-m5="2973321.28" data-m6="2831701.1">
+<tr data-name="القادسية MK047" data-region="مكة" data-total="18281399.31" data-diff="-467182" data-pct="-14.16" data-m1="3298883.2" data-m2="3091288.99" data-m3="3129144.25" data-m4="2957060.49" data-m5="2973321.28" data-m6="2831701.1">
   <td class="st"><b>القادسية</b><span class="code">MK047 · مكة</span></td>
   <td class="num">3,298,883</td><td class="num">3,091,289</td><td class="num">3,129,144</td><td class="num">2,957,060</td><td class="num">2,973,321</td><td class="num">2,831,701</td>
+  <td class="num neg">▼ -467,182<span class="vs">مقابل يناير</span></td><td class="num neg">-14.2٪</td>
 </tr>
-<tr data-name="أحلى مساء MK028" data-region="الطائف" data-total="17320811.31" data-m1="3359937.62" data-m2="2615050.81" data-m3="3187377.52" data-m4="2887291.28" data-m5="2492687.9" data-m6="2778466.18">
+<tr data-name="أحلى مساء MK028" data-region="الطائف" data-total="17320811.31" data-diff="-581471" data-pct="-17.31" data-m1="3359937.62" data-m2="2615050.81" data-m3="3187377.52" data-m4="2887291.28" data-m5="2492687.9" data-m6="2778466.18">
   <td class="st"><b>أحلى مساء</b><span class="code">MK028 · الطائف</span></td>
   <td class="num">3,359,938</td><td class="num">2,615,051</td><td class="num">3,187,378</td><td class="num">2,887,291</td><td class="num">2,492,688</td><td class="num">2,778,466</td>
+  <td class="num neg">▼ -581,471<span class="vs">مقابل يناير</span></td><td class="num neg">-17.3٪</td>
 </tr>
-<tr data-name="الدائري الثالث - الذكرى MK029" data-region="مكة" data-total="16855372.14" data-m1="2735371.21" data-m2="2870536.41" data-m3="2919825.12" data-m4="2574229.94" data-m5="2926469.49" data-m6="2828939.97">
+<tr data-name="الدائري الثالث - الذكرى MK029" data-region="مكة" data-total="16855372.14" data-diff="93569" data-pct="3.42" data-m1="2735371.21" data-m2="2870536.41" data-m3="2919825.12" data-m4="2574229.94" data-m5="2926469.49" data-m6="2828939.97">
   <td class="st"><b>الدائري الثالث - الذكرى</b><span class="code">MK029 · مكة</span></td>
   <td class="num">2,735,371</td><td class="num">2,870,536</td><td class="num">2,919,825</td><td class="num">2,574,230</td><td class="num">2,926,469</td><td class="num">2,828,940</td>
+  <td class="num pos">▲ +93,569<span class="vs">مقابل يناير</span></td><td class="num pos">+3.4٪</td>
 </tr>
-<tr data-name="أبو وافي العمرة MK033" data-region="مكة" data-total="15775248.07" data-m1="2783668.16" data-m2="2916140.87" data-m3="3105610.98" data-m4="1939482.69" data-m5="2454894.99" data-m6="2575450.38">
+<tr data-name="أبو وافي العمرة MK033" data-region="مكة" data-total="15775248.07" data-diff="-208218" data-pct="-7.48" data-m1="2783668.16" data-m2="2916140.87" data-m3="3105610.98" data-m4="1939482.69" data-m5="2454894.99" data-m6="2575450.38">
   <td class="st"><b>أبو وافي العمرة</b><span class="code">MK033 · مكة</span></td>
   <td class="num">2,783,668</td><td class="num">2,916,141</td><td class="num">3,105,611</td><td class="num">1,939,483</td><td class="num">2,454,895</td><td class="num">2,575,450</td>
+  <td class="num neg">▼ -208,218<span class="vs">مقابل يناير</span></td><td class="num neg">-7.5٪</td>
 </tr>
-<tr data-name="الدائري الشمالي RY075" data-region="الرياض" data-total="15719284.96" data-m1="2695763.23" data-m2="2440539.11" data-m3="2129922.55" data-m4="2924539.94" data-m5="2803014.84" data-m6="2725505.29">
+<tr data-name="الدائري الشمالي RY075" data-region="الرياض" data-total="15719284.96" data-diff="29742" data-pct="1.10" data-m1="2695763.23" data-m2="2440539.11" data-m3="2129922.55" data-m4="2924539.94" data-m5="2803014.84" data-m6="2725505.29">
   <td class="st"><b>الدائري الشمالي</b><span class="code">RY075 · الرياض</span></td>
   <td class="num">2,695,763</td><td class="num">2,440,539</td><td class="num">2,129,923</td><td class="num">2,924,540</td><td class="num">2,803,015</td><td class="num">2,725,505</td>
+  <td class="num pos">▲ +29,742<span class="vs">مقابل يناير</span></td><td class="num pos">+1.1٪</td>
 </tr>
-<tr data-name="عاصفة الصحراء MK004" data-region="الطائف" data-total="15598002.0" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="5499037.73" data-m5="4971721.62" data-m6="5127242.65">
+<tr data-name="عاصفة الصحراء MK004" data-region="الطائف" data-total="15598002.0" data-diff="-371795" data-pct="-6.76" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="5499037.73" data-m5="4971721.62" data-m6="5127242.65">
   <td class="st"><b>عاصفة الصحراء</b><span class="code">MK004 · الطائف</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">5,499,038</td><td class="num">4,971,722</td><td class="num">5,127,243</td>
+  <td class="num neg">▼ -371,795<span class="vs">مقابل أبريل</span></td><td class="num neg">-6.8٪</td>
 </tr>
-<tr data-name="جبل النور MK001" data-region="مكة" data-total="14811455.96" data-m1="2081703.09" data-m2="2539803.34" data-m3="2857211.2" data-m4="2527778.05" data-m5="2326161.31" data-m6="2478798.97">
+<tr data-name="جبل النور MK001" data-region="مكة" data-total="14811455.96" data-diff="397096" data-pct="19.08" data-m1="2081703.09" data-m2="2539803.34" data-m3="2857211.2" data-m4="2527778.05" data-m5="2326161.31" data-m6="2478798.97">
   <td class="st"><b>جبل النور</b><span class="code">MK001 · مكة</span></td>
   <td class="num">2,081,703</td><td class="num">2,539,803</td><td class="num">2,857,211</td><td class="num">2,527,778</td><td class="num">2,326,161</td><td class="num">2,478,799</td>
+  <td class="num pos">▲ +397,096<span class="vs">مقابل يناير</span></td><td class="num pos">+19.1٪</td>
 </tr>
-<tr data-name="الرصيفة MK016" data-region="مكة" data-total="12392501.52" data-m1="2167911.25" data-m2="2092228.81" data-m3="2269929.61" data-m4="1900340.98" data-m5="1721558.13" data-m6="2240532.74">
+<tr data-name="الرصيفة MK016" data-region="مكة" data-total="12392501.52" data-diff="72621" data-pct="3.35" data-m1="2167911.25" data-m2="2092228.81" data-m3="2269929.61" data-m4="1900340.98" data-m5="1721558.13" data-m6="2240532.74">
   <td class="st"><b>الرصيفة</b><span class="code">MK016 · مكة</span></td>
   <td class="num">2,167,911</td><td class="num">2,092,229</td><td class="num">2,269,930</td><td class="num">1,900,341</td><td class="num">1,721,558</td><td class="num">2,240,533</td>
+  <td class="num pos">▲ +72,621<span class="vs">مقابل يناير</span></td><td class="num pos">+3.3٪</td>
 </tr>
-<tr data-name="عرفات الشوقية MK017" data-region="مكة" data-total="11129389.46" data-m1="1732798.26" data-m2="1605714.91" data-m3="2009034.8" data-m4="1797870.6" data-m5="1755572.34" data-m6="2228398.55">
+<tr data-name="عرفات الشوقية MK017" data-region="مكة" data-total="11129389.46" data-diff="495600" data-pct="28.60" data-m1="1732798.26" data-m2="1605714.91" data-m3="2009034.8" data-m4="1797870.6" data-m5="1755572.34" data-m6="2228398.55">
   <td class="st"><b>عرفات الشوقية</b><span class="code">MK017 · مكة</span></td>
   <td class="num">1,732,798</td><td class="num">1,605,715</td><td class="num">2,009,035</td><td class="num">1,797,871</td><td class="num">1,755,572</td><td class="num">2,228,399</td>
+  <td class="num pos">▲ +495,600<span class="vs">مقابل يناير</span></td><td class="num pos">+28.6٪</td>
 </tr>
-<tr data-name="ممشى الشوقية MK020" data-region="مكة" data-total="10708428.97" data-m1="1765368.75" data-m2="1608738.24" data-m3="1841353.38" data-m4="1836574.68" data-m5="1755610.02" data-m6="1900783.9">
+<tr data-name="ممشى الشوقية MK020" data-region="مكة" data-total="10708428.97" data-diff="135415" data-pct="7.67" data-m1="1765368.75" data-m2="1608738.24" data-m3="1841353.38" data-m4="1836574.68" data-m5="1755610.02" data-m6="1900783.9">
   <td class="st"><b>ممشى الشوقية</b><span class="code">MK020 · مكة</span></td>
   <td class="num">1,765,369</td><td class="num">1,608,738</td><td class="num">1,841,353</td><td class="num">1,836,575</td><td class="num">1,755,610</td><td class="num">1,900,784</td>
+  <td class="num pos">▲ +135,415<span class="vs">مقابل يناير</span></td><td class="num pos">+7.7٪</td>
 </tr>
-<tr data-name="السواط - شهار MK063" data-region="الطائف" data-total="10700092.42" data-m1="1765801.35" data-m2="1530377.22" data-m3="1588961.1" data-m4="1766617.19" data-m5="2061893.5" data-m6="1986442.06">
+<tr data-name="السواط - شهار MK063" data-region="الطائف" data-total="10700092.42" data-diff="220641" data-pct="12.50" data-m1="1765801.35" data-m2="1530377.22" data-m3="1588961.1" data-m4="1766617.19" data-m5="2061893.5" data-m6="1986442.06">
   <td class="st"><b>السواط - شهار</b><span class="code">MK063 · الطائف</span></td>
   <td class="num">1,765,801</td><td class="num">1,530,377</td><td class="num">1,588,961</td><td class="num">1,766,617</td><td class="num">2,061,894</td><td class="num">1,986,442</td>
+  <td class="num pos">▲ +220,641<span class="vs">مقابل يناير</span></td><td class="num pos">+12.5٪</td>
 </tr>
-<tr data-name="الجعرانة MK064" data-region="مكة" data-total="10414834.22" data-m1="1626107.14" data-m2="1773695.09" data-m3="1866184.49" data-m4="2017019.59" data-m5="1551275.25" data-m6="1580552.66">
+<tr data-name="الجعرانة MK064" data-region="مكة" data-total="10414834.22" data-diff="-45554" data-pct="-2.80" data-m1="1626107.14" data-m2="1773695.09" data-m3="1866184.49" data-m4="2017019.59" data-m5="1551275.25" data-m6="1580552.66">
   <td class="st"><b>الجعرانة</b><span class="code">MK064 · مكة</span></td>
   <td class="num">1,626,107</td><td class="num">1,773,695</td><td class="num">1,866,184</td><td class="num">2,017,020</td><td class="num">1,551,275</td><td class="num">1,580,553</td>
+  <td class="num neg">▼ -45,554<span class="vs">مقابل يناير</span></td><td class="num neg">-2.8٪</td>
 </tr>
-<tr data-name="الصفا - أحد المسارحة JA092" data-region="جازان" data-total="9901510.07" data-m1="-1" data-m2="304963.52" data-m3="2185634.16" data-m4="2338040.82" data-m5="2617189.4" data-m6="2455682.17">
+<tr data-name="الصفا - أحد المسارحة JA092" data-region="جازان" data-total="9901510.07" data-diff="270048" data-pct="12.36" data-m1="-1" data-m2="304963.52" data-m3="2185634.16" data-m4="2338040.82" data-m5="2617189.4" data-m6="2455682.17">
   <td class="st"><b>الصفا - أحد المسارحة<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-02-21">*</span></b><span class="code">JA092 · جازان</span></td>
   <td class="num none">—</td><td class="num">304,964</td><td class="num">2,185,634</td><td class="num">2,338,041</td><td class="num">2,617,189</td><td class="num">2,455,682</td>
+  <td class="num pos">▲ +270,048<span class="vs">مقابل مارس</span></td><td class="num pos">+12.4٪</td>
 </tr>
-<tr data-name="الجمعية الوسام MK035" data-region="الطائف" data-total="9869939.84" data-m1="1554850.44" data-m2="1510353.81" data-m3="1645242.48" data-m4="1801896.12" data-m5="1791606.33" data-m6="1565990.66">
+<tr data-name="الجمعية الوسام MK035" data-region="الطائف" data-total="9869939.84" data-diff="11140" data-pct="0.72" data-m1="1554850.44" data-m2="1510353.81" data-m3="1645242.48" data-m4="1801896.12" data-m5="1791606.33" data-m6="1565990.66">
   <td class="st"><b>الجمعية الوسام</b><span class="code">MK035 · الطائف</span></td>
   <td class="num">1,554,850</td><td class="num">1,510,354</td><td class="num">1,645,242</td><td class="num">1,801,896</td><td class="num">1,791,606</td><td class="num">1,565,991</td>
+  <td class="num pos">▲ +11,140<span class="vs">مقابل يناير</span></td><td class="num pos">+0.7٪</td>
 </tr>
-<tr data-name="الفلاح - فلسطين MK210" data-region="جدة" data-total="9737128.28" data-m1="-1" data-m2="1593770.06" data-m3="1964784.72" data-m4="2086831.3" data-m5="2079384.07" data-m6="2012358.13">
+<tr data-name="الفلاح - فلسطين MK210" data-region="جدة" data-total="9737128.28" data-diff="47573" data-pct="2.42" data-m1="-1" data-m2="1593770.06" data-m3="1964784.72" data-m4="2086831.3" data-m5="2079384.07" data-m6="2012358.13">
   <td class="st"><b>الفلاح - فلسطين<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-02-04">*</span></b><span class="code">MK210 · جدة</span></td>
   <td class="num none">—</td><td class="num">1,593,770</td><td class="num">1,964,785</td><td class="num">2,086,831</td><td class="num">2,079,384</td><td class="num">2,012,358</td>
+  <td class="num pos">▲ +47,573<span class="vs">مقابل مارس</span></td><td class="num pos">+2.4٪</td>
 </tr>
-<tr data-name="بطحاء قريش 1 MK022" data-region="مكة" data-total="9512678.02" data-m1="1457363.28" data-m2="1564616.43" data-m3="1818070.55" data-m4="1522632.29" data-m5="1668781.85" data-m6="1481213.62">
+<tr data-name="بطحاء قريش 1 MK022" data-region="مكة" data-total="9512678.02" data-diff="23850" data-pct="1.64" data-m1="1457363.28" data-m2="1564616.43" data-m3="1818070.55" data-m4="1522632.29" data-m5="1668781.85" data-m6="1481213.62">
   <td class="st"><b>بطحاء قريش 1</b><span class="code">MK022 · مكة</span></td>
   <td class="num">1,457,363</td><td class="num">1,564,616</td><td class="num">1,818,071</td><td class="num">1,522,632</td><td class="num">1,668,782</td><td class="num">1,481,214</td>
+  <td class="num pos">▲ +23,850<span class="vs">مقابل يناير</span></td><td class="num pos">+1.6٪</td>
 </tr>
-<tr data-name="الحمرا - طريق الملك عبدالله RY025" data-region="الخرج" data-total="8563677.57" data-m1="1334774.16" data-m2="1256392.32" data-m3="1303341.79" data-m4="1518353.3" data-m5="1599270.24" data-m6="1551545.76">
+<tr data-name="الحمرا - طريق الملك عبدالله RY025" data-region="الخرج" data-total="8563677.57" data-diff="216772" data-pct="16.24" data-m1="1334774.16" data-m2="1256392.32" data-m3="1303341.79" data-m4="1518353.3" data-m5="1599270.24" data-m6="1551545.76">
   <td class="st"><b>الحمرا - طريق الملك عبدالله</b><span class="code">RY025 · الخرج</span></td>
   <td class="num">1,334,774</td><td class="num">1,256,392</td><td class="num">1,303,342</td><td class="num">1,518,353</td><td class="num">1,599,270</td><td class="num">1,551,546</td>
+  <td class="num pos">▲ +216,772<span class="vs">مقابل يناير</span></td><td class="num pos">+16.2٪</td>
 </tr>
-<tr data-name="كورنيش جيزان JA069" data-region="جازان" data-total="8483209.47" data-m1="1497183.94" data-m2="1207032.82" data-m3="1163132.41" data-m4="1609327.06" data-m5="1603378.74" data-m6="1403154.5">
+<tr data-name="كورنيش جيزان JA069" data-region="جازان" data-total="8483209.47" data-diff="-94029" data-pct="-6.28" data-m1="1497183.94" data-m2="1207032.82" data-m3="1163132.41" data-m4="1609327.06" data-m5="1603378.74" data-m6="1403154.5">
   <td class="st"><b>كورنيش جيزان</b><span class="code">JA069 · جازان</span></td>
   <td class="num">1,497,184</td><td class="num">1,207,033</td><td class="num">1,163,132</td><td class="num">1,609,327</td><td class="num">1,603,379</td><td class="num">1,403,154</td>
+  <td class="num neg">▼ -94,029<span class="vs">مقابل يناير</span></td><td class="num neg">-6.3٪</td>
 </tr>
-<tr data-name="خليص MK014" data-region="مكة" data-total="8421900.66" data-m1="1464638.31" data-m2="1516429.64" data-m3="1391175.58" data-m4="1157254.01" data-m5="1494788.1" data-m6="1397615.02">
+<tr data-name="خليص MK014" data-region="مكة" data-total="8421900.66" data-diff="-67023" data-pct="-4.58" data-m1="1464638.31" data-m2="1516429.64" data-m3="1391175.58" data-m4="1157254.01" data-m5="1494788.1" data-m6="1397615.02">
   <td class="st"><b>خليص</b><span class="code">MK014 · مكة</span></td>
   <td class="num">1,464,638</td><td class="num">1,516,430</td><td class="num">1,391,176</td><td class="num">1,157,254</td><td class="num">1,494,788</td><td class="num">1,397,615</td>
+  <td class="num neg">▼ -67,023<span class="vs">مقابل يناير</span></td><td class="num neg">-4.6٪</td>
 </tr>
-<tr data-name="المعيصم MK002" data-region="مكة" data-total="7821875.27" data-m1="3098249.38" data-m2="1115270.47" data-m3="1099857.63" data-m4="979663.17" data-m5="667017.53" data-m6="861817.09">
+<tr data-name="المعيصم MK002" data-region="مكة" data-total="7821875.27" data-diff="-2236432" data-pct="-72.18" data-m1="3098249.38" data-m2="1115270.47" data-m3="1099857.63" data-m4="979663.17" data-m5="667017.53" data-m6="861817.09">
   <td class="st"><b>المعيصم</b><span class="code">MK002 · مكة</span></td>
   <td class="num">3,098,249</td><td class="num">1,115,270</td><td class="num">1,099,858</td><td class="num">979,663</td><td class="num">667,018</td><td class="num">861,817</td>
+  <td class="num neg">▼ -2,236,432<span class="vs">مقابل يناير</span></td><td class="num neg">-72.2٪</td>
 </tr>
-<tr data-name="الجموم - الكنيدري MK068" data-region="مكة" data-total="7731203.51" data-m1="1411617.47" data-m2="1284308.94" data-m3="1284158.19" data-m4="1299273.34" data-m5="1246117.43" data-m6="1205728.14">
+<tr data-name="الجموم - الكنيدري MK068" data-region="مكة" data-total="7731203.51" data-diff="-205889" data-pct="-14.59" data-m1="1411617.47" data-m2="1284308.94" data-m3="1284158.19" data-m4="1299273.34" data-m5="1246117.43" data-m6="1205728.14">
   <td class="st"><b>الجموم - الكنيدري</b><span class="code">MK068 · مكة</span></td>
   <td class="num">1,411,617</td><td class="num">1,284,309</td><td class="num">1,284,158</td><td class="num">1,299,273</td><td class="num">1,246,117</td><td class="num">1,205,728</td>
+  <td class="num neg">▼ -205,889<span class="vs">مقابل يناير</span></td><td class="num neg">-14.6٪</td>
 </tr>
-<tr data-name="الأجاويد MK071" data-region="جدة" data-total="7305589.41" data-m1="1174734.76" data-m2="1110342.5" data-m3="1202448.81" data-m4="1258015.33" data-m5="1287909.47" data-m6="1272138.54">
+<tr data-name="الأجاويد MK071" data-region="جدة" data-total="7305589.41" data-diff="97404" data-pct="8.29" data-m1="1174734.76" data-m2="1110342.5" data-m3="1202448.81" data-m4="1258015.33" data-m5="1287909.47" data-m6="1272138.54">
   <td class="st"><b>الأجاويد</b><span class="code">MK071 · جدة</span></td>
   <td class="num">1,174,735</td><td class="num">1,110,342</td><td class="num">1,202,449</td><td class="num">1,258,015</td><td class="num">1,287,909</td><td class="num">1,272,139</td>
+  <td class="num pos">▲ +97,404<span class="vs">مقابل يناير</span></td><td class="num pos">+8.3٪</td>
 </tr>
-<tr data-name="الكر النازل MK084" data-region="مكة" data-total="6769349.73" data-m1="1259774.0" data-m2="1018734.2" data-m3="1315895.38" data-m4="1076627.61" data-m5="948488.99" data-m6="1149829.55">
+<tr data-name="الكر النازل MK084" data-region="مكة" data-total="6769349.73" data-diff="-109944" data-pct="-8.73" data-m1="1259774.0" data-m2="1018734.2" data-m3="1315895.38" data-m4="1076627.61" data-m5="948488.99" data-m6="1149829.55">
   <td class="st"><b>الكر النازل</b><span class="code">MK084 · مكة</span></td>
   <td class="num">1,259,774</td><td class="num">1,018,734</td><td class="num">1,315,895</td><td class="num">1,076,628</td><td class="num">948,489</td><td class="num">1,149,830</td>
+  <td class="num neg">▼ -109,944<span class="vs">مقابل يناير</span></td><td class="num neg">-8.7٪</td>
 </tr>
-<tr data-name="طريق صبيا JA061" data-region="جازان" data-total="6763759.43" data-m1="1285231.73" data-m2="1042421.9" data-m3="1111608.07" data-m4="1179869.29" data-m5="1098044.52" data-m6="1046583.92">
+<tr data-name="طريق صبيا JA061" data-region="جازان" data-total="6763759.43" data-diff="-238648" data-pct="-18.57" data-m1="1285231.73" data-m2="1042421.9" data-m3="1111608.07" data-m4="1179869.29" data-m5="1098044.52" data-m6="1046583.92">
   <td class="st"><b>طريق صبيا</b><span class="code">JA061 · جازان</span></td>
   <td class="num">1,285,232</td><td class="num">1,042,422</td><td class="num">1,111,608</td><td class="num">1,179,869</td><td class="num">1,098,045</td><td class="num">1,046,584</td>
+  <td class="num neg">▼ -238,648<span class="vs">مقابل يناير</span></td><td class="num neg">-18.6٪</td>
 </tr>
-<tr data-name="النسيم MK015" data-region="جدة" data-total="6610805.17" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="491965.77" data-m5="3175510.64" data-m6="2943328.76">
+<tr data-name="النسيم MK015" data-region="جدة" data-total="6610805.17" data-diff="-232182" data-pct="-7.31" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="491965.77" data-m5="3175510.64" data-m6="2943328.76">
   <td class="st"><b>النسيم<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-27">*</span></b><span class="code">MK015 · جدة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">491,966</td><td class="num">3,175,511</td><td class="num">2,943,329</td>
+  <td class="num neg">▼ -232,182<span class="vs">مقابل مايو</span></td><td class="num neg">-7.3٪</td>
 </tr>
-<tr data-name="بن درويش MK023" data-region="مكة" data-total="6600955.93" data-m1="1186191.12" data-m2="1150553.12" data-m3="1157181.32" data-m4="1094265.54" data-m5="1025992.24" data-m6="986772.59">
+<tr data-name="بن درويش MK023" data-region="مكة" data-total="6600955.93" data-diff="-199419" data-pct="-16.81" data-m1="1186191.12" data-m2="1150553.12" data-m3="1157181.32" data-m4="1094265.54" data-m5="1025992.24" data-m6="986772.59">
   <td class="st"><b>بن درويش</b><span class="code">MK023 · مكة</span></td>
   <td class="num">1,186,191</td><td class="num">1,150,553</td><td class="num">1,157,181</td><td class="num">1,094,266</td><td class="num">1,025,992</td><td class="num">986,773</td>
+  <td class="num neg">▼ -199,419<span class="vs">مقابل يناير</span></td><td class="num neg">-16.8٪</td>
 </tr>
-<tr data-name="الشيباني MK005" data-region="الطائف" data-total="6430227.92" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="175083.95" data-m5="3242754.84" data-m6="3012389.13">
+<tr data-name="الشيباني MK005" data-region="الطائف" data-total="6430227.92" data-diff="-230366" data-pct="-7.10" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="175083.95" data-m5="3242754.84" data-m6="3012389.13">
   <td class="st"><b>الشيباني<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-29">*</span></b><span class="code">MK005 · الطائف</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">175,084</td><td class="num">3,242,755</td><td class="num">3,012,389</td>
+  <td class="num neg">▼ -230,366<span class="vs">مقابل مايو</span></td><td class="num neg">-7.1٪</td>
 </tr>
-<tr data-name="الملك خالد MK093" data-region="الطائف" data-total="6302158.39" data-m1="957377.19" data-m2="982624.63" data-m3="1068951.25" data-m4="1064900.37" data-m5="1145693.53" data-m6="1082611.42">
+<tr data-name="الملك خالد MK093" data-region="الطائف" data-total="6302158.39" data-diff="125234" data-pct="13.08" data-m1="957377.19" data-m2="982624.63" data-m3="1068951.25" data-m4="1064900.37" data-m5="1145693.53" data-m6="1082611.42">
   <td class="st"><b>الملك خالد</b><span class="code">MK093 · الطائف</span></td>
   <td class="num">957,377</td><td class="num">982,625</td><td class="num">1,068,951</td><td class="num">1,064,900</td><td class="num">1,145,694</td><td class="num">1,082,611</td>
+  <td class="num pos">▲ +125,234<span class="vs">مقابل يناير</span></td><td class="num pos">+13.1٪</td>
 </tr>
-<tr data-name="الحليس - طريق الجنوب MK046" data-region="الطائف" data-total="6133991.69" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="2844192.59" data-m6="3289799.1">
+<tr data-name="الحليس - طريق الجنوب MK046" data-region="الطائف" data-total="6133991.69" data-diff="-9e15" data-pct="-9e15" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="2844192.59" data-m6="3289799.1">
   <td class="st"><b>الحليس - طريق الجنوب<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-05-07">*</span></b><span class="code">MK046 · الطائف</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">2,844,193</td><td class="num">3,289,799</td>
+  <td class="num none" title="أقل من شهرين كاملين — لا يمكن قياس التغير">—</td><td class="num none">—</td>
 </tr>
-<tr data-name="كورنيش الخبر EP051" data-region="الشرقية" data-total="6083371.04" data-m1="817599.07" data-m2="868422.02" data-m3="911267.57" data-m4="1128608.2" data-m5="1153585.16" data-m6="1203889.02">
+<tr data-name="كورنيش الخبر EP051" data-region="الشرقية" data-total="6083371.04" data-diff="386290" data-pct="47.25" data-m1="817599.07" data-m2="868422.02" data-m3="911267.57" data-m4="1128608.2" data-m5="1153585.16" data-m6="1203889.02">
   <td class="st"><b>كورنيش الخبر</b><span class="code">EP051 · الشرقية</span></td>
   <td class="num">817,599</td><td class="num">868,422</td><td class="num">911,268</td><td class="num">1,128,608</td><td class="num">1,153,585</td><td class="num">1,203,889</td>
+  <td class="num pos">▲ +386,290<span class="vs">مقابل يناير</span></td><td class="num pos">+47.2٪</td>
 </tr>
-<tr data-name="الدائري الشرقي QS055" data-region="القصيم" data-total="5976488.29" data-m1="1086144.1" data-m2="899702.03" data-m3="1029554.35" data-m4="1044541.47" data-m5="994460.73" data-m6="922085.61">
+<tr data-name="الدائري الشرقي QS055" data-region="القصيم" data-total="5976488.29" data-diff="-164058" data-pct="-15.10" data-m1="1086144.1" data-m2="899702.03" data-m3="1029554.35" data-m4="1044541.47" data-m5="994460.73" data-m6="922085.61">
   <td class="st"><b>الدائري الشرقي</b><span class="code">QS055 · القصيم</span></td>
   <td class="num">1,086,144</td><td class="num">899,702</td><td class="num">1,029,554</td><td class="num">1,044,541</td><td class="num">994,461</td><td class="num">922,086</td>
+  <td class="num neg">▼ -164,058<span class="vs">مقابل يناير</span></td><td class="num neg">-15.1٪</td>
 </tr>
-<tr data-name="طريق السيل MK054" data-region="مكة" data-total="5875411.3" data-m1="-1" data-m2="-1" data-m3="1088370.59" data-m4="1452205.97" data-m5="1369859.55" data-m6="1964975.19">
+<tr data-name="طريق السيل MK054" data-region="مكة" data-total="5875411.3" data-diff="512769" data-pct="35.31" data-m1="-1" data-m2="-1" data-m3="1088370.59" data-m4="1452205.97" data-m5="1369859.55" data-m6="1964975.19">
   <td class="st"><b>طريق السيل<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-03-12">*</span></b><span class="code">MK054 · مكة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num">1,088,371</td><td class="num">1,452,206</td><td class="num">1,369,860</td><td class="num">1,964,975</td>
+  <td class="num pos">▲ +512,769<span class="vs">مقابل أبريل</span></td><td class="num pos">+35.3٪</td>
 </tr>
-<tr data-name="بطحاء قريش 2 MK031" data-region="مكة" data-total="5721086.82" data-m1="1067643.87" data-m2="964869.9" data-m3="1000486.99" data-m4="835593.06" data-m5="965484.52" data-m6="887008.48">
+<tr data-name="بطحاء قريش 2 MK031" data-region="مكة" data-total="5721086.82" data-diff="-180635" data-pct="-16.92" data-m1="1067643.87" data-m2="964869.9" data-m3="1000486.99" data-m4="835593.06" data-m5="965484.52" data-m6="887008.48">
   <td class="st"><b>بطحاء قريش 2</b><span class="code">MK031 · مكة</span></td>
   <td class="num">1,067,644</td><td class="num">964,870</td><td class="num">1,000,487</td><td class="num">835,593</td><td class="num">965,485</td><td class="num">887,008</td>
+  <td class="num neg">▼ -180,635<span class="vs">مقابل يناير</span></td><td class="num neg">-16.9٪</td>
 </tr>
-<tr data-name="خبت نخلان JA053" data-region="جازان" data-total="5714308.27" data-m1="1128934.03" data-m2="836138.09" data-m3="889821.92" data-m4="882378.95" data-m5="982014.06" data-m6="995021.22">
+<tr data-name="خبت نخلان JA053" data-region="جازان" data-total="5714308.27" data-diff="-133913" data-pct="-11.86" data-m1="1128934.03" data-m2="836138.09" data-m3="889821.92" data-m4="882378.95" data-m5="982014.06" data-m6="995021.22">
   <td class="st"><b>خبت نخلان</b><span class="code">JA053 · جازان</span></td>
   <td class="num">1,128,934</td><td class="num">836,138</td><td class="num">889,822</td><td class="num">882,379</td><td class="num">982,014</td><td class="num">995,021</td>
+  <td class="num neg">▼ -133,913<span class="vs">مقابل يناير</span></td><td class="num neg">-11.9٪</td>
 </tr>
-<tr data-name="الحسينية MK008" data-region="مكة" data-total="5015246.13" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="585235.72" data-m5="2183851.6" data-m6="2246158.81">
+<tr data-name="الحسينية MK008" data-region="مكة" data-total="5015246.13" data-diff="62307" data-pct="2.85" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="585235.72" data-m5="2183851.6" data-m6="2246158.81">
   <td class="st"><b>الحسينية<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-22">*</span></b><span class="code">MK008 · مكة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">585,236</td><td class="num">2,183,852</td><td class="num">2,246,159</td>
+  <td class="num pos">▲ +62,307<span class="vs">مقابل مايو</span></td><td class="num pos">+2.9٪</td>
 </tr>
-<tr data-name="غرناطة - طريق الملك عبدالله RY024" data-region="الخرج" data-total="4846644.23" data-m1="849643.01" data-m2="739743.26" data-m3="744866.34" data-m4="875150.1" data-m5="875203.82" data-m6="762037.7">
+<tr data-name="غرناطة - طريق الملك عبدالله RY024" data-region="الخرج" data-total="4846644.23" data-diff="-87605" data-pct="-10.31" data-m1="849643.01" data-m2="739743.26" data-m3="744866.34" data-m4="875150.1" data-m5="875203.82" data-m6="762037.7">
   <td class="st"><b>غرناطة - طريق الملك عبدالله</b><span class="code">RY024 · الخرج</span></td>
   <td class="num">849,643</td><td class="num">739,743</td><td class="num">744,866</td><td class="num">875,150</td><td class="num">875,204</td><td class="num">762,038</td>
+  <td class="num neg">▼ -87,605<span class="vs">مقابل يناير</span></td><td class="num neg">-10.3٪</td>
 </tr>
-<tr data-name="جنوب الطائف MK006" data-region="الطائف" data-total="4714627.21" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="2249709.72" data-m6="2464917.49">
+<tr data-name="جنوب الطائف MK006" data-region="الطائف" data-total="4714627.21" data-diff="-9e15" data-pct="-9e15" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="2249709.72" data-m6="2464917.49">
   <td class="st"><b>جنوب الطائف<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-05-05">*</span></b><span class="code">MK006 · الطائف</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">2,249,710</td><td class="num">2,464,917</td>
+  <td class="num none" title="أقل من شهرين كاملين — لا يمكن قياس التغير">—</td><td class="num none">—</td>
 </tr>
-<tr data-name="الرصيفة المسار MK018" data-region="مكة" data-total="4575739.43" data-m1="-1" data-m2="-1" data-m3="20477.69" data-m4="1419141.92" data-m5="1475104.44" data-m6="1661015.38">
+<tr data-name="الرصيفة المسار MK018" data-region="مكة" data-total="4575739.43" data-diff="241873" data-pct="17.04" data-m1="-1" data-m2="-1" data-m3="20477.69" data-m4="1419141.92" data-m5="1475104.44" data-m6="1661015.38">
   <td class="st"><b>الرصيفة المسار<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-03-31">*</span></b><span class="code">MK018 · مكة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num">20,478</td><td class="num">1,419,142</td><td class="num">1,475,104</td><td class="num">1,661,015</td>
+  <td class="num pos">▲ +241,873<span class="vs">مقابل أبريل</span></td><td class="num pos">+17.0٪</td>
 </tr>
-<tr data-name="الناصفة RY042" data-region="الخرج" data-total="4569368.7" data-m1="706318.45" data-m2="640687.6" data-m3="665885.42" data-m4="849102.36" data-m5="866619.31" data-m6="840755.56">
+<tr data-name="الناصفة RY042" data-region="الخرج" data-total="4569368.7" data-diff="134437" data-pct="19.03" data-m1="706318.45" data-m2="640687.6" data-m3="665885.42" data-m4="849102.36" data-m5="866619.31" data-m6="840755.56">
   <td class="st"><b>الناصفة</b><span class="code">RY042 · الخرج</span></td>
   <td class="num">706,318</td><td class="num">640,688</td><td class="num">665,885</td><td class="num">849,102</td><td class="num">866,619</td><td class="num">840,756</td>
+  <td class="num pos">▲ +134,437<span class="vs">مقابل يناير</span></td><td class="num pos">+19.0٪</td>
 </tr>
-<tr data-name="الشرايع MK019" data-region="مكة" data-total="4331346.88" data-m1="1288231.5" data-m2="573780.23" data-m3="599227.07" data-m4="648509.42" data-m5="613396.74" data-m6="608201.92">
+<tr data-name="الشرايع MK019" data-region="مكة" data-total="4331346.88" data-diff="-680030" data-pct="-52.79" data-m1="1288231.5" data-m2="573780.23" data-m3="599227.07" data-m4="648509.42" data-m5="613396.74" data-m6="608201.92">
   <td class="st"><b>الشرايع</b><span class="code">MK019 · مكة</span></td>
   <td class="num">1,288,232</td><td class="num">573,780</td><td class="num">599,227</td><td class="num">648,509</td><td class="num">613,397</td><td class="num">608,202</td>
+  <td class="num neg">▼ -680,030<span class="vs">مقابل يناير</span></td><td class="num neg">-52.8٪</td>
 </tr>
-<tr data-name="البيعة MK099" data-region="الطائف" data-total="3783051.54" data-m1="537592.54" data-m2="573912.15" data-m3="648023.85" data-m4="666726.0" data-m5="694263.71" data-m6="662533.29">
+<tr data-name="البيعة MK099" data-region="الطائف" data-total="3783051.54" data-diff="124941" data-pct="23.24" data-m1="537592.54" data-m2="573912.15" data-m3="648023.85" data-m4="666726.0" data-m5="694263.71" data-m6="662533.29">
   <td class="st"><b>البيعة</b><span class="code">MK099 · الطائف</span></td>
   <td class="num">537,593</td><td class="num">573,912</td><td class="num">648,024</td><td class="num">666,726</td><td class="num">694,264</td><td class="num">662,533</td>
+  <td class="num pos">▲ +124,941<span class="vs">مقابل يناير</span></td><td class="num pos">+23.2٪</td>
 </tr>
-<tr data-name="الكوثر MK100" data-region="جدة" data-total="3334225.6" data-m1="546390.91" data-m2="523297.5" data-m3="551558.83" data-m4="589556.38" data-m5="575010.35" data-m6="548411.63">
+<tr data-name="الكوثر MK100" data-region="جدة" data-total="3334225.6" data-diff="2021" data-pct="0.37" data-m1="546390.91" data-m2="523297.5" data-m3="551558.83" data-m4="589556.38" data-m5="575010.35" data-m6="548411.63">
   <td class="st"><b>الكوثر</b><span class="code">MK100 · جدة</span></td>
   <td class="num">546,391</td><td class="num">523,298</td><td class="num">551,559</td><td class="num">589,556</td><td class="num">575,010</td><td class="num">548,412</td>
+  <td class="num pos">▲ +2,021<span class="vs">مقابل يناير</span></td><td class="num pos">+0.4٪</td>
 </tr>
-<tr data-name="مدخل محايل AS153" data-region="عسير" data-total="3263895.98" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="326172.39" data-m5="1464343.6" data-m6="1473379.99">
+<tr data-name="مدخل محايل AS153" data-region="عسير" data-total="3263895.98" data-diff="9036" data-pct="0.62" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="326172.39" data-m5="1464343.6" data-m6="1473379.99">
   <td class="st"><b>مدخل محايل<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-23">*</span></b><span class="code">AS153 · عسير</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">326,172</td><td class="num">1,464,344</td><td class="num">1,473,380</td>
+  <td class="num pos">▲ +9,036<span class="vs">مقابل مايو</span></td><td class="num pos">+0.6٪</td>
 </tr>
-<tr data-name="العريفي HA043" data-region="حائل" data-total="3179944.3" data-m1="606341.7" data-m2="490977.65" data-m3="506733.36" data-m4="536516.12" data-m5="543962.56" data-m6="495412.91">
+<tr data-name="العريفي HA043" data-region="حائل" data-total="3179944.3" data-diff="-110929" data-pct="-18.29" data-m1="606341.7" data-m2="490977.65" data-m3="506733.36" data-m4="536516.12" data-m5="543962.56" data-m6="495412.91">
   <td class="st"><b>العريفي</b><span class="code">HA043 · حائل</span></td>
   <td class="num">606,342</td><td class="num">490,978</td><td class="num">506,733</td><td class="num">536,516</td><td class="num">543,963</td><td class="num">495,413</td>
+  <td class="num neg">▼ -110,929<span class="vs">مقابل يناير</span></td><td class="num neg">-18.3٪</td>
 </tr>
-<tr data-name="الروابي - المودة JA056" data-region="جازان" data-total="2708910.52" data-m1="413519.82" data-m2="417229.92" data-m3="400110.76" data-m4="474992.03" data-m5="522955.07" data-m6="480102.92">
+<tr data-name="الروابي - المودة JA056" data-region="جازان" data-total="2708910.52" data-diff="66583" data-pct="16.10" data-m1="413519.82" data-m2="417229.92" data-m3="400110.76" data-m4="474992.03" data-m5="522955.07" data-m6="480102.92">
   <td class="st"><b>الروابي - المودة</b><span class="code">JA056 · جازان</span></td>
   <td class="num">413,520</td><td class="num">417,230</td><td class="num">400,111</td><td class="num">474,992</td><td class="num">522,955</td><td class="num">480,103</td>
+  <td class="num pos">▲ +66,583<span class="vs">مقابل يناير</span></td><td class="num pos">+16.1٪</td>
 </tr>
-<tr data-name="صناعية صامطة JA060" data-region="جازان" data-total="2574778.75" data-m1="422047.77" data-m2="419000.05" data-m3="401867.82" data-m4="451804.41" data-m5="445586.71" data-m6="434471.99">
+<tr data-name="صناعية صامطة JA060" data-region="جازان" data-total="2574778.75" data-diff="12424" data-pct="2.94" data-m1="422047.77" data-m2="419000.05" data-m3="401867.82" data-m4="451804.41" data-m5="445586.71" data-m6="434471.99">
   <td class="st"><b>صناعية صامطة</b><span class="code">JA060 · جازان</span></td>
   <td class="num">422,048</td><td class="num">419,000</td><td class="num">401,868</td><td class="num">451,804</td><td class="num">445,587</td><td class="num">434,472</td>
+  <td class="num pos">▲ +12,424<span class="vs">مقابل يناير</span></td><td class="num pos">+2.9٪</td>
 </tr>
-<tr data-name="القسوم - أحد المسارحة JA041" data-region="جازان" data-total="2479042.7" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="162964.77" data-m5="1173074.94" data-m6="1143002.99">
+<tr data-name="القسوم - أحد المسارحة JA041" data-region="جازان" data-total="2479042.7" data-diff="-30072" data-pct="-2.56" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="162964.77" data-m5="1173074.94" data-m6="1143002.99">
   <td class="st"><b>القسوم - أحد المسارحة<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-24">*</span></b><span class="code">JA041 · جازان</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">162,965</td><td class="num">1,173,075</td><td class="num">1,143,003</td>
+  <td class="num neg">▼ -30,072<span class="vs">مقابل مايو</span></td><td class="num neg">-2.6٪</td>
 </tr>
-<tr data-name="جبل ثور - جوهرة النسيم MK323" data-region="مكة" data-total="1285957.41" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="943.48" data-m5="654070.25" data-m6="630943.68">
+<tr data-name="جبل ثور - جوهرة النسيم MK323" data-region="مكة" data-total="1285957.41" data-diff="-23127" data-pct="-3.54" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="943.48" data-m5="654070.25" data-m6="630943.68">
   <td class="st"><b>جبل ثور - جوهرة النسيم<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-04-30">*</span></b><span class="code">MK323 · مكة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">943</td><td class="num">654,070</td><td class="num">630,944</td>
+  <td class="num neg">▼ -23,127<span class="vs">مقابل مايو</span></td><td class="num neg">-3.5٪</td>
 </tr>
-<tr data-name="جنوب صبيا JA348" data-region="جازان" data-total="1063909.56" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="-1" data-m6="1063909.56">
+<tr data-name="جنوب صبيا JA348" data-region="جازان" data-total="1063909.56" data-diff="-9e15" data-pct="-9e15" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="-1" data-m6="1063909.56">
   <td class="st"><b>جنوب صبيا<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-06-05">*</span></b><span class="code">JA348 · جازان</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">1,063,910</td>
+  <td class="num none" title="أقل من شهرين كاملين — لا يمكن قياس التغير">—</td><td class="num none">—</td>
 </tr>
-<tr data-name="طريق السلام MD009" data-region="المدينة المنورة" data-total="436616.6" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="49204.87" data-m6="387411.73">
+<tr data-name="طريق السلام MD009" data-region="المدينة المنورة" data-total="436616.6" data-diff="-9e15" data-pct="-9e15" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="49204.87" data-m6="387411.73">
   <td class="st"><b>طريق السلام<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-05-23">*</span></b><span class="code">MD009 · المدينة المنورة</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">49,205</td><td class="num">387,412</td>
+  <td class="num none" title="أقل من شهرين كاملين — لا يمكن قياس التغير">—</td><td class="num none">—</td>
 </tr>
-<tr data-name="المركب NJ219" data-region="نجران" data-total="46159.85" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="-1" data-m6="46159.85">
+<tr data-name="المركب NJ219" data-region="نجران" data-total="46159.85" data-diff="-9e15" data-pct="-9e15" data-m1="-1" data-m2="-1" data-m3="-1" data-m4="-1" data-m5="-1" data-m6="46159.85">
   <td class="st"><b>المركب<span class="star" title="بيانات أول شهر جزئية — بدأت في 2026-06-25">*</span></b><span class="code">NJ219 · نجران</span></td>
   <td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num none">—</td><td class="num">46,160</td>
+  <td class="num none" title="أقل من شهرين كاملين — لا يمكن قياس التغير">—</td><td class="num none">—</td>
 </tr>
         </tbody>
         <tfoot>
           <tr>
             <td>إجمالي الشبكة (55 محطة)</td>
             <td class="num">69,758,281</td><td class="num">66,096,872</td><td class="num">74,080,736</td><td class="num">87,094,351</td><td class="num">101,526,018</td><td class="num">103,859,405</td>
+            <td class="num pos">▲ +34,101,124 †</td>
+            <td class="num pos">+48.9٪ †</td>
           </tr>
         </tfoot>
       </table>
@@ -329,6 +391,8 @@ footer{text-align:center;color:var(--ink3);font-size:12px;padding:10px 0 34px}
     <div class="note">
       <b>ملاحظات:</b> شهر 1 = يناير 2026 … شهر 6 = يونيو 2026. «—» تعني عدم توفر بيانات للمحطة في ذلك الشهر (المحطة انضمت للشبكة لاحقاً).
       <b>*</b> بجانب اسم المحطة تعني أن بيانات أول شهر جزئية (بدأت أثناء الشهر وليس من أوله) — مرّر المؤشر على العلامة لمعرفة تاريخ البداية.
+      <br><b>الزيادة / النقصان</b> = مبيعات يونيو ناقص مبيعات أول شهر <b>كامل</b> للمحطة (نستبعد الشهر الجزئي من المقارنة لأنه يضخّم النمو زوراً). المحطات التي ليس لديها شهران كاملان (5 محطات) تظهر «—».
+      <br><b>†</b> نمو إجمالي الشبكة (+48.9٪) يشمل أثر التوسّع بدخول محطات جديدة؛ عند تثبيت المقارنة على الـ37 محطة المكتملة منذ يناير يكون التغير -5,499,556 ر.س (-8.3٪) — تطبيع موسمي بعد ذروة رمضان والعمرة (فبراير–مارس) كما يوضح التقرير نفسه.
       المبيعات = الإيرادات بالريال السعودي كما وردت في التقرير التحليلي «درب · تحليل المبيعات والتسويق».
     </div>
   </div>
