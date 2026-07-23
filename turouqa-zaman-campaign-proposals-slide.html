@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<style>
+@page{size:1440px 810px; margin:0}
+*{box-sizing:border-box; margin:0; padding:0}
+html,body{width:1440px; height:810px; overflow:hidden}
+body{
+  font-family:"Cairo","Noto Sans Arabic",sans-serif; direction:rtl;
+  background:linear-gradient(135deg,#F2F0ED 0%,#EAE7E3 55%,#E4E0DB 100%);
+  color:#3F3F3F; position:relative;
+}
+.orange{color:#EE7623}
+.page{padding:38px 60px 32px; height:100%; display:flex; flex-direction:column}
+
+.title{font-size:39px; font-weight:800; color:#8A8A8A; line-height:1.25; text-align:right}
+.title b{color:#EE7623; font-weight:800}
+.rule{width:80px; height:6px; background:#EE7623; border-radius:3px; margin:8px 0 5px}
+.subtitle{font-size:17.5px; color:#6E6E6E; font-weight:600}
+.subtitle b{color:#3F3F3F}
+
+.main{display:flex; gap:20px; margin-top:19px; flex:1; min-height:0}
+
+/* concept column */
+.concept{width:342px; flex:none; display:flex; flex-direction:column; gap:14px; min-height:0}
+.concept-card{background:#4F4F4F; color:#fff; border-radius:14px; padding:16px 20px;
+  box-shadow:0 10px 24px -14px rgba(0,0,0,.45)}
+.concept-card .k{font-size:15px; font-weight:700; color:#F5A96B; letter-spacing:.5px}
+.concept-card h2{font-size:25px; font-weight:800; line-height:1.35; margin-top:4px}
+.concept-card h2 span{color:#EE7623; background:#fff; border-radius:8px; padding:0 10px; display:inline-block}
+.concept-card p{font-size:13.5px; line-height:1.65; color:#E3E3E3; margin-top:10px}
+.why{background:#fff; border-radius:14px; padding:13px 20px; overflow:hidden; box-shadow:0 10px 24px -16px rgba(0,0,0,.3); flex:1}
+.why h3{font-size:16px; font-weight:800; color:#3F3F3F; margin-bottom:8px}
+.why h3 i{display:inline-block; width:10px; height:22px; background:#EE7623; border-radius:3px;
+  vertical-align:-4px; margin-left:9px; font-style:normal}
+.why ul{list-style:none}
+.why li{font-size:13px; color:#666; line-height:1.55; padding:5px 0; border-bottom:1px solid #EFECE8;
+  padding-right:16px; position:relative}
+.why li:last-child{border-bottom:0}
+.why li::before{content:""; position:absolute; right:0; top:13px; width:7px; height:7px; border-radius:50%; background:#EE7623}
+.why li b{color:#3F3F3F}
+
+/* offers grid */
+.offers{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:15px; min-height:0}
+.offer{background:#fff; border-radius:14px; overflow:hidden; box-shadow:0 10px 24px -16px rgba(0,0,0,.3);
+  display:flex; flex-direction:column}
+.offer .head{padding:7px 18px; color:#fff; display:flex; align-items:center; justify-content:space-between}
+.offer .head h3{font-size:17.5px; font-weight:800}
+.offer .head .tag{font-size:12.5px; font-weight:700; background:rgba(255,255,255,.22); border-radius:100px; padding:3px 12px}
+.o1 .head{background:#EE7623}
+.o2 .head{background:#5A5A5A}
+.o3 .head{background:#EE7623}
+.o4 .head{background:#5A5A5A}
+.offer .body{padding:9px 18px 11px; flex:1; display:flex; flex-direction:column; gap:5px; overflow:hidden}
+.row{display:flex; gap:10px; font-size:13.5px; line-height:1.5}
+.row .lbl{flex:none; width:64px; font-weight:800; color:#EE7623; font-size:13px; padding-top:2px}
+.row .val{color:#5F5F5F}
+.row .val b{color:#3F3F3F}
+
+/* KPI band */
+.kpis{margin-top:16px; display:flex; align-items:stretch; gap:12px; flex:none}
+.kpis .cap{flex:none; width:132px; display:flex; align-items:center; line-height:1.3; font-size:15.5px; font-weight:800; color:#3F3F3F;
+  border-right:6px solid #EE7623; padding-right:14px}
+.kpi{flex:1; background:#fff; border-radius:12px; padding:8px 14px; box-shadow:0 8px 20px -14px rgba(0,0,0,.3);
+  display:flex; flex-direction:column; justify-content:center}
+.kpi .n{font-size:17px; font-weight:800; color:#EE7623; font-feature-settings:"tnum"}
+.kpi .l{font-size:11.5px; color:#777; font-weight:600; line-height:1.4}
+.timing{margin-top:10px; font-size:12.5px; flex:none; color:#8A8A8A; font-weight:600; text-align:center}
+.timing b{color:#EE7623}
+</style>
+</head>
+<body>
+<div class="page">
+  <div>
+    <div class="title">مقترحات <b>الحملة والعروض</b></div>
+    <div class="rule"></div>
+    <div class="subtitle"><b>ترويقة زمان × درب</b> — محطة النوارية، مكة المكرمة · مبنيّة على تحليل الموقع وتقييمات خرائط قوقل</div>
+  </div>
+
+  <div class="main">
+    <div class="concept">
+      <div class="concept-card">
+        <div class="k">فكرة الحملة الرئيسية</div>
+        <h2>«آخر ترويقة<br>قبل <span>المدينة</span>»</h2>
+        <p>المطعم هو آخر محطة فطور كبرى قبل طريق مكة – المدينة. نستثمر نافذة الفجر إلى الضحى — وقت انطلاق الحجاج والمعتمرين — وهي نفسها هوية «الترويقة».</p>
+      </div>
+      <div class="why">
+        <h3><i></i>لماذا هذه المقترحات؟</h3>
+        <ul>
+          <li>التقييمات مادحة (<b>4.1/5</b>) لكنها <b>14 فقط</b> — المشكلة <b>وصولٌ وظهور</b>، لا منتج</li>
+          <li><b>4,300 مركبة/ساعة</b> تمر أمام الموقع دون التقاط عند المضخات</li>
+          <li>طلب حي النوارية المحلي غير مفعّل — توصيل وعروض عائلية</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="offers">
+      <div class="offer o1">
+        <div class="head"><h3>بوكس المسافر</h3><span class="tag">التقاط العابرين</span></div>
+        <div class="body">
+          <div class="row"><span class="lbl">العرض</span><span class="val"><b>فول + فلافل + شاهي بـ 15 ريال</b> — يُجهَّز خلال 5 دقائق</span></div>
+          <div class="row"><span class="lbl">الآلية</span><span class="val">لوحات من المضخات والمداخل + طلب مسبق عبر QR</span></div>
+          <div class="row"><span class="lbl">الهدف</span><span class="val">تحويل المتوقف لدقائق إلى عميل — ذروة <b>5–11 صباحًا</b></span></div>
+        </div>
+      </div>
+      <div class="offer o2">
+        <div class="head"><h3>ترويقة الوقود</h3><span class="tag">ربط بالمحطة</span></div>
+        <div class="body">
+          <div class="row"><span class="lbl">العرض</span><span class="val"><b>خصم 30%</b> على الفطور</span></div>
+          <div class="row"><span class="lbl">المقابل</span><span class="val">تعبئة بنزين بقيمة <b>40 ريالًا أو أكثر</b> — بآلية QR المعتمدة في المحطة</span></div>
+          <div class="row"><span class="lbl">الهدف</span><span class="val">تحويل عملاء المضخات إلى البوليفارد ورفع قيمة الزيارة</span></div>
+        </div>
+      </div>
+      <div class="offer o3">
+        <div class="head"><h3>قيِّمنا وترَوَّق</h3><span class="tag">ظهور رقمي</span></div>
+        <div class="body">
+          <div class="row"><span class="lbl">العرض</span><span class="val"><b>شاهي مجاني</b> مقابل تقييم على خرائط قوقل عبر QR على الطاولات والفواتير</span></div>
+          <div class="row"><span class="lbl">الآلية</span><span class="val">توحيد إدراج الفرع + صور ومنيو محدّثة + رد على كل مراجعة</span></div>
+          <div class="row"><span class="lbl">الهدف</span><span class="val"><b>200+ تقييم</b> خلال 90 يومًا لدخول نتائج «فطور قريب مني»</span></div>
+        </div>
+      </div>
+      <div class="offer o4">
+        <div class="head"><h3>النوارية والقوافل</h3><span class="tag">طلب مستقر</span></div>
+        <div class="body">
+          <div class="row"><span class="lbl">العرض</span><span class="val">خصم إطلاق على <b>التوصيل لحي النوارية</b> + عرض عائلي نهاية الأسبوع</span></div>
+          <div class="row"><span class="lbl">المقابل</span><span class="val">باقة جماعية لباصات العمرة والسائقين بتسعير خاص</span></div>
+          <div class="row"><span class="lbl">الهدف</span><span class="val">إيراد ثابت لا يتأثر بمواسم العبور + نافذة مسائية خفيفة</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpis">
+    <div class="cap">مؤشرات النجاح</div>
+    <div class="kpi"><span class="n">200+</span><span class="l">تقييم قوقل ماب بمعدل 4.3+</span></div>
+    <div class="kpi"><span class="n">5–11 ص</span><span class="l">نمو مبيعات نافذة الصباح</span></div>
+    <div class="kpi"><span class="n">يوميًا</span><span class="l">مبيعات «بوكس المسافر»</span></div>
+    <div class="kpi"><span class="n">أسبوعيًا</span><span class="l">طلبات توصيل حي النوارية</span></div>
+    <div class="kpi"><span class="n">90 يومًا</span><span class="l">مدة الموجة الأولى ثم قياس وتقويم</span></div>
+  </div>
+  <div class="timing">التوقيت المقترح: الإطلاق مع مطلع <b>ربيع الأول 1448</b> — مباشرة بعد ركود صفر الموسمي وقبل عودة مواسم العمرة</div>
+</div>
+</body>
+</html>
