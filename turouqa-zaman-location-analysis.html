@@ -1,0 +1,280 @@
+<title>تحليل موقع — مطعم ترويقة زمان · محطة درب النوارية، مكة المكرمة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF;
+  --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --brown:#2E1D12; --brown-2:#4A3020;
+  --green:#1B7A4B; --green-2:#4E9E74;
+  --rose:#C6486B; --gold:#C79A3A;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+    --line:#332417; --surface:#211710;
+    --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+    --green-2:#5FB689; --rose:#E27795; --gold:#D9B45B;
+    --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+    --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF; --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green-2:#4E9E74; --rose:#C6486B; --gold:#C79A3A;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+}
+:root[data-theme="dark"]{
+  --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+  --line:#332417; --surface:#211710; --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+  --green-2:#5FB689; --rose:#E27795; --gold:#D9B45B;
+  --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  line-height:1.6; font-feature-settings:"kern";
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; line-height:1.18; margin:0}
+p{margin:0}
+
+.toggle{position:fixed; inset-block-start:14px; inset-inline-start:14px; z-index:40;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--line);
+  border-radius:100px; padding:7px 14px; font:inherit; font-size:13px; cursor:pointer;
+  box-shadow:var(--shadow)}
+.toggle:hover{color:var(--amber)}
+.toggle:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+
+.banner{position:relative; overflow:hidden; color:#F7EEDF;
+  background:
+    radial-gradient(120% 90% at 82% -10%, rgba(232,118,12,.34), transparent 55%),
+    radial-gradient(80% 70% at 10% 120%, rgba(47,110,78,.30), transparent 60%),
+    linear-gradient(160deg,var(--hero-1),var(--hero-2) 55%,var(--hero-3));
+  border-block-end:1px solid rgba(232,118,12,.35)}
+.grain{position:absolute; inset:0; z-index:0; opacity:.06; mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px);
+  background-size:4px 4px}
+.banner .wrap{position:relative; z-index:3; padding-block:clamp(34px,7vw,74px) clamp(120px,16vw,150px)}
+.brandbar{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.mark{display:inline-flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.3px}
+.mark .glyph{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:0 8px 18px -8px rgba(232,118,12,.8);
+  font-size:22px}
+.mark b{font-size:20px}
+.mark span{display:block; font-size:11.5px; font-weight:600; color:#E7C9A2; letter-spacing:2px}
+.brandbar .sep{flex:1}
+.brandbar .place{font-size:13px; color:#EAD3B4; border:1px solid rgba(255,255,255,.18);
+  padding:6px 13px; border-radius:100px; background:rgba(0,0,0,.18)}
+.eyebrow{margin-block-start:clamp(26px,5vw,48px); display:inline-flex; align-items:center; gap:9px;
+  font-size:13px; letter-spacing:3px; font-weight:700; color:var(--gold); text-transform:uppercase}
+.eyebrow::before{content:""; inline-size:26px; block-size:2px; background:var(--gold)}
+.headline{margin-block-start:16px; font-size:clamp(30px,5.6vw,54px); font-weight:800; letter-spacing:-.5px}
+.headline .hl{color:var(--amber)}
+.sub{margin-block-start:16px; max-width:62ch; font-size:clamp(15px,2.1vw,18px); color:#EBD9C2; line-height:1.8}
+.chips{margin-block-start:22px; display:flex; gap:10px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:#F1E2CC;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+  padding:8px 14px; border-radius:100px}
+.chip .dot{inline-size:8px; block-size:8px; border-radius:50%; background:var(--amber)}
+
+section{padding-block:clamp(44px,6.5vw,72px)}
+.kicker{font-size:12.5px; letter-spacing:2.5px; font-weight:800; color:var(--amber); text-transform:uppercase}
+.sec-title{font-size:clamp(22px,3.6vw,32px); font-weight:800; margin-block:6px 0}
+.sec-note{color:var(--ink-2); max-width:70ch; margin-block-start:10px; font-size:15.5px}
+
+.stats-band{margin-block-start:clamp(-100px,-11vw,-80px); position:relative; z-index:5; padding-block:0 8px}
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:14px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:20px 18px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.stat::after{content:""; position:absolute; inset-block-start:0; inset-inline-end:0; inline-size:46px; block-size:46px;
+  background:radial-gradient(circle at 100% 0,var(--amber-soft),transparent 70%)}
+.stat .num{font-size:clamp(24px,3.6vw,32px); font-weight:800; color:var(--amber-2); letter-spacing:-.5px}
+.stat .num small{font-size:.55em; font-weight:700; color:var(--ink-2)}
+.stat .lbl{margin-block-start:6px; font-size:13.5px; color:var(--ink-2); line-height:1.5}
+
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:clamp(18px,3vw,28px); box-shadow:var(--shadow)}
+.grid-2{display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-block-start:22px}
+.grid-3{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:14px; margin-block-start:22px}
+.card h3{font-size:17.5px; font-weight:800; display:flex; align-items:center; gap:10px}
+.card h3 .ico{inline-size:34px; block-size:34px; border-radius:10px; display:grid; place-items:center; flex:none;
+  background:var(--amber-soft); font-size:17px}
+.card p, .card li{color:var(--ink-2); font-size:14.5px}
+.card ul{margin:10px 0 0; padding-inline-start:20px; display:grid; gap:7px}
+.card .body{margin-block-start:10px}
+b, strong{color:var(--ink)}
+
+.factor{border-inline-start:4px solid var(--amber); }
+.factor.sev-high{border-inline-start-color:var(--rose)}
+.factor.sev-med{border-inline-start-color:var(--amber)}
+.factor.sev-low{border-inline-start-color:var(--green-2)}
+.sev{display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-weight:800; letter-spacing:1px;
+  padding:4px 11px; border-radius:100px; text-transform:uppercase}
+.sev-h{background:color-mix(in srgb,var(--rose) 14%, transparent); color:var(--rose)}
+.sev-m{background:var(--amber-soft); color:var(--amber-2)}
+.sev-l{background:color-mix(in srgb,var(--green-2) 16%, transparent); color:var(--green)}
+
+.map-card{margin-block-start:22px; overflow:hidden}
+.map-card svg{display:block; inline-size:100%; block-size:auto}
+.legend{display:flex; gap:16px; flex-wrap:wrap; margin-block-start:14px; font-size:13px; color:var(--ink-2)}
+.legend span{display:inline-flex; align-items:center; gap:7px}
+.legend i{inline-size:12px; block-size:12px; border-radius:4px; display:inline-block}
+
+table{inline-size:100%; border-collapse:collapse; margin-block-start:18px; font-size:14.5px}
+th,td{padding:12px 14px; text-align:right; border-block-end:1px solid var(--line); vertical-align:top}
+th{font-size:12.5px; letter-spacing:1px; color:var(--ink-3); text-transform:uppercase}
+td{color:var(--ink-2)}
+td:first-child{color:var(--ink); font-weight:700}
+.tbl-scroll{overflow-x:auto}
+
+.step{display:flex; gap:14px; align-items:flex-start}
+.step .n{flex:none; inline-size:34px; block-size:34px; border-radius:50%; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; font-weight:800; font-size:15px}
+.steps{display:grid; gap:14px; margin-block-start:22px}
+.step .card{flex:1}
+
+.note{margin-block-start:18px; background:var(--paper-2); border:1px dashed var(--line); border-radius:var(--r);
+  padding:16px 20px; font-size:13.5px; color:var(--ink-2)}
+footer{border-block-start:1px solid var(--line); padding-block:26px 40px; color:var(--ink-3); font-size:13px}
+footer .wrap{display:flex; gap:10px; flex-wrap:wrap; justify-content:space-between}
+a{color:var(--amber-2)}
+</style>
+
+<button class="toggle" onclick="const r=document.documentElement,d=r.dataset.theme==='dark'||(!r.dataset.theme&&matchMedia('(prefers-color-scheme:dark)').matches);r.dataset.theme=d?'light':'dark'">◐ الوضع</button>
+
+<div class="banner">
+  <div class="grain"></div>
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="mark"><span class="glyph">⛽</span><span><b>درب</b><span>DARB STATIONS</span></span></div>
+      <div class="sep"></div>
+      <div class="place">📍 مكة المكرمة · حي النوارية · طريق المدينة المنورة</div>
+    </div>
+    <div class="eyebrow">تقرير تشخيصي — أداء مستأجر</div>
+    <h1 class="headline">تحليل موقع <span class="hl">مطعم ترويقة زمان</span><br>في محطة درب النوارية</h1>
+    <p class="sub">قراءة ميدانية وجغرافية لأسباب انخفاض المبيعات المرصود من تعليقات العملاء في خرائط قوقل، مع تشخيص مرتَّب حسب الأثر وخطة معالجة عملية خلال 90 يومًا.</p>
+    <div class="chips">
+      <span class="chip"><i class="dot"></i> الإحداثيات: <span class="tnum" dir="ltr">21.546272, 39.779916</span></span>
+      <span class="chip"><i class="dot"></i> النشاط: فطور شعبي (فول · حمص · فلافل · مصابيب)</span>
+      <span class="chip"><i class="dot"></i> تاريخ التقرير: يوليو 2026</span>
+    </div>
+  </div>
+</div>
+
+<section class="stats-band">
+  <div class="wrap stat-grid">
+    <div class="stat"><div class="num tnum">120,000<small> م²</small></div><div class="lbl">مساحة المحطة — الأكبر في مكة المكرمة</div></div>
+    <div class="stat"><div class="num tnum">4,300<small> مركبة/ساعة</small></div><div class="lbl">تدفق مروري على طريق المدينة أمام الموقع</div></div>
+    <div class="stat"><div class="num tnum">68<small> وحدة</small></div><div class="lbl">وحدات تأجيرية في بوليفارد المحطة</div></div>
+    <div class="stat"><div class="num tnum">4.1<small> / 5</small></div><div class="lbl">تقييم الفرع في الخرائط — من <b class="tnum">14</b> تقييمًا فقط</div></div>
+    <div class="stat"><div class="num tnum">~13<small> كم</small></div><div class="lbl">المسافة من الحرم المكي باتجاه الشمال الغربي</div></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">أولًا</div>
+    <h2 class="sec-title">قراءة الموقع الجغرافي</h2>
+    <p class="sec-note">الإحداثيات تقع داخل محطة درب النوارية على طريق المدينة المنورة (المسار الإقليمي الرابط مكة ↔ المدينة)، عند البوابة الشمالية الغربية لمكة المكرمة — آخر نقطة خدمات كبرى قبل الخروج من النطاق العمراني باتجاه الشميسي/الحديبية ثم المدينة.</p>
+
+    <div class="card map-card">
+      <svg viewBox="0 0 900 380" role="img" aria-label="مخطط توضيحي لموقع المحطة على طريق المدينة شمال غرب مكة">
+        <rect width="900" height="380" fill="none"/>
+        <!-- Makkah urban blob -->
+        <ellipse cx="700" cy="300" rx="190" ry="110" fill="#E8760C" opacity=".12"/>
+        <text x="700" y="305" text-anchor="middle" font-size="17" font-weight="800" fill="currentColor">مكة المكرمة — النطاق العمراني</text>
+        <circle cx="742" cy="332" r="6" fill="#C6486B"/>
+        <text x="742" y="356" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">المسجد الحرام</text>
+        <!-- Madinah road -->
+        <path d="M 760 300 C 560 240 380 170 100 60" stroke="#9A8674" stroke-width="14" fill="none" stroke-linecap="round" opacity=".45"/>
+        <path d="M 760 300 C 560 240 380 170 100 60" stroke="#E8760C" stroke-width="3" stroke-dasharray="14 10" fill="none"/>
+        <text x="205" y="130" font-size="13" fill="currentColor" opacity=".8" transform="rotate(-21 205 130)">طريق المدينة المنورة — 4,300 مركبة/ساعة</text>
+        <text x="80" y="40" font-size="13" font-weight="700" fill="currentColor" opacity=".7">→ إلى المدينة المنورة</text>
+        <!-- Station -->
+        <g>
+          <rect x="330" y="150" width="120" height="64" rx="12" fill="#E8760C"/>
+          <text x="390" y="177" text-anchor="middle" font-size="14" font-weight="800" fill="#fff">محطة درب</text>
+          <text x="390" y="197" text-anchor="middle" font-size="11.5" fill="#FBE3C6">النوارية · 120 ألف م²</text>
+        </g>
+        <circle cx="390" cy="228" r="7" fill="#1B7A4B"/>
+        <text x="390" y="252" text-anchor="middle" font-size="12" font-weight="700" fill="currentColor">ترويقة زمان — داخل البوليفارد</text>
+        <!-- Nawariyah district -->
+        <ellipse cx="430" cy="90" rx="120" ry="52" fill="#1B7A4B" opacity=".13"/>
+        <text x="430" y="95" text-anchor="middle" font-size="13.5" font-weight="700" fill="currentColor">حي النوارية — سكني ناشئ</text>
+      </svg>
+      <div class="legend">
+        <span><i style="background:#E8760C"></i> المحطة والموقع</span>
+        <span><i style="background:#9A8674"></i> طريق المدينة</span>
+        <span><i style="background:#1B7A4B"></i> النطاق السكني المجاور</span>
+      </div>
+    </div>
+
+    <div class="grid-3">
+      <div class="card"><h3><span class="ico">🛣️</span>موقع عبور لا مقصد</h3><div class="body"><p>الموقع على شريان سفر إقليمي: الجمهور الأكبر <b>عابر</b> (حجاج ومعتمرون ومسافرون بين مكة والمدينة)، يتوقف لدقائق للتزود بالوقود. سلوك الشراء هنا «التقاط سريع»، لا جلسة مطعم — وهذا يجب أن ينعكس على المنتج والعرض.</p></div></div>
+      <div class="card"><h3><span class="ico">🏘️</span>حوض سكاني ناشئ</h3><div class="body"><p>حي النوارية حي أطراف ناشئ متوسط الكثافة؛ الطلب المحلي على الفطور موجود (عائلات، عمالة، موظفو المحطة) لكنه لا يكفي وحده لتشغيل فرع بطاقة كاملة — يحتاج تفعيل توصيل وعروض حي.</p></div></div>
+      <div class="card"><h3><span class="ico">🕰️</span>نافذة ذهبية صباحية</h3><div class="body"><p>ميزة الموقع الحقيقية: المغادرون من مكة إلى المدينة ينطلقون غالبًا <b>بعد الفجر وحتى الضحى</b> — وهي نفسها نافذة «الترويقة». المطعم واقف على آخر نقطة فطور قبل طريق طويل، وهذه الميزة غير مستثمَرة تسويقيًا.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="kicker">ثانيًا</div>
+    <h2 class="sec-title">ماذا تقول بيانات خرائط قوقل؟</h2>
+    <p class="sec-note">حسب البيانات المتاحة للفرع (ترويقة زمان — النوارية): تقييم <b>4.1 من 5</b> من <b>14 تقييمًا فقط</b>. المضمون المتكرر في المراجعات إيجابي: نظافة، سرعة خدمة، لطف موظفين، أسعار مناسبة، وجودة في الفول والحمص والفلافل.</p>
+    <div class="grid-2">
+      <div class="card factor sev-low"><h3><span class="ico">✅</span>المنتج ليس هو المشكلة</h3><div class="body"><p>لا توجد شكاوى نمطية عن الجودة أو النظافة أو المعاملة. تقييم 4.1 مع مراجعات مادحة يعني أن من يصل إلى المطعم يرضى عنه — فالمشكلة إذن في <b>عدد من يصل</b>، لا في تجربة من وصل.</p></div></div>
+      <div class="card factor sev-high"><h3><span class="ico">📉</span>الظهور الرقمي هو العنق</h3><div class="body"><p><b>14 تقييمًا فقط</b> رقم بالغ الضعف لموقع أمامه 4,300 مركبة/ساعة. المسافر يبحث عن «فطور قريب مني» فتتصدر مطاعم أعلى تقييمًا وعددًا، ويبقى الفرع غير مرئي خوارزميًا رغم موقعه الفيزيائي الممتاز. كما يُحتمل تشتت التقييمات بين أكثر من إدراج (فرع بنده النوارية / فرع المحطة).</p></div></div>
+    </div>
+    <div class="note">⚠️ منهجية: تعذّر سحب النصوص الكاملة لكل مراجعة آليًا في هذه الجلسة (حجبت خرائط قوقل ومواقع الأدلة الجلب المباشر، ولم تُستخدم أداة السحب الخارجية بعد رفض تشغيلها). الأرقام أعلاه من ملخصات أدلة المطاعم ونتائج البحث المنشورة. يُوصى بتصدير المراجعات رسميًا من لوحة Google Business Profile للفرع لتأكيد التفاصيل نصيًا.</div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kicker">ثالثًا</div>
+    <h2 class="sec-title">تشخيص انخفاض المبيعات — مرتّب حسب الأثر</h2>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><div class="card factor sev-high"><h3>المحطة نفسها ما زالت في طور النضج <span class="sev sev-h">أثر مرتفع</span></h3><div class="body"><p>المرحلة الأولى افتُتحت أواخر 2025 والوحدات تفتتح تباعًا (بنده، رو، ريشيو…). حركة الأقدام في أي بوليفارد جديد تحتاج 12–18 شهرًا لتبلغ طاقتها، وأعمال الاستكمال المتبقية تُضعف قرار التوقف لدى العابرين. جزء من الانخفاض <b>دورة حياة طبيعية</b> للموقع لا خلل في المطعم.</p></div></div></div>
+      <div class="step"><div class="n">2</div><div class="card factor sev-high"><h3>ضعف الظهور على الخرائط <span class="sev sev-h">أثر مرتفع</span></h3><div class="body"><p>14 تقييمًا لا تُدخل الفرع في نتائج «الأفضل قربي» التي يعتمد عليها المسافر وساكن الحي معًا. غياب الصور المحدّثة والمنيو والرد على المراجعات يخفض الترتيب أكثر. هذه أسرع رافعة إصلاح وأرخصها.</p></div></div></div>
+      <div class="step"><div class="n">3</div><div class="card factor sev-med"><h3>عدم التقاط العميل داخل المحطة <span class="sev sev-m">أثر متوسط</span></h3><div class="body"><p>في محطة بمساحة 120 ألف م² و68 وحدة، من يتوقف عند المضخة قد لا يعلم أصلًا بوجود المطعم. غياب اللافتات الموجِّهة من المضخات والمداخل إلى وحدة المطعم، وغياب عرض «سيارة/سفري» سريع، يعني خسارة الجمهور الأكبر: المتوقف لدقائق.</p></div></div></div>
+      <div class="step"><div class="n">4</div><div class="card factor sev-med"><h3>الموسمية: صفر 1448 <span class="sev sev-m">أثر متوسط</span></h3><div class="body"><p>يوليو 2026 يوافق صفر 1448 — تقليديًا أضعف فترات العمرة والحركة بين الحرمين بعد ذروة الحج. الانخفاض الحالي يتضخم موسميًا، ويتوقع تحسن طبيعي مع ربيع الأول والمواسم الدراسية ثم رمضان.</p></div></div></div>
+      <div class="step"><div class="n">5</div><div class="card factor sev-low"><h3>تموضع «الفطور» مقابل ذروة المساء <span class="sev sev-l">أثر منخفض</span></h3><div class="body"><p>ذروة المرور على الطريق مسائية أيضًا، ومفهوم «الترويقة» صباحي الهوية. لا يُنصح بتغيير الهوية، بل بإضافة نافذة مسائية خفيفة (عشاء شعبي/ساندويتشات سفر) لرفع استغلال الإيجار على مدار اليوم.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="kicker">رابعًا</div>
+    <h2 class="sec-title">خطة معالجة — 90 يومًا</h2>
+    <div class="tbl-scroll">
+    <table>
+      <tr><th>الإجراء</th><th>التفصيل</th><th>المدى</th><th>مؤشر النجاح</th></tr>
+      <tr><td>إصلاح الإدراج على الخرائط</td><td>توحيد إدراج الفرع (اسم + إحداثيات المحطة الصحيحة)، صور احترافية، منيو بالأسعار، ساعات دقيقة، ورد على كل مراجعة</td><td>أسبوعان</td><td>اكتمال الملف 100%</td></tr>
+      <tr><td>حملة تقييمات</td><td>QR على الطاولات والفواتير بحافز بسيط (شاهي مجاني مثلًا) — الهدف تجاوز 200 تقييم مع الحفاظ على +4.3</td><td>90 يومًا</td><td>200+ تقييم</td></tr>
+      <tr><td>التقاط داخل المحطة</td><td>لوحات من المضخات والمداخل نحو المطعم، وعرض «بوكس المسافر» (فول/فلافل + شاهي) يُسلَّم خلال 5 دقائق</td><td>30 يومًا</td><td>مبيعات البوكس/يوم</td></tr>
+      <tr><td>استثمار نافذة الفجر–الضحى</td><td>تموضع «آخر ترويقة قبل المدينة»: فتح مبكر، لافتة طريق قبل المحطة، وعرض جماعي لباصات العمرة والسائقين</td><td>45 يومًا</td><td>مبيعات 5–11 صباحًا</td></tr>
+      <tr><td>تفعيل حي النوارية</td><td>تغطية تطبيقات التوصيل بنطاق الحي مع عرض إطلاق، وعروض نهاية أسبوع للعائلات</td><td>30 يومًا</td><td>طلبات التوصيل/أسبوع</td></tr>
+      <tr><td>نافذة مسائية خفيفة</td><td>منيو عشاء شعبي مصغّر يواكب ذروة المرور المسائية دون المساس بهوية الفطور</td><td>60 يومًا</td><td>إيراد ما بعد العصر</td></tr>
+    </table>
+    </div>
+    <div class="note">📌 التوصية الحاكمة: المشكلة <b>وصول وظهور</b> لا منتج. قبل أي قرار انكماشي (تقليص ساعات/عمالة)، تُستنفد رافعتا الظهور الرقمي والالتقاط داخل المحطة، ويُعاد قياس الأداء بعد موسم صفر مباشرة — فالمقارنة العادلة تكون بربيع الأول، لا بذروة الحج.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>إعداد: فريق التحليل — درب للوقود · بيانات: خرائط قوقل وأدلة المطاعم المنشورة والحسابات الرسمية للمحطة</span>
+    <span class="tnum" dir="ltr">21.546272°N, 39.779916°E · يوليو 2026</span>
+  </div>
+</footer>
