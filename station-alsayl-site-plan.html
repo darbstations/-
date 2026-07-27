@@ -1,0 +1,272 @@
+<title>مشروع السيل — المخطط العام المبسّط (الوضع التأجيري)</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --bg:#FBF6EF; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674; --line:#E4D6C4;
+  --surface:#FFFFFF; --amber:#E8760C; --amber-2:#C85E05;
+  --green:#1B7A4B; --green-deep:#14513A; --green-soft:#DFF0E5;
+  --vac:#C77414; --vac-deep:#9A5B0B; --vac-soft:#FDEBD3;
+  --mass:#F2EDE4; --mass-line:#9C8C79;
+  --cnp:#E7EEF5; --cnp-line:#5B7FA6;
+  --veg:#CDE8C0; --veg-line:#3D8B37;
+  --road:#EFE8DA; --road-line:#C9BFA9;
+  --plot:#C6486B;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.45);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#17100A; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C; --line:#332417;
+        --shadow:0 18px 44px -20px rgba(0,0,0,.7)}
+}
+:root[data-theme="light"]{--bg:#FBF6EF; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674; --line:#E4D6C4}
+:root[data-theme="dark"]{--bg:#17100A; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C; --line:#332417}
+*{box-sizing:border-box}
+body{margin:0; direction:rtl; background:var(--bg); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif; line-height:1.6}
+.wrap{max-width:1240px; margin:0 auto; padding:26px 20px 46px}
+.tnum{font-variant-numeric:tabular-nums}
+
+/* ===== header ===== */
+.head{display:flex; align-items:center; gap:14px; flex-wrap:wrap; margin-block-end:6px}
+.mark{display:inline-flex; align-items:center; gap:11px; font-weight:800}
+.mark .glyph{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:0 8px 18px -8px rgba(232,118,12,.8);
+  font-size:22px; color:#fff}
+.mark b{font-size:19px}
+.mark span{display:block; font-size:11px; font-weight:600; color:var(--ink-3); letter-spacing:2px}
+.head .sep{flex:1}
+.chip{font-size:12.5px; font-weight:700; border:1px solid var(--line); background:var(--surface);
+  color:var(--ink-2); padding:6px 13px; border-radius:100px}
+.chip.hot{color:#B3261E; border-color:#E8B4B0; background:#FDEFEE}
+.chip.hot::before{content:"● "; font-size:10px}
+h1{margin:14px 0 4px; font-size:clamp(24px,4vw,34px); font-weight:800; letter-spacing:-.4px}
+.sub{margin:0; color:var(--ink-2); font-size:15px; max-width:72ch}
+
+/* ===== legend ===== */
+.legend{display:flex; gap:8px 14px; flex-wrap:wrap; margin:18px 0 12px; align-items:center}
+.lg{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:600; color:var(--ink-2)}
+.sw{inline-size:15px; block-size:11px; border-radius:3px; border:1.6px solid}
+.sw.lease{background:var(--green-soft); border-color:var(--green)}
+.sw.vac{background:var(--vac-soft); border-color:var(--vac)}
+.sw.mass{background:var(--mass); border-color:var(--mass-line)}
+.sw.cnp{background:var(--cnp); border-color:var(--cnp-line)}
+.sw.veg{background:var(--veg); border-color:var(--veg-line)}
+.sw.park{background:#F7F3EB; border-color:#B9AD97; border-style:dashed}
+.sw.plot{background:transparent; border:none; block-size:0; border-block-start:3px solid var(--plot); border-radius:0}
+.sw.road{background:var(--road); border-color:var(--road-line)}
+
+/* ===== sheet ===== */
+.sheet{background:#FFFDF9; border:1px solid var(--line); border-radius:16px; box-shadow:var(--shadow);
+  padding:clamp(8px,2vw,22px); overflow-x:auto}
+.sheet svg{display:block; inline-size:100%; block-size:auto; min-inline-size:640px}
+svg text{font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif}
+.u{cursor:default}
+.u:hover{filter:brightness(.95)}
+
+/* ===== occupancy strip ===== */
+.occ{display:flex; gap:10px; flex-wrap:wrap; margin-block-start:16px}
+.pill{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700;
+  padding:8px 14px; border-radius:100px; border:1px solid}
+.pill.ok{color:var(--green-deep); background:var(--green-soft); border-color:#BCDCC9}
+.pill.no{color:var(--vac-deep); background:var(--vac-soft); border-color:#F2D3A8}
+.pill small{font-weight:600; opacity:.85}
+.note{margin-block-start:16px; font-size:12px; color:var(--ink-3); max-width:110ch; line-height:1.8}
+@media print{
+  @page{size:A3; margin:10mm}
+  body{background:#fff}
+  .wrap{max-width:none; padding:0}
+  .sheet{box-shadow:none; border-color:#ddd}
+}
+</style>
+
+<div class="wrap">
+  <div class="head">
+    <span class="mark"><span class="glyph">🛣️</span><span><b>محطة درب</b><span>DARB STATION</span></span></span>
+    <span class="sep"></span>
+    <span class="chip">📍 مشروع السيل</span>
+    <span class="chip hot">تم التحديث</span>
+  </div>
+  <h1>مخطط مشروع السيل — النسخة المبسّطة</h1>
+  <p class="sub">المخطط العام للموقع بعد تفريغه من خطوط الأوتوكاد التفصيلية: بقيت حدود القطعة، الكتل الرئيسية، والوضع التأجيري للوحدات كما دُوِّن في آخر تحديث.</p>
+
+  <div class="legend">
+    <span class="lg"><span class="sw lease"></span> مؤجَّر</span>
+    <span class="lg"><span class="sw vac"></span> شاغر</span>
+    <span class="lg"><span class="sw mass"></span> مبانٍ ووحدات (غير محدّدة الحالة)</span>
+    <span class="lg"><span class="sw cnp"></span> مظلات وهياكل خدمية</span>
+    <span class="lg"><span class="sw veg"></span> مسطحات خضراء</span>
+    <span class="lg"><span class="sw park"></span> مواقف</span>
+    <span class="lg"><span class="sw plot"></span> حد القطعة</span>
+    <span class="lg"><span class="sw road"></span> الشارع</span>
+  </div>
+
+  <div class="sheet">
+  <svg viewBox="70 100 1120 990" role="img" aria-label="مخطط الموقع العام لمشروع السيل">
+    <defs>
+      <pattern id="hatch" width="8" height="8" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+        <rect width="8" height="8" fill="#EFF4F9"/>
+        <line x1="0" y1="0" x2="0" y2="8" stroke="#9FB6CE" stroke-width="1.6"/>
+      </pattern>
+      <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0,0 L10,5 L0,10 Z" fill="#8A7A6A"/>
+      </marker>
+    </defs>
+
+    <!-- ======= الشارع ======= -->
+    <g class="u"><title>الشارع العام</title>
+      <polygon points="124,948 206,1000 952,930 966,988 216,1062 108,1002" fill="#EFE8DA" stroke="#C9BFA9" stroke-width="1.5"/>
+      <line x1="212" y1="1031" x2="946" y2="959" stroke="#B7AC94" stroke-width="2" stroke-dasharray="14 10"/>
+      <text x="560" y="1052" transform="rotate(-5.4 560 1052)" font-size="15" letter-spacing="6" fill="#8A7264" text-anchor="middle" font-weight="700">الــشــارع</text>
+    </g>
+    <!-- نخيل الرصيف -->
+    <g fill="#3D8B37" stroke="#2A5F26" stroke-width="1">
+      <circle cx="260" cy="1025" r="7"/><circle cx="340" cy="1017" r="7"/><circle cx="420" cy="1009" r="7"/>
+      <circle cx="500" cy="1001" r="7"/><circle cx="580" cy="993.6" r="7"/><circle cx="660" cy="985.7" r="7"/>
+      <circle cx="740" cy="977.8" r="7"/><circle cx="820" cy="969.9" r="7"/>
+    </g>
+
+    <!-- ======= أرضية القطعة وحدودها ======= -->
+    <polygon points="124,948 120,382 364,192 670,133 766,142 1165,231 952,930 206,1000"
+      fill="#FDFBF7" stroke="var(--plot,#C6486B)" stroke-width="3.5" stroke-linejoin="round"/>
+    <g fill="#C6486B">
+      <circle cx="124" cy="948" r="4.5"/><circle cx="120" cy="382" r="4.5"/><circle cx="364" cy="192" r="4.5"/>
+      <circle cx="670" cy="133" r="4.5"/><circle cx="766" cy="142" r="4.5"/><circle cx="1165" cy="231" r="4.5"/>
+      <circle cx="952" cy="930" r="4.5"/><circle cx="206" cy="1000" r="4.5"/>
+    </g>
+
+    <!-- ======= أبعاد الحدود (كما دُوِّنت يدوياً) ======= -->
+    <g fill="#A63B5C" font-weight="700" font-size="15" class="tnum">
+      <text x="100" y="660" transform="rotate(-90 100 660)" text-anchor="middle">١٥٩٫٠٠ م</text>
+      <text x="1104" y="522" transform="rotate(-73 1104 522)" text-anchor="middle">١٥٠٫٨٠ م</text>
+      <text x="998" y="874" transform="rotate(-73 998 874)" text-anchor="middle">٣٣٫٠٠ م</text>
+    </g>
+    <line x1="984.4" y1="795.7" x2="999.6" y2="800.3" stroke="#C6486B" stroke-width="2.5"/>
+
+    <!-- ======= مظلات وهياكل خدمية ======= -->
+    <g class="u"><title>مظلة خدمية</title>
+      <polygon points="405.1,204.4 664.4,154.5 670.8,187.9 411.5,237.8" fill="var(--cnp,#E7EEF5)" stroke="#5B7FA6" stroke-width="1.6"/>
+    </g>
+    <g class="u"><title>مظلة (خط متقطع بالمخطط الأصلي)</title>
+      <polygon points="429.7,242.5 635.9,202.8 642.7,238.1 436.5,277.8" fill="none" stroke="#5B7FA6" stroke-width="1.6" stroke-dasharray="6 4"/>
+    </g>
+    <g class="u"><title>مظلات مائلة</title>
+      <polygon points="777.5,159 938.6,194.9 927.7,243.7 766.6,207.8" fill="url(#hatch)" stroke="#5B7FA6" stroke-width="1.4"/>
+    </g>
+    <g class="u"><title>هيكل خدمي على المحور الشرقي</title>
+      <polygon points="1045.3,445.3 963.8,713.1 929.3,702.6 1010.9,434.8" fill="var(--cnp,#E7EEF5)" stroke="#5B7FA6" stroke-width="1.4"/>
+    </g>
+    <!-- جزيرة الخدمة الوسطى (متقطعة بالأصل) -->
+    <g class="u"><title>جزيرة خدمة — مظلة متقطعة بالمخطط الأصلي</title>
+      <rect x="720" y="618" width="92" height="262" fill="none" stroke="#5B7FA6" stroke-width="1.6" stroke-dasharray="7 5"/>
+      <g fill="#DCE6F2" stroke="#5B7FA6" stroke-width="1">
+        <rect x="732" y="634" width="68" height="12" rx="2"/><rect x="732" y="670" width="68" height="12" rx="2"/>
+        <rect x="732" y="706" width="68" height="12" rx="2"/><rect x="732" y="742" width="68" height="12" rx="2"/>
+        <rect x="732" y="778" width="68" height="12" rx="2"/><rect x="732" y="814" width="68" height="12" rx="2"/>
+        <rect x="732" y="850" width="68" height="12" rx="2"/>
+      </g>
+    </g>
+
+    <!-- ======= مبانٍ ووحدات غير محددة الحالة ======= -->
+    <g fill="var(--mass,#F2EDE4)" stroke="#9C8C79" stroke-width="1.5">
+      <g class="u"><title>وحدات — الحالة غير محددة</title><polygon points="184,432 320,376 332,404 196,460"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><polygon points="196,472 332,416 344,444 208,500"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><rect x="546" y="288" width="142" height="56" rx="2"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><rect x="696" y="288" width="148" height="56" rx="2"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><rect x="546" y="366" width="86" height="70" rx="2"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><rect x="692" y="366" width="68" height="70" rx="2"/></g>
+      <g class="u"><title>مبنى — الحالة غير محددة</title><rect x="862" y="350" width="140" height="116" rx="2"/></g>
+      <g class="u"><title>مبنى — الحالة غير محددة</title><rect x="172" y="512" width="92" height="362" rx="2"/></g>
+      <g class="u"><title>وحدات — الحالة غير محددة</title><rect x="488" y="850" width="144" height="44" rx="2"/></g>
+      <g class="u"><title>وحدة — الحالة غير محددة</title><rect x="862" y="890" width="36" height="26" rx="2" transform="rotate(-5.35 880 903)"/></g>
+    </g>
+
+    <!-- ======= مسطحات خضراء ======= -->
+    <g fill="var(--veg,#CDE8C0)" stroke="#3D8B37" stroke-width="1.2">
+      <g class="u"><title>مسطح أخضر</title><polygon points="356,380 448,372 448,436 368,438"/></g>
+      <g class="u"><title>مسطح أخضر</title><rect x="636" y="366" width="52" height="70"/></g>
+      <g class="u"><title>مسطح أخضر</title><rect x="764" y="366" width="76" height="70"/></g>
+      <g class="u"><title>مسطح أخضر</title><rect x="902" y="494" width="80" height="66"/></g>
+      <g class="u"><title>فناء أخضر</title><rect x="182" y="552" width="64" height="56"/></g>
+    </g>
+
+    <!-- ======= مواقف ======= -->
+    <g class="u"><title>مواقف سيارات</title>
+      <rect x="344" y="446" width="496" height="34" rx="6" fill="#F7F3EB" stroke="#B9AD97" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <text x="592" y="468" text-anchor="middle" font-size="13" letter-spacing="3" fill="#8A7A6A" font-weight="700">مواقف</text>
+    </g>
+    <g class="u"><title>مواقف سيارات</title>
+      <rect x="312" y="510" width="140" height="214" rx="6" fill="#F7F3EB" stroke="#B9AD97" stroke-width="1.6" stroke-dasharray="4 4"/>
+      <text x="424" y="622" text-anchor="middle" font-size="13" letter-spacing="3" fill="#8A7A6A" font-weight="700" transform="rotate(-90 424 622)">مواقف</text>
+      <g fill="#CDE8C0" stroke="#3D8B37" stroke-width="1">
+        <rect x="336" y="528" width="22" height="22"/><rect x="336" y="568" width="22" height="22"/>
+        <rect x="336" y="608" width="22" height="22"/><rect x="336" y="648" width="22" height="22"/>
+        <rect x="336" y="688" width="22" height="22"/>
+      </g>
+    </g>
+
+    <!-- ======= الوحدات المؤجرة ======= -->
+    <g class="u"><title>مؤجَّر — أسواق تهامة</title>
+      <rect x="502" y="628" width="132" height="222" rx="3" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" stroke-width="2.2"/>
+      <rect x="540" y="646" width="56" height="23" rx="11.5" fill="#1B7A4B"/>
+      <text x="568" y="662.5" text-anchor="middle" font-size="12.5" font-weight="700" fill="#fff">مؤجر</text>
+      <text x="568" y="730" text-anchor="middle" font-size="21" font-weight="800" fill="#14513A">أسواق</text>
+      <text x="568" y="760" text-anchor="middle" font-size="21" font-weight="800" fill="#14513A">تهامة</text>
+    </g>
+    <g class="u"><title>مؤجَّر</title>
+      <polygon points="862,606 944,606 918,806 862,806" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" stroke-width="2.2"/>
+      <text x="899" y="706" text-anchor="middle" font-size="16" font-weight="800" fill="#14513A" transform="rotate(-90 899 706)">مؤجر</text>
+    </g>
+
+    <!-- ======= الوحدات الشاغرة (وسط الموقع) ======= -->
+    <g class="u"><title>شاغر</title>
+      <rect x="310" y="800" width="52" height="58" rx="3" fill="var(--vac-soft,#FDEBD3)" stroke="#C77414" stroke-width="2"/>
+      <text x="336" y="834" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9A5B0B">شاغر</text>
+    </g>
+    <g class="u"><title>شاغر</title>
+      <rect x="390" y="800" width="52" height="58" rx="3" fill="var(--vac-soft,#FDEBD3)" stroke="#C77414" stroke-width="2"/>
+      <text x="416" y="834" text-anchor="middle" font-size="12.5" font-weight="800" fill="#9A5B0B">شاغر</text>
+    </g>
+
+    <!-- ======= وحدات الواجهة الجنوبية ======= -->
+    <g stroke-width="2">
+      <g class="u"><title>شاغر</title>
+        <rect x="268" y="942" width="46" height="34" rx="2" fill="var(--vac-soft,#FDEBD3)" stroke="#C77414" transform="rotate(-5.35 291 959)"/></g>
+      <g class="u"><title>مؤجَّر — لاباز</title>
+        <rect x="356" y="933.8" width="46" height="34" rx="2" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" transform="rotate(-5.35 379 950.8)"/></g>
+      <g class="u"><title>مؤجَّر — شاي خادر</title>
+        <rect x="420" y="927.8" width="46" height="34" rx="2" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" transform="rotate(-5.35 443 944.8)"/></g>
+      <g class="u"><title>مؤجَّر — تايقر</title>
+        <rect x="488" y="921.4" width="46" height="34" rx="2" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" transform="rotate(-5.35 511 938.4)"/></g>
+      <g class="u"><title>مؤجَّر — كويك سيب</title>
+        <rect x="556" y="915" width="46" height="34" rx="2" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" transform="rotate(-5.35 579 932)"/></g>
+      <g class="u"><title>مؤجَّر — بيرفكتو</title>
+        <rect x="664" y="904.9" width="46" height="34" rx="2" fill="var(--green-soft,#DFF0E5)" stroke="#1B7A4B" transform="rotate(-5.35 687 921.9)"/></g>
+    </g>
+    <g font-size="12.5" font-weight="800" text-anchor="middle">
+      <text x="291" y="934" fill="#9A5B0B">شاغر</text>
+      <text x="379" y="925.8" fill="#14513A">لاباز</text>
+      <text x="443" y="919.8" fill="#14513A">شاي خادر</text>
+      <text x="511" y="913.4" fill="#14513A">تايقر</text>
+      <text x="579" y="907" fill="#14513A">كويك سيب</text>
+      <text x="687" y="896.9" fill="#14513A">بيرفكتو</text>
+    </g>
+
+    <!-- ======= المداخل ======= -->
+    <g stroke="#8A7A6A" stroke-width="2.4" fill="none">
+      <line x1="226" y1="1024" x2="236" y2="992" marker-end="url(#arr)"/>
+      <line x1="921" y1="968" x2="911" y2="940" marker-end="url(#arr)"/>
+    </g>
+    <g font-size="11.5" font-weight="700" fill="#8A7A6A" text-anchor="middle">
+      <text x="214" y="1040">مدخل</text>
+      <text x="936" y="984">مدخل</text>
+    </g>
+  </svg>
+  </div>
+
+  <div class="occ">
+    <span class="pill ok">المؤجَّر (٧ وحدات) <small>— أسواق تهامة، بيرفكتو، كويك سيب، تايقر، شاي خادر، لاباز، جناح الواجهة الشرقية</small></span>
+    <span class="pill no">الشاغر (٣ وحدات) <small>— كشكان وسط الموقع + وحدة على الواجهة الجنوبية</small></span>
+  </div>
+
+  <p class="note">أُعيد إنتاج هذا المخطط من نسخة الأوتوكاد المحدَّثة يدوياً بعد حذف خطوط الأبعاد الإنشائية وأسهم حركة السير ورموز المواقف التفصيلية، مع الإبقاء على حدود القطعة والكتل الرئيسية وحالة التأجير وأسماء المستأجرين كما دُوِّنت. الأبعاد الظاهرة (١٥٩٫٠٠ / ١٥٠٫٨٠ / ٣٣٫٠٠ م) منقولة من التدوين اليدوي، وأُسقطت الأرقام غير المقروءة في الأصل. المخطط توضيحي للتأجير والعرض وليس للقياس الهندسي.</p>
+</div>
