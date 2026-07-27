@@ -1,0 +1,2182 @@
+[
+ {
+  "num": "MK001",
+  "city": "مكة",
+  "name": "جبل النور",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/bLQ8Rk8NXVCu52ic7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK002",
+  "city": "مكة",
+  "name": "المعيصم",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/F45v54bDzqzHCT3t9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK003",
+  "city": "مكة",
+  "name": "العوالي",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/6qVC9TAckzxgxKAE8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK008",
+  "city": "مكة",
+  "name": "الحسينية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/AgQKFt6mX7ik9p586",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK007",
+  "city": "مكة",
+  "name": "العمرة الجديدة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/kfbiarxj5P9wHUbN9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK014",
+  "city": "مكة",
+  "name": "خليص",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/vFwDFJo3wzNUB5wHA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK016",
+  "city": "مكة",
+  "name": "الرصيفة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/turBqiYgPn5MtySC7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK017",
+  "city": "مكة",
+  "name": "عرفات الشوقية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/29qAVLNJMJaAfqKX7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK018",
+  "city": "مكة",
+  "name": "الرصيفة المسار",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/TZYSA2igkYziBM9G8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK019",
+  "city": "مكة",
+  "name": "الشرايع",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/VDC152DbqzNfjsaA6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK020",
+  "city": "مكة",
+  "name": "ممشى الشوقية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/5dg9jTrY69K9FGfC9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK022",
+  "city": "مكة",
+  "name": "1بطحاء قريش",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/5X6YUHWPBh1GuEgL8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK023",
+  "city": "مكة",
+  "name": "بن درويش",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/t8KPRvutMzRvVrV78",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK029",
+  "city": "مكة",
+  "name": "الدائري الثالث-الذكرى",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/SPDW18ud8ZszM4Sr7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK031",
+  "city": "مكة",
+  "name": "2بطحاء قريش",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/5sGAEfc4vWWdpZDS6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK033",
+  "city": "مكة",
+  "name": "ابو وافي العمرة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/1UzEBBe17RRAH2M38",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK047",
+  "city": "مكة",
+  "name": "القادسية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/zNh3dypoRFRX16vY7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK049",
+  "city": "مكة",
+  "name": "السلولي",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/45LDeqE1syDZvbNq6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK064",
+  "city": "مكة",
+  "name": "جعرانه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/7bKLuzouMWks5XFEA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK068",
+  "city": "مكة",
+  "name": "الجموم - الكنيدري",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/sN6fSKP5jCHgU2vP9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK072",
+  "city": "مكة",
+  "name": "العزيزية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/FZHcAMvFdCfC8HdY7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK084",
+  "city": "مكة",
+  "name": "الكر النازل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/JKEzgBW8QCmiDywMA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK054",
+  "city": "مكة",
+  "name": "محطة طريق السيل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/ra2FeTjDM7SCDRFY8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK323",
+  "city": "مكة",
+  "name": "جبل ثور-جوهرة النسيم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/EbEkdV3DSoGxQJTi8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK257",
+  "city": "مكة",
+  "name": "الربوة مكة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Mji7fiQ8iX6WxWCF9?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK258",
+  "city": "مكة",
+  "name": "الستين مكة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/ZghKvLVfusUTTt656?g_st=iw",
+  "open": null,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK004",
+  "city": "الطائف",
+  "name": "عاصفة الصحراء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/A2BFSbroMH5SPbaY8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK005",
+  "city": "الطائف",
+  "name": "الشيباني",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/q5vjDvNzRWDUZXPX8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK006",
+  "city": "الطائف",
+  "name": "جنوب الطائف",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/BSajPNHHJchJyAUFA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK028",
+  "city": "الطائف",
+  "name": "احلى مساء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/MNyozB7qUzoJ5m3s6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK035",
+  "city": "الطائف",
+  "name": "الجمعية الوسام( طريق الملك فهد)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/KsUJR4js7yraMkoa8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK046",
+  "city": "الطائف",
+  "name": "الحليس(طريق الجنوب)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/VG5g8gwZSHEdxoGb8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK063",
+  "city": "الطائف",
+  "name": "السواط(شهار)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/pGagHfPk8rwvto5t8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK067",
+  "city": "الطائف",
+  "name": "تربه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/qPZMRQTHkY4XYcRt6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK093",
+  "city": "الطائف",
+  "name": "الملك خالد",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/dywgWoyDthxqK79U8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK099",
+  "city": "الطائف",
+  "name": "البيعه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/S4Wsqx2MYn8U9Zy27",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK015",
+  "city": "جدة",
+  "name": "النسيم",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/KHGrNchehzTG1ZQF8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK071",
+  "city": "جدة",
+  "name": "الاجاويد",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/g6TEPEq1mZXRZKgy5",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK100",
+  "city": "جدة",
+  "name": "الكوثر",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Ssp39Ck5qFinCSDQ6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK154",
+  "city": "جدة",
+  "name": "العليا-ابحر الشمالية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/2r9PkGupt6AJ5BjeA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK210",
+  "city": "جدة",
+  "name": "الفلاح-فلسطين",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/JYngJqtoAze9rnSq8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK300",
+  "city": "جدة",
+  "name": "بترولايز البغدادية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/6MuFMRYU1ogtLSDw6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK103",
+  "city": "جدة",
+  "name": "اكويلا فيول - المعلمي",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/KK4iz2cCBj5ZYB8H6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK216",
+  "city": "جدة",
+  "name": "الواحة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/eLGR6WpCW8veAsEX7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK223",
+  "city": "جدة",
+  "name": "     بترو لايز المساعدية  / الحمراء",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/FAJnLHzBz3AoNpR88",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK289",
+  "city": "جدة",
+  "name": "طريق الليث التعاون-الفضيلة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/YA2CGo79RBqmZJ9r5",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK311",
+  "city": "جدة",
+  "name": "قويزه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/VLy41ZGKdoLsa75h9",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA053",
+  "city": "جازان",
+  "name": "خبت نخلان(الملك عبد العزيز)-جيزان",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/YkC6JVTUNV23RsHk9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA060",
+  "city": "جازان",
+  "name": "صناعية صامطه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/RqeMiGTQwZLFK9TWA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA061",
+  "city": "جازان",
+  "name": "طريق صبيا",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/nkbnCNJKf9t67Gh66",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA069",
+  "city": "جازان",
+  "name": "كورنيش جيزان",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/yRaMgmjKChpZ4NH99",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA056",
+  "city": "جازان",
+  "name": "الروابي-المودة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/QL286Svw39DmRHTe8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA227",
+  "city": "جازان",
+  "name": "العارضة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/gSK5jaYLnJE9NAqSA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "   JA272",
+  "city": "جازان",
+  "name": "مسارات درب الزامل  ",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/5GtVhpuqwqN9tpKp9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA092",
+  "city": "جازان",
+  "name": "الصفا-محمد بن ناصر+ احد المسارحه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/WzGhdq43qgNmc4oRA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA302",
+  "city": "جازان",
+  "name": " ركن جاز الفرسان",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/TwaaBw3XssNaPeYVA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA256",
+  "city": "جازان",
+  "name": "ركن جاز الفطيحة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/XxckHc1WLygaHyME6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA041",
+  "city": "جازان",
+  "name": "القسوم-احد المسارحه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/e5SFPqYQrZWVuMtN9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA156",
+  "city": "جازان",
+  "name": "ركن جاز  العيدابي - لتركو",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/tv3zv7sCCcMaNgK86",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA207",
+  "city": "جازان",
+  "name": "الطالبي - الحقو",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/nwaLBc8ufwoSD66fA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA348",
+  "city": "جازان",
+  "name": "صبيا  / جازان",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/6zGnZoExbhnRshTFA",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY024",
+  "city": "الخرج",
+  "name": "غرناطة - الخرج طريق الملك عبد الله",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/pbkZubjPkrJmFh2u7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY025",
+  "city": "الخرج",
+  "name": "الحمرا - الخرج طريق الملك عبد الله",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/1BzRfUHenBam4M957",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY042",
+  "city": "الخرج",
+  "name": "الناصفة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Fe8EWjcMV9zZaWLX9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "BH065",
+  "city": "الباحة",
+  "name": "النزهه ",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/y8NbK4HXY8zziktK6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "AS081",
+  "city": "عسير",
+  "name": "العزيزيه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/rZbxrE8ah2viPrbo8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "As085",
+  "city": "عسير",
+  "name": "خيبر بيشة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/BLQW15tfJicdR6pw7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "AS271",
+  "city": "عسير",
+  "name": "مسارات درب عقبة شعار ",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/ojEhupJ43gt1t4ya7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "AS153",
+  "city": "عسير",
+  "name": "محطة مدخل محايل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/AQpXHJgg5NFXkJ9E8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY075",
+  "city": "الرياض",
+  "name": "الدايري الشمالي",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/5v2jRyYf2f5AxTJM6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY106",
+  "city": "الرياض",
+  "name": "نجم الدين الايوبي - طويق",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/KSDGQreydiMmc4FW6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "EP102",
+  "city": "الشرقية",
+  "name": "شارع أحد تاروت-القطيف",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/UXhZuXqHExhzERuP7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "EP051",
+  "city": "الشرقية",
+  "name": "كورنيش الخبر",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/A1qfBqxnAwN7WsX1A",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "HA043",
+  "city": "حائل",
+  "name": "العريفي",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/1gPTmdTse4b95yqs7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "QS055",
+  "city": "القصيم",
+  "name": "الدائري الشرقي",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/DZ5Zi4RE4ruQvbks7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD224",
+  "city": "المدينة المنورة",
+  "name": "محطة الجمعية العربية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/A6WV24sPNmREVdth8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD009",
+  "city": "المدينة المنورة",
+  "name": "طريق السلام",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/5WCGyZi9UzE63qig9",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "EP134",
+  "city": "حفر الباطن",
+  "name": "فيو الواحة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/ubE5wRvRAWtqw3Ya6",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "NP130\n",
+  "city": "طريف",
+  "name": "العقيلي -طريق الامير سلطان",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/JQGwPNxVayJDSy6J8",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "NP131",
+  "city": "طريف",
+  "name": "العقيلي- طريق ابو بكر",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/7U6C52p9whh4TQRNA",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "NJ219",
+  "city": "نجران",
+  "name": "المركب",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/mh5i4Y4xRfk8Qia69",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY201",
+  "city": "الرياض",
+  "name": "نبض- طنجة ظهرة البديعة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/FbEPSpHdT13bC1rW7",
+  "open": true,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA070",
+  "city": "جازان",
+  "name": "درب الجنوب الاولي - بندر عبده محمد الوائلي الظبية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/5H5BvhtmFHcafDEq9",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "AS192",
+  "city": "خميس مشيط ",
+  "name": "محطه الرؤيا-وادي هشبل ",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/jD5fQtzszsLJiPnWA",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "AS286",
+  "city": "محايل عسير",
+  "name": "صناعية محائل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/kS47kDuZtF4qk3Ph7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY083",
+  "city": "الرياض",
+  "name": "الحوميات",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/2iNRZpWjhRHtJ8TEA",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA141",
+  "city": "جازان",
+  "name": "الأمير سلطان-بيش",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/iTzJgvNgfxL969Xa8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK228",
+  "city": "جدة",
+  "name": "جدةالملك خالد - دلهام",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/pGvA6WHAnEDG6qYKA",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK310",
+  "city": "جدة",
+  "name": "الشاطئ-طريق الملك",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/PXRFijP57wDhWmsv5",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK040",
+  "city": "جدة",
+  "name": "درب - الروضة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/XQuDdN89iQwuypcu8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "JA059",
+  "city": "جازان",
+  "name": "طريق الملك فهد جازان",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/KFJDV4K6ES5Lc99t8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK027",
+  "city": "الطائف",
+  "name": "الصيانة-طريق المطار",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/VqaUChF4kZ61kKyT8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK205",
+  "city": "جدة",
+  "name": "نقز - الربوة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/CCLQLgVhi8K17gAs6",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK021",
+  "city": "الطائف",
+  "name": "الوسام",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/QJ1f1S5uDwjnJqpS7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK161",
+  "city": "جدة",
+  "name": "الحزم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/GcvQP8juzDvv9fCH7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD096",
+  "city": "المدينة المنورة",
+  "name": "الهجرة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/iswGWRoA42eBjot98",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK044",
+  "city": "مكة",
+  "name": "القنفذة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/zneq4Suk6S6HuhaWA",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK012",
+  "city": "جدة",
+  "name": "طيبه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/ocMcjELBvQdNUxv66",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK045",
+  "city": "المدينة المنورة",
+  "name": "مدينة الملك عبد الله-رابغ",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/joisDrohwu97AFSq5",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK066",
+  "city": "جدة",
+  "name": "الأمير فواز",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/p9fUyjYxet1CxAho7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY105",
+  "city": "الرياض",
+  "name": "طريق الأمير سعد",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/o15xCcg7CGxugHLE7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK326",
+  "city": "جدة",
+  "name": "محطة الحمدانية \n",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/MaBHHa4rns52j3i78",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK013",
+  "city": "مكة",
+  "name": "بن العباس_الشوقية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/shFeNsWTdu3RhLVR6",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK285",
+  "city": "جدة",
+  "name": "القرينية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/8pPoFyUoP6WFp77Z9",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK260",
+  "city": "جدة",
+  "name": "ابحر الشمالية-الزمرد ",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/VbuPbwAurYRhWwvq8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK037",
+  "city": "مكة",
+  "name": "الراشدية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/jqwDg3R2rnAJ2nh7A",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "BH050",
+  "city": "الباحة",
+  "name": "الاطاولة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/otDnU918RuKzYJ9f6",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "EP133",
+  "city": "حفر الباطن",
+  "name": "طريق الملك عبدالله",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/3sEhE7YJXCb1QYYf9",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD123",
+  "city": "المدينة المنورة",
+  "name": "محطة بترو بارك - المدينة المنورة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/YrXqZCH252rDfbhy8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK206",
+  "city": "جدة",
+  "name": "نقز - الاجواد",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/vu2xCHcwX9nnQ5Jh8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK080",
+  "city": "مكة",
+  "name": "طريق السيل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/wBSK8LDCyDdtChd86",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MK164",
+  "city": "مكة",
+  "name": "محطة ولي العهد 3",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/SYXiLrnChWyw3pbR8",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD011",
+  "city": "المدينة المنورة",
+  "name": "ابيار",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/yR9cUq3uG6LjSVnL7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "RY073",
+  "city": "الرياض",
+  "name": "القديه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/S28AFcAtZ6iMbsWk6",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "EP074",
+  "city": "حفر الباطن",
+  "name": "حي الورود",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/d9NNhKSGc7kSHGCt7",
+  "open": false,
+  "install": true,
+  "notes": null
+ },
+ {
+  "num": "MD194",
+  "city": "المدينة المنورة",
+  "name": "محطة النواة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/dcux79p4kbRCRQWU7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA155",
+  "city": "جازان",
+  "name": "محطة بترو بارك",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/6SoxhdNEQusm5Hty8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY200",
+  "city": "الرياض",
+  "name": "نبض - ثادج",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/qJPQ3niNBth7xSy48",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK217",
+  "city": "مكة",
+  "name": "محطة المظليف",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/GH5gA3WMpvw2akFx5",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "HA050",
+  "city": "حائل",
+  "name": "مطار حائل",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/iVcrbNvVuzTo9t1Z6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "BH126",
+  "city": "الباحة",
+  "name": "محطة الحميدان\n",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Wkjbi6yitiLmn8Hw5",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK127",
+  "city": "جدة",
+  "name": "درب بحره",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/cKhGikzMLtDYUERz7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA094",
+  "city": "جازان",
+  "name": "الكربوس (محطة الزهور )",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/9A6DhgdgX5JJP3Tc6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY338",
+  "city": "الرياض",
+  "name": "محطة التعاون",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/1zPP73Je2JX63L7D7",
+  "open": null,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "HA052",
+  "city": "حائل",
+  "name": "الأمير سعود",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/7rLf2km3YaNFWczT8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP349",
+  "city": "الاحساء",
+  "name": "-",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/UZFGfLzcm1RybF9X8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP301",
+  "city": "الدمام",
+  "name": "الدمام Dammam",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/zitgCWWv7i49hGfE6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "NJ350",
+  "city": "نجران",
+  "name": "زهرة الجنوب 1",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/DoWTAFDofn161kAB8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP337",
+  "city": "الاحساء",
+  "name": "الحزام الذهبي الاحساء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/otwR4QfnHxzNmupX8",
+  "open": null,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP335",
+  "city": "الاحساء",
+  "name": "النزهة الاحساء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/1zcJjJu2kKzyVY5A9",
+  "open": null,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS255",
+  "city": "عسير",
+  "name": "طريق الستين (نوره الشهراني)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/nDthCDjGWYNbbwmH9",
+  "open": null,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP299",
+  "city": "الشرقية",
+  "name": "طريق قبه",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/DDVGtRLmmKmtDmbW8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK313",
+  "city": "جدة",
+  "name": "محطة الصفا",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/sqxLEPe4f65M3zap9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS124",
+  "city": "عسير",
+  "name": "الصفاء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/nDthCDjGWYNbbwmH9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK091",
+  "city": "الطائف",
+  "name": "محطة السر",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/yerUfVj9bD4QEe8EA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA188",
+  "city": "جازان",
+  "name": "محطة طريق الملك عبدالعزيز بيش",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/kFaCyVcBrNHtfJbP9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS197",
+  "city": "خميس مشيط ",
+  "name": "سوق الاشواق",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/H3FXBLrscK7MuVMi8?g_st=iwb",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK191",
+  "city": "جدة",
+  "name": "الربوة التلاتين",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/iQqyGmzGnZoTPXJZ7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK318",
+  "city": "الطائف",
+  "name": "محطة الدغمية الخرمة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/jRGzT2WTT9RLMtyW8?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "QS319",
+  "city": "القصيم",
+  "name": "محطة قرطبة - سنيدي-بريدة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/uBy8D3pGmFDJbzhe7?g_st=iwb",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK082",
+  "city": "جدة",
+  "name": "امنيتي(اسكان المدائن)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/N1MANVkueVHiNiaA9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP324",
+  "city": "الشرقية",
+  "name": "رمكو الصفوي",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/DoG1TRwUnfwRCAiA8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "تحت التوثيق",
+  "city": "جدة",
+  "name": "هدى الشام",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/gJzqJGP7kqZYANnJ7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA259",
+  "city": "جازان",
+  "name": "الخالدية ضمد",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/hgHPTcUW7AzH14qi9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK104",
+  "city": "جدة",
+  "name": "الخمرة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/wafLDdDYn5fJN1MSA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK142",
+  "city": "مكة",
+  "name": "عين شمس",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/qLxsVNwmPgPjbY3x5",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "NJ145",
+  "city": "نجران",
+  "name": "المندفق",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/M191MVsHVfjdruWT9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "NA190",
+  "city": "نجران",
+  "name": "الحصينية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/36VxhrTjhdymRsbH8?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS225",
+  "city": "عسير",
+  "name": "محطة الفلاح-بيشة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/oYrzRZnB99YUSHHL8?g_st=ipc",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK190",
+  "city": "مكة",
+  "name": "قديد",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/bUJoRzFuvE2aDurg6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MD097",
+  "city": "المدينة المنورة",
+  "name": "الامام مسلم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/4HfgXeGBMgEUbd6T9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA026",
+  "city": "جازان",
+  "name": "الكربوس - طريق الملك فيصل",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/R3Aa4yeRXbAZwHQY9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS211",
+  "city": "عسير",
+  "name": "المطار القديم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/L5JQLynd7CyAq3Z6A",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS212",
+  "city": "عسير",
+  "name": "محايل عسر الياسمين",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/QoBjhUkvG1Rjfpk86",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "BH253",
+  "city": "الباحة",
+  "name": "مثلث الأطاولة العقيق",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/wJBoXRVdbjaBY5hEA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "BH108",
+  "city": "الباحة",
+  "name": "بني عدوان (شمرخ)",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/8vimUHzMhPU99jax8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY095",
+  "city": "الخرج",
+  "name": "السفير 4 (الهداء)",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/DHvJhe9X5a6iZ89r6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY076",
+  "city": "الخرج",
+  "name": "السحاب",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/HrfFWthkCngyizuv5",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY077",
+  "city": "الخرج",
+  "name": "السفير 1 ( طويق الزاهر )",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/23UjZ3bbbUE6WBsJ6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "HA109",
+  "city": "حائل",
+  "name": "المدائن - حائل",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/tRqKHwixcqpCmMte6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "Mk284",
+  "city": "مكة",
+  "name": "محطة بتروتن مكة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/uEx98XyhDp7bGTYDA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JO251",
+  "city": "الجوف",
+  "name": "محطة الريان - الجوف",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/rSbZF4Bnh2AfNLYZ8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JO281",
+  "city": "الجوف",
+  "name": "القريات - النسيم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/V9KwM4ksGvsw5V2s6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JO298",
+  "city": "الجوف",
+  "name": "القريات - الصناعية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/rYLzFeLEJAmZmDC4A",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP315",
+  "city": "الشرقية",
+  "name": "وهل طريق الخليج",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/vVrcwxh2n51oNXxX8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MD297",
+  "city": "المدينة المنورة",
+  "name": "المدينة عين الخيف",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/zZZU42UcyCj5f4k68",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK304",
+  "city": "جدة",
+  "name": "حي الرياض",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/v7fdHhdEkQGXjJN27",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP316",
+  "city": "الشرقية",
+  "name": "محطة القصيم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/b9F9fjwSft3Bfzvj9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY204",
+  "city": "الرياض",
+  "name": "محطة النسيم",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/cQwwmUHWPGjpUYmq6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MD294",
+  "city": "المدينة المنورة",
+  "name": "نقطة ايفاء العلا",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/9fwjwbwk3HpgMKBn7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY199",
+  "city": "الخرج",
+  "name": "نبض - الرفايع",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/9pHwSe7nvTvVuq6y9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS128",
+  "city": "عسير ",
+  "name": "الفرعاء",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/DYV5mAWoi6psNmrL7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS129",
+  "city": "عسير ",
+  "name": "محطة الجنوب",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/ihDU4kXzjVTZ7icK8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK322",
+  "city": "جدة",
+  "name": "محطة الياقوت",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/36kkyEATST4uB7es8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP325",
+  "city": "الشرقية",
+  "name": "رمكو البطحاء",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/sXwvdskpQsPfkHCC6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "QS330",
+  "city": "القصيم",
+  "name": "محطة القويع",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/Ywy97T2jvgG6EB4w8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "QS331",
+  "city": "القصيم",
+  "name": "محطة البصر",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/3Wfka8KZnutEo3UA6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "QS332",
+  "city": "القصيم",
+  "name": "محطة البدائع",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/rgtwiZQ8XAj1ffoy6",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS180",
+  "city": "عسير ",
+  "name": "محطة المركاض",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/ZWaCBzrSuvyCPM9D9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS226",
+  "city": "ابها",
+  "name": "المصيف",
+  "status": "Operation",
+  "loc": "https://goo.gl/maps/s1ykbLUWawUFx5NA7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK036",
+  "city": "مكة",
+  "name": "محطة حلي",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Q87z9kZ58JN1EMdUA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA058",
+  "city": "جازان",
+  "name": "أبو عريش جازان زيارة ام الغلف",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/s9Msko22UKnrJ2qQ8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS287",
+  "city": "عسير",
+  "name": "عقبة شعار",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/rwxPGN2JL4GaRX9K7?g_st=iwb",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK057",
+  "city": "مكة",
+  "name": "الريان-الجموم",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/NEXWXpEVVXTwornD9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "TB146",
+  "city": "تبوك",
+  "name": "القادسية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/7ZNAUu7L6vtQ2bX17",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA234",
+  "city": "جازان",
+  "name": "محطة الرحاب (البشاير)",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/uQTUEdvKbKTf1nA47?g_st=aw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA353",
+  "city": "جازان",
+  "name": "محطة الحنيني-صامطة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/iaHkd6FHWGTfFLRF7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK317",
+  "city": "الطائف",
+  "name": "وادي وج",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/uvPENCwH85a8TepcA?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "تحت التوثيق",
+  "city": "خميس مشيط",
+  "name": "الوادين أحد رفيده ـ عسير",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/f6KQE9iYiVHmBSxeA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK038",
+  "city": "الطائف",
+  "name": "محطة القديرة",
+  "status": "Operation",
+  "loc": null,
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK039",
+  "city": "رابغ",
+  "name": "محطة الجود / رابغ",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/vQyFVVi4dCgogwkYA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK048",
+  "city": "عشيرة",
+  "name": "عشيرة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/2n8s66vt6gYdXaPf8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK098",
+  "city": "الطائف",
+  "name": "وادي جليل",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/HidRQsVqZvJq5NXw8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK143",
+  "city": "الطائف",
+  "name": "مدينة الورود",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/syRQo5bWzMMJ9XP8A",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY147",
+  "city": "الرياض",
+  "name": "حوطة بني تميم",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/7ZEMAE6D1TAecuhWA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "TB148",
+  "city": "تبوك",
+  "name": "بئر بن هرماس",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/qUSbLwFti2wfzk5f7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY149",
+  "city": "الدلم",
+  "name": "طريق الحاير",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/nS7Ujb35EqQivfcRA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK150",
+  "city": "جدة",
+  "name": "حداء-بحره",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/5BBzj7ExUDDgYBNp9",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA187",
+  "city": "جازان",
+  "name": "محطة درب الناصرية ( أبو عريش )",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/8bVhNexMQ4FZoXpKA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS189",
+  "city": "عسير",
+  "name": "محطة الخزامى بيشه",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/DeXvxtcYfpn97mMGA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS193",
+  "city": "خميس مشيط",
+  "name": "طريق المئة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/h7Syc4Q85xbjaoKY9?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AB254",
+  "city": "ابها",
+  "name": "محطة الزهور",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/ow1jGXUN3T8R2bhb8?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY312",
+  "city": "الرياض",
+  "name": "محطة الغروب",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/M8b8LzA46YH1jC2P6?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK333",
+  "city": "جدة",
+  "name": "محطة الرويس ( شارع حائل )",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/7dBhK1JDuEPXjpgt6?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK334",
+  "city": "الطائف",
+  "name": "صناعية الطائف",
+  "status": "Operation",
+  "loc": null,
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP336",
+  "city": "الدمام",
+  "name": "طيبة الدمام",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/HbNJ6ZSZkRh9emEQ7",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK339",
+  "city": "جدة",
+  "name": "محطة الشاطئ",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/oBAW4S4XTLcQUuFZ9?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS354",
+  "city": "خميس مشيط",
+  "name": "محطة الواحة",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/yrUqSdJMZJ38wnhy6?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY355",
+  "city": "الرياض",
+  "name": "محطة العريجاء",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/WUviPFVrgT7f9omx9?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "RY356",
+  "city": "الرياض",
+  "name": "محطة المونسية",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/WUviPFVrgT7f9omx9?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA357",
+  "city": "جازان",
+  "name": "محطة الريث",
+  "status": "Operation",
+  "loc": "https://maps.app.goo.gl/Rzuzjmr8cTPWAujz7?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS359",
+  "city": "عسير",
+  "name": "المصيف خميس مشيط",
+  "status": "Operation",
+  "loc": null,
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "MK314",
+  "city": "مكة",
+  "name": "قوس النصر-الخالدية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/vZKhCykEp7s7pxQX8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "EP329",
+  "city": "حفر الباطن ",
+  "name": "محطة الورود",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/5CdfZdUp26V1hYEHA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA157",
+  "city": "جازان",
+  "name": "ديبر",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/wEUGzJW9ZJTQABBN8",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA152",
+  "city": "جازان",
+  "name": "أبو سبيلة-العارضة",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/VvYiUXMtHmQnEAyRA",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "JA209",
+  "city": "جازان",
+  "name": "ضمد-الظبية",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/u4JQsCJctwE7ED4d8?g_st=iw",
+  "open": false,
+  "install": false,
+  "notes": null
+ },
+ {
+  "num": "AS328",
+  "city": "محايل عسير",
+  "name": "خميس البحر",
+  "status": "Franchises",
+  "loc": "https://maps.app.goo.gl/SNa6GqCdjzbRKh386",
+  "open": false,
+  "install": false,
+  "notes": null
+ }
+]

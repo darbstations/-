@@ -1,0 +1,2627 @@
+{
+ "RY024": {
+  "n": 17,
+  "top": [
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 1194,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 1434,
+    "rating": 4.1,
+    "reviews": 218
+   },
+   {
+    "title": "محطة الثمامة للخدمات البترولية",
+    "dist": 1637,
+    "rating": 3.7,
+    "reviews": 392
+   },
+   {
+    "title": "ADNOC Service Station | Al Nahdi - Al Khozami-Al Kharj (2062)",
+    "dist": 1837,
+    "rating": 3.6,
+    "reviews": 27
+   },
+   {
+    "title": "محطة الخالدية",
+    "dist": 1927,
+    "rating": 3.5,
+    "reviews": 86
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2213,
+    "rating": 3.9,
+    "reviews": 547
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2334,
+    "rating": 3.9,
+    "reviews": 720
+   },
+   {
+    "title": "محطة وقود محطتي",
+    "dist": 2750,
+    "rating": 3.4,
+    "reviews": 119
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2943,
+    "rating": 3.9,
+    "reviews": 303
+   },
+   {
+    "title": "Go station",
+    "dist": 3093,
+    "rating": 1.0,
+    "reviews": 1
+   }
+  ],
+  "nearest": {
+   "title": "بتروجين Petrogen",
+   "dist": 1194
+  },
+  "avg_rating": 3.58,
+  "weak_share": 0.71,
+  "strong": [
+   "ساسكو",
+   "بترولي",
+   "أدنوك",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 3660
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4003
+   }
+  ]
+ },
+ "QS055": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "RY075": {
+  "n": 1,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 611,
+    "rating": 3.9,
+    "reviews": 811
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 611
+  },
+  "avg_rating": 3.9,
+  "weak_share": 1.0,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": [],
+  "thin": true
+ },
+ "RY025": {
+  "n": 3,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 1723,
+    "rating": 3.9,
+    "reviews": 547
+   },
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 2522,
+    "rating": 4.1,
+    "reviews": 218
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 4619,
+    "rating": null,
+    "reviews": 0
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 1723
+  },
+  "avg_rating": 4.0,
+  "weak_share": 0.33,
+  "strong": [
+   "الدريس",
+   "ساسكو"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 3660
+   }
+  ]
+ },
+ "MK022": {
+  "n": 3,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 2133,
+    "rating": 3.9,
+    "reviews": 1072
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3313,
+    "rating": 4.3,
+    "reviews": 80
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3942,
+    "rating": 4.0,
+    "reviews": 620
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 2133
+  },
+  "avg_rating": 4.07,
+  "weak_share": 0.33,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "RY042": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 4965
+   }
+  ],
+  "thin": true
+ },
+ "MK028": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK033": {
+  "n": 3,
+  "top": [
+   {
+    "title": "محطة بترولي",
+    "dist": 3397,
+    "rating": 4.4,
+    "reviews": 4773
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3602,
+    "rating": 3.9,
+    "reviews": 2109
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4042,
+    "rating": 3.8,
+    "reviews": 731
+   }
+  ],
+  "nearest": {
+   "title": "محطة بترولي",
+   "dist": 3397
+  },
+  "avg_rating": 4.03,
+  "weak_share": 0.67,
+  "strong": [
+   "بترولي",
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK035": {
+  "n": 3,
+  "top": [
+   {
+    "title": "محطه وقود الطائف",
+    "dist": 3305,
+    "rating": 3.9,
+    "reviews": 525
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3683,
+    "rating": 3.7,
+    "reviews": 850
+   },
+   {
+    "title": "محطة ساسكو طريق شهار العام",
+    "dist": 4016,
+    "rating": 4.0,
+    "reviews": 479
+   }
+  ],
+  "nearest": {
+   "title": "محطه وقود الطائف",
+   "dist": 3305
+  },
+  "avg_rating": 3.87,
+  "weak_share": 0.67,
+  "strong": [
+   "الدريس",
+   "ساسكو"
+  ],
+  "sisters": []
+ },
+ "MK020": {
+  "n": 3,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 1497,
+    "rating": 4.0,
+    "reviews": 620
+   },
+   {
+    "title": "محطة نوفل",
+    "dist": 3747,
+    "rating": 3.8,
+    "reviews": 289
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4032,
+    "rating": 3.9,
+    "reviews": 1072
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 1497
+  },
+  "avg_rating": 3.9,
+  "weak_share": 0.67,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 3664
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4310
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4395
+   }
+  ]
+ },
+ "MK046": {
+  "n": 1,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 4185,
+    "rating": 3.4,
+    "reviews": 522
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 4185
+  },
+  "avg_rating": 3.4,
+  "weak_share": 1.0,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": [],
+  "thin": true
+ },
+ "MK029": {
+  "n": 14,
+  "top": [
+   {
+    "title": "محطة نوفل",
+    "dist": 1151,
+    "rating": 3.8,
+    "reviews": 289
+   },
+   {
+    "title": "محطة تلال الأديب للوقود",
+    "dist": 1594,
+    "rating": 4.3,
+    "reviews": 268
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1781,
+    "rating": 4.4,
+    "reviews": 37
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 1931,
+    "rating": 1.0,
+    "reviews": 2
+   },
+   {
+    "title": "محطة المعطاني للخدمات البترولية",
+    "dist": 2370,
+    "rating": 3.6,
+    "reviews": 375
+   },
+   {
+    "title": "محطة الدريس في شارع المنصور",
+    "dist": 2499,
+    "rating": 4.5,
+    "reviews": 2
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3472,
+    "rating": 3.9,
+    "reviews": 643
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3486,
+    "rating": 3.8,
+    "reviews": 222
+   },
+   {
+    "title": "Sasco",
+    "dist": 3583,
+    "rating": 4.0,
+    "reviews": 1
+   },
+   {
+    "title": "نفط",
+    "dist": 3588,
+    "rating": 3.9,
+    "reviews": 176
+   }
+  ],
+  "nearest": {
+   "title": "محطة نوفل",
+   "dist": 1151
+  },
+  "avg_rating": 3.96,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس",
+   "بترولي",
+   "ساسكو",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 514
+   },
+   {
+    "title": "محطة درب",
+    "dist": 1029
+   },
+   {
+    "title": "محطة درب",
+    "dist": 1934
+   }
+  ]
+ },
+ "MK063": {
+  "n": 5,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 519,
+    "rating": 3.7,
+    "reviews": 850
+   },
+   {
+    "title": "محطه وقود الطائف",
+    "dist": 1013,
+    "rating": 3.9,
+    "reviews": 525
+   },
+   {
+    "title": "محطة ساسكو طريق شهار العام",
+    "dist": 2087,
+    "rating": 4.0,
+    "reviews": 479
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4244,
+    "rating": 4.1,
+    "reviews": 15
+   },
+   {
+    "title": "مجمع النسيم",
+    "dist": 4768,
+    "rating": 3.5,
+    "reviews": 142
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 519
+  },
+  "avg_rating": 3.84,
+  "weak_share": 0.6,
+  "strong": [
+   "الدريس",
+   "ساسكو"
+  ],
+  "sisters": []
+ },
+ "MK068": {
+  "n": 10,
+  "top": [
+   {
+    "title": "محطة بتروتن 1",
+    "dist": 254,
+    "rating": 3.8,
+    "reviews": 4
+   },
+   {
+    "title": "محطة السنوسي للمحروقات",
+    "dist": 364,
+    "rating": 3.5,
+    "reviews": 140
+   },
+   {
+    "title": "Alsbuhdaa gas station",
+    "dist": 779,
+    "rating": 3.7,
+    "reviews": 120
+   },
+   {
+    "title": "محطة الجزيره للمحروقات",
+    "dist": 842,
+    "rating": 3.7,
+    "reviews": 135
+   },
+   {
+    "title": "بريك للوقود",
+    "dist": 850,
+    "rating": 1.0,
+    "reviews": 1
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2909,
+    "rating": 4.3,
+    "reviews": 349
+   },
+   {
+    "title": "وقود ديزل",
+    "dist": 2982,
+    "rating": 4.1,
+    "reviews": 35
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3101,
+    "rating": 4.0,
+    "reviews": 8
+   },
+   {
+    "title": "الدريس",
+    "dist": 3986,
+    "rating": 4.0,
+    "reviews": 39
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3997,
+    "rating": 4.0,
+    "reviews": 11
+   }
+  ],
+  "nearest": {
+   "title": "محطة بتروتن 1",
+   "dist": 254
+  },
+  "avg_rating": 3.91,
+  "weak_share": 0.3,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK071": {
+  "n": 2,
+  "top": [
+   {
+    "title": "محطة الهدى",
+    "dist": 1590,
+    "rating": 4.0,
+    "reviews": 320
+   },
+   {
+    "title": "محطة الرحيلي",
+    "dist": 3554,
+    "rating": 4.3,
+    "reviews": 16315
+   }
+  ],
+  "nearest": {
+   "title": "محطة الهدى",
+   "dist": 1590
+  },
+  "avg_rating": 4.15,
+  "weak_share": 0.0,
+  "strong": [],
+  "sisters": []
+ },
+ "MK054": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK047": {
+  "n": 20,
+  "top": [
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 221,
+    "rating": 4.1,
+    "reviews": 1303
+   },
+   {
+    "title": "محطة بداية نفط",
+    "dist": 857,
+    "rating": 3.4,
+    "reviews": 45
+   },
+   {
+    "title": "محطة",
+    "dist": 1524,
+    "rating": 1.8,
+    "reviews": 4
+   },
+   {
+    "title": "ساسكو",
+    "dist": 2274,
+    "rating": 3.3,
+    "reviews": 44
+   },
+   {
+    "title": "محطة السرح للوقود والديزل",
+    "dist": 2450,
+    "rating": 3.4,
+    "reviews": 503
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 2483,
+    "rating": 3.1,
+    "reviews": 32
+   },
+   {
+    "title": "محطة الدريس",
+    "dist": 2492,
+    "rating": 3.6,
+    "reviews": 49
+   },
+   {
+    "title": "محطة احمد حماد المطرفي",
+    "dist": 2575,
+    "rating": 2.8,
+    "reviews": 26
+   },
+   {
+    "title": "محطة الدريس",
+    "dist": 2609,
+    "rating": 2.5,
+    "reviews": 53
+   },
+   {
+    "title": "محطة الاندلس للوقود",
+    "dist": 3026,
+    "rating": 3.8,
+    "reviews": 143
+   }
+  ],
+  "nearest": {
+   "title": "SASCO - ساسكو",
+   "dist": 221
+  },
+  "avg_rating": 3.56,
+  "weak_share": 0.7,
+  "strong": [
+   "ساسكو",
+   "نفط",
+   "الدريس",
+   "بترومين"
+  ],
+  "sisters": []
+ },
+ "MK084": {
+  "n": 5,
+  "top": [
+   {
+    "title": "محطة بترولي الكر",
+    "dist": 113,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "محطة بنزول الكر",
+    "dist": 350,
+    "rating": 4.4,
+    "reviews": 14
+   },
+   {
+    "title": "Aldrees",
+    "dist": 411,
+    "rating": 4.2,
+    "reviews": 242
+   },
+   {
+    "title": "كويك باور | Quick Power",
+    "dist": 1866,
+    "rating": 3.6,
+    "reviews": 56
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2148,
+    "rating": 4.3,
+    "reviews": 623
+   }
+  ],
+  "nearest": {
+   "title": "محطة بترولي الكر",
+   "dist": 113
+  },
+  "avg_rating": 4.12,
+  "weak_share": 0.2,
+  "strong": [
+   "بترولي",
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK019": {
+  "n": 23,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 488,
+    "rating": 3.2,
+    "reviews": 48
+   },
+   {
+    "title": "Aldrees",
+    "dist": 824,
+    "rating": 4.0,
+    "reviews": 207
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 923,
+    "rating": 4.6,
+    "reviews": 18
+   },
+   {
+    "title": "NAFT",
+    "dist": 1382,
+    "rating": 3.0,
+    "reviews": 6
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1804,
+    "rating": 3.9,
+    "reviews": 14
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 1861,
+    "rating": 4.0,
+    "reviews": 21
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1909,
+    "rating": 3.3,
+    "reviews": 21
+   },
+   {
+    "title": "محطة المعيصم",
+    "dist": 1967,
+    "rating": 3.8,
+    "reviews": 2273
+   },
+   {
+    "title": "محطة تميز للوقود",
+    "dist": 2152,
+    "rating": 4.0,
+    "reviews": 9
+   },
+   {
+    "title": "اومكو",
+    "dist": 2169,
+    "rating": 3.2,
+    "reviews": 108
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 488
+  },
+  "avg_rating": 3.65,
+  "weak_share": 0.7,
+  "strong": [
+   "الدريس",
+   "نفط",
+   "ساسكو",
+   "بترومين"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 1586
+   },
+   {
+    "title": "محطة درب",
+    "dist": 2077
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4939
+   }
+  ]
+ },
+ "MK210": {
+  "n": 8,
+  "top": [
+   {
+    "title": "محطة نفط",
+    "dist": 1022,
+    "rating": 4.0,
+    "reviews": 553
+   },
+   {
+    "title": "PURE IN بيور إن",
+    "dist": 1427,
+    "rating": 3.3,
+    "reviews": 3
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1890,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "الدريس",
+    "dist": 2077,
+    "rating": 3.9,
+    "reviews": 292
+   },
+   {
+    "title": "محطة دلتا جدة",
+    "dist": 2342,
+    "rating": 4.1,
+    "reviews": 814
+   },
+   {
+    "title": "محطة الخليج",
+    "dist": 2841,
+    "rating": 3.5,
+    "reviews": 137
+   },
+   {
+    "title": "الدريس",
+    "dist": 4405,
+    "rating": 3.2,
+    "reviews": 248
+   },
+   {
+    "title": "محطة شرق جدة",
+    "dist": 4752,
+    "rating": 3.7,
+    "reviews": 362
+   }
+  ],
+  "nearest": {
+   "title": "محطة نفط",
+   "dist": 1022
+  },
+  "avg_rating": 3.73,
+  "weak_share": 0.5,
+  "strong": [
+   "نفط",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 4850
+   }
+  ]
+ },
+ "MK031": {
+  "n": 3,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 612,
+    "rating": 3.9,
+    "reviews": 1072
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2514,
+    "rating": 4.0,
+    "reviews": 620
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3562,
+    "rating": 4.3,
+    "reviews": 80
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 612
+  },
+  "avg_rating": 4.07,
+  "weak_share": 0.33,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "NJ219": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK289": {
+  "n": 15,
+  "top": [
+   {
+    "title": "محطة وقود سيارات",
+    "dist": 179,
+    "rating": 3.7,
+    "reviews": 84
+   },
+   {
+    "title": "محطة الفضيله",
+    "dist": 234,
+    "rating": 3.7,
+    "reviews": 268
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 482,
+    "rating": 2.2,
+    "reviews": 78
+   },
+   {
+    "title": "الشرعبي للعرائسي",
+    "dist": 482,
+    "rating": 3.9,
+    "reviews": 2052
+   },
+   {
+    "title": "محطة الدريس",
+    "dist": 834,
+    "rating": 4.3,
+    "reviews": 413
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 877,
+    "rating": 4.8,
+    "reviews": 5
+   },
+   {
+    "title": "H Way 1",
+    "dist": 966,
+    "rating": 4.2,
+    "reviews": 25
+   },
+   {
+    "title": "محطة وقود سيارات",
+    "dist": 990,
+    "rating": 3.4,
+    "reviews": 55
+   },
+   {
+    "title": "محطة فال للوقود",
+    "dist": 1188,
+    "rating": 3.6,
+    "reviews": 267
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1390,
+    "rating": 3.9,
+    "reviews": 739
+   }
+  ],
+  "nearest": {
+   "title": "محطة وقود سيارات",
+   "dist": 179
+  },
+  "avg_rating": 3.82,
+  "weak_share": 0.53,
+  "strong": [
+   "ساسكو",
+   "الدريس",
+   "جي أويل"
+  ],
+  "sisters": []
+ },
+ "AS153": {
+  "n": 15,
+  "top": [
+   {
+    "title": "ساسكو اكسبرس",
+    "dist": 958,
+    "rating": 3.5,
+    "reviews": 232
+   },
+   {
+    "title": "محطة",
+    "dist": 1564,
+    "rating": 5.0,
+    "reviews": 3
+   },
+   {
+    "title": "ريد بوكس",
+    "dist": 1894,
+    "rating": 3.5,
+    "reviews": 15
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1900,
+    "rating": 4.2,
+    "reviews": 172
+   },
+   {
+    "title": "محطة احمدالبسيسي للمحروقات",
+    "dist": 1905,
+    "rating": 5.0,
+    "reviews": 5
+   },
+   {
+    "title": "مجمع الفلقي للخدمات البترولية",
+    "dist": 1923,
+    "rating": 3.6,
+    "reviews": 169
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 2017,
+    "rating": 4.5,
+    "reviews": 2
+   },
+   {
+    "title": "ساسكو",
+    "dist": 2311,
+    "rating": 3.6,
+    "reviews": 261
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2495,
+    "rating": 3.9,
+    "reviews": 400
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 2581,
+    "rating": 3.5,
+    "reviews": 33
+   }
+  ],
+  "nearest": {
+   "title": "ساسكو اكسبرس",
+   "dist": 958
+  },
+  "avg_rating": 3.74,
+  "weak_share": 0.67,
+  "strong": [
+   "ساسكو",
+   "الدريس",
+   "بترولي"
+  ],
+  "sisters": []
+ },
+ "EP051": {
+  "n": 5,
+  "top": [
+   {
+    "title": "مجمع الحقيل للخدمات البترولية",
+    "dist": 1670,
+    "rating": 4.5,
+    "reviews": 3697
+   },
+   {
+    "title": "محطة الحقيل للخدمات البترولية داونستريم",
+    "dist": 2337,
+    "rating": 4.5,
+    "reviews": 241
+   },
+   {
+    "title": "محطة وقود أومكو",
+    "dist": 2567,
+    "rating": 3.2,
+    "reviews": 11
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 3051,
+    "rating": 3.5,
+    "reviews": 81
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 3557,
+    "rating": 3.8,
+    "reviews": 84
+   }
+  ],
+  "nearest": {
+   "title": "مجمع الحقيل للخدمات البترولية",
+   "dist": 1670
+  },
+  "avg_rating": 3.9,
+  "weak_share": 0.6,
+  "strong": [
+   "بترولي"
+  ],
+  "sisters": []
+ },
+ "HA043": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK100": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK064": {
+  "n": 6,
+  "top": [
+   {
+    "title": "محطة القمة",
+    "dist": 773,
+    "rating": 4.0,
+    "reviews": 99
+   },
+   {
+    "title": "محطة التعاون للمحروقات",
+    "dist": 906,
+    "rating": 3.8,
+    "reviews": 237
+   },
+   {
+    "title": "All jaraanah liter gas station",
+    "dist": 1015,
+    "rating": 4.1,
+    "reviews": 32
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1360,
+    "rating": 4.3,
+    "reviews": 21
+   },
+   {
+    "title": "محطة بيور إن",
+    "dist": 1736,
+    "rating": 3.9,
+    "reviews": 680
+   },
+   {
+    "title": "محطة طيبة",
+    "dist": 2020,
+    "rating": 3.5,
+    "reviews": 91
+   }
+  ],
+  "nearest": {
+   "title": "محطة القمة",
+   "dist": 773
+  },
+  "avg_rating": 3.93,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK023": {
+  "n": 28,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 411,
+    "rating": 3.3,
+    "reviews": 21
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1048,
+    "rating": 4.0,
+    "reviews": 207
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1208,
+    "rating": 3.2,
+    "reviews": 48
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1230,
+    "rating": 3.3,
+    "reviews": 8
+   },
+   {
+    "title": "محطة بترومين للوقود",
+    "dist": 1423,
+    "rating": 3.7,
+    "reviews": 231
+   },
+   {
+    "title": "محطة امداد الخليج للوقود الشرائع",
+    "dist": 1578,
+    "rating": 4.0,
+    "reviews": 312
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 1701,
+    "rating": 4.0,
+    "reviews": 21
+   },
+   {
+    "title": "محطة تميز للوقود",
+    "dist": 1735,
+    "rating": 4.0,
+    "reviews": 9
+   },
+   {
+    "title": "اومكو",
+    "dist": 1755,
+    "rating": 3.2,
+    "reviews": 108
+   },
+   {
+    "title": "محطة بترومين",
+    "dist": 1796,
+    "rating": 3.7,
+    "reviews": 92
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 411
+  },
+  "avg_rating": 3.62,
+  "weak_share": 0.68,
+  "strong": [
+   "الدريس",
+   "بترومين",
+   "ساسكو",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 1586
+   },
+   {
+    "title": "محطة درب",
+    "dist": 3062
+   }
+  ]
+ },
+ "JA060": {
+  "n": 1,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 4718,
+    "rating": 3.6,
+    "reviews": 12
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 4718
+  },
+  "avg_rating": 3.6,
+  "weak_share": 1.0,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": [],
+  "thin": true
+ },
+ "MK072": {
+  "n": 3,
+  "top": [
+   {
+    "title": "محطة المجنوني",
+    "dist": 1121,
+    "rating": 3.7,
+    "reviews": 1351
+   },
+   {
+    "title": "محطة مشاعر نفط وان",
+    "dist": 4265,
+    "rating": 3.9,
+    "reviews": 198
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4740,
+    "rating": 4.3,
+    "reviews": 80
+   }
+  ],
+  "nearest": {
+   "title": "محطة المجنوني",
+   "dist": 1121
+  },
+  "avg_rating": 3.97,
+  "weak_share": 0.67,
+  "strong": [
+   "نفط",
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "JA061": {
+  "n": 10,
+  "top": [
+   {
+    "title": "محطة ريبن",
+    "dist": 659,
+    "rating": 4.0,
+    "reviews": 5
+   },
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 1768,
+    "rating": 4.1,
+    "reviews": 609
+   },
+   {
+    "title": "محطة بنزين ام شيبان",
+    "dist": 2125,
+    "rating": 4.4,
+    "reviews": 39
+   },
+   {
+    "title": "محطة كويك",
+    "dist": 2156,
+    "rating": 3.9,
+    "reviews": 17
+   },
+   {
+    "title": "محطة لتر",
+    "dist": 4243,
+    "rating": 3.8,
+    "reviews": 53
+   },
+   {
+    "title": "Sasco",
+    "dist": 4482,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "محطة وسوبرماركت الخردلي",
+    "dist": 4573,
+    "rating": 3.8,
+    "reviews": 42
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4681,
+    "rating": 4.2,
+    "reviews": 21
+   },
+   {
+    "title": "محطة شروق المهر للمحروقات",
+    "dist": 4795,
+    "rating": 5.0,
+    "reviews": 7
+   },
+   {
+    "title": "محطة العقيلي",
+    "dist": 4796,
+    "rating": 3.8,
+    "reviews": 97
+   }
+  ],
+  "nearest": {
+   "title": "محطة ريبن",
+   "dist": 659
+  },
+  "avg_rating": 4.11,
+  "weak_share": 0.4,
+  "strong": [
+   "ساسكو",
+   "لتر",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 1321
+   }
+  ]
+ },
+ "JA348": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK323": {
+  "n": 4,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 1313,
+    "rating": 4.3,
+    "reviews": 80
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3102,
+    "rating": 4.1,
+    "reviews": 1988
+   },
+   {
+    "title": "محطة المجنوني",
+    "dist": 3380,
+    "rating": 3.7,
+    "reviews": 1351
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4339,
+    "rating": 3.9,
+    "reviews": 1072
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 1313
+  },
+  "avg_rating": 4.0,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK001": {
+  "n": 13,
+  "top": [
+   {
+    "title": "محطة الخير بنزين",
+    "dist": 524,
+    "rating": 4.1,
+    "reviews": 2669
+   },
+   {
+    "title": "محطة أورانج",
+    "dist": 1343,
+    "rating": 3.2,
+    "reviews": 18
+   },
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 1358,
+    "rating": 4.1,
+    "reviews": 769
+   },
+   {
+    "title": "محطة مشاعر نفط وان",
+    "dist": 2863,
+    "rating": 3.9,
+    "reviews": 198
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2951,
+    "rating": 3.6,
+    "reviews": 20
+   },
+   {
+    "title": "محطة المعيصم",
+    "dist": 3049,
+    "rating": 3.8,
+    "reviews": 2273
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3145,
+    "rating": 3.9,
+    "reviews": 14
+   },
+   {
+    "title": "NAFT",
+    "dist": 3577,
+    "rating": 3.0,
+    "reviews": 6
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 4017,
+    "rating": 4.6,
+    "reviews": 18
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 4407,
+    "rating": 4.0,
+    "reviews": 21
+   }
+  ],
+  "nearest": {
+   "title": "محطة الخير بنزين",
+   "dist": 524
+  },
+  "avg_rating": 3.8,
+  "weak_share": 0.54,
+  "strong": [
+   "ساسكو",
+   "نفط",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 2900
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4939
+   }
+  ]
+ },
+ "MK099": {
+  "n": 11,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 619,
+    "rating": 3.3,
+    "reviews": 88
+   },
+   {
+    "title": "Aldrees",
+    "dist": 797,
+    "rating": 3.6,
+    "reviews": 447
+   },
+   {
+    "title": "مجمع النسيم",
+    "dist": 1207,
+    "rating": 3.5,
+    "reviews": 142
+   },
+   {
+    "title": "محطة الأمانة",
+    "dist": 1244,
+    "rating": 3.6,
+    "reviews": 356
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 1580,
+    "rating": 5.0,
+    "reviews": 2
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 1849,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "محطة نفط",
+    "dist": 2123,
+    "rating": 3.7,
+    "reviews": 382
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2541,
+    "rating": 3.8,
+    "reviews": 1039
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3497,
+    "rating": 4.1,
+    "reviews": 386
+   },
+   {
+    "title": "محطة ساسكو طريق شهار العام",
+    "dist": 4553,
+    "rating": 4.0,
+    "reviews": 479
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 619
+  },
+  "avg_rating": 3.74,
+  "weak_share": 0.55,
+  "strong": [
+   "الدريس",
+   "نفط",
+   "ساسكو"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 911
+   }
+  ]
+ },
+ "MK093": {
+  "n": 9,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 856,
+    "rating": 3.3,
+    "reviews": 88
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1320,
+    "rating": 3.6,
+    "reviews": 447
+   },
+   {
+    "title": "محطة الأمانة",
+    "dist": 1840,
+    "rating": 3.6,
+    "reviews": 356
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 2074,
+    "rating": 5.0,
+    "reviews": 2
+   },
+   {
+    "title": "مجمع النسيم",
+    "dist": 2118,
+    "rating": 3.5,
+    "reviews": 142
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 2313,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "محطة نفط",
+    "dist": 2556,
+    "rating": 3.7,
+    "reviews": 382
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2838,
+    "rating": 3.8,
+    "reviews": 1039
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3978,
+    "rating": 4.1,
+    "reviews": 386
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 856
+  },
+  "avg_rating": 3.66,
+  "weak_share": 0.67,
+  "strong": [
+   "الدريس",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 911
+   }
+  ]
+ },
+ "JA069": {
+  "n": 3,
+  "top": [
+   {
+    "title": "محطة لتر للوقود",
+    "dist": 2986,
+    "rating": 4.3,
+    "reviews": 943
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3193,
+    "rating": 4.1,
+    "reviews": 480
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3997,
+    "rating": 4.1,
+    "reviews": 298
+   }
+  ],
+  "nearest": {
+   "title": "محطة لتر للوقود",
+   "dist": 2986
+  },
+  "avg_rating": 4.17,
+  "weak_share": 0.0,
+  "strong": [
+   "لتر",
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK003": {
+  "n": 3,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 837,
+    "rating": 4.1,
+    "reviews": 1988
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3581,
+    "rating": 4.3,
+    "reviews": 80
+   },
+   {
+    "title": "محطة المجنوني",
+    "dist": 3753,
+    "rating": 3.7,
+    "reviews": 1351
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 837
+  },
+  "avg_rating": 4.03,
+  "weak_share": 0.33,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MD009": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK006": {
+  "n": 6,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 958,
+    "rating": 4.1,
+    "reviews": 15
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2310,
+    "rating": 4.1,
+    "reviews": 386
+   },
+   {
+    "title": "محطة نفط",
+    "dist": 3683,
+    "rating": 3.7,
+    "reviews": 382
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 3903,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "محطة الأمانة",
+    "dist": 4394,
+    "rating": 3.6,
+    "reviews": 356
+   },
+   {
+    "title": "مجمع النسيم",
+    "dist": 4967,
+    "rating": 3.5,
+    "reviews": 142
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 958
+  },
+  "avg_rating": 3.8,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس",
+   "نفط"
+  ],
+  "sisters": []
+ },
+ "MK005": {
+  "n": 2,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 1062,
+    "rating": 4.0,
+    "reviews": 1360
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2109,
+    "rating": 3.7,
+    "reviews": 345
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 1062
+  },
+  "avg_rating": 3.85,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK008": {
+  "n": 2,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 4929,
+    "rating": 4.3,
+    "reviews": 80
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4952,
+    "rating": 4.1,
+    "reviews": 1988
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 4929
+  },
+  "avg_rating": 4.2,
+  "weak_share": 0.0,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": []
+ },
+ "MK016": {
+  "n": 14,
+  "top": [
+   {
+    "title": "محطة نوفل",
+    "dist": 218,
+    "rating": 3.8,
+    "reviews": 289
+   },
+   {
+    "title": "محطة الدريس في شارع المنصور",
+    "dist": 2095,
+    "rating": 4.5,
+    "reviews": 2
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 2533,
+    "rating": 1.0,
+    "reviews": 2
+   },
+   {
+    "title": "محطة تلال الأديب للوقود",
+    "dist": 2619,
+    "rating": 4.3,
+    "reviews": 268
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2773,
+    "rating": 4.4,
+    "reviews": 37
+   },
+   {
+    "title": "محطة المعطاني للخدمات البترولية",
+    "dist": 3265,
+    "rating": 3.6,
+    "reviews": 375
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3409,
+    "rating": 3.9,
+    "reviews": 643
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3469,
+    "rating": 4.0,
+    "reviews": 620
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3580,
+    "rating": 3.8,
+    "reviews": 222
+   },
+   {
+    "title": "محطة قبص للوقود",
+    "dist": 4048,
+    "rating": 3.9,
+    "reviews": 183
+   }
+  ],
+  "nearest": {
+   "title": "محطة نوفل",
+   "dist": 218
+  },
+  "avg_rating": 3.96,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس",
+   "بترولي",
+   "ساسكو",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 695
+   },
+   {
+    "title": "محطة درب",
+    "dist": 1029
+   },
+   {
+    "title": "محطة درب",
+    "dist": 2532
+   }
+  ]
+ },
+ "MK002": {
+  "n": 18,
+  "top": [
+   {
+    "title": "محطة المعيصم",
+    "dist": 181,
+    "rating": 3.8,
+    "reviews": 2273
+   },
+   {
+    "title": "Aldrees",
+    "dist": 517,
+    "rating": 3.9,
+    "reviews": 14
+   },
+   {
+    "title": "Aldrees",
+    "dist": 547,
+    "rating": 3.6,
+    "reviews": 20
+   },
+   {
+    "title": "NAFT",
+    "dist": 695,
+    "rating": 3.0,
+    "reviews": 6
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 1165,
+    "rating": 4.6,
+    "reviews": 18
+   },
+   {
+    "title": "محطة أورانج",
+    "dist": 1561,
+    "rating": 3.2,
+    "reviews": 18
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 1806,
+    "rating": 4.0,
+    "reviews": 21
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2042,
+    "rating": 4.0,
+    "reviews": 207
+   },
+   {
+    "title": "محطة تميز للوقود",
+    "dist": 2116,
+    "rating": 4.0,
+    "reviews": 9
+   },
+   {
+    "title": "اومكو",
+    "dist": 2116,
+    "rating": 3.2,
+    "reviews": 108
+   }
+  ],
+  "nearest": {
+   "title": "محطة المعيصم",
+   "dist": 181
+  },
+  "avg_rating": 3.71,
+  "weak_share": 0.61,
+  "strong": [
+   "الدريس",
+   "نفط",
+   "ساسكو",
+   "بترومين"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 2077
+   },
+   {
+    "title": "محطة درب",
+    "dist": 2900
+   },
+   {
+    "title": "محطة درب",
+    "dist": 3062
+   }
+  ]
+ },
+ "MK017": {
+  "n": 6,
+  "top": [
+   {
+    "title": "محطة نوفل",
+    "dist": 2450,
+    "rating": 3.8,
+    "reviews": 289
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2491,
+    "rating": 4.0,
+    "reviews": 620
+   },
+   {
+    "title": "محطة تلال الأديب للوقود",
+    "dist": 4079,
+    "rating": 4.3,
+    "reviews": 268
+   },
+   {
+    "title": "محطة الدريس في شارع المنصور",
+    "dist": 4256,
+    "rating": 4.5,
+    "reviews": 2
+   },
+   {
+    "title": "Aldrees",
+    "dist": 4401,
+    "rating": 4.4,
+    "reviews": 37
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 4689,
+    "rating": 1.0,
+    "reviews": 2
+   }
+  ],
+  "nearest": {
+   "title": "محطة نوفل",
+   "dist": 2450
+  },
+  "avg_rating": 4.12,
+  "weak_share": 0.17,
+  "strong": [
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 2298
+   },
+   {
+    "title": "محطة درب",
+    "dist": 2794
+   },
+   {
+    "title": "محطة درب",
+    "dist": 2830
+   },
+   {
+    "title": "محطة درب",
+    "dist": 4690
+   }
+  ]
+ },
+ "JA053": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "MK018": {
+  "n": 14,
+  "top": [
+   {
+    "title": "محطة نوفل",
+    "dist": 738,
+    "rating": 3.8,
+    "reviews": 289
+   },
+   {
+    "title": "بتروجين Petrogen",
+    "dist": 1881,
+    "rating": 1.0,
+    "reviews": 2
+   },
+   {
+    "title": "محطة تلال الأديب للوقود",
+    "dist": 1997,
+    "rating": 4.3,
+    "reviews": 268
+   },
+   {
+    "title": "محطة الدريس في شارع المنصور",
+    "dist": 2017,
+    "rating": 4.5,
+    "reviews": 2
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2108,
+    "rating": 4.4,
+    "reviews": 37
+   },
+   {
+    "title": "محطة المعطاني للخدمات البترولية",
+    "dist": 2571,
+    "rating": 3.6,
+    "reviews": 375
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3100,
+    "rating": 3.9,
+    "reviews": 643
+   },
+   {
+    "title": "محطة الأديب",
+    "dist": 3176,
+    "rating": 3.8,
+    "reviews": 222
+   },
+   {
+    "title": "Sasco",
+    "dist": 3463,
+    "rating": 4.0,
+    "reviews": 1
+   },
+   {
+    "title": "نفط",
+    "dist": 3467,
+    "rating": 3.9,
+    "reviews": 176
+   }
+  ],
+  "nearest": {
+   "title": "محطة نوفل",
+   "dist": 738
+  },
+  "avg_rating": 3.96,
+  "weak_share": 0.5,
+  "strong": [
+   "الدريس",
+   "بترولي",
+   "ساسكو",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 514
+   },
+   {
+    "title": "محطة درب",
+    "dist": 695
+   },
+   {
+    "title": "محطة درب",
+    "dist": 1882
+   }
+  ]
+ },
+ "JA056": {
+  "n": 16,
+  "top": [
+   {
+    "title": "SASCO - ساسكو",
+    "dist": 464,
+    "rating": 4.1,
+    "reviews": 609
+   },
+   {
+    "title": "محطة ريبن",
+    "dist": 669,
+    "rating": 4.0,
+    "reviews": 5
+   },
+   {
+    "title": "محطة بنزين ام شيبان",
+    "dist": 2785,
+    "rating": 4.4,
+    "reviews": 39
+   },
+   {
+    "title": "محطة كويك",
+    "dist": 2824,
+    "rating": 3.9,
+    "reviews": 17
+   },
+   {
+    "title": "محطة لتر",
+    "dist": 3022,
+    "rating": 3.8,
+    "reviews": 53
+   },
+   {
+    "title": "Sasco",
+    "dist": 3226,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3402,
+    "rating": 4.2,
+    "reviews": 21
+   },
+   {
+    "title": "محطة العقيلي",
+    "dist": 3750,
+    "rating": 3.8,
+    "reviews": 97
+   },
+   {
+    "title": "محطة شروق المهر للمحروقات",
+    "dist": 3750,
+    "rating": 5.0,
+    "reviews": 7
+   },
+   {
+    "title": "محطة وسوبرماركت الخردلي",
+    "dist": 3949,
+    "rating": 3.8,
+    "reviews": 42
+   }
+  ],
+  "nearest": {
+   "title": "SASCO - ساسكو",
+   "dist": 464
+  },
+  "avg_rating": 3.99,
+  "weak_share": 0.38,
+  "strong": [
+   "ساسكو",
+   "لتر",
+   "الدريس",
+   "نفط"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 1321
+   }
+  ]
+ },
+ "MK015": {
+  "n": 8,
+  "top": [
+   {
+    "title": "Aldrees",
+    "dist": 1582,
+    "rating": 3.9,
+    "reviews": 477
+   },
+   {
+    "title": "محطة ساسكو",
+    "dist": 1609,
+    "rating": 4.0,
+    "reviews": 304
+   },
+   {
+    "title": "Aldrees",
+    "dist": 1871,
+    "rating": 3.9,
+    "reviews": 1866
+   },
+   {
+    "title": "محطة جي اويل",
+    "dist": 2255,
+    "rating": 3.9,
+    "reviews": 1729
+   },
+   {
+    "title": "محطة قلف",
+    "dist": 2358,
+    "rating": 3.9,
+    "reviews": 168
+   },
+   {
+    "title": "محطة ديزل",
+    "dist": 2450,
+    "rating": 4.1,
+    "reviews": 40
+   },
+   {
+    "title": "محطة أبرق الرغامة",
+    "dist": 4139,
+    "rating": 3.5,
+    "reviews": 730
+   },
+   {
+    "title": "محطة شرق جدة",
+    "dist": 4565,
+    "rating": 3.7,
+    "reviews": 362
+   }
+  ],
+  "nearest": {
+   "title": "Aldrees",
+   "dist": 1582
+  },
+  "avg_rating": 3.86,
+  "weak_share": 0.75,
+  "strong": [
+   "الدريس",
+   "ساسكو",
+   "جي أويل"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 4845
+   }
+  ]
+ },
+ "MK014": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "JA041": {
+  "n": 13,
+  "top": [
+   {
+    "title": "محطة صفاء الريان للوقوة",
+    "dist": 1091,
+    "rating": 5.0,
+    "reviews": 4
+   },
+   {
+    "title": "محطة الأفق",
+    "dist": 1179,
+    "rating": 2.9,
+    "reviews": 15
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 1354,
+    "rating": 3.6,
+    "reviews": 45
+   },
+   {
+    "title": "محطة صفاء الريان",
+    "dist": 1438,
+    "rating": 3.4,
+    "reviews": 5
+   },
+   {
+    "title": "محطة وقود جديدة",
+    "dist": 1448,
+    "rating": 2.0,
+    "reviews": 4
+   },
+   {
+    "title": "J125 - Liter Gas Station | محطة لتر",
+    "dist": 1686,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "احد المسارحه",
+    "dist": 2004,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "محطة بترو عطيف",
+    "dist": 3207,
+    "rating": 3.8,
+    "reviews": 132
+   },
+   {
+    "title": "محطة واجهة الشاطئ",
+    "dist": 3420,
+    "rating": 3.9,
+    "reviews": 97
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3546,
+    "rating": 3.9,
+    "reviews": 190
+   }
+  ],
+  "nearest": {
+   "title": "محطة صفاء الريان للوقوة",
+   "dist": 1091
+  },
+  "avg_rating": 3.62,
+  "weak_share": 0.69,
+  "strong": [
+   "لتر",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 3086
+   }
+  ]
+ },
+ "MK004": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [],
+  "thin": true
+ },
+ "JA092": {
+  "n": 14,
+  "top": [
+   {
+    "title": "احد المسارحه",
+    "dist": 1209,
+    "rating": null,
+    "reviews": 0
+   },
+   {
+    "title": "محطة واجهة الشاطئ",
+    "dist": 1659,
+    "rating": 3.9,
+    "reviews": 97
+   },
+   {
+    "title": "J125 - Liter Gas Station | محطة لتر",
+    "dist": 2131,
+    "rating": 5.0,
+    "reviews": 1
+   },
+   {
+    "title": "محطة صفاء الريان للوقوة",
+    "dist": 2222,
+    "rating": 5.0,
+    "reviews": 4
+   },
+   {
+    "title": "محطة وقود",
+    "dist": 2236,
+    "rating": 3.6,
+    "reviews": 45
+   },
+   {
+    "title": "محطة وقود جديدة",
+    "dist": 2260,
+    "rating": 2.0,
+    "reviews": 4
+   },
+   {
+    "title": "محطة صفاء الريان",
+    "dist": 2273,
+    "rating": 3.4,
+    "reviews": 5
+   },
+   {
+    "title": "محطة بنزين",
+    "dist": 2719,
+    "rating": 3.8,
+    "reviews": 163
+   },
+   {
+    "title": "محطة وقود Gas Station",
+    "dist": 3696,
+    "rating": 3.7,
+    "reviews": 45
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3766,
+    "rating": 3.6,
+    "reviews": 12
+   }
+  ],
+  "nearest": {
+   "title": "احد المسارحه",
+   "dist": 1209
+  },
+  "avg_rating": 3.64,
+  "weak_share": 0.64,
+  "strong": [
+   "لتر",
+   "الدريس"
+  ],
+  "sisters": [
+   {
+    "title": "محطة درب",
+    "dist": 3086
+   }
+  ]
+ },
+ "MK007": {
+  "n": 4,
+  "top": [
+   {
+    "title": "محطة المملكة",
+    "dist": 2194,
+    "rating": 3.7,
+    "reviews": 900
+   },
+   {
+    "title": "Aldrees",
+    "dist": 2367,
+    "rating": 3.8,
+    "reviews": 731
+   },
+   {
+    "title": "Aldrees",
+    "dist": 3420,
+    "rating": 3.9,
+    "reviews": 2109
+   },
+   {
+    "title": "محطة بترولي",
+    "dist": 4376,
+    "rating": 4.4,
+    "reviews": 4773
+   }
+  ],
+  "nearest": {
+   "title": "محطة المملكة",
+   "dist": 2194
+  },
+  "avg_rating": 3.95,
+  "weak_share": 0.75,
+  "strong": [
+   "الدريس",
+   "بترولي"
+  ],
+  "sisters": []
+ },
+ "_meta": {
+  "unique_competitors": 197
+ }
+}
