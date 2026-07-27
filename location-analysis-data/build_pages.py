@@ -413,7 +413,7 @@ for i, a in enumerate(ORDER, 1):
     cls_cl = {'حيوية':'c-viv','حي':'c-nbh','خط سفر':'c-hwy','مختلط':'c-mix','نائية':'c-rem'}.get(cls, 'c-un')
     gr = m['growth']
     gh = '' if gr is None else (f'<span class="up">+{gr:.0f}٪</span>' if gr >= 0 else f'<span class="dn">{gr:.0f}٪</span>')
-    cards += f'''<a class="scard" href="stations/{m['code']}.html" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']}">
+    cards += f'''<a class="scard" href="#/{m['code']}" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']}">
       <div class="r1"><span class="nm">{esc(m['name'])}</span><span class="badge">{m['code']}</span></div>
       <div class="r2"><span>📍 {esc(m['region'])}</span><span class="cls {cls_cl}">{esc(cls)}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>
       <div class="r3"><span>إيراد يومي <b>{n0(m['daily_rev'])}</b> ر.س</span><span>#{i} {gh}</span></div>
@@ -426,7 +426,7 @@ for i, a in enumerate(ORDER, 1):
     gr = m['growth']
     gh = '—' if gr is None else (f'<span class="up">+{gr:.0f}٪</span>' if gr >= 0 else f'<span class="dn">{gr:.0f}٪</span>')
     ov_rows += f'''<tr data-region="{esc(m['region'])}">
-      <td>{i}</td><td><a class="stlink" href="stations/{m['code']}.html">{esc(m['name'])}</a> <span class="tcode">{m['code']}</span></td><td>{esc(m['region'])}</td>
+      <td>{i}</td><td><a class="stlink" href="#/{m['code']}">{esc(m['name'])}</a> <span class="tcode">{m['code']}</span></td><td>{esc(m['region'])}</td>
       <td>{esc(m['cls'] or '—')}</td><td>{n0(m['daily_rev'])}</td><td>{m['avg_invoice']:.0f}</td><td>{gh}</td>
       <td>{(str(c['n']) + ('*' if c.get('thin') else '')) if c else '—'}</td><td>{g['rating'] if g else '—'}</td></tr>'''
 
@@ -437,6 +437,33 @@ app_sum = '، '.join(f"{c} ({n})" for c, n in bycity.most_common())
 app_rows = ''.join(f"<tr><td>{esc(r['num'])}</td><td>{esc(r['city'])}</td><td>{esc(r['name'])}</td>"
                    f"<td>{'تشغيل' if r['status']=='Operation' else 'فرنشايز'}</td>"
                    f"<td><a href='{esc(r['loc'])}' target='_blank' rel='noopener'>الموقع ↗</a></td></tr>" for r in nosales)
+
+def spa_view(idx, a):
+    m = a['metrics']; code = m['code']
+    prv = CODES[idx-1] if idx > 0 else None
+    nxt = CODES[idx+1] if idx < len(CODES)-1 else None
+    opts = ''.join(
+        f'<option value="#/{c}"{" selected" if c==code else ""}>{esc(A[c]["metrics"]["name"])} — {c} ({esc(A[c]["metrics"]["region"])})</option>'
+        for c in CODES)
+    nav = f'''
+    <div class="pgnav">
+      <div class="nvl">
+        <a class="hb" href="#/">⌂ جميع المحطات</a>
+        {f'<a href="#/{prv}">→ السابقة: {esc(A[prv]["metrics"]["name"])}</a>' if prv else ''}
+        {f'<a href="#/{nxt}">التالية: {esc(A[nxt]["metrics"]["name"])} ←</a>' if nxt else ''}
+      </div>
+      <select onchange="location.hash=this.value" aria-label="انتقل إلى محطة">{opts}</select>
+    </div>'''
+    return f'''<div class="pgview" id="pg-{code}" data-title="{esc(m['name'])} {code}" hidden>
+    {nav}
+    <section class="station">{station_body(a)}</section>
+    <div class="pgnav" style="margin-top:4px"><div class="nvl">
+      <a class="hb" href="#/">⌂ جميع المحطات</a>
+      {f'<a href="#/{nxt}">المحطة التالية: {esc(A[nxt]["metrics"]["name"])} ←</a>' if nxt else ''}
+    </div></div>
+    </div>'''
+
+SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))
 
 hub = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -464,6 +491,7 @@ hub = f'''<!DOCTYPE html>
     </div>
   </div>
 </header>
+<div id="hub">
 <div class="stationbar"><div class="chips" id="chips">{chips}
   <div class="search"><input id="q" type="search" placeholder="ابحث باسم المحطة أو الكود…" aria-label="بحث"></div>
 </div></div>
@@ -480,7 +508,18 @@ hub = f'''<!DOCTYPE html>
   </details>
   <footer>{FOOT_METH}</footer>
 </main>
+</div>
+<main class="wrap" id="pages">{SPA_VIEWS}</main>
 <script>
+const hubEl=document.getElementById('hub');
+function route(){{
+  const h=decodeURIComponent(location.hash.replace(/^#\/?/, ''));
+  document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
+  const t=h?document.getElementById('pg-'+h):null;
+  if(t){{hubEl.style.display='none';t.hidden=false;document.title='درب · '+t.dataset.title+' — تحليل الموقع والمبيعات';window.scrollTo(0,0);}}
+  else{{hubEl.style.display='';document.title='درب · تحليل المواقع والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
+}}
+window.addEventListener('hashchange',route);
 const chips=document.querySelectorAll('.chip');const q=document.getElementById('q');
 let region='*';
 function apply(){{
@@ -498,6 +537,7 @@ function apply(){{
 }}
 chips.forEach(c=>c.addEventListener('click',()=>{{chips.forEach(x=>x.classList.remove('on'));c.classList.add('on');region=c.dataset.r;apply();}}));
 q.addEventListener('input',apply);
+route();
 </script>
 </body>
 </html>'''
