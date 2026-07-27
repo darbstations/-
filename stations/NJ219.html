@@ -147,6 +147,21 @@ footer b{color:var(--ink2)}
 .pgnav a.hb{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pgnav a.hb:hover{background:var(--orange);border-color:var(--orange)}
 .pgnav select{cursor:pointer;max-width:290px}
+.tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.tab{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 16px;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink2);text-decoration:none;transition:.14s}
+.tab:hover{border-color:var(--orange);color:var(--ink)}
+.tab.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.chartbox{background:#FDFCFA;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
+.chartbox h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.chartbox .cs{font-size:12px;color:var(--ink2);margin-bottom:10px}
+.bigchart{width:100%;height:auto;display:block}
+.dtbl{max-height:430px;overflow-y:auto;border:1px solid var(--line);border-radius:12px}
+.dtbl thead th{position:sticky;top:0;z-index:2}
+.dtbl td,.dtbl th{padding:7px 12px;font-size:12.5px}
+.dnote{font-size:12px;color:var(--ink2);background:#FDEEE2;border-radius:10px;padding:9px 13px;margin-top:12px}
+.mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
+.mini-head .rg{font-size:12.5px;color:var(--ink2)}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-bottom:34px}
 .scard{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:14px 16px;text-decoration:none;color:var(--ink);transition:.15s;display:block}
 .scard:hover{border-color:var(--orange);transform:translateY(-2px)}
@@ -177,8 +192,8 @@ footer b{color:var(--ink2)}
       </div>
       <select onchange="location.href=this.value" aria-label="انتقل إلى محطة"><option value="MK007.html">العمرة الجديدة — MK007 (مكة)</option><option value="MK003.html">العوالي — MK003 (مكة)</option><option value="MK004.html">عاصفة الصحراء — MK004 (الطائف)</option><option value="MK289.html">طريق الليث - الفضيلة — MK289 (جدة)</option><option value="MK072.html">العزيزية — MK072 (مكة)</option><option value="MK046.html">الحليس - طريق الجنوب — MK046 (الطائف)</option><option value="MK005.html">الشيباني — MK005 (الطائف)</option><option value="MK015.html">النسيم — MK015 (جدة)</option><option value="MK047.html">القادسية — MK047 (مكة)</option><option value="MK028.html">أحلى مساء — MK028 (الطائف)</option><option value="MK029.html">الدائري الثالث - الذكرى — MK029 (مكة)</option><option value="MK033.html">أبو وافي العمرة — MK033 (مكة)</option><option value="RY075.html">الدائري الشمالي — RY075 (الرياض)</option><option value="MK006.html">جنوب الطائف — MK006 (الطائف)</option><option value="MK001.html">جبل النور — MK001 (مكة)</option><option value="JA092.html">الصفا - أحد المسارحة — JA092 (جازان)</option><option value="MK008.html">الحسينية — MK008 (مكة)</option><option value="MK016.html">الرصيفة — MK016 (مكة)</option><option value="MK210.html">الفلاح - فلسطين — MK210 (جدة)</option><option value="MK017.html">عرفات الشوقية — MK017 (مكة)</option><option value="MK020.html">ممشى الشوقية — MK020 (مكة)</option><option value="MK063.html">السواط - شهار — MK063 (الطائف)</option><option value="MK064.html">الجعرانة — MK064 (مكة)</option><option value="MK035.html">الجمعية الوسام — MK035 (الطائف)</option><option value="MK054.html">طريق السيل — MK054 (مكة)</option><option value="MK022.html">بطحاء قريش 1 — MK022 (مكة)</option><option value="MK018.html">الرصيفة المسار — MK018 (مكة)</option><option value="RY025.html">الحمرا - طريق الملك عبدالله — RY025 (الخرج)</option><option value="AS153.html">مدخل محايل — AS153 (عسير)</option><option value="JA069.html">كورنيش جيزان — JA069 (جازان)</option><option value="MK014.html">خليص — MK014 (مكة)</option><option value="MK002.html">المعيصم — MK002 (مكة)</option><option value="MK068.html">الجموم - الكنيدري — MK068 (مكة)</option><option value="JA348.html">جنوب صبيا — JA348 (جازان)</option><option value="MK071.html">الأجاويد — MK071 (جدة)</option><option value="MK084.html">الكر النازل — MK084 (مكة)</option><option value="JA061.html">طريق صبيا — JA061 (جازان)</option><option value="MK023.html">بن درويش — MK023 (مكة)</option><option value="JA041.html">القسوم - أحد المسارحة — JA041 (جازان)</option><option value="MK093.html">الملك خالد — MK093 (الطائف)</option><option value="EP051.html">كورنيش الخبر — EP051 (الشرقية)</option><option value="QS055.html">الدائري الشرقي — QS055 (القصيم)</option><option value="MK031.html">بطحاء قريش 2 — MK031 (مكة)</option><option value="JA053.html">خبت نخلان — JA053 (جازان)</option><option value="RY024.html">غرناطة - طريق الملك عبدالله — RY024 (الخرج)</option><option value="RY042.html">الناصفة — RY042 (الخرج)</option><option value="MK019.html">الشرايع — MK019 (مكة)</option><option value="MK323.html">جبل ثور - جوهرة النسيم — MK323 (مكة)</option><option value="MK099.html">البيعة — MK099 (الطائف)</option><option value="MK100.html">الكوثر — MK100 (جدة)</option><option value="HA043.html">العريفي — HA043 (حائل)</option><option value="JA056.html">الروابي - المودة — JA056 (جازان)</option><option value="JA060.html">صناعية صامطة — JA060 (جازان)</option><option value="MD009.html">طريق السلام — MD009 (المدينة المنورة)</option><option value="NJ219.html" selected>المركب — NJ219 (نجران)</option></select>
     </div>
-  <section class="station">
-  
+  <div data-v="main" class="tabs"><a class="tab on" href="#">التحليل الكامل</a><a class="tab" href="#monthly" data-v="monthly">المبيعات الشهرية</a><a class="tab" href="#daily" data-v="daily">المبيعات اليومية</a></div>
+  <div class="pgview" id="v-main"><section class="station">
     <div class="shead">
       <div class="stitle">
         <span class="badge">NJ219</span><h2>المركب</h2>
@@ -250,12 +265,58 @@ footer b{color:var(--ink2)}
           <div class="ctbl"><table><thead><tr><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
           <tbody><tr><td colspan="4">لم يرصد المسح الآلي محطات منافسة داخل الدائرة</td></tr></tbody></table></div>
         </div>
+    </div></section></div>
+  <div class="pgview" id="v-monthly" hidden><div class="mini-head"><span class="badge">NJ219</span><h2>المركب</h2>
+    <span class="rg">📍 نجران</span><span class="stars">★ 5.0</span></div>
+    <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi hot"><div class="kl">إجمالي إيراد الفترة</div><div class="kv">46 <small>ألف ر.س</small></div><div class="kn">1 أشهر (يونيو → يونيو 2026)</div></div>
+      <div class="kpi"><div class="kl">أفضل شهر</div><div class="kv">يونيو</div><div class="kn">46,160 ر.س</div></div>
+      <div class="kpi"><div class="kl">متوسط الإيراد الشهري</div><div class="kv">46 <small>ألف ر.س</small></div><div class="kn">للأشهر المسجلة</div></div>
+      <div class="kpi"><div class="kl">متوسط الفاتورة (الفترة)</div><div class="kv">50 <small>ر.س</small></div><div class="kn">23 لترًا للتعبئة</div></div>
     </div>
-  </section>
+    <div class="chartbox"><h3>الإيراد الشهري (ر.س)</h3><div class="cs">الأشهر الجزئية تظهر أقل بحكم عدد الأيام — قارن بمتوسط اليوم أدناه</div><svg viewBox="0 0 640 190" class="bigchart" role="img"><defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs><rect x="288.0" y="26.0" width="64.0" height="134.0" rx="5" fill="url(#gB)"/><text x="320.0" y="20.0" font-size="11" font-weight="700" text-anchor="middle" fill="var(--ink)">46ألف</text><text x="320.0" y="178.0" font-size="11" text-anchor="middle" fill="var(--ink2)">يونيو</text></svg></div>
+    <div class="chartbox"><h3>متوسط الإيراد اليومي لكل شهر (ر.س)</h3><div class="cs">المقياس الأدق لمقارنة الأشهر بغض النظر عن اكتمال أيامها</div><svg viewBox="0 0 640 190" class="bigchart" role="img"><defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs><rect x="288.0" y="26.0" width="64.0" height="134.0" rx="5" fill="url(#gB)"/><text x="320.0" y="20.0" font-size="11" font-weight="700" text-anchor="middle" fill="var(--ink)">8ألف</text><text x="320.0" y="178.0" font-size="11" text-anchor="middle" fill="var(--ink2)">يونيو</text></svg></div>
+    <div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>الشهر</th><th>أيام مسجلة</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>اللترات</th><th>الفاتورة (ر.س)</th><th>متوسط اليوم (ر.س)</th><th>ساعة الذروة</th><th>التغير٪*</th></tr></thead>
+      <tbody><tr><td><b>يونيو</b> <span class="tcode">(جزئي)</span></td><td>6</td><td>46,160</td>
+        <td>924</td><td>21,693</td><td>50</td>
+        <td>7,693</td><td>7م</td><td>—</td></tr></tbody></table></div></div>
+    <div class="sec-h" style="margin-top:18px"><h2>مزيج الوقود شهريًا</h2><span>نسب من إيراد الشهر</span></div>
+    <div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
+      <tbody><tr><td><b>يونيو</b></td><td>50٪</td>
+        <td>33٪</td><td>17٪</td></tr></tbody></table></div></div>
+    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div></div>
+  <div class="pgview" id="v-daily" hidden><div class="mini-head"><span class="badge">NJ219</span><h2>المركب</h2>
+    <span class="rg">📍 نجران</span><span class="stars">★ 5.0</span></div>
+    <div class="skpis" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi hot"><div class="kl">متوسط الإيراد اليومي</div><div class="kv">8 <small>ألف ر.س</small></div><div class="kn">6 يومًا مسجلًا</div></div>
+      <div class="kpi"><div class="kl">أفضل يوم</div><div class="kv">10,682 <small>ر.س</small></div><div class="kn">2026-06-30 (الثلاثاء)</div></div>
+      <div class="kpi"><div class="kl">أدنى يوم</div><div class="kv">2,810 <small>ر.س</small></div><div class="kn">2026-06-25 (الخميس)</div></div>
+      <div class="kpi"><div class="kl">آخر 30 يومًا مقابل ما قبلها</div><div class="kv">—</div><div class="kn">على متوسط الإيراد اليومي</div></div>
+      <div class="kpi"><div class="kl">التذبذب اليومي</div><div class="kv">32٪ <small>CV</small></div><div class="kn">أقل = أكثر استقرارًا</div></div>
+    </div>
+    <div class="chartbox"><h3>الإيراد اليومي عبر الفترة</h3><div class="cs">الخط الرمادي: القيم اليومية · الخط البرتقالي: متوسط متحرك 7 أيام</div><svg viewBox="0 0 920 240" class="bigchart" role="img" aria-label="الإيراد اليومي"><line x1="46" y1="10.0" x2="912" y2="10.0" stroke="var(--line)" stroke-dasharray="2 4"/><text x="40" y="14.0" font-size="10" text-anchor="end" fill="var(--ink3)">11ألف</text><line x1="46" y1="112.0" x2="912" y2="112.0" stroke="var(--line)" stroke-dasharray="2 4"/><text x="40" y="116.0" font-size="10" text-anchor="end" fill="var(--ink3)">5ألف</text><line x1="46.0" y1="10" x2="46.0" y2="214" stroke="var(--line)" stroke-dasharray="2 4"/><text x="50.0" y="232" font-size="11" fill="var(--ink2)">يونيو</text><polyline points="46.0,160.3 219.2,78.5 392.4,72.6 565.6,32.0 738.8,49.2 912.0,10.0" fill="none" stroke="#C9BFB0" stroke-width="1.4"/><polyline points="46.0,160.3 219.2,119.4 392.4,103.8 565.6,85.8 738.8,78.5 912.0,67.1" fill="none" stroke="#F37021" stroke-width="2.6" stroke-linejoin="round"/></svg></div>
+    <div class="sec-h"><h2>سجل الأيام</h2><span>الأحدث أولًا — 2026-06-30 ← 2026-06-25</span></div>
+    <div class="dtbl"><table>
+      <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>متوسط الفاتورة</th></tr></thead>
+      <tbody><tr><td>2026-06-30</td><td>الثلاثاء</td><td>10,682</td><td>206</td><td>52</td></tr><tr><td>2026-06-29</td><td>الإثنين</td><td>8,631</td><td>155</td><td>56</td></tr><tr><td>2026-06-28</td><td>الأحد</td><td>9,531</td><td>206</td><td>46</td></tr><tr><td>2026-06-27</td><td>السبت</td><td>7,407</td><td>161</td><td>46</td></tr><tr><td>2026-06-26</td><td>الجمعة</td><td>7,098</td><td>149</td><td>48</td></tr><tr><td>2026-06-25</td><td>الخميس</td><td>2,810</td><td>47</td><td>60</td></tr></tbody></table></div>
+    <div class="dnote">📌 هذه الصفحة مبنية على البيانات اليومية المتوفرة حاليًا في لوحة المبيعات (حتى 2026-06-30). عند تزويدنا بملف مبيعات يومية أحدث تُحدَّث الصفحة بالكامل بنفس التصميم.</div></div>
   <footer><b>المنهجية والمصادر:</b> بيانات المبيعات والزيارات من لوحة «درب · تحليل المبيعات والتسويق» (يناير–يونيو 2026)؛
     مواقع المحطات من ملف Station_Data.xlsx؛ رصد المنافسين والتقييمات من خرائط جوجل (بحث «محطة وقود» ضمن دائرة نصف قطرها 5 كم حول إحداثيات كل محطة، يوليو 2026) —
     القوائم تشمل المدرَج في خرائط جوجل فقط والمسافات مباشرة (خط مستقيم). الدوائر التي أعاد المسح الآلي فيها نتائج شحيحة معلَّمة بتنبيه ولا يُبنى على عددها استنتاج تنافسي.
     تحليلات PEST/SWOT/البيرسونا مولّدة قاعديًا من مؤشرات كل محطة وتُقرأ كمسودة عمل تسويقية لا كدراسة سوق ميدانية.</footer>
 </main>
+<script>
+function route(){
+  const h=location.hash.replace('#','');
+  const k=(h==='monthly'||h==='daily')?h:'main';
+  document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
+  document.getElementById('v-'+k).hidden=false;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
+  window.scrollTo(0,0);
+}
+window.addEventListener('hashchange',route);route();
+</script>
 </body>
 </html>

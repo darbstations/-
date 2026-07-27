@@ -166,6 +166,21 @@ footer b{color:var(--ink2)}
 .pgnav a.hb{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pgnav a.hb:hover{background:var(--orange);border-color:var(--orange)}
 .pgnav select{cursor:pointer;max-width:290px}
+.tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+.tab{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 16px;font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink2);text-decoration:none;transition:.14s}
+.tab:hover{border-color:var(--orange);color:var(--ink)}
+.tab.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.chartbox{background:#FDFCFA;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;margin-bottom:16px}
+.chartbox h3{font-size:15px;font-weight:700;margin-bottom:2px}
+.chartbox .cs{font-size:12px;color:var(--ink2);margin-bottom:10px}
+.bigchart{width:100%;height:auto;display:block}
+.dtbl{max-height:430px;overflow-y:auto;border:1px solid var(--line);border-radius:12px}
+.dtbl thead th{position:sticky;top:0;z-index:2}
+.dtbl td,.dtbl th{padding:7px 12px;font-size:12.5px}
+.dnote{font-size:12px;color:var(--ink2);background:#FDEEE2;border-radius:10px;padding:9px 13px;margin-top:12px}
+.mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
+.mini-head .rg{font-size:12.5px;color:var(--ink2)}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-bottom:34px}
 .scard{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:14px 16px;text-decoration:none;color:var(--ink);transition:.15s;display:block}
 .scard:hover{border-color:var(--orange);transform:translateY(-2px)}
@@ -347,6 +362,152 @@ def station_body(a):
     </div>'''
     return head + kpis + sig + grid
 
+MONTH_AR = {'2026-01':'يناير','2026-02':'فبراير','2026-03':'مارس','2026-04':'أبريل','2026-05':'مايو','2026-06':'يونيو'}
+WD_AR = ['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد']
+import datetime as _dt
+
+def mini_head(a):
+    m, g = a['metrics'], a['geo']
+    return f'''<div class="mini-head"><span class="badge">{m['code']}</span><h2>{esc(m['name'])}</h2>
+    <span class="rg">📍 {esc(m['region'])}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>'''
+
+def tabs_html(code, active, mode):
+    items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية')]
+    out = []
+    for key, lab in items:
+        if mode == 'spa':
+            href = f'#/{code}' if key=='main' else f'#/{code}/{key}'
+        else:
+            href = '#' if key=='main' else f'#{key}'
+        out.append(f'<a class="tab{" on" if key==active else ""}" href="{href}">{lab}</a>')
+    return '<div class="tabs">' + ''.join(out) + '</div>'
+
+def bars_chart(vals, labels, fmt, unit=''):
+    if not vals: return ''
+    W, H = 640, 190
+    n = len(vals); mx = max(vals) or 1
+    bw = min(64, (W-30)/n - 14)
+    out = ['<defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    for i, v in enumerate(vals):
+        x = 15 + i*((W-30)/n) + ((W-30)/n - bw)/2
+        bh = max(3, v/mx*(H-56))
+        fill = 'url(#gB)' if v == mx else 'var(--bar)'
+        out.append(f'<rect x="{x:.1f}" y="{H-30-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"/>')
+        out.append(f'<text x="{x+bw/2:.1f}" y="{H-36-bh:.1f}" font-size="11" font-weight="700" text-anchor="middle" fill="var(--ink)">{fmt(v)}</text>')
+        out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{labels[i]}</text>')
+    return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def monthly_body(a):
+    m = a['metrics']; code = m['code']
+    st = BYCODE[code]; mm = st.get('monthly', {})
+    keys = sorted(mm.keys())
+    if not keys: return '<div class="card"><div class="cs">لا تتوفر بيانات شهرية.</div></div>'
+    best = max(keys, key=lambda k: mm[k]['revenue'])
+    tot = sum(mm[k]['revenue'] for k in keys)
+    rows = ''
+    prev_drev = None
+    for k in keys:
+        v = mm[k]
+        mom = ''
+        if prev_drev:
+            ch = (v['daily_avg_rev']/prev_drev - 1)*100
+            mom = f'<span class="up">+{ch:.0f}٪</span>' if ch >= 0 else f'<span class="dn">{ch:.0f}٪</span>'
+        prev_drev = v['daily_avg_rev']
+        partial = ' <span class="tcode">(جزئي)</span>' if v['ndays'] < 26 else ''
+        vol = n0(v['volume']) if v.get('volume') else '—'
+        rows += f'''<tr><td><b>{MONTH_AR.get(k,k)}</b>{partial}</td><td>{v['ndays']}</td><td>{n0(v['revenue'])}</td>
+        <td>{n0(v['visits'])}</td><td>{vol}</td><td>{v['avg_invoice']:.0f}</td>
+        <td>{n0(v['daily_avg_rev'])}</td><td>{hr_ar(v['peak_vis_hour'])}</td><td>{mom or '—'}</td></tr>'''
+    fuel_rows = ''
+    for k in keys:
+        fs = {f['fuel']: f['rev'] for f in mm[k].get('fuels', [])}
+        fr = sum(fs.values()) or 1
+        fuel_rows += f'''<tr><td><b>{MONTH_AR.get(k,k)}</b></td><td>{fs.get('Gasoline 91',0)/fr*100:.0f}٪</td>
+        <td>{fs.get('Gasoline 95',0)/fr*100:.0f}٪</td><td>{fs.get('Diesel',0)/fr*100:.0f}٪</td></tr>'''
+    kpis = f'''
+    <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+      <div class="kpi hot"><div class="kl">إجمالي إيراد الفترة</div><div class="kv">{sar(tot)}</div><div class="kn">{len(keys)} أشهر ({MONTH_AR.get(keys[0])} → {MONTH_AR.get(keys[-1])} 2026)</div></div>
+      <div class="kpi"><div class="kl">أفضل شهر</div><div class="kv">{MONTH_AR.get(best)}</div><div class="kn">{n0(mm[best]['revenue'])} ر.س</div></div>
+      <div class="kpi"><div class="kl">متوسط الإيراد الشهري</div><div class="kv">{sar(tot/len(keys))}</div><div class="kn">للأشهر المسجلة</div></div>
+      <div class="kpi"><div class="kl">متوسط الفاتورة (الفترة)</div><div class="kv">{m['avg_invoice']:.0f} <small>ر.س</small></div><div class="kn">{m['avg_liters']:.0f} لترًا للتعبئة</div></div>
+    </div>'''
+    ch1 = bars_chart([mm[k]['revenue'] for k in keys], [MONTH_AR.get(k,k) for k in keys], lambda v: f'{v/1e6:.1f}م' if v>=1e6 else f'{v/1e3:.0f}ألف')
+    ch2 = bars_chart([mm[k]['daily_avg_rev'] for k in keys], [MONTH_AR.get(k,k) for k in keys], lambda v: f'{v/1e3:.0f}ألف')
+    return f'''{kpis}
+    <div class="chartbox"><h3>الإيراد الشهري (ر.س)</h3><div class="cs">الأشهر الجزئية تظهر أقل بحكم عدد الأيام — قارن بمتوسط اليوم أدناه</div>{ch1}</div>
+    <div class="chartbox"><h3>متوسط الإيراد اليومي لكل شهر (ر.س)</h3><div class="cs">المقياس الأدق لمقارنة الأشهر بغض النظر عن اكتمال أيامها</div>{ch2}</div>
+    <div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>الشهر</th><th>أيام مسجلة</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>اللترات</th><th>الفاتورة (ر.س)</th><th>متوسط اليوم (ر.س)</th><th>ساعة الذروة</th><th>التغير٪*</th></tr></thead>
+      <tbody>{rows}</tbody></table></div></div>
+    <div class="sec-h" style="margin-top:18px"><h2>مزيج الوقود شهريًا</h2><span>نسب من إيراد الشهر</span></div>
+    <div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
+      <tbody>{fuel_rows}</tbody></table></div></div>
+    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>'''
+
+def daily_line_chart(daily):
+    if len(daily) < 2: return ''
+    W, H, PL, PB = 920, 240, 46, 26
+    vals = [d['rev'] for d in daily]
+    mx = max(vals) or 1
+    n = len(vals)
+    def X(i): return PL + i*(W-PL-8)/(n-1)
+    def Y(v): return 10 + (1 - v/mx)*(H-10-PB)
+    pts = ' '.join(f'{X(i):.1f},{Y(v):.1f}' for i, v in enumerate(vals))
+    ma = []
+    for i in range(n):
+        w = vals[max(0,i-6):i+1]
+        ma.append(sum(w)/len(w))
+    mpts = ' '.join(f'{X(i):.1f},{Y(v):.1f}' for i, v in enumerate(ma))
+    months_seen, ticks = set(), []
+    for i, d in enumerate(daily):
+        mk = d['date'][:7]
+        if mk not in months_seen:
+            months_seen.add(mk)
+            ticks.append(f'<line x1="{X(i):.1f}" y1="10" x2="{X(i):.1f}" y2="{H-PB}" stroke="var(--line)" stroke-dasharray="2 4"/>'
+                         f'<text x="{X(i)+4:.1f}" y="{H-8}" font-size="11" fill="var(--ink2)">{MONTH_AR.get(mk,mk)}</text>')
+    grid = ''.join(f'<line x1="{PL}" y1="{Y(mx*f):.1f}" x2="{W-8}" y2="{Y(mx*f):.1f}" stroke="var(--line)" stroke-dasharray="2 4"/>'
+                   f'<text x="{PL-6}" y="{Y(mx*f)+4:.1f}" font-size="10" text-anchor="end" fill="var(--ink3)">{mx*f/1e3:.0f}ألف</text>'
+                   for f in (1.0, .5))
+    return (f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img" aria-label="الإيراد اليومي">'
+            f'{grid}{"".join(ticks)}'
+            f'<polyline points="{pts}" fill="none" stroke="#C9BFB0" stroke-width="1.4"/>'
+            f'<polyline points="{mpts}" fill="none" stroke="#F37021" stroke-width="2.6" stroke-linejoin="round"/>'
+            f'</svg>')
+
+def daily_body(a):
+    m = a['metrics']; code = m['code']
+    daily = [d for d in BYCODE[code]['overall'].get('daily', []) if d['rev'] > 0]
+    if not daily: return '<div class="card"><div class="cs">لا تتوفر بيانات يومية بعد — بانتظار التزويد.</div></div>'
+    vals = [d['rev'] for d in daily]
+    avg = sum(vals)/len(vals)
+    best = max(daily, key=lambda d: d['rev']); worst = min(daily, key=lambda d: d['rev'])
+    last30 = vals[-30:]; prev30 = vals[-60:-30]
+    trend = ''
+    if len(prev30) >= 15:
+        ch = (sum(last30)/len(last30))/(sum(prev30)/len(prev30)) - 1
+        trend = (f'<span class="up">+{ch*100:.0f}٪</span>' if ch >= 0 else f'<span class="dn">{ch*100:.0f}٪</span>')
+    def wd(ds): return WD_AR[_dt.date(*map(int, ds.split('-'))).weekday()]
+    rows = ''
+    for d in reversed(daily):
+        inv = d['rev']/d['vis'] if d['vis'] else 0
+        rows += f'''<tr><td>{d['date']}</td><td>{wd(d['date'])}</td><td>{n0(d['rev'])}</td><td>{n0(d['vis'])}</td><td>{inv:.0f}</td></tr>'''
+    kpis = f'''
+    <div class="skpis" style="grid-template-columns:repeat(5,1fr)">
+      <div class="kpi hot"><div class="kl">متوسط الإيراد اليومي</div><div class="kv">{sar(avg)}</div><div class="kn">{len(daily)} يومًا مسجلًا</div></div>
+      <div class="kpi"><div class="kl">أفضل يوم</div><div class="kv">{n0(best['rev'])} <small>ر.س</small></div><div class="kn">{best['date']} ({wd(best['date'])})</div></div>
+      <div class="kpi"><div class="kl">أدنى يوم</div><div class="kv">{n0(worst['rev'])} <small>ر.س</small></div><div class="kn">{worst['date']} ({wd(worst['date'])})</div></div>
+      <div class="kpi"><div class="kl">آخر 30 يومًا مقابل ما قبلها</div><div class="kv">{trend or '—'}</div><div class="kn">على متوسط الإيراد اليومي</div></div>
+      <div class="kpi"><div class="kl">التذبذب اليومي</div><div class="kv">{m['cv']*100:.0f}٪ <small>CV</small></div><div class="kn">أقل = أكثر استقرارًا</div></div>
+    </div>'''
+    return f'''{kpis}
+    <div class="chartbox"><h3>الإيراد اليومي عبر الفترة</h3><div class="cs">الخط الرمادي: القيم اليومية · الخط البرتقالي: متوسط متحرك 7 أيام</div>{daily_line_chart(daily)}</div>
+    <div class="sec-h"><h2>سجل الأيام</h2><span>الأحدث أولًا — {daily[-1]['date']} ← {daily[0]['date']}</span></div>
+    <div class="dtbl"><table>
+      <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>متوسط الفاتورة</th></tr></thead>
+      <tbody>{rows}</tbody></table></div>
+    <div class="dnote">📌 هذه الصفحة مبنية على البيانات اليومية المتوفرة حاليًا في لوحة المبيعات (حتى {daily[-1]['date']}). عند تزويدنا بملف مبيعات يومية أحدث تُحدَّث الصفحة بالكامل بنفس التصميم.</div>'''
+
 # ---------------- per-station pages ----------------
 for idx, a in enumerate(ORDER):
     m = a['metrics']; code = m['code']
@@ -385,11 +546,23 @@ for idx, a in enumerate(ORDER):
 </header>
 <main class="wrap" style="padding-top:20px">
   {nav}
-  <section class="station">
-  {station_body(a)}
-  </section>
+  {tabs_html(code, 'main', 'file').replace('class="tab', 'data-v="main" class="tab', 1).replace('href="#monthly"','href="#monthly" data-v="monthly"').replace('href="#daily"','href="#daily" data-v="daily"')}
+  <div class="pgview" id="v-main"><section class="station">{station_body(a)}</section></div>
+  <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
+  <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
   <footer>{FOOT_METH}</footer>
 </main>
+<script>
+function route(){{
+  const h=location.hash.replace('#','');
+  const k=(h==='monthly'||h==='daily')?h:'main';
+  document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
+  document.getElementById('v-'+k).hidden=false;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
+  window.scrollTo(0,0);
+}}
+window.addEventListener('hashchange',route);route();
+</script>
 </body>
 </html>'''
     open(f'stations/{code}.html', 'w', encoding='utf-8').write(page)
@@ -454,14 +627,19 @@ def spa_view(idx, a):
       </div>
       <select onchange="location.hash=this.value" aria-label="انتقل إلى محطة">{opts}</select>
     </div>'''
-    return f'''<div class="pgview" id="pg-{code}" data-title="{esc(m['name'])} {code}" hidden>
-    {nav}
-    <section class="station">{station_body(a)}</section>
-    <div class="pgnav" style="margin-top:4px"><div class="nvl">
+    bottom = f'''<div class="pgnav" style="margin-top:4px"><div class="nvl">
       <a class="hb" href="#/">⌂ جميع المحطات</a>
       {f'<a href="#/{nxt}">المحطة التالية: {esc(A[nxt]["metrics"]["name"])} ←</a>' if nxt else ''}
-    </div></div>
-    </div>'''
+    </div></div>'''
+    return (
+      f'''<div class="pgview" id="pg-{code}" data-title="{esc(m['name'])} {code}" hidden>
+      {nav}{tabs_html(code, 'main', 'spa')}
+      <section class="station">{station_body(a)}</section>{bottom}</div>'''
+      f'''<div class="pgview" id="pg-{code}-monthly" data-title="{esc(m['name'])} {code} · المبيعات الشهرية" hidden>
+      {nav}{tabs_html(code, 'monthly', 'spa')}{mini_head(a)}{monthly_body(a)}{bottom}</div>'''
+      f'''<div class="pgview" id="pg-{code}-daily" data-title="{esc(m['name'])} {code} · المبيعات اليومية" hidden>
+      {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
+    )
 
 SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))
 
@@ -515,7 +693,7 @@ const hubEl=document.getElementById('hub');
 function route(){{
   const h=decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
-  const t=h?document.getElementById('pg-'+h):null;
+  const t=h?document.getElementById('pg-'+h.replace(/\//g,'-')):null;
   if(t){{hubEl.style.display='none';t.hidden=false;document.title='درب · '+t.dataset.title+' — تحليل الموقع والمبيعات';window.scrollTo(0,0);}}
   else{{hubEl.style.display='';document.title='درب · تحليل المواقع والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
 }}
