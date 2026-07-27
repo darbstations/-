@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>درب · الرصيفة المسار MK018 — تحليل الموقع والمبيعات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#F37021;--gold1:#F5A623;--ink:#3D3D3D;--ink2:#6E6A64;--ink3:#9B968E;--bg:#F7F4EF;--card:#FFFFFF;
+--line:#ECE6DD;--line2:#E3DCD1;--bar:#E0D9CD;--good:#2E8B6F;--bad:#C0503A;--blue:#3E6E8E;
+--shadow:0 1px 2px rgba(61,61,61,.04),0 8px 24px rgba(61,61,61,.06);--radius:16px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'IBM Plex Sans Arabic','Tajawal',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px}
+::selection{background:var(--orange);color:#fff}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px}
+header{background:#1d1c1b;color:#fff;padding:30px 0 24px}
+.brand{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.mark .ar{font-family:'Tajawal';font-weight:800;font-size:28px;letter-spacing:-.5px}
+.mark .ar b{color:var(--orange)}
+.mark .en{font-size:10.5px;letter-spacing:3.5px;color:#b9b3aa;margin-top:3px}
+.mark a{color:inherit;text-decoration:none}
+.hd-title{text-align:left}
+.hd-title h1{font-size:17px;font-weight:600}
+.hd-title p{font-size:12px;color:#b9b3aa;margin-top:3px}
+.netkpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.09);border-radius:14px;overflow:hidden;margin-top:22px}
+.netkpis>div{background:#26241f;padding:13px 16px}
+.netkpis .v{font-family:'Tajawal';font-weight:800;font-size:21px;color:var(--gold1)}
+.netkpis .v small{font-size:11px;color:#b9b3aa;font-weight:500}
+.netkpis .l{font-size:11.5px;color:#b9b3aa;margin-top:2px}
+@media(max-width:900px){.netkpis{grid-template-columns:repeat(2,1fr)}}
+.stationbar{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(61,61,61,.05)}
+.chips{display:flex;gap:7px;overflow-x:auto;padding:11px 22px;max-width:1240px;margin:0 auto;scrollbar-width:thin;align-items:center}
+.chip{flex:none;border:1px solid var(--line2);background:#fff;border-radius:11px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--ink2);transition:.14s;display:flex;gap:7px;align-items:center;text-decoration:none}
+.chip:hover{border-color:var(--orange);color:var(--ink)}
+.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip .code{font-size:10.5px;color:var(--ink3);font-family:'Tajawal'}
+.chip.on .code{color:var(--gold1)}
+.search{flex:none;margin-inline-start:auto}
+.search input{border:1px solid var(--line2);border-radius:11px;padding:8px 13px;font-family:inherit;font-size:13px;width:220px;background:#fff;color:var(--ink)}
+.search input:focus{outline:2px solid var(--orange);border-color:var(--orange)}
+main{padding:26px 0 40px}
+.sec-h{display:flex;align-items:baseline;gap:10px;margin:8px 0 14px}
+.sec-h h2{font-size:19px;font-weight:800;font-family:'Tajawal'}
+.sec-h span{font-size:12px;color:var(--ink3)}
+.ntable{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:34px}
+.ntable .tscroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:right;font-size:12px;color:var(--ink2);font-weight:600;padding:11px 14px;border-bottom:1px solid var(--line);background:#FBF9F5;white-space:nowrap}
+td{padding:10px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+tbody tr{transition:.12s}
+tbody tr:hover{background:#FBF6EF}
+td a.stlink{color:var(--ink);text-decoration:none;font-weight:700}
+td a.stlink:hover{color:var(--orange)}
+.tcode{font-size:11px;color:var(--ink3);font-family:'Tajawal';letter-spacing:.4px}
+.up{color:var(--good);font-weight:700}.dn{color:var(--bad);font-weight:700}
+.station{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px 22px 18px;margin-bottom:26px}
+.shead{border-bottom:1px dashed var(--line2);padding-bottom:14px;margin-bottom:16px}
+.stitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.stitle h2{font-family:'Tajawal';font-weight:800;font-size:24px}
+.badge{font-size:12px;font-weight:700;background:var(--ink);color:#fff;padding:3px 9px;border-radius:7px;font-family:'Tajawal';letter-spacing:.5px}
+.cls{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid transparent}
+.c-viv{background:#FDEEE2;color:#B4500F;border-color:#F5CBA8}
+.c-nbh{background:#E9F2EC;color:#22694F;border-color:#BFDCCB}
+.c-hwy{background:#E8EFF5;color:#2D5674;border-color:#BED3E2}
+.c-mix{background:#F3ECFA;color:#5E3A85;border-color:#D8C6EC}
+.c-rem{background:#F5F1E8;color:#7A6A3A;border-color:#E0D5B8}
+.c-un{background:#F1EFEB;color:#6E6A64;border-color:#DDD8CF}
+.c-st{background:#fff;color:var(--ink2);border-color:var(--line2)}
+.smeta{display:flex;gap:16px;align-items:center;font-size:13px;color:var(--ink2);margin-top:8px;flex-wrap:wrap}
+.smeta a{color:var(--blue);text-decoration:none;font-weight:600}
+.smeta a:hover{color:var(--orange)}
+.stars{color:#C98A1B;font-weight:800;font-family:'Tajawal'}
+.saddr{font-size:12px;color:var(--ink3);margin-top:5px}
+.skpis{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-bottom:16px}
+@media(max-width:1000px){.skpis{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:620px){.skpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:#FDFCFA;border:1px solid var(--line);border-radius:13px;padding:12px 13px;position:relative;overflow:hidden}
+.kpi::before{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:var(--line2)}
+.kpi.hot::before{background:linear-gradient(var(--gold1),var(--orange))}
+.kpi .kl{font-size:11.5px;color:var(--ink2);font-weight:500}
+.kpi .kv{font-family:'Tajawal';font-weight:800;font-size:21px;margin-top:6px;color:var(--ink)}
+.kpi .kv small{font-size:11px;color:var(--ink2);font-weight:500}
+.kpi.hot .kv{color:var(--orange)}
+.kpi .kn{font-size:10.5px;color:var(--ink3);margin-top:3px}
+.card{background:#FDFCFA;border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px 14px}
+.card .ct{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.card .ct h3{font-size:15px;font-weight:700}
+.card .ct .leg{font-size:11px;color:var(--ink3)}
+.card .cs{font-size:12.5px;color:var(--ink2);margin-bottom:12px}
+.sig{margin-bottom:16px}
+.siggrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:10px}
+@media(max-width:900px){.siggrid{grid-template-columns:1fr}}
+.sglb{font-size:12px;color:var(--ink2);font-weight:600;margin-bottom:6px}
+.sgnote{font-size:11px;color:var(--ink3);margin-top:4px}
+.spark{width:100%;height:auto;display:block}
+.mix .mixbar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--bar)}
+.mix .mixbar i{display:block;height:100%}
+.mix .mixleg{display:flex;gap:12px;font-size:11px;color:var(--ink2);margin-top:6px;flex-wrap:wrap}
+.mix .mixleg b{display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:4px}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:980px){.agrid{grid-template-columns:1fr}}
+.pcard{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line2)}
+.pcard:last-child{border-bottom:none}
+.pico{font-size:24px;flex:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#FDEEE2;border-radius:12px}
+.pname{font-weight:800;font-family:'Tajawal';font-size:14.5px}
+.pshare{font-size:10.5px;font-weight:600;color:#B4500F;background:#FDEEE2;padding:2px 8px;border-radius:7px;margin-inline-start:6px}
+.pbody p{font-size:12.5px;color:var(--ink2);margin:4px 0}
+.pline{font-size:12px;color:var(--ink2)}
+.pline b{color:var(--ink)}
+.pline.act b{color:var(--orange)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:620px){.swot{grid-template-columns:1fr}}
+.sq{border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
+.sq h4{font-size:13px;font-weight:800;font-family:'Tajawal';margin-bottom:7px}
+.sq ul{padding-inline-start:16px;font-size:12px;color:var(--ink2);display:grid;gap:5px}
+.sq.s{background:#F0F7F2;border-color:#CBE2D3}.sq.s h4{color:#22694F}
+.sq.w{background:#FBF0ED;border-color:#EBCFC7}.sq.w h4{color:#A6432E}
+.sq.o{background:#F0F5FA;border-color:#CBDDEB}.sq.o h4{color:#2D5674}
+.sq.t{background:#F8F3E9;border-color:#E6D9BE}.sq.t h4{color:#8A6D2B}
+.pest{display:grid;gap:10px}
+.pr{display:flex;gap:12px;align-items:flex-start}
+.pk{flex:none;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Tajawal';color:#fff;font-size:14px}
+.pP{background:#3E6E8E}.pE{background:#F37021}.pS{background:#2E8B6F}.pT{background:#6E5A8E}
+.pr b{font-size:13px}
+.pr ul{padding-inline-start:16px;font-size:12px;color:var(--ink2);display:grid;gap:4px;margin-top:4px}
+.comp .ctbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.comp table{font-size:12.5px}
+.comp td,.comp th{padding:8px 12px;white-space:normal}
+.dens{font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:8px}
+.dens.lo{background:#E9F2EC;color:#22694F}
+.dens.md{background:#F8F3E9;color:#8A6D2B}
+.dens.hi{background:#FBF0ED;color:#A6432E}
+.sis{font-size:12px;color:var(--ink2);margin-top:9px;background:#FDEEE2;border-radius:10px;padding:8px 12px}
+details.apx{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin-top:8px}
+details.apx summary{cursor:pointer;font-weight:700;font-size:14px}
+details.apx .tscroll{overflow-x:auto;margin-top:12px}
+footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 34px;font-size:12px;color:var(--ink3)}
+footer b{color:var(--ink2)}
+.hidden{display:none!important}
+.pgnav{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.pgnav .nvl{display:flex;gap:8px;flex-wrap:wrap}
+.pgnav a,.pgnav select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 14px;font-family:inherit;font-size:13px;color:var(--ink2);text-decoration:none;transition:.14s}
+.pgnav a:hover{border-color:var(--orange);color:var(--ink)}
+.pgnav a.hb{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pgnav a.hb:hover{background:var(--orange);border-color:var(--orange)}
+.pgnav select{cursor:pointer;max-width:290px}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-bottom:34px}
+.scard{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:14px 16px;text-decoration:none;color:var(--ink);transition:.15s;display:block}
+.scard:hover{border-color:var(--orange);transform:translateY(-2px)}
+.scard .r1{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.scard .nm{font-family:'Tajawal';font-weight:800;font-size:16px}
+.scard .r2{display:flex;gap:8px;align-items:center;margin-top:7px;font-size:11.5px;color:var(--ink2);flex-wrap:wrap}
+.scard .r3{margin-top:9px;font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
+.scard .r3 b{font-family:'Tajawal';color:var(--orange);font-size:15px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="brand">
+      <div class="mark"><a href="../location-analysis.html"><div class="ar">محطات <b>درب</b></div><div class="en">DARB STATIONS</div></a></div>
+      <div class="hd-title"><h1>تحليل الموقع والمبيعات — الرصيفة المسار <span style="color:var(--gold1);font-family:Tajawal">MK018</span></h1>
+      <p>مكة · المرتبة 27 من 55 بالإيراد اليومي · النصف الأول 2026</p></div>
+    </div>
+  </div>
+</header>
+<main class="wrap" style="padding-top:20px">
+  
+    <div class="pgnav">
+      <div class="nvl">
+        <a class="hb" href="../location-analysis.html">⌂ جميع المحطات</a>
+        <a href="MK022.html">→ السابقة: بطحاء قريش 1</a>
+        <a href="RY025.html">التالية: الحمرا - طريق الملك عبدالله ←</a>
+      </div>
+      <select onchange="location.href=this.value" aria-label="انتقل إلى محطة"><option value="MK007.html">العمرة الجديدة — MK007 (مكة)</option><option value="MK003.html">العوالي — MK003 (مكة)</option><option value="MK004.html">عاصفة الصحراء — MK004 (الطائف)</option><option value="MK289.html">طريق الليث - الفضيلة — MK289 (جدة)</option><option value="MK072.html">العزيزية — MK072 (مكة)</option><option value="MK046.html">الحليس - طريق الجنوب — MK046 (الطائف)</option><option value="MK005.html">الشيباني — MK005 (الطائف)</option><option value="MK015.html">النسيم — MK015 (جدة)</option><option value="MK047.html">القادسية — MK047 (مكة)</option><option value="MK028.html">أحلى مساء — MK028 (الطائف)</option><option value="MK029.html">الدائري الثالث - الذكرى — MK029 (مكة)</option><option value="MK033.html">أبو وافي العمرة — MK033 (مكة)</option><option value="RY075.html">الدائري الشمالي — RY075 (الرياض)</option><option value="MK006.html">جنوب الطائف — MK006 (الطائف)</option><option value="MK001.html">جبل النور — MK001 (مكة)</option><option value="JA092.html">الصفا - أحد المسارحة — JA092 (جازان)</option><option value="MK008.html">الحسينية — MK008 (مكة)</option><option value="MK016.html">الرصيفة — MK016 (مكة)</option><option value="MK210.html">الفلاح - فلسطين — MK210 (جدة)</option><option value="MK017.html">عرفات الشوقية — MK017 (مكة)</option><option value="MK020.html">ممشى الشوقية — MK020 (مكة)</option><option value="MK063.html">السواط - شهار — MK063 (الطائف)</option><option value="MK064.html">الجعرانة — MK064 (مكة)</option><option value="MK035.html">الجمعية الوسام — MK035 (الطائف)</option><option value="MK054.html">طريق السيل — MK054 (مكة)</option><option value="MK022.html">بطحاء قريش 1 — MK022 (مكة)</option><option value="MK018.html" selected>الرصيفة المسار — MK018 (مكة)</option><option value="RY025.html">الحمرا - طريق الملك عبدالله — RY025 (الخرج)</option><option value="AS153.html">مدخل محايل — AS153 (عسير)</option><option value="JA069.html">كورنيش جيزان — JA069 (جازان)</option><option value="MK014.html">خليص — MK014 (مكة)</option><option value="MK002.html">المعيصم — MK002 (مكة)</option><option value="MK068.html">الجموم - الكنيدري — MK068 (مكة)</option><option value="JA348.html">جنوب صبيا — JA348 (جازان)</option><option value="MK071.html">الأجاويد — MK071 (جدة)</option><option value="MK084.html">الكر النازل — MK084 (مكة)</option><option value="JA061.html">طريق صبيا — JA061 (جازان)</option><option value="MK023.html">بن درويش — MK023 (مكة)</option><option value="JA041.html">القسوم - أحد المسارحة — JA041 (جازان)</option><option value="MK093.html">الملك خالد — MK093 (الطائف)</option><option value="EP051.html">كورنيش الخبر — EP051 (الشرقية)</option><option value="QS055.html">الدائري الشرقي — QS055 (القصيم)</option><option value="MK031.html">بطحاء قريش 2 — MK031 (مكة)</option><option value="JA053.html">خبت نخلان — JA053 (جازان)</option><option value="RY024.html">غرناطة - طريق الملك عبدالله — RY024 (الخرج)</option><option value="RY042.html">الناصفة — RY042 (الخرج)</option><option value="MK019.html">الشرايع — MK019 (مكة)</option><option value="MK323.html">جبل ثور - جوهرة النسيم — MK323 (مكة)</option><option value="MK099.html">البيعة — MK099 (الطائف)</option><option value="MK100.html">الكوثر — MK100 (جدة)</option><option value="HA043.html">العريفي — HA043 (حائل)</option><option value="JA056.html">الروابي - المودة — JA056 (جازان)</option><option value="JA060.html">صناعية صامطة — JA060 (جازان)</option><option value="MD009.html">طريق السلام — MD009 (المدينة المنورة)</option><option value="NJ219.html">المركب — NJ219 (نجران)</option></select>
+    </div>
+  <section class="station">
+  
+    <div class="shead">
+      <div class="stitle">
+        <span class="badge">MK018</span><h2>الرصيفة المسار</h2>
+        <span class="cls c-viv">حيوية</span><span class="cls c-st">تشغيل</span>
+      </div>
+      <div class="smeta">
+        <span>📍 مكة · حي الرصيفة</span>
+        <span class="stars">★ 4.9</span>
+        <a href="https://maps.app.goo.gl/TZYSA2igkYziBM9G8" target="_blank" rel="noopener">افتح في خرائط جوجل ↗</a>
+      </div>
+      <div class="saddr">طريق المنصورية، حي الرصيفة، مكة — منطقة حيوية</div>
+    </div>
+    <div class="skpis">
+      <div class="kpi hot"><div class="kl">إيراد الفترة (4 أشهر)</div><div class="kv">4.6 <small>مليون ر.س</small></div><div class="kn">94,310 زيارة · 2,127,665 لتر</div></div>
+      <div class="kpi"><div class="kl">الإيراد اليومي</div><div class="kv">50 <small>ألف ر.س</small></div><div class="kn">المرتبة 27 من 55 بالشبكة</div></div>
+      <div class="kpi"><div class="kl">الزيارات اليومية</div><div class="kv">1,025</div><div class="kn">ذروة الزيارات 10م</div></div>
+      <div class="kpi"><div class="kl">متوسط الفاتورة</div><div class="kv">49 <small>ر.س</small></div><div class="kn">متوسط التعبئة 23 لترًا</div></div>
+      <div class="kpi"><div class="kl">نمو Q2 مقابل Q1</div><div class="kv">—</div><div class="kn">لا تتوفر مقارنة (بيانات جزئية)</div></div>
+      <div class="kpi"><div class="kl">تقييم جوجل</div><div class="kv">4.9 <small>★</small></div><div class="kn">894 مراجعة</div></div>
+    </div>
+    <div class="card sig">
+      <div class="ct"><h3>توقيع الموقع الزمني والسلوكي</h3><div class="leg">من بيانات المبيعات الفعلية</div></div>
+      <div class="siggrid">
+        <div><div class="sglb">الزيارات على مدار اليوم</div><svg viewBox="0 0 244 44" class="spark" role="img" aria-label="توزيع الزيارات على الساعات"><defs><linearGradient id="gO" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs><rect x="2" y="10" width="8" height="26" rx="2" fill="#E4B98F"/><text x="6.0" y="43" font-size="6.5" text-anchor="middle" fill="var(--ink3)">12ص</text><rect x="12" y="19" width="8" height="17" rx="2" fill="var(--bar)"/><rect x="22" y="23" width="8" height="13" rx="2" fill="var(--bar)"/><rect x="32" y="27" width="8" height="9" rx="2" fill="var(--bar)"/><rect x="42" y="28" width="8" height="8" rx="2" fill="var(--bar)"/><rect x="52" y="24" width="8" height="12" rx="2" fill="var(--bar)"/><rect x="62" y="19" width="8" height="17" rx="2" fill="var(--bar)"/><text x="66.0" y="43" font-size="6.5" text-anchor="middle" fill="var(--ink3)">6ص</text><rect x="72" y="17" width="8" height="19" rx="2" fill="var(--bar)"/><rect x="82" y="17" width="8" height="19" rx="2" fill="var(--bar)"/><rect x="92" y="16" width="8" height="20" rx="2" fill="var(--bar)"/><rect x="102" y="17" width="8" height="19" rx="2" fill="var(--bar)"/><rect x="112" y="17" width="8" height="19" rx="2" fill="var(--bar)"/><rect x="122" y="14" width="8" height="22" rx="2" fill="var(--bar)"/><text x="126.0" y="43" font-size="6.5" text-anchor="middle" fill="var(--ink3)">12م</text><rect x="132" y="12" width="8" height="24" rx="2" fill="var(--bar)"/><rect x="142" y="13" width="8" height="23" rx="2" fill="var(--bar)"/><rect x="152" y="13" width="8" height="23" rx="2" fill="var(--bar)"/><rect x="162" y="9" width="8" height="27" rx="2" fill="#E4B98F"/><rect x="172" y="5" width="8" height="31" rx="2" fill="#E4B98F"/><rect x="182" y="6" width="8" height="30" rx="2" fill="#E4B98F"/><text x="186.0" y="43" font-size="6.5" text-anchor="middle" fill="var(--ink3)">6م</text><rect x="192" y="8" width="8" height="28" rx="2" fill="#E4B98F"/><rect x="202" y="6" width="8" height="30" rx="2" fill="#E4B98F"/><rect x="212" y="5" width="8" height="31" rx="2" fill="#E4B98F"/><rect x="222" y="4" width="8" height="32" rx="2" fill="url(#gO)"/><rect x="232" y="10" width="8" height="26" rx="2" fill="#E4B98F"/></svg>
+             <div class="sgnote">المساء (4م–12ل): 45٪ · الليل (12–5ص): 14٪ · الصباح: 24٪</div></div>
+        <div><div class="sglb">متوسط الزيارات حسب اليوم</div><svg viewBox="0 0 244 46" class="spark" role="img" aria-label="متوسط الزيارات حسب اليوم"><rect x="3" y="7" width="26" height="27" rx="3" fill="var(--bar)"/><text x="16.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">السبت</text><rect x="37" y="6" width="26" height="28" rx="3" fill="var(--bar)"/><text x="50.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الأحد</text><rect x="71" y="6" width="26" height="28" rx="3" fill="var(--bar)"/><text x="84.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الإثنين</text><rect x="105" y="7" width="26" height="27" rx="3" fill="var(--bar)"/><text x="118.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الثلاثا</text><rect x="139" y="5" width="26" height="29" rx="3" fill="var(--bar)"/><text x="152.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الأربعا</text><rect x="173" y="4" width="26" height="30" rx="3" fill="url(#gO)"/><text x="186.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الخميس</text><rect x="207" y="8" width="26" height="26" rx="3" fill="var(--bar)"/><text x="220.0" y="44" font-size="7" text-anchor="middle" fill="var(--ink3)">الجمعة</text></svg>
+             <div class="sgnote">نهاية الأسبوع مقابل أيام العمل: 0.93×</div></div>
+        <div><div class="sglb">مزيج الوقود (من الإيراد)</div><div class="mix"><div class="mixbar"><i style="width:51.4%;background:#3E6E8E" title="بنزين 91 51٪"></i><i style="width:31.0%;background:#F37021" title="بنزين 95 31٪"></i><i style="width:17.6%;background:#6E6A64" title="ديزل 18٪"></i></div><div class="mixleg"><span><b style="background:#3E6E8E"></b>بنزين 91 51٪</span><span><b style="background:#F37021"></b>بنزين 95 31٪</span><span><b style="background:#6E6A64"></b>ديزل 18٪</span></div></div>
+             <div class="sglb" style="margin-top:12px">طرق الدفع (من الإيراد)</div><div class="mix"><div class="mixbar"><i style="width:61.8%;background:#2E8B6F" title="نقد 62٪"></i><i style="width:24.4%;background:#3E6E8E" title="بطاقة 24٪"></i><i style="width:13.8%;background:#F5A623" title="تطبيقات وأخرى 14٪"></i></div><div class="mixleg"><span><b style="background:#2E8B6F"></b>نقد 62٪</span><span><b style="background:#3E6E8E"></b>بطاقة 24٪</span><span><b style="background:#F5A623"></b>تطبيقات وأخرى 14٪</span></div></div></div>
+      </div>
+    </div>
+    <div class="agrid">
+      <div class="card"><div class="ct"><h3>بيرسونا العملاء</h3><div class="leg">مشتقة من مزيج الوقود والأوقات والدفع</div></div>
+      <div class="pcard"><div class="pico">🕋</div>
+        <div class="pbody"><div class="pname">المعتمر والزائر <span class="pshare">ذروة رمضان والمواسم</span></div>
+        <p>زائر بسيارة خاصة أو سائق نقل زوار، لا يعرف المنطقة، يبحث عن محطة واضحة وآمنة قرب محاور الحرم.</p>
+        <div class="pline"><b>يحتاج:</b> لافتات واضحة، مسار دخول سهل، متجر مجهز، مصلى ودورات مياه نظيفة</div>
+        <div class="pline act"><b>التحرك التسويقي:</b> الظهور على خرائط جوجل بتقييم عالٍ + عروض مواسم العمرة</div></div></div>
+      <div class="pcard"><div class="pico">🌆</div>
+        <div class="pbody"><div class="pname">رائد المساء <span class="pshare">45٪ من الزيارات مساءً</span></div>
+        <p>موظف/عائلة تتحرك بعد العصر للتسوق والمشاوير، تفضل التعبئة مع قضاء حاجات المتجر.</p>
+        <div class="pline"><b>يحتاج:</b> خدمة سريعة وقت الذروة، متجر ومقهى، إضاءة وأمان</div>
+        <div class="pline act"><b>التحرك التسويقي:</b> عروض المساء (6–10م) وربطها بالمتجر والمغسلة</div></div></div>
+      <div class="pcard"><div class="pico">🚗</div>
+        <div class="pbody"><div class="pname">المتنقل اليومي <span class="pshare">القاعدة الأوسع</span></div>
+        <p>موظف يتنقل يوميًا للعمل ويعبئ 1-2 مرة أسبوعيًا في أقرب محطة موثوقة.</p>
+        <div class="pline"><b>يحتاج:</b> سرعة، توفر 91/95، دفع سهل</div>
+        <div class="pline act"><b>التحرك التسويقي:</b> ولاء أسبوعي ورسائل تذكير</div></div></div></div>
+      <div class="card"><div class="ct"><h3>تحليل SWOT</h3><div class="leg">مبيعات + موقع + منافسة</div></div>
+    <div class="swot">
+      <div class="sq s"><h4>القوة</h4><ul><li>سمعة قوية على خرائط جوجل: 4.9★ من 894 مراجعة</li><li>موقع حيوية — منطقة حيوية</li></ul></div>
+      <div class="sq w"><h4>الضعف</h4><ul><li>اعتماد مفرط على الكاش (62٪) — فرصة ولاء ودقة بيانات مهدرة</li><li>بيانات 4 أشهر فقط — المقارنات الموسمية غير مكتملة</li></ul></div>
+      <div class="sq o"><h4>الفرص</h4><ul><li>50٪ من المنافسين بتقييم أقل من 4.0★ — التفوق الخدمي يسحب عملاءهم</li><li>تفوق سمعة واضح: 4.9★ مقابل متوسط منافسين 4.0★</li><li>تحويل عملاء الكاش لبرنامج ولاء/تطبيق يرفع التكرار ويجمع البيانات</li><li>تعظيم سلة المساء: ربط الوقود بالمتجر والمغسلة في ساعات الذروة</li><li>مواسم العمرة والحج — شراكات نقل زوار وتموين حافلات</li></ul></div>
+      <div class="sq t"><h4>التهديدات</h4><ul><li>سوق مشبع: 14 محطة منافسة ≤5كم تضغط على الحصة</li><li>منافسون معروفون قريبون (الدريس، بترولي، ساسكو) بقدرات تسعير وخدمات</li><li>موسمية حادة: ما بعد رمضان/الحج ينخفض الطلب — ظهر في تراجع Q2 بعدة محطات</li><li>هامش الوقود المنظّم يجعل أي حرب خدمات/سرعة تُحسم لصالح الأفضل تشغيلًا</li></ul></div>
+    </div></div>
+      <div class="card"><div class="ct"><h3>تحليل PEST</h3><div class="leg">بيئة مكة الكلية</div></div>
+    <div class="pest">
+      <div class="pr"><span class="pk pP">P</span><div><b>سياسي/تنظيمي</b><ul><li>تنظيمات موسم الحج والعمرة (تصاريح، مسارات، إغلاقات مؤقتة) تؤثر مباشرة على حركة المرور</li><li>تسعير الوقود خاضع للمراجعة الحكومية الدورية (أرامكو) — هامش الوقود شبه ثابت والتنافس يتحول للخدمات</li></ul></div></div>
+      <div class="pr"><span class="pk pE">E</span><div><b>اقتصادي</b><ul><li>اقتصاد مدفوع بالزوار: ملايين المعتمرين والحجاج سنويًا يرفعون الطلب على النقل والوقود</li><li>مشاريع توسعة الحرم والمشاعر وفنادق ضخمة تزيد حركة الإنشاء والشاحنات</li></ul></div></div>
+      <div class="pr"><span class="pk pS">S</span><div><b>اجتماعي</b><ul><li>تركيبة سكانية متنوعة (سكان + عمالة خدمات + زوار موسميون) بأنماط تنقل مختلفة</li><li>ذروة موسمية حادة (رمضان، الحج) يليها هدوء نسبي — إدارة الطاقة الاستيعابية أساسية</li></ul></div></div>
+      <div class="pr"><span class="pk pT">T</span><div><b>تقني</b><ul><li>حافلات نقل الحجاج الحديثة وقطار المشاعر يعيدان توزيع الطلب على الوقود</li><li>انتشار مدفوعات NFC وتطبيقات الوقود (Syarah/Petro App) وأنظمة الولاء الرقمية</li></ul></div></div>
+    </div></div>
+      
+        <div class="card comp"><div class="ct"><h3>المنافسون ضمن 5 كم</h3>
+          <div class="leg"><span class="dens hi">14 محطة · منافسة مرتفعة</span></div></div>
+          <div class="cs">الأقرب: محطة نوفل
+             على بعد 738 م · متوسط تقييم المنافسين 4.0★ — درب أعلى بـ0.9 نقطة.
+             مصدر الرصد: خرائط جوجل (يوليو 2026).</div>
+          <div class="ctbl"><table><thead><tr><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+          <tbody><tr><td>محطة نوفل</td><td>738 م</td>
+            <td>3.8</td><td>289</td></tr><tr><td>بتروجين Petrogen</td><td>1,881 م</td>
+            <td>1.0</td><td>2</td></tr><tr><td>محطة تلال الأديب للوقود</td><td>1,997 م</td>
+            <td>4.3</td><td>268</td></tr><tr><td>محطة الدريس في شارع المنصور</td><td>2,017 م</td>
+            <td>4.5</td><td>2</td></tr><tr><td>Aldrees</td><td>2,108 م</td>
+            <td>4.4</td><td>37</td></tr><tr><td>محطة المعطاني للخدمات البترولية</td><td>2,571 م</td>
+            <td>3.6</td><td>375</td></tr><tr><td>محطة الأديب</td><td>3,100 م</td>
+            <td>3.9</td><td>643</td></tr><tr><td>محطة الأديب</td><td>3,176 م</td>
+            <td>3.8</td><td>222</td></tr><tr><td>Sasco</td><td>3,463 م</td>
+            <td>4.0</td><td>1</td></tr><tr><td>نفط</td><td>3,467 م</td>
+            <td>3.9</td><td>176</td></tr></tbody></table></div><div class="sis">🧡 محطات درب شقيقة ضمن النطاق: محطة درب (514 م)، محطة درب (695 م)، محطة درب (1,882 م) — تغطية شبكية وليست منافسة.</div>
+        </div>
+    </div>
+  </section>
+  <footer><b>المنهجية والمصادر:</b> بيانات المبيعات والزيارات من لوحة «درب · تحليل المبيعات والتسويق» (يناير–يونيو 2026)؛
+    مواقع المحطات من ملف Station_Data.xlsx؛ رصد المنافسين والتقييمات من خرائط جوجل (بحث «محطة وقود» ضمن دائرة نصف قطرها 5 كم حول إحداثيات كل محطة، يوليو 2026) —
+    القوائم تشمل المدرَج في خرائط جوجل فقط والمسافات مباشرة (خط مستقيم). الدوائر التي أعاد المسح الآلي فيها نتائج شحيحة معلَّمة بتنبيه ولا يُبنى على عددها استنتاج تنافسي.
+    تحليلات PEST/SWOT/البيرسونا مولّدة قاعديًا من مؤشرات كل محطة وتُقرأ كمسودة عمل تسويقية لا كدراسة سوق ميدانية.</footer>
+</main>
+</body>
+</html>
