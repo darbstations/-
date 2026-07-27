@@ -181,6 +181,45 @@ footer b{color:var(--ink2)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
+.cmpbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin-bottom:14px}
+.cmpbar select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-family:inherit;font-size:13.5px;color:var(--ink);cursor:pointer;max-width:260px}
+.cmpbar .sw{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 12px;cursor:pointer;font-size:15px;font-family:inherit}
+.cmpbar .sw:hover{border-color:var(--orange)}
+.cmpbar .lbA{font-weight:800;color:var(--orange);font-family:'Tajawal'}
+.cmpbar .lbB{font-weight:800;color:var(--blue);font-family:'Tajawal'}
+.dimchips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.dim{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--ink2);transition:.14s}
+.dim.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.dim:hover{border-color:var(--orange)}
+.vshead{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}
+.vshead .side{font-family:'Tajawal';font-weight:800;font-size:19px}
+.vshead .side.a{color:var(--orange)}
+.vshead .side.b{color:var(--blue);text-align:left}
+.vshead .vs{font-size:12px;color:var(--ink3);font-weight:700}
+.vsrow{display:grid;grid-template-columns:1fr 170px 1fr;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line2)}
+.vsrow:last-child{border-bottom:none}
+.vsrow .va,.vsrow .vb{font-family:'Tajawal';font-weight:700;font-size:15px}
+.vsrow .va{text-align:right}
+.vsrow .vb{text-align:left;color:var(--ink)}
+.vsrow .win{color:var(--good)}
+.vsrow .mid{text-align:center}
+.vsrow .mid .lb{font-size:11.5px;color:var(--ink2);margin-bottom:4px}
+.vsbars{display:flex;flex-direction:column;gap:3px}
+.vsbars i{display:block;height:7px;border-radius:5px;background:var(--bar)}
+.vsbars i.a{background:linear-gradient(90deg,var(--gold1),var(--orange))}
+.vsbars i.b{background:var(--blue)}
+.pcolz{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.pcolz{grid-template-columns:1fr}.vsrow{grid-template-columns:1fr 110px 1fr}}
+.pcol{background:#FDFCFA;border:1px solid var(--line);border-radius:13px;padding:13px 15px}
+.pcol h4{font-family:'Tajawal';font-weight:800;font-size:15px;margin-bottom:8px}
+.pcol.a h4{color:var(--orange)}
+.pcol.b h4{color:var(--blue)}
+.pitem{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line2);font-size:12.5px;color:var(--ink2)}
+.pitem:last-child{border-bottom:none}
+.pitem .ic{font-size:17px;flex:none}
+.pitem b{color:var(--ink)}
+.pitem .uniq{font-size:10px;font-weight:700;color:#B4500F;background:#FDEEE2;border-radius:6px;padding:1px 7px;margin-inline-start:5px}
+.cmpnote{font-size:11.5px;color:var(--ink3);margin-top:8px}
 .grid-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:13px;margin-bottom:34px}
 .scard{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:14px 16px;text-decoration:none;color:var(--ink);transition:.15s;display:block}
 .scard:hover{border-color:var(--orange);transform:translateY(-2px)}
@@ -643,6 +682,185 @@ def spa_view(idx, a):
 
 SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))
 
+# ---- comparison view (regions or stations, dimension filters) ----
+import gen_analysis as GA
+CMP_ST = {}
+for a in ORDER:
+    m = a['metrics']; g = a['geo']; code = m['code']
+    comp = COMP.get(code) or {}
+    CMP_ST[code] = dict(
+        code=code, name=m['name'], region=m['region'], nmonths=m['nmonths'],
+        revenue=round(m['revenue']), drev=round(m['daily_rev']), dvis=round(m['daily_vis'],1),
+        inv=m['avg_invoice'], lit=m['avg_liters'], growth=m['growth'],
+        evening=m['evening'], night=m['night'], morning=m['morning'], midday=m['midday'],
+        we=m['we_ratio'], peak=m['peak_hour'],
+        g91=m['g91'], g95=m['g95'], dsl=m['dsl'], cash=m['cash'], card=m['card'], apps=m['apps'],
+        rating=(g or {}).get('rating'), compn=comp.get('n'), compthin=bool(comp.get('thin')),
+        compavg=comp.get('avg_rating'), cls=m['cls'],
+        personas=[[p['icon'], p['name']] for p in a['personas']],
+        pest=a['pest'],
+    )
+CMP_RG = {}
+for r in REGIONS:
+    codes = [a['metrics']['code'] for a in ORDER if a['metrics']['region'] == r]
+    grp = GA.CITY_GROUP.get(r, 'qassim')
+    base = GA.PEST_CITY[grp]
+    CMP_RG[r] = dict(codes=codes, pest=dict(p=base['P'][:3], e=base['E'][:3], s=base['S'][:3], t=base['T'][:3]))
+CMP_JSON = json.dumps({'stations': CMP_ST, 'regions': CMP_RG, 'regionOrder': REGIONS}, ensure_ascii=False)
+
+CMP_HTML = '''<div class="pgview" id="pg-compare" data-title="مقارنة المناطق والمحطات" hidden>
+  <div class="pgnav"><div class="nvl"><a class="hb" href="#/">⌂ جميع المحطات</a></div></div>
+  <div class="sec-h"><h2>⚖️ إنشاء مقارنة</h2><span>اختر الطرفين وحدد الخواص المطلوبة — النتائج تتحدث فورًا</span></div>
+  <div class="cmpbar">
+    <select id="cmpMode" aria-label="نوع المقارنة">
+      <option value="region" selected>مقارنة مناطق</option>
+      <option value="station">مقارنة محطات</option>
+    </select>
+    <span class="lbA">أ</span><select id="cmpA"></select>
+    <button class="sw" id="cmpSwap" title="تبديل الطرفين">⇄</button>
+    <span class="lbB">ب</span><select id="cmpB"></select>
+  </div>
+  <div class="dimchips" id="cmpDims">
+    <button class="dim on" data-d="sales">المبيعات</button>
+    <button class="dim on" data-d="time">الأنماط الزمنية</button>
+    <button class="dim on" data-d="mix">مزيج الوقود والدفع</button>
+    <button class="dim on" data-d="persona">البيرسونا</button>
+    <button class="dim on" data-d="pest">PEST</button>
+    <button class="dim on" data-d="comp">المنافسة ≤5كم</button>
+    <button class="dim on" data-d="health">مؤشرات تشغيلية</button>
+  </div>
+  <div id="cmpOut"></div>
+  <div class="cmpnote">القيم النسبية (فاتورة، أنماط، مزيج) مرجّحة بحجم الزيارات/الإيراد؛ إيراد الفترة يتأثر بعدد الأشهر المسجلة لكل محطة — الأدق للمقارنة هو معدلات اليوم. المناطق ذات محطة واحدة تمثل تلك المحطة فقط.</div>
+</div>'''
+
+CMP_SCRIPT = r'''<script>
+const CMP=JSON.parse(document.getElementById('cmpdata').textContent);
+const $=id=>document.getElementById(id);
+const F0=v=>v==null?'—':Math.round(v).toLocaleString('en');
+const F1=v=>v==null?'—':(Math.round(v*10)/10).toLocaleString('en');
+const FP=v=>v==null?'—':Math.round(v*100)+'٪';
+const HR=h=>h==null?'—':((h%12)||12)+(h<12?'ص':'م');
+function groupCodes(mode,key){return mode==='region'?CMP.regions[key].codes:[key];}
+function agg(codes){
+  const ss=codes.map(c=>CMP.stations[c]);
+  const W=(f,w)=>{let n=0,d=0;ss.forEach(s=>{const x=f(s),ww=w(s);if(x!=null&&ww){n+=x*ww;d+=ww}});return d?n/d:null};
+  const AV=f=>{const xs=ss.map(f).filter(x=>x!=null);return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null};
+  const SM=f=>ss.reduce((a,s)=>a+(f(s)||0),0);
+  const FR=f=>{const xs=ss.filter(s=>f(s)!=null);return xs.length?xs.filter(f).length/xs.length:null};
+  const peaks={};ss.forEach(s=>{peaks[s.peak]=(peaks[s.peak]||0)+1});
+  const peak=Object.keys(peaks).length?+Object.entries(peaks).sort((a,b)=>b[1]-a[1])[0][0]:null;
+  const pers={};ss.forEach(s=>s.personas.forEach(([ic,nm])=>{pers[nm]=pers[nm]||{ic,n:0};pers[nm].n++}));
+  return {n:ss.length,rev:SM(s=>s.revenue),drev:SM(s=>s.drev),dvis:SM(s=>s.dvis),
+    inv:W(s=>s.inv,s=>s.dvis),lit:W(s=>s.lit,s=>s.dvis),
+    growth:AV(s=>s.growth),gN:ss.filter(s=>s.growth!=null).length,
+    evening:W(s=>s.evening,s=>s.dvis),night:W(s=>s.night,s=>s.dvis),morning:W(s=>s.morning,s=>s.dvis),midday:W(s=>s.midday,s=>s.dvis),
+    we:AV(s=>s.we),peak,
+    g91:W(s=>s.g91,s=>s.drev),g95:W(s=>s.g95,s=>s.drev),dsl:W(s=>s.dsl,s=>s.drev),
+    cash:W(s=>s.cash,s=>s.drev),card:W(s=>s.card,s=>s.drev),apps:W(s=>s.apps,s=>s.drev),
+    rating:AV(s=>s.rating),
+    compn:AV(s=>s.compthin?null:s.compn),thinN:ss.filter(s=>s.compthin).length,
+    compavg:AV(s=>s.compavg),
+    hiComp:FR(s=>s.compthin?null:(s.compn>=10)),
+    posG:FR(s=>s.growth==null?null:(s.growth>0)),
+    topRt:FR(s=>s.rating==null?null:(s.rating>=4.8)),
+    cashHv:FR(s=>s.cash>0.6),nightAct:FR(s=>s.night>=0.15),
+    pers:Object.entries(pers).map(([nm,v])=>({nm,ic:v.ic,n:v.n})).sort((a,b)=>b.n-a.n)};
+}
+function vsRow(lb,va,vb,fa,fb,hib){
+  const aw=(hib!=null&&va!=null&&vb!=null&&va!==vb)?(hib?va>vb:va<vb):false;
+  const bw=(hib!=null&&va!=null&&vb!=null&&va!==vb)?(hib?vb>va:vb<va):false;
+  const mx=Math.max(Math.abs(va||0),Math.abs(vb||0))||1;
+  return `<div class="vsrow"><div class="va ${aw?'win':''}">${fa}</div>
+    <div class="mid"><div class="lb">${lb}</div><div class="vsbars">
+    <i class="a" style="width:${Math.max(4,Math.abs(va||0)/mx*100)}%"></i>
+    <i class="b" style="width:${Math.max(4,Math.abs(vb||0)/mx*100)}%"></i></div></div>
+    <div class="vb ${bw?'win':''}">${fb}</div></div>`;
+}
+function card(title,leg,body){return `<div class="card" style="margin-bottom:16px"><div class="ct"><h3>${title}</h3><div class="leg">${leg||''}</div></div>${body}</div>`}
+function mixPair(lb,parts,A,B){
+  const bar=g=>'<div class="mix"><div class="mixbar">'+parts.map(([k,l,c])=>`<i style="width:${(g[k]||0)*100}%;background:${c}" title="${l}"></i>`).join('')+'</div><div class="mixleg">'+parts.map(([k,l,c])=>`<span><b style="background:${c}"></b>${l} ${FP(g[k])}</span>`).join('')+'</div></div>';
+  return `<div class="pcolz"><div class="pcol a"><h4>${lb} — أ</h4>${bar(A)}</div><div class="pcol b"><h4>${lb} — ب</h4>${bar(B)}</div></div>`;
+}
+function pestCol(cls,name,pe){
+  const K=[['p','pP','سياسي/تنظيمي'],['e','pE','اقتصادي'],['s','pS','اجتماعي'],['t','pT','تقني']];
+  return `<div class="pcol ${cls}"><h4>${name}</h4><div class="pest">`+K.map(([k,kc,kl])=>
+    `<div class="pr"><span class="pk ${kc}">${kl[0]==='س'?'P':kl[0]==='ا'&&k==='e'?'E':k==='s'?'S':'T'}</span><div><b>${kl}</b><ul>`+
+    (pe[k]||[]).map(x=>`<li>${x}</li>`).join('')+`</ul></div></div>`).join('')+`</div></div>`;
+}
+function render(){
+  const mode=$('cmpMode').value,ka=$('cmpA').value,kb=$('cmpB').value;
+  const dims=[...document.querySelectorAll('#cmpDims .dim.on')].map(b=>b.dataset.d);
+  const A=agg(groupCodes(mode,ka)),B=agg(groupCodes(mode,kb));
+  const nameA=mode==='region'?ka:CMP.stations[ka].name+' '+ka;
+  const nameB=mode==='region'?kb:CMP.stations[kb].name+' '+kb;
+  let out=`<div class="card" style="margin-bottom:16px"><div class="vshead">
+    <div class="side a">${nameA} <span class="tcode">(${A.n} ${A.n===1?'محطة':'محطات'})</span></div>
+    <div class="vs">مقابل</div>
+    <div class="side b">${nameB} <span class="tcode">(${B.n} ${B.n===1?'محطة':'محطات'})</span></div></div></div>`;
+  if(dims.includes('sales')) out+=card('المبيعات','معدلات اليوم أدق من إجمالي الفترة لاختلاف الأشهر المسجلة',
+    vsRow('إيراد الفترة المسجل (ر.س)',A.rev,B.rev,F0(A.rev),F0(B.rev),null)+
+    vsRow('الإيراد اليومي الإجمالي (ر.س)',A.drev,B.drev,F0(A.drev),F0(B.drev),true)+
+    vsRow('متوسط إيراد المحطة/يوم',A.drev/A.n,B.drev/B.n,F0(A.drev/A.n),F0(B.drev/B.n),true)+
+    vsRow('الزيارات اليومية الإجمالية',A.dvis,B.dvis,F0(A.dvis),F0(B.dvis),true)+
+    vsRow('متوسط الفاتورة (مرجّح)',A.inv,B.inv,F1(A.inv)+' ر.س',F1(B.inv)+' ر.س',true)+
+    vsRow('متوسط اللترات للتعبئة',A.lit,B.lit,F1(A.lit),F1(B.lit),true)+
+    vsRow('متوسط نمو Q2٪',A.growth,B.growth,A.growth==null?'—':F1(A.growth)+'٪ ('+(A.gN===1?'محطة واحدة':A.gN+' محطات')+')',B.growth==null?'—':F1(B.growth)+'٪ ('+(B.gN===1?'محطة واحدة':B.gN+' محطات')+')',true)+
+    vsRow('متوسط تقييم جوجل',A.rating,B.rating,F1(A.rating)+'★',F1(B.rating)+'★',true));
+  if(dims.includes('time')) out+=card('الأنماط الزمنية','حصص الزيارات مرجّحة بحجم كل محطة',
+    vsRow('حصة المساء (4م–12ل)',A.evening,B.evening,FP(A.evening),FP(B.evening),null)+
+    vsRow('حصة الليل (12–5ص)',A.night,B.night,FP(A.night),FP(B.night),null)+
+    vsRow('حصة الصباح (5ص–12م)',A.morning,B.morning,FP(A.morning),FP(B.morning),null)+
+    vsRow('نهاية الأسبوع ÷ أيام العمل',A.we,B.we,A.we==null?'—':F1(A.we)+'×',B.we==null?'—':F1(B.we)+'×',null)+
+    vsRow('ساعة الذروة الغالبة',null,null,HR(A.peak),HR(B.peak),null));
+  if(dims.includes('mix')) out+=card('مزيج الوقود والدفع','نسب من الإيراد (مرجّحة)',
+    mixPair('الوقود',[['g91','بنزين 91','#3E6E8E'],['g95','بنزين 95','#F37021'],['dsl','ديزل','#6E6A64']],A,B)+
+    '<div style="height:12px"></div>'+
+    mixPair('الدفع',[['cash','نقد','#2E8B6F'],['card','بطاقة','#3E6E8E'],['apps','تطبيقات','#F5A623']],A,B));
+  if(dims.includes('persona')){
+    const mk=(g,other,cls,nm)=>`<div class="pcol ${cls}"><h4>${nm}</h4>`+(g.pers.slice(0,5).map(p=>{
+      const uniq=!other.pers.some(q=>q.nm===p.nm);
+      return `<div class="pitem"><span class="ic">${p.ic}</span><span><b>${p.nm}</b> — في ${p.n} من ${g.n} ${g.n===1?'محطة':'محطات'}${uniq?'<span class="uniq">مميزة لهذا الطرف</span>':''}</span></div>`}).join('')||'<div class="pitem">—</div>')+`</div>`;
+    out+=card('البيرسونا السائدة','تكرار ظهور كل شخصية في محطات الطرف',
+      `<div class="pcolz">${mk(A,B,'a',nameA)}${mk(B,A,'b',nameB)}</div>`);
+  }
+  if(dims.includes('pest')){
+    const pa=mode==='region'?CMP.regions[ka].pest:CMP.stations[ka].pest;
+    const pb=mode==='region'?CMP.regions[kb].pest:CMP.stations[kb].pest;
+    out+=card('بيئة PEST','العوامل الكلية لكل طرف',`<div class="pcolz">${pestCol('a',nameA,pa)}${pestCol('b',nameB,pb)}</div>`);
+  }
+  if(dims.includes('comp')){
+    const th=(g)=>g.thinN?` <span class="tcode">(${g.thinN} دوائر رصدها ناقص)</span>`:'';
+    out+=card('المنافسة ضمن 5 كم','من رصد خرائط جوجل — الدوائر الناقصة مستبعدة من المتوسط',
+      vsRow('متوسط المنافسين حول المحطة',A.compn,B.compn,A.compn==null?'—':F1(A.compn)+th(A),B.compn==null?'—':F1(B.compn)+th(B),false)+
+      vsRow('٪ محطات بمنافسة عالية (10+)',A.hiComp,B.hiComp,FP(A.hiComp),FP(B.hiComp),false)+
+      vsRow('متوسط تقييم المنافسين',A.compavg,B.compavg,F1(A.compavg)+'★',F1(B.compavg)+'★',null)+
+      vsRow('تفوق درب على المنافسين (نقاط تقييم)',A.rating-A.compavg,B.rating-B.compavg,F1(A.rating-A.compavg),F1(B.rating-B.compavg),true));
+  }
+  if(dims.includes('health')) out+=card('مؤشرات تشغيلية','نِسَب من محطات كل طرف (حيث تتوفر البيانات)',
+    vsRow('نمو Q2 موجب',A.posG,B.posG,FP(A.posG),FP(B.posG),true)+
+    vsRow('تقييم جوجل ≥ 4.8★',A.topRt,B.topRt,FP(A.topRt),FP(B.topRt),true)+
+    vsRow('اعتماد نقدي مفرط (>60٪)',A.cashHv,B.cashHv,FP(A.cashHv),FP(B.cashHv),false)+
+    vsRow('ليل نشط (≥15٪ من الزيارات)',A.nightAct,B.nightAct,FP(A.nightAct),FP(B.nightAct),true));
+  $('cmpOut').innerHTML=out;
+}
+function fillSel(){
+  const mode=$('cmpMode').value,a=$('cmpA'),b=$('cmpB');
+  let opts='';
+  if(mode==='region') CMP.regionOrder.forEach(r=>opts+=`<option value="${r}">${r} (${CMP.regions[r].codes.length})</option>`);
+  else Object.values(CMP.stations).forEach(s=>opts+=`<option value="${s.code}">${s.name} — ${s.code} (${s.region})</option>`);
+  a.innerHTML=opts;b.innerHTML=opts;
+  if(mode==='region'){a.value=CMP.regionOrder[0]||'';b.value=CMP.regionOrder[1]||CMP.regionOrder[0];}
+  else{const ks=Object.keys(CMP.stations);a.value=ks[0];b.value=ks[1]||ks[0];}
+  render();
+}
+['cmpA','cmpB'].forEach(id=>$(id).addEventListener('change',render));
+$('cmpMode').addEventListener('change',fillSel);
+$('cmpSwap').addEventListener('click',()=>{const a=$('cmpA').value;$('cmpA').value=$('cmpB').value;$('cmpB').value=a;render();});
+document.querySelectorAll('#cmpDims .dim').forEach(d=>d.addEventListener('click',()=>{d.classList.toggle('on');render();}));
+fillSel();
+</script>'''
+
+
 hub = f'''<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -670,7 +888,7 @@ hub = f'''<!DOCTYPE html>
   </div>
 </header>
 <div id="hub">
-<div class="stationbar"><div class="chips" id="chips">{chips}
+<div class="stationbar"><div class="chips" id="chips"><a class="chip" href="#/compare" style="background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700">⚖️ إنشاء مقارنة</a>{chips}
   <div class="search"><input id="q" type="search" placeholder="ابحث باسم المحطة أو الكود…" aria-label="بحث"></div>
 </div></div>
 <main class="wrap">
@@ -687,7 +905,8 @@ hub = f'''<!DOCTYPE html>
   <footer>{FOOT_METH}</footer>
 </main>
 </div>
-<main class="wrap" id="pages">{SPA_VIEWS}</main>
+<main class="wrap" id="pages">{SPA_VIEWS}{CMP_HTML}</main>
+<script id="cmpdata" type="application/json">{CMP_JSON}</script>
 <script>
 const hubEl=document.getElementById('hub');
 function route(){{
@@ -717,6 +936,7 @@ chips.forEach(c=>c.addEventListener('click',()=>{{chips.forEach(x=>x.classList.r
 q.addEventListener('input',apply);
 route();
 </script>
+{CMP_SCRIPT}
 </body>
 </html>'''
 open('location-analysis.html', 'w', encoding='utf-8').write(hub)
