@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>درب — بوابة الفواتير وكوبونات البنزين</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF;
+  --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --brown:#2E1D12; --brown-2:#4A3020;
+  --green:#1B7A4B; --green-2:#4E9E74; --green-soft:#DCEFE4;
+  --rose:#C6486B; --rose-soft:#F8E0E7;
+  --gold:#C79A3A; --gold-soft:#F5E8CC;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+    --line:#332417; --surface:#211710;
+    --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+    --green:#2E9563; --green-2:#5FB689; --green-soft:#15291E;
+    --rose:#E27795; --rose-soft:#33171E;
+    --gold:#D9B45B; --gold-soft:#2E2412;
+    --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+    --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF; --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green:#1B7A4B; --green-2:#4E9E74; --green-soft:#DCEFE4;
+  --rose:#C6486B; --rose-soft:#F8E0E7; --gold:#C79A3A; --gold-soft:#F5E8CC;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+}
+:root[data-theme="dark"]{
+  --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+  --line:#332417; --surface:#211710; --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+  --green:#2E9563; --green-2:#5FB689; --green-soft:#15291E;
+  --rose:#E27795; --rose-soft:#33171E; --gold:#D9B45B; --gold-soft:#2E2412;
+  --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+  --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+[hidden]{display:none!important}
+.wrap{max-width:1120px; margin:0 auto; padding:0 20px}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; line-height:1.2; margin:0}
+p{margin:0}
+button{font:inherit; cursor:pointer}
+
+/* ============ THEME TOGGLE ============ */
+.toggle{background:rgba(0,0,0,.18); color:#EAD3B4; border:1px solid rgba(255,255,255,.18);
+  border-radius:100px; padding:6px 13px; font-size:13px}
+.toggle:hover{color:#fff; border-color:var(--amber)}
+.toggle:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+
+/* ============ APP BAR ============ */
+.appbar{position:relative; overflow:hidden; color:#F7EEDF;
+  background:
+    radial-gradient(120% 160% at 85% -30%, rgba(232,118,12,.32), transparent 55%),
+    radial-gradient(70% 140% at 8% 140%, rgba(47,110,78,.25), transparent 60%),
+    linear-gradient(160deg,var(--hero-1),var(--hero-2) 55%,var(--hero-3));
+  border-block-end:1px solid rgba(232,118,12,.35)}
+.appbar .wrap{display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-block:16px}
+.mark{display:inline-flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.3px}
+.mark .glyph{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:0 8px 18px -8px rgba(232,118,12,.8);
+  font-size:22px}
+.mark b{font-size:19px; display:block; line-height:1.25}
+.mark span{display:block; font-size:11px; font-weight:600; color:#E7C9A2; letter-spacing:2px}
+.appbar .sep{flex:1}
+.sess{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+.sess .who{font-size:13px; color:#EAD3B4; border:1px solid rgba(255,255,255,.18);
+  padding:6px 13px; border-radius:100px; background:rgba(0,0,0,.18)}
+.btn{display:inline-flex; align-items:center; justify-content:center; gap:9px; font-weight:800; font-size:14.5px;
+  padding:11px 22px; border-radius:100px; text-decoration:none; border:1px solid transparent}
+.btn-primary{background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff;
+  box-shadow:0 14px 30px -14px rgba(232,118,12,.9)}
+.btn-primary:hover{transform:translateY(-1px)}
+.btn-ghost{background:transparent; color:inherit; border-color:rgba(140,110,80,.4)}
+.btn-ghost:hover{border-color:var(--amber); color:var(--amber)}
+.appbar .btn-ghost{color:#F7EEDF; border-color:rgba(255,255,255,.28)}
+.appbar .btn-ghost:hover{border-color:var(--amber); color:#fff}
+.btn-sm{padding:7px 14px; font-size:13px; font-weight:700}
+.btn-green{background:var(--green); color:#fff}
+.btn-green:hover{filter:brightness(1.08)}
+.btn-rose{background:transparent; color:var(--rose); border-color:var(--rose)}
+.btn-rose:hover{background:var(--rose); color:#fff}
+.btn:focus-visible{outline:2px solid var(--gold); outline-offset:3px}
+.btn:disabled{opacity:.5; cursor:not-allowed; transform:none}
+
+/* ============ SECTIONS / CARDS ============ */
+main{padding-block:clamp(26px,4vw,44px) 70px}
+section{margin-block-end:clamp(30px,4.5vw,46px)}
+.kicker{font-size:12.5px; letter-spacing:2.5px; font-weight:800; color:var(--amber); text-transform:uppercase}
+.sec-title{font-size:clamp(20px,3.2vw,27px); font-weight:800; margin-block:6px 0}
+.sec-note{color:var(--ink-2); max-width:64ch; margin-block-start:8px; font-size:14.5px}
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:22px; box-shadow:var(--shadow)}
+.grid2{display:grid; gap:16px; grid-template-columns:1fr}
+@media(min-width:880px){.grid2{grid-template-columns:1fr 1fr}}
+.stat-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px}
+.stat{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:18px 16px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.stat::after{content:""; position:absolute; inset-block-start:0; inset-inline-end:0; inline-size:46px; block-size:46px;
+  background:radial-gradient(circle at 100% 0,var(--amber-soft),transparent 70%)}
+.stat .num{font-size:clamp(24px,3.6vw,32px); font-weight:800; color:var(--amber-2); letter-spacing:-.5px}
+.stat .lbl{font-size:13px; color:var(--ink-2); font-weight:700; margin-block-start:2px}
+
+/* ============ FORMS ============ */
+.field{display:flex; flex-direction:column; gap:6px}
+.field label{font-size:12.5px; font-weight:800; color:var(--ink-2)}
+.field input,.field select{background:var(--paper); border:1px solid var(--line); border-radius:10px;
+  padding:10px 12px; color:var(--ink); font:inherit; width:100%}
+.field input:focus-visible,.field select:focus-visible{outline:2px solid var(--amber); outline-offset:1px}
+.field .hint{font-size:11.5px; color:var(--ink-3)}
+.formgrid{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.formfoot{margin-block-start:18px; display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+
+/* ============ TABS (auth) ============ */
+.tabs{display:flex; gap:8px; flex-wrap:wrap; margin-block-end:18px}
+.tab{border:1px solid var(--line); background:var(--paper); color:var(--ink-2); font-weight:800;
+  font-size:14px; padding:9px 18px; border-radius:100px}
+.tab[aria-selected="true"]{background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; border-color:transparent}
+
+/* ============ AUTH HERO ============ */
+.authhero{padding-block-start:clamp(26px,5vw,50px)}
+.authhero .headline{font-size:clamp(26px,5vw,42px); font-weight:800; letter-spacing:-.5px}
+.authhero .hl{color:var(--amber)}
+.authhero .sub{margin-block-start:12px; color:var(--ink-2); max-width:58ch; font-size:15.5px}
+.steps{margin:22px 0 0; padding:0; list-style:none; display:grid; gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); counter-reset:st}
+.steps li{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:15px 16px;
+  box-shadow:var(--shadow); font-size:13.5px; color:var(--ink-2); counter-increment:st}
+.steps li b{display:flex; align-items:center; gap:9px; color:var(--ink); font-size:14.5px; margin-block-end:4px}
+.steps li b::before{content:counter(st); inline-size:24px; block-size:24px; border-radius:50%; flex:none;
+  display:grid; place-items:center; font-size:12.5px; color:#fff;
+  background:linear-gradient(150deg,var(--amber),#B44E05)}
+.demo-hint{margin-block-start:16px; font-size:12.5px; color:var(--ink-3); background:var(--paper-2);
+  border:1px dashed var(--line); border-radius:12px; padding:10px 14px; line-height:1.9}
+.demo-hint code{background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1px 7px;
+  font-family:inherit; font-weight:700; color:var(--amber-2); direction:ltr; unicode-bidi:embed}
+
+/* ============ BADGES / CHIPS ============ */
+.badge{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:800;
+  padding:4px 12px; border-radius:100px; white-space:nowrap}
+.b-approved{background:var(--green-soft); color:var(--green)}
+.b-pending{background:var(--gold-soft); color:var(--gold)}
+.b-rejected{background:var(--rose-soft); color:var(--rose)}
+.b-active{background:var(--amber-soft); color:var(--amber-2)}
+.b-used{background:var(--paper-2); color:var(--ink-3)}
+.chiprow{display:flex; gap:9px; flex-wrap:wrap; margin-block-start:14px}
+.chip{display:inline-flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:var(--ink-2);
+  background:var(--paper-2); border:1px solid var(--line); padding:7px 14px; border-radius:100px}
+.chip b{color:var(--ink)}
+
+/* ============ PROGRESS ============ */
+.progresscard{display:flex; gap:24px; align-items:center; flex-wrap:wrap}
+.ring{inline-size:132px; block-size:132px; flex:none; position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring .track{fill:none; stroke:var(--paper-2); stroke-width:11}
+.ring .bar{fill:none; stroke:url(#ringgrad); stroke-width:11; stroke-linecap:round;
+  transition:stroke-dashoffset .6s ease}
+.ring .mid{position:absolute; inset:0; display:grid; place-items:center; text-align:center}
+.ring .mid b{font-size:26px; font-weight:800; color:var(--amber-2); letter-spacing:-.5px; line-height:1.1}
+.ring .mid span{font-size:11px; color:var(--ink-3); font-weight:700}
+.progressinfo{flex:1; min-width:220px}
+.progressinfo h3{font-size:18px; font-weight:800}
+.progressinfo p{color:var(--ink-2); font-size:14px; margin-block-start:6px}
+.meter{margin-block-start:14px; block-size:10px; border-radius:100px; background:var(--paper-2);
+  overflow:hidden; border:1px solid var(--line)}
+.meter i{display:block; block-size:100%; border-radius:100px;
+  background:linear-gradient(90deg,var(--amber),var(--gold)); transition:width .6s ease}
+
+/* ============ TABLES ============ */
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface);
+  box-shadow:var(--shadow)}
+table{border-collapse:collapse; width:100%; font-size:13.5px; min-width:640px}
+th,td{padding:11px 14px; text-align:right; border-block-end:1px solid var(--line); vertical-align:middle}
+th{font-size:12px; letter-spacing:.6px; color:var(--ink-3); font-weight:800; background:var(--paper-2);
+  white-space:nowrap}
+tbody tr:last-child td{border-block-end:0}
+tbody tr:hover{background:color-mix(in srgb, var(--amber-soft) 26%, transparent)}
+td .thumb{inline-size:38px; block-size:38px; object-fit:cover; border-radius:8px; border:1px solid var(--line);
+  cursor:zoom-in; display:block}
+.rowmeter{inline-size:110px; block-size:7px; border-radius:100px; background:var(--paper-2); overflow:hidden;
+  border:1px solid var(--line); display:inline-block; vertical-align:middle}
+.rowmeter i{display:block; block-size:100%; background:linear-gradient(90deg,var(--amber),var(--gold))}
+.empty{padding:26px; text-align:center; color:var(--ink-3); font-size:13.5px}
+
+/* ============ COUPONS ============ */
+.couponrow{display:grid; gap:14px; grid-template-columns:repeat(auto-fill,minmax(270px,1fr))}
+.coupon{position:relative; border-radius:var(--r); padding:18px 20px; color:#fff; overflow:hidden;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:var(--shadow)}
+.coupon.is-off{background:linear-gradient(150deg,#8d8177,#5d534b)}
+.coupon::before,.coupon::after{content:""; position:absolute; inline-size:22px; block-size:22px; border-radius:50%;
+  background:var(--paper); inset-block-start:calc(50% - 11px)}
+.coupon::before{inset-inline-start:-11px}
+.coupon::after{inset-inline-end:-11px}
+.coupon .top{display:flex; justify-content:space-between; align-items:center; gap:8px; font-size:12.5px;
+  font-weight:800; opacity:.92}
+.coupon .val{font-size:30px; font-weight:800; letter-spacing:-.5px; margin-block-start:6px}
+.coupon .val small{font-size:.45em; font-weight:700; opacity:.85}
+.coupon .code{margin-block-start:12px; border-block-start:2px dashed rgba(255,255,255,.45); padding-block-start:10px;
+  font-weight:800; font-size:16.5px; letter-spacing:2.5px; direction:ltr; text-align:center;
+  font-variant-numeric:tabular-nums}
+.coupon .meta{margin-block-start:8px; font-size:11.5px; opacity:.85; display:flex; justify-content:space-between;
+  gap:8px; flex-wrap:wrap}
+
+/* ============ REVIEW QUEUE ============ */
+.queue{display:grid; gap:12px}
+.qitem{display:flex; gap:14px; align-items:center; flex-wrap:wrap; background:var(--surface);
+  border:1px solid var(--line); border-radius:var(--r); padding:14px 16px; box-shadow:var(--shadow)}
+.qitem .thumb{inline-size:52px; block-size:52px; object-fit:cover; border-radius:10px; border:1px solid var(--line);
+  cursor:zoom-in; flex:none}
+.qitem .nophoto{inline-size:52px; block-size:52px; border-radius:10px; border:1px dashed var(--line); flex:none;
+  display:grid; place-items:center; font-size:20px; color:var(--ink-3); background:var(--paper-2)}
+.qitem .info{flex:1; min-width:200px; font-size:13.5px; color:var(--ink-2)}
+.qitem .info b{display:block; color:var(--ink); font-size:14.5px}
+.qitem .acts{display:flex; gap:8px; flex-wrap:wrap}
+
+/* ============ ALERT / CELEBRATION ============ */
+.celebrate{display:flex; gap:14px; align-items:center; flex-wrap:wrap; border-radius:var(--r);
+  padding:16px 20px; margin-block-end:18px; color:#fff; box-shadow:var(--shadow);
+  background:linear-gradient(150deg,var(--green),#0E5A36)}
+.celebrate .em{font-size:30px; flex:none}
+.celebrate b{font-size:16px}
+.celebrate p{font-size:13.5px; opacity:.92}
+
+/* ============ SEARCH ============ */
+.toolrow{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-block:14px}
+.toolrow input[type="search"]{flex:1; min-width:200px; background:var(--surface); border:1px solid var(--line);
+  border-radius:100px; padding:10px 18px; font:inherit; color:var(--ink)}
+.toolrow input[type="search"]:focus-visible{outline:2px solid var(--amber); outline-offset:1px}
+
+/* ============ MODAL / TOAST ============ */
+.overlay{position:fixed; inset:0; z-index:80; background:rgba(18,10,5,.62); display:grid; place-items:center;
+  padding:20px; backdrop-filter:blur(3px)}
+.overlay .box{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); max-width:760px;
+  width:100%; max-height:86vh; overflow:auto; padding:24px; box-shadow:var(--shadow); position:relative}
+.overlay .close{position:absolute; inset-block-start:12px; inset-inline-start:12px; border:1px solid var(--line);
+  background:var(--paper); color:var(--ink-2); border-radius:100px; inline-size:32px; block-size:32px;
+  display:grid; place-items:center; font-size:15px}
+.overlay .close:hover{color:var(--rose); border-color:var(--rose)}
+.overlay img.full{max-width:100%; border-radius:12px; display:block; margin:0 auto}
+#toasts{position:fixed; inset-block-end:18px; inset-inline-start:50%; translate:-50% 0; z-index:90;
+  display:flex; flex-direction:column; gap:8px; align-items:center; pointer-events:none}
+html[dir="rtl"] #toasts{translate:50% 0}
+.toast{background:var(--brown); color:#F7EEDF; font-size:13.5px; font-weight:700; padding:11px 20px;
+  border-radius:100px; box-shadow:var(--shadow); animation:pop .25s ease; max-width:min(92vw,480px); text-align:center}
+.toast.ok{background:var(--green)} .toast.warn{background:var(--rose)}
+@keyframes pop{from{opacity:0; translate:0 8px}to{opacity:1}}
+
+footer{border-block-start:1px solid var(--line); padding-block:22px; color:var(--ink-3); font-size:12.5px;
+  text-align:center}
+</style>
+</head>
+<body>
+<header class="appbar">
+  <div class="wrap">
+    <div class="mark">
+      <span class="glyph">⛽</span>
+      <span><b>درب <span style="font-weight:600">Darb</span></b><span>FUEL REWARDS</span></span>
+    </div>
+    <div class="sep"></div>
+    <button class="toggle" id="themeToggle" type="button">🌗 الوضع</button>
+    <div class="sess" id="sessArea" hidden>
+      <span class="who" id="sessName"></span>
+      <button class="btn btn-ghost btn-sm" id="logoutBtn" type="button">تسجيل الخروج</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ==================== AUTH VIEW ==================== -->
+  <div id="view-auth" hidden>
+    <section class="authhero">
+      <p class="kicker">برنامج مكافآت الوقود</p>
+      <h1 class="headline">اجمع فواتيرك من محطات درب<br>واستلم <span class="hl">كوبون بنزين</span></h1>
+      <p class="sub">لكل عميل حساب خاص وصفحة يرفع فيها فواتيره. فريق درب يراجع الفواتير ويعتمدها،
+        ومتى ما وصلت العدد المطلوب — الكوبون ينصدر لك تلقائياً.</p>
+      <ol class="steps">
+        <li><b>سجّل حسابك</b>برقم جوالك خلال دقيقة واحدة.</li>
+        <li><b>ارفع فواتيرك</b>أدخل بيانات الفاتورة وأرفق صورتها من أي محطة درب.</li>
+        <li><b>درب تراجع وتعتمد</b>نتحقق من الفاتورة ونعتمدها في حسابك.</li>
+        <li><b>استلم الكوبون</b>عند اكتمال العدد المطلوب ينصدر كوبون البنزين تلقائياً.</li>
+      </ol>
+    </section>
+
+    <section class="card" style="max-width:640px">
+      <div class="tabs" role="tablist">
+        <button class="tab" id="tab-login" role="tab" aria-selected="true" type="button">تسجيل الدخول</button>
+        <button class="tab" id="tab-register" role="tab" aria-selected="false" type="button">حساب جديد</button>
+        <button class="tab" id="tab-admin" role="tab" aria-selected="false" type="button">إدارة درب</button>
+      </div>
+
+      <form id="form-login">
+        <div class="formgrid">
+          <div class="field"><label for="li-phone">رقم الجوال</label>
+            <input id="li-phone" inputmode="tel" dir="ltr" placeholder="05XXXXXXXX" autocomplete="tel" required></div>
+          <div class="field"><label for="li-pass">كلمة المرور</label>
+            <input id="li-pass" type="password" autocomplete="current-password" required></div>
+        </div>
+        <div class="formfoot"><button class="btn btn-primary" type="submit">دخول</button></div>
+      </form>
+
+      <form id="form-register" hidden>
+        <div class="formgrid">
+          <div class="field"><label for="rg-name">الاسم</label>
+            <input id="rg-name" autocomplete="name" placeholder="مثال: فهد العتيبي" required></div>
+          <div class="field"><label for="rg-phone">رقم الجوال</label>
+            <input id="rg-phone" inputmode="tel" dir="ltr" placeholder="05XXXXXXXX" autocomplete="tel" required>
+            <span class="hint">يبدأ بـ 05 ويتكون من 10 أرقام</span></div>
+          <div class="field"><label for="rg-pass">كلمة المرور</label>
+            <input id="rg-pass" type="password" autocomplete="new-password" minlength="6" required>
+            <span class="hint">6 أحرف على الأقل</span></div>
+        </div>
+        <div class="formfoot"><button class="btn btn-primary" type="submit">إنشاء الحساب</button></div>
+      </form>
+
+      <form id="form-admin" hidden>
+        <div class="formgrid">
+          <div class="field"><label for="ad-user">اسم المستخدم</label>
+            <input id="ad-user" dir="ltr" autocomplete="username" required></div>
+          <div class="field"><label for="ad-pass">كلمة المرور</label>
+            <input id="ad-pass" type="password" autocomplete="current-password" required></div>
+        </div>
+        <div class="formfoot"><button class="btn btn-primary" type="submit">دخول الإدارة</button></div>
+      </form>
+
+      <div class="demo-hint">
+        <b>حسابات تجريبية:</b>
+        عميل — الجوال <code>0551234567</code> وكلمة المرور <code>123456</code>
+        · إدارة درب — المستخدم <code>admin</code> وكلمة المرور <code>darb2026</code>
+      </div>
+    </section>
+  </div>
+
+  <!-- ==================== CUSTOMER VIEW ==================== -->
+  <div id="view-customer" hidden>
+    <div id="c-celebrate"></div>
+
+    <section>
+      <p class="kicker">رحلتك نحو الكوبون</p>
+      <h2 class="sec-title" id="c-hello"></h2>
+      <div class="card progresscard" style="margin-block-start:16px">
+        <div class="ring">
+          <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
+            <defs><linearGradient id="ringgrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#E8760C"/><stop offset="1" stop-color="#C79A3A"/>
+            </linearGradient></defs>
+            <circle class="track" cx="66" cy="66" r="56"></circle>
+            <circle class="bar" id="c-ringbar" cx="66" cy="66" r="56"></circle>
+          </svg>
+          <div class="mid"><div><b id="c-ringnum" class="tnum">0/0</b><span>فاتورة معتمدة</span></div></div>
+        </div>
+        <div class="progressinfo">
+          <h3 id="c-progress-title"></h3>
+          <p id="c-progress-note"></p>
+          <div class="meter"><i id="c-meterbar" style="width:0%"></i></div>
+          <div class="chiprow" id="c-chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="c-coupons-sec">
+      <p class="kicker">كوبوناتك</p>
+      <h2 class="sec-title">كوبونات البنزين</h2>
+      <p class="sec-note">قدّم رمز الكوبون للكاشير في أي محطة درب لاستخدامه قبل انتهاء صلاحيته.</p>
+      <div class="couponrow" id="c-coupons" style="margin-block-start:16px"></div>
+    </section>
+
+    <section>
+      <p class="kicker">فاتورة جديدة</p>
+      <h2 class="sec-title">أضف فاتورتك</h2>
+      <p class="sec-note" id="c-add-note"></p>
+      <form class="card" id="form-invoice" style="margin-block-start:16px">
+        <div class="formgrid">
+          <div class="field"><label for="iv-no">رقم الفاتورة</label>
+            <input id="iv-no" dir="ltr" placeholder="INV-10254" required></div>
+          <div class="field"><label for="iv-station">المحطة</label>
+            <select id="iv-station">
+              <option>شِهار — الطائف</option><option>الحوية — الطائف</option>
+              <option>السيل الكبير</option><option>الهدا</option>
+              <option>عشيرة</option><option>محطة أخرى</option>
+            </select></div>
+          <div class="field"><label for="iv-fuel">نوع الوقود</label>
+            <select id="iv-fuel"><option>بنزين 91</option><option>بنزين 95</option><option>ديزل</option></select></div>
+          <div class="field"><label for="iv-amount">المبلغ (ر.س)</label>
+            <input id="iv-amount" type="number" inputmode="decimal" dir="ltr" min="1" step="0.01" required></div>
+          <div class="field"><label for="iv-date">تاريخ الفاتورة</label>
+            <input id="iv-date" type="date" required></div>
+          <div class="field"><label for="iv-photo">صورة الفاتورة (اختياري)</label>
+            <input id="iv-photo" type="file" accept="image/*">
+            <span class="hint">تُصغَّر الصورة تلقائياً قبل الحفظ</span></div>
+        </div>
+        <div class="formfoot">
+          <button class="btn btn-primary" type="submit">إرسال الفاتورة للمراجعة</button>
+        </div>
+      </form>
+    </section>
+
+    <section>
+      <p class="kicker">سجل الفواتير</p>
+      <h2 class="sec-title">فواتيري</h2>
+      <div class="tablewrap" style="margin-block-start:16px" id="c-invoices"></div>
+    </section>
+  </div>
+
+  <!-- ==================== ADMIN VIEW ==================== -->
+  <div id="view-admin" hidden>
+    <section>
+      <p class="kicker">لوحة إدارة درب</p>
+      <h2 class="sec-title">نظرة عامة على البرنامج</h2>
+      <div class="stat-grid" style="margin-block-start:16px" id="a-stats"></div>
+    </section>
+
+    <section>
+      <p class="kicker">المراجعة</p>
+      <h2 class="sec-title">فواتير بانتظار الاعتماد</h2>
+      <p class="sec-note">الفواتير المعتمدة فقط تُحتسب ضمن هدف الكوبون. عند اكتمال العدد المطلوب لعميلٍ ما،
+        يُصدر النظام الكوبون تلقائياً.</p>
+      <div class="queue" style="margin-block-start:16px" id="a-queue"></div>
+    </section>
+
+    <section>
+      <p class="kicker">العملاء</p>
+      <h2 class="sec-title">عدد الفواتير لكل عميل</h2>
+      <div class="toolrow">
+        <input type="search" id="a-search" placeholder="ابحث بالاسم أو رقم الجوال…">
+      </div>
+      <div class="tablewrap" id="a-customers"></div>
+    </section>
+
+    <section>
+      <p class="kicker">الكوبونات</p>
+      <h2 class="sec-title">الكوبونات الصادرة</h2>
+      <div class="tablewrap" style="margin-block-start:16px" id="a-coupons"></div>
+    </section>
+
+    <section class="grid2">
+      <form class="card" id="form-settings">
+        <p class="kicker">الإعدادات</p>
+        <h3 class="sec-title" style="font-size:19px">قواعد البرنامج</h3>
+        <div class="formgrid" style="margin-block-start:14px">
+          <div class="field"><label for="st-target">عدد الفواتير المطلوب للكوبون</label>
+            <input id="st-target" type="number" dir="ltr" min="1" max="100" required></div>
+          <div class="field"><label for="st-value">قيمة الكوبون (ر.س)</label>
+            <input id="st-value" type="number" dir="ltr" min="5" max="1000" required></div>
+          <div class="field"><label for="st-min">الحد الأدنى لمبلغ الفاتورة (ر.س)</label>
+            <input id="st-min" type="number" dir="ltr" min="0" max="500" required></div>
+        </div>
+        <div class="formfoot"><button class="btn btn-primary btn-sm" type="submit">حفظ الإعدادات</button></div>
+      </form>
+      <div class="card">
+        <p class="kicker">البيانات</p>
+        <h3 class="sec-title" style="font-size:19px">بيانات النموذج التجريبي</h3>
+        <p class="sec-note">هذا نموذج أولي يخزّن بياناته محلياً في متصفحك (localStorage) —
+          لا يوجد خادم بعد. يمكنك تصفير البيانات والعودة للبيانات التجريبية في أي وقت.</p>
+        <div class="formfoot">
+          <button class="btn btn-rose btn-sm" id="resetBtn" type="button">تصفير البيانات التجريبية</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+</main>
+
+<footer>درب Darb · برنامج فواتير ومكافآت الوقود — نموذج أولي تجريبي · <span class="tnum">v1.0</span></footer>
+
+<div id="modalRoot"></div>
+<div id="toasts"></div>
+
+<script>
+/* ==================== THEME ==================== */
+(function(){
+  const KEY='darb-theme', root=document.documentElement, btn=document.getElementById('themeToggle');
+  const saved=localStorage.getItem(KEY); if(saved) root.dataset.theme=saved;
+  btn.addEventListener('click',()=>{
+    const cur=root.dataset.theme || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+    const next=cur==='dark'?'light':'dark';
+    root.dataset.theme=next; localStorage.setItem(KEY,next);
+  });
+})();
+
+/* ==================== STORE ==================== */
+const KEY='darb_invoices_v1';
+const ADMIN={user:'admin', pass:'darb2026'};
+const DAY=86400000;
+let state=null;
+
+function load(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
+function save(){ try{ localStorage.setItem(KEY, JSON.stringify(state)); return true; }catch(e){ return false; } }
+function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString(36)+Math.random().toString(36).slice(2,10)); }
+async function hashText(t){
+  try{
+    const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode('darb|'+t));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }catch(e){
+    let h=5381; const s='darb|'+t;
+    for(let i=0;i<s.length;i++){ h=((h<<5)+h+s.charCodeAt(i))>>>0; }
+    return 'x'+h.toString(16);
+  }
+}
+function couponCode(){
+  const cs='ABCDEFGHJKMNPQRSTUVWXYZ23456789'; let a='',b='';
+  for(let i=0;i<4;i++){ a+=cs[Math.floor(Math.random()*cs.length)]; b+=cs[Math.floor(Math.random()*cs.length)]; }
+  return 'DARB-'+a+'-'+b;
+}
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const fmtDate=ts=>new Intl.DateTimeFormat('ar-SA-u-ca-gregory-nu-latn',{year:'numeric',month:'short',day:'numeric'}).format(new Date(ts));
+const fmtMoney=n=>Number(n).toLocaleString('en-US',{maximumFractionDigits:2})+' ر.س';
+const userById=id=>state.users.find(u=>u.id===id);
+const invoicesOf=id=>state.invoices.filter(i=>i.userId===id);
+const couponsOf=id=>state.coupons.filter(c=>c.userId===id);
+function couponState(c){ return c.status==='used' ? 'used' : (Date.now()>c.expiresAt ? 'expired' : 'active'); }
+const CP_LABEL={active:'فعّال', used:'مستخدم', expired:'منتهي'};
+const ST_LABEL={pending:'قيد المراجعة', approved:'معتمدة', rejected:'مرفوضة'};
+const ST_CLASS={pending:'b-pending', approved:'b-approved', rejected:'b-rejected'};
+
+/* عند اكتمال كل (الهدف) فاتورة معتمدة يُصدر كوبون جديد تلقائياً */
+function syncCoupons(userId){
+  const t=state.settings.target;
+  const approved=invoicesOf(userId).filter(i=>i.status==='approved').length;
+  const due=Math.floor(approved/t);
+  const have=couponsOf(userId).length;
+  let issued=0;
+  for(let k=have;k<due;k++){
+    state.coupons.push({id:uid(), code:couponCode(), userId, value:state.settings.couponValue,
+      target:t, issuedAt:Date.now(), expiresAt:Date.now()+90*DAY, status:'active'});
+    issued++;
+  }
+  return issued;
+}
+function progressOf(userId){
+  const t=state.settings.target;
+  const inv=invoicesOf(userId);
+  const approved=inv.filter(i=>i.status==='approved').length;
+  const pending=inv.filter(i=>i.status==='pending').length;
+  const rejected=inv.filter(i=>i.status==='rejected').length;
+  const cycle=approved % t;
+  return {target:t, approved, pending, rejected, total:inv.length, cycle,
+    remaining:t-cycle, pct:Math.round(cycle/t*100), coupons:couponsOf(userId).length};
+}
+
+/* ==================== SEED ==================== */
+async function seed(){
+  const pass=await hashText('123456');
+  const now=Date.now();
+  const u1={id:uid(), name:'فهد العتيبي',  phone:'0551234567', passHash:pass, createdAt:now-40*DAY};
+  const u2={id:uid(), name:'نورة الشهري',  phone:'0567891234', passHash:pass, createdAt:now-25*DAY};
+  const u3={id:uid(), name:'محمد الزهراني', phone:'0509876543', passHash:pass, createdAt:now-3*DAY};
+  const stations=['شِهار — الطائف','الحوية — الطائف','السيل الكبير','الهدا'];
+  const fuels=['بنزين 91','بنزين 95','ديزل'];
+  const inv=[];
+  const mk=(u,n,daysAgo,status,amount,reason)=>inv.push({
+    id:uid(), userId:u.id, no:'INV-'+n, station:stations[n%stations.length], fuel:fuels[n%fuels.length],
+    amount, date:now-daysAgo*DAY, photo:null, status, reason:reason||null,
+    createdAt:now-daysAgo*DAY, reviewedAt:status==='pending'?null:now-(daysAgo-1)*DAY});
+  /* فهد: 12 معتمدة (كوبون مكتمل + 2 بالدورة الجديدة) + 1 قيد المراجعة */
+  let n=2091;
+  for(let k=0;k<12;k++) mk(u1, n++, 36-k*3, 'approved', 40+((k*37)%140));
+  mk(u1, n++, 1, 'pending', 95.5);
+  /* نورة: 7 معتمدة + 1 قيد المراجعة + 1 مرفوضة */
+  for(let k=0;k<7;k++) mk(u2, n++, 22-k*3, 'approved', 30+((k*53)%120));
+  mk(u2, n++, 2, 'pending', 60);
+  mk(u2, n++, 9, 'rejected', 15, 'المبلغ أقل من الحد الأدنى');
+  /* محمد: 2 قيد المراجعة */
+  mk(u3, n++, 1, 'pending', 120);
+  mk(u3, n++, 0, 'pending', 75.25);
+
+  state={v:1, settings:{target:10, couponValue:50, minAmount:20},
+    users:[u1,u2,u3], invoices:inv, coupons:[], session:null};
+  syncCoupons(u1.id);
+  if(state.coupons[0]){ state.coupons[0].issuedAt=now-5*DAY; state.coupons[0].expiresAt=now+85*DAY; }
+  save();
+}
+
+/* ==================== UI HELPERS ==================== */
+function toast(msg, kind){
+  const t=document.createElement('div');
+  t.className='toast'+(kind?' '+kind:''); t.textContent=msg;
+  document.getElementById('toasts').appendChild(t);
+  setTimeout(()=>t.remove(), 4200);
+}
+function openModal(html){
+  const root=document.getElementById('modalRoot');
+  root.innerHTML='<div class="overlay" id="ovl"><div class="box">'
+    +'<button class="close" type="button" title="إغلاق">✕</button>'+html+'</div></div>';
+  const ovl=document.getElementById('ovl');
+  ovl.addEventListener('click',e=>{ if(e.target===ovl) closeModal(); });
+  ovl.querySelector('.close').addEventListener('click', closeModal);
+  return ovl;
+}
+function closeModal(){ document.getElementById('modalRoot').innerHTML=''; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+function showPhoto(src){ openModal('<img class="full" src="'+src+'" alt="صورة الفاتورة">'); }
+function readPhoto(file){
+  return new Promise(res=>{
+    if(!file){ res(null); return; }
+    const img=new Image(); const url=URL.createObjectURL(file);
+    img.onload=()=>{
+      const max=1000; const k=Math.min(1, max/Math.max(img.width,img.height));
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*k); c.height=Math.round(img.height*k);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(url); res(c.toDataURL('image/jpeg',.72));
+    };
+    img.onerror=()=>{ URL.revokeObjectURL(url); res(null); };
+    img.src=url;
+  });
+}
+
+/* ==================== RENDER: ROUTER ==================== */
+function renderApp(){
+  const s=state.session;
+  document.getElementById('view-auth').hidden = !!s;
+  document.getElementById('view-customer').hidden = !(s && s.type==='customer');
+  document.getElementById('view-admin').hidden = !(s && s.type==='admin');
+  const sessArea=document.getElementById('sessArea');
+  sessArea.hidden=!s;
+  if(s){
+    document.getElementById('sessName').textContent =
+      s.type==='admin' ? '⚙️ إدارة درب' : '👤 '+(userById(s.userId)?.name || '');
+  }
+  if(s && s.type==='customer') renderCustomer();
+  if(s && s.type==='admin') renderAdmin();
+  window.scrollTo({top:0});
+}
+
+/* ==================== RENDER: CUSTOMER ==================== */
+function renderCustomer(){
+  const u=userById(state.session.userId);
+  if(!u){ state.session=null; save(); renderApp(); return; }
+  const p=progressOf(u.id);
+  document.getElementById('c-hello').textContent='هلا '+u.name+' 👋';
+
+  /* celebration */
+  const active=couponsOf(u.id).filter(c=>couponState(c)==='active');
+  document.getElementById('c-celebrate').innerHTML = active.length
+    ? '<div class="celebrate"><span class="em">🎉</span><div><b>مبروك! لديك '
+      +(active.length>1 ? active.length+' كوبونات فعّالة' : 'كوبون فعّال')
+      +' بقيمة '+esc(fmtMoney(active.reduce((s,c)=>s+c.value,0)))+'</b>'
+      +'<p>اعرض رمز الكوبون للكاشير في أقرب محطة درب.</p></div></div>'
+    : '';
+
+  /* progress ring */
+  const C=2*Math.PI*56;
+  const bar=document.getElementById('c-ringbar');
+  bar.style.strokeDasharray=C;
+  bar.style.strokeDashoffset=C*(1-p.cycle/p.target);
+  document.getElementById('c-ringnum').textContent=p.cycle+'/'+p.target;
+  document.getElementById('c-meterbar').style.width=p.pct+'%';
+  document.getElementById('c-progress-title').textContent =
+    p.cycle===0 && p.coupons>0 ? 'دورة جديدة بدأت — استمر!' :
+    p.remaining===p.target ? 'ابدأ برفع أول فاتورة' :
+    'باقي لك '+p.remaining+' '+(p.remaining===1?'فاتورة':'فواتير')+' للكوبون القادم';
+  document.getElementById('c-progress-note').textContent =
+    'كل '+p.target+' فواتير معتمدة = كوبون بنزين بقيمة '+fmtMoney(state.settings.couponValue)
+    +'. الفواتير قيد المراجعة تُحتسب بعد اعتمادها من درب.';
+  document.getElementById('c-chips').innerHTML =
+    '<span class="chip">معتمدة <b class="tnum">'+p.approved+'</b></span>'
+    +'<span class="chip">قيد المراجعة <b class="tnum">'+p.pending+'</b></span>'
+    +'<span class="chip">مرفوضة <b class="tnum">'+p.rejected+'</b></span>'
+    +'<span class="chip">كوبونات <b class="tnum">'+p.coupons+'</b></span>';
+
+  document.getElementById('c-add-note').textContent =
+    'الحد الأدنى لمبلغ الفاتورة '+fmtMoney(state.settings.minAmount)
+    +' — وتُقبل الفواتير الصادرة خلال آخر 180 يوماً فقط.';
+
+  /* coupons */
+  const cs=couponsOf(u.id).slice().sort((a,b)=>b.issuedAt-a.issuedAt);
+  document.getElementById('c-coupons-sec').style.display = cs.length ? '' : 'none';
+  document.getElementById('c-coupons').innerHTML=cs.map(c=>{
+    const st=couponState(c);
+    return '<div class="coupon'+(st==='active'?'':' is-off')+'">'
+      +'<div class="top"><span>⛽ كوبون بنزين درب</span><span>'+CP_LABEL[st]+'</span></div>'
+      +'<div class="val tnum">'+Number(c.value).toLocaleString('en-US')+' <small>ر.س</small></div>'
+      +'<div class="code">'+esc(c.code)+'</div>'
+      +'<div class="meta"><span>صدر: '+fmtDate(c.issuedAt)+'</span><span>'
+      +(st==='used'?'استُخدم: '+fmtDate(c.usedAt||c.issuedAt):'صالح حتى: '+fmtDate(c.expiresAt))
+      +'</span></div></div>';
+  }).join('');
+
+  /* invoices table */
+  const inv=invoicesOf(u.id).slice().sort((a,b)=>b.createdAt-a.createdAt);
+  document.getElementById('c-invoices').innerHTML = !inv.length
+    ? '<div class="empty">ما عندك فواتير بعد — أضف أول فاتورة من النموذج بالأعلى ⬆️</div>'
+    : '<table><thead><tr><th>الصورة</th><th>رقم الفاتورة</th><th>المحطة</th><th>الوقود</th>'
+      +'<th>المبلغ</th><th>التاريخ</th><th>الحالة</th><th></th></tr></thead><tbody>'
+      +inv.map(i=>'<tr>'
+        +'<td>'+(i.photo?'<img class="thumb" data-photo="'+esc(i.id)+'" src="'+i.photo+'" alt="فاتورة">':'—')+'</td>'
+        +'<td class="tnum" dir="ltr" style="text-align:right">'+esc(i.no)+'</td>'
+        +'<td>'+esc(i.station)+'</td><td>'+esc(i.fuel)+'</td>'
+        +'<td class="tnum">'+esc(fmtMoney(i.amount))+'</td>'
+        +'<td class="tnum">'+fmtDate(i.date)+'</td>'
+        +'<td><span class="badge '+ST_CLASS[i.status]+'">'+ST_LABEL[i.status]+'</span>'
+        +(i.status==='rejected'&&i.reason?'<div style="font-size:11px;color:var(--ink-3);margin-block-start:3px">'+esc(i.reason)+'</div>':'')
+        +'</td>'
+        +'<td>'+(i.status==='pending'
+          ? '<button class="btn btn-rose btn-sm" data-del="'+esc(i.id)+'" type="button">حذف</button>':'')+'</td>'
+        +'</tr>').join('')
+      +'</tbody></table>';
+
+  const wrap=document.getElementById('c-invoices');
+  wrap.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('حذف هذه الفاتورة؟')) return;
+    state.invoices=state.invoices.filter(x=>x.id!==b.dataset.del);
+    save(); renderCustomer(); toast('حُذفت الفاتورة');
+  }));
+  wrap.querySelectorAll('[data-photo]').forEach(im=>im.addEventListener('click',()=>{
+    const i=state.invoices.find(x=>x.id===im.dataset.photo); if(i&&i.photo) showPhoto(i.photo);
+  }));
+}
+
+/* ==================== RENDER: ADMIN ==================== */
+function renderAdmin(){
+  const pend=state.invoices.filter(i=>i.status==='pending');
+  const activeCp=state.coupons.filter(c=>couponState(c)==='active');
+  const usedCp=state.coupons.filter(c=>c.status==='used');
+
+  document.getElementById('a-stats').innerHTML=[
+    ['العملاء المسجّلون', state.users.length],
+    ['إجمالي الفواتير', state.invoices.length],
+    ['بانتظار المراجعة', pend.length],
+    ['فواتير معتمدة', state.invoices.filter(i=>i.status==='approved').length],
+    ['كوبونات فعّالة', activeCp.length],
+    ['كوبونات مستخدمة', usedCp.length],
+  ].map(([l,n])=>'<div class="stat"><div class="num tnum">'+n+'</div><div class="lbl">'+l+'</div></div>').join('');
+
+  /* review queue */
+  document.getElementById('a-queue').innerHTML = !pend.length
+    ? '<div class="card empty">لا توجد فواتير بانتظار المراجعة ✅</div>'
+    : pend.slice().sort((a,b)=>a.createdAt-b.createdAt).map(i=>{
+        const u=userById(i.userId);
+        return '<div class="qitem">'
+          +(i.photo?'<img class="thumb" data-photo="'+esc(i.id)+'" src="'+i.photo+'" alt="فاتورة">'
+                   :'<span class="nophoto">🧾</span>')
+          +'<div class="info"><b>'+esc(u?u.name:'عميل محذوف')+' · <span class="tnum" dir="ltr">'+esc(i.no)+'</span></b>'
+          +esc(i.station)+' · '+esc(i.fuel)+' · '+esc(fmtMoney(i.amount))+' · '+fmtDate(i.date)+'</div>'
+          +'<div class="acts">'
+          +'<button class="btn btn-green btn-sm" data-approve="'+esc(i.id)+'" type="button">اعتماد ✓</button>'
+          +'<button class="btn btn-rose btn-sm" data-reject="'+esc(i.id)+'" type="button">رفض ✕</button>'
+          +'</div></div>';
+      }).join('');
+
+  const q=document.getElementById('a-queue');
+  q.querySelectorAll('[data-approve]').forEach(b=>b.addEventListener('click',()=>{
+    const i=state.invoices.find(x=>x.id===b.dataset.approve); if(!i) return;
+    i.status='approved'; i.reviewedAt=Date.now();
+    const issued=syncCoupons(i.userId);
+    save(); renderAdmin();
+    const u=userById(i.userId);
+    toast(issued?'🎉 اعتُمدت الفاتورة وصدر كوبون لـ'+(u?u.name:''):'اعتُمدت الفاتورة','ok');
+  }));
+  q.querySelectorAll('[data-reject]').forEach(b=>b.addEventListener('click',()=>{
+    const i=state.invoices.find(x=>x.id===b.dataset.reject); if(!i) return;
+    const reason=prompt('سبب الرفض (اختياري):',''); if(reason===null) return;
+    i.status='rejected'; i.reason=reason.trim()||null; i.reviewedAt=Date.now();
+    save(); renderAdmin(); toast('رُفضت الفاتورة','warn');
+  }));
+  q.querySelectorAll('[data-photo]').forEach(im=>im.addEventListener('click',()=>{
+    const i=state.invoices.find(x=>x.id===im.dataset.photo); if(i&&i.photo) showPhoto(i.photo);
+  }));
+
+  renderAdminCustomers();
+  renderAdminCoupons();
+
+  document.getElementById('st-target').value=state.settings.target;
+  document.getElementById('st-value').value=state.settings.couponValue;
+  document.getElementById('st-min').value=state.settings.minAmount;
+}
+
+function renderAdminCustomers(){
+  const term=(document.getElementById('a-search').value||'').trim().toLowerCase();
+  const rows=state.users
+    .filter(u=>!term || u.name.toLowerCase().includes(term) || u.phone.includes(term))
+    .map(u=>({u, p:progressOf(u.id)}))
+    .sort((a,b)=>b.p.total-a.p.total);
+  document.getElementById('a-customers').innerHTML = !rows.length
+    ? '<div class="empty">لا توجد نتائج مطابقة</div>'
+    : '<table><thead><tr><th>العميل</th><th>الجوال</th><th>الفواتير</th><th>معتمدة</th>'
+      +'<th>قيد المراجعة</th><th>التقدم نحو الكوبون</th><th>كوبونات</th><th></th></tr></thead><tbody>'
+      +rows.map(({u,p})=>'<tr>'
+        +'<td><b>'+esc(u.name)+'</b></td>'
+        +'<td class="tnum" dir="ltr" style="text-align:right">'+esc(u.phone)+'</td>'
+        +'<td class="tnum">'+p.total+'</td><td class="tnum">'+p.approved+'</td>'
+        +'<td class="tnum">'+p.pending+'</td>'
+        +'<td><span class="rowmeter"><i style="width:'+p.pct+'%"></i></span> '
+        +'<span class="tnum" style="font-size:12px;color:var(--ink-3)">'+p.cycle+'/'+p.target+'</span></td>'
+        +'<td class="tnum">'+p.coupons+'</td>'
+        +'<td><button class="btn btn-ghost btn-sm" data-view="'+esc(u.id)+'" type="button">التفاصيل</button></td>'
+        +'</tr>').join('')
+      +'</tbody></table>';
+  document.getElementById('a-customers').querySelectorAll('[data-view]').forEach(b=>
+    b.addEventListener('click',()=>showCustomerModal(b.dataset.view)));
+}
+
+function showCustomerModal(userId){
+  const u=userById(userId); if(!u) return;
+  const p=progressOf(userId);
+  const inv=invoicesOf(userId).slice().sort((a,b)=>b.createdAt-a.createdAt);
+  const cs=couponsOf(userId).slice().sort((a,b)=>b.issuedAt-a.issuedAt);
+  openModal(
+    '<p class="kicker">صفحة العميل</p>'
+    +'<h3 class="sec-title" style="font-size:21px">'+esc(u.name)
+    +' <span class="tnum" dir="ltr" style="font-size:13px;color:var(--ink-3)">'+esc(u.phone)+'</span></h3>'
+    +'<div class="chiprow">'
+    +'<span class="chip">معتمدة <b class="tnum">'+p.approved+'</b></span>'
+    +'<span class="chip">قيد المراجعة <b class="tnum">'+p.pending+'</b></span>'
+    +'<span class="chip">مرفوضة <b class="tnum">'+p.rejected+'</b></span>'
+    +'<span class="chip">التقدم <b class="tnum">'+p.cycle+'/'+p.target+'</b></span>'
+    +'<span class="chip">كوبونات <b class="tnum">'+p.coupons+'</b></span></div>'
+    +'<h4 style="margin:18px 0 8px; font-size:15px">الفواتير</h4>'
+    +(!inv.length?'<p class="empty">لا فواتير</p>'
+      :'<div class="tablewrap"><table><thead><tr><th>رقم</th><th>المحطة</th><th>المبلغ</th><th>التاريخ</th><th>الحالة</th></tr></thead><tbody>'
+      +inv.map(i=>'<tr><td class="tnum" dir="ltr" style="text-align:right">'+esc(i.no)+'</td><td>'+esc(i.station)+'</td>'
+        +'<td class="tnum">'+esc(fmtMoney(i.amount))+'</td><td class="tnum">'+fmtDate(i.date)+'</td>'
+        +'<td><span class="badge '+ST_CLASS[i.status]+'">'+ST_LABEL[i.status]+'</span></td></tr>').join('')
+      +'</tbody></table></div>')
+    +'<h4 style="margin:18px 0 8px; font-size:15px">الكوبونات</h4>'
+    +(!cs.length?'<p class="empty">لا كوبونات بعد</p>'
+      :'<div class="tablewrap"><table><thead><tr><th>الرمز</th><th>القيمة</th><th>الإصدار</th><th>الحالة</th></tr></thead><tbody>'
+      +cs.map(c=>'<tr><td class="tnum" dir="ltr" style="text-align:right">'+esc(c.code)+'</td>'
+        +'<td class="tnum">'+esc(fmtMoney(c.value))+'</td><td class="tnum">'+fmtDate(c.issuedAt)+'</td>'
+        +'<td><span class="badge '+(couponState(c)==='active'?'b-active':'b-used')+'">'+CP_LABEL[couponState(c)]+'</span></td></tr>').join('')
+      +'</tbody></table></div>')
+  );
+}
+
+function renderAdminCoupons(){
+  const cs=state.coupons.slice().sort((a,b)=>b.issuedAt-a.issuedAt);
+  document.getElementById('a-coupons').innerHTML = !cs.length
+    ? '<div class="empty">لم تصدر كوبونات بعد — أول كوبون ينصدر تلقائياً عند اكتمال هدف أحد العملاء</div>'
+    : '<table><thead><tr><th>الرمز</th><th>العميل</th><th>القيمة</th><th>الإصدار</th><th>الصلاحية</th>'
+      +'<th>الحالة</th><th></th></tr></thead><tbody>'
+      +cs.map(c=>{
+        const u=userById(c.userId); const st=couponState(c);
+        return '<tr>'
+          +'<td class="tnum" dir="ltr" style="text-align:right; font-weight:800">'+esc(c.code)+'</td>'
+          +'<td>'+esc(u?u.name:'—')+'</td>'
+          +'<td class="tnum">'+esc(fmtMoney(c.value))+'</td>'
+          +'<td class="tnum">'+fmtDate(c.issuedAt)+'</td>'
+          +'<td class="tnum">'+fmtDate(c.expiresAt)+'</td>'
+          +'<td><span class="badge '+(st==='active'?'b-active':'b-used')+'">'+CP_LABEL[st]+'</span></td>'
+          +'<td>'+(st==='active'
+            ? '<button class="btn btn-ghost btn-sm" data-use="'+esc(c.id)+'" type="button">تحديد كمستخدم</button>':'')+'</td>'
+          +'</tr>';
+      }).join('')
+      +'</tbody></table>';
+  document.getElementById('a-coupons').querySelectorAll('[data-use]').forEach(b=>
+    b.addEventListener('click',()=>{
+      const c=state.coupons.find(x=>x.id===b.dataset.use); if(!c) return;
+      if(!confirm('تأكيد استخدام الكوبون '+c.code+' في المحطة؟')) return;
+      c.status='used'; c.usedAt=Date.now();
+      save(); renderAdmin(); toast('سُجّل الكوبون كمستخدم','ok');
+    }));
+}
+
+/* ==================== AUTH ACTIONS ==================== */
+const tabs={login:document.getElementById('tab-login'), register:document.getElementById('tab-register'),
+  admin:document.getElementById('tab-admin')};
+const forms={login:document.getElementById('form-login'), register:document.getElementById('form-register'),
+  admin:document.getElementById('form-admin')};
+Object.keys(tabs).forEach(k=>tabs[k].addEventListener('click',()=>{
+  Object.keys(tabs).forEach(j=>{ tabs[j].setAttribute('aria-selected', j===k?'true':'false'); forms[j].hidden=j!==k; });
+}));
+
+forms.register.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const name=document.getElementById('rg-name').value.trim();
+  const phone=document.getElementById('rg-phone').value.trim();
+  const pass=document.getElementById('rg-pass').value;
+  if(!/^05\d{8}$/.test(phone)){ toast('رقم الجوال يجب أن يبدأ بـ 05 ويتكون من 10 أرقام','warn'); return; }
+  if(state.users.some(u=>u.phone===phone)){ toast('هذا الرقم مسجّل مسبقاً — جرّب تسجيل الدخول','warn'); return; }
+  const u={id:uid(), name, phone, passHash:await hashText(pass), createdAt:Date.now()};
+  state.users.push(u); state.session={type:'customer', userId:u.id};
+  save(); forms.register.reset(); renderApp(); toast('أهلاً بك في برنامج درب 🎉','ok');
+});
+
+forms.login.addEventListener('submit', async e=>{
+  e.preventDefault();
+  const phone=document.getElementById('li-phone').value.trim();
+  const pass=document.getElementById('li-pass').value;
+  const u=state.users.find(x=>x.phone===phone);
+  if(!u || u.passHash!==await hashText(pass)){ toast('بيانات الدخول غير صحيحة','warn'); return; }
+  state.session={type:'customer', userId:u.id};
+  save(); forms.login.reset(); renderApp();
+});
+
+forms.admin.addEventListener('submit', e=>{
+  e.preventDefault();
+  const user=document.getElementById('ad-user').value.trim();
+  const pass=document.getElementById('ad-pass').value;
+  if(user!==ADMIN.user || pass!==ADMIN.pass){ toast('بيانات الإدارة غير صحيحة','warn'); return; }
+  state.session={type:'admin'};
+  save(); forms.admin.reset(); renderApp();
+});
+
+document.getElementById('logoutBtn').addEventListener('click',()=>{
+  state.session=null; save(); renderApp();
+});
+
+/* ==================== INVOICE ACTIONS ==================== */
+const ivDate=document.getElementById('iv-date');
+function resetInvoiceForm(){
+  document.getElementById('form-invoice').reset();
+  const today=new Date(); const p=n=>String(n).padStart(2,'0');
+  const iso=today.getFullYear()+'-'+p(today.getMonth()+1)+'-'+p(today.getDate());
+  ivDate.value=iso; ivDate.max=iso;
+}
+document.getElementById('form-invoice').addEventListener('submit', async e=>{
+  e.preventDefault();
+  const u=userById(state.session.userId); if(!u) return;
+  const no=document.getElementById('iv-no').value.trim();
+  const station=document.getElementById('iv-station').value;
+  const fuel=document.getElementById('iv-fuel').value;
+  const amount=parseFloat(document.getElementById('iv-amount').value);
+  const dateStr=ivDate.value;
+  const file=document.getElementById('iv-photo').files[0]||null;
+
+  if(!no){ toast('أدخل رقم الفاتورة','warn'); return; }
+  if(invoicesOf(u.id).some(i=>i.no.toLowerCase()===no.toLowerCase())){
+    toast('رقم الفاتورة مسجّل مسبقاً في حسابك','warn'); return; }
+  if(!(amount>0)){ toast('أدخل مبلغاً صحيحاً','warn'); return; }
+  if(amount < state.settings.minAmount){
+    toast('الحد الأدنى لمبلغ الفاتورة '+fmtMoney(state.settings.minAmount),'warn'); return; }
+  const d=new Date(dateStr+'T12:00:00');
+  if(isNaN(d)){ toast('أدخل تاريخاً صحيحاً','warn'); return; }
+  /* مقارنة على مستوى اليوم حتى لا تُرفض فاتورة اليوم نفسه صباحاً */
+  const dMid=new Date(dateStr+'T00:00:00');
+  const tMid=new Date(); tMid.setHours(0,0,0,0);
+  if(dMid.getTime()>tMid.getTime()){ toast('تاريخ الفاتورة لا يمكن أن يكون في المستقبل','warn'); return; }
+  if(tMid.getTime()-dMid.getTime() > 180*DAY){ toast('تُقبل الفواتير الصادرة خلال آخر 180 يوماً فقط','warn'); return; }
+
+  const btn=e.submitter; if(btn) btn.disabled=true;
+  const photo=await readPhoto(file);
+  const invoice={id:uid(), userId:u.id, no, station, fuel, amount, date:d.getTime(),
+    photo, status:'pending', reason:null, createdAt:Date.now(), reviewedAt:null};
+  state.invoices.push(invoice);
+  if(!save() && photo){ invoice.photo=null; if(save()) toast('مساحة التخزين ممتلئة — حُفظت الفاتورة بدون صورة','warn'); }
+  if(btn) btn.disabled=false;
+  resetInvoiceForm(); renderCustomer();
+  toast('أُرسلت الفاتورة للمراجعة ✓','ok');
+});
+
+/* ==================== ADMIN ACTIONS ==================== */
+document.getElementById('a-search').addEventListener('input', renderAdminCustomers);
+document.getElementById('form-settings').addEventListener('submit', e=>{
+  e.preventDefault();
+  const target=Math.min(100, Math.max(1, parseInt(document.getElementById('st-target').value)||10));
+  const value=Math.min(1000, Math.max(5, parseFloat(document.getElementById('st-value').value)||50));
+  const min=Math.min(500, Math.max(0, parseFloat(document.getElementById('st-min').value)||0));
+  state.settings={target, couponValue:value, minAmount:min};
+  let issued=0; state.users.forEach(u=>{ issued+=syncCoupons(u.id); });
+  save(); renderAdmin();
+  toast(issued?'حُفظت الإعدادات وصدر '+issued+' كوبون وفق الهدف الجديد':'حُفظت الإعدادات','ok');
+});
+document.getElementById('resetBtn').addEventListener('click',()=>{
+  if(!confirm('سيتم حذف جميع البيانات والعودة للبيانات التجريبية. متابعة؟')) return;
+  localStorage.removeItem(KEY); location.reload();
+});
+
+/* ==================== BOOT ==================== */
+(async function(){
+  state=load();
+  if(!state || state.v!==1) await seed();
+  resetInvoiceForm();
+  renderApp();
+})();
+</script>
+</body>
+</html>
