@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>محطة العمرة — قراءة الحركة الصباحية</title>
-
 <style>
 :root{
   --ink:#2A1D12;
@@ -195,9 +199,22 @@ tr.dim td{color:var(--ink-3)}
   .step .t{justify-self:start}
 }
 @media print{
-  .slide{break-inside:avoid;page-break-inside:avoid}
+  :root{
+    --ink:#2A1D12; --ink-2:#5B4834; --ink-3:#857161;
+    --ground:#FFFFFF; --surface:#FAF5ED; --line:#D8C7B0;
+    --orange:#B44E05; --orange-hi:#C85E05; --amber:#E08A1E; --sand:#F1E2CC;
+    --cool:#7C8B84; --cool-soft:#BDC6C0;
+  }
+  body{background:#fff}
+  .deck{max-width:100%;padding:0}
+  .slide,.cover{break-inside:avoid;page-break-inside:avoid;padding:28px 0}
+  .chartwrap,.tablewrap,.step,.card,.src{break-inside:avoid;page-break-inside:avoid}
+  .chartwrap svg{min-width:0}
+  @page{margin:14mm}
 }
 </style>
+</head>
+<body>
 
 <div class="deck">
 
@@ -573,3 +590,5 @@ tr.dim td{color:var(--ink-3)}
   </section>
 
 </div>
+</body>
+</html>
