@@ -487,11 +487,12 @@ footer{border-block-start:1px solid var(--line); padding-block:22px; color:var(-
 /* ==================== THEME ==================== */
 (function(){
   const KEY='darb-theme', root=document.documentElement, btn=document.getElementById('themeToggle');
-  const saved=localStorage.getItem(KEY); if(saved) root.dataset.theme=saved;
+  let saved=null; try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) root.dataset.theme=saved;
   btn.addEventListener('click',()=>{
     const cur=root.dataset.theme || (matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
     const next=cur==='dark'?'light':'dark';
-    root.dataset.theme=next; localStorage.setItem(KEY,next);
+    root.dataset.theme=next; try{ localStorage.setItem(KEY,next); }catch(e){}
   });
 })();
 
