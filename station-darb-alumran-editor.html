@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8">
+<title>درب العمران — مخطط المستأجرين (قابل للتعديل)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+*{box-sizing:border-box}
+body{margin:0; background:#F4F1EC; font-family:"Tahoma","Segoe UI","Noto Sans Arabic",sans-serif}
+.bar{position:sticky; top:0; z-index:20; display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+  background:#ffffff; border-bottom:1px solid #e3ddd3; padding:10px 16px}
+.bar b{font-size:15px; color:#2A1D14}
+.bar .sp{flex:1}
+.btn{font:inherit; font-size:13.5px; font-weight:700; padding:9px 16px; border-radius:100px;
+  border:1px solid #E8760C; background:#E8760C; color:#fff; cursor:pointer}
+.btn.ghost{background:#fff; color:#C85E05}
+.btn:hover{filter:brightness(.95)}
+.tip{font-size:12.5px; color:#8a7a68}
+.sheet{max-width:1500px; margin:0 auto; padding:14px; background:#fff}
+svg{display:block; width:100%; height:auto}
+.unit .sel, .unit.sel rect:first-child{stroke:#111 !important; stroke-width:3.5 !important}
+#panel{position:fixed; inset-block-end:16px; inset-inline-end:16px; z-index:30; width:290px;
+  background:#fff; border:1px solid #e3ddd3; border-radius:16px; padding:16px;
+  box-shadow:0 20px 44px -20px rgba(0,0,0,.35); display:none}
+#panel.open{display:block}
+#panel h3{margin:0 0 12px; font-size:15px; color:#2A1D14}
+#panel label{display:block; font-size:12.5px; color:#6E5A48; margin:10px 0 5px; font-weight:700}
+#panel input, #panel select{width:100%; font:inherit; font-size:14px; padding:9px 11px;
+  border:1px solid #ddd5c8; border-radius:9px; background:#fff}
+#panel .row{display:flex; gap:8px}
+#hint{position:fixed; inset-block-end:16px; inset-inline-end:16px; z-index:25;
+  background:#2A1D14; color:#F4E9DB; font-size:13px; padding:11px 16px; border-radius:100px}
+@media print{ .bar,#panel,#hint{display:none} .sheet{max-width:none;padding:0} @page{size:A3 landscape;margin:8mm} }
+</style></head><body>
+
+<div class="bar">
+  <b>مخطط درب العمران — وضع التعديل</b>
+  <span class="tip">اضغط على أي وحدة لتغيير اسمها وحالتها · اضغط العنوان لتغييره</span>
+  <span class="sp"></span>
+  <button class="btn ghost" id="btnSave">حفظ الملف</button>
+  <button class="btn" id="btnPng">تصدير صورة PNG</button>
+</div>
+
+<div class="sheet">
+<svg id="plan" viewBox="20 20 1980 1400" xmlns="http://www.w3.org/2000/svg" aria-label="درب العمران — مخطط المستأجرين">
+<rect x="20" y="20" width="1980" height="1400" fill="#ffffff"/>
+<rect x="40" y="45" width="430" height="62" rx="31" fill="#F58220"/>
+<text id="planTitle" x="255" y="85" font-size="28" text-anchor="middle" fill="#ffffff" font-weight="700" font-family="Tahoma,sans-serif">مستأجرين — ٨ يوليو ٢٠٢٦</text>
+<rect x="460" y="145" width="160" height="150" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u1" data-status="leased" data-name="مــاك" data-num="" data-x="467" data-y="152" data-w="146" data-h="136" data-size="17" data-vert="0" data-rot="0" data-plate="1" data-logo="mac" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="632" y="155" width="60" height="120" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u2" data-status="leased" data-name="القادري" data-num="" data-x="637" data-y="160" data-w="50" data-h="110" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="696" data-ly="300" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="700" y="155" width="60" height="120" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u3" data-status="leased" data-name="" data-num="" data-x="705" data-y="160" data-w="50" data-h="110" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="772" y="145" width="165" height="160" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u4" data-status="leased" data-name="ايتر" data-num="26" data-x="779" data-y="152" data-w="151" data-h="146" data-size="20" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="940" y="188" width="762" height="84" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u5" data-status="vacant" data-name="" data-num="88" data-x="944" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u6" data-status="vacant" data-name="" data-num="87" data-x="1052.5" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u7" data-status="leased" data-name="برنت" data-num="86" data-x="1161" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u8" data-status="vacant" data-name="" data-num="85" data-x="1269.5" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u9" data-status="leased" data-name="Car shield" data-num="84" data-x="1378" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u10" data-status="leased" data-name="درب الصيانة" data-num="83" data-x="1486.5" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u11" data-status="leased" data-name="بنشر" data-num="82" data-x="1595" data-y="192" data-w="101" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="1718" y="135" width="262" height="170" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u12" data-status="leased" data-name="وقت القفز" data-num="" data-x="1725" data-y="142" data-w="248" data-h="156" data-size="27" data-vert="0" data-rot="0" data-plate="1" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<polygon points="295,140 322,140 357,1120 330,1120" fill="#EFE8DA" stroke="#C9BFA9" stroke-width="1.2"/>
+<line x1="309" y1="150" x2="344" y2="1110" stroke="#B7AC94" stroke-width="1.5" stroke-dasharray="12 9"/>
+<g class="unit" id="u13" data-status="leased" data-name="جوينت" data-num="" data-x="340.6775" data-y="199" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="221" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 364.7 215)"></g>
+<g class="unit" id="u14" data-status="leased" data-name="ريشيو" data-num="" data-x="343.6049" data-y="281" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="303" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 367.6 297)"></g>
+<g class="unit" id="u15" data-status="leased" data-name="كافيه ٣٦٠" data-num="" data-x="346.5323" data-y="363" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="385" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 370.5 379)"></g>
+<g class="unit" id="u16" data-status="leased" data-name="سكيلتون كافيه" data-num="" data-x="349.4597" data-y="445" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="467" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 373.5 461)"></g>
+<g class="unit" id="u17" data-status="reserved" data-name="" data-num="" data-x="352.3871" data-y="527" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="549" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 376.4 543)"></g>
+<g class="unit" id="u18" data-status="leased" data-name="مذاق مغربي" data-num="" data-x="355.3145" data-y="609" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="631" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 379.3 625)"></g>
+<g class="unit" id="u19" data-status="leased" data-name="كوف" data-num="" data-x="358.2419" data-y="691" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="713" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 382.2 707)"></g>
+<g class="unit" id="u20" data-status="leased" data-name="واي كوفي" data-num="" data-x="361.1693" data-y="773" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="795" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 385.2 789)"></g>
+<g class="unit" id="u21" data-status="leased" data-name="انسول" data-num="" data-x="364.0967" data-y="855" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="877" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 388.1 871)"></g>
+<g class="unit" id="u22" data-status="leased" data-name="بون" data-num="" data-x="367.0241" data-y="937" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="959" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 391 953)"></g>
+<g class="unit" id="u23" data-status="leased" data-name="مؤجر" data-num="" data-x="369.9515" data-y="1019" data-w="48" data-h="32" data-size="13" data-vert="0" data-rot="-27" data-plate="0" data-logo="" data-aisles="0" data-lx="255" data-ly="1041" data-lsize="17" data-lanchor="end" data-r="2" transform="rotate(-27 394 1035)"></g>
+<rect x="700" y="430" width="990" height="512" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u24" data-status="market" data-name="سوبر ماركت" data-num="20" data-x="772" data-y="532" data-w="846" data-h="318" data-size="24" data-vert="0" data-rot="0" data-plate="1" data-logo="" data-aisles="1" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="0"></g>
+<g class="unit" id="u25" data-status="leased" data-name="مكبب" data-num="73" data-x="740" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u26" data-status="vacant" data-name="" data-num="72" data-x="806" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u27" data-status="leased" data-name="قطب" data-num="70-71" data-x="872" data-y="444" data-w="128" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u28" data-status="leased" data-name="العكبري" data-num="69" data-x="1004" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u29" data-status="leased" data-name="البركة" data-num="68" data-x="1070" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u30" data-status="vacant" data-name="" data-num="67" data-x="1136" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u31" data-status="vacant" data-name="" data-num="66" data-x="1202" data-y="444" data-w="62" data-h="84" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="1272" y="444" width="178" height="84" rx="2" fill="#f2f2f2" stroke="#8f8f8f" stroke-width="1"/>
+<line x1="1276" y1="448" x2="1290" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1290.5" y1="448" x2="1304.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1305" y1="448" x2="1319" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1319.5" y1="448" x2="1333.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1334" y1="448" x2="1348" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1348.5" y1="448" x2="1362.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1363" y1="448" x2="1377" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1377.5" y1="448" x2="1391.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1392" y1="448" x2="1406" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1406.5" y1="448" x2="1420.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1421" y1="448" x2="1435" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<line x1="1435.5" y1="448" x2="1449.5" y2="524" stroke="#d5d5d5" stroke-width="0.8"/>
+<g class="unit" id="u32" data-status="leased" data-name="لمة" data-num="74-75" data-x="704" data-y="532" data-w="64" data-h="156" data-size="14" data-vert="1" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u33" data-status="leased" data-name="سوما" data-num="76" data-x="704" data-y="692" data-w="64" data-h="76" data-size="13" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u34" data-status="leased" data-name="مرسى مطروح" data-num="77-78" data-x="704" data-y="772" data-w="64" data-h="78" data-size="12" data-vert="1" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u35" data-status="leased" data-name="ضيافة البركة" data-num="61-65" data-x="1622" data-y="444" data-w="64" data-h="286" data-size="14" data-vert="1" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u36" data-status="leased" data-name="ضيافة الجاوي" data-num="59-60" data-x="1622" data-y="734" data-w="64" data-h="116" data-size="13" data-vert="1" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u37" data-status="leased" data-name="قيس ايسكريم" data-num="46" data-x="704" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u38" data-status="vacant" data-name="" data-num="47" data-x="767" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u39" data-status="leased" data-name="شاي بوبا" data-num="48" data-x="830" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u40" data-status="leased" data-name="ريتا" data-num="49" data-x="893" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u41" data-status="leased" data-name="ركن الجمبري" data-num="50" data-x="956" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u42" data-status="vacant" data-name="" data-num="51" data-x="1019" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="1086" y="854" width="160" height="84" rx="2" fill="#f2f2f2" stroke="#8f8f8f" stroke-width="1"/>
+<path d="M1136,938 A26,26 0 0 1 1162,912" fill="none" stroke="#8f8f8f" stroke-width="0.9"/>
+<path d="M1196,938 A26,26 0 0 0 1170,912" fill="none" stroke="#8f8f8f" stroke-width="0.9"/>
+<text x="1166" y="890" font-size="12" text-anchor="middle" fill="#8a8a8a" font-weight="700" font-family="Tahoma,sans-serif">مدخل · مخرج</text>
+<g class="unit" id="u43" data-status="vacant" data-name="" data-num="52" data-x="1250" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u44" data-status="leased" data-name="العندليب" data-num="53" data-x="1313" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u45" data-status="vacant" data-name="" data-num="54" data-x="1376" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u46" data-status="vacant" data-name="" data-num="55" data-x="1439" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u47" data-status="leased" data-name="ستارجوس" data-num="56" data-x="1502" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u48" data-status="leased" data-name="ترويقة زمان" data-num="57" data-x="1565" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g class="unit" id="u49" data-status="leased" data-name="كافترجي" data-num="58" data-x="1628" data-y="854" data-w="59" data-h="84" data-size="11.5" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="520" y="1060" width="230" height="80" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u50" data-status="leased" data-name="شاورمر" data-num="" data-x="527" data-y="1067" data-w="216" data-h="66" data-size="20" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="520" y="1150" width="230" height="80" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u51" data-status="leased" data-name="برقرهنش" data-num="" data-x="527" data-y="1157" data-w="216" data-h="66" data-size="20" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<rect x="520" y="1240" width="230" height="80" rx="0" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.9"/>
+<g class="unit" id="u52" data-status="reserved" data-name="" data-num="" data-x="527" data-y="1247" data-w="216" data-h="66" data-size="20" data-vert="0" data-rot="0" data-plate="0" data-logo="" data-aisles="0" data-lx="" data-ly="" data-lsize="17" data-lanchor="middle" data-r="3"></g>
+<g transform="rotate(-38 1000 1215)"><rect x="935" y="1188" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="919.1,1273.2 947.1,1273.2 919.1,1245.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M921 1249.7h.01M920.1 1255h.01M919.8 1262.1h.01M920.3 1272.6h.01M928.4 1257.6h.01M926.4 1263.2h.01M928.9 1273.2h.01M937.5 1264.4h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="936.1,1263.2 930.8,1263.9 934.1,1268.1 929.8,1264.9 929.1,1270.2 928.4,1264.9 924.2,1268.1 927.5,1263.9 922.1,1263.2 927.5,1262.5 924.2,1258.2 928.4,1261.5 929.1,1256.2 929.8,1261.5 934.1,1258.2 930.8,1262.5" fill="#6E6E1E" opacity="0.9"/><circle cx="929.1" cy="1263.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u53" data-status="dt" data-name="" data-num="" data-x="941" data-y="1194" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="980" data-ly="1307" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1000 1215)"></g>
+<g transform="rotate(-38 1128 1204)"><rect x="1063" y="1177" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1047.1,1262.2 1075.1,1262.2 1047.1,1234.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1047.7 1241h.01M1047.7 1247h.01M1048.6 1256.2h.01M1054 1249h.01M1057 1256.8h.01M1064.5 1255h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1064.1,1252.2 1058.8,1252.9 1062.1,1257.1 1057.8,1253.9 1057.1,1259.2 1056.4,1253.9 1052.2,1257.1 1055.5,1252.9 1050.1,1252.2 1055.5,1251.5 1052.2,1247.2 1056.4,1250.5 1057.1,1245.2 1057.8,1250.5 1062.1,1247.2 1058.8,1251.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1057.1" cy="1252.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u54" data-status="leased" data-name="باباسنفور" data-num="" data-x="1069" data-y="1183" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1108" data-ly="1296" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1128 1204)"></g>
+<g transform="rotate(-38 1256 1193)"><rect x="1191" y="1166" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1175.1,1251.2 1203.1,1251.2 1175.1,1223.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1177.6 1232.5h.01M1176.3 1238.2h.01M1183.5 1242h.01M1184.4 1249.4h.01M1192 1246.4h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1192.1,1241.2 1186.8,1241.9 1190.1,1246.1 1185.8,1242.9 1185.1,1248.2 1184.4,1242.9 1180.2,1246.1 1183.5,1241.9 1178.1,1241.2 1183.5,1240.5 1180.2,1236.2 1184.4,1239.5 1185.1,1234.2 1185.8,1239.5 1190.1,1236.2 1186.8,1240.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1185.1" cy="1241.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u55" data-status="leased" data-name="صامولجي" data-num="" data-x="1197" data-y="1172" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1236" data-ly="1285" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1256 1193)"></g>
+<g transform="rotate(-38 1384 1182)"><rect x="1319" y="1155" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1303.1,1240.2 1331.1,1240.2 1303.1,1212.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1303.6 1216.4h.01M1304.9 1230.3h.01M1312.5 1225.9h.01M1311.4 1231.5h.01M1320.4 1233.7h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1320.1,1230.2 1314.8,1230.9 1318.1,1235.1 1313.8,1231.9 1313.1,1237.2 1312.4,1231.9 1308.2,1235.1 1311.5,1230.9 1306.1,1230.2 1311.5,1229.5 1308.2,1225.2 1312.4,1228.5 1313.1,1223.2 1313.8,1228.5 1318.1,1225.2 1314.8,1229.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1313.1" cy="1230.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u56" data-status="leased" data-name="بف" data-num="" data-x="1325" data-y="1161" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1364" data-ly="1274" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1384 1182)"></g>
+<g transform="rotate(-38 1512 1171)"><rect x="1447" y="1144" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1431.1,1229.2 1459.1,1229.2 1431.1,1201.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1432.6 1209.1h.01M1432.5 1215.2h.01M1431.4 1225.7h.01M1440.7 1217.4h.01M1439.9 1225.4h.01M1448.6 1222.6h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1448.1,1219.2 1442.8,1219.9 1446.1,1224.1 1441.8,1220.9 1441.1,1226.2 1440.4,1220.9 1436.2,1224.1 1439.5,1219.9 1434.1,1219.2 1439.5,1218.5 1436.2,1214.2 1440.4,1217.5 1441.1,1212.2 1441.8,1217.5 1446.1,1214.2 1442.8,1218.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1441.1" cy="1219.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u57" data-status="leased" data-name="زيكا" data-num="" data-x="1453" data-y="1150" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1492" data-ly="1263" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1512 1171)"></g>
+<g transform="rotate(-38 1640 1160)"><rect x="1575" y="1133" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1559.1,1218.2 1587.1,1218.2 1559.1,1190.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1560.4 1200.2h.01M1560.5 1209h.01M1561.2 1216.3h.01M1567.5 1207.6h.01M1569.5 1215.9h.01M1575.8 1209.4h.01M1576 1217.6h.01M1582.7 1216.2h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1576.1,1208.2 1570.8,1208.9 1574.1,1213.1 1569.8,1209.9 1569.1,1215.2 1568.4,1209.9 1564.2,1213.1 1567.5,1208.9 1562.1,1208.2 1567.5,1207.5 1564.2,1203.2 1568.4,1206.5 1569.1,1201.2 1569.8,1206.5 1574.1,1203.2 1570.8,1207.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1569.1" cy="1208.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u58" data-status="leased" data-name="شاميقوس" data-num="" data-x="1581" data-y="1139" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1620" data-ly="1252" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1640 1160)"></g>
+<g transform="rotate(-38 1768 1149)"><rect x="1703" y="1122" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1687.1,1207.2 1715.1,1207.2 1687.1,1179.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1689.7 1190.5h.01M1688.6 1199.4h.01M1694.8 1193.6h.01M1696.5 1201.6h.01M1705.6 1200.3h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1704.1,1197.2 1698.8,1197.9 1702.1,1202.1 1697.8,1198.9 1697.1,1204.2 1696.4,1198.9 1692.2,1202.1 1695.5,1197.9 1690.1,1197.2 1695.5,1196.5 1692.2,1192.2 1696.4,1195.5 1697.1,1190.2 1697.8,1195.5 1702.1,1192.2 1698.8,1196.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1697.1" cy="1197.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u59" data-status="leased" data-name="اندو محموس" data-num="" data-x="1709" data-y="1128" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1748" data-ly="1241" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1768 1149)"></g>
+<g transform="rotate(-38 1896 1138)"><rect x="1831" y="1111" width="130" height="54" fill="#ffffff" stroke="#3d3d3d" stroke-width="1.6"/></g>
+<polygon points="1815.1,1196.2 1843.1,1196.2 1815.1,1168.2" fill="none" stroke="#adadad" stroke-width="0.6"/>
+<path d="M1816.2 1174.2h.01M1815.7 1183h.01M1823.6 1185.8h.01M1824.8 1193.6h.01M1832.8 1185.8h.01M1832.8 1190.6h.01" stroke="#9a9a9a" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+<polygon points="1832.1,1186.2 1826.8,1186.9 1830.1,1191.1 1825.8,1187.9 1825.1,1193.2 1824.4,1187.9 1820.2,1191.1 1823.5,1186.9 1818.1,1186.2 1823.5,1185.5 1820.2,1181.2 1824.4,1184.5 1825.1,1179.2 1825.8,1184.5 1830.1,1181.2 1826.8,1185.5" fill="#6E6E1E" opacity="0.9"/><circle cx="1825.1" cy="1186.2" r="1.6" fill="#2f2f10"/>
+<g class="unit" id="u60" data-status="leased" data-name="مدور" data-num="" data-x="1837" data-y="1117" data-w="118" data-h="42" data-size="13" data-vert="0" data-rot="-38" data-plate="0" data-logo="" data-aisles="0" data-lx="1876" data-ly="1230" data-lsize="16" data-lanchor="middle" data-r="3" transform="rotate(-38 1896 1138)"></g>
+<g id="legend"></g>
+</svg>
+</div>
+
+<div id="hint">اضغط على أي وحدة في المخطط لتعديلها</div>
+
+<div id="panel">
+  <h3>تعديل الوحدة</h3>
+  <label>اسم المستأجر</label>
+  <input id="fName" placeholder="اتركه فارغاً إن كانت شاغرة">
+  <label>رقم الوحدة</label>
+  <input id="fNum" placeholder="مثال: 86">
+  <label>الحالة</label>
+  <select id="fStatus">
+    <option value="leased">تم التأجير</option>
+    <option value="reserved">تم الحجز</option>
+    <option value="vacant">محل تجاري — شاغر</option>
+    <option value="dt">درايف ثرو — شاغر</option>
+    <option value="market">سوبر ماركت</option>
+  </select>
+  <div class="row" style="margin-top:14px">
+    <button class="btn ghost" id="btnClose" style="width:100%">إغلاق</button>
+  </div>
+</div>
+
+<script>
+var STATUS = {
+  leased:   { c:'#22B04C', b:'#157A33', t:'#ffffff', label:'تم التأجير', short:'مؤجر' },
+  reserved: { c:'#A8A8A8', b:'#7d7d7d', t:'#ffffff', label:'تم الحجز', short:'محجوز' },
+  vacant:   { c:'#F5C542', b:'#C79A1E', t:'#6b5510', label:'محل تجاري — شاغر', short:'شاغر' },
+  dt:       { c:'#F58220', b:'#C05F0A', t:'#ffffff', label:'درايف ثرو — شاغر', short:'شاغر' },
+  market:   { c:'#63C5F2', b:'#2E86B8', t:'#ffffff', label:'سوبر ماركت', short:'سوبر ماركت' }
+};
+var ORDER = ['leased','reserved','vacant','dt','market'];
+var NS = 'http://www.w3.org/2000/svg';
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function txt(x,y,size,fill,s,extra){
+  return '<text x="'+x+'" y="'+y+'" font-size="'+size+'" text-anchor="middle" fill="'+fill+'" font-weight="700" font-family="Tahoma,sans-serif" '+(extra||'')+'>'+esc(s)+'</text>';
+}
+var LTR = 'font-family="Arial,sans-serif" direction="ltr" unicode-bidi="isolate"';
+
+function drawUnit(g){
+  var d = g.dataset, S = STATUS[d.status] || STATUS.vacant;
+  var x=+d.x, y=+d.y, w=+d.w, h=+d.h, size=+d.size, cx=x+w/2, cy=y+h/2;
+  var s = '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" rx="'+d.r+'" fill="'+S.c+'" stroke="'+S.b+'" stroke-width="1.5"/>';
+  if(d.aisles==='1'){ for(var i=0;i<6;i++){ var ax=950+i*80; s += '<line x1="'+ax+'" y1="570" x2="'+ax+'" y2="810" stroke="#ffffff" stroke-width="4" opacity="0.5"/>'; } }
+  var name = d.name, num = d.num, out = (d.lx !== '');
+  if(d.plate==='1'){
+    var pw = Math.max(name.length*size*0.75+40, 110), ph = size*2.6;
+    var py = d.logo==='mac' ? cy+4 : cy-ph/2;
+    s += '<rect x="'+(cx-pw/2)+'" y="'+py+'" width="'+pw+'" height="'+ph+'" rx="9" fill="#ffffff" stroke="#e2e2e2"/>';
+    if(d.logo==='mac'){
+      s += '<g transform="translate('+cx+' '+(cy-9)+')" fill="none" stroke="#FFC72C" stroke-width="7.5" stroke-linecap="round">'
+         + '<path d="M-26,17 C-26,-15 -9,-15 -1.5,9"/><path d="M1.5,9 C9,-15 26,-15 26,17"/></g>';
+      s += txt(cx, py+ph*0.68, size, '#1a1a1a', name);
+    } else {
+      s += txt(cx, py+ph*0.66, size, S.b, name);
+    }
+    if(num) s += txt(cx, py+ph+14, 13, '#555555', num, LTR);
+  } else if(!out){
+    if(d.vert==='1'){
+      s += '<g transform="rotate(-90 '+cx+' '+cy+')">';
+      if(name) s += txt(cx, cy-5, size, S.t, name);
+      if(num)  s += txt(cx, cy+11, size-4, S.t, num, LTR);
+      s += '</g>';
+    } else if(name){
+      var parts = name.split(' ');
+      var two = parts.length>1 && w < 90;
+      if(two){
+        s += txt(cx, cy-6, size, S.t, parts[0]);
+        s += txt(cx, cy+size+2, size, S.t, parts.slice(1).join(' '));
+        if(num) s += txt(cx, cy+size*2+12, 10, S.t, num, LTR);
+      } else {
+        s += txt(cx, cy+size*0.35, size, S.t, name);
+        if(num) s += txt(cx, cy+size*0.35+16, 10, S.t, num, LTR);
+      }
+    } else if(num){
+      s += txt(cx, cy+4, 11, S.t, num, LTR);
+    } else {
+      s += txt(cx, cy+size*0.35, size, S.t, S.short);
+    }
+  }
+  g.innerHTML = s;
+  var lbl = document.getElementById(g.id+'L');
+  if(out){
+    if(!lbl){ lbl = document.createElementNS(NS,'text'); lbl.id = g.id+'L'; document.getElementById('plan').appendChild(lbl); }
+    lbl.setAttribute('x', d.lx); lbl.setAttribute('y', d.ly);
+    lbl.setAttribute('font-size', d.lsize); lbl.setAttribute('text-anchor', d.lanchor);
+    lbl.setAttribute('font-weight','700'); lbl.setAttribute('font-family','Tahoma,sans-serif');
+    lbl.setAttribute('fill', d.status==='leased' ? '#157A33' : (d.status==='reserved' ? '#7d7d7d' : (d.status==='dt' ? '#C05F0A' : '#9a7a12')));
+    lbl.textContent = name || S.short;
+    lbl.style.cursor='pointer';
+    lbl.onclick = function(){ select(g); };
+  }
+}
+
+function drawLegend(){
+  var used = {}; var gs = document.querySelectorAll('.unit');
+  for(var i=0;i<gs.length;i++) used[gs[i].dataset.status] = 1;
+  var keys = ORDER.filter(function(k){ return used[k]; });
+  var box = document.getElementById('legend'); box.innerHTML = '';
+  var items = keys.map(function(k){
+    var S = STATUS[k];
+    var t = document.createElementNS(NS,'text');
+    t.setAttribute('y', 1370); t.setAttribute('font-size', 19); t.setAttribute('x', 0);
+    t.setAttribute('fill','#333333'); t.setAttribute('font-weight','700');
+    t.setAttribute('font-family','Tahoma,sans-serif');
+    t.textContent = S.label; box.appendChild(t);
+    var r = document.createElementNS(NS,'rect');
+    r.setAttribute('y',1352); r.setAttribute('width',24); r.setAttribute('height',24); r.setAttribute('rx',5);
+    r.setAttribute('fill',S.c); r.setAttribute('stroke',S.b); r.setAttribute('stroke-width',1.3);
+    box.appendChild(r);
+    return { t:t, r:r };
+  });
+  var right = 1960;
+  items.forEach(function(it){
+    right -= 24; it.r.setAttribute('x', right);
+    var bb = it.t.getBBox();
+    it.t.setAttribute('x', (right - 9) - (bb.x + bb.width));
+    right = (right - 9) - bb.width - 30;
+  });
+}
+
+var cur = null;
+function select(g){
+  if(cur) cur.classList.remove('sel');
+  cur = g; g.classList.add('sel');
+  var d = g.dataset;
+  document.getElementById('fName').value = d.name;
+  document.getElementById('fNum').value = d.num;
+  document.getElementById('fStatus').value = d.status;
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('hint').style.display = 'none';
+}
+function apply(){
+  if(!cur) return;
+  cur.dataset.name = document.getElementById('fName').value;
+  cur.dataset.num = document.getElementById('fNum').value;
+  cur.dataset.status = document.getElementById('fStatus').value;
+  drawUnit(cur); drawLegend();
+}
+
+function boot(){
+  var gs = document.querySelectorAll('.unit');
+  for(var i=0;i<gs.length;i++){
+    drawUnit(gs[i]);
+    gs[i].style.cursor = 'pointer';
+    gs[i].addEventListener('click', (function(g){ return function(){ select(g); }; })(gs[i]));
+  }
+  drawLegend();
+  ['fName','fNum','fStatus'].forEach(function(id){
+    document.getElementById(id).addEventListener('input', apply);
+  });
+  document.getElementById('planTitle').onclick = function(){
+    var v = prompt('عنوان المخطط:', this.textContent);
+    if(v!==null) this.textContent = v;
+  };
+  document.getElementById('planTitle').style.cursor='pointer';
+  document.getElementById('btnClose').onclick = function(){
+    document.getElementById('panel').classList.remove('open');
+    if(cur) cur.classList.remove('sel'); cur = null;
+  };
+  document.getElementById('btnPng').onclick = exportPng;
+  document.getElementById('btnSave').onclick = saveHtml;
+}
+
+function cleanSvg(){
+  var svg = document.getElementById('plan').cloneNode(true);
+  var sel = svg.querySelectorAll('.sel');
+  for(var i=0;i<sel.length;i++) sel[i].classList.remove('sel');
+  svg.setAttribute('xmlns', NS);
+  return new XMLSerializer().serializeToString(svg);
+}
+function exportPng(){
+  var data = cleanSvg();
+  var img = new Image();
+  img.onload = function(){
+    var cv = document.createElement('canvas');
+    cv.width = 1980*2; cv.height = 1400*2;
+    var ctx = cv.getContext('2d');
+    ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    var a = document.createElement('a');
+    a.download = 'darb-alumran-plan.png';
+    a.href = cv.toDataURL('image/png');
+    a.click();
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(data);
+}
+function saveHtml(){
+  var doc = '<!doctype html>' + document.documentElement.outerHTML;
+  var a = document.createElement('a');
+  a.download = 'darb-alumran-plan.html';
+  a.href = URL.createObjectURL(new Blob([doc], {type:'text/html'}));
+  a.click();
+}
+if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+</script>
+</body></html>
