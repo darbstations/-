@@ -9,8 +9,10 @@ def dist(a,b,c,d):
     return 2*R*math.asin(math.sqrt(x))
 
 EXCL = re.compile(r'مغسل|مغاسل|غسيل|لغسيل|wash|واش|حافلات|موقف|مسجد|مستودع|الكعكي|لزينة السيارات|الضيافة|وميزان', re.I)
-rows = []
-seen = set()
+THIN = {'HA043','JA053','JA060','JA348','MD009','MK004','MK014','MK028','MK046','MK054','MK100','NJ219','QS055','RY042','RY075'}
+DIR8 = ['شمال','شمال شرق','شرق','جنوب شرق','جنوب','جنوب غرب','غرب','شمال غرب']
+
+rows, seen = [], set()
 for ln in open('competitors_raw.txt', encoding='utf-8'):
     ln = ln.rstrip('\n')
     if not ln.strip(): continue
@@ -26,24 +28,27 @@ print('unique places:', len(rows))
 def is_darb(t): return 'درب' in t
 def is_fuel(r):
     if EXCL.search(r['title']): return False
-    if r['title']=='محطة وقود' and r['rating']==3.5 and r['reviews']==2: return False  # ورشة الجعرانة
+    if r['title']=='محطة وقود' and r['rating']==3.5 and r['reviews']==2: return False
     return True
 
-comp = {}
+def bearing_octant(lat0,lng0,lat,lng):
+    dy = lat-lat0
+    dx = (lng-lng0)*math.cos(math.radians(lat0))
+    ang = (math.degrees(math.atan2(dx,dy)) + 360) % 360
+    return DIR8[int(((ang+22.5)%360)//45)]
+
+comp, uniq = {}, set()
 for code, v in coords.items():
-    near = []
-    sisters = []
+    near, sisters = [], []
     for r in rows:
         d = dist(v['lat'], v['lng'], r['lat'], r['lng'])
-        if d > 5000: continue
-        if d <= 60: continue  # نقطة المحطة نفسها في جوجل (قد تكون بلا كلمة «درب»)
+        if d > 5000 or d <= 60: continue
         e = dict(r, dist=int(round(d)))
         if is_darb(r['title']):
-            if d > 120:  # own pin ~0m
-                sisters.append(e)
-            continue
+            sisters.append(e); continue
         if not is_fuel(r): continue
         near.append(e)
+        uniq.add((round(r['lat'],6), round(r['lng'],6), r['title']))
     near.sort(key=lambda x: x['dist'])
     rated = [x['rating'] for x in near if x['rating'] and x['reviews'] >= 5]
     weak = [x for x in near if x['rating'] and x['rating'] < 4.0 and x['reviews'] >= 5]
@@ -55,18 +60,25 @@ for code, v in coords.items():
                         ('adnoc','أدنوك'),('petromin','بترومين'),('naft','نفط'),('جي اويل','جي أويل')]:
             if b in t.lower() and label not in brands:
                 brands.append(label)
+    bands = [sum(1 for x in near if x['dist']<=1000),
+             sum(1 for x in near if 1000<x['dist']<=3000),
+             sum(1 for x in near if 3000<x['dist']<=5000)]
+    dirs = {}
+    for x in near:
+        o = bearing_octant(v['lat'], v['lng'], x['lat'], x['lng'])
+        dirs[o] = dirs.get(o,0)+1
+    dirmax = max(dirs.items(), key=lambda kv: kv[1])[0] if dirs else None
     comp[code] = dict(
         n=len(near),
-        top=[{k: x[k] for k in ('title','dist','rating','reviews')} for x in near[:10]],
+        top=[{k: x[k] for k in ('title','dist','rating','reviews','lat','lng')} for x in near],
         nearest={k: near[0][k] for k in ('title','dist')} if near else None,
         avg_rating=round(statistics.mean(rated),2) if rated else None,
         weak_share=round(len(weak)/len(near),2) if near else 0,
         strong=brands[:4],
-        sisters=[{k: s[k] for k in ('title','dist')} for s in sorted(sisters,key=lambda x:x['dist'])],
+        sisters=[{k: s[k] for k in ('title','dist','lat','lng')} for s in sorted(sisters,key=lambda x:x['dist'])],
+        bands=bands, dirmax=dirmax, thin=(code in THIN),
     )
+comp['_meta'] = {'unique_competitors': len(uniq)}
 json.dump(comp, open('competitors.json','w'), ensure_ascii=False, indent=1)
-thin = [(c, comp[c]['n']) for c in comp if comp[c]['n'] <= 1]
-print('thin coverage (<=1):', sorted(thin))
-for c in sorted(comp):
-    print(c, coords[c]['gcity'], '| n=', comp[c]['n'], '| nearest:', comp[c]['nearest']['title'] if comp[c]['nearest'] else '—',
-          comp[c]['nearest']['dist'] if comp[c]['nearest'] else '', '| sisters:', len(comp[c]['sisters']))
+print('unique competitors:', len(uniq))
+print('MK023 bands:', comp['MK023']['bands'], 'dir:', comp['MK023']['dirmax'], '| top n:', len(comp['MK023']['top']))

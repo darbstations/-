@@ -162,6 +162,16 @@ footer b{color:var(--ink2)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.mapsvg{width:100%;height:auto;display:block;background:#FBF8F3;border:1px solid var(--line);border-radius:14px}
+.maplegend{display:grid;gap:8px;font-size:12px;color:var(--ink2)}
+.maplegend .li{display:flex;gap:8px;align-items:center}
+.maplegend .dot{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px var(--line2)}
+.bandrow{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.bandrow span{background:#FDFCFA;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:11.5px;color:var(--ink2)}
+.bandrow b{color:var(--orange);font-family:'Tajawal'}
+.svcnote{font-size:12px;color:var(--ink2);background:#F0F5FA;border:1px solid #CBDDEB;border-radius:10px;padding:9px 13px;margin-top:10px}
 .cmpbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin-bottom:14px}
 .cmpbar select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-family:inherit;font-size:13.5px;color:var(--ink);cursor:pointer;max-width:260px}
 .cmpbar .sw{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 12px;cursor:pointer;font-size:15px;font-family:inherit}
@@ -264,6 +274,16 @@ footer b{color:var(--ink2)}
              <div class="sglb" style="margin-top:12px">طرق الدفع (من الإيراد)</div><div class="mix"><div class="mixbar"><i style="width:23.1%;background:#2E8B6F" title="نقد 23٪"></i><i style="width:26.1%;background:#3E6E8E" title="بطاقة 26٪"></i><i style="width:50.8%;background:#F5A623" title="تطبيقات وأخرى 51٪"></i></div><div class="mixleg"><span><b style="background:#2E8B6F"></b>نقد 23٪</span><span><b style="background:#3E6E8E"></b>بطاقة 26٪</span><span><b style="background:#F5A623"></b>تطبيقات وأخرى 51٪</span></div></div></div>
       </div>
     </div>
+    <div class="card sig"><div class="ct"><h3>الخريطة التنافسية ونطاق الخدمة</h3>
+      <div class="leg">مواقع حقيقية من خرائط جوجل — الشمال للأعلى</div></div>
+      <div class="mapgrid"><svg viewBox="0 0 520 520" class="mapsvg" role="img" aria-label="الخريطة التنافسية"><circle cx="260.0" cy="260.0" r="96.0" fill="#F37021" opacity="0.07"/><circle cx="260.0" cy="260.0" r="48.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="2 5"/><text x="264.0" y="226.0" font-size="10.5" fill="#9B968E">1 كم</text><circle cx="260.0" cy="260.0" r="144.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="2 5"/><text x="264.0" y="130.0" font-size="10.5" fill="#9B968E">3 كم</text><circle cx="260.0" cy="260.0" r="240.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="6 6"/><text x="264.0" y="34.0" font-size="10.5" fill="#9B968E">5 كم</text><text x="260.0" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ش</text><text x="260.0" y="512" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ج</text><text x="508" y="264.0" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ق</text><text x="12" y="264.0" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">غ</text><line x1="20" y1="498" x2="68.0" y2="498" stroke="#6E6A64" stroke-width="2.5"/><text x="44.0" y="490" font-size="10" text-anchor="middle" fill="#6E6A64">1 كم</text><g><circle cx="266.1" cy="180.5" r="11.0" fill="#2E8B6F" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="266.1" y="183.7" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">1</text><title>مجمع الحقيل للخدمات البترولية — 1,670 م · 4.5★ · 3,697 مراجعة</title></g><g><circle cx="168.2" cy="195.8" r="10.5" fill="#2E8B6F" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="168.2" y="199.0" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">2</text><title>محطة الحقيل للخدمات البترولية داونستريم — 2,337 م · 4.5★ · 241 مراجعة</title></g><g><circle cx="156.3" cy="193.6" r="7.8" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="156.3" y="196.8" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">3</text><title>محطة وقود أومكو — 2,567 م · 3.2★ · 11 مراجعة</title></g><g><circle cx="134.1" cy="185.3" r="9.5" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="134.1" y="188.5" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">4</text><title>محطة وقود — 3,051 م · 3.5★ · 81 مراجعة</title></g><g><circle cx="247.8" cy="90.7" r="9.6" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="247.8" y="93.9" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">5</text><title>محطة وقود — 3,557 م · 3.8★ · 84 مراجعة</title></g><circle cx="260.0" cy="260.0" r="13" fill="#F37021" stroke="#fff" stroke-width="3"/><circle cx="260.0" cy="260.0" r="4.2" fill="#fff"/><text x="260.0" y="290.0" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">كورنيش الخبر</text></svg><div class="maplegend">
+      <div class="li"><span class="dot" style="background:#F37021"></span> محطة درب (المركز) · <span class="dot" style="background:#F5A623"></span> محطات درب شقيقة</div>
+      <div class="li"><span class="dot" style="background:#2E8B6F"></span> منافس تقييمه ≥ 4.5 · <span class="dot" style="background:#C98A1B"></span> 4.0–4.4 · <span class="dot" style="background:#C0503A"></span> أقل من 4.0 · <span class="dot" style="background:#9B968E"></span> بلا تقييم</div>
+      <div class="li">حجم النقطة يعكس عدد المراجعات؛ الأرقام 1–10 تطابق جدول المنافسين؛ مرّر بالفأرة لأي نقطة للتفاصيل.</div>
+      <div class="bandrow"><span>0–1 كم: <b>0</b> منافس</span><span>1–3 كم: <b>3</b></span><span>3–5 كم: <b>2</b></span></div>
+      <div class="li"> أعلى كثافة تنافسية جهة <b>شمال غرب</b>.</div>
+      <div class="svcnote">🎯 <b>نطاق الخدمة:</b> موقع حيوي: يجذب من نطاق أوسع من الحي المباشر (2–5 كم) بفضل الحركة العابرة والوجهات المجاورة.</div>
+    </div></div></div>
     <div class="agrid">
       <div class="card"><div class="ct"><h3>بيرسونا العملاء</h3><div class="leg">مشتقة من مزيج الوقود والأوقات والدفع</div></div>
       <div class="pcard"><div class="pico">🌆</div>
@@ -296,13 +316,14 @@ footer b{color:var(--ink2)}
           <div class="cs">الأقرب: مجمع الحقيل للخدمات البترولية
              على بعد 1,670 م · متوسط تقييم المنافسين 3.9★ — درب أعلى بـ1.0 نقطة.
              مصدر الرصد: خرائط جوجل (يوليو 2026).</div>
-          <div class="ctbl"><table><thead><tr><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
-          <tbody><tr><td>مجمع الحقيل للخدمات البترولية</td><td>1,670 م</td>
-            <td>4.5</td><td>3,697</td></tr><tr><td>محطة الحقيل للخدمات البترولية داونستريم</td><td>2,337 م</td>
-            <td>4.5</td><td>241</td></tr><tr><td>محطة وقود أومكو</td><td>2,567 م</td>
-            <td>3.2</td><td>11</td></tr><tr><td>محطة وقود</td><td>3,051 م</td>
-            <td>3.5</td><td>81</td></tr><tr><td>محطة وقود</td><td>3,557 م</td>
+          <div class="ctbl"><table><thead><tr><th>#</th><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+          <tbody><tr><td><b>1</b></td><td>مجمع الحقيل للخدمات البترولية</td><td>1,670 م</td>
+            <td>4.5</td><td>3,697</td></tr><tr><td><b>2</b></td><td>محطة الحقيل للخدمات البترولية داونستريم</td><td>2,337 م</td>
+            <td>4.5</td><td>241</td></tr><tr><td><b>3</b></td><td>محطة وقود أومكو</td><td>2,567 م</td>
+            <td>3.2</td><td>11</td></tr><tr><td><b>4</b></td><td>محطة وقود</td><td>3,051 م</td>
+            <td>3.5</td><td>81</td></tr><tr><td><b>5</b></td><td>محطة وقود</td><td>3,557 م</td>
             <td>3.8</td><td>84</td></tr></tbody></table></div>
+          
         </div>
     </div></section></div>
   <div class="pgview" id="v-monthly" hidden><div class="mini-head"><span class="badge">EP051</span><h2>كورنيش الخبر</h2>

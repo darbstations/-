@@ -181,6 +181,16 @@ footer b{color:var(--ink2)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.mapsvg{width:100%;height:auto;display:block;background:#FBF8F3;border:1px solid var(--line);border-radius:14px}
+.maplegend{display:grid;gap:8px;font-size:12px;color:var(--ink2)}
+.maplegend .li{display:flex;gap:8px;align-items:center}
+.maplegend .dot{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px var(--line2)}
+.bandrow{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.bandrow span{background:#FDFCFA;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:11.5px;color:var(--ink2)}
+.bandrow b{color:var(--orange);font-family:'Tajawal'}
+.svcnote{font-size:12px;color:var(--ink2);background:#F0F5FA;border:1px solid #CBDDEB;border-radius:10px;padding:9px 13px;margin-top:10px}
 .cmpbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin-bottom:14px}
 .cmpbar select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-family:inherit;font-size:13.5px;color:var(--ink);cursor:pointer;max-width:260px}
 .cmpbar .sw{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 12px;cursor:pointer;font-size:15px;font-family:inherit}
@@ -284,6 +294,72 @@ def mixbar(parts):
 def stars(r):
     return f'<span class="stars">★ {r}</span>' if r else ''
 
+import math as _math
+def comp_map(a):
+    m, g = a['metrics'], a['geo']
+    code = m['code']
+    comp = COMP.get(code)
+    if not (g and comp): return ''
+    lat0, lng0 = g['lat'], g['lng']
+    S = 520; C = S/2; PX_KM = 48.0
+    def XY(lat, lng):
+        dxk = (lng-lng0)*111.32*_math.cos(_math.radians(lat0))
+        dyk = (lat-lat0)*110.57
+        return C+dxk*PX_KM, C-dyk*PX_KM
+    def rcol(r):
+        if r is None: return '#9B968E'
+        if r >= 4.5: return '#2E8B6F'
+        if r >= 4.0: return '#C98A1B'
+        return '#C0503A'
+    out = []
+    out.append(f'<circle cx="{C}" cy="{C}" r="{2*PX_KM}" fill="#F37021" opacity="0.07"/>')
+    for km, lab in ((1,'1 كم'),(3,'3 كم'),(5,'5 كم')):
+        dash = ' stroke-dasharray="6 6"' if km==5 else ' stroke-dasharray="2 5"'
+        out.append(f'<circle cx="{C}" cy="{C}" r="{km*PX_KM}" fill="none" stroke="#D3CBBC" stroke-width="1.4"{dash}/>')
+        out.append(f'<text x="{C+4}" y="{C-km*PX_KM+14}" font-size="10.5" fill="#9B968E">{lab}</text>')
+    for txt, x, y in (('ش', C, 16), ('ج', C, S-8), ('ق', S-12, C+4), ('غ', 12, C+4)):
+        out.append(f'<text x="{x}" y="{y}" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">{txt}</text>')
+    out.append(f'<line x1="20" y1="{S-22}" x2="{20+PX_KM}" y2="{S-22}" stroke="#6E6A64" stroke-width="2.5"/>')
+    out.append(f'<text x="{20+PX_KM/2}" y="{S-30}" font-size="10" text-anchor="middle" fill="#6E6A64">1 كم</text>')
+    for s in comp.get('sisters', []):
+        x, y = XY(s['lat'], s['lng'])
+        if not (6 <= x <= S-6 and 6 <= y <= S-6): continue
+        out.append(f'<g><circle cx="{x:.1f}" cy="{y:.1f}" r="8.5" fill="#F5A623" stroke="#fff" stroke-width="2"/>'
+                   f'<text x="{x:.1f}" y="{y+3.4:.1f}" font-size="9" font-weight="800" text-anchor="middle" fill="#fff">د</text>'
+                   f'<title>{esc(s["title"])} (شقيقة) — {s["dist"]:,} م</title></g>')
+    for i, cpt in enumerate(comp['top']):
+        x, y = XY(cpt['lat'], cpt['lng'])
+        rv = cpt['reviews'] or 0
+        r = 5.5 + min(5.5, _math.log10(rv+1)*2.1)
+        num = f'<text x="{x:.1f}" y="{y+3.2:.1f}" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">{i+1}</text>' if i < 10 else ''
+        out.append(f'<g><circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{rcol(cpt["rating"])}" stroke="#fff" stroke-width="1.8" opacity="0.93"/>{num}'
+                   f'<title>{esc(cpt["title"])} — {cpt["dist"]:,} م · {cpt["rating"] or "بلا تقييم"}★ · {rv:,} مراجعة</title></g>')
+    out.append(f'<circle cx="{C}" cy="{C}" r="13" fill="#F37021" stroke="#fff" stroke-width="3"/>'
+               f'<circle cx="{C}" cy="{C}" r="4.2" fill="#fff"/>')
+    out.append(f'<text x="{C}" y="{C+30}" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">{esc(m["name"])}</text>')
+    svg = (f'<svg viewBox="0 0 {S} {S}" class="mapsvg" role="img" aria-label="الخريطة التنافسية">{"".join(out)}</svg>')
+    b = comp.get('bands', [0,0,0])
+    cls = m['cls'] or ''
+    svc = {
+      'حي': 'محطة أحياء: نطاق الخدمة الفعلي يتركز في 1–2 كم (النطاق البرتقالي) — كثافة الدائرة الأولى هي الحاسمة، وما بعد 3 كم تأثيره محدود.',
+      'خط سفر': 'محطة خط سفر: نطاق خدمتها الحقيقي ممتد على محور الطريق (شريطي لا دائري) — المنافسة الفعلية هي محطات المحور نفسه قبلها وبعدها، والدوائر هنا إطار استرشادي.',
+      'حيوية': 'موقع حيوي: يجذب من نطاق أوسع من الحي المباشر (2–5 كم) بفضل الحركة العابرة والوجهات المجاورة.',
+      'مختلط': 'موقع مختلط (حي + خط سفر): نطاق مزدوج — قاعدة سكانية قريبة ضمن 2 كم وحركة محور تمتد أبعد من الدائرة.',
+      'نائية': 'موقع نائي: قد تمتد خدمته أبعد من 5 كم لغياب البدائل القريبة — الكثافة المنخفضة داخل الدوائر طبيعية.',
+    }.get(cls, 'النطاق البرتقالي (2 كم) تقدير للنطاق الأساسي الحضري؛ الدائرة المتقطعة حد الرصد التنافسي (5 كم).')
+    dirline = f' أعلى كثافة تنافسية جهة <b>{esc(comp["dirmax"])}</b>.' if comp.get('dirmax') else ''
+    legend = f'''<div class="maplegend">
+      <div class="li"><span class="dot" style="background:#F37021"></span> محطة درب (المركز) · <span class="dot" style="background:#F5A623"></span> محطات درب شقيقة</div>
+      <div class="li"><span class="dot" style="background:#2E8B6F"></span> منافس تقييمه ≥ 4.5 · <span class="dot" style="background:#C98A1B"></span> 4.0–4.4 · <span class="dot" style="background:#C0503A"></span> أقل من 4.0 · <span class="dot" style="background:#9B968E"></span> بلا تقييم</div>
+      <div class="li">حجم النقطة يعكس عدد المراجعات؛ الأرقام 1–10 تطابق جدول المنافسين؛ مرّر بالفأرة لأي نقطة للتفاصيل.</div>
+      <div class="bandrow"><span>0–1 كم: <b>{b[0]}</b> منافس</span><span>1–3 كم: <b>{b[1]}</b></span><span>3–5 كم: <b>{b[2]}</b></span></div>
+      <div class="li">{('⚠️ الرصد في هذه الدائرة غير مكتمل — الخريطة تعرض المرصود فقط.' if comp.get('thin') else '')}{dirline}</div>
+      <div class="svcnote">🎯 <b>نطاق الخدمة:</b> {svc}</div>
+    </div>'''
+    return f'''<div class="card sig"><div class="ct"><h3>الخريطة التنافسية ونطاق الخدمة</h3>
+      <div class="leg">مواقع حقيقية من خرائط جوجل — الشمال للأعلى</div></div>
+      <div class="mapgrid">{svg}{legend}</div></div>'''
+
 def station_body(a):
     """Inner content: head + kpis + signature + analysis grid (shared by pages)."""
     m, g = a['metrics'], a['geo']
@@ -354,8 +430,8 @@ def station_body(a):
             dcls, dlab = 'md', 'رصد غير مكتمل'
         else:
             dcls, dlab = ('lo', 'منافسة منخفضة') if dens <= 4 else (('md', 'منافسة متوسطة') if dens <= 9 else ('hi', 'منافسة مرتفعة'))
-        rows = ''.join(f'''<tr><td>{esc(c['title'])}</td><td>{c['dist']:,} م</td>
-            <td>{c['rating'] if c['rating'] else '—'}</td><td>{n0(c['reviews']) if c['reviews'] else '—'}</td></tr>''' for c in comp['top'])
+        rows = ''.join(f'''<tr><td><b>{i+1}</b></td><td>{esc(c['title'])}</td><td>{c['dist']:,} م</td>
+            <td>{c['rating'] if c['rating'] else '—'}</td><td>{n0(c['reviews']) if c['reviews'] else '—'}</td></tr>''' for i, c in enumerate(comp['top'][:10]))
         sisters = ''
         if comp.get('sisters'):
             ss = '، '.join(f"{esc(s['title'])} ({s['dist']:,} م)" for s in comp['sisters'][:4])
@@ -372,8 +448,9 @@ def station_body(a):
           <div class="cs">{warn}الأقرب: {esc(comp['nearest']['title']) if comp.get('nearest') else 'لم تُرصد محطات'}
              {f"على بعد {comp['nearest']['dist']:,} م" if comp.get('nearest') else ''} · {ratingline}
              مصدر الرصد: خرائط جوجل (يوليو 2026).</div>
-          <div class="ctbl"><table><thead><tr><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
-          <tbody>{rows or '<tr><td colspan="4">لم يرصد المسح الآلي محطات منافسة داخل الدائرة</td></tr>'}</tbody></table></div>{sisters}
+          <div class="ctbl"><table><thead><tr><th>#</th><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+          <tbody>{rows or '<tr><td colspan="5">لم يرصد المسح الآلي محطات منافسة داخل الدائرة</td></tr>'}</tbody></table></div>
+          {f'<div class="cmpnote">يعرض الجدول أقرب 10 — الخريطة أعلاه تعرض كل المنافسين المرصودين ({comp["n"]}).</div>' if comp['n'] > 10 else ''}{sisters}
         </div>'''
     else:
         compb = '<div class="card comp"><div class="ct"><h3>المنافسون ضمن 5 كم</h3></div><div class="cs">لا تتوفر بيانات رصد.</div></div>'
@@ -392,7 +469,9 @@ def station_body(a):
       <div class="saddr">{esc(g['address']) if g else ''}{(' — ' + esc(m['note'])) if m['note'] else ''}</div>
     </div>'''
 
+    mapcard = comp_map(a)
     grid = f'''
+    {mapcard}
     <div class="agrid">
       <div class="card"><div class="ct"><h3>بيرسونا العملاء</h3><div class="leg">مشتقة من مزيج الوقود والأوقات والدفع</div></div>{pers}</div>
       <div class="card"><div class="ct"><h3>تحليل SWOT</h3><div class="leg">مبيعات + موقع + منافسة</div></div>{swot}</div>

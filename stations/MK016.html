@@ -162,6 +162,16 @@ footer b{color:var(--ink2)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
+.mapgrid{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:20px;align-items:start}
+@media(max-width:900px){.mapgrid{grid-template-columns:1fr}}
+.mapsvg{width:100%;height:auto;display:block;background:#FBF8F3;border:1px solid var(--line);border-radius:14px}
+.maplegend{display:grid;gap:8px;font-size:12px;color:var(--ink2)}
+.maplegend .li{display:flex;gap:8px;align-items:center}
+.maplegend .dot{width:12px;height:12px;border-radius:50%;flex:none;border:2px solid #fff;box-shadow:0 0 0 1px var(--line2)}
+.bandrow{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap}
+.bandrow span{background:#FDFCFA;border:1px solid var(--line);border-radius:9px;padding:4px 10px;font-size:11.5px;color:var(--ink2)}
+.bandrow b{color:var(--orange);font-family:'Tajawal'}
+.svcnote{font-size:12px;color:var(--ink2);background:#F0F5FA;border:1px solid #CBDDEB;border-radius:10px;padding:9px 13px;margin-top:10px}
 .cmpbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;box-shadow:var(--shadow);margin-bottom:14px}
 .cmpbar select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:9px 13px;font-family:inherit;font-size:13.5px;color:var(--ink);cursor:pointer;max-width:260px}
 .cmpbar .sw{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 12px;cursor:pointer;font-size:15px;font-family:inherit}
@@ -264,6 +274,16 @@ footer b{color:var(--ink2)}
              <div class="sglb" style="margin-top:12px">طرق الدفع (من الإيراد)</div><div class="mix"><div class="mixbar"><i style="width:100.0%;background:#2E8B6F" title="نقد 100٪"></i><i style="width:0.0%;background:#3E6E8E" title="بطاقة 0٪"></i><i style="width:0.0%;background:#F5A623" title="تطبيقات وأخرى 0٪"></i></div><div class="mixleg"><span><b style="background:#2E8B6F"></b>نقد 100٪</span><span><b style="background:#3E6E8E"></b>بطاقة 0٪</span><span><b style="background:#F5A623"></b>تطبيقات وأخرى 0٪</span></div></div></div>
       </div>
     </div>
+    <div class="card sig"><div class="ct"><h3>الخريطة التنافسية ونطاق الخدمة</h3>
+      <div class="leg">مواقع حقيقية من خرائط جوجل — الشمال للأعلى</div></div>
+      <div class="mapgrid"><svg viewBox="0 0 520 520" class="mapsvg" role="img" aria-label="الخريطة التنافسية"><circle cx="260.0" cy="260.0" r="96.0" fill="#F37021" opacity="0.07"/><circle cx="260.0" cy="260.0" r="48.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="2 5"/><text x="264.0" y="226.0" font-size="10.5" fill="#9B968E">1 كم</text><circle cx="260.0" cy="260.0" r="144.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="2 5"/><text x="264.0" y="130.0" font-size="10.5" fill="#9B968E">3 كم</text><circle cx="260.0" cy="260.0" r="240.0" fill="none" stroke="#D3CBBC" stroke-width="1.4" stroke-dasharray="6 6"/><text x="264.0" y="34.0" font-size="10.5" fill="#9B968E">5 كم</text><text x="260.0" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ش</text><text x="260.0" y="512" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ج</text><text x="508" y="264.0" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">ق</text><text x="12" y="264.0" font-size="12" font-weight="700" text-anchor="middle" fill="#9B968E">غ</text><line x1="20" y1="498" x2="68.0" y2="498" stroke="#6E6A64" stroke-width="2.5"/><text x="44.0" y="490" font-size="10" text-anchor="middle" fill="#6E6A64">1 كم</text><g><circle cx="242.3" cy="231.9" r="8.5" fill="#F5A623" stroke="#fff" stroke-width="2"/><text x="242.3" y="235.3" font-size="9" font-weight="800" text-anchor="middle" fill="#fff">د</text><title>محطة درب (شقيقة) — 695 م</title></g><g><circle cx="217.8" cy="234.5" r="8.5" fill="#F5A623" stroke="#fff" stroke-width="2"/><text x="217.8" y="237.9" font-size="9" font-weight="800" text-anchor="middle" fill="#fff">د</text><title>محطة درب (شقيقة) — 1,029 م</title></g><g><circle cx="229.6" cy="142.9" r="8.5" fill="#F5A623" stroke="#fff" stroke-width="2"/><text x="229.6" y="146.3" font-size="9" font-weight="800" text-anchor="middle" fill="#fff">د</text><title>محطة درب (شقيقة) — 2,532 م</title></g><g><circle cx="269.1" cy="254.9" r="10.7" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="269.1" y="258.1" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">1</text><title>محطة نوفل — 218 م · 3.8★ · 289 مراجعة</title></g><g><circle cx="327.3" cy="185.7" r="6.5" fill="#2E8B6F" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="327.3" y="188.9" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">2</text><title>محطة الدريس في شارع المنصور — 2,095 م · 4.5★ · 2 مراجعة</title></g><g><circle cx="229.3" cy="143.0" r="6.5" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="229.3" y="146.2" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">3</text><title>بتروجين Petrogen — 2,533 م · 1.0★ · 2 مراجعة</title></g><g><circle cx="157.2" cy="187.9" r="10.6" fill="#C98A1B" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="157.2" y="191.1" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">4</text><title>محطة تلال الأديب للوقود — 2,619 م · 4.3★ · 268 مراجعة</title></g><g><circle cx="163.2" cy="169.1" r="8.8" fill="#C98A1B" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="163.2" y="172.3" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">5</text><title>Aldrees — 2,773 م · 4.4★ · 37 مراجعة</title></g><g><circle cx="172.4" cy="130.7" r="10.9" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="172.4" y="133.9" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">6</text><title>محطة المعطاني للخدمات البترولية — 3,265 م · 3.6★ · 375 مراجعة</title></g><g><circle cx="332.4" cy="114.0" r="11.0" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="332.4" y="117.2" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">7</text><title>محطة الأديب — 3,409 م · 3.9★ · 643 مراجعة</title></g><g><circle cx="349.7" cy="399.6" r="11.0" fill="#C98A1B" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="349.7" y="402.8" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">8</text><title>Aldrees — 3,469 م · 4.0★ · 620 مراجعة</title></g><g><circle cx="312.6" cy="97.3" r="10.4" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="312.6" y="100.5" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">9</text><title>محطة الأديب — 3,580 م · 3.8★ · 222 مراجعة</title></g><g><circle cx="322.2" cy="76.9" r="10.3" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><text x="322.2" y="80.1" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">10</text><title>محطة قبص للوقود — 4,048 م · 3.9★ · 183 مراجعة</title></g><g><circle cx="252.1" cy="66.9" r="6.1" fill="#C98A1B" stroke="#fff" stroke-width="1.8" opacity="0.93"/><title>Sasco — 4,049 م · 4.0★ · 1 مراجعة</title></g><g><circle cx="252.3" cy="66.7" r="10.2" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><title>نفط — 4,053 م · 3.9★ · 176 مراجعة</title></g><g><circle cx="217.9" cy="62.9" r="11.0" fill="#C98A1B" stroke="#fff" stroke-width="1.8" opacity="0.93"/><title>SASCO | محطة ساسكو — 4,221 م · 4.1★ · 921 مراجعة</title></g><g><circle cx="145.6" cy="70.3" r="11.0" fill="#C0503A" stroke="#fff" stroke-width="1.8" opacity="0.93"/><title>Aldrees — 4,633 م · 3.9★ · 956 مراجعة</title></g><circle cx="260.0" cy="260.0" r="13" fill="#F37021" stroke="#fff" stroke-width="3"/><circle cx="260.0" cy="260.0" r="4.2" fill="#fff"/><text x="260.0" y="290.0" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">الرصيفة</text></svg><div class="maplegend">
+      <div class="li"><span class="dot" style="background:#F37021"></span> محطة درب (المركز) · <span class="dot" style="background:#F5A623"></span> محطات درب شقيقة</div>
+      <div class="li"><span class="dot" style="background:#2E8B6F"></span> منافس تقييمه ≥ 4.5 · <span class="dot" style="background:#C98A1B"></span> 4.0–4.4 · <span class="dot" style="background:#C0503A"></span> أقل من 4.0 · <span class="dot" style="background:#9B968E"></span> بلا تقييم</div>
+      <div class="li">حجم النقطة يعكس عدد المراجعات؛ الأرقام 1–10 تطابق جدول المنافسين؛ مرّر بالفأرة لأي نقطة للتفاصيل.</div>
+      <div class="bandrow"><span>0–1 كم: <b>1</b> منافس</span><span>1–3 كم: <b>4</b></span><span>3–5 كم: <b>9</b></span></div>
+      <div class="li"> أعلى كثافة تنافسية جهة <b>شمال</b>.</div>
+      <div class="svcnote">🎯 <b>نطاق الخدمة:</b> موقع حيوي: يجذب من نطاق أوسع من الحي المباشر (2–5 كم) بفضل الحركة العابرة والوجهات المجاورة.</div>
+    </div></div></div>
     <div class="agrid">
       <div class="card"><div class="ct"><h3>بيرسونا العملاء</h3><div class="leg">مشتقة من مزيج الوقود والأوقات والدفع</div></div>
       <div class="pcard"><div class="pico">🕋</div>
@@ -306,18 +326,19 @@ footer b{color:var(--ink2)}
           <div class="cs">الأقرب: محطة نوفل
              على بعد 218 م · متوسط تقييم المنافسين 4.0★ — درب أعلى بـ0.9 نقطة.
              مصدر الرصد: خرائط جوجل (يوليو 2026).</div>
-          <div class="ctbl"><table><thead><tr><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
-          <tbody><tr><td>محطة نوفل</td><td>218 م</td>
-            <td>3.8</td><td>289</td></tr><tr><td>محطة الدريس في شارع المنصور</td><td>2,095 م</td>
-            <td>4.5</td><td>2</td></tr><tr><td>بتروجين Petrogen</td><td>2,533 م</td>
-            <td>1.0</td><td>2</td></tr><tr><td>محطة تلال الأديب للوقود</td><td>2,619 م</td>
-            <td>4.3</td><td>268</td></tr><tr><td>Aldrees</td><td>2,773 م</td>
-            <td>4.4</td><td>37</td></tr><tr><td>محطة المعطاني للخدمات البترولية</td><td>3,265 م</td>
-            <td>3.6</td><td>375</td></tr><tr><td>محطة الأديب</td><td>3,409 م</td>
-            <td>3.9</td><td>643</td></tr><tr><td>Aldrees</td><td>3,469 م</td>
-            <td>4.0</td><td>620</td></tr><tr><td>محطة الأديب</td><td>3,580 م</td>
-            <td>3.8</td><td>222</td></tr><tr><td>محطة قبص للوقود</td><td>4,048 م</td>
-            <td>3.9</td><td>183</td></tr></tbody></table></div><div class="sis">🧡 محطات درب شقيقة ضمن النطاق: محطة درب (695 م)، محطة درب (1,029 م)، محطة درب (2,532 م) — تغطية شبكية وليست منافسة.</div>
+          <div class="ctbl"><table><thead><tr><th>#</th><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+          <tbody><tr><td><b>1</b></td><td>محطة نوفل</td><td>218 م</td>
+            <td>3.8</td><td>289</td></tr><tr><td><b>2</b></td><td>محطة الدريس في شارع المنصور</td><td>2,095 م</td>
+            <td>4.5</td><td>2</td></tr><tr><td><b>3</b></td><td>بتروجين Petrogen</td><td>2,533 م</td>
+            <td>1.0</td><td>2</td></tr><tr><td><b>4</b></td><td>محطة تلال الأديب للوقود</td><td>2,619 م</td>
+            <td>4.3</td><td>268</td></tr><tr><td><b>5</b></td><td>Aldrees</td><td>2,773 م</td>
+            <td>4.4</td><td>37</td></tr><tr><td><b>6</b></td><td>محطة المعطاني للخدمات البترولية</td><td>3,265 م</td>
+            <td>3.6</td><td>375</td></tr><tr><td><b>7</b></td><td>محطة الأديب</td><td>3,409 م</td>
+            <td>3.9</td><td>643</td></tr><tr><td><b>8</b></td><td>Aldrees</td><td>3,469 م</td>
+            <td>4.0</td><td>620</td></tr><tr><td><b>9</b></td><td>محطة الأديب</td><td>3,580 م</td>
+            <td>3.8</td><td>222</td></tr><tr><td><b>10</b></td><td>محطة قبص للوقود</td><td>4,048 م</td>
+            <td>3.9</td><td>183</td></tr></tbody></table></div>
+          <div class="cmpnote">يعرض الجدول أقرب 10 — الخريطة أعلاه تعرض كل المنافسين المرصودين (14).</div><div class="sis">🧡 محطات درب شقيقة ضمن النطاق: محطة درب (695 م)، محطة درب (1,029 م)، محطة درب (2,532 م) — تغطية شبكية وليست منافسة.</div>
         </div>
     </div></section></div>
   <div class="pgview" id="v-monthly" hidden><div class="mini-head"><span class="badge">MK016</span><h2>الرصيفة</h2>
