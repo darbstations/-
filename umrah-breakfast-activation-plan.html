@@ -61,14 +61,14 @@ body{
   margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:0;
   border:1px solid var(--line);border-radius:4px;overflow:hidden;
 }
-.pos div{padding:26px 24px;background:var(--surface)}
-.pos div:first-child{border-inline-end:1px solid var(--line);background:var(--deep)}
+.pos > div{padding:26px 24px;background:var(--surface)}
+.pos > div:first-child{border-inline-end:1px solid var(--line);background:var(--deep)}
 .pos .dir{font-size:11px;letter-spacing:.14em;font-weight:700;margin-bottom:10px}
-.pos div:first-child .dir{color:var(--amber)}
-.pos div:last-child .dir{color:var(--ink-3)}
+.pos > div:first-child .dir{color:var(--amber)}
+.pos > div:last-child .dir{color:var(--ink-3)}
 .pos .line{font-size:clamp(19px,2.6vw,27px);font-weight:700;line-height:1.35}
-.pos div:first-child .line{color:#FDF3E6}
-@media (max-width:640px){.pos{grid-template-columns:1fr}.pos div:first-child{border-inline-end:0;border-bottom:1px solid var(--line)}}
+.pos > div:first-child .line{color:#FDF3E6}
+@media (max-width:640px){.pos{grid-template-columns:1fr}.pos > div:first-child{border-inline-end:0;border-bottom:1px solid var(--line)}}
 
 /* metric cards */
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:32px}
@@ -166,7 +166,59 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 @media (max-width:640px){.tl .row{grid-template-columns:1fr}.tl .w{border-inline-end:0;border-bottom:1px solid var(--line)}}
 
 @media (max-width:640px){.deck{padding:0 16px 64px}.slide{padding:46px 0}}
+
+/* ---------- edit toolbar ---------- */
+.toolbar{
+  position:fixed; inset-block-end:18px; inset-inline-start:18px; z-index:50;
+  display:flex; gap:7px; flex-wrap:wrap; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  padding:7px 9px; box-shadow:0 12px 30px -14px rgba(40,25,12,.5);
+}
+.toolbar button{
+  font-family:inherit; font-size:13px; font-weight:700; color:var(--ink-2);
+  background:transparent; border:1px solid transparent; border-radius:999px;
+  padding:7px 14px; cursor:pointer; transition:background .15s,color .15s;
+}
+.toolbar button:hover{background:var(--sand); color:var(--ink)}
+.toolbar button:focus-visible{outline:2px solid var(--orange-hi); outline-offset:2px}
+.toolbar button.primary{background:var(--orange-hi); color:#fff}
+.toolbar button.primary:hover{background:var(--orange); color:#fff}
+.toolbar .state{
+  font-size:11.5px; font-weight:700; letter-spacing:.08em;
+  color:var(--ink-3); padding-inline:10px 4px; white-space:nowrap;
+}
+.toolbar .state.on{color:var(--orange)}
+
+body.editing .deck [contenteditable="true"]{outline:none}
+body.editing .slide h2:hover,
+body.editing .lede:hover, body.editing .note:hover,
+body.editing .card .v:hover, body.editing .card .d:hover, body.editing .card .k:hover,
+body.editing .move h3:hover, body.editing .move p:hover, body.editing .move .why:hover,
+body.editing td:hover, body.editing th:hover,
+body.editing .col li:hover, body.editing .tl .c:hover,
+body.editing .ticket .offer:hover, body.editing .ticket .units:hover{
+  background:color-mix(in srgb,var(--orange-hi) 11%,transparent);
+  border-radius:3px;
+}
+body.editing .deck{cursor:text}
+.toast{
+  position:fixed; inset-block-end:76px; inset-inline-start:18px; z-index:51;
+  background:var(--deep); color:#F6E9D8; font-size:13px; font-weight:700;
+  padding:11px 18px; border-radius:6px; box-shadow:0 12px 30px -14px rgba(0,0,0,.6);
+  opacity:0; transform:translateY(6px); transition:opacity .2s,transform .2s;
+  pointer-events:none; max-width:min(78vw,420px); line-height:1.6;
+}
+.toast.show{opacity:1; transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  .toolbar button,.toast{transition:none}
+}
+@media (max-width:640px){
+  .toolbar{inset-inline:12px; inset-block-end:12px; justify-content:center}
+  .toast{inset-inline:12px; inset-block-end:88px; max-width:none}
+}
+
 @media print{
+  .toolbar,.toast{display:none !important}
   :root{
     --ink:#2A1D12; --ink-2:#5B4834; --ink-3:#857161;
     --ground:#FFFFFF; --surface:#FAF5ED; --line:#D8C7B0;
@@ -183,7 +235,17 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 </style>
 </head>
 <body>
-<div class="deck">
+
+<div class="toolbar" role="toolbar" aria-label="أدوات الملف">
+  <button type="button" id="btnEdit" class="primary">تحرير النص</button>
+  <button type="button" id="btnSave">حفظ نسخة</button>
+  <button type="button" id="btnPrint">طباعة / PDF</button>
+  <button type="button" id="btnReset">استعادة الأصل</button>
+  <span class="state" id="state">وضع العرض</span>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<div class="deck" id="deck">
 
 <!-- COVER -->
 <section class="cover">
@@ -601,5 +663,111 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 </section>
 
 </div>
+
+<script>
+(function(){
+  var KEY   = 'darb-umrah-plan-edits';
+  var deck  = document.getElementById('deck');
+  var state = document.getElementById('state');
+  var toast = document.getElementById('toast');
+  var bEdit = document.getElementById('btnEdit');
+  var bSave = document.getElementById('btnSave');
+  var bPrn  = document.getElementById('btnPrint');
+  var bRst  = document.getElementById('btnReset');
+
+  var pristine = deck.innerHTML;
+  var editing  = false;
+  var timer;
+
+  function say(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+  }
+
+  /* ---- restore any saved edits ---- */
+  try{
+    var saved = localStorage.getItem(KEY);
+    if(saved){ deck.innerHTML = saved; say('تم استرجاع نسختك المعدّلة المحفوظة في هذا المتصفح.'); }
+  }catch(e){}
+
+  function persist(){
+    try{ localStorage.setItem(KEY, deck.innerHTML); }
+    catch(e){ say('تعذّر الحفظ التلقائي — استخدم «حفظ نسخة» للاحتفاظ بالتعديلات.'); }
+  }
+
+  /* ---- edit mode ---- */
+  function setEditing(on){
+    editing = on;
+    deck.setAttribute('contenteditable', on ? 'true' : 'false');
+    deck.spellcheck = false;
+    document.body.classList.toggle('editing', on);
+    bEdit.textContent = on ? 'إنهاء التحرير' : 'تحرير النص';
+    bEdit.classList.toggle('primary', !on);
+    state.textContent = on ? 'وضع التحرير — التعديلات تُحفظ تلقائيًا' : 'وضع العرض';
+    state.classList.toggle('on', on);
+    if(on){ say('اضغط على أي نص وعدّله مباشرة. لا تنسَ «حفظ نسخة» لتصدير ملف نهائي.'); }
+  }
+
+  bEdit.addEventListener('click', function(){ setEditing(!editing); });
+
+  deck.addEventListener('input', function(){
+    clearTimeout(persist._t);
+    persist._t = setTimeout(persist, 400);
+  });
+
+  /* ---- export a standalone copy with the edits baked in ---- */
+  bSave.addEventListener('click', function(){
+    var wasEditing = editing;
+    if(wasEditing) setEditing(false);
+
+    var clone = document.documentElement.cloneNode(true);
+    var d = clone.querySelector('#deck');
+    if(d) d.setAttribute('contenteditable','false');
+    var t = clone.querySelector('#toast');
+    if(t){ t.className = 'toast'; t.textContent = ''; }
+    var b = clone.querySelector('body');
+    if(b) b.classList.remove('editing');
+
+    var html = '<!doctype html>\n' + clone.outerHTML;
+    var blob = new Blob([html], {type:'text/html;charset=utf-8'});
+    var url  = URL.createObjectURL(blob);
+    var a    = document.createElement('a');
+    a.href = url;
+    a.download = 'خطة-تفعيل-الفطور-محطة-العمرة.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
+
+    say('تم تنزيل نسخة تحمل تعديلاتك — وتبقى قابلة للتحرير أيضًا.');
+    if(wasEditing) setEditing(true);
+  });
+
+  bPrn.addEventListener('click', function(){
+    if(editing) setEditing(false);
+    setTimeout(function(){ window.print(); }, 60);
+  });
+
+  bRst.addEventListener('click', function(){
+    if(!window.confirm('استعادة النص الأصلي وحذف كل تعديلاتك في هذا المتصفح؟')) return;
+    deck.innerHTML = pristine;
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    if(editing) setEditing(false);
+    say('تمت استعادة النسخة الأصلية.');
+  });
+
+  /* Ctrl/Cmd+S exports instead of saving the page */
+  document.addEventListener('keydown', function(e){
+    if((e.ctrlKey || e.metaKey) && (e.key === 's' || e.key === 'S')){
+      e.preventDefault();
+      bSave.click();
+    }
+  });
+
+  deck.setAttribute('contenteditable','false');
+})();
+</script>
 </body>
 </html>
