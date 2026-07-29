@@ -88,6 +88,7 @@ td a.stlink:hover{color:var(--orange)}
 .c-rem{background:#F5F1E8;color:#7A6A3A;border-color:#E0D5B8}
 .c-un{background:#F1EFEB;color:#6E6A64;border-color:#DDD8CF}
 .c-st{background:#fff;color:var(--ink2);border-color:var(--line2)}
+.c-hd{background:#FBF6EF;color:#8A5A2B;border-color:#EAD9C3;font-family:'Tajawal'}
 .smeta{display:flex;gap:16px;align-items:center;font-size:13px;color:var(--ink2);margin-top:8px;flex-wrap:wrap}
 .smeta a{color:var(--blue);text-decoration:none;font-weight:600}
 .smeta a:hover{color:var(--orange)}
@@ -294,6 +295,15 @@ def mixbar(parts):
 def stars(r):
     return f'<span class="stars">★ {r}</span>' if r else ''
 
+import re as _re
+def hood_of(a):
+    g = a['geo'] or {}
+    h = (g.get('hood') or '').strip()
+    if h.startswith('حي '): h = h[3:].strip()
+    if len(_re.findall(r'[\u0600-\u06FF]', h)) >= 3:
+        return h
+    return a['metrics']['name']
+
 import math as _math
 def comp_map(a):
     m, g = a['metrics'], a['geo']
@@ -336,7 +346,7 @@ def comp_map(a):
                    f'<title>{esc(cpt["title"])} — {cpt["dist"]:,} م · {cpt["rating"] or "بلا تقييم"}★ · {rv:,} مراجعة</title></g>')
     out.append(f'<circle cx="{C}" cy="{C}" r="13" fill="#F37021" stroke="#fff" stroke-width="3"/>'
                f'<circle cx="{C}" cy="{C}" r="4.2" fill="#fff"/>')
-    out.append(f'<text x="{C}" y="{C+30}" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">{esc(m["name"])}</text>')
+    out.append(f'<text x="{C}" y="{C+30}" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">درب {esc(m["name"])}</text>')
     svg = (f'<svg viewBox="0 0 {S} {S}" class="mapsvg" role="img" aria-label="الخريطة التنافسية">{"".join(out)}</svg>')
     b = comp.get('bands', [0,0,0])
     cls = m['cls'] or ''
@@ -455,14 +465,16 @@ def station_body(a):
     else:
         compb = '<div class="card comp"><div class="ct"><h3>المنافسون ضمن 5 كم</h3></div><div class="cs">لا تتوفر بيانات رصد.</div></div>'
 
+    hood = hood_of(a)
     head = f'''
     <div class="shead">
       <div class="stitle">
-        <span class="badge">{code}</span><h2>{esc(m['name'])}</h2>
+        <span class="badge">{code}</span><h2>درب {esc(m['name'])}</h2>
+        <span class="cls c-hd">حي {esc(hood)}</span>
         <span class="cls {cls_cl}">{esc(cls)}</span><span class="cls c-st">{stt}</span>
       </div>
       <div class="smeta">
-        <span>📍 {esc(m['region'])}{(' · ' + esc(g['hood'])) if g and g.get('hood') else ''}</span>
+        <span>📍 {esc(m['region'])}</span>
         {stars(g['rating']) if g else ''}
         <a href="{esc(maps_url)}" target="_blank" rel="noopener">افتح في خرائط جوجل ↗</a>
       </div>
@@ -486,7 +498,8 @@ import datetime as _dt
 
 def mini_head(a):
     m, g = a['metrics'], a['geo']
-    return f'''<div class="mini-head"><span class="badge">{m['code']}</span><h2>{esc(m['name'])}</h2>
+    return f'''<div class="mini-head"><span class="badge">{m['code']}</span><h2>درب {esc(m['name'])}</h2>
+    <span class="cls c-hd">حي {esc(hood_of(a))}</span>
     <span class="rg">📍 {esc(m['region'])}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>'''
 
 def tabs_html(code, active, mode):
@@ -648,7 +661,7 @@ for idx, a in enumerate(ORDER):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>درب · {esc(m['name'])} {code} — تحليل الموقع والمبيعات</title>
+<title>درب {esc(m['name'])} {code} — حي {esc(hood_of(a))} · تحليل الموقع والمبيعات</title>
 {FONTS}
 <style>{CSS}</style>
 </head>
@@ -657,8 +670,8 @@ for idx, a in enumerate(ORDER):
   <div class="wrap">
     <div class="brand">
       <div class="mark"><a href="../location-analysis.html"><div class="ar">محطات <b>درب</b></div><div class="en">DARB STATIONS</div></a></div>
-      <div class="hd-title"><h1>تحليل الموقع والمبيعات — {esc(m['name'])} <span style="color:var(--gold1);font-family:Tajawal">{code}</span></h1>
-      <p>{esc(m['region'])} · المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026</p></div>
+      <div class="hd-title"><h1>تحليل الموقع والمبيعات — درب {esc(m['name'])} <span style="color:var(--gold1);font-family:Tajawal">{code}</span></h1>
+      <p>حي {esc(hood_of(a))} · {esc(m['region'])} · المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026</p></div>
     </div>
   </div>
 </header>
@@ -704,9 +717,10 @@ for i, a in enumerate(ORDER, 1):
     cls_cl = {'حيوية':'c-viv','حي':'c-nbh','خط سفر':'c-hwy','مختلط':'c-mix','نائية':'c-rem'}.get(cls, 'c-un')
     gr = m['growth']
     gh = '' if gr is None else (f'<span class="up">+{gr:.0f}٪</span>' if gr >= 0 else f'<span class="dn">{gr:.0f}٪</span>')
-    cards += f'''<a class="scard" href="#/{m['code']}" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']}">
-      <div class="r1"><span class="nm">{esc(m['name'])}</span><span class="badge">{m['code']}</span></div>
-      <div class="r2"><span>📍 {esc(m['region'])}</span><span class="cls {cls_cl}">{esc(cls)}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>
+    hood = hood_of(a)
+    cards += f'''<a class="scard" href="#/{m['code']}" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']} {esc(hood)}">
+      <div class="r1"><span class="nm">درب {esc(m['name'])}</span><span class="badge">{m['code']}</span></div>
+      <div class="r2"><span>حي {esc(hood)}</span><span>📍 {esc(m['region'])}</span><span class="cls {cls_cl}">{esc(cls)}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>
       <div class="r3"><span>إيراد يومي <b>{n0(m['daily_rev'])}</b> ر.س</span><span>#{i} {gh}</span></div>
     </a>'''
 
@@ -750,12 +764,12 @@ def spa_view(idx, a):
       {f'<a href="#/{nxt}">المحطة التالية: {esc(A[nxt]["metrics"]["name"])} ←</a>' if nxt else ''}
     </div></div>'''
     return (
-      f'''<div class="pgview" id="pg-{code}" data-title="{esc(m['name'])} {code}" hidden>
+      f'''<div class="pgview" id="pg-{code}" data-title="درب {esc(m['name'])} {code} · حي {esc(hood_of(a))}" hidden>
       {nav}{tabs_html(code, 'main', 'spa')}
       <section class="station">{station_body(a)}</section>{bottom}</div>'''
-      f'''<div class="pgview" id="pg-{code}-monthly" data-title="{esc(m['name'])} {code} · المبيعات الشهرية" hidden>
+      f'''<div class="pgview" id="pg-{code}-monthly" data-title="درب {esc(m['name'])} {code} · المبيعات الشهرية" hidden>
       {nav}{tabs_html(code, 'monthly', 'spa')}{mini_head(a)}{monthly_body(a)}{bottom}</div>'''
-      f'''<div class="pgview" id="pg-{code}-daily" data-title="{esc(m['name'])} {code} · المبيعات اليومية" hidden>
+      f'''<div class="pgview" id="pg-{code}-daily" data-title="درب {esc(m['name'])} {code} · المبيعات اليومية" hidden>
       {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
     )
 
@@ -992,7 +1006,7 @@ function route(){{
   const h=decodeURIComponent(location.hash.replace(/^#\/?/, ''));
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   const t=h?document.getElementById('pg-'+h.replace(/\//g,'-')):null;
-  if(t){{hubEl.style.display='none';t.hidden=false;document.title='درب · '+t.dataset.title+' — تحليل الموقع والمبيعات';window.scrollTo(0,0);}}
+  if(t){{hubEl.style.display='none';t.hidden=false;document.title=t.dataset.title+' — تحليل الموقع والمبيعات';window.scrollTo(0,0);}}
   else{{hubEl.style.display='';document.title='درب · تحليل المواقع والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
 }}
 window.addEventListener('hashchange',route);
