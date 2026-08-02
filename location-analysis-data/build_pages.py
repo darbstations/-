@@ -7,6 +7,10 @@ try:
     ACT = json.load(open('actual_daily.json'))
 except FileNotFoundError:
     ACT = {}
+try:
+    ECO = json.load(open('ecosys.json'))  # {code: {rentals:[{title,dist,rating,reviews,lat,lng}], hajj:[...]}}
+except FileNotFoundError:
+    ECO = {}
 DATA = json.load(open('data.json'))
 XL = json.load(open('stations.json'))
 COMP = json.load(open('competitors.json'))
@@ -371,6 +375,19 @@ def comp_map(a):
         num = f'<text x="{x:.1f}" y="{y+3.2:.1f}" font-size="8.5" font-weight="800" text-anchor="middle" fill="#fff">{i+1}</text>' if i < 10 else ''
         out.append(f'<g><circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" fill="{rcol(cpt["rating"])}" stroke="#fff" stroke-width="1.8" opacity="0.93"/>{num}'
                    f'<title>{esc(cpt["title"])} — {cpt["dist"]:,} م · {cpt["rating"] or "بلا تقييم"}★ · {rv:,} مراجعة</title></g>')
+    eco = ECO.get(code) or {}
+    for r in eco.get('rentals', []):
+        if r.get('lat') is None: continue
+        x, y = XY(r['lat'], r['lng'])
+        if not (6 <= x <= S-6 and 6 <= y <= S-6): continue
+        out.append(f'<g><rect x="{x-6:.1f}" y="{y-6:.1f}" width="12" height="12" rx="3" fill="#3E6E8E" stroke="#fff" stroke-width="1.8"/>'
+                   f'<title>🚘 {esc(r["title"])} — {r["dist"]:,} م{f" · {r[chr(39)+chr(114)+chr(97)+chr(116)+chr(105)+chr(110)+chr(103)+chr(39)]}★" if False else ""}</title></g>')
+    for h in eco.get('hajj', []):
+        if h.get('lat') is None: continue
+        x, y = XY(h['lat'], h['lng'])
+        if not (6 <= x <= S-6 and 6 <= y <= S-6): continue
+        out.append(f'<g><path d="M {x:.1f} {y-7:.1f} L {x+7:.1f} {y+6:.1f} L {x-7:.1f} {y+6:.1f} Z" fill="#2E8B6F" stroke="#fff" stroke-width="1.8"/>'
+                   f'<title>🕋 {esc(h["title"])} — {h["dist"]:,} م</title></g>')
     out.append(f'<circle cx="{C}" cy="{C}" r="13" fill="#F37021" stroke="#fff" stroke-width="3"/>'
                f'<circle cx="{C}" cy="{C}" r="4.2" fill="#fff"/>')
     out.append(f'<text x="{C}" y="{C+30}" font-size="12" font-weight="800" text-anchor="middle" fill="#3D3D3D">درب {esc(m["name"])}</text>')
@@ -389,6 +406,7 @@ def comp_map(a):
       <div class="li"><span class="dot" style="background:#F37021"></span> محطة درب (المركز) · <span class="dot" style="background:#F5A623"></span> محطات درب شقيقة</div>
       <div class="li"><span class="dot" style="background:#2E8B6F"></span> منافس تقييمه ≥ 4.5 · <span class="dot" style="background:#C98A1B"></span> 4.0–4.4 · <span class="dot" style="background:#C0503A"></span> أقل من 4.0 · <span class="dot" style="background:#9B968E"></span> بلا تقييم</div>
       <div class="li">حجم النقطة يعكس عدد المراجعات؛ الأرقام 1–10 تطابق جدول المنافسين؛ مرّر بالفأرة لأي نقطة للتفاصيل.</div>
+      {f'<div class="li"><span class="dot" style="background:#3E6E8E;border-radius:3px"></span> تأجير سيارات ({len(eco.get("rentals", []))}) · <span class="dot" style="background:#2E8B6F;clip-path:polygon(50% 0,100% 100%,0 100%);border-radius:0"></span> مكاتب/حملات حج وعمرة ({len(eco.get("hajj", []))})</div>' if eco else ''}
       <div class="bandrow"><span>0–1 كم: <b>{b[0]}</b> منافس</span><span>1–3 كم: <b>{b[1]}</b></span><span>3–5 كم: <b>{b[2]}</b></span></div>
       <div class="li">{('⚠️ الرصد في هذه الدائرة غير مكتمل — الخريطة تعرض المرصود فقط.' if comp.get('thin') else '')}{dirline}</div>
       <div class="svcnote">🎯 <b>نطاق الخدمة:</b> {svc}</div>
@@ -509,6 +527,20 @@ def station_body(a):
     </div>'''
 
     mapcard = comp_map(a)
+    eco = ECO.get(code) or {}
+    ecob = ''
+    if eco:
+        def ecotbl(items, label):
+            rws = ''.join(f'''<tr><td><b>{i+1}</b></td><td>{esc(x['title'])}</td><td>{x['dist']:,} م</td>
+                <td>{x.get('rating') or '—'}</td><td>{n0(x.get('reviews') or 0) if x.get('reviews') else '—'}</td></tr>''' for i, x in enumerate(items[:12]))
+            return f'''<div class="card comp"><div class="ct"><h3>{label}</h3>
+              <div class="leg"><span class="dens md">{len(items)} ضمن 5 كم</span></div></div>
+              <div class="ctbl"><table><thead><tr><th>#</th><th>الاسم</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+              <tbody>{rws or '<tr><td colspan="5">لا يوجد ضمن النطاق حسب الرصد</td></tr>'}</tbody></table></div></div>'''
+        ecob = f'''<div class="agrid" style="margin-top:16px">
+          {ecotbl(eco.get('rentals', []), '🚘 مكاتب تأجير السيارات المحيطة')}
+          {ecotbl(eco.get('hajj', []), '🕋 مكاتب وحملات الحج والعمرة المحيطة')}
+        </div>'''
     grid = f'''
     {mapcard}
     <div class="agrid">
@@ -516,7 +548,7 @@ def station_body(a):
       <div class="card"><div class="ct"><h3>تحليل SWOT</h3><div class="leg">مبيعات + موقع + منافسة</div></div>{swot}</div>
       <div class="card"><div class="ct"><h3>تحليل PEST</h3><div class="leg">بيئة {esc(m['region'])} الكلية</div></div>{pest}</div>
       {compb}
-    </div>'''
+    </div>{ecob}'''
     return head + kpis + sig + grid
 
 MONTH_AR = {'2026-01':'يناير','2026-02':'فبراير','2026-03':'مارس','2026-04':'أبريل','2026-05':'مايو','2026-06':'يونيو'}
