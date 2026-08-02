@@ -27,34 +27,35 @@ for a in ORDER:
     if r not in REGIONS: REGIONS.append(r)
 
 CSS = """
-:root{--orange:#F37021;--gold1:#F5A623;--ink:#3D3D3D;--ink2:#6E6A64;--ink3:#9B968E;--bg:#F7F4EF;--card:#FFFFFF;
+:root{--orange:#F5831F;--gold1:#F7A94B;--bgray:#55565A;--ink:#3D3D3D;--ink2:#6E6A64;--ink3:#9B968E;--bg:#F7F4EF;--card:#FFFFFF;
 --line:#ECE6DD;--line2:#E3DCD1;--bar:#E0D9CD;--good:#2E8B6F;--bad:#C0503A;--blue:#3E6E8E;
 --shadow:0 1px 2px rgba(61,61,61,.04),0 8px 24px rgba(61,61,61,.06);--radius:16px}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'IBM Plex Sans Arabic','Tajawal',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;font-size:15px}
+body{font-family:'DIN Next Arabic','IBM Plex Sans Arabic',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px}
 ::selection{background:var(--orange);color:#fff}
 .wrap{max-width:1240px;margin:0 auto;padding:0 22px}
-header{background:#1d1c1b;color:#fff;padding:30px 0 24px}
+header{background:var(--bgray);color:#fff;padding:26px 0 22px;border-bottom:4px solid var(--orange)}
+.darblogo{height:64px;width:auto;display:block;filter:drop-shadow(0 4px 14px rgba(0,0,0,.25))}
 .brand{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
-.mark .ar{font-family:'Tajawal';font-weight:800;font-size:28px;letter-spacing:-.5px}
+.mark .ar{font-weight:800;font-size:28px;letter-spacing:-.5px}
 .mark .ar b{color:var(--orange)}
 .mark .en{font-size:10.5px;letter-spacing:3.5px;color:#b9b3aa;margin-top:3px}
 .mark a{color:inherit;text-decoration:none}
 .hd-title{text-align:left}
 .hd-title h1{font-size:17px;font-weight:600}
-.hd-title p{font-size:12px;color:#b9b3aa;margin-top:3px}
-.netkpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.09);border-radius:14px;overflow:hidden;margin-top:22px}
-.netkpis>div{background:#26241f;padding:13px 16px}
-.netkpis .v{font-family:'Tajawal';font-weight:800;font-size:21px;color:var(--gold1)}
+.hd-title p{font-size:12px;color:#D8D9DB;margin-top:3px}
+.netkpis{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:rgba(255,255,255,.14);border-radius:14px;overflow:hidden;margin-top:22px}
+.netkpis>div{background:#4A4B4F;padding:13px 16px}
+.netkpis .v{font-weight:800;font-size:21px;color:var(--gold1)}
 .netkpis .v small{font-size:11px;color:#b9b3aa;font-weight:500}
-.netkpis .l{font-size:11.5px;color:#b9b3aa;margin-top:2px}
+.netkpis .l{font-size:11.5px;color:#CFD0D2;margin-top:2px}
 @media(max-width:900px){.netkpis{grid-template-columns:repeat(2,1fr)}}
 .stationbar{background:var(--card);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:40;box-shadow:0 2px 10px rgba(61,61,61,.05)}
 .chips{display:flex;gap:7px;overflow-x:auto;padding:11px 22px;max-width:1240px;margin:0 auto;scrollbar-width:thin;align-items:center}
 .chip{flex:none;border:1px solid var(--line2);background:#fff;border-radius:11px;padding:7px 13px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--ink2);transition:.14s;display:flex;gap:7px;align-items:center;text-decoration:none}
 .chip:hover{border-color:var(--orange);color:var(--ink)}
-.chip.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip.on{background:var(--bgray);border-color:var(--bgray);color:#fff}
 .chip .code{font-size:10.5px;color:var(--ink3);font-family:'Tajawal'}
 .chip.on .code{color:var(--gold1)}
 .search{flex:none;margin-inline-start:auto}
@@ -73,13 +74,13 @@ tbody tr{transition:.12s}
 tbody tr:hover{background:#FBF6EF}
 td a.stlink{color:var(--ink);text-decoration:none;font-weight:700}
 td a.stlink:hover{color:var(--orange)}
-.tcode{font-size:11px;color:var(--ink3);font-family:'Tajawal';letter-spacing:.4px}
+.tcode{font-size:11px;color:var(--ink3);letter-spacing:.4px}
 .up{color:var(--good);font-weight:700}.dn{color:var(--bad);font-weight:700}
 .station{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:22px 22px 18px;margin-bottom:26px}
 .shead{border-bottom:1px dashed var(--line2);padding-bottom:14px;margin-bottom:16px}
 .stitle{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.stitle h2{font-family:'Tajawal';font-weight:800;font-size:24px}
-.badge{font-size:12px;font-weight:700;background:var(--ink);color:#fff;padding:3px 9px;border-radius:7px;font-family:'Tajawal';letter-spacing:.5px}
+.stitle h2{font-weight:800;font-size:24px}
+.badge{font-size:12px;font-weight:700;background:var(--bgray);color:#fff;padding:3px 9px;border-radius:7px;letter-spacing:.5px}
 .cls{font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:8px;border:1px solid transparent}
 .c-viv{background:#FDEEE2;color:#B4500F;border-color:#F5CBA8}
 .c-nbh{background:#E9F2EC;color:#22694F;border-color:#BFDCCB}
@@ -101,7 +102,7 @@ td a.stlink:hover{color:var(--orange)}
 .kpi::before{content:"";position:absolute;top:0;right:0;width:3px;height:100%;background:var(--line2)}
 .kpi.hot::before{background:linear-gradient(var(--gold1),var(--orange))}
 .kpi .kl{font-size:11.5px;color:var(--ink2);font-weight:500}
-.kpi .kv{font-family:'Tajawal';font-weight:800;font-size:21px;margin-top:6px;color:var(--ink)}
+.kpi .kv{font-weight:800;font-size:21px;margin-top:6px;color:var(--ink)}
 .kpi .kv small{font-size:11px;color:var(--ink2);font-weight:500}
 .kpi.hot .kv{color:var(--orange)}
 .kpi .kn{font-size:10.5px;color:var(--ink3);margin-top:3px}
@@ -125,7 +126,7 @@ td a.stlink:hover{color:var(--orange)}
 .pcard{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line2)}
 .pcard:last-child{border-bottom:none}
 .pico{font-size:24px;flex:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:#FDEEE2;border-radius:12px}
-.pname{font-weight:800;font-family:'Tajawal';font-size:14.5px}
+.pname{font-weight:800;font-size:14.5px}
 .pshare{font-size:10.5px;font-weight:600;color:#B4500F;background:#FDEEE2;padding:2px 8px;border-radius:7px;margin-inline-start:6px}
 .pbody p{font-size:12.5px;color:var(--ink2);margin:4px 0}
 .pline{font-size:12px;color:var(--ink2)}
@@ -134,7 +135,7 @@ td a.stlink:hover{color:var(--orange)}
 .swot{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:620px){.swot{grid-template-columns:1fr}}
 .sq{border-radius:12px;padding:12px 14px;border:1px solid var(--line)}
-.sq h4{font-size:13px;font-weight:800;font-family:'Tajawal';margin-bottom:7px}
+.sq h4{font-size:13px;font-weight:800;margin-bottom:7px}
 .sq ul{padding-inline-start:16px;font-size:12px;color:var(--ink2);display:grid;gap:5px}
 .sq.s{background:#F0F7F2;border-color:#CBE2D3}.sq.s h4{color:#22694F}
 .sq.w{background:#FBF0ED;border-color:#EBCFC7}.sq.w h4{color:#A6432E}
@@ -142,7 +143,7 @@ td a.stlink:hover{color:var(--orange)}
 .sq.t{background:#F8F3E9;border-color:#E6D9BE}.sq.t h4{color:#8A6D2B}
 .pest{display:grid;gap:10px}
 .pr{display:flex;gap:12px;align-items:flex-start}
-.pk{flex:none;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Tajawal';color:#fff;font-size:14px}
+.pk{flex:none;width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:14px}
 .pP{background:#3E6E8E}.pE{background:#F37021}.pS{background:#2E8B6F}.pT{background:#6E5A8E}
 .pr b{font-size:13px}
 .pr ul{padding-inline-start:16px;font-size:12px;color:var(--ink2);display:grid;gap:4px;margin-top:4px}
@@ -164,7 +165,7 @@ footer b{color:var(--ink2)}
 .pgnav .nvl{display:flex;gap:8px;flex-wrap:wrap}
 .pgnav a,.pgnav select{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:8px 14px;font-family:inherit;font-size:13px;color:var(--ink2);text-decoration:none;transition:.14s}
 .pgnav a:hover{border-color:var(--orange);color:var(--ink)}
-.pgnav a.hb{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pgnav a.hb{background:var(--bgray);color:#fff;border-color:var(--bgray)}
 .pgnav a.hb:hover{background:var(--orange);border-color:var(--orange)}
 .pgnav select{cursor:pointer;max-width:290px}
 .tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
@@ -180,7 +181,7 @@ footer b{color:var(--ink2)}
 .dtbl td,.dtbl th{padding:7px 12px;font-size:12.5px}
 .dnote{font-size:12px;color:var(--ink2);background:#FDEEE2;border-radius:10px;padding:9px 13px;margin-top:12px}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
-.mini-head h2{font-family:'Tajawal';font-weight:800;font-size:21px}
+.mini-head h2{font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
 .mapgrid{display:grid;grid-template-columns:minmax(0,520px) 1fr;gap:20px;align-items:start}
 @media(max-width:900px){.mapgrid{grid-template-columns:1fr}}
@@ -200,16 +201,16 @@ footer b{color:var(--ink2)}
 .cmpbar .lbB{font-weight:800;color:var(--blue);font-family:'Tajawal'}
 .dimchips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
 .dim{border:1px solid var(--line2);background:#fff;border-radius:11px;padding:7px 14px;cursor:pointer;font-family:inherit;font-size:13px;color:var(--ink2);transition:.14s}
-.dim.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.dim.on{background:var(--bgray);border-color:var(--bgray);color:#fff}
 .dim:hover{border-color:var(--orange)}
 .vshead{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}
-.vshead .side{font-family:'Tajawal';font-weight:800;font-size:19px}
+.vshead .side{font-weight:800;font-size:19px}
 .vshead .side.a{color:var(--orange)}
 .vshead .side.b{color:var(--blue);text-align:left}
 .vshead .vs{font-size:12px;color:var(--ink3);font-weight:700}
 .vsrow{display:grid;grid-template-columns:1fr 170px 1fr;gap:12px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line2)}
 .vsrow:last-child{border-bottom:none}
-.vsrow .va,.vsrow .vb{font-family:'Tajawal';font-weight:700;font-size:15px}
+.vsrow .va,.vsrow .vb{font-weight:700;font-size:15px}
 .vsrow .va{text-align:right}
 .vsrow .vb{text-align:left;color:var(--ink)}
 .vsrow .win{color:var(--good)}
@@ -222,7 +223,7 @@ footer b{color:var(--ink2)}
 .pcolz{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:760px){.pcolz{grid-template-columns:1fr}.vsrow{grid-template-columns:1fr 110px 1fr}}
 .pcol{background:#FDFCFA;border:1px solid var(--line);border-radius:13px;padding:13px 15px}
-.pcol h4{font-family:'Tajawal';font-weight:800;font-size:15px;margin-bottom:8px}
+.pcol h4{font-weight:800;font-size:15px;margin-bottom:8px}
 .pcol.a h4{color:var(--orange)}
 .pcol.b h4{color:var(--blue)}
 .pitem{display:flex;gap:9px;align-items:flex-start;padding:7px 0;border-bottom:1px dashed var(--line2);font-size:12.5px;color:var(--ink2)}
@@ -235,15 +236,22 @@ footer b{color:var(--ink2)}
 .scard{background:var(--card);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);padding:14px 16px;text-decoration:none;color:var(--ink);transition:.15s;display:block}
 .scard:hover{border-color:var(--orange);transform:translateY(-2px)}
 .scard .r1{display:flex;align-items:center;gap:8px;justify-content:space-between}
-.scard .nm{font-family:'Tajawal';font-weight:800;font-size:16px}
+.scard .nm{font-weight:800;font-size:16px}
 .scard .r2{display:flex;gap:8px;align-items:center;margin-top:7px;font-size:11.5px;color:var(--ink2);flex-wrap:wrap}
 .scard .r3{margin-top:9px;font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
-.scard .r3 b{font-family:'Tajawal';color:var(--orange);font-size:15px}
+.scard .r3 b{color:var(--orange);font-size:15px}
 """
 
-FONTS = """<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">"""
+FONTFACE = open('fontface.css', encoding='utf-8').read()
+FONTS = f"""<style>{FONTFACE}</style>"""
+
+LOGO_SVG = """<svg class="darblogo" viewBox="0 0 640 240" role="img" aria-label="شعار درب Darb"><g>
+<rect x="12" y="12" width="616" height="216" rx="108" fill="#55565A" stroke="#F5831F" stroke-width="18"/>
+<path d="M 396 92 L 556 76" fill="none" stroke="#F5831F" stroke-width="37" stroke-linecap="round"/>
+<path d="M 562 114 C 578 174 492 212 382 186" fill="none" stroke="#F5831F" stroke-width="37" stroke-linecap="round"/>
+<text x="238" y="114" font-family="'DIN Next Arabic'" font-weight="700" font-size="74" text-anchor="middle" fill="#fff" direction="rtl">درب</text>
+<text x="238" y="184" font-family="'DIN Next Arabic'" font-weight="700" font-size="52" letter-spacing="3" text-anchor="middle" fill="#fff" direction="ltr">Darb</text>
+</g></svg>"""
 
 FOOT_METH = """<b>المنهجية والمصادر:</b> بيانات المبيعات والزيارات من لوحة «درب · تحليل المبيعات والتسويق» (يناير–يونيو 2026)؛
     مواقع المحطات من ملف Station_Data.xlsx؛ رصد المنافسين والتقييمات من خرائط جوجل (بحث «محطة وقود» ضمن دائرة نصف قطرها 5 كم حول إحداثيات كل محطة، يوليو 2026) —
@@ -669,8 +677,8 @@ for idx, a in enumerate(ORDER):
 <header>
   <div class="wrap">
     <div class="brand">
-      <div class="mark"><a href="../location-analysis.html"><div class="ar">محطات <b>درب</b></div><div class="en">DARB STATIONS</div></a></div>
-      <div class="hd-title"><h1>تحليل الموقع والمبيعات — درب {esc(m['name'])} <span style="color:var(--gold1);font-family:Tajawal">{code}</span></h1>
+      <div class="mark"><a href="../location-analysis.html">{LOGO_SVG}</a></div>
+      <div class="hd-title"><h1>تحليل الموقع والمبيعات — درب {esc(m['name'])} <span style="color:var(--gold1);font-family:'DIN Next Arabic'">{code}</span></h1>
       <p>حي {esc(hood_of(a))} · {esc(m['region'])} · المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026</p></div>
     </div>
   </div>
@@ -967,7 +975,7 @@ hub = f'''<!DOCTYPE html>
 <header>
   <div class="wrap">
     <div class="brand">
-      <div class="mark"><div class="ar">محطات <b>درب</b></div><div class="en">DARB STATIONS</div></div>
+      <div class="mark">{LOGO_SVG}</div>
       <div class="hd-title"><h1>تحليل المواقع والمبيعات — صفحة مستقلة لكل محطة: PEST · بيرسونا · SWOT · المنافسون ≤ 5 كم</h1>
       <p>النصف الأول 2026 · {len(ORDER)} محطة مشمولة بالبيانات · اختر محطة لفتح صفحتها الكاملة</p></div>
     </div>
