@@ -610,17 +610,22 @@ body.editing .deck{cursor:text}
   var editing  = false;
   var timer;
 
-  function say(msg){
+  function say(msg, ms){
     toast.textContent = msg;
     toast.classList.add('show');
     clearTimeout(timer);
-    timer = setTimeout(function(){ toast.classList.remove('show'); }, 2600);
+    timer = setTimeout(function(){ toast.classList.remove('show'); }, ms || 2600);
   }
 
   /* ---- restore any saved edits ---- */
+  var restored = false;
   try{
     var saved = localStorage.getItem(KEY);
-    if(saved){ deck.innerHTML = saved; say('تم استرجاع نسختك المعدّلة المحفوظة في هذا المتصفح.'); }
+    if(saved){
+      deck.innerHTML = saved;
+      restored = true;
+      say('تم استرجاع نسختك المعدّلة المحفوظة في هذا المتصفح.');
+    }
   }catch(e){}
 
   function persist(){
@@ -669,6 +674,20 @@ body.editing .deck{cursor:text}
   }
 
   bEdit.addEventListener('click', function(){ setEditing(!editing); });
+
+  /* double-clicking any text drops straight into edit mode */
+  deck.addEventListener('dblclick', function(){
+    if(!editing) setEditing(true);
+  });
+
+  /* point the reader at the edit button on first open */
+  if(!restored){
+    setTimeout(function(){
+      if(!editing){
+        say('هذا الملف قابل للتعديل: اضغط «تحرير النص» في الشريط أسفل الصفحة، أو انقر نقرًا مزدوجًا على أي كلمة.', 6000);
+      }
+    }, 900);
+  }
 
   deck.addEventListener('input', function(){
     clearTimeout(persist._t);
