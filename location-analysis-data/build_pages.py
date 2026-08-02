@@ -170,6 +170,16 @@ details.apx{background:var(--card);border:1px solid var(--line);border-radius:va
 details.apx summary{cursor:pointer;font-weight:700;font-size:14px}
 details.apx .tscroll{overflow-x:auto;margin-top:12px}
 footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 34px;font-size:12px;color:var(--ink3)}
+#editbar{position:fixed;bottom:18px;inset-inline-start:18px;z-index:90;display:flex;gap:9px;align-items:center;
+  background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:9px 12px;box-shadow:0 8px 30px rgba(61,61,61,.18);font-size:13px}
+#editbar button{font-family:inherit;font-size:13px;font-weight:700;border-radius:10px;padding:8px 14px;cursor:pointer;border:1px solid var(--line2);background:#fff;color:var(--ink2);transition:.15s}
+#editbar button:hover{border-color:var(--orange);color:var(--ink)}
+#editbar.editing #edtoggle{background:var(--orange);border-color:var(--orange);color:#fff}
+#editbar .hint{color:var(--ink3);font-size:11.5px;max-width:230px;display:none}
+#editbar.editing .hint{display:block}
+body.editmode{outline:3px dashed var(--orange);outline-offset:-3px}
+body.editmode [contenteditable="true"]:focus{outline:2px solid var(--orange);border-radius:4px}
+@media print{#editbar{display:none}}
 footer b{color:var(--ink2)}
 .hidden{display:none!important}
 .pgnav{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
@@ -253,6 +263,33 @@ footer b{color:var(--ink2)}
 .scard .r3 b{color:var(--orange);font-size:15px}
 """
 
+EDITBAR = ''' <div id="editbar" contenteditable="false">
+  <button id="edtoggle" onclick="__toggleEdit()">✏️ وضع التحرير</button>
+  <button onclick="__saveEdits()">⬇️ تنزيل النسخة المعدلة</button>
+  <span class="hint">عدّل أي نص بالنقر عليه مباشرة. عند الانتهاء نزّل النسخة لحفظ تعديلاتك — التعديلات لا تُحفظ تلقائيًا.</span>
+</div>
+<script>
+var __ED=false;
+function __toggleEdit(){
+  __ED=!__ED;
+  document.body.contentEditable=__ED?'true':'false';
+  document.body.spellcheck=false;
+  document.body.classList.toggle('editmode',__ED);
+  document.getElementById('editbar').classList.toggle('editing',__ED);
+}
+function __saveEdits(){
+  var was=__ED; if(was) __toggleEdit();
+  document.body.removeAttribute('contenteditable');
+  var html='<!DOCTYPE html>'+String.fromCharCode(10)+document.documentElement.outerHTML;
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='location-analysis-edited.html';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+  if(was) __toggleEdit();
+}
+</script> '''
 FONTFACE = open('fontface.css', encoding='utf-8').read()
 FONTS = f"""<style>{FONTFACE}</style>"""
 
@@ -774,6 +811,7 @@ function route(){{
 }}
 window.addEventListener('hashchange',route);route();
 </script>
+{EDITBAR}
 </body>
 </html>'''
     open(f'stations/{code}.html', 'w', encoding='utf-8').write(page)
@@ -1110,6 +1148,7 @@ q.addEventListener('input',apply);
 route();
 </script>
 {CMP_SCRIPT}
+{EDITBAR}
 </body>
 </html>'''
 open('location-analysis.html', 'w', encoding='utf-8').write(hub)

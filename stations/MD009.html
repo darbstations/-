@@ -142,6 +142,16 @@ details.apx{background:var(--card);border:1px solid var(--line);border-radius:va
 details.apx summary{cursor:pointer;font-weight:700;font-size:14px}
 details.apx .tscroll{overflow-x:auto;margin-top:12px}
 footer{border-top:1px solid var(--line);margin-top:30px;padding:22px 0 34px;font-size:12px;color:var(--ink3)}
+#editbar{position:fixed;bottom:18px;inset-inline-start:18px;z-index:90;display:flex;gap:9px;align-items:center;
+  background:var(--card);border:1px solid var(--line2);border-radius:14px;padding:9px 12px;box-shadow:0 8px 30px rgba(61,61,61,.18);font-size:13px}
+#editbar button{font-family:inherit;font-size:13px;font-weight:700;border-radius:10px;padding:8px 14px;cursor:pointer;border:1px solid var(--line2);background:#fff;color:var(--ink2);transition:.15s}
+#editbar button:hover{border-color:var(--orange);color:var(--ink)}
+#editbar.editing #edtoggle{background:var(--orange);border-color:var(--orange);color:#fff}
+#editbar .hint{color:var(--ink3);font-size:11.5px;max-width:230px;display:none}
+#editbar.editing .hint{display:block}
+body.editmode{outline:3px dashed var(--orange);outline-offset:-3px}
+body.editmode [contenteditable="true"]:focus{outline:2px solid var(--orange);border-radius:4px}
+@media print{#editbar{display:none}}
 footer b{color:var(--ink2)}
 .hidden{display:none!important}
 .pgnav{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
@@ -291,6 +301,7 @@ footer b{color:var(--ink2)}
       <div class="li"><span class="dot" style="background:#F37021"></span> محطة درب (المركز) · <span class="dot" style="background:#F5A623"></span> محطات درب شقيقة</div>
       <div class="li"><span class="dot" style="background:#2E8B6F"></span> منافس تقييمه ≥ 4.5 · <span class="dot" style="background:#C98A1B"></span> 4.0–4.4 · <span class="dot" style="background:#C0503A"></span> أقل من 4.0 · <span class="dot" style="background:#9B968E"></span> بلا تقييم</div>
       <div class="li">حجم النقطة يعكس عدد المراجعات؛ الأرقام 1–10 تطابق جدول المنافسين؛ مرّر بالفأرة لأي نقطة للتفاصيل.</div>
+      
       <div class="bandrow"><span>0–1 كم: <b>0</b> منافس</span><span>1–3 كم: <b>0</b></span><span>3–5 كم: <b>0</b></span></div>
       <div class="li">⚠️ الرصد في هذه الدائرة غير مكتمل — الخريطة تعرض المرصود فقط.</div>
       <div class="svcnote">🎯 <b>نطاق الخدمة:</b> النطاق البرتقالي (2 كم) تقدير للنطاق الأساسي الحضري؛ الدائرة المتقطعة حد الرصد التنافسي (5 كم).</div>
@@ -382,8 +393,8 @@ footer b{color:var(--ink2)}
     <div class="sec-h"><h2>سجل الأيام</h2><span>الأحدث أولًا — 2026-06-30 ← 2026-05-23</span></div>
     <div class="dtbl"><table>
       <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>اللترات*</th><th>الزيارات</th><th>متوسط الفاتورة</th><th>لتر/زيارة*</th></tr></thead>
-      <tbody><tr><td>2026-06-30</td><td>الثلاثاء</td><td>14,410</td><td>6,838</td><td>245</td><td>59</td><td>28</td></tr><tr><td>2026-06-29</td><td>الإثنين</td><td>12,538</td><td>5,950</td><td>175</td><td>72</td><td>34</td></tr><tr><td>2026-06-28</td><td>الأحد</td><td>19,886</td><td>9,437</td><td>321</td><td>62</td><td>29</td></tr><tr><td>2026-06-27</td><td>السبت</td><td>15,494</td><td>7,353</td><td>273</td><td>57</td><td>27</td></tr><tr><td>2026-06-26</td><td>الجمعة</td><td>16,682</td><td>7,916</td><td>309</td><td>54</td><td>26</td></tr><tr><td>2026-06-25</td><td>الخميس</td><td>15,334</td><td>7,277</td><td>278</td><td>55</td><td>26</td></tr><tr><td>2026-06-24</td><td>الأربعاء</td><td>15,926</td><td>7,558</td><td>285</td><td>56</td><td>27</td></tr><tr><td>2026-06-23</td><td>الثلاثاء</td><td>16,983</td><td>8,059</td><td>303</td><td>56</td><td>27</td></tr><tr><td>2026-06-22</td><td>الإثنين</td><td>13,086</td><td>6,210</td><td>245</td><td>53</td><td>25</td></tr><tr><td>2026-06-21</td><td>الأحد</td><td>14,546</td><td>6,903</td><td>262</td><td>56</td><td>26</td></tr><tr><td>2026-06-20</td><td>السبت</td><td>12,821</td><td>6,084</td><td>254</td><td>50</td><td>24</td></tr><tr><td>2026-06-19</td><td>الجمعة</td><td>11,974</td><td>5,682</td><td>221</td><td>54</td><td>26</td></tr><tr><td>2026-06-18</td><td>الخميس</td><td>16,279</td><td>7,725</td><td>289</td><td>56</td><td>27</td></tr><tr><td>2026-06-17</td><td>الأربعاء</td><td>16,371</td><td>7,769</td><td>282</td><td>58</td><td>28</td></tr><tr><td>2026-06-16</td><td>الثلاثاء</td><td>13,337</td><td>6,329</td><td>258</td><td>52</td><td>25</td></tr><tr><td>2026-06-15</td><td>الإثنين</td><td>13,386</td><td>6,352</td><td>256</td><td>52</td><td>25</td></tr><tr><td>2026-06-14</td><td>الأحد</td><td>11,004</td><td>5,222</td><td>222</td><td>50</td><td>24</td></tr><tr><td>2026-06-13</td><td>السبت</td><td>13,607</td><td>6,457</td><td>246</td><td>55</td><td>26</td></tr><tr><td>2026-06-12</td><td>الجمعة</td><td>15,057</td><td>7,145</td><td>273</td><td>55</td><td>26</td></tr><tr><td>2026-06-11</td><td>الخميس</td><td>16,061</td><td>7,622</td><td>263</td><td>61</td><td>29</td></tr><tr><td>2026-06-10</td><td>الأربعاء</td><td>15,352</td><td>7,285</td><td>262</td><td>59</td><td>28</td></tr><tr><td>2026-06-09</td><td>الثلاثاء</td><td>9,728</td><td>4,616</td><td>173</td><td>56</td><td>27</td></tr><tr><td>2026-06-08</td><td>الإثنين</td><td>10,035</td><td>4,762</td><td>164</td><td>61</td><td>29</td></tr><tr><td>2026-06-07</td><td>الأحد</td><td>11,426</td><td>5,422</td><td>204</td><td>56</td><td>27</td></tr><tr><td>2026-06-06</td><td>السبت</td><td>17,353</td><td>8,235</td><td>347</td><td>50</td><td>24</td></tr><tr><td>2026-06-05</td><td>الجمعة</td><td>5,560</td><td>2,638</td><td>96</td><td>58</td><td>27</td></tr><tr><td>2026-06-04</td><td>الخميس</td><td>4,835</td><td>2,294</td><td>80</td><td>60</td><td>29</td></tr><tr><td>2026-06-03</td><td>الأربعاء</td><td>4,433</td><td>2,104</td><td>79</td><td>56</td><td>27</td></tr><tr><td>2026-06-02</td><td>الثلاثاء</td><td>6,203</td><td>2,944</td><td>99</td><td>63</td><td>30</td></tr><tr><td>2026-06-01</td><td>الإثنين</td><td>7,702</td><td>3,655</td><td>107</td><td>72</td><td>34</td></tr><tr><td>2026-05-31</td><td>الأحد</td><td>6,005</td><td>2,730</td><td>92</td><td>65</td><td>30</td></tr><tr><td>2026-05-30</td><td>السبت</td><td>5,789</td><td>2,632</td><td>76</td><td>76</td><td>35</td></tr><tr><td>2026-05-29</td><td>الجمعة</td><td>5,740</td><td>2,610</td><td>98</td><td>59</td><td>27</td></tr><tr><td>2026-05-28</td><td>الخميس</td><td>6,248</td><td>2,840</td><td>93</td><td>67</td><td>31</td></tr><tr><td>2026-05-27</td><td>الأربعاء</td><td>6,641</td><td>3,019</td><td>102</td><td>65</td><td>30</td></tr><tr><td>2026-05-26</td><td>الثلاثاء</td><td>6,334</td><td>2,879</td><td>104</td><td>61</td><td>28</td></tr><tr><td>2026-05-25</td><td>الإثنين</td><td>6,902</td><td>3,138</td><td>97</td><td>71</td><td>32</td></tr><tr><td>2026-05-24</td><td>الأحد</td><td>4,648</td><td>2,113</td><td>83</td><td>56</td><td>25</td></tr><tr><td>2026-05-23</td><td>السبت</td><td>897</td><td>408</td><td>33</td><td>27</td><td>12</td></tr></tbody></table></div>
-    <div class="dnote">📌 (*) اللترات اليومية <b>تقديرية</b>: البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى 2026-06-30 — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div></div>
+      <tbody><tr><td>2026-06-30</td><td>الثلاثاء</td><td>14,410</td><td>6,838*</td><td>245</td><td>59</td><td>28*</td></tr><tr><td>2026-06-29</td><td>الإثنين</td><td>12,538</td><td>5,950*</td><td>175</td><td>72</td><td>34*</td></tr><tr><td>2026-06-28</td><td>الأحد</td><td>19,886</td><td>9,437*</td><td>321</td><td>62</td><td>29*</td></tr><tr><td>2026-06-27</td><td>السبت</td><td>15,494</td><td>7,353*</td><td>273</td><td>57</td><td>27*</td></tr><tr><td>2026-06-26</td><td>الجمعة</td><td>16,682</td><td>7,916*</td><td>309</td><td>54</td><td>26*</td></tr><tr><td>2026-06-25</td><td>الخميس</td><td>15,334</td><td>7,277*</td><td>278</td><td>55</td><td>26*</td></tr><tr><td>2026-06-24</td><td>الأربعاء</td><td>15,926</td><td>7,558*</td><td>285</td><td>56</td><td>27*</td></tr><tr><td>2026-06-23</td><td>الثلاثاء</td><td>16,983</td><td>8,059*</td><td>303</td><td>56</td><td>27*</td></tr><tr><td>2026-06-22</td><td>الإثنين</td><td>13,086</td><td>6,210*</td><td>245</td><td>53</td><td>25*</td></tr><tr><td>2026-06-21</td><td>الأحد</td><td>14,546</td><td>6,903*</td><td>262</td><td>56</td><td>26*</td></tr><tr><td>2026-06-20</td><td>السبت</td><td>12,821</td><td>6,084*</td><td>254</td><td>50</td><td>24*</td></tr><tr><td>2026-06-19</td><td>الجمعة</td><td>11,974</td><td>5,682*</td><td>221</td><td>54</td><td>26*</td></tr><tr><td>2026-06-18</td><td>الخميس</td><td>16,279</td><td>7,725*</td><td>289</td><td>56</td><td>27*</td></tr><tr><td>2026-06-17</td><td>الأربعاء</td><td>16,371</td><td>7,769*</td><td>282</td><td>58</td><td>28*</td></tr><tr><td>2026-06-16</td><td>الثلاثاء</td><td>13,337</td><td>6,329*</td><td>258</td><td>52</td><td>25*</td></tr><tr><td>2026-06-15</td><td>الإثنين</td><td>13,386</td><td>6,352*</td><td>256</td><td>52</td><td>25*</td></tr><tr><td>2026-06-14</td><td>الأحد</td><td>11,004</td><td>5,222*</td><td>222</td><td>50</td><td>24*</td></tr><tr><td>2026-06-13</td><td>السبت</td><td>13,607</td><td>6,457*</td><td>246</td><td>55</td><td>26*</td></tr><tr><td>2026-06-12</td><td>الجمعة</td><td>15,057</td><td>7,145*</td><td>273</td><td>55</td><td>26*</td></tr><tr><td>2026-06-11</td><td>الخميس</td><td>16,061</td><td>7,622*</td><td>263</td><td>61</td><td>29*</td></tr><tr><td>2026-06-10</td><td>الأربعاء</td><td>15,352</td><td>7,285*</td><td>262</td><td>59</td><td>28*</td></tr><tr><td>2026-06-09</td><td>الثلاثاء</td><td>9,728</td><td>4,616*</td><td>173</td><td>56</td><td>27*</td></tr><tr><td>2026-06-08</td><td>الإثنين</td><td>10,035</td><td>4,762*</td><td>164</td><td>61</td><td>29*</td></tr><tr><td>2026-06-07</td><td>الأحد</td><td>11,426</td><td>5,422*</td><td>204</td><td>56</td><td>27*</td></tr><tr><td>2026-06-06</td><td>السبت</td><td>17,353</td><td>8,235*</td><td>347</td><td>50</td><td>24*</td></tr><tr><td>2026-06-05</td><td>الجمعة</td><td>5,560</td><td>2,638*</td><td>96</td><td>58</td><td>27*</td></tr><tr><td>2026-06-04</td><td>الخميس</td><td>4,835</td><td>2,294*</td><td>80</td><td>60</td><td>29*</td></tr><tr><td>2026-06-03</td><td>الأربعاء</td><td>4,433</td><td>2,104*</td><td>79</td><td>56</td><td>27*</td></tr><tr><td>2026-06-02</td><td>الثلاثاء</td><td>6,203</td><td>2,944*</td><td>99</td><td>63</td><td>30*</td></tr><tr><td>2026-06-01</td><td>الإثنين</td><td>7,702</td><td>3,655*</td><td>107</td><td>72</td><td>34*</td></tr><tr><td>2026-05-31</td><td>الأحد</td><td>6,005</td><td>2,730*</td><td>92</td><td>65</td><td>30*</td></tr><tr><td>2026-05-30</td><td>السبت</td><td>5,789</td><td>2,632*</td><td>76</td><td>76</td><td>35*</td></tr><tr><td>2026-05-29</td><td>الجمعة</td><td>5,740</td><td>2,610*</td><td>98</td><td>59</td><td>27*</td></tr><tr><td>2026-05-28</td><td>الخميس</td><td>6,248</td><td>2,840*</td><td>93</td><td>67</td><td>31*</td></tr><tr><td>2026-05-27</td><td>الأربعاء</td><td>6,641</td><td>3,019*</td><td>102</td><td>65</td><td>30*</td></tr><tr><td>2026-05-26</td><td>الثلاثاء</td><td>6,334</td><td>2,879*</td><td>104</td><td>61</td><td>28*</td></tr><tr><td>2026-05-25</td><td>الإثنين</td><td>6,902</td><td>3,138*</td><td>97</td><td>71</td><td>32*</td></tr><tr><td>2026-05-24</td><td>الأحد</td><td>4,648</td><td>2,113*</td><td>83</td><td>56</td><td>25*</td></tr><tr><td>2026-05-23</td><td>السبت</td><td>897</td><td>408*</td><td>33</td><td>27</td><td>12*</td></tr></tbody></table></div>
+    <div class="dnote">(*) اللترات التقديرية: البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى 2026-06-30 — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div></div>
   <footer><b>المنهجية والمصادر:</b> بيانات المبيعات والزيارات من لوحة «درب · تحليل المبيعات والتسويق» (يناير–يونيو 2026)؛
     مواقع المحطات من ملف Station_Data.xlsx؛ رصد المنافسين والتقييمات من خرائط جوجل (بحث «محطة وقود» ضمن دائرة نصف قطرها 5 كم حول إحداثيات كل محطة، يوليو 2026) —
     القوائم تشمل المدرَج في خرائط جوجل فقط والمسافات مباشرة (خط مستقيم). الدوائر التي أعاد المسح الآلي فيها نتائج شحيحة معلَّمة بتنبيه ولا يُبنى على عددها استنتاج تنافسي.
@@ -400,5 +411,32 @@ function route(){
 }
 window.addEventListener('hashchange',route);route();
 </script>
+ <div id="editbar" contenteditable="false">
+  <button id="edtoggle" onclick="__toggleEdit()">✏️ وضع التحرير</button>
+  <button onclick="__saveEdits()">⬇️ تنزيل النسخة المعدلة</button>
+  <span class="hint">عدّل أي نص بالنقر عليه مباشرة. عند الانتهاء نزّل النسخة لحفظ تعديلاتك — التعديلات لا تُحفظ تلقائيًا.</span>
+</div>
+<script>
+var __ED=false;
+function __toggleEdit(){
+  __ED=!__ED;
+  document.body.contentEditable=__ED?'true':'false';
+  document.body.spellcheck=false;
+  document.body.classList.toggle('editmode',__ED);
+  document.getElementById('editbar').classList.toggle('editing',__ED);
+}
+function __saveEdits(){
+  var was=__ED; if(was) __toggleEdit();
+  document.body.removeAttribute('contenteditable');
+  var html='<!DOCTYPE html>'+String.fromCharCode(10)+document.documentElement.outerHTML;
+  var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='location-analysis-edited.html';
+  document.body.appendChild(a);a.click();a.remove();
+  setTimeout(function(){URL.revokeObjectURL(a.href)},2000);
+  if(was) __toggleEdit();
+}
+</script> 
 </body>
 </html>
