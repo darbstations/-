@@ -112,15 +112,18 @@ td a.stlink:hover{color:var(--orange)}
 .card .ct .leg{font-size:11px;color:var(--ink3)}
 .card .cs{font-size:12.5px;color:var(--ink2);margin-bottom:12px}
 .sig{margin-bottom:16px}
-.siggrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:10px}
+.siggrid{display:grid;grid-template-columns:1fr 1fr;gap:24px 34px;margin-top:12px}
+.sigfull{grid-column:1/-1}
 @media(max-width:900px){.siggrid{grid-template-columns:1fr}}
-.sglb{font-size:12px;color:var(--ink2);font-weight:600;margin-bottom:6px}
-.sgnote{font-size:11px;color:var(--ink3);margin-top:4px}
+.sglb{font-size:15px;color:var(--ink);font-weight:700;margin-bottom:8px}
+.sgnote{font-size:13.5px;color:var(--ink2);margin-top:8px}
+.sgnote b{color:var(--ink);font-weight:700}
 .spark{width:100%;height:auto;display:block}
-.mix .mixbar{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--bar)}
-.mix .mixbar i{display:block;height:100%}
-.mix .mixleg{display:flex;gap:12px;font-size:11px;color:var(--ink2);margin-top:6px;flex-wrap:wrap}
-.mix .mixleg b{display:inline-block;width:9px;height:9px;border-radius:3px;margin-inline-end:4px}
+.mix .mixbar{display:flex;height:30px;border-radius:9px;overflow:hidden;background:var(--bar)}
+.mix .mixbar i{display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:13px;font-weight:700;font-style:normal;min-width:0;overflow:hidden}
+.mix .mixleg{display:flex;gap:16px;font-size:13.5px;color:var(--ink2);margin-top:8px;flex-wrap:wrap}
+.mix .mixleg strong{color:var(--ink)}
+.mix .mixleg b{display:inline-block;width:11px;height:11px;border-radius:3px;margin-inline-end:5px}
 .agrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:980px){.agrid{grid-template-columns:1fr}}
 .pcard{display:flex;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line2)}
@@ -262,42 +265,54 @@ def spark_hours(code):
     o = BYCODE[code]['overall']
     hs = {h['h']: h['vis'] for h in o['hours']}
     mx = max(hs.values()) or 1
+    W, H = 1100, 216
+    slot = (W-30)/24; bw = slot-9
     bars = []
-    W, H, bw = 240, 44, 8
+    bars.append(f'<line x1="15" y1="{H-160-28}" x2="{W-15}" y2="{H-160-28}" stroke="var(--line2)" stroke-dasharray="3 5"/>')
     for h in range(24):
         v = hs.get(h, 0)
-        bh = max(2, round(v/mx*(H-12)))
-        x = 2 + h*(bw+2)
-        hot = 'url(#gO)' if v == mx else ('#E4B98F' if v >= 0.75*mx else 'var(--bar)')
-        bars.append(f'<rect x="{x}" y="{H-8-bh}" width="{bw}" height="{bh}" rx="2" fill="{hot}"/>')
-        if h % 6 == 0:
-            bars.append(f'<text x="{x+bw/2}" y="{H-1}" font-size="6.5" text-anchor="middle" fill="var(--ink3)">{hr_ar(h)}</text>')
-    return (f'<svg viewBox="0 0 {W+4} {H}" class="spark" role="img" aria-label="توزيع الزيارات على الساعات">'
+        bh = max(4, round(v/mx*150))
+        x = 15 + h*slot + 4.5
+        hot = 'url(#gO)' if v == mx else ('#F0A868' if v >= 0.75*mx else '#CFC5B4')
+        bars.append(f'<g><rect x="{x:.1f}" y="{H-34-bh}" width="{bw:.1f}" height="{bh}" rx="6" fill="{hot}"/>'
+                    f'<title>الساعة {hr_ar(h)} — {v:,} زيارة ({v/max(1,sum(hs.values()))*100:.0f}٪)</title></g>')
+        if v == mx or (v >= 0.75*mx and h % 2 == 0):
+            lab = f'{v/1000:.1f}ألف' if v >= 1000 else f'{v:,}'
+            w8 = '800' if v == mx else '600'
+            bars.append(f'<text x="{x+bw/2:.1f}" y="{H-42-bh}" font-size="15" font-weight="{w8}" text-anchor="middle" fill="{"var(--orange)" if v==mx else "var(--ink2)"}">{lab}</text>')
+        if h % 2 == 0:
+            bars.append(f'<text x="{x+bw/2:.1f}" y="{H-12}" font-size="14" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" class="spark" role="img" aria-label="توزيع الزيارات على الساعات">'
             f'<defs><linearGradient id="gO" x1="0" y1="0" x2="0" y2="1">'
-            f'<stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>{"".join(bars)}</svg>')
+            f'<stop offset="0" stop-color="#F7A94B"/><stop offset="1" stop-color="#F5831F"/></linearGradient></defs>{"".join(bars)}</svg>')
 
 def spark_dow(code):
     o = BYCODE[code]['overall']
     ds = [(d['d'], d['avg']) for d in o['dow']]
     if not ds: return ''
     mx = max(v for _, v in ds) or 1
-    W, H, bw = 240, 46, 26
+    W, H = 540, 200
+    slot = (W-24)/len(ds); bw = slot-16
     bars = []
     for i, (d, v) in enumerate(ds):
-        bh = max(2, round(v/mx*(H-16)))
-        x = 3 + i*(bw+8)
-        hot = 'url(#gO)' if v == mx else 'var(--bar)'
-        bars.append(f'<rect x="{x}" y="{H-12-bh}" width="{bw}" height="{bh}" rx="3" fill="{hot}"/>'
-                    f'<text x="{x+bw/2}" y="{H-2}" font-size="7" text-anchor="middle" fill="var(--ink3)">{d[:7]}</text>')
-    return (f'<svg viewBox="0 0 {W+4} {H}" class="spark" role="img" aria-label="متوسط الزيارات حسب اليوم">'
+        bh = max(5, round(v/mx*130))
+        x = 12 + i*slot + 8
+        hot = 'url(#gO)' if v == mx else '#CFC5B4'
+        lab = f'{v/1000:.1f}ألف' if v >= 1000 else f'{v:,.0f}'
+        bars.append(f'<g><rect x="{x:.1f}" y="{H-46-bh}" width="{bw:.1f}" height="{bh}" rx="7" fill="{hot}"/>'
+                    f'<title>{d} — متوسط {v:,.0f} زيارة/يوم</title></g>'
+                    f'<text x="{x+bw/2:.1f}" y="{H-54-bh}" font-size="15" font-weight="{"800" if v==mx else "600"}" text-anchor="middle" fill="{"var(--orange)" if v==mx else "var(--ink2)"}">{lab}</text>'
+                    f'<text x="{x+bw/2:.1f}" y="{H-16}" font-size="14.5" text-anchor="middle" fill="var(--ink)">{d}</text>')
+    return (f'<svg viewBox="0 0 {W} {H}" class="spark" role="img" aria-label="متوسط الزيارات حسب اليوم">'
             f'{"".join(bars)}</svg>')
 
 def mixbar(parts):
     seg, leg = [], []
     for lb, fr, colr in parts:
         w = max(0.0, fr*100)
-        seg.append(f'<i style="width:{w:.1f}%;background:{colr}" title="{esc(lb)} {fr*100:.0f}٪"></i>')
-        leg.append(f'<span><b style="background:{colr}"></b>{esc(lb)} {fr*100:.0f}٪</span>')
+        inner = f'{fr*100:.0f}٪' if w >= 12 else ''
+        seg.append(f'<i style="width:{w:.1f}%;background:{colr}" title="{esc(lb)} {fr*100:.0f}٪">{inner}</i>')
+        leg.append(f'<span><b style="background:{colr}"></b>{esc(lb)} <strong>{fr*100:.0f}٪</strong></span>')
     return f'<div class="mix"><div class="mixbar">{"".join(seg)}</div><div class="mixleg">{"".join(leg)}</div></div>'
 
 def stars(r):
@@ -407,12 +422,12 @@ def station_body(a):
     <div class="card sig">
       <div class="ct"><h3>توقيع الموقع الزمني والسلوكي</h3><div class="leg">من بيانات المبيعات الفعلية</div></div>
       <div class="siggrid">
-        <div><div class="sglb">الزيارات على مدار اليوم</div>{spark_hours(code)}
-             <div class="sgnote">المساء (4م–12ل): {pct(m['evening'])} · الليل (12–5ص): {pct(m['night'])} · الصباح: {pct(m['morning'])}</div></div>
+        <div class="sigfull"><div class="sglb">الزيارات على مدار اليوم (24 ساعة)</div>{spark_hours(code)}
+             <div class="sgnote">المساء (4م–12ل): <b>{pct(m['evening'])}</b> · الليل (12–5ص): <b>{pct(m['night'])}</b> · الصباح: <b>{pct(m['morning'])}</b> · ذروة الزيارات: <b>{hr_ar(m['peak_hour'])}</b></div></div>
         <div><div class="sglb">متوسط الزيارات حسب اليوم</div>{spark_dow(code)}
-             <div class="sgnote">نهاية الأسبوع مقابل أيام العمل: {f"{m['we_ratio']:.2f}×" if m['we_ratio'] else '—'}</div></div>
-        <div><div class="sglb">مزيج الوقود (من الإيراد)</div>{mixbar([('بنزين 91', m['g91'], '#3E6E8E'), ('بنزين 95', m['g95'], '#F37021'), ('ديزل', m['dsl'], '#6E6A64')])}
-             <div class="sglb" style="margin-top:12px">طرق الدفع (من الإيراد)</div>{mixbar([('نقد', m['cash'], '#2E8B6F'), ('بطاقة', m['card'], '#3E6E8E'), ('تطبيقات وأخرى', m['apps'], '#F5A623')])}</div>
+             <div class="sgnote">نهاية الأسبوع مقابل أيام العمل: <b>{f"{m['we_ratio']:.2f}×" if m['we_ratio'] else '—'}</b></div></div>
+        <div><div class="sglb">مزيج الوقود (من الإيراد)</div>{mixbar([('بنزين 91', m['g91'], '#3E6E8E'), ('بنزين 95', m['g95'], '#F5831F'), ('ديزل', m['dsl'], '#6E6A64')])}
+             <div class="sglb" style="margin-top:18px">طرق الدفع (من الإيراد)</div>{mixbar([('نقد', m['cash'], '#2E8B6F'), ('بطاقة', m['card'], '#3E6E8E'), ('تطبيقات وأخرى', m['apps'], '#F7A94B')])}</div>
       </div>
     </div>'''
 
