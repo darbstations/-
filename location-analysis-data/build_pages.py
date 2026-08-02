@@ -3,6 +3,10 @@
 import json, html, os, statistics
 
 A = json.load(open('analysis.json'))
+try:
+    ACT = json.load(open('actual_daily.json'))
+except FileNotFoundError:
+    ACT = {}
 DATA = json.load(open('data.json'))
 XL = json.load(open('stations.json'))
 COMP = json.load(open('competitors.json'))
@@ -640,9 +644,14 @@ def daily_body(a):
     for mk, mv in BYCODE[code].get('monthly', {}).items():
         if mv.get('volume') and mv.get('revenue'):
             mratio[mk] = mv['volume'] / mv['revenue']
+    act = ACT.get(code, {})
     def liters_of(d):
+        a = act.get(d['date'])
+        if a and a.get('lit'):
+            return a['lit']
         r = mratio.get(d['date'][:7], base_ratio)
         return d['rev'] * r
+    n_act = sum(1 for d in daily if act.get(d['date'], {}).get('lit'))
     tot_lit = sum(liters_of(d) for d in daily)
     vals = [d['rev'] for d in daily]
     avg = sum(vals)/len(vals)
@@ -658,11 +667,13 @@ def daily_body(a):
         inv = d['rev']/d['vis'] if d['vis'] else 0
         lit = liters_of(d)
         litv = lit/d['vis'] if d['vis'] else 0
-        rows += f'''<tr><td>{d['date']}</td><td>{wd(d['date'])}</td><td>{n0(d['rev'])}</td><td>{n0(lit)}</td><td>{n0(d['vis'])}</td><td>{inv:.0f}</td><td>{litv:.0f}</td></tr>'''
+        is_act = bool(act.get(d['date'], {}).get('lit'))
+        mark = '' if is_act else '*'
+        rows += f'''<tr><td>{d['date']}</td><td>{wd(d['date'])}</td><td>{n0(d['rev'])}</td><td>{n0(lit)}{mark}</td><td>{n0(d['vis'])}</td><td>{inv:.0f}</td><td>{litv:.0f}{mark}</td></tr>'''
     kpis = f'''
     <div class="skpis" style="grid-template-columns:repeat(6,1fr)">
       <div class="kpi hot"><div class="kl">متوسط الإيراد اليومي</div><div class="kv">{sar(avg)}</div><div class="kn">{len(daily)} يومًا مسجلًا</div></div>
-      <div class="kpi"><div class="kl">متوسط اللترات اليومية*</div><div class="kv">{n0(tot_lit/len(daily))} <small>لتر</small></div><div class="kn">إجمالي الفترة {n0(tot_lit)} لتر</div></div>
+      <div class="kpi"><div class="kl">متوسط اللترات اليومية{'' if n_act == len(daily) else '*'}</div><div class="kv">{n0(tot_lit/len(daily))} <small>لتر</small></div><div class="kn">إجمالي الفترة {n0(tot_lit)} لتر{f' · فعلي لـ{n_act} من {len(daily)} يومًا' if 0 < n_act < len(daily) else (' · فعلي 100٪ من ملفات المعاملات' if n_act == len(daily) else '')}</div></div>
       <div class="kpi"><div class="kl">أفضل يوم</div><div class="kv">{n0(best['rev'])} <small>ر.س</small></div><div class="kn">{best['date']} ({wd(best['date'])})</div></div>
       <div class="kpi"><div class="kl">أدنى يوم</div><div class="kv">{n0(worst['rev'])} <small>ر.س</small></div><div class="kn">{worst['date']} ({wd(worst['date'])})</div></div>
       <div class="kpi"><div class="kl">آخر 30 يومًا مقابل ما قبلها</div><div class="kv">{trend or '—'}</div><div class="kn">على متوسط الإيراد اليومي</div></div>
@@ -674,7 +685,7 @@ def daily_body(a):
     <div class="dtbl"><table>
       <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>اللترات*</th><th>الزيارات</th><th>متوسط الفاتورة</th><th>لتر/زيارة*</th></tr></thead>
       <tbody>{rows}</tbody></table></div>
-    <div class="dnote">📌 (*) اللترات اليومية <b>تقديرية</b>: البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر{' — وبنسبة الفترة للأشهر ناقصة اللترات' if len(mratio) < len(BYCODE[code].get('monthly', {})) else ''}). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى {daily[-1]['date']} — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div>'''
+    <div class="dnote">{'📌 اللترات اليومية <b>فعلية</b> — محسوبة من ملفات المعاملات الشهرية (Drive «2026»، عمود ResponseVolume بعد استبعاد غير المبيعات). ' if n_act == len(daily) else ('📌 اللترات المعلَّمة بدون نجمة <b>فعلية</b> من ملفات المعاملات؛ والمعلَّمة بنجمة (*) تقديرية للأيام غير المغطاة. ' if n_act else '')}{'' if n_act == len(daily) else '(*) اللترات التقديرية:'} البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر{' — وبنسبة الفترة للأشهر ناقصة اللترات' if len(mratio) < len(BYCODE[code].get('monthly', {})) else ''}). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى {daily[-1]['date']} — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div>'''
 
 # ---------------- per-station pages ----------------
 for idx, a in enumerate(ORDER):
