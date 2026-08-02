@@ -982,7 +982,7 @@ hub = f'''<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>درب · تحليل المواقع والمبيعات — دليل المحطات</title>
+<title>درب · تحليل المحطات والمبيعات — دليل المحطات</title>
 {FONTS}
 <style>{CSS}</style>
 </head>
@@ -991,7 +991,7 @@ hub = f'''<!DOCTYPE html>
   <div class="wrap">
     <div class="brand">
       <div class="mark">{LOGO_SVG}</div>
-      <div class="hd-title"><h1>تحليل المواقع والمبيعات — صفحة مستقلة لكل محطة: PEST · بيرسونا · SWOT · المنافسون ≤ 5 كم</h1>
+      <div class="hd-title"><h1>تحليل المحطات والمبيعات – صفحة مستقلة لكل محطة تشمل: تحليل PEST، العميل المستهدف (Persona)، تحليل SWOT، وتحليل المنافسين ضمن نطاق 5 كم</h1>
       <p>النصف الأول 2026 · {len(ORDER)} محطة مشمولة بالبيانات · اختر محطة لفتح صفحتها الكاملة</p></div>
     </div>
     <div class="netkpis">
@@ -1030,7 +1030,7 @@ function route(){{
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   const t=h?document.getElementById('pg-'+h.replace(/\//g,'-')):null;
   if(t){{hubEl.style.display='none';t.hidden=false;document.title=t.dataset.title+' — تحليل الموقع والمبيعات';window.scrollTo(0,0);}}
-  else{{hubEl.style.display='';document.title='درب · تحليل المواقع والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
+  else{{hubEl.style.display='';document.title='درب · تحليل المحطات والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
 }}
 window.addEventListener('hashchange',route);
 const chips=document.querySelectorAll('.chip');const q=document.getElementById('q');
