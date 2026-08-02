@@ -75,6 +75,7 @@ body{
 .card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px}
 .card .k{font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:700;margin-bottom:10px}
 .card .v{font-size:33px;font-weight:700;line-height:1;letter-spacing:-.02em}
+.card .v.formula{font-size:19px;line-height:1.5;letter-spacing:0}
 .card .v small{font-size:14px;font-weight:700;color:var(--ink-2);margin-inline-start:5px}
 .card .d{font-size:13px;color:var(--ink-2);margin-top:10px;line-height:1.65}
 .card.accent{background:var(--orange-hi);border-color:var(--orange-hi)}
@@ -91,6 +92,7 @@ body{
 .move .t{font-size:13px;font-weight:700;color:#fff;background:var(--orange);border-radius:3px;padding:5px 11px;white-space:nowrap}
 .move h3{margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.4}
 .move p{margin:0;font-size:14.5px;line-height:1.75;color:var(--ink-2)}
+.move p + p{margin-top:6px}
 .move .why{
   display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;
   color:var(--orange);background:color-mix(in srgb,var(--orange-hi) 14%,transparent);
@@ -135,9 +137,8 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 .ticket .logo{font-size:11px;font-weight:700;letter-spacing:.2em}
 .ticket .win{font-size:11px;font-weight:700;letter-spacing:.05em;opacity:.9}
 .ticket .offer{font-size:22px;font-weight:700;line-height:1.35;margin:14px 0 0}
-.ticket .foot{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;font-size:11.5px;margin-top:16px}
-.ticket .valid{font-weight:700}
-.ticket .pump{border:1px dashed rgba(255,255,255,.6);padding:4px 9px;border-radius:3px}
+.ticket .foot{display:flex;justify-content:flex-start;align-items:flex-end;gap:10px;font-size:11.5px;margin-top:16px}
+.ticket .pump{border:1px dashed rgba(255,255,255,.6);padding:4px 9px;border-radius:3px;font-weight:700}
 .ticket.back .h{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--ink-3);margin-bottom:9px}
 .ticket.back .units{font-size:12.5px;line-height:1.85;color:var(--ink-2)}
 .ticket.back .rule{font-size:11.5px;color:var(--ink-3);border-top:1px solid var(--line);padding-top:9px;margin-top:10px}
@@ -149,10 +150,10 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 .col{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px}
 .col.station{border-top:3px solid var(--orange-hi)}
 .col.partner{border-top:3px solid var(--cool)}
-.col h3{margin:0 0 4px;font-size:18px;font-weight:700}
-.col .sub{font-size:12.5px;color:var(--ink-3);margin:0 0 16px}
+.col h3{margin:0 0 16px;font-size:18px;font-weight:700}
 .col ul{margin:0;padding-inline-start:19px}
 .col li{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-bottom:9px}
+.col li:last-child{margin-bottom:0}
 .col li b{color:var(--ink)}
 
 /* timeline */
@@ -256,7 +257,7 @@ body.editing .deck{cursor:text}
     <span class="brandmeta">خطة تفعيل الفطور مع الشركاء</span>
   </div>
   <h1>محطة الفطور.<br><span class="hl">تُبنى بالعمال، لا بالإعلانات.</span></h1>
-  <p class="sub">خطة على مرحلتين: الأولى تبني الهوية وتوزّع الكروت دون أي ربط بالبنزين، والثانية تربط الشركاء ببعضهم.</p>
+  <p class="sub">خطة على مرحلتين: الأولى تبني الهوية وتوزّع الكروت والثانية تربط الشركاء ببعضهم.</p>
 
   <div class="pos">
     <div>
@@ -315,25 +316,24 @@ body.editing .deck{cursor:text}
     <div class="move hero">
       <span class="t">١</span>
       <div>
-        <h3>المضخة تصير نقطة طلب</h3>
-        <p>العامل يأخذ طلب الفطور أثناء التعبئة ويرسله للوحدة عبر واتساب أو لاسلكي، فيكون جاهزًا لحظة ما يركن العميل. هذا يلغي السبب الأول لعزوف المسافر: الطابور. يبدأ بصنف واحد سريع لكل وحدة حتى لا يرتبك العامل.</p>
-        <span class="why">٨٧ ثانية وقوف ميت تتحوّل إلى طلب — دون ربط بنظام البنزين</span>
+        <h3>الاستعداد والتجهيز :</h3>
+        <p>أول أسبوع اجتماعات لجمع العروض من الشركاء - تصميم قالب الكروت - تصميم سديري مكتوب عليه اسألني عن عروض الفطور - بروشور بجدول الفطور خلال الشهر كامل</p>
       </div>
     </div>
 
     <div class="move">
       <span class="t">٢</span>
       <div>
-        <h3>كرت الترويقة</h3>
-        <p>يُسلَّم مع الباقي، لا كمنشور. ميزة واحدة واضحة — شاي أو قهوة مجانًا مع أي فطور — صالحة نفس اليوم فقط، ولون مختلف لكل يوم.</p>
-        <span class="why">اللون اليومي يقيس معدل الالتقاط بعدّ الكروت المسترجعة، بلا أي نظام</span>
+        <h3>طريقة التوزيع :</h3>
+        <p>عن طريق العمال + واش واي : كروت العروض</p>
+        <p>عن طريق الشركاء : البروشورات</p>
       </div>
     </div>
 
     <div class="move">
       <span class="t">٣</span>
       <div>
-        <h3>ابدأ بست مضخات لا بأربع وثلاثين</h3>
+        <h3>التركيز على أكثر ست مضخات تبيع</h3>
         <p>المضخات ١٦ و٢٤ و٣٠ و١٨ و٣٤ و٢٠ تستقبل وحدها ٣٩٥ سيارة صباحًا. جرّب عليها أسبوعين، ثم عمّم بعد أن تعرف ما ينجح.</p>
         <span class="why">٤٠٪ من حركة الصباح من ٦ مضخات فقط — وأضعف مضخة لا تتجاوز ٥ سيارات</span>
       </div>
@@ -351,8 +351,8 @@ body.editing .deck{cursor:text}
     <div class="move">
       <span class="t">٥</span>
       <div>
-        <h3>بطاقة السائق</h3>
-        <p>فطور مجاني دائم للسائق وعمولة على المجموعة، مع اتفاق مع مكاتب النقل ليكون الموقف معتمدًا. السائق — لا الراكب — هو من يقرر أين تقف الحافلة.</p>
+        <h3>باصات العمرة</h3>
+        <p>توزيع البروشورات والكروت على المعتمرين يوميا</p>
         <span class="why">٣٢ مركبة كبيرة كل صباح · الحافلة الواحدة ٤٠–٥٠ معتمرًا</span>
       </div>
     </div>
@@ -361,8 +361,8 @@ body.editing .deck{cursor:text}
       <span class="t">٦</span>
       <div>
         <h3>الرائحة قبل اللافتة</h3>
-        <p>توجيه مدخنة فرن التميس والخبز ناحية الساحة، وإبقاء نشاط مرئي ومضاء من الخامسة فجرًا. واجهة مظلمة في الخامسة تُقرأ «مغلق» مهما كُتب عليها.</p>
-        <span class="why">أرخص أداة تسويق في المحطة — وأسرعها أثرًا عند الفجر</span>
+        <p>توجيه مدخنة فرن التميس والخبز أو محل بف ناحية الساحة، وإبقاء نشاط مرئي ومضاء من الخامسة فجرًا.</p>
+        <span class="why">أرخص أداة تسويق في المحطة — وأسرعها أثرًا عند الفجر وصارت معي من أول</span>
       </div>
     </div>
 
@@ -370,7 +370,7 @@ body.editing .deck{cursor:text}
       <span class="t">٧</span>
       <div>
         <h3>العمال فريق مبيعات، لا موظفو مضخة</h3>
-        <p>صدرية برتقالية للفترة الصباحية مكتوب عليها «اسألني عن الفطور»، وجملة واحدة مدرّبة لا خطبة، وحافز صغير على كل كرت مسترجع يحمل رقم مضخته.</p>
+        <p>صدرية برتقالية للفترة الصباحية مكتوب عليها «اسألني عن الفطور»، وجملة واحدة مدرّبة، وحافز صغير على كل كرت مسترجع يحمل رقم مضخته.</p>
         <span class="why">رقم المضخة على الكرت يربط كل عملية بيع بالعامل الذي صنعها</span>
       </div>
     </div>
@@ -379,7 +379,7 @@ body.editing .deck{cursor:text}
       <span class="t">٨</span>
       <div>
         <h3>لافتات الطريق بالرسالة الجغرافية</h3>
-        <p>«آخر فطور قبل الحرم» على الاتجاه الداخل و«أول فطور بعد الحرم» على الخارج، مع تثبيت اسم النافذة: ترويقة درب من ٥ إلى ١١.</p>
+        <p>«آخر فطور قبل الحرم» على الاتجاه الداخل و«أول فطور بعد الحرم» على الخارج، مع تثبيت اسم النافذة: فطور درب من ٥ص .</p>
         <span class="why">تكرار الاسم يحوّل المحطة من محطة وقود إلى وجهة فطور</span>
       </div>
     </div>
@@ -458,19 +458,18 @@ body.editing .deck{cursor:text}
 <section class="slide">
   <p class="eyebrow">٤ · الأداة</p>
   <h2>كرت الترويقة — وجهان ووظيفتان</h2>
-  <p class="lede">الوجه الأول يبيع، والوجه الثاني يدلّ ويقيس. اللون يتغيّر يوميًا، ورقم المضخة يُكتب يدويًا من العامل.</p>
+  <p class="lede">الوجه الأول يبيع، والوجه الثاني يدلّ ويقيس، ورقم المضخة يُكتب يدويًا من العامل.</p>
 
   <div class="mock">
     <div class="ticket front">
       <div>
         <div class="top">
-          <span class="logo">درب · ترويقة</span>
-          <span class="win">٠٥:٠٠ — ١١:٠٠</span>
+          <span class="logo">فطور درب</span>
+          <span class="win">٠٥:٠٠ ص</span>
         </div>
-        <p class="offer">شاي أو قهوة<br>مجانًا مع أي فطور</p>
+        <p class="offer">شاي أو قهوة<br>بقيمة ١٠ مع أي فطور</p>
       </div>
       <div class="foot">
-        <span class="valid">صالح اليوم فقط</span>
         <span class="pump">مضخة رقم ____</span>
       </div>
     </div>
@@ -488,7 +487,7 @@ body.editing .deck{cursor:text}
       <div class="rule">سلّم الكرت عند الطلب · لا يُجمع مع عرض آخر · لا يُقبل بعد الحادية عشرة</div>
     </div>
 
-    <p class="mocknote">لون الكرت يتغيّر كل يوم. في نهاية اليوم تُجمع الكروت المسترجعة من كل وحدة وتُعدّ — فتظهر نسبة التحويل لكل وحدة ولكل مضخة، دون أي ربط بنظام البنزين ودون تكلفة تقنية.</p>
+    <p class="mocknote">لون الكرت يتغيّر كل يوم. في نهاية اليوم تُجمع الكروت المسترجعة من كل وحدة وتُعدّ فتظهر نسبة التحويل لكل وحدة ولكل مضخة، دون أي ربط بنظام البنزين ودون تكلفة تقنية.</p>
   </div>
 </section>
 
@@ -505,8 +504,8 @@ body.editing .deck{cursor:text}
     <div class="move hero">
       <span class="t">١</span>
       <div>
-        <h3>صحن الطريق</h3>
-        <p>طبق مركّب من عدة وحدات — فول من وحدة، تميس من ثانية، شاي من ثالثة — بسعر واحد وتوزيع إيراد بنسب متفق عليها مسبقًا. كل شريك يبيع أكثر مما يبيعه منفردًا.</p>
+        <h3>صينية الفطور :</h3>
+        <p>طبق مركّب من عدة وحدات — فول من وحدة، تميس من ثانية، شاي من ثالثة — يتم توضيح الربط بين العروض في بروشور (أي أحد يشتري من واش واي له عرض من زينة السيارات)</p>
         <span class="why">يرفع قيمة الفاتورة الواحدة دون زيادة عدد العملاء</span>
       </div>
     </div>
@@ -514,30 +513,14 @@ body.editing .deck{cursor:text}
       <span class="t">٢</span>
       <div>
         <h3>القسيمة المتبادلة</h3>
-        <p>من يشتري من محل الشاي يأخذ قسيمة لمحل الفلافل صالحة نفس الزيارة، والعكس. ورقة وختم — بلا نظام مركزي ولا تكلفة.</p>
+        <p>من يشتري من محل الشاي يأخذ قسيمة لمحل الفلافل صالحة نفس الزيارة، والعكس.</p>
         <span class="why">تحوّل عميل وحدة واحدة إلى عميل وحدتين في نفس الوقفة</span>
       </div>
     </div>
     <div class="move">
       <span class="t">٣</span>
       <div>
-        <h3>بطاقة الأختام المتقاطعة</h3>
-        <p>خمسة أختام من وحدات مختلفة — لا تُقبل من وحدة واحدة — تعطي فطورًا مجانيًا. تدفع العميل لتجربة شركاء ما كان ليدخلهم.</p>
-        <span class="why">طريق العمرة طريق متكرر: المعتمر يعود، والسائق أسبوعيًا</span>
-      </div>
-    </div>
-    <div class="move">
-      <span class="t">٤</span>
-      <div>
-        <h3>فطور الأسبوع</h3>
-        <p>وحدة واحدة كل أسبوع تتصدّر لافتات المحطة كلها بالتناوب العادل بين الشركاء.</p>
-        <span class="why">يجدّد المحتوى ويحافظ على حماس الشركاء دون محاباة</span>
-      </div>
-    </div>
-    <div class="move">
-      <span class="t">٥</span>
-      <div>
-        <h3>قاعة الترويقة</h3>
+        <h3>قاعة الفطور</h3>
         <p>منطقة جلوس مشتركة موسومة باسم واحد، يجلس فيها عملاء كل الوحدات معًا.</p>
         <span class="why">إطالة مدة البقاء ترفع الشراء المتقاطع تلقائيًا</span>
       </div>
@@ -545,83 +528,37 @@ body.editing .deck{cursor:text}
   </div>
 </section>
 
-<!-- 7 — OFFERS CALENDAR -->
+<!-- 7 — RESPONSIBILITIES -->
 <section class="slide">
-  <p class="eyebrow">٥ · خطة العروض</p>
-  <h2>كل عرض مبني على رقم، لا على انطباع</h2>
-
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr><th>العرض</th><th>التوقيت</th><th>الآلية</th><th>المنطق من البيانات</th></tr>
-      </thead>
-      <tbody>
-        <tr class="hot">
-          <td class="strong">الترويقة اليومية</td><td>٠٥:٠٠ – ١١:٠٠</td>
-          <td>مشروب مجاني مع أي فطور عبر الكرت</td>
-          <td>هضبة ثابتة ٩٩٢ سيارة صباحًا</td>
-        </tr>
-        <tr>
-          <td class="strong">فطور الفجر</td><td>٠٥:٠٠ – ٠٧:٠٠</td>
-          <td>سعر مخفّض لأول ساعتين</td>
-          <td>من يفتح الثامنة يفوّت ٤١٤ سيارة يوميًا</td>
-        </tr>
-        <tr>
-          <td class="strong">بوكس المجموعات</td><td>طوال الصباح</td>
-          <td>سعر للفرد يُباع لمكتب الرحلات</td>
-          <td>٣٢ مركبة كبيرة كل صباح</td>
-        </tr>
-        <tr>
-          <td class="strong">جمعة العائلة</td><td>بعد الفجر</td>
-          <td>عرض عائلي بحجم أكبر وسعر مجموعة</td>
-          <td>الجمعة ٥٩٨ سيارة — أضعف بـ٤٣٪</td>
-        </tr>
-        <tr>
-          <td class="strong">يوم الإطلاق</td><td>أربعاء</td>
-          <td>تشغيل كامل: كروت وصدريات ولافتات</td>
-          <td>أقوى صباح في الأسبوع: ١٬١١٣ سيارة</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</section>
-
-<!-- 8 — COMMITMENTS -->
-<section class="slide">
-  <p class="eyebrow">٦ · تقسيم الالتزام</p>
-  <h2>المحطة تدفع، والشريك يفتح</h2>
+  <h2>المسؤوليات:</h2>
   <p class="lede">تمويل المرحلة الأولى بالكامل من المحطة ينزع أكبر اعتراض متوقّع — «ندفع على تجربة غير مضمونة» — ويشتري الالتزام الوحيد الذي تحتاجه فعلًا.</p>
 
   <div class="cols">
     <div class="col station">
       <h3>على المحطة</h3>
-      <p class="sub">تكلفة المرحلة الأولى كاملة</p>
       <ul>
-        <li><b>طباعة الكروت</b> بألوان يومية طوال ٦٠ يومًا</li>
-        <li><b>الصدريات</b> وتدريب العمال الستة وحوافزهم</li>
-        <li><b>لافتات الطريق</b> وأطواق المضخات ولوحاتها</li>
+        <li><b>لافتات الطريق</b></li>
         <li><b>اتفاقيات مكاتب النقل</b> وشركات الحافلات</li>
         <li><b>الإنارة</b> وتوجيه المسار من المصلّى إلى الوحدات</li>
-        <li><b>القياس الأسبوعي</b> وإصدار تقرير معدّل الالتقاط</li>
+        <li><b>الصدريات</b> وتدريب العمال الستة وحوافزهم</li>
       </ul>
     </div>
     <div class="col partner">
       <h3>على الشريك</h3>
-      <p class="sub">التزامات تشغيلية بلا تكلفة نقدية</p>
       <ul>
         <li><b>الفتح الساعة ٠٥:٠٠</b> — وهو الالتزام الأهم في الخطة كلها</li>
-        <li><b>قبول الكرت</b> دون جدال مع العميل</li>
-        <li><b>صنف سريع واحد</b> جاهز للطلب من المضخة</li>
-        <li><b>تسليم الكروت المسترجعة</b> في نهاية كل يوم</li>
+        <li><b>طباعة الكرت</b></li>
+        <li><b>صنف سريع واحد</b></li>
         <li><b>تعيين مسؤول</b> يردّ على طلبات العمال فورًا</li>
+        <li><b>التعاون مع مؤثرين</b></li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- 9 — TIMELINE -->
+<!-- 8 — TIMELINE -->
 <section class="slide">
-  <p class="eyebrow">٧ · الجدول الزمني</p>
+  <p class="eyebrow">٥ · الجدول الزمني</p>
   <h2>تجربة ستين يومًا برقم واحد يحكم عليها</h2>
 
   <div class="tl">
@@ -631,32 +568,26 @@ body.editing .deck{cursor:text}
     </div>
     <div class="row">
       <div class="w">الأسبوع ٢ – ٣</div>
-      <div class="c"><b>التجربة على ست مضخات</b><span>توزيع الكروت في ٠٥:٠٠–١١:٠٠، وجمعها وعدّها يوميًا لكل وحدة ولكل مضخة. الإطلاق يوم أربعاء.</span></div>
+      <div class="c"><b>التجربة على ست مضخات</b><span>توزيع الكروت في ٠٥:٠ ص.</span></div>
     </div>
     <div class="row">
       <div class="w">الأسبوع ٤</div>
-      <div class="c"><b>القياس والتعديل</b><span>مراجعة معدّل الالتقاط، استبعاد العروض الضعيفة، تثبيت الصنف الأكثر طلبًا لكل وحدة.</span></div>
+      <div class="c"><b>القياس والتعديل</b></div>
     </div>
     <div class="row">
       <div class="w">الأسبوع ٥ – ٨</div>
-      <div class="c"><b>التعميم</b><span>توسعة التوزيع إلى ٣٤ مضخة، تركيب لافتات الطريق، تفعيل بطاقة السائق واتفاقيات مكاتب النقل.</span></div>
+      <div class="c"><b>تنفيذ خطة رقمية محكمة: نشر تشويقة وعرض وستوري لكل شريك</b></div>
     </div>
     <div class="row">
       <div class="w">الأسبوع ٩ فأكثر</div>
-      <div class="c"><b>المرحلة الثانية</b><span>إطلاق صحن الطريق والقسيمة المتبادلة وبطاقة الأختام بعد أن يكون معدّل الالتقاط قد استقر وأصبح قابلًا للمقارنة.</span></div>
+      <div class="c"><b>المرحلة الثانية</b><span>نبدأ بمرحلة ربط الشركاء ببعض .</span></div>
     </div>
   </div>
 
   <div class="grid">
     <div class="card accent">
       <div class="k">مؤشر النجاح الوحيد</div>
-      <div class="v">معدّل الالتقاط</div>
-      <div class="d">الكروت المسترجعة ÷ سيارات الصباح — يُقاس أسبوعيًا وتُبنى عليه كل قرارات التمديد أو الإيقاف</div>
-    </div>
-    <div class="card">
-      <div class="k">أساس المقارنة</div>
-      <div class="v">يوليو ٢٠٢٦</div>
-      <div class="d">٩٩٢ سيارة صباحًا · ٦٧٬٦٣٠ ر.س إيراد وقود يوميًا في النافذة</div>
+      <div class="v formula">عدد الكروت المسترجعة من الشريك / عدد سيرات الصباح</div>
     </div>
   </div>
   <p class="note">مصدر كل الأرقام: تقرير Sales Transaction لمحطة العمرة (Al Umrah-MK007) — ٩٥٬٣٠٤ عملية بيع بين ١ و٢٢ يوليو ٢٠٢٦، حيث كل عملية تعبئة تساوي مركبة واحدة. أرقام العمال وأزمنة الوقوف مستخرجة من حقلَي المستخدم ومدة العملية في التقرير نفسه.</p>
@@ -666,7 +597,7 @@ body.editing .deck{cursor:text}
 
 <script>
 (function(){
-  var KEY   = 'darb-umrah-plan-edits';
+  var KEY   = 'darb-umrah-plan-edits-v2';
   var deck  = document.getElementById('deck');
   var state = document.getElementById('state');
   var toast = document.getElementById('toast');
@@ -697,6 +628,28 @@ body.editing .deck{cursor:text}
     catch(e){ say('تعذّر الحفظ التلقائي — استخدم «حفظ نسخة» للاحتفاظ بالتعديلات.'); }
   }
 
+  /* ---- keep pasted and typed text free of inline styling ---- */
+  function scrub(root){
+    var nodes = root.querySelectorAll('[style],font');
+    for(var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      if(el.tagName === 'FONT'){
+        var span = document.createElement('span');
+        span.innerHTML = el.innerHTML;
+        el.parentNode.replaceChild(span, el);
+      }else{
+        el.removeAttribute('style');
+      }
+    }
+  }
+
+  deck.addEventListener('paste', function(e){
+    if(!editing) return;
+    e.preventDefault();
+    var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+    document.execCommand('insertText', false, text);
+  });
+
   /* ---- edit mode ---- */
   function setEditing(on){
     editing = on;
@@ -707,14 +660,19 @@ body.editing .deck{cursor:text}
     bEdit.classList.toggle('primary', !on);
     state.textContent = on ? 'وضع التحرير — التعديلات تُحفظ تلقائيًا' : 'وضع العرض';
     state.classList.toggle('on', on);
-    if(on){ say('اضغط على أي نص وعدّله مباشرة. لا تنسَ «حفظ نسخة» لتصدير ملف نهائي.'); }
+    if(on){
+      say('اضغط على أي نص وعدّله مباشرة. لا تنسَ «حفظ نسخة» لتصدير ملف نهائي.');
+    }else{
+      scrub(deck);
+      persist();
+    }
   }
 
   bEdit.addEventListener('click', function(){ setEditing(!editing); });
 
   deck.addEventListener('input', function(){
     clearTimeout(persist._t);
-    persist._t = setTimeout(persist, 400);
+    persist._t = setTimeout(function(){ scrub(deck); persist(); }, 500);
   });
 
   /* ---- export a standalone copy with the edits baked in ---- */
