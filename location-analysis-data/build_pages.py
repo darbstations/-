@@ -633,6 +633,17 @@ def daily_body(a):
     m = a['metrics']; code = m['code']
     daily = [d for d in BYCODE[code]['overall'].get('daily', []) if d['rev'] > 0]
     if not daily: return '<div class="card"><div class="cs">لا تتوفر بيانات يومية بعد — بانتظار التزويد.</div></div>'
+    # نسبة اللترات/الإيراد لكل شهر من الفعلي الشهري (معايرة بمزيج وقود الشهر)؛ وإلا نسبة الفترة كاملة
+    ov = BYCODE[code]['overall']
+    base_ratio = (ov.get('volume') or 0) / ov['revenue'] if ov['revenue'] else 0
+    mratio = {}
+    for mk, mv in BYCODE[code].get('monthly', {}).items():
+        if mv.get('volume') and mv.get('revenue'):
+            mratio[mk] = mv['volume'] / mv['revenue']
+    def liters_of(d):
+        r = mratio.get(d['date'][:7], base_ratio)
+        return d['rev'] * r
+    tot_lit = sum(liters_of(d) for d in daily)
     vals = [d['rev'] for d in daily]
     avg = sum(vals)/len(vals)
     best = max(daily, key=lambda d: d['rev']); worst = min(daily, key=lambda d: d['rev'])
@@ -645,10 +656,13 @@ def daily_body(a):
     rows = ''
     for d in reversed(daily):
         inv = d['rev']/d['vis'] if d['vis'] else 0
-        rows += f'''<tr><td>{d['date']}</td><td>{wd(d['date'])}</td><td>{n0(d['rev'])}</td><td>{n0(d['vis'])}</td><td>{inv:.0f}</td></tr>'''
+        lit = liters_of(d)
+        litv = lit/d['vis'] if d['vis'] else 0
+        rows += f'''<tr><td>{d['date']}</td><td>{wd(d['date'])}</td><td>{n0(d['rev'])}</td><td>{n0(lit)}</td><td>{n0(d['vis'])}</td><td>{inv:.0f}</td><td>{litv:.0f}</td></tr>'''
     kpis = f'''
-    <div class="skpis" style="grid-template-columns:repeat(5,1fr)">
+    <div class="skpis" style="grid-template-columns:repeat(6,1fr)">
       <div class="kpi hot"><div class="kl">متوسط الإيراد اليومي</div><div class="kv">{sar(avg)}</div><div class="kn">{len(daily)} يومًا مسجلًا</div></div>
+      <div class="kpi"><div class="kl">متوسط اللترات اليومية*</div><div class="kv">{n0(tot_lit/len(daily))} <small>لتر</small></div><div class="kn">إجمالي الفترة {n0(tot_lit)} لتر</div></div>
       <div class="kpi"><div class="kl">أفضل يوم</div><div class="kv">{n0(best['rev'])} <small>ر.س</small></div><div class="kn">{best['date']} ({wd(best['date'])})</div></div>
       <div class="kpi"><div class="kl">أدنى يوم</div><div class="kv">{n0(worst['rev'])} <small>ر.س</small></div><div class="kn">{worst['date']} ({wd(worst['date'])})</div></div>
       <div class="kpi"><div class="kl">آخر 30 يومًا مقابل ما قبلها</div><div class="kv">{trend or '—'}</div><div class="kn">على متوسط الإيراد اليومي</div></div>
@@ -658,9 +672,9 @@ def daily_body(a):
     <div class="chartbox"><h3>الإيراد اليومي عبر الفترة</h3><div class="cs">الخط الرمادي: القيم اليومية · الخط البرتقالي: متوسط متحرك 7 أيام</div>{daily_line_chart(daily)}</div>
     <div class="sec-h"><h2>سجل الأيام</h2><span>الأحدث أولًا — {daily[-1]['date']} ← {daily[0]['date']}</span></div>
     <div class="dtbl"><table>
-      <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>متوسط الفاتورة</th></tr></thead>
+      <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>اللترات*</th><th>الزيارات</th><th>متوسط الفاتورة</th><th>لتر/زيارة*</th></tr></thead>
       <tbody>{rows}</tbody></table></div>
-    <div class="dnote">📌 هذه الصفحة مبنية على البيانات اليومية المتوفرة حاليًا في لوحة المبيعات (حتى {daily[-1]['date']}). عند تزويدنا بملف مبيعات يومية أحدث تُحدَّث الصفحة بالكامل بنفس التصميم.</div>'''
+    <div class="dnote">📌 (*) اللترات اليومية <b>تقديرية</b>: البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر{' — وبنسبة الفترة للأشهر ناقصة اللترات' if len(mratio) < len(BYCODE[code].get('monthly', {})) else ''}). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى {daily[-1]['date']} — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div>'''
 
 # ---------------- per-station pages ----------------
 for idx, a in enumerate(ORDER):
