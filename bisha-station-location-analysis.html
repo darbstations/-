@@ -1,0 +1,314 @@
+<!doctype html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>درب · بيشة — تحليل الموقع + حملة الافتتاح</title>
+<style>
+:root{
+ --bg:#0a0f16;--panel:#111a25;--panel2:#16212f;--line:#243247;
+ --txt:#e9f1fa;--muted:#9db0c6;--sub:#6b7f97;
+ --acc:#4a90d9;--red:#e0574c;--amber:#e0a33e;--green:#37c98a;--blue:#4a90d9;
+ --p91:#F37021;--p95:#2E5C8A;--diesel:#4E9A51;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Tahoma,Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;padding:26px;max-width:1150px;margin:auto}
+.mono{font-family:'Consolas','Courier New',monospace}
+.kick{font-size:11px;letter-spacing:.3em;color:var(--sub);text-transform:uppercase}
+h1{font-size:27px;font-weight:800;margin:6px 0}
+h1 .sub{display:block;font-size:14px;color:var(--acc);font-weight:600;margin-top:4px}
+.top{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:flex-end}
+.coord{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:13px}
+.coord a{color:var(--blue);text-decoration:none}
+.divider{margin:34px 0 0;border:0;border-top:2px dashed var(--line)}
+.part{font-size:12px;letter-spacing:.2em;color:var(--acc);text-transform:uppercase;margin:20px 0 -6px}
+.sec{margin:24px 0}
+.sec-h{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.sec-h .n{background:var(--acc);color:#0a0f16;font-weight:800;border-radius:8px;padding:3px 10px;font-size:14px}
+.sec-h.gold .n{background:var(--amber)}
+.sec-h h2{font-size:17px;font-weight:700}
+.verdict{background:linear-gradient(135deg,#16212f,#111a25);border:1px solid var(--line);border-right:5px solid var(--acc);border-radius:14px;padding:18px 20px}
+.verdict.go{border-right-color:var(--green)}
+.verdict h3{color:var(--acc);font-size:15px;margin-bottom:6px}
+.verdict.go h3{color:var(--green)}
+.verdict p{color:var(--muted);font-size:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.kpi .l{font-size:11px;color:var(--sub)}
+.kpi .v{font-size:22px;font-weight:800;margin-top:4px}
+.kpi .u{font-size:11px;color:var(--muted);margin-top:3px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h4{font-size:13px;color:var(--acc);margin-bottom:10px}
+.card .big{font-size:20px;font-weight:800}
+.card small{color:var(--sub);font-size:11px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right}
+th{color:var(--sub);font-size:11px;font-weight:600}
+.mid td,.mid th{text-align:center}
+.b{background:rgba(224,163,62,.12)}
+.tag{font-size:10px;padding:2px 8px;border-radius:10px;font-weight:700}
+.g{background:rgba(55,201,138,.16);color:var(--green)}
+.a{background:rgba(224,163,62,.16);color:var(--amber)}
+.r{background:rgba(224,87,76,.16);color:var(--red)}
+.swot{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sw{border-radius:12px;padding:14px;border:1px solid var(--line)}
+.sw h4{font-size:13px;margin-bottom:6px}
+.sw ul{margin:0;padding-right:18px;font-size:12px;color:var(--muted)}
+.sw.s{border-top:3px solid var(--green)}.sw.w{border-top:3px solid var(--red)}
+.sw.o{border-top:3px solid var(--blue)}.sw.t{border-top:3px solid var(--amber)}
+.map{width:100%;height:320px;border:1px solid var(--line);border-radius:12px}
+.wrap{position:relative;height:260px}
+.note{font-size:11.5px;color:var(--sub);background:var(--panel);border:1px dashed var(--line);border-radius:10px;padding:12px;margin-top:12px}
+.foot{border-top:1px solid var(--line);margin-top:30px;padding-top:14px;font-size:11.5px;color:var(--sub)}
+.ideas{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.idea{display:grid;grid-template-columns:auto 1fr;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+.idea .in{background:var(--amber);color:#0a0f16;font-weight:800;border-radius:8px;min-width:34px;height:34px;display:grid;place-items:center;font-size:15px}
+.idea h5{font-size:13.5px;margin-bottom:2px}
+.idea p{font-size:12.5px;color:var(--muted)}
+.idea .when{font-size:10.5px;color:var(--amber);font-weight:700}
+@media(max-width:820px){.kpis,.grid2,.grid3,.swot,.ideas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="top">
+ <div>
+   <div class="kick">Site Intelligence + Launch Playbook · إدارة التسويق درب</div>
+   <h1>محطة بيشة — تحليل الموقع + خطة حملة الافتتاح<span class="sub">جنوب مدينة بيشة · محور بيشة ↔ خميس مشيط (المدخل الجنوبي) · منطقة عسير</span></h1>
+ </div>
+ <div class="coord mono">
+   LAT / LNG<br>
+   <a href="https://www.google.com/maps?q=19.928710,42.594561" target="_blank">19.928710, 42.594561</a><br>
+   <span style="color:var(--sub)">درب / بيشة — الجنوب</span>
+ </div>
+</div>
+
+<div class="part">الجزء الأول · تشريح الموقع</div>
+
+<div class="sec">
+ <div class="verdict"><h3>◎ الحكم التنفيذي للموقع</h3>
+  <p><b>حاضرة زراعية-جامعية مكتفية بذاتها على بوابتها الجنوبية — وسوق شبه مفتوح لدرب في عمق عسير الداخلي.</b>
+  الموقع على المحور الجنوبي لمدينة <b>بيشة</b> — بوابة القادم من/إلى <b>خميس مشيط وعسير</b> عبر الطريق المعبد، على أطراف النسيج الحضري الجنوبي. بيشة <b>محافظة بـ202 ألف نسمة (74.9% سعوديون)</b> وهي مركز الجذب الوحيد لنطاق واسع من عسير الداخلية: مقر <b>جامعة بيشة</b>، ومطار محلي، وأكبر واحة نخيل بالجنوب (وادي بيشة وسد الملك فهد — أضخم سدود المملكة)، ومهرجان <b>«صفري بيشة»</b> للتمور الذي يقترب موعده (أواخر الصيف).
+  درب لا تملك محطة في بيشة — <b>صفر تداخل داخلي</b> — والمرجع الإقليمي من نفس منطقة عسير جاهز: <b>محايل عسير قفزت بعد حملة إطلاقها من 72 ألفاً إلى 660 ألف لتر (~21.3 ألف لتر/يوم)</b> في محافظة مماثلة الحجم تقريباً. بيشة تكرارٌ شبه حرفي لمعادلة محايل: مدينة داخلية مكتفية، جمهور حسّاس للعروض، ومنافسة تقليدية قابلة للاختراق.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">سكان محافظة بيشة</div><div class="v">202,096</div><div class="u">تعداد 2022 · سعوديون 151,279 (74.9%)</div></div>
+  <div class="kpi"><div class="l">حضور درب في بيشة</div><div class="v" style="color:var(--green)">صفر تداخل</div><div class="u">أول محطة — كل لتر صافٍ للشبكة</div></div>
+  <div class="kpi"><div class="l">المرجع الإقليمي (عسير)</div><div class="v">21.3K</div><div class="u">لتر/يوم — محايل عسير بعد إطلاقها (×9)</div></div>
+  <div class="kpi"><div class="l">الموسم القادم</div><div class="v">صفري بيشة</div><div class="u">مهرجان التمور (أواخر الصيف) — موجة زوّار على الأبواب</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">◎</span><h2>الخريطة الموضعية للنطاق</h2></div>
+ <iframe class="map" src="https://www.openstreetmap.org/export/embed.html?bbox=42.520,19.895,42.670,19.975&marker=19.928710,42.594561&layer=mapnik"></iframe>
+ <div class="note">الموقع على <b>المحور الجنوبي لبيشة</b> — الشريان الرابط بالمدينة نحو <b>خميس مشيط/أبها</b> (الطريق المعبد)، عند التقاء أحياء الجنوب النامية بحركة العبور الإقليمية. شمالاً: وسط بيشة وأسواقها؛ جنوباً وغرباً: قرى وادي بيشة الزراعية ومراكز المحافظة؛ وبالنطاق مرافق جامعة بيشة. <b>(يُثبَّت المشهد الدقيق للمداخل والجوار المباشر بالمسح الميداني)</b></div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">01</span><h2>الفئة المستهدفة وحركة المرور</h2></div>
+ <div class="grid3">
+  <div class="card"><h4>سكان المحافظة</h4><div class="big">202,096</div><small>تعداد 2022 — قاعدة سعودية عائلية غالبة (74.9%) متجذرة ومترابطة</small></div>
+  <div class="card"><h4>الجمهور الجامعي</h4><div class="big" style="font-size:16px">جامعة بيشة</div><small>آلاف الطلاب والموظفين — تنقّل يومي منتظم وذروة صباحية ثابتة 5 أيام أسبوعياً</small></div>
+  <div class="card"><h4>اقتصاد الوادي</h4><div class="big" style="font-size:16px">نخيل وزراعة</div><small>أكبر واحة نخيل بالجنوب: دينات، وايتات، نقل تمور — ديزل B2B ثابت وذروته بموسم الصفري</small></div>
+  <div class="card"><h4>عبور إقليمي</h4><div class="big" style="font-size:16px">بوابة الجنوب</div><small>محور بيشة ↔ خميس/أبها + مركز خدمات لعشرات القرى والمراكز حول المدينة</small></div>
+  <div class="card"><h4>حساسية السعر</h4><div class="big" style="font-size:16px">عالية</div><small>مدينة داخلية بنمط محايل — العروض تحرّك الجمهور بقوة والانتشار شفهي سريع</small></div>
+  <div class="card"><h4>الإيقاع اليومي</h4><div class="big" style="font-size:16px">ذروتان + مساء حار</div><small>صباح جامعي-حكومي + مساء عائلي ممتد (صيف بيشة الداخلي حار — الليل هو النهار التجاري)</small></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">02</span><h2>نموذج الجذب والاستحواذ (HUFF)</h2></div>
+ <div class="card">
+  <table class="mid">
+   <tr><th>المؤشر</th><th>القيمة</th><th>الملاحظة</th></tr>
+   <tr><td>سكان نطاق 5 دقائق (~2.5كم)</td><td class="mono">20K–35K</td><td>أحياء الجنوب النامية — أسعار أرض أرخص تجذب العائلات الشابة</td></tr>
+   <tr><td>سكان نطاق 10 دقائق (~6كم)</td><td class="mono">70K–110K</td><td>يشمل معظم النسيج الحضري لمدينة بيشة</td></tr>
+   <tr><td>مركبات نطاق 5 دقائق</td><td class="mono">5K–9K</td><td>اعتماد كامل على السيارة + مركبات زراعية</td></tr>
+   <tr><td>أحداث تعبئة يومية قابلة للاستهداف</td><td class="mono">2.5K–4K</td><td>حضرية + جامعية + زراعية + عبور المحور الجنوبي</td></tr>
+   <tr class="b"><td><b>حصة درب المحتملة</b></td><td class="mono" style="color:var(--green)"><b>30–40%</b></td><td>الهدف العملي: 300–450 تعبئة/يوم (~13–20K لتر) خلال 6–12 شهراً</td></tr>
+  </table>
+  <div class="note">تقديرات نمذجة تُعاير بعد التشغيل. الحصة المستهدفة أعلى من ملفات المدن الكبرى (منافسة تقليدية أقل شراسة، وبوابة جنوبية تحتكر جمهورها الاتجاهي) — والهدف النهائي (~20 ألف لتر/يوم) هو حرفياً مستوى محايل عسير المحقق في محافظة موازية.</div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">03</span><h2>رادار القرب التنافسي وتقييم المخاطر</h2></div>
+ <table>
+  <tr><th>المنافس</th><th>المسافة</th><th>الاتجاه</th><th>الخطر (0–10)</th><th>الملاحظة</th></tr>
+  <tr><td>محطات محاور المدينة (وطنية: الدريس/ساسكو + محلية)</td><td class="mono">1–4كم*</td><td>وسط وشمال</td><td>5.0 <span class="tag a">متوسط</span></td><td>تخدم الوسط — قبضتها على البوابة الجنوبية أضعف</td></tr>
+  <tr><td>محطات محلية على المحور الجنوبي</td><td class="mono">0.5–3كم*</td><td>على الطريق</td><td>5.5 <span class="tag a">متوسط</span></td><td>علامات أضعف خدمةً — تُكسب حصتها بالنظافة والسرعة والمتجر</td></tr>
+  <tr><td>محطات طرق القرى والمراكز</td><td class="mono">5–15كم*</td><td>محيط ريفي</td><td>3.0 <span class="tag g">منخفض</span></td><td>خارج نطاق الجذب اليومي</td></tr>
+  <tr><td><b>درب / بيشة (موقعنا)</b></td><td class="mono">—</td><td>—</td><td><span class="tag g">مرجع</span></td><td>بوابة الجنوب — أول وآخر محطة للقادم/المغادر نحو عسير</td></tr>
+ </table>
+ <div class="note">أوزان التقييم: القرب 35% · قوة العلامة 20% · جودة التقييم 15% · عمق الخدمات 15% · الإتاحة 15%. <b>(*)</b> نطاقات تقديرية — <b>المسح الميداني قبل الإطلاق إلزامي</b> لتثبيت المنافس المباشر واتجاه خطه على الطريق المزدوج، وعدّ مروري للمحور الجنوبي لتثبيت طبقة العبور.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">04</span><h2>مصفوفة الخدمات المساندة</h2></div>
+ <table>
+  <tr><th>الخدمة</th><th>درب/بيشة</th><th>منافسو النطاق</th><th>الأولوية</th></tr>
+  <tr><td>ديزل</td><td>~</td><td>✓</td><td><span class="tag r">عالية — دينات ووايتات وادي بيشة ونقل التمور (الصفري قادم)</span></td></tr>
+  <tr><td>مغسلة</td><td>~</td><td>~</td><td><span class="tag r">عالية — غبار البيئة الداخلية يرفع التكرار</span></td></tr>
+  <tr><td>متجر</td><td>✓</td><td>✓</td><td><span class="tag a">متوسط — مع ركن تمور بيشة كهوية محلية</span></td></tr>
+  <tr><td>مأكولات/قهوة</td><td>~</td><td>~</td><td><span class="tag r">عالية — قهوة الطلاب والموظفين صباحاً (فرصة بيضاء بالمحور الجنوبي)</span></td></tr>
+  <tr><td>خدمة 24 ساعة</td><td>✓</td><td>~</td><td><span class="tag r">عالية — مساء بيشة الصيفي ممتد + مسافرو الليل نحو خميس</span></td></tr>
+  <tr><td>درايف ثرو</td><td>~</td><td>~</td><td><span class="tag r">عالية (غير منتشر بالمدينة إطلاقاً)</span></td></tr>
+ </table>
+ <div class="note">✓ متوفر · ~ غير مؤكد. في مدينة لم تصلها سلاسل الخدمة الحديثة بعد، <b>مستوى خدمة «المدن الكبرى» هو نفسه الميزة التنافسية</b> — نظافة ودورات مياه ومتجر ودرايف ثرو قهوة تجعل المحطة وجهة لا مجرد نقطة تعبئة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h"><span class="n">05</span><h2>تحليل SWOT للموقع</h2></div>
+ <div class="swot">
+  <div class="sw s"><h4 style="color:var(--green)">S · قوة</h4><ul>
+   <li>بوابة بيشة الجنوبية — احتكار اتجاهي لحركة خميس/أبها</li>
+   <li>مدينة مكتفية بذاتها: جامعة + مطار + زراعة + مركز خدمات لعشرات القرى</li>
+   <li>صفر تداخل داخلي — أول محطة درب بالمحافظة</li>
+   <li>معادلة محايل المجرَّبة (نفس المنطقة، نفس النمط، نفس الحجم تقريباً)</li>
+  </ul></div>
+  <div class="sw w"><h4 style="color:var(--red)">W · ضعف</h4><ul>
+   <li>وعي علامة درب في بيشة يبدأ من الصفر — لا عنقود يسند</li>
+   <li>سوق أصغر من ملفات المدن الكبرى — السقف المطلق محدود</li>
+   <li>بُعد لوجستي عن عناقيد درب (أقرب شقيقة محايل ~180كم جبلية)</li>
+   <li>الخدمات المميِّزة تحتاج بناء من الصفر</li>
+  </ul></div>
+  <div class="sw o"><h4 style="color:var(--blue)">O · فرص</h4><ul>
+   <li>حملة افتتاح قبيل مهرجان صفري بيشة — موجة زوّار المهرجان تضاعف أثرها</li>
+   <li>B2B زراعي فريد: أكبر واحة نخيل بالجنوب (وايتات/دينات/نقل تمور)</li>
+   <li>كرت الطالب الجامعي — آلاف العملاء المنتظمين بولاء طويل</li>
+   <li>رأس جسر لتغطية عسير الداخلية (بيشة ← تثليث ← النماص لاحقاً)</li>
+  </ul></div>
+  <div class="sw t"><h4 style="color:var(--amber)">T · تهديدات</h4><ul>
+   <li>ردّ المحطات المحلية بحرب أسعار (قدرتها محدودة لكن مزعجة)</li>
+   <li>ولاء تقليدي متجذر في مجتمع صغير يحتاج كسراً بالخدمة لا بالسعر وحده</li>
+   <li>محطة وحيدة بلا إسناد عنقودي عند أي تعثر تشغيلي</li>
+   <li>موسمية زراعية — سيولة القرى تتقلب بين المواسم</li>
+  </ul></div>
+ </div>
+</div>
+
+<hr class="divider">
+<div class="part" style="color:var(--amber)">الجزء الثاني · حملة الافتتاح: السيناريو المالي + التصور التنفيذي</div>
+
+<div class="sec">
+ <div class="verdict go"><h3>✅ توصية إدارة التسويق: نفّذ الافتتاح الآن — والتقط موجة صفري بيشة بعده مباشرة</h3>
+  <p>بيشة هي أقرب استنساخ متاح لقصة نجاح محايل عسير: مدينة داخلية بنفس الحجم تقريباً، جمهور حسّاس للعروض، منافسة تقليدية، وصفر حضور سابق للعلامة — ومحايل حققت <b>×9 خلال شهرها الأول</b> بنفس آلية الحملة. العرض: <b>50 ريالاً لأول 100 سيارة</b> بتكلفة كلية <b>~11 ألف ريال</b> واسترداد متوقع <b>~7 أيام</b> (أساسي). <b>التوقيت الذكي:</b> إطلاق الآن لبناء القاعدة، ثم موجة ترويج ثانية أيام مهرجان صفري بيشة (أواخر الصيف) حين تمتلئ المدينة بزوّار المحافظة والقرى — حملتان بميزانية واحدة تقريباً.</p></div>
+ <div class="kpis" style="margin-top:12px">
+  <div class="kpi"><div class="l">تكلفة الحملة الأساسية</div><div class="v">~11,000</div><div class="u">ريال (5K وقود مجاني + 6K تشغيل)</div></div>
+  <div class="kpi"><div class="l">قفزة الإطلاق (أساسي)</div><div class="v">~12,000</div><div class="u">لتر/يوم · مقابل ~6K بلا حملة</div></div>
+  <div class="kpi"><div class="l">الإيراد الإضافي (3 أشهر)</div><div class="v" style="color:var(--green)">~1.23M</div><div class="u">ريال (أساسي @2.10 ر/لتر)</div></div>
+  <div class="kpi"><div class="l">استرداد التكلفة</div><div class="v" style="color:var(--green)">~7 أيام</div><div class="u">أساسي · هامش 0.25 ر/لتر</div></div>
+ </div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">06</span><h2>افتراضات النموذج</h2></div>
+ <table>
+  <tr><th>المتغير</th><th>القيمة</th><th>المنطق</th></tr>
+  <tr><td>العرض الرئيسي</td><td class="mono">50 ريال × أول 100 سيارة = 5,000</td><td>يوم الافتتاح — قسائم QR بمواعيد + مسار مخصص</td></tr>
+  <tr><td>تكلفة تشغيل/تسويق</td><td class="mono">~6,000 ريال</td><td>قياساً على محايل (6,440) والقسوم (5,950)</td></tr>
+  <tr><td>سعر اللتر المدمج</td><td class="mono">2.10 ريال</td><td>فعلي من تقرير الشبكة (إجمالي ريالات ÷ لترات)</td></tr>
+  <tr><td>متوسط التعبئة</td><td class="mono">45 لتر</td><td>معيار الشبكة — الدينات والوايتات ترفعه محلياً</td></tr>
+  <tr class="b"><td>خط الأساس (بلا حملة)</td><td class="mono">6K→7.5K→9K لتر/يوم</td><td>بوابة مدينة 200 ألف — فوق أرضية البلدات (صامطة 6.7K) ودون مواقع المدن الكبرى</td></tr>
+ </table>
+ <div class="note">الإيراد بأسعار الضخ. الهامش الصافي حساسية 0.15/0.25/0.35 ويُستبدل بهامش درب المعتمد. سقف الواقعية: محايل عسير (محافظة موازية) تعمل عند ~21.3 ألف لتر/يوم بعد إطلاقها — أهدافنا النهائية كلها عند هذا السقف أو دونه.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">07</span><h2>مسار التصريف والأثر المالي</h2></div>
+ <div class="grid2">
+  <div class="card">
+   <table class="mid">
+    <tr><th>السيناريو</th><th>ش1</th><th>ش2</th><th>ش3</th><th>حجم 3 أشهر</th></tr>
+    <tr><td>بلا حملة</td><td>6,000</td><td>7,500</td><td>9,000</td><td class="mono">675,000</td></tr>
+    <tr><td><span class="tag r">محافظ</span></td><td>9,500</td><td>11,000</td><td>12,000</td><td class="mono">975,000</td></tr>
+    <tr class="b"><td><span class="tag a">أساسي</span></td><td>12,000</td><td>14,000</td><td>16,000</td><td class="mono">1,260,000</td></tr>
+    <tr><td><span class="tag g">متفائل</span></td><td>14,500</td><td>17,500</td><td>20,000</td><td class="mono">1,560,000</td></tr>
+   </table>
+  </div>
+  <div class="card"><h4>المقارنة البصرية (لتر/يوم)</h4><div class="wrap"><canvas id="ch"></canvas></div></div>
+ </div>
+ <table class="mid" style="margin-top:12px">
+  <tr><th>السيناريو</th><th>حجم إضافي</th><th>إيراد إضافي @2.10</th><th>هامش @0.15</th><th>هامش @0.25</th><th>هامش @0.35</th><th>ROI @0.25</th><th>الاسترداد</th></tr>
+  <tr><td><span class="tag r">محافظ</span></td><td class="mono">300,000</td><td class="mono">630,000</td><td class="mono">45,000</td><td class="mono">75,000</td><td class="mono">105,000</td><td>5.8×</td><td>~13 يوم</td></tr>
+  <tr class="b"><td><span class="tag a">أساسي</span></td><td class="mono">585,000</td><td class="mono">1,228,500</td><td class="mono">87,750</td><td class="mono">146,250</td><td class="mono">204,750</td><td>12.3×</td><td>~7 أيام</td></tr>
+  <tr><td><span class="tag g">متفائل</span></td><td class="mono">885,000</td><td class="mono">1,858,500</td><td class="mono">132,750</td><td class="mono">221,250</td><td class="mono">309,750</td><td>19.1×</td><td>~5 أيام</td></tr>
+ </table>
+ <div class="note">الحجم الإضافي مقابل خط الأساس (مساهمة الحملة). ROI = (هامش إضافي − 11K) ÷ 11K. المتفائل (20 ألفاً بالشهر الثالث) يبقى دون مستوى محايل المحقق (21.3 ألفاً) — الجدول كله داخل حدود مثبتة إقليمياً، وموجة صفري بيشة رافعة إضافية غير مسعّرة.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">08</span><h2>التصور التنفيذي — يوم الحملة ساعة بساعة + 10 أفكار للبرنامج</h2></div>
+ <div class="card" style="margin-bottom:14px">
+  <h4>⏱️ خطة تنفيذ يوم الافتتاح (الخميس)</h4>
+  <table>
+   <tr><th>الوقت</th><th>النشاط</th><th>المسؤول</th></tr>
+   <tr><td class="mono">16:00–18:30</td><td>تجهيز: فحص المضخات والأنظمة، تركيب اللافتات وشاشة العدّاد، بروفة مسار القسائم، ركن ضيافة (قهوة وتمر بيشاوي)</td><td>التشغيل</td></tr>
+   <tr><td class="mono">18:30–19:30</td><td>رسالة واتساب/SMS تذكيرية للمسجّلين بمواعيد شرائحهم + تفعيل قروبات المدينة والقرى</td><td>التسويق</td></tr>
+   <tr class="b"><td class="mono">20:00</td><td><b>الافتتاح: أول سيارة تعبّي مجاناً — بث مباشر + عدّاد الشاشة يبدأ</b> (بعد انكسار الحرارة)</td><td>الجميع</td></tr>
+   <tr><td class="mono">20:00–00:00</td><td>صرف المئة على 4 شرائح (25 سيارة/ساعة) — مسار قسائم منفصل عن المحور، التقاط جوال كل مستفيد، و«الحظ الثاني» لغيرهم</td><td>التشغيل + التسويق</td></tr>
+   <tr><td class="mono">00:00–00:45</td><td>سحب جائزة الليلة الكبرى (تعبئة شهر مجانية بالقرعة) + إعلان عروض الجمعة العائلية</td><td>التسويق</td></tr>
+   <tr><td class="mono">اليوم التالي 10:00</td><td>مراجعة الأرقام: لترات اليوم، أرقام ملتقطة، تكلفة فعلية — وضبط بقية الأسبوع</td><td>إدارة التسويق</td></tr>
+  </table>
+ </div>
+ <div class="ideas">
+  <div class="idea"><span class="in">1</span><div><span class="when">قبل الافتتاح بأسبوع</span><h5>ستارة التشويق على البوابة الجنوبية</h5><p>«درب وصلت بيشة» + عدّاد تنازلي مضيء — يراها كل داخل وخارج من جهة خميس/أبها، وأخبار المدن الصغيرة تنتشر وحدها.</p></div></div>
+  <div class="idea"><span class="in">2</span><div><span class="when">قبل الافتتاح 48 ساعة</span><h5>تسجيل مسبق: إعلان جيو + قروبات القرى</h5><p>إعلانات جيو-مستهدفة (نطاق 8 كم) + رسالة لقروبات المدينة ومراكز المحافظة: «سجّل رقمك — أول 100 سيارة تعبّي بـ50 ريالاً مجاناً» بشرائح مواعيد.</p></div></div>
+  <div class="idea"><span class="in">3</span><div><span class="when">يوم الافتتاح — 20:00</span><h5>الصاعق + ضيافة بيشة</h5><p>التفاصيل بالجدول أعلاه — مع قهوة وتمر بيشاوي لكل زائر: أول 100 يأخذون الوقود، والجميع يأخذ انطباع «محطتنا الجديدة».</p></div></div>
+  <div class="idea"><span class="in">4</span><div><span class="when">يوم الافتتاح</span><h5>قسيمة «الحظ الثاني»</h5><p>لما بعد المئة: خصم فوري + قهوة + قسيمة عودة — الطابور الخائب يعود الأسبوع القادم بدل أن يغضب.</p></div></div>
+  <div class="idea"><span class="in">5</span><div><span class="when">الأحد–الخميس</span><h5>كرت الطالب الجامعي</h5><p>خصم/كرت ختم لطلاب وموظفي جامعة بيشة بإبراز البطاقة — آلاف العملاء المنتظمين بذروة صباحية ثابتة، وولاء الطالب يمتد سنوات التخرج.</p></div></div>
+  <div class="idea"><span class="in">6</span><div><span class="when">من الأسبوع الأول</span><h5>B2B وادي بيشة: النخيل والوايتات</h5><p>زيارات ميدانية لعقود ديزل آجلة مع مزارع النخيل ووايتات الوادي — أكبر واحة بالجنوب، وموسم الصفري يعني ذروة نقل قادمة؛ 20 عقداً = أرضية آلاف اللترات.</p></div></div>
+  <div class="idea"><span class="in">7</span><div><span class="when">أواخر الصيف</span><h5>«محطة الصفري» — موجة المهرجان</h5><p>عروض أيام مهرجان صفري بيشة + لافتة اتجاهات للمهرجان + ركن تمور بالمتجر — المدينة تمتلئ بزوّار المحافظة والقرى: موجة ترويج ثانية شبه مجانية.</p></div></div>
+  <div class="idea"><span class="in">8</span><div><span class="when">الجمعة–السبت</span><h5>«عبّي وأنت مسافر خميس»</h5><p>باقة مسافر (ماء بارد + فحص هواء مجاني) مع تعبئة 100+ ريال — آخر محطة قبل طريق عسير الطويل حجة إقناع تعمل وحدها.</p></div></div>
+  <div class="idea"><span class="in">9</span><div><span class="when">طوال الأسبوع</span><h5>مغطي بيشاوي + بث مباشر</h5><p>استنساخ نموذج تعاقد «سناب برزان» (حائل) بحساب تغطيات بيشاوي — «أول محطة درب في بيشة» قصة محلية جاهزة، بنفس لوحة القياس وبوابة القرار.</p></div></div>
+  <div class="idea"><span class="in">10</span><div><span class="when">من اليوم الأول — دائم</span><h5>بنية الولاء: تأسيس قاعدة بيشة</h5><p>رقم الجوال شرط كل عرض → واتساب أسبوعي + كرت ختم — أول قاعدة عملاء لدرب بالمحافظة، وأصل أي توسع لاحق في عسير الداخلية (تثليث/النماص).</p></div></div>
+ </div>
+ <div class="note"><b>ترتيب الأولوية إن ضاقت الميزانية:</b> (3) الصاعق + (2) التسجيل المسبق + (10) الولاء = الحد الأدنى (~11 ألف ريال). ثم (5) كرت الطالب و(6) B2B الوادي — أثقل مصدرَي طلب منتظم بالنطاق. و(7) موجة الصفري تُخطط من الآن لأن موعدها قريب.</div>
+</div>
+
+<div class="sec">
+ <div class="sec-h gold"><span class="n">09</span><h2>المخاطر والضوابط وتوصية إدارة التسويق</h2></div>
+ <div class="grid2">
+  <div class="card"><h4>⚠️ المخاطر</h4>
+   <table><tr><td>ولاء تقليدي متجذر في مجتمع صغير</td><td><span class="tag a">متوسط — يُكسر بالخدمة والهوية المحلية لا بالسعر وحده</span></td></tr>
+   <tr><td>ردّ المحطات المحلية بحرب أسعار</td><td><span class="tag a">متوسط — قدرتها المالية محدودة</span></td></tr>
+   <tr><td>محطة وحيدة بلا إسناد عنقودي (أقرب شقيقة ~180كم)</td><td><span class="tag a">متوسط — جاهزية كاملة + خطة طوارئ شرط إطلاق</span></td></tr>
+   <tr><td>تلاشٍ بعد العرض في جمهور حسّاس للسعر</td><td><span class="tag a">متوسط — آلية الاحتفاظ (درس الحقو)</span></td></tr></table></div>
+  <div class="card"><h4>🛡️ الضوابط المتاحة الآن</h4>
+   <table><tr><td>التقاط جوال المستفيد شرطاً لكل عرض</td><td><span class="tag g">حاسم — تأسيس قاعدة المحافظة</span></td></tr>
+   <tr><td>متابعة واتساب أسبوعية (قنوات درب القائمة)</td><td><span class="tag g">حاسم</span></td></tr>
+   <tr><td>قسيمة عودة + كرت ختم من اليوم الأول</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>عقود B2B زراعية + كرت الطالب الجامعي</td><td><span class="tag g">عالٍ</span></td></tr>
+   <tr><td>مسح ميداني + عدّ مروري + خطة طوارئ قبل الإطلاق</td><td><span class="tag g">شرط إطلاق</span></td></tr></table></div>
+ </div>
+ <div class="card" style="margin-top:12px">
+  <p style="font-size:14px;color:var(--muted)"><b>ترى إدارة التسويق تنفيذ حملة الافتتاح الآن.</b> بتكلفة ~11 ألف ريال، يعطي السيناريو الأساسي إيراداً إضافياً ~1.23 مليون ريال خلال 3 أشهر واسترداداً خلال ~7 أيام — في سوق شبه مفتوح بلا تداخل داخلي، وبسقف مثبت إقليمياً (محايل 21.3 ألف لتر/يوم).
+  <br><br><b>العبرة البيشاوية:</b> هذا الملف هو أنقى تطبيق لمعادلة محايل في الشبكة كلها — نفس المنطقة، نفس حجم السوق، نفس نمط الجمهور، ونفس غياب العلامة قبل الدخول. ما نجح هناك ×9 لا يحتاج إعادة اختراع هنا، بل تنفيذاً منضبطاً بإضافتين محليتين: <b>كرت الطالب الجامعي</b> (جمهور منتظم لا تملكه محايل) و<b>موجة صفري بيشة</b> القادمة كترويج ثانٍ شبه مجاني.</p>
+ </div>
+</div>
+
+<div class="foot">
+ <b>المصادر:</b> الهيئة العامة للإحصاء — تعداد 2022 (محافظة بيشة 202,096 · سعوديون 151,279 = 74.9%) · ويكيبيديا/إمارة عسير/سعوديبيديا (بيشة: العاصمة الإدارية للمحافظة بمنطقة عسير — جامعة بيشة (2014)، مطار محلي، سد الملك فهد ووادي بيشة، الارتباط بخميس مشيط عبر الطريق المعبد) · واس (مهرجان «صفري بيشة» للتمور — الدورة 12) · تقرير المبيعات اليومية درب حتى 31/05/2026 (محايل عسير AS153: 72,153 لتراً أبريل → 660,084 مايو ≈ 21.3 ألف لتر/يوم · صامطة MK060: 207,191 · سعر اللتر المدمج وميزانيات محايل/القسوم كمرجع معايِر).
+ <br><b>تنبيه:</b> أرقام السيناريو تقديرية تُعاير على أول أسبوع فعلي؛ الهامش الصافي افتراضي. تحديد الحي الدقيق للإحداثيات وجدول المنافسين نطاقات تقديرية من مصادر مفتوحة — <b>المسح الميداني قبل الإطلاق إلزامي</b>.
+ <br><br>درب | إدارة التسويق · تحليل الموقع + خطة حملة الافتتاح — بيشة (البوابة الجنوبية)
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gc='#9db0c6',gl='rgba(159,176,196,.1)';
+new Chart(document.getElementById('ch'),{type:'line',
+ data:{labels:['شهر 1','شهر 2','شهر 3'],datasets:[
+  {label:'بلا حملة',data:[6000,7500,9000],borderColor:'#6b7f97',borderDash:[5,4],tension:.3},
+  {label:'محافظ',data:[9500,11000,12000],borderColor:'#e0574c',tension:.3},
+  {label:'أساسي',data:[12000,14000,16000],borderColor:'#E0A33E',borderWidth:3,tension:.3},
+  {label:'متفائل',data:[14500,17500,20000],borderColor:'#37c98a',tension:.3},
+ ]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{labels:{color:gc,usePointStyle:true,boxWidth:8,padding:10,font:{size:11}}},
+   tooltip:{callbacks:{label:c=>' '+c.dataset.label+': '+c.raw.toLocaleString()+' لتر/يوم'}}},
+  scales:{x:{ticks:{color:gc},grid:{display:false}},y:{ticks:{color:gc,callback:v=>(v/1000)+'K'},grid:{color:gl}}}}});
+</script>
+</body>
+</html>
