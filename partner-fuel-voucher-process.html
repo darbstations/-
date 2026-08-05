@@ -1,0 +1,446 @@
+<title>محطات درب · آلية توفير كوبونات البنزين لعملاء الشريك — شراكة تسويقية</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF;
+  --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --brown:#2E1D12; --brown-2:#4A3020;
+  --green:#1B7A4B; --green-2:#4E9E74;
+  --rose:#C6486B; --gold:#C79A3A;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+  --r:16px;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+    --line:#332417; --surface:#211710;
+    --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+    --green-2:#5FB689; --rose:#E27795; --gold:#D9B45B;
+    --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+    --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="light"]{
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --surface:#FFFFFF; --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green:#1B7A4B; --green-2:#4E9E74; --rose:#C6486B; --gold:#C79A3A;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+}
+:root[data-theme="dark"]{
+  --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+  --line:#332417; --surface:#211710; --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+  --green:#1B7A4B; --green-2:#5FB689; --rose:#E27795; --gold:#D9B45B;
+  --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+  --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  line-height:1.6; font-feature-settings:"kern";
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1060px; margin:0 auto; padding:0 20px}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{text-wrap:balance; line-height:1.18; margin:0}
+p{margin:0}
+
+/* ============ THEME TOGGLE ============ */
+.toggle{position:fixed; inset-block-start:14px; inset-inline-start:14px; z-index:40;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--line);
+  border-radius:100px; padding:7px 14px; font:inherit; font-size:13px; cursor:pointer;
+  box-shadow:var(--shadow)}
+.toggle:hover{color:var(--amber)}
+.toggle:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+
+/* ============ HERO ============ */
+.banner{position:relative; overflow:hidden; color:#F7EEDF;
+  background:
+    radial-gradient(120% 90% at 82% -10%, rgba(232,118,12,.34), transparent 55%),
+    radial-gradient(80% 70% at 10% 120%, rgba(47,110,78,.30), transparent 60%),
+    linear-gradient(160deg,var(--hero-1),var(--hero-2) 55%,var(--hero-3));
+  border-block-end:1px solid rgba(232,118,12,.35)}
+.grain{position:absolute; inset:0; z-index:0; opacity:.06; mix-blend-mode:overlay;
+  background-image:radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px);
+  background-size:4px 4px}
+.banner .wrap{position:relative; z-index:3; padding-block:clamp(34px,7vw,70px) clamp(120px,16vw,150px)}
+
+.brandbar{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.mark{display:inline-flex; align-items:center; gap:11px; font-weight:800; letter-spacing:.3px}
+.mark .glyph{inline-size:42px; block-size:42px; border-radius:12px; display:grid; place-items:center;
+  background:linear-gradient(150deg,var(--amber),#B44E05); box-shadow:0 8px 18px -8px rgba(232,118,12,.8);
+  font-size:22px}
+.mark b{font-size:20px}
+.mark span{display:block; font-size:11.5px; font-weight:600; color:#E7C9A2; letter-spacing:2px}
+.brandbar .sep{flex:1}
+.brandbar .place{font-size:13px; color:#EAD3B4; border:1px solid rgba(255,255,255,.18);
+  padding:6px 13px; border-radius:100px; background:rgba(0,0,0,.18)}
+
+.eyebrow{margin-block-start:clamp(24px,4.5vw,42px); display:inline-flex; align-items:center; gap:9px;
+  font-size:13px; letter-spacing:3px; font-weight:700; color:var(--gold); text-transform:uppercase}
+.eyebrow::before{content:""; inline-size:26px; block-size:2px; background:var(--gold)}
+.headline{margin-block-start:16px; font-size:clamp(28px,5.6vw,52px); font-weight:800; letter-spacing:-.5px}
+.headline .hl{color:var(--amber)}
+.sub{margin-block-start:16px; max-width:62ch; font-size:clamp(15px,2.1vw,18.5px); color:#EBD9C2; line-height:1.75}
+.chips{margin-block-start:22px; display:flex; gap:10px; flex-wrap:wrap}
+.chip{display:inline-flex; align-items:center; gap:8px; font-size:13.5px; color:#F1E2CC;
+  background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14);
+  padding:8px 14px; border-radius:100px}
+.chip .dot{inline-size:8px; block-size:8px; border-radius:50%}
+
+/* ============ SECTIONS ============ */
+section{padding-block:clamp(44px,6.5vw,72px)}
+.kicker{font-size:12.5px; letter-spacing:2.5px; font-weight:800; color:var(--amber); text-transform:uppercase}
+.sec-title{font-size:clamp(22px,3.4vw,30px); font-weight:800; margin-block:6px 0}
+.sec-note{color:var(--ink-2); max-width:66ch; margin-block-start:10px; font-size:15.5px}
+
+/* ============ STEPS BAND (over hero) ============ */
+.steps-band{margin-block-start:clamp(-100px,-12vw,-80px); position:relative; z-index:5; padding-block:0 clamp(44px,6vw,64px)}
+.step-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px}
+.step{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:22px 20px; box-shadow:var(--shadow); position:relative; overflow:hidden}
+.step::after{content:""; position:absolute; inset-block-start:0; inset-inline-end:0; inline-size:52px; block-size:52px;
+  background:radial-gradient(circle at 100% 0,var(--amber-soft),transparent 70%)}
+.step .n{display:inline-grid; place-items:center; inline-size:38px; block-size:38px; border-radius:11px;
+  background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; font-weight:800; font-size:18px;
+  box-shadow:0 8px 16px -8px rgba(232,118,12,.8)}
+.step h3{margin-block-start:12px; font-size:17.5px; font-weight:800}
+.step p{margin-block-start:8px; color:var(--ink-2); font-size:14.5px; line-height:1.7}
+.step .who{margin-block-start:12px; display:inline-flex; align-items:center; gap:7px; font-size:12.5px;
+  font-weight:700; padding:5px 12px; border-radius:100px; border:1px solid var(--line); color:var(--ink-2)}
+.step .who .dot{inline-size:8px; block-size:8px; border-radius:50%}
+
+/* flow arrows between step cards (desktop) */
+.flowline{display:flex; align-items:center; justify-content:center; gap:10px; margin-block-start:18px;
+  color:var(--ink-3); font-size:13px; flex-wrap:wrap}
+.flowline b{color:var(--amber-2)}
+.flowline .arr{color:var(--amber)}
+
+/* ============ DETAIL CARDS ============ */
+.detail{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  box-shadow:var(--shadow); padding:clamp(22px,3.5vw,32px); margin-block-start:22px; position:relative; overflow:hidden}
+.detail .stepno{position:absolute; inset-block-start:-18px; inset-inline-end:6px; font-size:120px; font-weight:800;
+  color:var(--amber-soft); line-height:1; pointer-events:none; user-select:none}
+.detail h3{font-size:clamp(18px,2.6vw,22px); font-weight:800; display:flex; align-items:center; gap:12px; position:relative}
+.detail h3 .n{display:inline-grid; place-items:center; inline-size:34px; block-size:34px; border-radius:10px; flex:none;
+  background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; font-weight:800; font-size:16px}
+.detail .lead{margin-block-start:12px; color:var(--ink-2); font-size:15.5px; line-height:1.75; max-width:70ch; position:relative}
+.detail ul{margin:14px 0 0; padding-inline-start:0; list-style:none; position:relative}
+.detail ul li{position:relative; padding-inline-start:26px; margin-block-start:9px; font-size:14.5px; line-height:1.7; color:var(--ink)}
+.detail ul li::before{content:"◆"; position:absolute; inset-inline-start:2px; inset-block-start:1px; color:var(--amber); font-size:11px}
+.detail ul li b{color:var(--ink)}
+.note{margin-block-start:16px; border:1px dashed var(--amber); background:var(--amber-soft);
+  border-radius:12px; padding:12px 16px; font-size:13.5px; color:var(--ink); line-height:1.7; position:relative}
+.note b{color:var(--amber-2)}
+
+/* sample table */
+.tbl-scroll{overflow-x:auto; margin-block-start:16px; border:1px solid var(--line); border-radius:12px}
+table{border-collapse:collapse; inline-size:100%; min-inline-size:560px; font-size:13.5px; background:var(--surface)}
+th,td{padding:10px 14px; text-align:right; border-block-end:1px solid var(--line); white-space:nowrap}
+th{background:var(--paper-2); font-size:12.5px; color:var(--ink-2); letter-spacing:.5px}
+tr:last-child td{border-block-end:none}
+td.tnum{color:var(--amber-2); font-weight:700}
+
+/* SMS mock */
+.sms{margin-block-start:18px; max-width:430px; background:var(--paper-2); border:1px solid var(--line);
+  border-radius:18px; padding:16px 18px; position:relative}
+.sms .from{font-size:12px; font-weight:800; color:var(--amber-2); letter-spacing:1px; margin-block-end:8px;
+  display:flex; align-items:center; gap:8px}
+.sms .from::before{content:"💬"}
+.sms p{font-size:13.5px; line-height:1.8; color:var(--ink)}
+.sms p b{color:var(--amber-2)}
+.sms .meta{margin-block-start:10px; font-size:11.5px; color:var(--ink-3)}
+
+/* ============ ROLES ============ */
+.roles{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; margin-block-start:22px}
+.role{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow);
+  padding:24px 22px; border-block-start:4px solid var(--amber)}
+.role.darb{border-block-start-color:var(--green)}
+.role h3{font-size:17px; font-weight:800; display:flex; align-items:center; gap:10px}
+.role h3 .tag{font-size:11px; letter-spacing:1.5px; padding:4px 10px; border-radius:100px; font-weight:800;
+  background:var(--amber-soft); color:var(--amber-2)}
+.role.darb h3 .tag{background:transparent; border:1px solid var(--green-2); color:var(--green)}
+.role ul{margin:14px 0 0; padding-inline-start:0; list-style:none}
+.role ul li{position:relative; padding-inline-start:24px; margin-block-start:9px; font-size:14px; line-height:1.7; color:var(--ink-2)}
+.role ul li::before{content:"✓"; position:absolute; inset-inline-start:0; color:var(--green-2); font-weight:800}
+
+/* ============ TIMELINE ============ */
+.timeline{margin-block-start:26px; display:grid; gap:0}
+.tl{display:grid; grid-template-columns:34px 1fr; gap:14px; position:relative; padding-block-end:22px}
+.tl:last-child{padding-block-end:0}
+.tl::before{content:""; position:absolute; inset-inline-start:16px; inset-block-start:30px; inset-block-end:2px;
+  inline-size:2px; background:var(--line)}
+.tl:last-child::before{display:none}
+.tl .pt{inline-size:34px; block-size:34px; border-radius:50%; display:grid; place-items:center; z-index:1;
+  background:var(--surface); border:2px solid var(--amber); color:var(--amber-2); font-weight:800; font-size:14px}
+.tl.done .pt{background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; border-color:transparent}
+.tl h4{margin:4px 0 0; font-size:15.5px; font-weight:800}
+.tl p{margin-block-start:5px; color:var(--ink-2); font-size:13.5px; line-height:1.7; max-width:64ch}
+
+/* ============ TERMS ============ */
+.terms{background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r);
+  padding:clamp(22px,3.5vw,30px); margin-block-start:22px}
+.terms h3{font-size:17px; font-weight:800}
+.terms ol{margin:14px 0 0; padding-inline-start:22px}
+.terms ol li{margin-block-start:9px; font-size:14px; line-height:1.75; color:var(--ink-2)}
+.terms ol li b{color:var(--ink)}
+
+/* ============ FOOTER ============ */
+.foot{background:
+    radial-gradient(110% 100% at 85% 0%, rgba(232,118,12,.28), transparent 55%),
+    linear-gradient(160deg,var(--hero-1),var(--hero-3));
+  color:#F7EEDF; text-align:center; border-block-start:1px solid rgba(232,118,12,.35)}
+.foot h2{font-size:clamp(22px,3.6vw,32px); font-weight:800}
+.foot p{margin-block-start:12px; color:#EBD9C2; max-width:58ch; margin-inline:auto; font-size:15.5px; line-height:1.75}
+.contacts{margin-block-start:24px; display:flex; gap:18px; justify-content:center; flex-wrap:wrap; font-size:14px; color:#EAD3B4}
+.finmark{margin-block-start:30px; font-size:12px; letter-spacing:2px; color:#9A836C}
+
+@media print{
+  .toggle{display:none}
+  body{background:#fff}
+  .banner,.foot{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  section{padding-block:26px}
+  .steps-band{margin-block-start:-60px}
+}
+</style>
+
+<button class="toggle" id="tg" type="button">☀️ / 🌙 الوضع</button>
+
+<!-- ============================ HERO ============================ -->
+<header class="banner">
+  <div class="grain"></div>
+  <div class="wrap">
+    <div class="brandbar">
+      <span class="mark"><span class="glyph">⛽</span><span><b>محطات درب</b><span>DARB STATIONS</span></span></span>
+      <span class="sep"></span>
+      <span class="place">مستند تشغيلي — للشركاء</span>
+    </div>
+
+    <div class="eyebrow">برنامج الشراكات التسويقية</div>
+    <h1 class="headline">آلية توفير <span class="hl">كوبونات البنزين</span> لعملاء الشريك</h1>
+    <p class="sub">
+      انطلاقاً من الشراكة التسويقية القائمة بين <b>محطات درب</b> و<b>الشريك</b>، تتيح درب للشريك إهداء عملائه
+      تعبئة بنزين مجانية باسم الشراكة. يوضح هذا المستند خطوات تنفيذ الآلية من لحظة تجهيز قائمة العملاء
+      وحتى وصول الرسالة الترحيبية من درب لكل عميل وتفعيل التعبئة المجانية في المحطة.
+    </p>
+    <div class="chips">
+      <span class="chip"><span class="dot" style="background:var(--amber)"></span> شراكة تسويقية موثّقة</span>
+      <span class="chip"><span class="dot" style="background:var(--green-2)"></span> تعبئة مجانية لعملاء الشريك</span>
+      <span class="chip"><span class="dot" style="background:var(--gold)"></span> رسالة ترحيبية باسم الشراكة</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ STEPS SUMMARY ============================ -->
+<section class="steps-band">
+  <div class="wrap">
+    <div class="step-grid">
+      <div class="step">
+        <span class="n">1</span>
+        <h3>تعبئة النموذج وإرسال قائمة العملاء</h3>
+        <p>يعبّئ الشريك النموذج المعتمد ويرفق قائمة بأسماء العملاء المستفيدين وأرقام جوالاتهم، ثم يرسلها إلى فريق الشراكات في درب.</p>
+        <span class="who"><span class="dot" style="background:var(--amber)"></span> مسؤولية الشريك</span>
+      </div>
+      <div class="step">
+        <span class="n">2</span>
+        <h3>تحويل المبلغ المتفق عليه</h3>
+        <p>يحوّل الشريك المبلغ المالي المتفق عليه عن كل عميل مدرج في القائمة إلى حساب درب المعتمد، ويرسل إشعار التحويل.</p>
+        <span class="who"><span class="dot" style="background:var(--amber)"></span> مسؤولية الشريك</span>
+      </div>
+      <div class="step">
+        <span class="n">3</span>
+        <h3>انتظار الرسالة الترحيبية من درب</h3>
+        <p>بعد مطابقة القائمة مع المبلغ، ترسل درب رسالة ترحيبية لكل عميل تُفعّل بها التعبئة المجانية — ولا يُطلب من الشريك أي إجراء إضافي.</p>
+        <span class="who"><span class="dot" style="background:var(--green-2)"></span> مسؤولية درب</span>
+      </div>
+    </div>
+    <div class="flowline">
+      <b>النموذج + قائمة الأسماء</b> <span class="arr">◀</span>
+      <b>التحويل المالي</b> <span class="arr">◀</span>
+      <b>الرسالة الترحيبية</b> <span class="arr">◀</span>
+      <span>تعبئة مجانية للعميل في أقرب محطة درب</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STEP 1 DETAIL ============================ -->
+<section style="padding-block-start:0">
+  <div class="wrap">
+    <div class="kicker">تفاصيل الآلية</div>
+    <h2 class="sec-title">الخطوات التنفيذية بالتفصيل</h2>
+    <p class="sec-note">ثلاث خطوات متسلسلة؛ لا تبدأ الخطوة التالية إلا بعد اكتمال ما قبلها. أي نقص في البيانات أو المبالغ يوقف الدورة حتى استكماله.</p>
+
+    <div class="detail">
+      <span class="stepno">1</span>
+      <h3><span class="n">1</span> تعبئة النموذج وإرسال قائمة بأسماء العملاء</h3>
+      <p class="lead">
+        الخطوة الأولى على عاتق الشريك: تعبئة <b>نموذج طلب كوبونات البنزين</b> المعتمد لدى درب، وإرفاق قائمة
+        العملاء المستفيدين. القائمة هي أساس العملية كلها — عليها تُحسب المبالغ، وإليها تُرسل الرسائل الترحيبية.
+      </p>
+      <ul>
+        <li><b>بيانات الشريك في النموذج:</b> اسم الجهة، اسم ممثل التواصل، رقم الجوال، والبريد الإلكتروني.</li>
+        <li><b>بيانات كل عميل في القائمة:</b> الاسم الكامل، ورقم الجوال (وهو الرقم الذي ستصل إليه الرسالة الترحيبية)، وقيمة التعبئة المتفق عليها له.</li>
+        <li><b>قناة الإرسال:</b> يُرسل النموذج والقائمة إلى قناة التواصل المعتمدة مع فريق الشراكات في درب (البريد الإلكتروني أو القناة المتفق عليها في اتفاقية الشراكة).</li>
+        <li><b>تأكيد الاستلام:</b> يتحقق فريق درب من اكتمال البيانات ويرد على الشريك بتأكيد استلام القائمة ورقم مرجعي للدفعة.</li>
+      </ul>
+
+      <div class="tbl-scroll">
+        <table>
+          <thead>
+            <tr><th>#</th><th>اسم العميل</th><th>رقم الجوال</th><th>قيمة التعبئة (ريال)</th><th>ملاحظات</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="tnum">1</td><td>مثال: عبدالله محمد …</td><td class="tnum">05XXXXXXXX</td><td class="tnum">حسب الاتفاق</td><td>—</td></tr>
+            <tr><td class="tnum">2</td><td>مثال: سارة أحمد …</td><td class="tnum">05XXXXXXXX</td><td class="tnum">حسب الاتفاق</td><td>—</td></tr>
+            <tr><td class="tnum">3</td><td>…</td><td class="tnum">…</td><td class="tnum">…</td><td>…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="note"><b>مهم:</b> دقة أرقام الجوال مسؤولية الشريك؛ الرقم الخاطئ يعني عدم وصول الرسالة الترحيبية للعميل. كما يلتزم الشريك بأخذ موافقة عملائه على مشاركة بياناتهم واستقبال رسالة الشراكة.</div>
+    </div>
+
+    <!-- ============================ STEP 2 DETAIL ============================ -->
+    <div class="detail">
+      <span class="stepno">2</span>
+      <h3><span class="n">2</span> تحويل المبلغ المالي المتفق عليه لكل عميل</h3>
+      <p class="lead">
+        بعد تأكيد درب استلام القائمة، يحوّل الشريك قيمة الدفعة كاملة. المبلغ الإجمالي يُحسب بضرب
+        <b>قيمة التعبئة المتفق عليها لكل عميل</b> (كما وردت في اتفاقية الشراكة التسويقية) في <b>عدد العملاء</b> المدرجين في القائمة.
+      </p>
+      <ul>
+        <li><b>وجهة التحويل:</b> الحساب البنكي المعتمد لمحطات درب والموضح في اتفاقية الشراكة.</li>
+        <li><b>إشعار التحويل:</b> يرسل الشريك صورة إشعار التحويل مع ذكر الرقم المرجعي للدفعة الذي زوّده به فريق درب.</li>
+        <li><b>المطابقة:</b> يطابق فريق درب المبلغ المستلم مع قائمة العملاء (عدد الأسماء × القيمة المتفق عليها). أي فرق في المبلغ يوقف التفعيل حتى تسويته.</li>
+        <li><b>لا تفعيل قبل التحويل:</b> لا تُرسل أي رسالة ترحيبية ولا يُفعَّل أي كوبون قبل تأكيد وصول كامل المبلغ ومطابقته.</li>
+      </ul>
+      <div class="note"><b>ملاحظة:</b> قيمة التعبئة لكل عميل تُحدَّد مسبقاً في اتفاقية الشراكة التسويقية، ويمكن للطرفين تحديثها لاحقاً بملحق اتفاق مكتوب قبل أي دفعة جديدة.</div>
+    </div>
+
+    <!-- ============================ STEP 3 DETAIL ============================ -->
+    <div class="detail">
+      <span class="stepno">3</span>
+      <h3><span class="n">3</span> الرسالة الترحيبية من درب وتفعيل التعبئة المجانية</h3>
+      <p class="lead">
+        هذه الخطوة بالكامل على درب، ودور الشريك فيها هو <b>الانتظار فقط</b>. فور اكتمال المطابقة المالية،
+        ترسل درب لكل عميل في القائمة رسالة ترحيبية باسم الشراكة، تحمل قيمة التعبئة المجانية وطريقة استخدامها في المحطة.
+      </p>
+      <ul>
+        <li><b>مضمون الرسالة:</b> ترحيب باسم الشراكة (درب × الشريك)، وقيمة التعبئة المجانية، وآلية الاستخدام، ومدة الصلاحية.</li>
+        <li><b>الاستخدام في المحطة:</b> يُبرز العميل الرسالة الترحيبية لموظف المحطة عند التعبئة، فتُصرف له تعبئة مجانية بقيمة الكوبون.</li>
+        <li><b>تقرير للشريك:</b> بعد إتمام الإرسال، يزوّد فريق درب الشريكَ بتأكيد إرسال الرسائل، ولاحقاً بتقرير استخدام الكوبونات عند طلبه.</li>
+        <li><b>حالات عدم الوصول:</b> إذا لم تصل الرسالة لعميلٍ ما (رقم خاطئ أو غير فعّال)، يُبلَّغ الشريك لتصحيح الرقم وتُعاد المحاولة دون رسوم إضافية.</li>
+      </ul>
+
+      <div class="sms">
+        <div class="from">DARB — درب</div>
+        <p>أهلاً بك <b>[اسم العميل]</b> 🌟<br>
+        بمناسبة شراكتنا مع <b>[اسم الشريك]</b>، نهديك تعبئة بنزين مجانية بقيمة <b>[القيمة] ريال</b> في محطات درب.
+        أبرز هذه الرسالة لموظف المحطة عند التعبئة. صلاحية الهدية حتى <b>[التاريخ]</b>. حيّاك في درب!</p>
+        <div class="meta">نموذج توضيحي لصيغة الرسالة الترحيبية — الصيغة النهائية تُعتمد بالتنسيق بين الطرفين.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ROLES ============================ -->
+<section style="padding-block-start:0">
+  <div class="wrap">
+    <div class="kicker">إطار الشراكة التسويقية</div>
+    <h2 class="sec-title">أدوار الطرفين ومسؤولياتهما</h2>
+    <p class="sec-note">
+      تقوم هذه الآلية على شراكة تسويقية متكافئة: الشريك يكافئ عملاءه بهدية ملموسة تحمل اسمه،
+      ودرب تصل عبر الشراكة إلى عملاء جدد يزورون محطاتها — فيكسب الطرفان والعميل معاً.
+    </p>
+
+    <div class="roles">
+      <div class="role">
+        <h3>الشريك <span class="tag">الطرف الأول</span></h3>
+        <ul>
+          <li>تعبئة النموذج المعتمد وإرسال قائمة أسماء العملاء وأرقام جوالاتهم كاملةً ودقيقة.</li>
+          <li>أخذ موافقة العملاء على مشاركة بياناتهم واستقبال رسالة الشراكة.</li>
+          <li>تحويل المبلغ المتفق عليه عن كل عميل خلال المدة المحددة، وإرسال إشعار التحويل بالرقم المرجعي.</li>
+          <li>تصحيح أي بيانات خاطئة يبلغه بها فريق درب دون تأخير.</li>
+          <li>الترويج للمبادرة ضمن قنواته باعتبارها ثمرة الشراكة مع درب.</li>
+        </ul>
+      </div>
+      <div class="role darb">
+        <h3>محطات درب <span class="tag">الطرف الثاني</span></h3>
+        <ul>
+          <li>تأكيد استلام النموذج والقائمة وتزويد الشريك برقم مرجعي للدفعة.</li>
+          <li>مطابقة المبلغ المحوّل مع القائمة وإشعار الشريك بالنتيجة.</li>
+          <li>إرسال الرسالة الترحيبية لكل عميل باسم الشراكة فور اكتمال المطابقة.</li>
+          <li>صرف التعبئة المجانية للعملاء في المحطات بقيمة الكوبون دون أي رسوم عليهم.</li>
+          <li>الحفاظ على سرية بيانات العملاء وعدم استخدامها خارج نطاق هذه الآلية، وتزويد الشريك بتقارير الاستخدام.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TIMELINE ============================ -->
+<section style="padding-block-start:0">
+  <div class="wrap">
+    <div class="kicker">المسار الزمني</div>
+    <h2 class="sec-title">رحلة الدفعة الواحدة من البداية للنهاية</h2>
+
+    <div class="timeline">
+      <div class="tl done"><span class="pt">1</span><div><h4>إرسال النموذج والقائمة</h4><p>الشريك يعبّئ النموذج ويرسل قائمة أسماء العملاء وأرقامهم إلى فريق الشراكات في درب.</p></div></div>
+      <div class="tl done"><span class="pt">2</span><div><h4>تأكيد الاستلام والرقم المرجعي</h4><p>درب تتحقق من اكتمال البيانات وتزوّد الشريك برقم مرجعي للدفعة وإجمالي المبلغ المطلوب.</p></div></div>
+      <div class="tl done"><span class="pt">3</span><div><h4>التحويل المالي وإشعاره</h4><p>الشريك يحوّل المبلغ المتفق عليه عن كل عميل ويرسل إشعار التحويل مع الرقم المرجعي.</p></div></div>
+      <div class="tl done"><span class="pt">4</span><div><h4>المطابقة المالية</h4><p>درب تطابق المبلغ المستلم مع القائمة؛ اكتمال المطابقة هو إشارة بدء التفعيل.</p></div></div>
+      <div class="tl"><span class="pt">5</span><div><h4>الرسالة الترحيبية للعملاء</h4><p>درب ترسل الرسالة الترحيبية لكل عميل خلال المدة المتفق عليها (يُوصى بألا تتجاوز يومي عمل من المطابقة)، ويُشعَر الشريك بإتمام الإرسال.</p></div></div>
+      <div class="tl"><span class="pt">6</span><div><h4>التعبئة المجانية والتقرير</h4><p>العملاء يستخدمون كوبوناتهم في محطات درب خلال مدة الصلاحية، ويُزوَّد الشريك بتقرير الاستخدام عند طلبه.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TERMS ============================ -->
+<section style="padding-block-start:0">
+  <div class="wrap">
+    <div class="terms">
+      <h3>أحكام وملاحظات عامة</h3>
+      <ol>
+        <li><b>مرجعية الاتفاقية:</b> هذا المستند يشرح آلية التنفيذ فقط؛ والمرجع في القيم والمدد والالتزامات هو اتفاقية الشراكة التسويقية الموقعة بين الطرفين، وعند التعارض تُقدَّم الاتفاقية.</li>
+        <li><b>طبيعة الكوبون:</b> الكوبون هدية تسويقية باسم الشراكة، يُصرف تعبئة بنزين في محطات درب فقط، ولا يُستبدل نقداً ولا يُحوَّل لشخص آخر إلا بتنسيق مسبق.</li>
+        <li><b>الصلاحية:</b> لكل كوبون مدة صلاحية تُذكر في الرسالة الترحيبية؛ الكوبونات غير المستخدمة بعد انتهاء الصلاحية تُعامل وفق ما تنص عليه الاتفاقية.</li>
+        <li><b>تعديل القائمة:</b> أي إضافة أو حذف بعد التحويل المالي يتطلب تنسيقاً مسبقاً مع فريق الشراكات وتسوية الفرق المالي إن وُجد.</li>
+        <li><b>خصوصية البيانات:</b> تُستخدم بيانات العملاء حصراً لإرسال الرسالة الترحيبية وتفعيل الكوبونات، وفق الأنظمة المعمول بها في المملكة.</li>
+        <li><b>التواصل:</b> جميع المراسلات المتعلقة بالدُفعات تتم عبر القناة المعتمدة وبالرقم المرجعي لكل دفعة لضمان سرعة المعالجة.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<section class="foot">
+  <div class="wrap">
+    <h2>شراكة تكسب بها أنت وعميلك</h2>
+    <p>
+      قائمة أسماء، تحويل واحد، ثم رسالة ترحيبية من درب — وعميلك يعبّئ مجاناً باسم شراكتكما.
+      فريق الشراكات التسويقية في درب جاهز لاستقبال دفعتك الأولى.
+    </p>
+    <div class="contacts">
+      <span>📞 <b>الهاتف:</b> ‎—</span>
+      <span>✉️ <b>البريد:</b> partnerships@darb.sa</span>
+      <span>📍 <b>المقر:</b> المملكة العربية السعودية</span>
+    </div>
+    <div class="finmark">محطات درب · DARB STATIONS — برنامج الشراكات التسويقية · كوبونات البنزين</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('tg');
+  function cur(){var d=root.getAttribute('data-theme'); if(d) return d;
+    return window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';}
+  btn.addEventListener('click',function(){
+    var next=cur()==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+  });
+})();
+</script>
