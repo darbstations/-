@@ -17,11 +17,16 @@
 والمحطة الخامسة المتبقية هي MK023 درب بن درويش وحيّها «حي الخضراء» — فرُبِطت
 الورقة بها بالاستبعاد، والملاحظة مكتوبة صراحةً في الصفحة.
 """
-import openpyxl, re, html, os
+import openpyxl, re, html, os, sys
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 XLSX = os.path.join(BASE, "darb-monthly-reasons-2026.xlsx")
+#  يعمل على ملف المستودع افتراضيًا، أو على ملف مُعطى:
+#      python3 tools/add_month_reasons.py <ملف-المصدر> [ملف-المخرَج]
 SRC = OUT = os.path.join(BASE, "darb-five-stations-analysis.html")
+if len(sys.argv) > 1:
+    SRC = sys.argv[1]
+    OUT = sys.argv[2] if len(sys.argv) > 2 else SRC
 KEEP = ["MK007", "MK017", "MK002", "MK023", "MK019"]
 MONTHS = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو"]
 
@@ -253,6 +258,7 @@ CSS = """
 """
 doc = doc.replace("</head>", CSS + "</head>", 1)
 doc = re.sub(r'data-docid="[^"]*"', 'data-docid="darb-5st-why-v2"', doc, count=1)
+assert 'data-docid="darb-5st-why-v2"' in doc
 open(OUT, "w", encoding="utf-8").write(doc)
 
 print("تم · الحجم:", round(len(doc.encode()) / 1024), "KB")
