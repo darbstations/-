@@ -280,8 +280,37 @@ td.tnum{color:var(--amber-2); font-weight:700}
 .empty{margin-block-start:16px; border:1px dashed var(--line); border-radius:var(--r);
   padding:34px 20px; text-align:center; color:var(--ink-3); font-size:14px; background:var(--paper-2)}
 
+/* ============ EDIT MODE ============ */
+.toggle.active{color:#fff; background:linear-gradient(150deg,var(--amber),#B44E05); border-color:transparent}
+.editbar{display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  max-width:1060px; margin:0 auto; padding:8px 20px 10px;
+  border-block-start:1px dashed var(--line); font-size:13px}
+.eb-title{font-weight:800; color:var(--amber-2); font-size:12.5px; letter-spacing:.5px}
+.ebtn{font:inherit; font-size:12.5px; font-weight:700; color:var(--ink-2);
+  background:var(--surface); border:1px solid var(--line); border-radius:100px;
+  padding:6px 13px; cursor:pointer; white-space:nowrap}
+.ebtn:hover{color:var(--amber-2); border-color:var(--amber)}
+.ebtn:disabled{opacity:.4; cursor:default}
+.ebtn:disabled:hover{color:var(--ink-2); border-color:var(--line)}
+.ebtn.warn{color:var(--rose); border-color:var(--rose)}
+.ebtn.warn:hover{background:var(--rose); color:#fff}
+.ebtn:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
+.eb-sep{inline-size:1px; align-self:stretch; background:var(--line); margin-inline:4px}
+.eb-hint{color:var(--ink-3); font-size:12px}
+.editbar .sp{flex:1}
+.savestate{font-size:12px; font-weight:800; color:var(--green)}
+.savestate.unsaved{color:var(--rose)}
+#view-process[contenteditable="true"]{caret-color:var(--amber-2)}
+#view-process:focus{outline:none}
+.edit-hover{outline:2px dashed var(--amber)!important; outline-offset:3px; border-radius:6px}
+.del-float{position:absolute; z-index:60; font:inherit; font-size:12px; font-weight:800;
+  background:var(--rose); color:#fff; border:0; border-radius:100px; padding:6px 13px;
+  cursor:pointer; box-shadow:0 10px 22px -10px rgba(0,0,0,.55)}
+.del-float:hover{filter:brightness(1.08)}
+
 @media print{
   .topbar{display:none}
+  .del-float{display:none}
   body{background:#fff}
   .banner,.foot{-webkit-print-color-adjust:exact; print-color-adjust:exact}
   section{padding-block:26px}
@@ -296,9 +325,30 @@ td.tnum{color:var(--amber-2); font-weight:700}
       <button class="tab active" type="button" role="tab" aria-selected="true" data-view="process">📄 آلية العمل</button>
       <button class="tab" type="button" role="tab" aria-selected="false" data-view="partners">➕ إضافة الشريك</button>
     </nav>
+    <button class="toggle" id="editToggle" type="button">✏️ تحرير المستند</button>
     <button class="toggle" id="tg" type="button">☀️ / 🌙 الوضع</button>
   </div>
+
+  <div class="editbar" id="editbar" hidden>
+    <span class="eb-title">✏️ وضع التحرير</span>
+    <button class="ebtn" id="btnUndo" type="button" title="Ctrl+Z">↩ تراجع</button>
+    <button class="ebtn" id="btnRedo" type="button" title="Ctrl+Y">↪ إعادة</button>
+    <span class="eb-sep"></span>
+    <button class="ebtn" data-cmd="bold" type="button"><b>غ</b> غامق</button>
+    <button class="ebtn" data-cmd="mark" type="button">🖍 تظليل</button>
+    <button class="ebtn" data-cmd="clear" type="button">⌫ إزالة التنسيق</button>
+    <span class="eb-sep"></span>
+    <span class="eb-hint">حرّر أي نص مباشرة، أو مرّر على عنصر واضغط «حذف العنصر» لإزالته</span>
+    <span class="sp"></span>
+    <span class="savestate" id="saveState">محفوظ ✓</span>
+    <button class="ebtn" id="btnSave" type="button" title="Ctrl+S">💾 حفظ</button>
+    <button class="ebtn" id="btnDownload" type="button">⬇ تنزيل الملف</button>
+    <button class="ebtn warn" id="btnReset" type="button">♻ استعادة الأصل</button>
+    <button class="ebtn" id="btnExit" type="button">✕ إنهاء التحرير</button>
+  </div>
 </div>
+
+<button id="delFloat" class="del-float" type="button" hidden>🗑 حذف العنصر</button>
 
 <!-- ============================ VIEW: PROCESS ============================ -->
 <main id="view-process">
@@ -630,6 +680,9 @@ td.tnum{color:var(--amber-2); font-weight:700}
       t.classList.toggle('active',on);
       t.setAttribute('aria-selected',on?'true':'false');
     });
+    if(name!=='process'&&editing) setEditing(false);
+    var et=document.getElementById('editToggle');
+    if(et) et.hidden=(name!=='process');
     window.scrollTo(0,0);
     if(history.replaceState) history.replaceState(null,'',name==='partners'?'#partners':location.pathname.split('/').pop()||'.');
   }
@@ -783,5 +836,162 @@ td.tnum{color:var(--amber-2); font-weight:700}
   });
 
   renderForms(); renderCards();
+
+  /* ==================== document editor ==================== */
+  var editRoot=views.process;
+  var DOC_KEY='darbDocHTML';
+  var ORIGINAL=editRoot.innerHTML;
+  try{
+    var savedDoc=localStorage.getItem(DOC_KEY);
+    if(savedDoc) editRoot.innerHTML=savedDoc;
+  }catch(e){}
+
+  var editbar=$('editbar'), editToggle=$('editToggle'), delFloat=$('delFloat'),
+      btnUndo=$('btnUndo'), btnRedo=$('btnRedo'), saveState=$('saveState');
+  var editing=false, dirty=false, tId=null, hoverEl=null;
+  var hist=[], hpos=-1, HMAX=150;
+
+  /* snapshot of the doc without editing chrome (hover outlines) */
+  function cleanHTML(){
+    var c=editRoot.cloneNode(true);
+    var hovered=c.querySelectorAll('.edit-hover');
+    for(var i=0;i<hovered.length;i++){
+      hovered[i].classList.remove('edit-hover');
+      if(!hovered[i].getAttribute('class')) hovered[i].removeAttribute('class');
+    }
+    return c.innerHTML;
+  }
+  hist.push(cleanHTML()); hpos=0;
+
+  function setDirty(d){
+    dirty=d;
+    saveState.textContent=d?'تعديلات غير محفوظة •':'محفوظ ✓';
+    saveState.classList.toggle('unsaved',d);
+  }
+  function updateUR(){btnUndo.disabled=hpos<=0; btnRedo.disabled=hpos>=hist.length-1;}
+  function pushHist(){
+    var html=cleanHTML();
+    if(html===hist[hpos]) return;
+    hist=hist.slice(0,hpos+1); hist.push(html);
+    if(hist.length>HMAX) hist.shift();
+    hpos=hist.length-1;
+    setDirty(true); updateUR();
+  }
+  function schedule(){clearTimeout(tId); tId=setTimeout(pushHist,450);}
+  function applyHist(){
+    clearHover();
+    editRoot.innerHTML=hist[hpos];
+    setDirty(true); updateUR();
+  }
+  function undo(){clearTimeout(tId); pushHist(); if(hpos>0){hpos--; applyHist();}}
+  function redo(){if(hpos<hist.length-1){hpos++; applyHist();}}
+
+  function saveDoc(){
+    clearTimeout(tId); pushHist();
+    try{localStorage.setItem(DOC_KEY,cleanHTML()); setDirty(false);}
+    catch(e){alert('تعذر الحفظ محلياً في هذا المتصفح.');}
+  }
+  function resetDoc(){
+    if(!confirm('استعادة النسخة الأصلية للمستند؟ ستفقد جميع التعديلات المحفوظة.')) return;
+    clearHover();
+    editRoot.innerHTML=ORIGINAL;
+    try{localStorage.removeItem(DOC_KEY);}catch(e){}
+    pushHist(); setDirty(false);
+  }
+  function downloadDoc(){
+    var was=editing;
+    if(was) setEditing(false);
+    clearTimeout(tId); pushHist();
+    var html='<!doctype html>\n'+document.documentElement.outerHTML;
+    var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);
+    a.download='darb-partner-fuel-voucher.html';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function(){URL.revokeObjectURL(a.href);},1500);
+    if(was) setEditing(true);
+  }
+
+  function setEditing(on){
+    editing=on;
+    if(on){editRoot.setAttribute('contenteditable','true'); editRoot.spellcheck=false;}
+    else{editRoot.removeAttribute('contenteditable'); clearHover();}
+    editbar.hidden=!on;
+    editToggle.textContent=on?'✕ إنهاء التحرير':'✏️ تحرير المستند';
+    editToggle.classList.toggle('active',on);
+    if(on) updateUR();
+  }
+
+  /* hover-to-delete blocks */
+  var DEL_SEL='.detail li,.terms li,.role li,tr,.chip,.step,.tl,.note,.sms,.tbl-scroll,'
+    +'.flowline,.detail,.role,.roles,.timeline,.terms,.steps-band,section,header.banner';
+  function setHover(el){
+    if(hoverEl===el) return;
+    clearHover(); hoverEl=el; el.classList.add('edit-hover');
+    var r=el.getBoundingClientRect();
+    delFloat.style.top=(r.top+window.scrollY-12)+'px';
+    delFloat.style.left=(r.left+window.scrollX+8)+'px';
+    delFloat.hidden=false;
+  }
+  function clearHover(){
+    if(hoverEl){
+      hoverEl.classList.remove('edit-hover');
+      if(!hoverEl.getAttribute('class')) hoverEl.removeAttribute('class');
+      hoverEl=null;
+    }
+    delFloat.hidden=true;
+  }
+  editRoot.addEventListener('mouseover',function(e){
+    if(!editing) return;
+    var t=e.target.closest?e.target.closest(DEL_SEL):null;
+    if(t&&t!==editRoot&&editRoot.contains(t)) setHover(t);
+  });
+  delFloat.addEventListener('click',function(){
+    if(!hoverEl) return;
+    var el=hoverEl; clearHover(); el.remove(); pushHist();
+  });
+
+  /* text edits */
+  editRoot.addEventListener('input',function(){if(editing) schedule();});
+
+  /* toolbar */
+  editbar.addEventListener('mousedown',function(e){
+    if(e.target.closest&&e.target.closest('button')) e.preventDefault();
+  });
+  btnUndo.addEventListener('click',undo);
+  btnRedo.addEventListener('click',redo);
+  $('btnSave').addEventListener('click',saveDoc);
+  $('btnDownload').addEventListener('click',downloadDoc);
+  $('btnReset').addEventListener('click',resetDoc);
+  $('btnExit').addEventListener('click',function(){setEditing(false);});
+  editToggle.addEventListener('click',function(){setEditing(!editing);});
+  document.querySelectorAll('[data-cmd]').forEach(function(b){
+    b.addEventListener('click',function(){
+      if(!editing) return;
+      var c=b.getAttribute('data-cmd');
+      try{
+        if(c==='bold') document.execCommand('bold');
+        else if(c==='mark') document.execCommand('hiliteColor',false,'#F8D8A8');
+        else if(c==='clear'){document.execCommand('removeFormat'); document.execCommand('hiliteColor',false,'transparent');}
+      }catch(e){}
+      pushHist();
+    });
+  });
+
+  /* keyboard shortcuts */
+  document.addEventListener('keydown',function(e){
+    if(!editing) return;
+    var mod=e.ctrlKey||e.metaKey, k=(e.key||'').toLowerCase();
+    if(mod&&!e.shiftKey&&k==='z'){e.preventDefault(); undo();}
+    else if(mod&&(k==='y'||(e.shiftKey&&k==='z'))){e.preventDefault(); redo();}
+    else if(mod&&k==='s'){e.preventDefault(); saveDoc();}
+  });
+
+  /* warn before leaving with unsaved edits */
+  window.addEventListener('beforeunload',function(e){
+    if(dirty){e.preventDefault(); e.returnValue='';}
+  });
+
+  updateUR();
 })();
 </script>
