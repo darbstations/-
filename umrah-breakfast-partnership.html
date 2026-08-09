@@ -122,6 +122,31 @@ tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
 .frow .val:empty::before{content:"………………";color:var(--ink-3);letter-spacing:.1em}
 @media (max-width:640px){.frow{grid-template-columns:1fr}.frow .lab{border-inline-end:0;border-bottom:1px solid var(--line)}}
 
+/* interactive partners */
+.ptally{
+  display:flex;gap:26px;flex-wrap:wrap;align-items:baseline;margin-top:28px;
+  background:var(--deep);color:#F3E5D3;border-radius:4px;padding:16px 22px;
+}
+.ptally div{font-size:12.5px;letter-spacing:.06em;color:#B9A48D}
+.ptally b{font-size:26px;font-weight:700;color:#fff;margin-inline-start:8px}
+.ptally b.ok{color:var(--amber)}
+.pstat{
+  font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;
+  border:1px solid var(--line);border-radius:999px;padding:5px 14px;
+  background:var(--sand);color:var(--ink-2);white-space:nowrap;
+}
+.pstat:focus-visible{outline:2px solid var(--orange-hi);outline-offset:2px}
+.pstat[data-s="in"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.pstat[data-s="out"]{background:transparent;color:var(--ink-3);text-decoration:line-through}
+.addrow{
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px;
+  background:transparent;color:var(--orange);border:1px dashed var(--orange-hi);
+  border-radius:4px;padding:11px 18px;width:100%;
+}
+.addrow:hover{background:color-mix(in srgb,var(--orange-hi) 10%,transparent)}
+.addrow:focus-visible{outline:2px solid var(--orange-hi);outline-offset:2px}
+td.fill:empty::before{content:"\2026\2026\2026";color:var(--ink-3);letter-spacing:.1em}
+
 /* two columns */
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
 @media (max-width:720px){.cols{grid-template-columns:1fr}}
@@ -250,7 +275,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     <span class="brandmeta">ملف شراكة</span>
   </div>
   <h1>حملة فطور محطة العمرة.<br><span class="hl">ندعوك لتكون جزءًا منها.</span></h1>
-  <p class="sub">ألف سيارة تمرّ أمام وحدتك كل صباح. هذا الملف يشرح الفرصة بالأرقام، والأدوات التي تنفّذها المحطة على حسابها، وما نطلبه منك: عرض واحد.</p>
+  <p class="sub">ألف سيارة تمرّ أمام وحدتك كل صباح. هذا الملف يشرح الفرصة بالأرقام، والمنصّة التي تبنيها المحطة للحملة، وما نطلبه منك: عرض واحد.</p>
 
   <div class="factstrip">
     <div class="fact" data-block>
@@ -391,8 +416,8 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     <div class="gain" data-block>
       <span class="mark"></span>
       <div>
-        <b>المحطة تتحمّل تكلفة الأدوات</b>
-        <span>الكروت والبروشورات والسديري واللوحات والحملة الرقمية على حساب المحطة. أنت تقدّم العرض فقط.</span>
+        <b>منصّة الحملة على حساب المحطة</b>
+        <span>الهوية والتصميم واللوحات والبنرات والشاشات ولافتات الطريق ورمز QR الموحّد ونظام القياس — كلها تبنيها المحطة. أنت تتكفّل بقيمة عرضك وبتعاقداتك مع المؤثرين.</span>
       </div>
     </div>
     <div class="gain" data-block>
@@ -413,7 +438,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
       <span class="mark"></span>
       <div>
         <b>قياس شفاف لأثر عرضك</b>
-        <span>الكروت المسترجعة تُعدّ يوميًا لكل وحدة، فتعرف بالرقم ما جلبته لك الحملة — لا بالانطباع.</span>
+        <span>رمز QR خاص بكل نقطة توزيع، ولوحة تعرض عمليات المسح لكل وحدة — فتعرف بالرقم ما جلبته لك الحملة، لا بالانطباع.</span>
       </div>
     </div>
   </div>
@@ -422,15 +447,15 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
 <!-- ============ 4 — MARKETING TOOLS ============ -->
 <section class="slide" data-block>
   <p class="eyebrow">٤ · الأدوات التسويقية</p>
-  <h2>سبع أدوات تنفّذها المحطة لحملة الفطور</h2>
-  <p class="lede">كل أداة معها مدى وصولها التقديري، وكلها ممولة من المحطة ضمن الحملة.</p>
+  <h2>ثماني أدوات تبني منصّة حملة الفطور</h2>
+  <p class="lede">كل أداة معها مدى وصولها التقديري. المحطة تبني المنصّة وتشغّلها، والشريك يتكفّل بقيمة عرضه وبتعاقداته مع المؤثرين.</p>
 
   <div class="tools">
     <div class="tool" data-block>
       <span class="t">١</span>
       <div>
-        <h3>كرت العروض</h3>
-        <p>كرت صغير يحمل عرض اليوم وأسماء الوحدات المشاركة، يسلّمه عامل المضخة مع الباقي في نافذة ٠٥:٠٠–١١:٠٠. لونه يتغيّر يوميًا ليُعدّ ويُقاس.</p>
+        <h3>كرت الحملة — أداة براندنق</h3>
+        <p>كرت يحمل هوية «فطور درب» وأسماء الوحدات المشاركة ورمز QR، يسلّمه عامل المضخة مع الباقي في نافذة ٠٥:٠٠–١١:٠٠. وظيفته التعريف بالحملة وتوجيه العميل إلى الوحدات — لا حمل قيمة خصم.</p>
       </div>
       <span class="reach">حتى ٩٥٣ كرتًا يوميًا</span>
     </div>
@@ -474,14 +499,23 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     <div class="tool" data-block>
       <span class="t">٦</span>
       <div>
-        <h3>الحملة الرقمية والمعلنون</h3>
-        <p>تشويقة وإعلان وستوري لكل شريك على قنوات المحطة، وتعاون مع معلنين ومؤثرين في محتوى المطاعم والطريق إلى مكة.</p>
+        <h3>رمز QR الموحّد — براندنق وقياس</h3>
+        <p>رمز واحد بهوية الحملة يظهر على الكرت والبروشور ولوحات المضخات وواجهات الوحدات، ويفتح صفحة عروض الشركاء. ولكل نقطة توزيع رمزها الخاص، فتُقاس عمليات المسح لكل مضخة ولكل وحدة بدقة.</p>
+      </div>
+      <span class="reach">قياس لحظي لكل نقطة</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٧</span>
+      <div>
+        <h3>القنوات الرقمية والمؤثرون</h3>
+        <p>تشويقة وستوري لكل شريك بالتناوب على قنوات المحطة. أما التعاقد مع المؤثرين والمعلنين فيتولّاه الشريك على حسابه، وتنسّق المحطة ظهورهم ضمن هوية الحملة.</p>
       </div>
       <span class="reach">شريك مميّز كل أسبوع</span>
     </div>
 
     <div class="tool" data-block>
-      <span class="t">٧</span>
+      <span class="t">٨</span>
       <div>
         <h3>لافتات الطريق</h3>
         <p>«آخر فطور قبل الحرم» على الاتجاه الداخل و«أول فطور بعد الحرم» على الخارج — رسالة جغرافية لا يستطيع أي منافس على الطريق نسخها.</p>
@@ -502,69 +536,108 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
         <tr><th>الأداة</th><th>من يوزّعها</th><th>المكان</th><th>التوقيت</th></tr>
       </thead>
       <tbody>
-        <tr class="hot" data-block><td class="strong">كرت العروض</td><td>عمال المضخات + واش واي</td><td>عند المضخة مع الباقي</td><td>٠٥:٠٠ – ١١:٠٠</td></tr>
+        <tr class="hot" data-block><td class="strong">كرت الحملة</td><td>عمال المضخات + واش واي</td><td>عند المضخة مع الباقي</td><td>٠٥:٠٠ – ١١:٠٠</td></tr>
         <tr data-block><td class="strong">البروشور</td><td>الشركاء داخل وحداتهم</td><td>الكاشير ومدخل الوحدة</td><td>طوال اليوم</td></tr>
         <tr data-block><td class="strong">البروشور — نسخة الحافلات</td><td>فريق المحطة</td><td>داخل الحافلة عند التوقف</td><td>مع كل حافلة</td></tr>
         <tr data-block><td class="strong">اللوحات والشاشات</td><td>المحطة</td><td>المضخات والساحة</td><td>ثابتة</td></tr>
-        <tr data-block><td class="strong">المحتوى الرقمي</td><td>فريق التسويق</td><td>قنوات المحطة والمعلنون</td><td>أسبوعيًا بالتناوب</td></tr>
+        <tr class="hot" data-block><td class="strong">رمز QR</td><td>المحطة — تصميم وتشغيل</td><td>الكرت والبروشور واللوحات وواجهة الوحدة</td><td>ثابت طوال الحملة</td></tr>
+        <tr data-block><td class="strong">المحتوى الرقمي</td><td>فريق التسويق + مؤثرو الشريك</td><td>قنوات المحطة وحسابات الشركاء</td><td>أسبوعيًا بالتناوب</td></tr>
       </tbody>
     </table>
   </div>
   <p class="note">التوزيع يبدأ بأقوى ست مضخات — ١٦ و٢٤ و٣٠ و١٨ و٣٤ و٢٠ — وهي وحدها ٣٩٥ سيارة صباحًا أي ٤٢٪ من الحركة، ثم يعمَّم على المضخات التسع والعشرين بعد أسبوعين من القياس.</p>
 </section>
 
-<!-- ============ 6 — THE OFFER FORM ============ -->
+<!-- ============ 6 — PARTNERS & OFFERS (interactive) ============ -->
 <section class="slide" data-block>
-  <p class="eyebrow">٦ · ما نطلبه منك</p>
-  <h2>عرض واحد — تعبّئه في هذا النموذج</h2>
-  <p class="lede">العرض هو مساهمتك الوحيدة في الحملة. اختر صنفًا واحدًا سريع التحضير يمثّل وحدتك، وحدّد سعره ضمن الحملة.</p>
+  <p class="eyebrow">٦ · الشركاء والعروض</p>
+  <h2>سجّل عرضك واحجز مكانك في الحملة</h2>
+  <p class="lede">العرض هو مساهمتك الوحيدة في الحملة، وقيمته على حسابك. اضغط على حالة وحدتك لتغييرها، واكتب صنفك وسعره مباشرة في الجدول.</p>
+
+  <div class="ptally" data-block>
+    <div>شركاء مؤكدون<b class="ok" id="pIn">٠</b></div>
+    <div>بانتظار الرد<b id="pWait">٠</b></div>
+    <div>معتذرون<b id="pOut">٠</b></div>
+    <div>إجمالي الوحدات<b id="pAll">٠</b></div>
+  </div>
+
+  <div class="tablewrap" data-block>
+    <table>
+      <thead>
+        <tr><th>الوحدة</th><th>الصنف المعروض</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr>
+      </thead>
+      <tbody id="pbody">
+        <tr data-block><td class="strong">ترويقة زمان</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ضيافة الجاوي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ضيافة البركة</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">العكبري</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">القادري</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">قطب</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">البركة</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">صامولجي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">اندو محموس</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">العندليب</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">كافترجي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ستارجوس</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">شاي بوبا</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">بف</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">باباسنفور</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">مدور</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">مذاق مغربي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">جوينت</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ريشيو</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">كافيه ٣٦٠</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="addrow" id="btnAddPartner" contenteditable="false">+ إضافة شريك إلى الجدول</button>
 
   <div class="form" data-block>
     <div class="head">
-      <b>نموذج عرض شريك — حملة فطور محطة العمرة</b>
-      <span>يُعبّأ ويُعاد لإدارة المحطة قبل موعد الإطلاق</span>
+      <b>تفاصيل الالتزام — يعبّئها الشريك</b>
+      <span>تُستكمل مع تسجيل العرض في الجدول أعلاه</span>
     </div>
-    <div class="frow" data-block><div class="lab">اسم الوحدة</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">رقم الوحدة في المحطة</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">اسم الوحدة ورقمها</div><div class="val"></div></div>
     <div class="frow" data-block><div class="lab">اسم المسؤول ورقم التواصل</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">الصنف المعروض</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">السعر الاعتيادي</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">سعر الحملة</div><div class="val"></div></div>
     <div class="frow" data-block><div class="lab">الكمية اليومية المتاحة</div><div class="val"></div></div>
     <div class="frow" data-block><div class="lab">زمن التحضير بالدقائق</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">هل تلتزم بالفتح ٠٥:٠٠ صباحًا؟</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">الالتزام بالفتح ٠٥:٠٠ صباحًا</div><div class="val"></div></div>
     <div class="frow" data-block><div class="lab">صنف سريع يصلح لمجموعات الحافلات</div><div class="val"></div></div>
-    <div class="frow" data-block><div class="lab">ملاحظات</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">من يتولّى التعاقد مع المؤثرين</div><div class="val"></div></div>
     <div class="frow" data-block><div class="lab">التوقيع والتاريخ</div><div class="val"></div></div>
   </div>
+  <p class="note">قيمة الكوبون أو الخصم وتكلفة التعاقد مع المؤثرين على الشريك. المحطة تتكفّل بالهوية والتصميم والطباعة المشتركة والتوزيع الميداني ورمز QR ونظام القياس.</p>
 </section>
 
 <!-- ============ 7 — COMMITMENTS ============ -->
 <section class="slide" data-block>
   <p class="eyebrow">٧ · تقسيم الالتزام</p>
-  <h2>المحطة تدفع، والشريك يفتح ويقدّم العرض</h2>
+  <h2>المحطة تبني المنصّة، والشريك يقدّم العرض ويفتح</h2>
 
   <div class="cols">
     <div class="col station" data-block>
       <h3>على المحطة</h3>
       <ul>
-        <li data-block><b>طباعة الكروت والبروشورات</b> طوال مدة الحملة</li>
-        <li data-block><b>السديري</b> وتدريب العمال الستة وحوافزهم</li>
+        <li data-block><b>هوية الحملة والتصميم</b> — قوالب الكرت والبروشور والسديري واللوحات</li>
+        <li data-block><b>طباعة المواد المشتركة</b> التي تحمل كل الشركاء</li>
+        <li data-block><b>قناة التوزيع</b> — العمال الستة والسديري الميداني</li>
         <li data-block><b>اللوحات والبنرات والشاشات</b> داخل المحطة</li>
         <li data-block><b>لافتات الطريق</b> في الاتجاهين</li>
-        <li data-block><b>الحملة الرقمية والمعلنون</b></li>
+        <li data-block><b>رمز QR الموحّد</b> ورموز نقاط التوزيع ونظام القياس</li>
         <li data-block><b>اتفاقيات مكاتب النقل</b> وشركات الحافلات</li>
-        <li data-block><b>تقرير أسبوعي</b> بعدد الكروت المسترجعة لكل وحدة</li>
+        <li data-block><b>تقرير أسبوعي</b> بعمليات المسح لكل وحدة</li>
       </ul>
     </div>
     <div class="col partner" data-block>
       <h3>على الشريك</h3>
       <ul>
-        <li data-block><b>تقديم عرض واحد</b> عبر النموذج أعلاه</li>
+        <li data-block><b>قيمة العرض أو الكوبون</b> — الخصم على حساب الشريك، لا على المحطة</li>
+        <li data-block><b>التعاقد مع المؤثرين والمعلنين</b> على حساب الشريك، بتنسيق مع فريق الحملة</li>
+        <li data-block><b>تسجيل العرض</b> في جدول الشركاء وتوقيع تفاصيل الالتزام</li>
         <li data-block><b>الفتح الساعة ٠٥:٠٠</b> — الالتزام الأهم في الحملة كلها</li>
-        <li data-block><b>قبول الكرت</b> دون جدال مع العميل</li>
+        <li data-block><b>قبول عرض الحملة</b> دون جدال مع العميل</li>
         <li data-block><b>صنف سريع واحد</b> جاهز للتسليم خلال دقائق</li>
-        <li data-block><b>تسليم الكروت المسترجعة</b> في نهاية كل يوم</li>
+        <li data-block><b>عرض رمز QR</b> على واجهة الوحدة وعند الكاشير</li>
         <li data-block><b>تعيين مسؤول</b> للتواصل مع فريق الحملة</li>
       </ul>
     </div>
@@ -579,7 +652,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
   <div class="tl" data-block>
     <div class="row" data-block>
       <div class="w">الأسبوع ١</div>
-      <div class="c"><b>جمع العروض</b><span>اجتماعات مع الشركاء، استلام النماذج، تصميم قالب الكرت والبروشور والسديري.</span></div>
+      <div class="c"><b>جمع العروض</b><span>اجتماعات مع الشركاء، تسجيل العروض في الجدول، تصميم قالب الكرت والبروشور والسديري ورمز QR.</span></div>
     </div>
     <div class="row" data-block>
       <div class="w">الأسبوع ٢</div>
@@ -587,7 +660,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     </div>
     <div class="row" data-block>
       <div class="w">الأسبوع ٣ – ٤</div>
-      <div class="c"><b>الإطلاق على ست مضخات</b><span>يبدأ التوزيع يوم أربعاء — أقوى صباح في الأسبوع — مع عدّ يومي للكروت المسترجعة لكل وحدة.</span></div>
+      <div class="c"><b>الإطلاق على ست مضخات</b><span>يبدأ التوزيع يوم أربعاء — أقوى صباح في الأسبوع — مع رصد يومي لعمليات مسح QR لكل وحدة ولكل مضخة.</span></div>
     </div>
     <div class="row" data-block>
       <div class="w">الأسبوع ٥</div>
@@ -602,7 +675,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
   <div class="grid">
     <div class="card accent" data-block>
       <div class="k">مؤشر النجاح الوحيد</div>
-      <div class="v" style="font-size:19px;line-height:1.5">عدد الكروت المسترجعة من الشريك ÷ عدد سيارات الصباح</div>
+      <div class="v" style="font-size:19px;line-height:1.5">عمليات مسح QR الخاصة بالشريك ÷ عدد سيارات الصباح</div>
     </div>
     <div class="card" data-block>
       <div class="k">موعد إغلاق استلام العروض</div>
@@ -757,6 +830,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
       while(next && !next.hasAttribute('data-block')) next=next.nextElementSibling;
       if(next){ p.insertBefore(next, el); place(el); el.scrollIntoView({block:'center'}); }
     }
+    tally();
     save();
   });
 
@@ -796,6 +870,57 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     node.scrollIntoView({behavior:'smooth',block:'center'});
     say('تمت الإضافة في نهاية الملف — اسحبه لأعلى بأزرار العنصر.');
     save();
+  });
+
+  /* ---------- interactive partners table ---------- */
+  var LABEL = {in:'مشارك', wait:'بانتظار', out:'معتذر'};
+  var NEXT  = {wait:'in', in:'out', out:'wait'};
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
+
+  function tally(){
+    var rows = doc.querySelectorAll('#pbody .pstat');
+    var c = {in:0, wait:0, out:0};
+    for(var i=0;i<rows.length;i++){
+      var k = rows[i].dataset.s;
+      if(c[k] === undefined) k = 'wait';
+      c[k]++;
+    }
+    var set = function(id, v){ var el = doc.querySelector('#'+id); if(el) el.textContent = ar(v); };
+    set('pIn', c.in); set('pWait', c.wait); set('pOut', c.out);
+    set('pAll', rows.length);
+  }
+
+  doc.addEventListener('click', function(e){
+    var b = e.target.closest('.pstat');
+    if(b){
+      e.preventDefault();
+      var cur = b.dataset.s || 'wait';
+      var nxt = NEXT[cur] || 'wait';
+      b.dataset.s = nxt;
+      b.textContent = LABEL[nxt];
+      tally(); save();
+      return;
+    }
+    if(e.target.closest('#btnAddPartner')){
+      e.preventDefault();
+      var body = doc.querySelector('#pbody');
+      if(!body) return;
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-block','');
+      tr.innerHTML = '<td class="strong fill"></td><td class="fill"></td><td class="fill"></td>'+
+                     '<td class="fill"></td><td><button type="button" class="pstat" data-s="wait" '+
+                     'contenteditable="false">بانتظار</button></td>';
+      body.appendChild(tr);
+      tr.scrollIntoView({block:'center'});
+      var first = tr.querySelector('td');
+      if(editing && first){
+        var r = document.createRange(); r.selectNodeContents(first);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+      tally(); save();
+      say('أُضيف صف جديد — اكتب اسم الوحدة وعرضها.');
+    }
   });
 
   /* ---------- edit mode ---------- */
@@ -840,6 +965,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     if(!window.confirm('استعادة الملف الأصلي وحذف كل تعديلاتك في هذا المتصفح؟')) return;
     doc.innerHTML=pristine;
     try{ localStorage.removeItem(KEY); }catch(e){}
+    tally();
     if(editing) setEditing(false);
     say('تمت استعادة النسخة الأصلية.');
   });
@@ -854,6 +980,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
   }, {passive:true});
 
   doc.setAttribute('contenteditable','false');
+  tally();
   if(!restored){
     setTimeout(function(){
       if(!editing) say('هذا الملف قابل للتعديل والحذف والإضافة: اضغط «تحرير» أسفل الصفحة.',6000);
