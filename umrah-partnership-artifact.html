@@ -1,0 +1,1006 @@
+<title>حملة فطور محطة العمرة — ملف الشراكة</title>
+<style>
+:root{
+  --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
+  --ground:#FBF6EF; --surface:#F4E9DB; --line:#E0D0BA;
+  --orange:#C85E05; --orange-hi:#E8760C; --amber:#F59A2E; --sand:#F1E2CC;
+  --cool:#7C8B84; --cool-soft:#C3CCC6; --deep:#3A2416;
+  --ok:#1B7A4B;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --ink:#F6EDE1; --ink-2:#C0AC96; --ink-3:#8E7B67;
+    --ground:#1B140D; --surface:#2A2016; --line:#3B2D1F;
+    --orange:#F0862A; --orange-hi:#FBA23F; --amber:#F5B05A; --sand:#3B2D1F;
+    --cool:#8A9992; --cool-soft:#4A5651; --deep:#0F0A06;
+    --ok:#4E9E74;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#F6EDE1; --ink-2:#C0AC96; --ink-3:#8E7B67;
+  --ground:#1B140D; --surface:#2A2016; --line:#3B2D1F;
+  --orange:#F0862A; --orange-hi:#FBA23F; --amber:#F5B05A; --sand:#3B2D1F;
+  --cool:#8A9992; --cool-soft:#4A5651; --deep:#0F0A06; --ok:#4E9E74;
+}
+:root[data-theme="light"]{
+  --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
+  --ground:#FBF6EF; --surface:#F4E9DB; --line:#E0D0BA;
+  --orange:#C85E05; --orange-hi:#E8760C; --amber:#F59A2E; --sand:#F1E2CC;
+  --cool:#7C8B84; --cool-soft:#C3CCC6; --deep:#3A2416; --ok:#1B7A4B;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  direction:rtl; text-align:right; -webkit-font-smoothing:antialiased;
+  font-variant-numeric:tabular-nums;
+}
+.doc{max-width:1080px;margin:0 auto;padding:0 24px 120px}
+.slide{padding:58px 0;border-bottom:1px solid var(--line);position:relative}
+.slide:last-child{border-bottom:0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--orange);margin:0 0 14px}
+.slide h2{font-size:clamp(25px,3.4vw,38px);line-height:1.28;font-weight:700;margin:0 0 12px;text-wrap:balance;letter-spacing:-.01em}
+.lede{font-size:17px;line-height:1.75;color:var(--ink-2);max-width:62ch;margin:0}
+.note{font-size:13px;line-height:1.75;color:var(--ink-3);margin:18px 0 0;max-width:72ch}
+
+/* cover */
+.cover{padding:72px 0 56px;border-bottom:3px solid var(--orange);position:relative}
+.brandbar{display:flex;align-items:center;gap:14px;margin-bottom:38px;flex-wrap:wrap}
+.brandmark{font-size:13px;font-weight:700;letter-spacing:.22em;color:#fff;background:var(--orange-hi);padding:7px 16px;border-radius:3px}
+.brandmeta{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+.cover h1{font-size:clamp(32px,5.6vw,60px);line-height:1.16;font-weight:700;margin:0 0 20px;letter-spacing:-.02em;text-wrap:balance}
+.cover h1 .hl{color:var(--orange)}
+.cover .sub{font-size:19px;color:var(--ink-2);line-height:1.7;max-width:58ch;margin:0}
+
+.factstrip{display:flex;flex-wrap:wrap;gap:0;margin-top:40px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.fact{flex:1 1 190px;padding:20px 22px;background:var(--surface);border-inline-start:1px solid var(--line)}
+.fact:first-child{border-inline-start:0}
+.fact .k{font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:700}
+.fact .v{font-size:29px;font-weight:700;margin-top:6px;letter-spacing:-.02em}
+.fact .u{font-size:12px;color:var(--ink-3);margin-top:2px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:30px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:22px}
+.card .k{font-size:11px;letter-spacing:.12em;color:var(--ink-3);font-weight:700;margin-bottom:10px}
+.card .v{font-size:32px;font-weight:700;line-height:1.05;letter-spacing:-.02em}
+.card .v small{font-size:14px;font-weight:700;color:var(--ink-2);margin-inline-start:5px}
+.card .d{font-size:13px;color:var(--ink-2);margin-top:10px;line-height:1.65}
+.card.accent{background:var(--orange-hi);border-color:var(--orange-hi)}
+.card.accent .k{color:#FFE6CC}
+.card.accent .v,.card.accent .d{color:#fff}
+
+/* tools */
+.tools{display:grid;gap:13px;margin-top:30px}
+.tool{
+  display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);
+  border-inline-start:3px solid var(--orange-hi);border-radius:4px;padding:20px 22px;
+}
+.tool .t{font-size:13px;font-weight:700;color:#fff;background:var(--orange);border-radius:3px;padding:5px 11px;white-space:nowrap}
+.tool h3{margin:0 0 6px;font-size:17px;font-weight:700;line-height:1.4}
+.tool p{margin:0;font-size:14.5px;line-height:1.75;color:var(--ink-2)}
+.tool .reach{
+  font-size:12.5px;font-weight:700;color:var(--orange);white-space:nowrap;
+  background:color-mix(in srgb,var(--orange-hi) 14%,transparent);
+  padding:6px 12px;border-radius:3px;align-self:center;
+}
+@media (max-width:720px){.tool{grid-template-columns:1fr;gap:12px}.tool .t,.tool .reach{justify-self:start}}
+
+/* value list */
+.gains{display:grid;gap:12px;margin-top:30px}
+.gain{
+  display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
+  background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+}
+.gain .mark{width:9px;height:9px;border-radius:50%;background:var(--ok);margin-top:8px}
+.gain b{display:block;font-size:16px;margin-bottom:4px}
+.gain span{font-size:14.5px;line-height:1.75;color:var(--ink-2)}
+
+/* table */
+.tablewrap{margin-top:28px;overflow-x:auto;border:1px solid var(--line);border-radius:4px}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px;background:var(--surface)}
+th,td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--sand);font-size:11.5px;letter-spacing:.09em;color:var(--ink-2);font-weight:700;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.num,td.strong{font-weight:700}
+tr.hot td{background:color-mix(in srgb,var(--orange-hi) 12%,transparent)}
+
+/* offer form */
+.form{margin-top:30px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.form .head{background:var(--deep);color:#F5E8D7;padding:18px 22px}
+.form .head b{display:block;font-size:17px;margin-bottom:4px}
+.form .head span{font-size:13px;color:#B9A48D}
+.frow{display:grid;grid-template-columns:220px 1fr;border-top:1px solid var(--line);background:var(--surface)}
+.frow .lab{padding:15px 20px;background:var(--sand);font-size:13.5px;font-weight:700;border-inline-end:1px solid var(--line)}
+.frow .val{padding:15px 20px;font-size:14.5px;color:var(--ink-2);min-height:52px}
+.frow .val:empty::before{content:"………………";color:var(--ink-3);letter-spacing:.1em}
+@media (max-width:640px){.frow{grid-template-columns:1fr}.frow .lab{border-inline-end:0;border-bottom:1px solid var(--line)}}
+
+/* interactive partners */
+.ptally{
+  display:flex;gap:26px;flex-wrap:wrap;align-items:baseline;margin-top:28px;
+  background:var(--deep);color:#F3E5D3;border-radius:4px;padding:16px 22px;
+}
+.ptally div{font-size:12.5px;letter-spacing:.06em;color:#B9A48D}
+.ptally b{font-size:26px;font-weight:700;color:#fff;margin-inline-start:8px}
+.ptally b.ok{color:var(--amber)}
+.pstat{
+  font-family:inherit;font-size:12.5px;font-weight:700;cursor:pointer;
+  border:1px solid var(--line);border-radius:999px;padding:5px 14px;
+  background:var(--sand);color:var(--ink-2);white-space:nowrap;
+}
+.pstat:focus-visible{outline:2px solid var(--orange-hi);outline-offset:2px}
+.pstat[data-s="in"]{background:var(--ok);border-color:var(--ok);color:#fff}
+.pstat[data-s="out"]{background:transparent;color:var(--ink-3);text-decoration:line-through}
+.addrow{
+  font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;margin-top:14px;
+  background:transparent;color:var(--orange);border:1px dashed var(--orange-hi);
+  border-radius:4px;padding:11px 18px;width:100%;
+}
+.addrow:hover{background:color-mix(in srgb,var(--orange-hi) 10%,transparent)}
+.addrow:focus-visible{outline:2px solid var(--orange-hi);outline-offset:2px}
+td.fill:empty::before{content:"\2026\2026\2026";color:var(--ink-3);letter-spacing:.1em}
+
+/* two columns */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+@media (max-width:720px){.cols{grid-template-columns:1fr}}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:24px}
+.col.station{border-top:3px solid var(--orange-hi)}
+.col.partner{border-top:3px solid var(--cool)}
+.col h3{margin:0 0 16px;font-size:18px;font-weight:700}
+.col ul{margin:0;padding-inline-start:19px}
+.col li{font-size:14.5px;line-height:1.8;color:var(--ink-2);margin-bottom:9px}
+.col li:last-child{margin-bottom:0}
+.col li b{color:var(--ink)}
+
+/* timeline */
+.tl{margin-top:28px;display:grid;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.tl .row{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--line);background:var(--surface)}
+.tl .row:last-child{border-bottom:0}
+.tl .w{padding:16px 18px;background:var(--sand);font-size:13px;font-weight:700;border-inline-end:1px solid var(--line)}
+.tl .c{padding:16px 20px}
+.tl .c b{display:block;font-size:15px;margin-bottom:4px}
+.tl .c span{font-size:13.5px;color:var(--ink-2);line-height:1.7}
+@media (max-width:640px){.tl .row{grid-template-columns:1fr}.tl .w{border-inline-end:0;border-bottom:1px solid var(--line)}}
+
+/* chart */
+.chartwrap{margin-top:30px;border:1px solid var(--line);border-radius:4px;background:var(--surface);padding:24px 20px 14px;overflow-x:auto}
+.chartwrap svg{display:block;min-width:600px;width:100%;height:auto}
+
+@media (max-width:640px){.doc{padding:0 16px 110px}.slide{padding:44px 0}}
+
+/* ================= editor ================= */
+.toolbar{
+  position:fixed; inset-block-end:18px; inset-inline-start:18px; z-index:60;
+  display:flex; gap:6px; flex-wrap:wrap; align-items:center;
+  background:var(--surface); border:1px solid var(--line); border-radius:999px;
+  padding:7px 9px; box-shadow:0 12px 30px -14px rgba(40,25,12,.5);
+}
+.toolbar button{
+  font-family:inherit; font-size:13px; font-weight:700; color:var(--ink-2);
+  background:transparent; border:1px solid transparent; border-radius:999px;
+  padding:7px 13px; cursor:pointer; transition:background .15s,color .15s;
+}
+.toolbar button:hover{background:var(--sand); color:var(--ink)}
+.toolbar button:focus-visible{outline:2px solid var(--orange-hi); outline-offset:2px}
+.toolbar button.primary{background:var(--orange-hi); color:#fff}
+.toolbar button.primary:hover{background:var(--orange)}
+.toolbar button[hidden]{display:none}
+.toolbar .state{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);padding-inline:9px 4px;white-space:nowrap}
+.toolbar .state.on{color:var(--orange)}
+
+/* block controls */
+.blockbar{
+  position:absolute; z-index:55; display:none; gap:3px;
+  background:var(--deep); border-radius:5px; padding:4px;
+  box-shadow:0 8px 22px -10px rgba(0,0,0,.6);
+}
+.blockbar.show{display:flex}
+.blockbar button{
+  font-family:inherit; font-size:12px; font-weight:700; line-height:1;
+  color:#F0E2D0; background:transparent; border:0; border-radius:3px;
+  padding:6px 9px; cursor:pointer;
+}
+.blockbar button:hover{background:rgba(255,255,255,.16); color:#fff}
+.blockbar button.danger:hover{background:#B3402A; color:#fff}
+.blockbar button:focus-visible{outline:2px solid var(--amber); outline-offset:1px}
+
+body.editing [data-block]{position:relative}
+body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offset:4px; border-radius:4px}
+
+/* add-menu */
+.addmenu{
+  position:fixed; inset-block-end:74px; inset-inline-start:18px; z-index:61;
+  background:var(--surface); border:1px solid var(--line); border-radius:8px;
+  padding:8px; box-shadow:0 16px 40px -16px rgba(40,25,12,.6);
+  display:none; flex-direction:column; gap:2px; min-width:230px;
+}
+.addmenu.show{display:flex}
+.addmenu b{font-size:11px;letter-spacing:.1em;color:var(--ink-3);padding:7px 12px 4px}
+.addmenu button{
+  font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-2);text-align:right;
+  background:transparent;border:0;border-radius:5px;padding:9px 12px;cursor:pointer;
+}
+.addmenu button:hover{background:var(--sand);color:var(--ink)}
+.addmenu button:focus-visible{outline:2px solid var(--orange-hi);outline-offset:-2px}
+
+.toast{
+  position:fixed; inset-block-end:76px; inset-inline-end:18px; z-index:62;
+  background:var(--deep); color:#F6E9D8; font-size:13px; font-weight:700;
+  padding:11px 18px; border-radius:6px; box-shadow:0 12px 30px -14px rgba(0,0,0,.6);
+  opacity:0; transform:translateY(6px); transition:opacity .2s,transform .2s;
+  pointer-events:none; max-width:min(78vw,420px); line-height:1.6;
+}
+.toast.show{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){.toolbar button,.toast{transition:none}}
+@media (max-width:640px){
+  .toolbar{inset-inline:12px;inset-block-end:12px;justify-content:center}
+  .addmenu{inset-inline:12px;inset-block-end:92px}
+  .toast{inset-inline:12px;inset-block-end:104px;max-width:none}
+}
+
+@media print{
+  .toolbar,.toast,.blockbar,.addmenu{display:none !important}
+  :root{
+    --ink:#2A1D12; --ink-2:#5B4834; --ink-3:#857161;
+    --ground:#FFFFFF; --surface:#FAF5ED; --line:#D8C7B0;
+    --orange:#B44E05; --orange-hi:#C85E05; --amber:#E08A1E; --sand:#F1E2CC;
+    --cool:#7C8B84; --cool-soft:#BDC6C0; --deep:#3A2416;
+  }
+  body{background:#fff}
+  .doc{max-width:100%;padding:0}
+  .slide,.cover{break-inside:avoid;page-break-inside:avoid;padding:24px 0}
+  .tool,.card,.col,.gain,.tablewrap,.form,.tl,.chartwrap{break-inside:avoid;page-break-inside:avoid}
+  .chartwrap svg{min-width:0}
+  @page{margin:14mm}
+}
+</style>
+
+<div class="doc" id="doc">
+
+<!-- ============ COVER ============ -->
+<section class="cover" data-block>
+  <div class="brandbar">
+    <span class="brandmark">درب</span>
+    <span class="brandmeta">محطة العمرة · MK007</span>
+    <span class="brandmeta">·</span>
+    <span class="brandmeta">ملف شراكة</span>
+  </div>
+  <h1>حملة فطور محطة العمرة.<br><span class="hl">ندعوك لتكون جزءًا منها.</span></h1>
+  <p class="sub">ألف سيارة تمرّ أمام وحدتك كل صباح. هذا الملف يشرح الفرصة بالأرقام، والمنصّة التي تبنيها المحطة للحملة، وما نطلبه منك: عرض واحد.</p>
+
+  <div class="factstrip">
+    <div class="fact" data-block>
+      <div class="k">سيارات كل صباح</div>
+      <div class="v">٩٥٣</div>
+      <div class="u">٠٥:٠٠ – ١٢:٠٠</div>
+    </div>
+    <div class="fact" data-block>
+      <div class="k">شهريًا</div>
+      <div class="v">٢٨٬٥٩١</div>
+      <div class="u">سيارة</div>
+    </div>
+    <div class="fact" data-block>
+      <div class="k">سيارة كل</div>
+      <div class="v">٢٦ ثانية</div>
+      <div class="u">طوال الصباح</div>
+    </div>
+    <div class="fact" data-block>
+      <div class="k">من حركة اليوم</div>
+      <div class="v">٢٣.١٪</div>
+      <div class="u">و ٢٥٪ من إيراد الوقود</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1 — THE FACTS ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">١ · الفرصة بالأرقام</p>
+  <h2>الصباح ليس فترة ضعيفة — إنه فترة غير مُفعّلة</h2>
+  <p class="lede">كل رقم هنا مستخرج من تقرير مبيعات المحطة الفعلي: ٩٠٬٩٥٠ عملية تعبئة بين ١ و٢٢ يوليو ٢٠٢٦، حيث كل عملية تساوي مركبة واحدة عند المضخة.</p>
+
+  <div class="grid">
+    <div class="card accent" data-block>
+      <div class="k">عميل الصباح الأعلى إنفاقًا</div>
+      <div class="v">٣٩.٧<small>لترًا</small></div>
+      <div class="d">بمتوسط ٨٠ ريالًا في الساعة الثامنة — أعلى رقم في اليوم كله. تعبئة كاملة تعني عميلًا يبدأ رحلة، ولم يفطر بعد.</div>
+    </div>
+    <div class="card" data-block>
+      <div class="k">هضبة ثابتة بلا ساعة ميتة</div>
+      <div class="v">٠٥:٣٠ – ١١:٣٠</div>
+      <div class="d">لا تنزل الحركة عن ٦٣ سيارة في نصف الساعة طوال ست ساعات متصلة</div>
+    </div>
+    <div class="card" data-block>
+      <div class="k">حافلات وشاحنات</div>
+      <div class="v">٢٩<small>مركبة كبيرة</small></div>
+      <div class="d">تعبّئ ١٠٠ لتر فأكثر كل صباح — والحافلة الواحدة تُنزل ٤٠ إلى ٥٠ معتمرًا دفعة واحدة</div>
+    </div>
+  </div>
+
+  <div class="tablewrap" data-block>
+    <table>
+      <thead>
+        <tr><th>الفترة</th><th>سيارات/يوم</th><th>متوسط اللترات</th><th>متوسط الفاتورة</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hot" data-block><td>٠٥:٠٠ – ٠٨:٠٠ &nbsp;فجر وشروق</td><td class="num">٤٠٤</td><td class="num">٣١.٠ ل</td><td class="num">٦٤.٥ ر.س</td></tr>
+        <tr class="hot" data-block><td>٠٨:٠٠ – ١١:٠٠ &nbsp;ضحى</td><td class="num">٤١٨</td><td class="num">٣٤.٣ ل</td><td class="num">٦٩.٨ ر.س</td></tr>
+        <tr data-block><td>١١:٠٠ – ١٥:٠٠ &nbsp;ظهر</td><td class="num">٦١٠</td><td class="num">٣٣.٨ ل</td><td class="num">٦٩.٧ ر.س</td></tr>
+        <tr data-block><td>١٥:٠٠ – ٢٠:٠٠ &nbsp;عصر ومغرب</td><td class="num">١٬١٢٣</td><td class="num">٢٩.٧ ل</td><td class="num">٦٣.٦ ر.س</td></tr>
+        <tr data-block><td>٢٠:٠٠ – ٠٥:٠٠ &nbsp;ليل وما بعده</td><td class="num">١٬٥٧٩</td><td class="num">٢٥.٥ ل</td><td class="num">٥٥.٣ ر.س</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">الأرقام محسوبة على ٢٩ مضخة بعد استثناء أضعف خمس مضخات صباحًا، فهي تمثّل الحركة القابلة للاستهداف فعليًا.</p>
+</section>
+
+<!-- ============ 2 — TIMING GAP ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٢ · لماذا الحملة الآن</p>
+  <h2>ساعة الفتح وحدها تقرّر نصف المبيعات</h2>
+  <p class="lede">الحركة تبدأ بالصعود من الخامسة وتبلغ ذروتها في الثامنة. من يفتح متأخرًا لا يواجه سوقًا ضعيفة — بل يصل بعد أن مرّت.</p>
+
+  <div class="chartwrap" dir="ltr" data-block>
+    <svg viewBox="0 0 700 230" role="img" aria-label="السيارات الملتقطة حسب ساعة الفتح">
+      <g font-size="11" fill="var(--ink-2)">
+        <text x="8" y="34">05:00</text>
+        <text x="8" y="70">06:00</text>
+        <text x="8" y="106">07:00</text>
+        <text x="8" y="142">08:00</text>
+        <text x="8" y="178">09:00</text>
+      </g>
+      <g>
+        <rect x="62" y="20"  width="546" height="22" rx="2" fill="var(--orange-hi)"/>
+        <rect x="62" y="56"  width="474" height="22" rx="2" fill="var(--orange-hi)" opacity=".82"/>
+        <rect x="62" y="92"  width="396" height="22" rx="2" fill="var(--orange-hi)" opacity=".64"/>
+        <rect x="62" y="128" width="315" height="22" rx="2" fill="var(--orange-hi)" opacity=".46"/>
+        <rect x="62" y="164" width="231" height="22" rx="2" fill="var(--orange-hi)" opacity=".32"/>
+      </g>
+      <g font-size="12" font-weight="700" fill="var(--ink)">
+        <text x="618" y="36">953</text>
+        <text x="546" y="72">827</text>
+        <text x="468" y="108">691</text>
+        <text x="387" y="144">549</text>
+        <text x="303" y="180">403</text>
+      </g>
+      <g font-size="10.5" fill="var(--ink-3)">
+        <text x="546" y="72"  dx="42">−126</text>
+        <text x="468" y="108" dx="42">−262</text>
+        <text x="387" y="144" dx="42">−404</text>
+        <text x="303" y="180" dx="42">−550</text>
+      </g>
+      <text x="350" y="214" font-size="10.5" fill="var(--ink-3)" text-anchor="middle">السيارات الملتقطة من نافذة الصباح حسب ساعة الفتح (متوسط يومي)</text>
+    </svg>
+  </div>
+
+  <div class="grid">
+    <div class="card accent" data-block>
+      <div class="k">الفتح ٨:٠٠ بدل ٥:٠٠</div>
+      <div class="v">−٤٠٤<small>سيارة/يوم</small></div>
+      <div class="d">أي ١٢٬١٢٠ سيارة شهريًا تمرّ والباب مغلق</div>
+    </div>
+    <div class="card" data-block>
+      <div class="k">أقوى أيام الأسبوع</div>
+      <div class="v">الأربعاء</div>
+      <div class="d">١٬٠٦٤ سيارة صباحًا — وستة أيام من سبعة تتجاوز ٨٥٠</div>
+    </div>
+    <div class="card" data-block>
+      <div class="k">اليوم الوحيد الضعيف</div>
+      <div class="v">الجمعة</div>
+      <div class="d">٥٧٤ سيارة — يُعالَج بعرض عائلي مختلف بعد الفجر</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3 — WHAT THE PARTNER GAINS ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٣ · ماذا تكسب من الحملة</p>
+  <h2>وصول لا تستطيع شراءه منفردًا</h2>
+
+  <div class="gains">
+    <div class="gain" data-block>
+      <span class="mark"></span>
+      <div>
+        <b>٢٨٬٦٠٠ سيارة شهريًا أمام وحدتك</b>
+        <span>الحملة تضع اسمك أمام حركة الصباح كاملة — لا أمام من يدخل وحدتك صدفةً.</span>
+      </div>
+    </div>
+    <div class="gain" data-block>
+      <span class="mark"></span>
+      <div>
+        <b>منصّة الحملة على حساب المحطة</b>
+        <span>الهوية والتصميم واللوحات والبنرات والشاشات ولافتات الطريق ورمز QR الموحّد ونظام القياس — كلها تبنيها المحطة. أنت تتكفّل بقيمة عرضك وبتعاقداتك مع المؤثرين.</span>
+      </div>
+    </div>
+    <div class="gain" data-block>
+      <span class="mark"></span>
+      <div>
+        <b>فريق ميداني من ستة عمال</b>
+        <span>٢٩.٨ ساعة تواصل مباشر يوميًا مع السائقين، توزَّع فيها كروت عروضك مع الباقي.</span>
+      </div>
+    </div>
+    <div class="gain" data-block>
+      <span class="mark"></span>
+      <div>
+        <b>حضور في قناة الحافلات</b>
+        <span>٢٩ حافلة وشاحنة كل صباح، وتوزيع مباشر للبروشورات على المعتمرين.</span>
+      </div>
+    </div>
+    <div class="gain" data-block>
+      <span class="mark"></span>
+      <div>
+        <b>قياس شفاف لأثر عرضك</b>
+        <span>رمز QR خاص بكل نقطة توزيع، ولوحة تعرض عمليات المسح لكل وحدة — فتعرف بالرقم ما جلبته لك الحملة، لا بالانطباع.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4 — MARKETING TOOLS ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٤ · الأدوات التسويقية</p>
+  <h2>ثماني أدوات تبني منصّة حملة الفطور</h2>
+  <p class="lede">كل أداة معها مدى وصولها التقديري. المحطة تبني المنصّة وتشغّلها، والشريك يتكفّل بقيمة عرضه وبتعاقداته مع المؤثرين.</p>
+
+  <div class="tools">
+    <div class="tool" data-block>
+      <span class="t">١</span>
+      <div>
+        <h3>كرت الحملة — أداة براندنق</h3>
+        <p>كرت يحمل هوية «فطور درب» وأسماء الوحدات المشاركة ورمز QR، يسلّمه عامل المضخة مع الباقي في نافذة ٠٥:٠٠–١١:٠٠. وظيفته التعريف بالحملة وتوجيه العميل إلى الوحدات — لا حمل قيمة خصم.</p>
+      </div>
+      <span class="reach">حتى ٩٥٣ كرتًا يوميًا</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٢</span>
+      <div>
+        <h3>البروشور — جدول الفطور الشهري</h3>
+        <p>مطبوعة تجمع عروض كل الشركاء على مدار الشهر، توزَّع داخل الوحدات وعلى المعتمرين وفي مكاتب الرحلات، وتُبقي العميل يعرف عرض كل يوم مقدّمًا.</p>
+      </div>
+      <span class="reach">توزيع يومي متجدد</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٣</span>
+      <div>
+        <h3>السديري الميداني</h3>
+        <p>صدرية برتقالية يلبسها عمال الفترة الصباحية مكتوب عليها «اسألني عن عروض الفطور»، فتتحوّل كل تعبئة إلى فرصة عرض.</p>
+      </div>
+      <span class="reach">٦ عمال · ٢٩.٨ ساعة يوميًا</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٤</span>
+      <div>
+        <h3>لوحات وبنرات وشاشات المحطة</h3>
+        <p>لوحة بمستوى النظر على كل مضخة، وبنرات في الساحة، وشاشات داخل المحطة تعرض عرض اليوم. العميل يقف عند المضخة دقيقة ونصف في المتوسط.</p>
+      </div>
+      <span class="reach">٢٩ مضخة · ٨٦ ثانية وقوف</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٥</span>
+      <div>
+        <h3>باصات العمرة</h3>
+        <p>توزيع البروشورات والكروت على المعتمرين داخل الحافلات، واتفاقيات مع مكاتب النقل ليكون الموقف معتمدًا للإفطار.</p>
+      </div>
+      <span class="reach">٢٩ حافلة وشاحنة يوميًا</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٦</span>
+      <div>
+        <h3>رمز QR الموحّد — براندنق وقياس</h3>
+        <p>رمز واحد بهوية الحملة يظهر على الكرت والبروشور ولوحات المضخات وواجهات الوحدات، ويفتح صفحة عروض الشركاء. ولكل نقطة توزيع رمزها الخاص، فتُقاس عمليات المسح لكل مضخة ولكل وحدة بدقة.</p>
+      </div>
+      <span class="reach">قياس لحظي لكل نقطة</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٧</span>
+      <div>
+        <h3>القنوات الرقمية والمؤثرون</h3>
+        <p>تشويقة وستوري لكل شريك بالتناوب على قنوات المحطة. أما التعاقد مع المؤثرين والمعلنين فيتولّاه الشريك على حسابه، وتنسّق المحطة ظهورهم ضمن هوية الحملة.</p>
+      </div>
+      <span class="reach">شريك مميّز كل أسبوع</span>
+    </div>
+
+    <div class="tool" data-block>
+      <span class="t">٨</span>
+      <div>
+        <h3>لافتات الطريق</h3>
+        <p>«آخر فطور قبل الحرم» على الاتجاه الداخل و«أول فطور بعد الحرم» على الخارج — رسالة جغرافية لا يستطيع أي منافس على الطريق نسخها.</p>
+      </div>
+      <span class="reach">الاتجاهان</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5 — DISTRIBUTION ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٥ · خطة التوزيع</p>
+  <h2>من يوزّع ماذا، وأين، ومتى</h2>
+
+  <div class="tablewrap" data-block>
+    <table>
+      <thead>
+        <tr><th>الأداة</th><th>من يوزّعها</th><th>المكان</th><th>التوقيت</th></tr>
+      </thead>
+      <tbody>
+        <tr class="hot" data-block><td class="strong">كرت الحملة</td><td>عمال المضخات + واش واي</td><td>عند المضخة مع الباقي</td><td>٠٥:٠٠ – ١١:٠٠</td></tr>
+        <tr data-block><td class="strong">البروشور</td><td>الشركاء داخل وحداتهم</td><td>الكاشير ومدخل الوحدة</td><td>طوال اليوم</td></tr>
+        <tr data-block><td class="strong">البروشور — نسخة الحافلات</td><td>فريق المحطة</td><td>داخل الحافلة عند التوقف</td><td>مع كل حافلة</td></tr>
+        <tr data-block><td class="strong">اللوحات والشاشات</td><td>المحطة</td><td>المضخات والساحة</td><td>ثابتة</td></tr>
+        <tr class="hot" data-block><td class="strong">رمز QR</td><td>المحطة — تصميم وتشغيل</td><td>الكرت والبروشور واللوحات وواجهة الوحدة</td><td>ثابت طوال الحملة</td></tr>
+        <tr data-block><td class="strong">المحتوى الرقمي</td><td>فريق التسويق + مؤثرو الشريك</td><td>قنوات المحطة وحسابات الشركاء</td><td>أسبوعيًا بالتناوب</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">التوزيع يبدأ بأقوى ست مضخات — ١٦ و٢٤ و٣٠ و١٨ و٣٤ و٢٠ — وهي وحدها ٣٩٥ سيارة صباحًا أي ٤٢٪ من الحركة، ثم يعمَّم على المضخات التسع والعشرين بعد أسبوعين من القياس.</p>
+</section>
+
+<!-- ============ 6 — PARTNERS & OFFERS (interactive) ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٦ · الشركاء والعروض</p>
+  <h2>سجّل عرضك واحجز مكانك في الحملة</h2>
+  <p class="lede">العرض هو مساهمتك الوحيدة في الحملة، وقيمته على حسابك. اضغط على حالة وحدتك لتغييرها، واكتب صنفك وسعره مباشرة في الجدول.</p>
+
+  <div class="ptally" data-block>
+    <div>شركاء مؤكدون<b class="ok" id="pIn">٠</b></div>
+    <div>بانتظار الرد<b id="pWait">٠</b></div>
+    <div>معتذرون<b id="pOut">٠</b></div>
+    <div>إجمالي الوحدات<b id="pAll">٠</b></div>
+  </div>
+
+  <div class="tablewrap" data-block>
+    <table>
+      <thead>
+        <tr><th>الوحدة</th><th>الصنف المعروض</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr>
+      </thead>
+      <tbody id="pbody">
+        <tr data-block><td class="strong">ترويقة زمان</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ضيافة الجاوي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ضيافة البركة</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">العكبري</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">القادري</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">قطب</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">البركة</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">صامولجي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">اندو محموس</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">العندليب</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">كافترجي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ستارجوس</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">شاي بوبا</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">بف</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">باباسنفور</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">مدور</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">مذاق مغربي</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">جوينت</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">ريشيو</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+        <tr data-block><td class="strong">كافيه ٣٦٠</td><td class="fill"></td><td class="fill"></td><td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <button type="button" class="addrow" id="btnAddPartner" contenteditable="false">+ إضافة شريك إلى الجدول</button>
+
+  <div class="form" data-block>
+    <div class="head">
+      <b>تفاصيل الالتزام — يعبّئها الشريك</b>
+      <span>تُستكمل مع تسجيل العرض في الجدول أعلاه</span>
+    </div>
+    <div class="frow" data-block><div class="lab">اسم الوحدة ورقمها</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">اسم المسؤول ورقم التواصل</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">الكمية اليومية المتاحة</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">زمن التحضير بالدقائق</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">الالتزام بالفتح ٠٥:٠٠ صباحًا</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">صنف سريع يصلح لمجموعات الحافلات</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">من يتولّى التعاقد مع المؤثرين</div><div class="val"></div></div>
+    <div class="frow" data-block><div class="lab">التوقيع والتاريخ</div><div class="val"></div></div>
+  </div>
+  <p class="note">قيمة الكوبون أو الخصم وتكلفة التعاقد مع المؤثرين على الشريك. المحطة تتكفّل بالهوية والتصميم والطباعة المشتركة والتوزيع الميداني ورمز QR ونظام القياس.</p>
+</section>
+
+<!-- ============ 7 — COMMITMENTS ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٧ · تقسيم الالتزام</p>
+  <h2>المحطة تبني المنصّة، والشريك يقدّم العرض ويفتح</h2>
+
+  <div class="cols">
+    <div class="col station" data-block>
+      <h3>على المحطة</h3>
+      <ul>
+        <li data-block><b>هوية الحملة والتصميم</b> — قوالب الكرت والبروشور والسديري واللوحات</li>
+        <li data-block><b>طباعة المواد المشتركة</b> التي تحمل كل الشركاء</li>
+        <li data-block><b>قناة التوزيع</b> — العمال الستة والسديري الميداني</li>
+        <li data-block><b>اللوحات والبنرات والشاشات</b> داخل المحطة</li>
+        <li data-block><b>لافتات الطريق</b> في الاتجاهين</li>
+        <li data-block><b>رمز QR الموحّد</b> ورموز نقاط التوزيع ونظام القياس</li>
+        <li data-block><b>اتفاقيات مكاتب النقل</b> وشركات الحافلات</li>
+        <li data-block><b>تقرير أسبوعي</b> بعمليات المسح لكل وحدة</li>
+      </ul>
+    </div>
+    <div class="col partner" data-block>
+      <h3>على الشريك</h3>
+      <ul>
+        <li data-block><b>قيمة العرض أو الكوبون</b> — الخصم على حساب الشريك، لا على المحطة</li>
+        <li data-block><b>التعاقد مع المؤثرين والمعلنين</b> على حساب الشريك، بتنسيق مع فريق الحملة</li>
+        <li data-block><b>تسجيل العرض</b> في جدول الشركاء وتوقيع تفاصيل الالتزام</li>
+        <li data-block><b>الفتح الساعة ٠٥:٠٠</b> — الالتزام الأهم في الحملة كلها</li>
+        <li data-block><b>قبول عرض الحملة</b> دون جدال مع العميل</li>
+        <li data-block><b>صنف سريع واحد</b> جاهز للتسليم خلال دقائق</li>
+        <li data-block><b>عرض رمز QR</b> على واجهة الوحدة وعند الكاشير</li>
+        <li data-block><b>تعيين مسؤول</b> للتواصل مع فريق الحملة</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8 — TIMELINE ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٨ · الجدول الزمني</p>
+  <h2>من التوقيع إلى الإطلاق</h2>
+
+  <div class="tl" data-block>
+    <div class="row" data-block>
+      <div class="w">الأسبوع ١</div>
+      <div class="c"><b>جمع العروض</b><span>اجتماعات مع الشركاء، تسجيل العروض في الجدول، تصميم قالب الكرت والبروشور والسديري ورمز QR.</span></div>
+    </div>
+    <div class="row" data-block>
+      <div class="w">الأسبوع ٢</div>
+      <div class="c"><b>التجهيز والطباعة</b><span>طباعة الكروت والبروشورات، تفصيل السديري، تركيب لوحات المضخات الست، تدريب العمال.</span></div>
+    </div>
+    <div class="row" data-block>
+      <div class="w">الأسبوع ٣ – ٤</div>
+      <div class="c"><b>الإطلاق على ست مضخات</b><span>يبدأ التوزيع يوم أربعاء — أقوى صباح في الأسبوع — مع رصد يومي لعمليات مسح QR لكل وحدة ولكل مضخة.</span></div>
+    </div>
+    <div class="row" data-block>
+      <div class="w">الأسبوع ٥</div>
+      <div class="c"><b>القياس والتعديل</b><span>مراجعة معدل الالتقاط لكل شريك، وتثبيت العروض الأنجح واستبدال الضعيفة.</span></div>
+    </div>
+    <div class="row" data-block>
+      <div class="w">الأسبوع ٦ – ٩</div>
+      <div class="c"><b>التعميم والحملة الرقمية</b><span>توسعة التوزيع إلى ٢٩ مضخة، ولافتات الطريق، وتشويقة وستوري لكل شريك بالتناوب.</span></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card accent" data-block>
+      <div class="k">مؤشر النجاح الوحيد</div>
+      <div class="v" style="font-size:19px;line-height:1.5">عمليات مسح QR الخاصة بالشريك ÷ عدد سيارات الصباح</div>
+    </div>
+    <div class="card" data-block>
+      <div class="k">موعد إغلاق استلام العروض</div>
+      <div class="v">………</div>
+      <div class="d">يُحدَّد في اجتماع الشركاء الأول</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9 — CONTACT ============ -->
+<section class="slide" data-block>
+  <p class="eyebrow">٩ · للتواصل</p>
+  <h2>جاهز للانضمام؟</h2>
+  <p class="lede">عبّئ نموذج العرض وأعده لإدارة المحطة، أو تواصل مع فريق الحملة لأي استفسار قبل التقديم.</p>
+
+  <div class="cols">
+    <div class="col station" data-block>
+      <h3>فريق الحملة</h3>
+      <ul>
+        <li data-block><b>المسؤول:</b> ………</li>
+        <li data-block><b>الجوال:</b> ………</li>
+        <li data-block><b>البريد:</b> ………</li>
+      </ul>
+    </div>
+    <div class="col partner" data-block>
+      <h3>مصدر الأرقام</h3>
+      <ul>
+        <li data-block>تقرير Sales Transaction لمحطة العمرة (Al Umrah-MK007)</li>
+        <li data-block>٩٠٬٩٥٠ عملية بيع بين ١ و٢٢ يوليو ٢٠٢٦</li>
+        <li data-block>كل عملية تعبئة = مركبة واحدة عند المضخة</li>
+        <li data-block>محسوبة على ٢٩ مضخة بعد استثناء أضعف خمس مضخات</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<div class="blockbar" id="blockbar" role="toolbar" aria-label="أدوات العنصر">
+  <button type="button" data-act="up"   title="تحريك لأعلى">▲</button>
+  <button type="button" data-act="down" title="تحريك لأسفل">▼</button>
+  <button type="button" data-act="dup"  title="تكرار">تكرار</button>
+  <button type="button" data-act="del" class="danger" title="حذف">حذف</button>
+</div>
+
+<div class="addmenu" id="addmenu" role="menu" aria-label="إضافة قسم">
+  <b>أضف إلى نهاية الملف</b>
+  <button type="button" data-add="text"  role="menuitem">قسم نصي</button>
+  <button type="button" data-add="cards" role="menuitem">شريط أرقام (٣ بطاقات)</button>
+  <button type="button" data-add="tools" role="menuitem">قائمة أدوات مرقّمة</button>
+  <button type="button" data-add="table" role="menuitem">جدول</button>
+  <button type="button" data-add="cols"  role="menuitem">عمودان (التزامات)</button>
+  <button type="button" data-add="form"  role="menuitem">نموذج تعبئة</button>
+</div>
+
+<div class="toolbar" role="toolbar" aria-label="أدوات الملف">
+  <button type="button" id="btnEdit" class="primary">تحرير</button>
+  <button type="button" id="btnAdd" hidden>إضافة قسم</button>
+  <button type="button" id="btnSave">حفظ نسخة</button>
+  <button type="button" id="btnPrint">طباعة / PDF</button>
+  <button type="button" id="btnReset">استعادة الأصل</button>
+  <span class="state" id="state">وضع العرض</span>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  document.documentElement.lang='ar';
+  document.documentElement.dir='rtl';
+  var KEY='darb-umrah-partnership-v1';
+  var doc=document.getElementById('doc');
+  var bar=document.getElementById('blockbar');
+  var menu=document.getElementById('addmenu');
+  var state=document.getElementById('state');
+  var toast=document.getElementById('toast');
+  var bEdit=document.getElementById('btnEdit'), bAdd=document.getElementById('btnAdd');
+  var bSave=document.getElementById('btnSave'), bPrn=document.getElementById('btnPrint'), bRst=document.getElementById('btnReset');
+  var pristine=doc.innerHTML, editing=false, target=null, timer, saveT;
+
+  function say(m,ms){
+    toast.textContent=m; toast.classList.add('show');
+    clearTimeout(timer); timer=setTimeout(function(){toast.classList.remove('show');}, ms||2600);
+  }
+
+  var restored=false;
+  try{ var v=localStorage.getItem(KEY); if(v){ doc.innerHTML=v; restored=true; say('تم استرجاع نسختك المعدّلة المحفوظة في هذا المتصفح.'); } }catch(e){}
+
+  function persist(){
+    try{ localStorage.setItem(KEY, doc.innerHTML); }
+    catch(e){ say('تعذّر الحفظ التلقائي — استخدم «حفظ نسخة».'); }
+  }
+  function scrub(){
+    var n=doc.querySelectorAll('[style],font');
+    for(var i=0;i<n.length;i++){
+      var el=n[i];
+      if(el.closest && (el.closest('svg') || el.closest('.card .v'))) continue;
+      if(el.tagName==='FONT'){ var s=document.createElement('span'); s.innerHTML=el.innerHTML; el.parentNode.replaceChild(s,el); }
+      else el.removeAttribute('style');
+    }
+  }
+  function save(){ clearTimeout(saveT); saveT=setTimeout(function(){ scrub(); persist(); },450); }
+
+  doc.addEventListener('input', save);
+  doc.addEventListener('paste', function(e){
+    if(!editing) return;
+    e.preventDefault();
+    var t=(e.clipboardData||window.clipboardData).getData('text/plain');
+    document.execCommand('insertText',false,t);
+  });
+  doc.addEventListener('dblclick', function(){ if(!editing) setEditing(true); });
+
+  /* ---------- block controls ---------- */
+  var hideT;
+  function place(el){
+    if(!el){ bar.classList.remove('show'); if(target) target.classList.remove('hot'); target=null; return; }
+    if(target && target!==el) target.classList.remove('hot');
+    target=el; el.classList.add('hot');
+    var r=el.getBoundingClientRect(), h=bar.offsetHeight||30;
+    /* sit just above the block so the pointer leaves the block to reach the bar
+       without landing on a neighbouring block and re-targeting it */
+    var top = r.top - h - 4;
+    if(top < 6) top = Math.min(r.top + 4, window.innerHeight - h - 6);
+    bar.style.position='fixed';
+    bar.style.top=top+'px';
+    bar.style.left=Math.max(6, r.left)+'px';
+    bar.classList.add('show');
+  }
+  function hideSoon(){ clearTimeout(hideT); hideT=setTimeout(function(){ place(null); }, 320); }
+  function keepOpen(){ clearTimeout(hideT); }
+
+  doc.addEventListener('mouseover', function(e){
+    if(!editing) return;
+    var el=e.target.closest('[data-block]');
+    if(el){ keepOpen(); place(el); }
+  });
+  doc.addEventListener('mouseleave', function(){ if(editing) hideSoon(); });
+  bar.addEventListener('mouseenter', keepOpen);
+  bar.addEventListener('mouseleave', function(){ if(editing) hideSoon(); });
+
+  bar.addEventListener('click', function(e){
+    var b=e.target.closest('button'); if(!b||!target) return;
+    var act=b.dataset.act, el=target, p=el.parentNode;
+    if(act==='del'){
+      if(!window.confirm('حذف هذا العنصر؟')) return;
+      place(null); el.remove(); say('تم الحذف. يمكنك التراجع بـ «استعادة الأصل».');
+    } else if(act==='dup'){
+      var c=el.cloneNode(true); p.insertBefore(c, el.nextSibling); place(c); say('تم التكرار — عدّل النسخة الجديدة.');
+    } else if(act==='up'){
+      var prev=el.previousElementSibling;
+      while(prev && !prev.hasAttribute('data-block')) prev=prev.previousElementSibling;
+      if(prev){ p.insertBefore(el, prev); place(el); el.scrollIntoView({block:'center'}); }
+    } else if(act==='down'){
+      var next=el.nextElementSibling;
+      while(next && !next.hasAttribute('data-block')) next=next.nextElementSibling;
+      if(next){ p.insertBefore(next, el); place(el); el.scrollIntoView({block:'center'}); }
+    }
+    tally();
+    save();
+  });
+
+  /* ---------- add blocks ---------- */
+  var T={
+    text:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><p class="lede">اكتب النص هنا.</p></section>',
+    cards:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><div class="grid">'+
+      '<div class="card accent" data-block><div class="k">عنوان</div><div class="v">٠٠</div><div class="d">وصف</div></div>'+
+      '<div class="card" data-block><div class="k">عنوان</div><div class="v">٠٠</div><div class="d">وصف</div></div>'+
+      '<div class="card" data-block><div class="k">عنوان</div><div class="v">٠٠</div><div class="d">وصف</div></div></div></section>',
+    tools:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><div class="tools">'+
+      '<div class="tool" data-block><span class="t">١</span><div><h3>اسم الأداة</h3><p>الوصف.</p></div><span class="reach">المدى</span></div>'+
+      '<div class="tool" data-block><span class="t">٢</span><div><h3>اسم الأداة</h3><p>الوصف.</p></div><span class="reach">المدى</span></div></div></section>',
+    table:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان الجدول</h2><div class="tablewrap" data-block><table>'+
+      '<thead><tr><th>عمود ١</th><th>عمود ٢</th><th>عمود ٣</th></tr></thead><tbody>'+
+      '<tr data-block><td>—</td><td class="num">—</td><td class="num">—</td></tr>'+
+      '<tr data-block><td>—</td><td class="num">—</td><td class="num">—</td></tr></tbody></table></div></section>',
+    cols:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><div class="cols">'+
+      '<div class="col station" data-block><h3>الطرف الأول</h3><ul><li data-block><b>بند</b> شرح</li><li data-block><b>بند</b> شرح</li></ul></div>'+
+      '<div class="col partner" data-block><h3>الطرف الثاني</h3><ul><li data-block><b>بند</b> شرح</li><li data-block><b>بند</b> شرح</li></ul></div></div></section>',
+    form:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان النموذج</h2><div class="form" data-block>'+
+      '<div class="head"><b>اسم النموذج</b><span>تعليمات التعبئة</span></div>'+
+      '<div class="frow" data-block><div class="lab">الحقل الأول</div><div class="val"></div></div>'+
+      '<div class="frow" data-block><div class="lab">الحقل الثاني</div><div class="val"></div></div></div></section>'
+  };
+  bAdd.addEventListener('click', function(e){ e.stopPropagation(); menu.classList.toggle('show'); });
+  document.addEventListener('click', function(e){
+    if(!menu.contains(e.target) && e.target!==bAdd) menu.classList.remove('show');
+  });
+  menu.addEventListener('click', function(e){
+    var b=e.target.closest('button[data-add]'); if(!b) return;
+    var wrap=document.createElement('div');
+    wrap.innerHTML=T[b.dataset.add];
+    var node=wrap.firstElementChild;
+    doc.appendChild(node);
+    menu.classList.remove('show');
+    node.scrollIntoView({behavior:'smooth',block:'center'});
+    say('تمت الإضافة في نهاية الملف — اسحبه لأعلى بأزرار العنصر.');
+    save();
+  });
+
+  /* ---------- interactive partners table ---------- */
+  var LABEL = {in:'مشارك', wait:'بانتظار', out:'معتذر'};
+  var NEXT  = {wait:'in', in:'out', out:'wait'};
+  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
+
+  function tally(){
+    var rows = doc.querySelectorAll('#pbody .pstat');
+    var c = {in:0, wait:0, out:0};
+    for(var i=0;i<rows.length;i++){
+      var k = rows[i].dataset.s;
+      if(c[k] === undefined) k = 'wait';
+      c[k]++;
+    }
+    var set = function(id, v){ var el = doc.querySelector('#'+id); if(el) el.textContent = ar(v); };
+    set('pIn', c.in); set('pWait', c.wait); set('pOut', c.out);
+    set('pAll', rows.length);
+  }
+
+  doc.addEventListener('click', function(e){
+    var b = e.target.closest('.pstat');
+    if(b){
+      e.preventDefault();
+      var cur = b.dataset.s || 'wait';
+      var nxt = NEXT[cur] || 'wait';
+      b.dataset.s = nxt;
+      b.textContent = LABEL[nxt];
+      tally(); save();
+      return;
+    }
+    if(e.target.closest('#btnAddPartner')){
+      e.preventDefault();
+      var body = doc.querySelector('#pbody');
+      if(!body) return;
+      var tr = document.createElement('tr');
+      tr.setAttribute('data-block','');
+      tr.innerHTML = '<td class="strong fill"></td><td class="fill"></td><td class="fill"></td>'+
+                     '<td class="fill"></td><td><button type="button" class="pstat" data-s="wait" '+
+                     'contenteditable="false">بانتظار</button></td>';
+      body.appendChild(tr);
+      tr.scrollIntoView({block:'center'});
+      var first = tr.querySelector('td');
+      if(editing && first){
+        var r = document.createRange(); r.selectNodeContents(first);
+        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      }
+      tally(); save();
+      say('أُضيف صف جديد — اكتب اسم الوحدة وعرضها.');
+    }
+  });
+
+  /* ---------- edit mode ---------- */
+  function setEditing(on){
+    editing=on;
+    doc.setAttribute('contenteditable', on?'true':'false');
+    doc.spellcheck=false;
+    document.body.classList.toggle('editing', on);
+    bEdit.textContent=on?'إنهاء التحرير':'تحرير';
+    bEdit.classList.toggle('primary', !on);
+    bAdd.hidden=!on;
+    state.textContent=on?'وضع التحرير — تعديل وحذف وإضافة':'وضع العرض';
+    state.classList.toggle('on', on);
+    if(on){ say('مرّر على أي عنصر ليظهر شريط: تحريك · تكرار · حذف. واضغط داخل النص لتعديله.',5200); }
+    else { place(null); menu.classList.remove('show'); scrub(); persist(); }
+  }
+  bEdit.addEventListener('click', function(){ setEditing(!editing); });
+
+  /* ---------- export / print / reset ---------- */
+  bSave.addEventListener('click', function(){
+    var was=editing; if(was) setEditing(false);
+    var c=document.documentElement.cloneNode(true);
+    var d=c.querySelector('#doc'); if(d) d.setAttribute('contenteditable','false');
+    var hot=c.querySelectorAll('.hot'); for(var i=0;i<hot.length;i++) hot[i].classList.remove('hot');
+    var t=c.querySelector('#toast'); if(t){ t.className='toast'; t.textContent=''; }
+    var bb=c.querySelector('#blockbar'); if(bb){ bb.className='blockbar'; bb.removeAttribute('style'); }
+    var mm=c.querySelector('#addmenu'); if(mm) mm.className='addmenu';
+    var bd=c.querySelector('body'); if(bd) bd.classList.remove('editing');
+    var html='<!doctype html>\n<html lang="ar" dir="rtl"><head><meta charset="utf-8">'+
+              '<meta name="viewport" content="width=device-width, initial-scale=1">'+
+              '<title>حملة فطور محطة العمرة — ملف الشراكة</title>'+
+              (c.querySelector('style')?c.querySelector('style').outerHTML:'')+
+              '</head><body>'+c.innerHTML+'</body></html>';
+    var name='ملف-شراكة-حملة-الفطور.html';
+    if(window.claude && window.claude.downloads){
+      window.claude.downloads.save({filename:name, data:html}).then(function(){
+        say('تم حفظ نسخة تحمل تعديلاتك.');
+      }).catch(function(err){
+        var code=(err&&err.code)||'unavailable';
+        if(code==='declined') return;
+        if(code==='extension_not_enabled'||code==='rejected_extension'){
+          say('حفظ ملفات HTML غير مفعّل في هذا العرض — تعديلاتك محفوظة تلقائيًا في هذا المتصفح.',5600);
+        }else if(code==='rate_limited'){
+          say('انتظر لحظة ثم أعد المحاولة.',4000);
+        }else{
+          say('تعذّر حفظ نسخة هنا — تعديلاتك محفوظة تلقائيًا في هذا المتصفح.',5600);
+        }
+      });
+    }else{
+      var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+      var url=URL.createObjectURL(blob), a=document.createElement('a');
+      a.href=url; a.download=name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){URL.revokeObjectURL(url);},1000);
+      say('تم تنزيل نسخة تحمل تعديلاتك — وتبقى قابلة للتحرير أيضًا.');
+    }
+    if(was) setEditing(true);
+  });
+
+  bPrn.addEventListener('click', function(){ if(editing) setEditing(false); setTimeout(function(){window.print();},60); });
+
+  bRst.addEventListener('click', function(){
+    if(!window.confirm('استعادة الملف الأصلي وحذف كل تعديلاتك في هذا المتصفح؟')) return;
+    doc.innerHTML=pristine;
+    try{ localStorage.removeItem(KEY); }catch(e){}
+    tally();
+    if(editing) setEditing(false);
+    say('تمت استعادة النسخة الأصلية.');
+  });
+
+  document.addEventListener('keydown', function(e){
+    if((e.ctrlKey||e.metaKey) && (e.key==='s'||e.key==='S')){ e.preventDefault(); bSave.click(); }
+    if(e.key==='Escape'){ menu.classList.remove('show'); place(null); }
+  });
+
+  window.addEventListener('scroll', function(){
+    if(editing && target && !bar.matches(':hover')) place(target);
+  }, {passive:true});
+
+  doc.setAttribute('contenteditable','false');
+  tally();
+  if(!restored){
+    setTimeout(function(){
+      if(!editing) say('التحرير يعمل هنا مباشرة: اضغط «تحرير» أسفل الصفحة. تعديلاتك تُحفظ تلقائيًا في هذا المتصفح.',6500);
+    },900);
+  }
+})();
+</script>
