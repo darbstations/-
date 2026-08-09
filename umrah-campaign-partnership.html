@@ -1,3 +1,8 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>حملة فطور محطة العمرة — عرض شراكة تسويقية</title>
 <style>
 :root{
@@ -331,6 +336,8 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
   @page{margin:14mm}
 }
 </style>
+</head>
+<body>
 
 <div class="editbanner">وضع التحرير مفعّل — اضغط على أي نص لتعديله، وعلى أي عنصر ليظهر شريط التحكم</div>
 <div class="doc" id="doc">
@@ -707,8 +714,6 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
 
 <script>
 (function(){
-  document.documentElement.lang='ar';
-  document.documentElement.dir='rtl';
   var KEY='darb-umrah-campaign-v1';
   var doc=document.getElementById('doc');
   var bar=document.getElementById('blockbar');
@@ -915,36 +920,13 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
     var bb=c.querySelector('#blockbar'); if(bb){ bb.className='blockbar'; bb.removeAttribute('style'); }
     var mm=c.querySelector('#addmenu'); if(mm) mm.className='addmenu';
     var bd=c.querySelector('body'); if(bd) bd.classList.remove('editing');
-    var html='<!doctype html>\n<html lang="ar" dir="rtl"><head><meta charset="utf-8">'+
-              '<meta name="viewport" content="width=device-width, initial-scale=1">'+
-              '<title>حملة فطور محطة العمرة — عرض شراكة تسويقية</title>'+
-              (c.querySelector('style')?c.querySelector('style').outerHTML:'')+
-              '</head><body>'+c.innerHTML+'</body></html>';
-    var name='ملف-شراكة-حملة-الفطور.html';
-    if(window.claude && window.claude.downloads){
-      window.claude.downloads.save({filename:name, data:html}).then(function(){
-        say('تم حفظ نسخة تحمل تعديلاتك.');
-      }).catch(function(err){
-        var code=(err&&err.code)||'unavailable';
-        if(code==='declined') return;
-        if(code==='extension_not_enabled'||code==='rejected_extension'){
-          say('حفظ ملفات HTML غير مفعّل في هذا العرض — تعديلاتك محفوظة تلقائيًا في هذا المتصفح.',5600);
-        }else if(code==='too_large'){
-          say('الملف أكبر من الحد المسموح للحفظ هنا.',5000);
-        }else if(code==='rate_limited'){
-          say('انتظر لحظة ثم أعد المحاولة.',4000);
-        }else{
-          say('تعذّر حفظ نسخة هنا — تعديلاتك محفوظة تلقائيًا في هذا المتصفح.',5600);
-        }
-      });
-    }else{
-      var blob=new Blob([html],{type:'text/html;charset=utf-8'});
-      var url=URL.createObjectURL(blob), a=document.createElement('a');
-      a.href=url; a.download=name;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(function(){URL.revokeObjectURL(url);},1000);
-      say('تم تنزيل نسخة تحمل تعديلاتك — وتبقى قابلة للتحرير أيضًا.');
-    }
+    var html='<!doctype html>\n'+c.outerHTML;
+    var blob=new Blob([html],{type:'text/html;charset=utf-8'});
+    var url=URL.createObjectURL(blob), a=document.createElement('a');
+    a.href=url; a.download='ملف-شراكة-حملة-الفطور-محطة-العمرة.html';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function(){URL.revokeObjectURL(url);},1000);
+    say('تم تنزيل نسخة تحمل تعديلاتك — وتبقى قابلة للتحرير أيضًا.');
     if(was) setEditing(true);
   });
 
@@ -994,7 +976,9 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
   setEditing(true);
   setTimeout(function(){
     say(restored?'تم استرجاع نسختك المعدّلة. التحرير مفعّل — اضغط على أي نص أو عنصر.'
-                :'التحرير مفعّل هنا مباشرة. تعديلاتك تُحفظ تلقائيًا في هذا المتصفح وحده.',7000);
+                :'التحرير مفعّل. اضغط على أي نص لتعديله، وعلى أي عنصر ليظهر شريط: القسم · ▲ ▼ · تكرار · حذف.',7000);
   },600);
 })();
 </script>
+</body>
+</html>
