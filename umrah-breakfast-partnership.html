@@ -177,72 +177,87 @@ td.fill:empty::before{content:"\2026\2026\2026";color:var(--ink-3);letter-spacin
 
 /* ================= editor ================= */
 .toolbar{
-  position:fixed; inset-block-end:18px; inset-inline-start:18px; z-index:60;
+  position:fixed; inset-block-end:16px; inset-inline-start:16px; z-index:60;
   display:flex; gap:6px; flex-wrap:wrap; align-items:center;
-  background:var(--surface); border:1px solid var(--line); border-radius:999px;
-  padding:7px 9px; box-shadow:0 12px 30px -14px rgba(40,25,12,.5);
+  background:var(--surface); border:1px solid var(--line); border-radius:14px;
+  padding:8px; box-shadow:0 14px 34px -14px rgba(40,25,12,.55);
 }
 .toolbar button{
-  font-family:inherit; font-size:13px; font-weight:700; color:var(--ink-2);
-  background:transparent; border:1px solid transparent; border-radius:999px;
-  padding:7px 13px; cursor:pointer; transition:background .15s,color .15s;
+  font-family:inherit; font-size:14px; font-weight:700; color:var(--ink-2);
+  background:transparent; border:1px solid transparent; border-radius:10px;
+  padding:10px 15px; min-height:42px; cursor:pointer;
 }
 .toolbar button:hover{background:var(--sand); color:var(--ink)}
 .toolbar button:focus-visible{outline:2px solid var(--orange-hi); outline-offset:2px}
 .toolbar button.primary{background:var(--orange-hi); color:#fff}
 .toolbar button.primary:hover{background:var(--orange)}
 .toolbar button[hidden]{display:none}
-.toolbar .state{font-size:11.5px;font-weight:700;letter-spacing:.06em;color:var(--ink-3);padding-inline:9px 4px;white-space:nowrap}
+.toolbar .state{font-size:12px;font-weight:700;color:var(--ink-3);padding-inline:8px 4px;white-space:nowrap}
 .toolbar .state.on{color:var(--orange)}
 
-/* block controls */
+/* banner telling the reader editing is live */
+.editbanner{
+  position:sticky; inset-block-start:0; z-index:45;
+  background:var(--orange-hi); color:#fff; font-size:13.5px; font-weight:700;
+  padding:11px 20px; text-align:center; display:none;
+}
+body.editing .editbanner{display:block}
+
+/* the pinned per-block toolbar */
 .blockbar{
-  position:absolute; z-index:55; display:none; gap:3px;
-  background:var(--deep); border-radius:5px; padding:4px;
-  box-shadow:0 8px 22px -10px rgba(0,0,0,.6);
+  position:fixed; z-index:58; display:none; gap:4px;
+  background:var(--deep); border-radius:10px; padding:5px;
+  box-shadow:0 10px 26px -10px rgba(0,0,0,.65);
 }
 .blockbar.show{display:flex}
 .blockbar button{
-  font-family:inherit; font-size:12px; font-weight:700; line-height:1;
-  color:#F0E2D0; background:transparent; border:0; border-radius:3px;
-  padding:6px 9px; cursor:pointer;
+  font-family:inherit; font-size:13px; font-weight:700; line-height:1;
+  color:#F2E5D3; background:transparent; border:0; border-radius:7px;
+  padding:10px 12px; min-height:40px; min-width:40px; cursor:pointer;
 }
-.blockbar button:hover{background:rgba(255,255,255,.16); color:#fff}
+.blockbar button:hover{background:rgba(255,255,255,.18); color:#fff}
 .blockbar button.danger:hover{background:#B3402A; color:#fff}
 .blockbar button:focus-visible{outline:2px solid var(--amber); outline-offset:1px}
 
 body.editing [data-block]{position:relative}
-body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offset:4px; border-radius:4px}
+body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset:3px; border-radius:4px}
 
-/* add-menu */
 .addmenu{
-  position:fixed; inset-block-end:74px; inset-inline-start:18px; z-index:61;
-  background:var(--surface); border:1px solid var(--line); border-radius:8px;
-  padding:8px; box-shadow:0 16px 40px -16px rgba(40,25,12,.6);
-  display:none; flex-direction:column; gap:2px; min-width:230px;
+  position:fixed; inset-block-end:74px; inset-inline-start:16px; z-index:61;
+  background:var(--surface); border:1px solid var(--line); border-radius:12px;
+  padding:8px; box-shadow:0 18px 44px -16px rgba(40,25,12,.6);
+  display:none; flex-direction:column; gap:2px; min-width:250px;
+  max-height:70vh; overflow-y:auto;
 }
 .addmenu.show{display:flex}
-.addmenu b{font-size:11px;letter-spacing:.1em;color:var(--ink-3);padding:7px 12px 4px}
+.addmenu b{font-size:11px;letter-spacing:.1em;color:var(--ink-3);padding:8px 12px 4px}
 .addmenu button{
-  font-family:inherit;font-size:14px;font-weight:700;color:var(--ink-2);text-align:right;
-  background:transparent;border:0;border-radius:5px;padding:9px 12px;cursor:pointer;
+  font-family:inherit;font-size:14.5px;font-weight:700;color:var(--ink-2);text-align:right;
+  background:transparent;border:0;border-radius:8px;padding:12px;min-height:44px;cursor:pointer;
 }
 .addmenu button:hover{background:var(--sand);color:var(--ink)}
 .addmenu button:focus-visible{outline:2px solid var(--orange-hi);outline-offset:-2px}
 
 .toast{
-  position:fixed; inset-block-end:76px; inset-inline-end:18px; z-index:62;
-  background:var(--deep); color:#F6E9D8; font-size:13px; font-weight:700;
-  padding:11px 18px; border-radius:6px; box-shadow:0 12px 30px -14px rgba(0,0,0,.6);
+  position:fixed; inset-block-end:78px; inset-inline-end:16px; z-index:62;
+  background:var(--deep); color:#F6E9D8; font-size:13.5px; font-weight:700;
+  padding:12px 16px; border-radius:10px; box-shadow:0 14px 34px -14px rgba(0,0,0,.65);
   opacity:0; transform:translateY(6px); transition:opacity .2s,transform .2s;
-  pointer-events:none; max-width:min(78vw,420px); line-height:1.6;
+  pointer-events:none; max-width:min(80vw,430px); line-height:1.6;
+  display:flex; align-items:center; gap:12px;
 }
-.toast.show{opacity:1;transform:translateY(0)}
+.toast.show{opacity:1;transform:translateY(0);pointer-events:auto}
+.toast button{
+  font-family:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;
+  background:var(--amber);color:#2A1D12;border:0;border-radius:7px;padding:9px 14px;min-height:38px;
+}
+.toast button[hidden]{display:none}
 @media (prefers-reduced-motion:reduce){.toolbar button,.toast{transition:none}}
 @media (max-width:640px){
-  .toolbar{inset-inline:12px;inset-block-end:12px;justify-content:center}
-  .addmenu{inset-inline:12px;inset-block-end:92px}
-  .toast{inset-inline:12px;inset-block-end:104px;max-width:none}
+  .toolbar{inset-inline:10px;inset-block-end:10px;justify-content:center;gap:4px}
+  .toolbar button{padding:10px 12px;font-size:13px}
+  .addmenu{inset-inline:10px;inset-block-end:126px}
+  .toast{inset-inline:10px;inset-block-end:126px;max-width:none}
 }
 
 @media print{
@@ -264,6 +279,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
 </head>
 <body>
 
+<div class="editbanner">وضع التحرير مفعّل — اضغط على أي نص لتعديله، وعلى أي عنصر ليظهر شريط التحكم</div>
 <div class="doc" id="doc">
 
 <!-- ============ COVER ============ -->
@@ -715,6 +731,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
 </div>
 
 <div class="blockbar" id="blockbar" role="toolbar" aria-label="أدوات العنصر">
+  <button type="button" data-act="parent" title="تحديد القسم الأكبر">القسم</button>
   <button type="button" data-act="up"   title="تحريك لأعلى">▲</button>
   <button type="button" data-act="down" title="تحريك لأسفل">▼</button>
   <button type="button" data-act="dup"  title="تكرار">تكرار</button>
@@ -739,7 +756,7 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
   <button type="button" id="btnReset">استعادة الأصل</button>
   <span class="state" id="state">وضع العرض</span>
 </div>
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button type="button" id="toastact" hidden></button></div>
 
 <script>
 (function(){
@@ -749,32 +766,39 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
   var menu=document.getElementById('addmenu');
   var state=document.getElementById('state');
   var toast=document.getElementById('toast');
+  var tmsg=document.getElementById('toastmsg');
+  var tact=document.getElementById('toastact');
   var bEdit=document.getElementById('btnEdit'), bAdd=document.getElementById('btnAdd');
   var bSave=document.getElementById('btnSave'), bPrn=document.getElementById('btnPrint'), bRst=document.getElementById('btnReset');
   var pristine=doc.innerHTML, editing=false, target=null, timer, saveT;
 
-  function say(m,ms){
-    toast.textContent=m; toast.classList.add('show');
-    clearTimeout(timer); timer=setTimeout(function(){toast.classList.remove('show');}, ms||2600);
+  /* ---------- toast, optionally with one action button ---------- */
+  function say(m, ms, actLabel, actFn){
+    tmsg.textContent=m;
+    if(actLabel){ tact.textContent=actLabel; tact.hidden=false; tact.onclick=function(){ tact.hidden=true; toast.classList.remove('show'); actFn(); }; }
+    else { tact.hidden=true; tact.onclick=null; }
+    toast.classList.add('show');
+    clearTimeout(timer);
+    timer=setTimeout(function(){ toast.classList.remove('show'); tact.hidden=true; }, ms||2800);
   }
 
   var restored=false;
-  try{ var v=localStorage.getItem(KEY); if(v){ doc.innerHTML=v; restored=true; say('تم استرجاع نسختك المعدّلة المحفوظة في هذا المتصفح.'); } }catch(e){}
+  try{ var v=localStorage.getItem(KEY); if(v){ doc.innerHTML=v; restored=true; } }catch(e){}
 
   function persist(){
     try{ localStorage.setItem(KEY, doc.innerHTML); }
-    catch(e){ say('تعذّر الحفظ التلقائي — استخدم «حفظ نسخة».'); }
+    catch(e){ say('تعذّر الحفظ التلقائي في هذا المتصفح.',4000); }
   }
   function scrub(){
     var n=doc.querySelectorAll('[style],font');
     for(var i=0;i<n.length;i++){
       var el=n[i];
       if(el.closest && (el.closest('svg') || el.closest('.card .v'))) continue;
-      if(el.tagName==='FONT'){ var s=document.createElement('span'); s.innerHTML=el.innerHTML; el.parentNode.replaceChild(s,el); }
+      if(el.tagName==='FONT'){ var sp=document.createElement('span'); sp.innerHTML=el.innerHTML; el.parentNode.replaceChild(sp,el); }
       else el.removeAttribute('style');
     }
   }
-  function save(){ clearTimeout(saveT); saveT=setTimeout(function(){ scrub(); persist(); },450); }
+  function save(){ clearTimeout(saveT); saveT=setTimeout(function(){ scrub(); persist(); },400); }
 
   doc.addEventListener('input', save);
   doc.addEventListener('paste', function(e){
@@ -783,58 +807,97 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     var t=(e.clipboardData||window.clipboardData).getData('text/plain');
     document.execCommand('insertText',false,t);
   });
-  doc.addEventListener('dblclick', function(){ if(!editing) setEditing(true); });
 
-  /* ---------- block controls ---------- */
-  var hideT;
+  /* ---------- partners table (works with or without edit mode) ---------- */
+  var LABEL={in:'مشارك', wait:'بانتظار', out:'معتذر'};
+  var NEXT={wait:'in', in:'out', out:'wait'};
+  var AR=['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
+  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
+  function tally(){
+    var rows=doc.querySelectorAll('#pbody .pstat'), c={in:0,wait:0,out:0};
+    for(var i=0;i<rows.length;i++){ var k=rows[i].dataset.s; if(c[k]===undefined) k='wait'; c[k]++; }
+    var set=function(id,v){ var el=doc.querySelector('#'+id); if(el) el.textContent=ar(v); };
+    set('pIn',c.in); set('pWait',c.wait); set('pOut',c.out); set('pAll',rows.length);
+  }
+
+  doc.addEventListener('click', function(e){
+    var b=e.target.closest('.pstat');
+    if(b){
+      e.preventDefault(); e.stopPropagation();
+      var cur=b.dataset.s||'wait', nxt=NEXT[cur]||'wait';
+      b.dataset.s=nxt; b.textContent=LABEL[nxt];
+      tally(); save(); return;
+    }
+    if(e.target.closest('#btnAddPartner')){
+      e.preventDefault(); e.stopPropagation();
+      var body=doc.querySelector('#pbody'); if(!body) return;
+      var tr=document.createElement('tr');
+      tr.setAttribute('data-block','');
+      tr.innerHTML='<td class="strong fill"></td><td class="fill"></td><td class="fill"></td>'+
+                   '<td class="fill"></td><td><button type="button" class="pstat" data-s="wait" contenteditable="false">بانتظار</button></td>';
+      body.appendChild(tr);
+      tr.scrollIntoView({block:'center'});
+      tally(); save();
+      say('أُضيف صف جديد — اكتب اسم الوحدة وعرضها.');
+    }
+  });
+
+  /* ---------- block selection: TAP, not hover ---------- */
   function place(el){
     if(!el){ bar.classList.remove('show'); if(target) target.classList.remove('hot'); target=null; return; }
     if(target && target!==el) target.classList.remove('hot');
     target=el; el.classList.add('hot');
-    var r=el.getBoundingClientRect(), h=bar.offsetHeight||30;
-    /* sit just above the block so the pointer leaves the block to reach the bar
-       without landing on a neighbouring block and re-targeting it */
-    var top = r.top - h - 4;
-    if(top < 6) top = Math.min(r.top + 4, window.innerHeight - h - 6);
-    bar.style.position='fixed';
+    var r=el.getBoundingClientRect(), h=bar.offsetHeight||44;
+    var top=r.top-h-6;
+    if(top<6) top=Math.min(r.top+6, window.innerHeight-h-6);
     bar.style.top=top+'px';
-    bar.style.left=Math.max(6, r.left)+'px';
+    bar.style.left=Math.max(6, Math.min(r.left, window.innerWidth-bar.offsetWidth-6))+'px';
     bar.classList.add('show');
   }
-  function hideSoon(){ clearTimeout(hideT); hideT=setTimeout(function(){ place(null); }, 320); }
-  function keepOpen(){ clearTimeout(hideT); }
-
-  doc.addEventListener('mouseover', function(e){
+  doc.addEventListener('pointerdown', function(e){
     if(!editing) return;
+    if(e.target.closest('.pstat') || e.target.closest('#btnAddPartner')) return;
     var el=e.target.closest('[data-block]');
-    if(el){ keepOpen(); place(el); }
+    if(el) place(el);
   });
-  doc.addEventListener('mouseleave', function(){ if(editing) hideSoon(); });
-  bar.addEventListener('mouseenter', keepOpen);
-  bar.addEventListener('mouseleave', function(){ if(editing) hideSoon(); });
 
   bar.addEventListener('click', function(e){
     var b=e.target.closest('button'); if(!b||!target) return;
     var act=b.dataset.act, el=target, p=el.parentNode;
+    if(act==='parent'){
+      var up=p.closest('[data-block]');
+      if(up) place(up); else say('هذا أعلى عنصر.');
+      return;
+    }
     if(act==='del'){
-      if(!window.confirm('حذف هذا العنصر؟')) return;
-      place(null); el.remove(); say('تم الحذف. يمكنك التراجع بـ «استعادة الأصل».');
-    } else if(act==='dup'){
-      var c=el.cloneNode(true); p.insertBefore(c, el.nextSibling); place(c); say('تم التكرار — عدّل النسخة الجديدة.');
+      var mark=document.createComment('x');
+      p.insertBefore(mark, el);
+      el.remove(); place(null); tally(); save();
+      say('تم الحذف.', 7000, 'تراجع', function(){
+        if(mark.parentNode){ mark.parentNode.insertBefore(el, mark); mark.remove(); }
+        tally(); save(); say('تم التراجع.');
+      });
+      setTimeout(function(){ if(mark.parentNode) mark.remove(); }, 7200);
+      return;
+    }
+    if(act==='dup'){
+      var c=el.cloneNode(true); p.insertBefore(c, el.nextSibling); place(c);
+      say('تم التكرار — عدّل النسخة الجديدة.');
     } else if(act==='up'){
       var prev=el.previousElementSibling;
       while(prev && !prev.hasAttribute('data-block')) prev=prev.previousElementSibling;
       if(prev){ p.insertBefore(el, prev); place(el); el.scrollIntoView({block:'center'}); }
+      else say('هذا أول عنصر في مكانه.');
     } else if(act==='down'){
       var next=el.nextElementSibling;
       while(next && !next.hasAttribute('data-block')) next=next.nextElementSibling;
       if(next){ p.insertBefore(next, el); place(el); el.scrollIntoView({block:'center'}); }
+      else say('هذا آخر عنصر في مكانه.');
     }
-    tally();
-    save();
+    tally(); save();
   });
 
-  /* ---------- add blocks ---------- */
+  /* ---------- add sections ---------- */
   var T={
     text:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><p class="lede">اكتب النص هنا.</p></section>',
     cards:'<section class="slide" data-block><p class="eyebrow">عنوان علوي</p><h2>عنوان القسم</h2><div class="grid">'+
@@ -865,62 +928,15 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     var wrap=document.createElement('div');
     wrap.innerHTML=T[b.dataset.add];
     var node=wrap.firstElementChild;
-    doc.appendChild(node);
+    var anchor=target;
+    while(anchor && anchor.parentNode!==doc) anchor=anchor.parentNode;
+    if(anchor && anchor.parentNode===doc) doc.insertBefore(node, anchor.nextSibling);
+    else doc.appendChild(node);
     menu.classList.remove('show');
     node.scrollIntoView({behavior:'smooth',block:'center'});
-    say('تمت الإضافة في نهاية الملف — اسحبه لأعلى بأزرار العنصر.');
+    place(node);
+    say('تمت الإضافة. حرّكها بأزرار ▲ ▼ أو احذفها بزر حذف.',4200);
     save();
-  });
-
-  /* ---------- interactive partners table ---------- */
-  var LABEL = {in:'مشارك', wait:'بانتظار', out:'معتذر'};
-  var NEXT  = {wait:'in', in:'out', out:'wait'};
-  var AR = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
-  function ar(n){ return String(n).split('').map(function(d){ return AR[+d]; }).join(''); }
-
-  function tally(){
-    var rows = doc.querySelectorAll('#pbody .pstat');
-    var c = {in:0, wait:0, out:0};
-    for(var i=0;i<rows.length;i++){
-      var k = rows[i].dataset.s;
-      if(c[k] === undefined) k = 'wait';
-      c[k]++;
-    }
-    var set = function(id, v){ var el = doc.querySelector('#'+id); if(el) el.textContent = ar(v); };
-    set('pIn', c.in); set('pWait', c.wait); set('pOut', c.out);
-    set('pAll', rows.length);
-  }
-
-  doc.addEventListener('click', function(e){
-    var b = e.target.closest('.pstat');
-    if(b){
-      e.preventDefault();
-      var cur = b.dataset.s || 'wait';
-      var nxt = NEXT[cur] || 'wait';
-      b.dataset.s = nxt;
-      b.textContent = LABEL[nxt];
-      tally(); save();
-      return;
-    }
-    if(e.target.closest('#btnAddPartner')){
-      e.preventDefault();
-      var body = doc.querySelector('#pbody');
-      if(!body) return;
-      var tr = document.createElement('tr');
-      tr.setAttribute('data-block','');
-      tr.innerHTML = '<td class="strong fill"></td><td class="fill"></td><td class="fill"></td>'+
-                     '<td class="fill"></td><td><button type="button" class="pstat" data-s="wait" '+
-                     'contenteditable="false">بانتظار</button></td>';
-      body.appendChild(tr);
-      tr.scrollIntoView({block:'center'});
-      var first = tr.querySelector('td');
-      if(editing && first){
-        var r = document.createRange(); r.selectNodeContents(first);
-        var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
-      }
-      tally(); save();
-      say('أُضيف صف جديد — اكتب اسم الوحدة وعرضها.');
-    }
   });
 
   /* ---------- edit mode ---------- */
@@ -932,20 +948,21 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     bEdit.textContent=on?'إنهاء التحرير':'تحرير';
     bEdit.classList.toggle('primary', !on);
     bAdd.hidden=!on;
-    state.textContent=on?'وضع التحرير — تعديل وحذف وإضافة':'وضع العرض';
+    state.textContent=on?'تعديل · حذف · إضافة':'وضع العرض';
     state.classList.toggle('on', on);
-    if(on){ say('مرّر على أي عنصر ليظهر شريط: تحريك · تكرار · حذف. واضغط داخل النص لتعديله.',5200); }
-    else { place(null); menu.classList.remove('show'); scrub(); persist(); }
+    if(!on){ place(null); menu.classList.remove('show'); scrub(); persist(); }
   }
   bEdit.addEventListener('click', function(){ setEditing(!editing); });
 
-  /* ---------- export / print / reset ---------- */
+  /* ---------- export ---------- */
   bSave.addEventListener('click', function(){
     var was=editing; if(was) setEditing(false);
     var c=document.documentElement.cloneNode(true);
     var d=c.querySelector('#doc'); if(d) d.setAttribute('contenteditable','false');
     var hot=c.querySelectorAll('.hot'); for(var i=0;i<hot.length;i++) hot[i].classList.remove('hot');
-    var t=c.querySelector('#toast'); if(t){ t.className='toast'; t.textContent=''; }
+    var t=c.querySelector('#toast'); if(t){ t.className='toast'; }
+    var tm=c.querySelector('#toastmsg'); if(tm) tm.textContent='';
+    var ta=c.querySelector('#toastact'); if(ta){ ta.hidden=true; ta.textContent=''; }
     var bb=c.querySelector('#blockbar'); if(bb){ bb.className='blockbar'; bb.removeAttribute('style'); }
     var mm=c.querySelector('#addmenu'); if(mm) mm.className='addmenu';
     var bd=c.querySelector('body'); if(bd) bd.classList.remove('editing');
@@ -961,12 +978,21 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
 
   bPrn.addEventListener('click', function(){ if(editing) setEditing(false); setTimeout(function(){window.print();},60); });
 
+  /* two-step reset — no modal, so it works inside a sandboxed frame */
+  var armed=false, armT;
   bRst.addEventListener('click', function(){
-    if(!window.confirm('استعادة الملف الأصلي وحذف كل تعديلاتك في هذا المتصفح؟')) return;
+    if(!armed){
+      armed=true; bRst.textContent='تأكيد الاستعادة؟';
+      say('سيُحذف كل ما عدّلته. اضغط مرة أخرى للتأكيد.',5000);
+      clearTimeout(armT);
+      armT=setTimeout(function(){ armed=false; bRst.textContent='استعادة الأصل'; },5000);
+      return;
+    }
+    clearTimeout(armT); armed=false; bRst.textContent='استعادة الأصل';
     doc.innerHTML=pristine;
     try{ localStorage.removeItem(KEY); }catch(e){}
-    tally();
     if(editing) setEditing(false);
+    tally();
     say('تمت استعادة النسخة الأصلية.');
   });
 
@@ -974,18 +1000,30 @@ body.editing [data-block].hot{outline:2px dashed var(--orange-hi); outline-offse
     if((e.ctrlKey||e.metaKey) && (e.key==='s'||e.key==='S')){ e.preventDefault(); bSave.click(); }
     if(e.key==='Escape'){ menu.classList.remove('show'); place(null); }
   });
+  window.addEventListener('scroll', function(){ if(editing && target) place(target); }, {passive:true});
 
-  window.addEventListener('scroll', function(){
-    if(editing && target && !bar.matches(':hover')) place(target);
-  }, {passive:true});
-
-  doc.setAttribute('contenteditable','false');
-  tally();
-  if(!restored){
-    setTimeout(function(){
-      if(!editing) say('هذا الملف قابل للتعديل والحذف والإضافة: اضغط «تحرير» أسفل الصفحة.',6000);
-    },900);
+  /* keep the toast and the add-menu clear of the toolbar, which wraps to
+     two rows on narrow screens */
+  var tbar=document.querySelector('.toolbar');
+  function stack(){
+    if(!tbar) return;
+    var gap=(tbar.offsetHeight||60)+22;
+    toast.style.setProperty('bottom', gap+'px', 'important');
+    toast.style.setProperty('inset-block-end', gap+'px', 'important');
+    menu.style.setProperty('bottom', gap+'px', 'important');
+    menu.style.setProperty('inset-block-end', gap+'px', 'important');
   }
+  window.addEventListener('resize', function(){ stack(); if(editing && target) place(target); });
+  stack();
+  window.addEventListener('load', stack);
+  setTimeout(stack, 400);
+
+  tally();
+  setEditing(true);
+  setTimeout(function(){
+    say(restored?'تم استرجاع نسختك المعدّلة. التحرير مفعّل — اضغط على أي نص أو عنصر.'
+                :'التحرير مفعّل. اضغط على أي نص لتعديله، وعلى أي عنصر ليظهر شريط: القسم · ▲ ▼ · تكرار · حذف.',7000);
+  },600);
 })();
 </script>
 </body>
