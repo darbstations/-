@@ -171,6 +171,10 @@ td.no{color:var(--ink-3)}
 .frow .val:empty::before{content:"\2026\2026\2026\2026";color:var(--ink-3);letter-spacing:.1em}
 @media (max-width:640px){.frow{grid-template-columns:1fr}.frow .lab{border-inline-end:0;border-bottom:1px solid var(--line)}}
 
+.savestate{font-size:11.5px;font-weight:700;padding:6px 11px;border-radius:999px;white-space:nowrap}
+.savestate.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 14%,transparent)}
+.savestate.bad{color:#B3402A;background:color-mix(in srgb,#B3402A 14%,transparent)}
+
 /* interactive partners */
 .ptally{display:flex;gap:26px;flex-wrap:wrap;align-items:baseline;margin-top:26px;
   background:var(--deep);color:#F3E5D3;border-radius:6px;padding:16px 22px}
@@ -743,6 +747,7 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
   <button type="button" id="btnPrint">طباعة / PDF</button>
   <button type="button" id="btnReset">استعادة الأصل</button>
   <span class="state" id="state">وضع العرض</span>
+  <span class="savestate" id="savestate">جاهز</span>
 </div>
 <div class="toast" id="toast" role="status" aria-live="polite"><span id="toastmsg"></span><button type="button" id="toastact" hidden></button></div>
 
@@ -750,7 +755,7 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
 (function(){
   document.documentElement.lang='ar';
   document.documentElement.dir='rtl';
-  var KEY='darb-umrah-campaign-v1';
+  var KEY='darb-umrah-doc';
   var doc=document.getElementById('doc');
   var bar=document.getElementById('blockbar');
   var menu=document.getElementById('addmenu');
@@ -772,12 +777,68 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
     timer=setTimeout(function(){ toast.classList.remove('show'); tact.hidden=true; }, ms||2800);
   }
 
-  var restored=false;
-  try{ var v=localStorage.getItem(KEY); if(v){ doc.innerHTML=v; restored=true; } }catch(e){}
+  /* ---------- storage ----------
+     One stable key for good. Older keys are offered back to the reader
+     instead of being abandoned when the document is republished. */
+  var LEGACY=['darb-umrah-campaign-v1','darb-umrah-partnership-v1','darb-umrah-partnership-edits'];
+  var BACKUP=KEY+':prev';
+  var sstate=document.getElementById('savestate');
+  var storageOK=true;
+  try{
+    localStorage.setItem(KEY+':t','1'); localStorage.removeItem(KEY+':t');
+  }catch(e){ storageOK=false; }
 
+  function mark(ok,msg){
+    if(!sstate) return;
+    sstate.textContent=msg;
+    sstate.className='savestate '+(ok?'ok':'bad');
+  }
+
+  var restored=false;
+  try{
+    var v=localStorage.getItem(KEY);
+    if(v){ doc.innerHTML=v; restored=true; }
+  }catch(e){}
+
+  var dirty=false;
   function persist(){
-    try{ localStorage.setItem(KEY, doc.innerHTML); }
-    catch(e){ say('تعذّر الحفظ التلقائي في هذا المتصفح.',4000); }
+    if(!dirty) return;                       /* never bank an untouched document */
+    if(!storageOK){ mark(false,'لا يحفظ في هذا المتصفح'); return; }
+    try{
+      var cur=localStorage.getItem(KEY);
+      if(cur) localStorage.setItem(BACKUP,cur);
+      localStorage.setItem(KEY, doc.innerHTML);
+      var d=new Date();
+      mark(true,'محفوظ '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'));
+    }catch(e){
+      storageOK=false;
+      mark(false,'تعذّر الحفظ');
+      say('تعذّر الحفظ في هذا المتصفح. اضغط «حفظ نسخة» للاحتفاظ بتعديلاتك.',7000);
+    }
+  }
+
+  /* an older key still holding work — offer it back, never overwrite silently */
+  function offerLegacy(){
+    if(!storageOK || restored) return;
+    for(var i=0;i<LEGACY.length;i++){
+      var old=null;
+      try{ old=localStorage.getItem(LEGACY[i]); }catch(e){}
+      if(old && old.length>500){
+        var k=LEGACY[i];
+        say('وجدنا تعديلات محفوظة من نسخة سابقة من هذا الملف.',20000,'استرجعها',function(){
+          try{
+            var cur=localStorage.getItem(KEY);
+            if(cur) localStorage.setItem(BACKUP,cur);
+            doc.innerHTML=localStorage.getItem(k);
+            dirty=true;
+            localStorage.setItem(KEY, doc.innerHTML);
+            tally();
+            say('تم استرجاع تعديلاتك السابقة. راجعها، وإن لم تعجبك اضغط «استعادة الأصل».',9000);
+          }catch(e){ say('تعذّر الاسترجاع.'); }
+        });
+        return;
+      }
+    }
   }
   function scrub(){
     var n=doc.querySelectorAll('[style],font');
@@ -788,7 +849,17 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
       else el.removeAttribute('style');
     }
   }
-  function save(){ clearTimeout(saveT); saveT=setTimeout(function(){ scrub(); persist(); },400); }
+  function save(){
+    dirty=true;
+    if(sstate) mark(false,'لم يُحفظ بعد');
+    clearTimeout(saveT);
+    saveT=setTimeout(function(){ scrub(); persist(); },250);
+  }
+  function flush(){ if(!dirty) return; clearTimeout(saveT); scrub(); persist(); }
+  window.addEventListener('pagehide', flush);
+  window.addEventListener('beforeunload', flush);
+  document.addEventListener('visibilitychange', function(){ if(document.hidden) flush(); });
+  doc.addEventListener('blur', flush, true);
 
   doc.addEventListener('input', save);
   doc.addEventListener('paste', function(e){
@@ -1033,6 +1104,15 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
 
   tally();
   setEditing(true);
+  if(!storageOK){
+    mark(false,'لا يحفظ في هذا المتصفح');
+    setTimeout(function(){
+      say('هذا المتصفح لا يسمح بالحفظ التلقائي. استخدم «حفظ نسخة» بعد كل تعديل.',9000);
+    },1500);
+  }else{
+    mark(true,'جاهز');
+    setTimeout(offerLegacy,1800);
+  }
   setTimeout(function(){
     say(restored?'تم استرجاع نسختك المعدّلة. التحرير مفعّل — اضغط على أي نص أو عنصر.'
                 :'التحرير مفعّل هنا مباشرة. تعديلاتك تُحفظ تلقائيًا في هذا المتصفح وحده.',7000);
