@@ -39,12 +39,14 @@ python3 tools/add_month_reasons.py <ملف-المصدر> [ملف-المخرَج]
 | 13 | `add_month_reasons.py` | سبب كل شهر من تقرير التحليل التفصيلي |
 | 14 | `add_hub_registers.py` | سجلّات الصفحة الأولى: الحملات · الشراكات · التوزيعات |
 | 15 | `add_sources_tab.py` | تبويب المصادر والدراسات — أرشيف المنصّة مضمَّنًا |
+| 16 | `add_gateways_tab.py` | تبويب المنافذ — مداخل مكة ومن يسيطر على كل منفذ + أنماط الطباعة |
 
 الإضافتان الأخيرتان تُطبَّقان بهذا الترتيب فوق الأساس المعتمد:
 
 ```bash
 python3 tools/add_hub_registers.py
 python3 tools/add_sources_tab.py
+python3 tools/add_gateways_tab.py
 python3 tools/build_artifact_page.py     # نسخة الرابط الحيّ
 ```
 
