@@ -994,25 +994,31 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
         downloadHTML(wrapDoc(mine),'نسختي-السابقة.html');
         say('نُزّلت نسختك. الصفحة الآن على النسخة الجديدة.',6000);
       });
-      var box=document.createElement('section');
-      box.className='slide'; box.setAttribute('data-block','');
-      box.innerHTML='<p class="eyebrow">نسختك السابقة</p><h2>محتوى إصدارك السابق</h2>'+
-                    '<p class="note">هذا ما كنت قد عدّلته. انسخ منه ما تحتاج إلى النسخة الجديدة، ثم احذف هذا القسم.</p>'+
-                    '<div class="staleblock">'+mine+'</div>';
-      doc.appendChild(box);
-      box.scrollIntoView({behavior:'smooth',block:'start'});
-      save();
+      showBeside(mine,'نسختك السابقة');
     });
+  }
+  /* Show an older revision BESIDE the current one. Replacing the document
+     wholesale is how the reader lost the new content last time. */
+  function showBeside(html, title){
+    var box=document.createElement('section');
+    box.className='slide'; box.setAttribute('data-block','');
+    box.innerHTML='<p class="eyebrow">'+title+'</p><h2>محتوى نسختك المحفوظة</h2>'+
+                  '<p class="note">أُضيفت هنا كما هي، ولم يُحذف شيء من الملف. انسخ منها ما تحتاجه، '+
+                  'أو اضغط «تنزيل HTML» للاحتفاظ بها، ثم احذف هذا القسم بزر «حذف».</p>'+
+                  '<div class="staleblock">'+html+'</div>';
+    doc.appendChild(box);
+    box.scrollIntoView({behavior:'smooth',block:'start'});
+    dirty=true; writeSaved(); tally();
   }
   function offerLegacy(){
     if(!storageOK||restored||stale) return;
     for(var i=0;i<LEGACY.length;i++){
       var old=null; try{ old=localStorage.getItem(LEGACY[i]); }catch(e){}
       if(old&&old.length>500){
-        var k=LEGACY[i];
-        say('وجدنا تعديلات محفوظة من نسخة أقدم.',22000,'استرجعها',function(){
-          try{ doc.innerHTML=localStorage.getItem(k); dirty=true; writeSaved(); tally();
-               say('تم الاسترجاع.'); }catch(e){ say('تعذّر الاسترجاع.'); }
+        var payload=old;
+        say('وجدنا تعديلات محفوظة من نسخة أقدم.',22000,'أضِفها في آخر الملف',function(){
+          try{ showBeside(payload,'نسختك السابقة'); say('أُضيفت في آخر الملف. لم يُحذف شيء.',6000); }
+          catch(e){ say('تعذّر الاسترجاع.'); }
         });
         return;
       }
@@ -1343,8 +1349,10 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
     tally(); say('تمت استعادة النسخة الأصلية.');
   });
 
+  /* Ctrl/Cmd+E: export whatever is on screen right now, no matter the mode */
   document.addEventListener('keydown', function(e){
     var mod=e.ctrlKey||e.metaKey;
+    if(mod&&(e.key==='e'||e.key==='E')){ e.preventDefault(); bHtml.click(); }
     if(mod&&(e.key==='s'||e.key==='S')){ e.preventDefault(); bHtml.click(); }
     if(mod&&!e.shiftKey&&(e.key==='z'||e.key==='Z')){ e.preventDefault(); undo(); }
     if(mod&&(e.key==='y'||e.key==='Y'||(e.shiftKey&&(e.key==='z'||e.key==='Z')))){ e.preventDefault(); redo(); }
