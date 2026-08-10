@@ -37,6 +37,16 @@ python3 tools/add_month_reasons.py <ملف-المصدر> [ملف-المخرَج]
 | 11 | `add_plan_forms.py` | نماذج إدخال الحملات والشراكات والتوزيعات |
 | 12 | `make_fully_editable.py` | تعديل كل شيء: أعمدة · تسميات · تبويبات |
 | 13 | `add_month_reasons.py` | سبب كل شهر من تقرير التحليل التفصيلي |
+| 14 | `add_hub_registers.py` | سجلّات الصفحة الأولى: الحملات · الشراكات · التوزيعات |
+| 15 | `add_sources_tab.py` | تبويب المصادر والدراسات — أرشيف المنصّة مضمَّنًا |
+
+الإضافتان الأخيرتان تُطبَّقان بهذا الترتيب فوق الأساس المعتمد:
+
+```bash
+python3 tools/add_hub_registers.py
+python3 tools/add_sources_tab.py
+python3 tools/build_artifact_page.py     # نسخة الرابط الحيّ
+```
 
 `apify_nearby_partners.py` مستقل عن السلسلة: يستخرج المنشآت حول المحطات عبر
 Apify عند توفّر رصيد في الحساب.
@@ -49,6 +59,9 @@ Apify عند توفّر رصيد في الحساب.
 | `darb-external-partners.xlsx` | الشركاء الخارجيون |
 | `darb-station-locations.xlsx` | إحداثيات المحطات |
 | `darb-monthly-reasons-2026.xlsx` | أسباب الأشهر |
+
+ونسخة مرتّبة من كل ملفات المصدر في `data/` — وهي التي تُضمَّن داخل المنصّة
+في تبويب «المصادر والدراسات»، ومعها دراسة الحركة الصباحية السابقة.
 
 ## الرابط الحيّ
 
