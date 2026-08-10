@@ -896,7 +896,8 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
   <button type="button" id="btnAdd" hidden>إضافة قسم</button>
   <button type="button" id="btnHtml">تنزيل HTML</button>
   <button type="button" id="btnPdf">تنزيل PDF</button>
-  <button type="button" id="btnCopy" class="primary">نسخ النص</button>
+  <button type="button" id="btnMerge" class="primary">ادمج تعديلاتي</button>
+  <button type="button" id="btnCopy">نسخ النص</button>
   <button type="button" id="btnReset">استعادة الأصل</button>
   <span class="state" id="state">وضع العرض</span>
   <span class="savestate" id="savestate">جاهز</span>
@@ -928,6 +929,7 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
   var bRst=document.getElementById('btnReset');
   var bUndo=document.getElementById('btnUndo'), bRedo=document.getElementById('btnRedo');
   var bCopy=document.getElementById('btnCopy');
+  var bMerge=document.getElementById('btnMerge');
 
   var pristine=doc.innerHTML, editing=false, target=null, timer, saveT, dirty=false;
 
@@ -1031,6 +1033,103 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
       }
     }
   }
+
+
+  /* ---------------- merge the reader's revision with this build ----------------
+     Their revision is the base so nothing they typed is lost; the sections this
+     build changed are spliced in by matching the eyebrow label. */
+  function eyebrowOf(sec){
+    var e=sec.querySelector('.eyebrow');
+    return e?e.textContent.replace(/\s+/g,' ').trim():'';
+  }
+  function findSec(root, needle){
+    var secs=root.querySelectorAll('section');
+    for(var i=0;i<secs.length;i++){
+      if(eyebrowOf(secs[i]).indexOf(needle)!==-1) return secs[i];
+      var h=secs[i].querySelector('h2');
+      if(h&&h.textContent.indexOf(needle)!==-1) return secs[i];
+    }
+    return null;
+  }
+  /* snapshot of the sections this build owns, taken before anything replaces them */
+  var NEWSEC={};
+  (function(){
+    var want=[['components','مكوّنات الحملة'],['capture','حسبة العائد'],
+              ['flow','آلية التنفيذ'],['services','ما تنفّذه درب']];
+    for(var i=0;i<want.length;i++){
+      var sec=findSec(doc, want[i][1]);
+      if(sec) NEWSEC[want[i][0]]=sec.outerHTML;
+    }
+  })();
+
+  function mergeWith(theirHTML){
+    var box=document.createElement('div');
+    box.innerHTML=theirHTML;
+    var report=[];
+
+    /* 1. the components section was reordered — swap theirs for this build's */
+    if(NEWSEC.components){
+      var mine=document.createElement('div'); mine.innerHTML=NEWSEC.components;
+      var theirs=findSec(box,'مكوّنات الحملة');
+      if(theirs){ theirs.parentNode.replaceChild(mine.firstElementChild, theirs); report.push('حُدِّث قسم مكوّنات الحملة'); }
+      else{
+        var anchor=findSec(box,'آلية التنفيذ');
+        if(anchor) anchor.parentNode.insertBefore(mine.firstElementChild, anchor);
+        else box.appendChild(mine.firstElementChild);
+        report.push('أُضيف قسم مكوّنات الحملة');
+      }
+      /* the old standalone clip gallery folded into it */
+      var old=findSec(box,'نماذج من حملات');
+      if(old){ old.parentNode.removeChild(old); report.push('أُزيل معرض المقاطع القديم لأنه انتقل داخل المكوّنات'); }
+    }
+
+    /* 2. the return table, if their revision predates it */
+    if(NEWSEC.capture && !findSec(box,'حسبة العائد')){
+      var cap=document.createElement('div'); cap.innerHTML=NEWSEC.capture;
+      var after=findSec(box,'الفرصة بالأرقام');
+      if(after&&after.nextSibling) after.parentNode.insertBefore(cap.firstElementChild, after.nextSibling);
+      else if(after) after.parentNode.appendChild(cap.firstElementChild);
+      else box.insertBefore(cap.firstElementChild, box.firstChild);
+      report.push('أُضيف قسم حسبة العائد بسعرَي ١٥ و٢٠');
+    }
+
+    /* 3. the four-step mechanism, if missing */
+    if(NEWSEC.flow && !findSec(box,'آلية التنفيذ')){
+      var fl=document.createElement('div'); fl.innerHTML=NEWSEC.flow;
+      box.appendChild(fl.firstElementChild);
+      report.push('أُضيف قسم آلية التنفيذ');
+    }
+    return {html:box.innerHTML, report:report};
+  }
+
+  function storedRevisions(){
+    var out=[], names=[KEY, BACKUP, 'darb-umrah-doc', 'darb-umrah-doc:prev',
+                      'darb-umrah-campaign-v1','darb-umrah-partnership-v1','darb-fitoor-2026'];
+    for(var i=0;i<names.length;i++){
+      var raw=null; try{ raw=localStorage.getItem(names[i]); }catch(e){}
+      if(!raw||raw.length<800) continue;
+      var html=raw;
+      if(raw.charAt(0)==='{'){ try{ var o=JSON.parse(raw); html=o.html||''; }catch(e){ continue; } }
+      if(html.length<800) continue;
+      if(out.some(function(x){ return x.html===html; })) continue;
+      out.push({key:names[i], html:html});
+    }
+    return out;
+  }
+
+  function runMerge(){
+    var revs=storedRevisions();
+    if(!revs.length){ say('لا توجد تعديلات محفوظة في هذا المتصفح على هذا الرابط.',7000); return; }
+    var best=revs[0];
+    for(var i=1;i<revs.length;i++) if(revs[i].html.length>best.html.length) best=revs[i];
+    snap();
+    var r=mergeWith(best.html);
+    doc.innerHTML=r.html;
+    dirty=true; writeSaved(); tally(); ubtn();
+    say('تم الدمج: تعديلاتك هي الأساس، و'+r.report.length+' تحديثات أُضيفت. اضغط «تراجع» للرجوع.',11000);
+    window.scrollTo(0,0);
+  }
+  if(bMerge) bMerge.addEventListener('click', runMerge);
 
   /* ---------------- undo / redo ---------------- */
   var undoS=[], redoS=[], MAXU=60, typing=false, typeT;
@@ -1428,7 +1527,11 @@ body.editing [data-block].hot{outline:2px solid var(--orange-hi); outline-offset
     setTimeout(function(){ say('هذا المتصفح لا يسمح بالحفظ التلقائي. استخدم «تنزيل HTML» بعد كل تعديل.',9000); },1500);
   } else {
     mark(true, restored?'محفوظة سابقًا':'جاهز');
-    setTimeout(function(){ if(stale) offerStale(); else offerLegacy(); },1600);
+    setTimeout(function(){
+      if(storedRevisions().length){
+        say('وجدنا تعديلاتك المحفوظة في هذا المتصفح. اضغط لدمجها مع المحتوى الجديد.',30000,'ادمجها',runMerge);
+      } else if(stale) offerStale(); else offerLegacy();
+    },1600);
   }
 })();
 </script>
