@@ -1,4 +1,4 @@
-<title>درب · إدارة الحملات التسويقية</title>
+<title>درب · سجل الحملات التسويقية (نسخة للاطّلاع)</title>
 <style>
 :root{
   --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
@@ -386,7 +386,7 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
 (function(){
   document.documentElement.lang='ar';
   document.documentElement.dir='rtl';
-  var KEY='darb-campaigns-v1';
+  var KEY='darb-campaigns-view-v1';
   var TOOLS=['فيديو تشويقي','فيديو عروض الحملة','فيديوهات المؤثّرين','حملة واتساب',
              'توزيع كروت العرض','لوحات المضخات','لافتات الطريق','رمز QR للتفعيل',
              'بروشور مطبوع','النشر على منصات التواصل','إعلانات مدفوعة','تدريب عمال المحطة'];
@@ -1091,7 +1091,8 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     list.forEach(function(c){ push(c,0); });        /* anything a cycle left behind */
     return out;
   }
-  var openCodes={};           /* which cards are expanded, kept across renders */
+  var openCodes={};
+  (function(){ for(var i=0;i<SEED.length;i++) openCodes[SEED[i].code]=1; })();           /* which cards are expanded, kept across renders */
   function card(c,idx,depth){
     var s=statusOf(c);
     var stx=(c.stations||[]).map(function(x){ return stLabel(x); });
