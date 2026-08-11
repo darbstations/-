@@ -8,6 +8,16 @@ try:
 except FileNotFoundError:
     ACT = {}
 try:
+    OPS = json.load(open('ops_content.json'))
+except FileNotFoundError:
+    OPS = {}
+OPS_COUNTS = {'MK007': {'cs':117,'partners':47,'external':10,'plan':18}, 'MK017': {'cs':16,'partners':9,'external':8,'plan':18}, 'MK002': {'cs':7,'partners':16,'external':4,'plan':18}, 'MK023': {'cs':14,'partners':7,'external':9,'plan':18}, 'MK019': {'cs':11,'partners':7,'external':7,'plan':18}}
+OPS_TABS = [('targets','المستهدفات'),('cs','استفسارات العملاء'),('partners','الشركاء عبر اليوم'),('external','الشركاء الخارجيون'),('plan','الخطة التشغيلية')]
+try:
+    OPS_CSS = open('ops_clean.css', encoding='utf-8').read()
+except FileNotFoundError:
+    OPS_CSS = ''
+try:
     ECO = json.load(open('ecosys.json'))  # {code: {rentals:[{title,dist,rating,reviews,lat,lng}], hajj:[...]}}
 except FileNotFoundError:
     ECO = {}
@@ -262,6 +272,8 @@ footer b{color:var(--ink2)}
 .scard .r3{margin-top:9px;font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
 .scard .r3 b{color:var(--orange);font-size:15px}
 """
+CSS = CSS + "\n" + OPS_CSS
+
 
 EDITBAR = ''' <div id="editbar" contenteditable="false">
   <button id="edtoggle" onclick="__toggleEdit()">✏️ وضع التحرير</button>
@@ -594,6 +606,11 @@ def mini_head(a):
 
 def tabs_html(code, active, mode):
     items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية')]
+    if code in OPS:
+        cc = OPS_COUNTS.get(code, {})
+        for k, lab in OPS_TABS:
+            n = cc.get(k)
+            items.append((k, lab + (f' <b class="tcount">{n}</b>' if n else '')))
     out = []
     for key, lab in items:
         if mode == 'spa':
@@ -788,16 +805,17 @@ for idx, a in enumerate(ORDER):
 </header>
 <main class="wrap" style="padding-top:20px">
   {nav}
-  {tabs_html(code, 'main', 'file').replace('class="tab', 'data-v="main" class="tab', 1).replace('href="#monthly"','href="#monthly" data-v="monthly"').replace('href="#daily"','href="#daily" data-v="daily"')}
+  {_re.sub(r'href="#([a-z]+)"', lambda mm: 'href="#'+mm.group(1)+'" data-v="'+mm.group(1)+'"', tabs_html(code, 'main', 'file')).replace('class="tab', 'data-v="main" class="tab', 1)}
   <div class="pgview" id="v-main"><section class="station">{station_body(a)}</section></div>
   <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
   <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
+  {''.join(f'<div class="pgview" id="v-{k}" hidden>{mini_head(a)}{OPS[code][k]}</div>' for k, lab in OPS_TABS if code in OPS and k in OPS[code])}
   <footer>{FOOT_METH}</footer>
 </main>
 <script>
 function route(){{
   const h=location.hash.replace('#','');
-  const k=(h==='monthly'||h==='daily')?h:'main';
+  const k=['monthly','daily','targets','cs','partners','external','plan'].includes(h)?h:'main';
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   document.getElementById('v-'+k).hidden=false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
@@ -883,6 +901,10 @@ def spa_view(idx, a):
       {nav}{tabs_html(code, 'monthly', 'spa')}{mini_head(a)}{monthly_body(a)}{bottom}</div>'''
       f'''<div class="pgview" id="pg-{code}-daily" data-title="درب {esc(m['name'])} {code} · المبيعات اليومية" hidden>
       {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
+      + ''.join(
+        f'''<div class="pgview" id="pg-{code}-{k}" data-title="درب {esc(m['name'])} {code} · {lab}" hidden>
+        {nav}{tabs_html(code, k, 'spa')}{mini_head(a)}{OPS[code][k]}{bottom}</div>'''
+        for k, lab in OPS_TABS if code in OPS and k in OPS[code])
     )
 
 SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))

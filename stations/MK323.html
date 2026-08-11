@@ -233,7 +233,110 @@ footer b{color:var(--ink2)}
 .scard .r2{display:flex;gap:8px;align-items:center;margin-top:7px;font-size:11.5px;color:var(--ink2);flex-wrap:wrap}
 .scard .r3{margin-top:9px;font-size:12px;color:var(--ink2);display:flex;justify-content:space-between}
 .scard .r3 b{color:var(--orange);font-size:15px}
-</style>
+
+.brk{display:grid;gap:10px}
+.brk .lb{font-size:12.5px;color:var(--ink2)}
+.brk .bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold1),var(--orange))}
+.brk .n small{font-size:10.5px;font-weight:500;color:var(--ink3)}
+.cslog td{vertical-align:top}
+.tab .tcount{display:inline-block;margin-inline-start:5px;background:var(--line2);color:var(--ink2);
+  border-radius:7px;padding:1px 6px;font-size:11px}
+.kpi .kv.kvl{color:var(--ink2);margin-top:1px}
+.kpi .kv.kvl small{color:var(--ink3)}
+.plegend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-inline-end:6px}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pcard2{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:15px 17px 14px;box-shadow:var(--shadow);border-top:3px solid var(--pc)}
+.pcard2 .ph h4{font-size:17px;font-weight:800}
+.pcard2 .phrs{font-size:12px;color:var(--ink2);font-family:'Tajawal'}
+.pcard2 .pnums{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:11px}
+.pcard2 .pnums b{display:block;font-size:19px;font-weight:800;color:var(--ink)}
+.pcard2 .pread{font-size:12.5px;color:var(--ink2);background:#FBF6EF;border-radius:10px;
+  padding:9px 12px;margin-bottom:11px;line-height:1.6}
+.ptags{display:flex;flex-wrap:wrap;gap:6px}
+.pcaph{font-size:11.5px;color:var(--ink3);margin-bottom:5px}
+table.captbl th{padding:6px 9px;font-size:11px}
+table.captbl tbody tr:last-child td{border-bottom:none}
+#bdbar button{font-family:inherit;font-size:12.5px;border:1px solid rgba(255,255,255,.22);
+  background:rgba(255,255,255,.08);color:#fff;border-radius:9px;padding:6px 11px;cursor:pointer;
+  transition:.14s;white-space:nowrap}
+.bdtb button:hover{border-color:var(--orange);color:var(--ink)}
+.bdtb .bdh:active{cursor:grabbing}
+[data-bddrag]{opacity:.4;outline:2px dashed var(--orange);outline-offset:4px;pointer-events:none}
+.bdtb .bdh{touch-action:none}
+.bdx{display:inline-block;margin-inline-start:6px;color:#C0503A;cursor:pointer;font-weight:800;
+  font-size:13px;line-height:1;user-select:none;-webkit-user-select:none}
+.bdaddtag{font-family:inherit;cursor:pointer;border-style:dashed !important;color:var(--orange) !important;
+  border-color:var(--orange) !important;background:#FFF7EF !important}
+.mcards{display:grid;gap:10px;margin-bottom:16px}
+.mdet>summary{cursor:pointer;padding:13px 16px;display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;font-size:15px;list-style:none}
+.mdet>summary::after{content:"▾";margin-inline-start:auto;color:var(--ink3);font-size:13px}
+.mdet[open]>summary::after{content:"▴"}
+.mdet .msum{font-size:12.5px;color:var(--ink2);font-family:'Tajawal'}
+.mbody{padding:14px 16px 15px}
+.mnums span{background:#FDFCFA;border:1px solid var(--line);border-radius:10px;
+  padding:7px 11px;font-size:12px;color:var(--ink2)}
+.mline{border-radius:11px;padding:10px 13px;margin-bottom:9px;font-size:12.5px;line-height:1.9}
+.mline ul{padding-inline-start:17px;margin-top:5px;display:grid;gap:4px;color:var(--ink2)}
+.mline.up>b{color:#22694F}
+.mline.dn>b{color:#A6432E}
+.mline.act{background:#FBF6EF;border:1px solid #EAD9C3}
+.mnote{font-size:11px;color:var(--ink3);margin:2px 0 7px}
+.hchip{font-size:11.5px;background:#fff;border:1px solid var(--line2);border-radius:8px;
+  padding:3px 9px;color:var(--ink3);cursor:pointer;transition:.14s;user-select:none;-webkit-user-select:none}
+.hchip.on{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+.mfree{color:var(--ink3);font-style:italic;margin-top:4px}
+.bdrowx{position:absolute;inset-inline-start:-2px;inset-block-start:50%;transform:translateY(-50%);
+  width:17px;height:17px;border-radius:50%;background:#FBF0ED;border:1px solid #E3BEB4;color:#A6432E;
+  font-size:12px;font-weight:800;line-height:15px;text-align:center;cursor:pointer;opacity:0;
+  transition:.12s;user-select:none;-webkit-user-select:none}
+.bdrowx:hover{background:#C0503A;color:#fff;border-color:#C0503A}
+.xtbl td{white-space:normal}
+#pages .ntable table td{vertical-align:top}
+.pgview[id$="-plan"] table td{white-space:normal;line-height:1.75}
+.planbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 10px}
+.planbar .planadd:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.plansum b{color:var(--ink2)}
+.plantbl td:first-child{min-width:150px;position:relative}
+.planx,.planedit{display:inline-block;width:17px;height:17px;border-radius:50%;font-size:11px;
+  font-weight:800;line-height:15px;text-align:center;cursor:pointer;opacity:0;transition:.12s;
+  user-select:none;-webkit-user-select:none;vertical-align:middle;margin-inline-end:3px}
+.planedit{background:#F1EFEB;border:1px solid #DDD8CF;color:#6E6A64}
+.planx:hover{background:#C0503A;color:#fff;border-color:#C0503A}
+.plantbl .bdrowx{display:none}
+#planmodal .pmbox{background:var(--card);border-radius:18px;width:min(880px,100%);
+  box-shadow:0 18px 60px rgba(45,45,45,.32);overflow:hidden;font-family:inherit;
+  max-height:calc(100vh - 52px);display:flex;flex-direction:column}
+#planmodal .pmh{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:var(--bgray);color:#fff;padding:13px 18px}
+#planmodal .pmh span{font-size:11.5px;opacity:.75;font-weight:400}
+#planmodal .pmb{padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:13px 16px;
+  overflow:auto;flex:1 1 auto}
+#planmodal label{display:block;font-size:12px;font-weight:700;color:var(--ink2);margin-bottom:5px}
+#planmodal input:focus,#planmodal select:focus,#planmodal textarea:focus{border-color:var(--orange);
+  background:#fff;box-shadow:0 0 0 3px rgba(246,133,31,.13)}
+#planmodal .pmulti{border:1px solid var(--line2);border-radius:10px;background:#FDFCFA;padding:7px 9px;
+  max-height:132px;overflow:auto;display:flex;flex-wrap:wrap;gap:5px}
+#planmodal .pmulti label:hover{border-color:var(--orange)}
+#planmodal .pmulti label.on{background:#FDEEE2;border-color:#F5CBA8;color:#B4500F;font-weight:700}
+#planmodal .pother{margin-top:6px}
+#planmodal .pmf .hint{font-size:11.5px;color:var(--ink3)}
+#planmodal .pmf .cancel{background:#fff;border:1px solid var(--line2);color:var(--ink2);
+  font-size:13px;border-radius:10px;padding:9px 16px;cursor:pointer;font-family:inherit;
+  margin-inline-end:8px}
+html.editing #pages table thead th{position:relative;padding-inline-start:20px}
+html.editing .tabs .tab,html.editing .pgnav a,html.editing .stationbar .chip{position:relative}
+.bdtabx{display:inline-block;margin-inline-start:5px;width:14px;height:14px;border-radius:50%;
+  background:#FBF0ED;border:1px solid #E3BEB4;color:#A6432E;font-size:10px;font-weight:800;
+  line-height:12px;text-align:center;cursor:pointer;vertical-align:middle;opacity:0;transition:.12s}
+.bdtabx:hover{background:#C0503A;color:#fff;border-color:#C0503A}
+.cfrm{background:#fff;border:1px solid #EAD9C3;border-radius:10px;padding:9px 11px;margin:6px 0 8px}
+.cfh{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:5px}
+.cfl{font-size:12.5px;line-height:1.9;color:var(--ink2)}
+.whytbl td{white-space:normal;line-height:1.8;vertical-align:top}
+.whytbl td:nth-child(2){min-width:110px}
+.tagm{display:inline-block;margin:0 0 4px 4px}</style>
 </head>
 <body>
 <header>
@@ -391,6 +494,7 @@ footer b{color:var(--ink2)}
       <thead><tr><th>التاريخ</th><th>اليوم</th><th>الإيراد (ر.س)</th><th>اللترات*</th><th>الزيارات</th><th>متوسط الفاتورة</th><th>لتر/زيارة*</th></tr></thead>
       <tbody><tr><td>2026-06-30</td><td>الثلاثاء</td><td>20,435</td><td>9,039*</td><td>429</td><td>48</td><td>21*</td></tr><tr><td>2026-06-29</td><td>الإثنين</td><td>22,785</td><td>10,079*</td><td>451</td><td>51</td><td>22*</td></tr><tr><td>2026-06-28</td><td>الأحد</td><td>23,663</td><td>10,467*</td><td>460</td><td>51</td><td>23*</td></tr><tr><td>2026-06-27</td><td>السبت</td><td>20,109</td><td>8,895*</td><td>445</td><td>45</td><td>20*</td></tr><tr><td>2026-06-26</td><td>الجمعة</td><td>17,782</td><td>7,866*</td><td>389</td><td>46</td><td>20*</td></tr><tr><td>2026-06-25</td><td>الخميس</td><td>19,768</td><td>8,744*</td><td>452</td><td>44</td><td>19*</td></tr><tr><td>2026-06-24</td><td>الأربعاء</td><td>21,110</td><td>9,338*</td><td>454</td><td>46</td><td>21*</td></tr><tr><td>2026-06-23</td><td>الثلاثاء</td><td>20,222</td><td>8,945*</td><td>417</td><td>48</td><td>21*</td></tr><tr><td>2026-06-22</td><td>الإثنين</td><td>18,469</td><td>8,170*</td><td>396</td><td>47</td><td>21*</td></tr><tr><td>2026-06-21</td><td>الأحد</td><td>22,121</td><td>9,785*</td><td>466</td><td>47</td><td>21*</td></tr><tr><td>2026-06-20</td><td>السبت</td><td>16,429</td><td>7,267*</td><td>370</td><td>44</td><td>20*</td></tr><tr><td>2026-06-19</td><td>الجمعة</td><td>17,744</td><td>7,849*</td><td>378</td><td>47</td><td>21*</td></tr><tr><td>2026-06-18</td><td>الخميس</td><td>25,960</td><td>11,483*</td><td>529</td><td>49</td><td>22*</td></tr><tr><td>2026-06-17</td><td>الأربعاء</td><td>20,530</td><td>9,081*</td><td>433</td><td>47</td><td>21*</td></tr><tr><td>2026-06-16</td><td>الثلاثاء</td><td>19,932</td><td>8,817*</td><td>433</td><td>46</td><td>20*</td></tr><tr><td>2026-06-15</td><td>الإثنين</td><td>22,548</td><td>9,974*</td><td>487</td><td>46</td><td>20*</td></tr><tr><td>2026-06-14</td><td>الأحد</td><td>22,131</td><td>9,789*</td><td>469</td><td>47</td><td>21*</td></tr><tr><td>2026-06-13</td><td>السبت</td><td>16,933</td><td>7,490*</td><td>368</td><td>46</td><td>20*</td></tr><tr><td>2026-06-12</td><td>الجمعة</td><td>17,870</td><td>7,904*</td><td>403</td><td>44</td><td>20*</td></tr><tr><td>2026-06-11</td><td>الخميس</td><td>23,585</td><td>10,433*</td><td>480</td><td>49</td><td>22*</td></tr><tr><td>2026-06-10</td><td>الأربعاء</td><td>25,271</td><td>11,179*</td><td>513</td><td>49</td><td>22*</td></tr><tr><td>2026-06-09</td><td>الثلاثاء</td><td>24,614</td><td>10,888*</td><td>482</td><td>51</td><td>23*</td></tr><tr><td>2026-06-08</td><td>الإثنين</td><td>22,567</td><td>9,982*</td><td>466</td><td>48</td><td>21*</td></tr><tr><td>2026-06-07</td><td>الأحد</td><td>24,562</td><td>10,865*</td><td>487</td><td>50</td><td>22*</td></tr><tr><td>2026-06-06</td><td>السبت</td><td>11,624</td><td>5,142*</td><td>228</td><td>51</td><td>23*</td></tr><tr><td>2026-06-05</td><td>الجمعة</td><td>23,685</td><td>10,477*</td><td>461</td><td>51</td><td>23*</td></tr><tr><td>2026-06-04</td><td>الخميس</td><td>24,895</td><td>11,012*</td><td>498</td><td>50</td><td>22*</td></tr><tr><td>2026-06-03</td><td>الأربعاء</td><td>21,117</td><td>9,341*</td><td>423</td><td>50</td><td>22*</td></tr><tr><td>2026-06-02</td><td>الثلاثاء</td><td>22,828</td><td>10,098*</td><td>444</td><td>51</td><td>23*</td></tr><tr><td>2026-06-01</td><td>الإثنين</td><td>19,655</td><td>8,694*</td><td>369</td><td>53</td><td>24*</td></tr><tr><td>2026-05-31</td><td>الأحد</td><td>22,556</td><td>9,981*</td><td>445</td><td>51</td><td>22*</td></tr><tr><td>2026-05-30</td><td>السبت</td><td>37,882</td><td>16,762*</td><td>618</td><td>61</td><td>27*</td></tr><tr><td>2026-05-29</td><td>الجمعة</td><td>39,727</td><td>17,579*</td><td>663</td><td>60</td><td>27*</td></tr><tr><td>2026-05-28</td><td>الخميس</td><td>36,313</td><td>16,068*</td><td>629</td><td>58</td><td>26*</td></tr><tr><td>2026-05-27</td><td>الأربعاء</td><td>31,903</td><td>14,117*</td><td>547</td><td>58</td><td>26*</td></tr><tr><td>2026-05-26</td><td>الثلاثاء</td><td>17,035</td><td>7,538*</td><td>320</td><td>53</td><td>24*</td></tr><tr><td>2026-05-25</td><td>الإثنين</td><td>33,330</td><td>14,748*</td><td>550</td><td>61</td><td>27*</td></tr><tr><td>2026-05-24</td><td>الأحد</td><td>30,988</td><td>13,711*</td><td>490</td><td>63</td><td>28*</td></tr><tr><td>2026-05-23</td><td>السبت</td><td>29,294</td><td>12,962*</td><td>580</td><td>51</td><td>22*</td></tr><tr><td>2026-05-22</td><td>الجمعة</td><td>27,834</td><td>12,316*</td><td>524</td><td>53</td><td>24*</td></tr><tr><td>2026-05-21</td><td>الخميس</td><td>34,057</td><td>15,069*</td><td>646</td><td>53</td><td>23*</td></tr><tr><td>2026-05-20</td><td>الأربعاء</td><td>26,548</td><td>11,747*</td><td>536</td><td>50</td><td>22*</td></tr><tr><td>2026-05-19</td><td>الثلاثاء</td><td>28,413</td><td>12,572*</td><td>526</td><td>54</td><td>24*</td></tr><tr><td>2026-05-18</td><td>الإثنين</td><td>26,827</td><td>11,870*</td><td>519</td><td>52</td><td>23*</td></tr><tr><td>2026-05-17</td><td>الأحد</td><td>29,540</td><td>13,071*</td><td>597</td><td>49</td><td>22*</td></tr><tr><td>2026-05-16</td><td>السبت</td><td>25,218</td><td>11,158*</td><td>495</td><td>51</td><td>23*</td></tr><tr><td>2026-05-15</td><td>الجمعة</td><td>15,596</td><td>6,901*</td><td>298</td><td>52</td><td>23*</td></tr><tr><td>2026-05-14</td><td>الخميس</td><td>16,724</td><td>7,400*</td><td>351</td><td>48</td><td>21*</td></tr><tr><td>2026-05-13</td><td>الأربعاء</td><td>13,152</td><td>5,819*</td><td>251</td><td>52</td><td>23*</td></tr><tr><td>2026-05-12</td><td>الثلاثاء</td><td>28,065</td><td>12,418*</td><td>540</td><td>52</td><td>23*</td></tr><tr><td>2026-05-11</td><td>الإثنين</td><td>30,213</td><td>13,369*</td><td>573</td><td>53</td><td>23*</td></tr><tr><td>2026-05-10</td><td>الأحد</td><td>25,412</td><td>11,244*</td><td>492</td><td>52</td><td>23*</td></tr><tr><td>2026-05-09</td><td>السبت</td><td>23,777</td><td>10,521*</td><td>487</td><td>49</td><td>22*</td></tr><tr><td>2026-05-08</td><td>الجمعة</td><td>18,685</td><td>8,268*</td><td>382</td><td>49</td><td>22*</td></tr><tr><td>2026-05-07</td><td>الخميس</td><td>4,982</td><td>2,205*</td><td>106</td><td>47</td><td>21*</td></tr><tr><td>2026-04-30</td><td>الخميس</td><td>943</td><td>415*</td><td>20</td><td>47</td><td>21*</td></tr></tbody></table></div>
     <div class="dnote">(*) اللترات التقديرية: البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى 2026-06-30 — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div></div>
+  
   <footer><b>المنهجية والمصادر:</b> بيانات المبيعات والزيارات من لوحة «درب · تحليل المبيعات والتسويق» (يناير–يونيو 2026)؛
     مواقع المحطات من ملف Station_Data.xlsx؛ رصد المنافسين والتقييمات من خرائط جوجل (بحث «محطة وقود» ضمن دائرة نصف قطرها 5 كم حول إحداثيات كل محطة، يوليو 2026) —
     القوائم تشمل المدرَج في خرائط جوجل فقط والمسافات مباشرة (خط مستقيم). الدوائر التي أعاد المسح الآلي فيها نتائج شحيحة معلَّمة بتنبيه ولا يُبنى على عددها استنتاج تنافسي.
@@ -399,7 +503,7 @@ footer b{color:var(--ink2)}
 <script>
 function route(){
   const h=location.hash.replace('#','');
-  const k=(h==='monthly'||h==='daily')?h:'main';
+  const k=['monthly','daily','targets','cs','partners','external','plan'].includes(h)?h:'main';
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   document.getElementById('v-'+k).hidden=false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
