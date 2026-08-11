@@ -18,6 +18,13 @@ try:
 except FileNotFoundError:
     OPS_CSS = ''
 try:
+    OPS_TPL = json.load(open('ops_template.json'))
+except FileNotFoundError:
+    OPS_TPL = {}
+def ops_content(code, k):
+    v = (OPS.get(code) or {}).get(k)
+    return v if v else OPS_TPL.get(k, '')
+try:
     ECO = json.load(open('ecosys.json'))  # {code: {rentals:[{title,dist,rating,reviews,lat,lng}], hajj:[...]}}
 except FileNotFoundError:
     ECO = {}
@@ -606,11 +613,10 @@ def mini_head(a):
 
 def tabs_html(code, active, mode):
     items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية')]
-    if code in OPS:
-        cc = OPS_COUNTS.get(code, {})
-        for k, lab in OPS_TABS:
-            n = cc.get(k)
-            items.append((k, lab + (f' <b class="tcount">{n}</b>' if n else '')))
+    cc = OPS_COUNTS.get(code, {})
+    for k, lab in OPS_TABS:
+        n = cc.get(k)
+        items.append((k, lab + (f' <b class="tcount">{n}</b>' if n else '')))
     out = []
     for key, lab in items:
         if mode == 'spa':
@@ -809,7 +815,7 @@ for idx, a in enumerate(ORDER):
   <div class="pgview" id="v-main"><section class="station">{station_body(a)}</section></div>
   <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
   <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
-  {''.join(f'<div class="pgview" id="v-{k}" hidden>{mini_head(a)}{OPS[code][k]}</div>' for k, lab in OPS_TABS if code in OPS and k in OPS[code])}
+  {''.join(f'<div class="pgview" id="v-{k}" hidden>{mini_head(a)}{ops_content(code, k)}</div>' for k, lab in OPS_TABS)}
   <footer>{FOOT_METH}</footer>
 </main>
 <script>
@@ -903,8 +909,8 @@ def spa_view(idx, a):
       {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
       + ''.join(
         f'''<div class="pgview" id="pg-{code}-{k}" data-title="درب {esc(m['name'])} {code} · {lab}" hidden>
-        {nav}{tabs_html(code, k, 'spa')}{mini_head(a)}{OPS[code][k]}{bottom}</div>'''
-        for k, lab in OPS_TABS if code in OPS and k in OPS[code])
+        {nav}{tabs_html(code, k, 'spa')}{mini_head(a)}{ops_content(code, k)}{bottom}</div>'''
+        for k, lab in OPS_TABS)
     )
 
 SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))
