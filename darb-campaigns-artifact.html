@@ -127,6 +127,8 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 .cards{display:grid;gap:14px;margin-top:16px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:7px;
   border-inline-start:4px solid var(--orange);overflow:hidden}
+.card.sub{border-inline-start-color:var(--cool)}
+.card .par{font-size:12px;color:var(--cool);font-weight:700}
 .card .top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;
   justify-content:space-between;padding:16px 19px;cursor:pointer}
 .card h3{font-size:17.5px}
@@ -214,6 +216,27 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
       <div><label class="f" for="fEnd">تاريخ الانتهاء</label><input type="date" id="fEnd"></div>
     </div>
     <p class="poolnote" id="fDur" style="margin:8px 0 0"></p>
+
+    <fieldset>
+      <legend>الحملة الأساسية والحملات الفرعية</legend>
+      <div class="grid2">
+        <div>
+          <label class="f" for="fParent">تتبع الحملة الأساسية</label>
+          <input type="text" id="fParent" list="campCodes" autocomplete="off" placeholder="كود الحملة الأساسية">
+          <p class="poolnote">اتركه فارغًا إن كانت هذه حملة مستقلة.</p>
+        </div>
+        <div>
+          <label class="f" for="subQ">أدرج حملة قائمة تحت هذه الحملة</label>
+          <input type="text" id="subQ" list="subCodes" autocomplete="off" placeholder="كود الحملة الفرعية">
+          <div class="bar" style="margin:9px 0 0">
+            <button type="button" class="btn sm" id="btnSubAdd">أدرجها</button>
+            <button type="button" class="btn sm ghost" id="btnSubNew">+ حملة فرعية جديدة</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="subChips"></div>
+      <datalist id="subCodes"></datalist>
+    </fieldset>
 
     <fieldset>
       <legend>المحطات المشمولة</legend>
@@ -382,6 +405,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   function nStation(n){ return count(n,'محطة واحدة','محطتان','محطات','محطة'); }
   function nWeek(n){ return count(n,'أسبوع واحد','أسبوعان','أسابيع','أسبوعًا'); }
   function nCampaign(n){ return count(n,'حملة واحدة','حملتان','حملات','حملة'); }
+  function nSub(n){ return count(n,'حملة فرعية واحدة','حملتان فرعيتان','حملات فرعية','حملة فرعية'); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
@@ -643,10 +667,77 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     dl.innerHTML=campaigns.map(function(c){
       return '<option value="'+esc(c.code)+'">'+esc(c.name||'')+'</option>'; }).join('');
   }
+  function childrenOf(code){
+    if(!code) return [];
+    return campaigns.filter(function(c){ return (c.parent||'')===code; });
+  }
+  /* is `code` somewhere inside `ancestor`'s subtree? guards against cycles */
+  function isDescendant(code, ancestor){
+    var seen={};
+    function walk(k){
+      if(seen[k]) return false;
+      seen[k]=1;
+      var kids=childrenOf(k);
+      for(var i=0;i<kids.length;i++){
+        if(kids[i].code===code) return true;
+        if(walk(kids[i].code)) return true;
+      }
+      return false;
+    }
+    return walk(ancestor);
+  }
   function campByCode(code){
     for(var i=0;i<campaigns.length;i++) if(campaigns[i].code===code) return campaigns[i];
     return null;
   }
+  function drawSubs(){
+    var me=$('fCode').value.trim().toUpperCase();
+    var kids=childrenOf(me);
+    $('subChips').innerHTML = kids.length ? kids.map(function(c){
+      return '<span class="chip"><b>'+esc(c.code)+'</b> '+esc(c.name||'')+
+             ' <button type="button" data-sub="'+esc(c.code)+'" title="فصلها">×</button></span>';
+    }).join('') : '<span class="poolnote">لا حملات فرعية تحت هذه الحملة.</span>';
+    var dl=$('subCodes');
+    if(dl) dl.innerHTML=campaigns.filter(function(c){
+      return c.code!==me && (c.parent||'')!==me && !isDescendant(me, c.code);
+    }).map(function(c){
+      return '<option value="'+esc(c.code)+'">'+esc(c.name||'')+'</option>'; }).join('');
+  }
+  $('fCode').addEventListener('input',drawSubs);
+  $('btnSubAdd').addEventListener('click',function(){
+    var me=$('fCode').value.trim().toUpperCase(), t=$('subQ').value.trim().toUpperCase();
+    if(!t){ say('اكتب كود الحملة الفرعية.',4000); $('subQ').focus(); return; }
+    if(!campByCode(me)){ say('احفظ هذه الحملة أولًا، ثم أدرج تحتها حملات فرعية.',8000); return; }
+    if(t===me){ say('لا تُدرج الحملة تحت نفسها.',5000); return; }
+    var c=campByCode(t);
+    if(!c){ say('لا توجد حملة بالكود «'+t+'».',6000); return; }
+    if((c.parent||'')===me){ say('«'+t+'» مدرجة تحتها بالفعل.',4500); return; }
+    if(isDescendant(me,t)){ say('«'+t+'» تحتوي هذه الحملة أصلًا، وإدراجها يصنع دائرة مغلقة.',9000); return; }
+    var prev=c.parent||'';
+    c.parent=me; stamp(c); persist(); render(); drawSubs();
+    $('subQ').value='';
+    say('أُدرجت «'+(c.name||t)+'» تحت '+me+'.',9000,'تراجع',function(){
+      c.parent=prev; stamp(c); persist(); render(); drawSubs();
+    });
+  });
+  $('subChips').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-sub]'); if(!b) return;
+    var c=campByCode(b.getAttribute('data-sub')); if(!c) return;
+    var prev=c.parent||'';
+    c.parent=''; stamp(c); persist(); render(); drawSubs();
+    say('فُصلت «'+(c.name||c.code)+'» وصارت حملة مستقلة.',9000,'تراجع',function(){
+      c.parent=prev; stamp(c); persist(); render(); drawSubs();
+    });
+  });
+  $('btnSubNew').addEventListener('click',function(){
+    var me=$('fCode').value.trim().toUpperCase();
+    if(!campByCode(me)){ say('احفظ هذه الحملة أولًا لتصير حملةً أساسية.',8000); return; }
+    openForm(null);
+    $('fParent').value=me;
+    $('fName').focus();
+    say('حملة جديدة تتبع '+me+'. أكمل بياناتها ثم احفظها.',8000);
+  });
+
   /* keep the code in step with the form until the writer overrides it */
   var exCampAuto=true;
   $('exCamp').addEventListener('input',function(){ exCampAuto=false; });
@@ -815,8 +906,10 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     setTools(c?c.tools:[]);
     setPartners(c?c.partners:[]);
     drawStChips();
+    $('fParent').value=c?(c.parent||''):'';
+    $('subQ').value='';
     exCampAuto=true; $('exCamp').value=$('fCode').value;
-    fillCampCodes();
+    fillCampCodes(); drawSubs();
     $('btnDel').hidden=!c;
     $('form').hidden=false;
     $('form').scrollIntoView({behavior:'smooth',block:'start'});
@@ -837,6 +930,14 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     if(!$('fEnd').value && weeks<1) miss.push('المدة بالأسابيع أو تاريخ الانتهاء');
     if(!goal) miss.push('الهدف');
     if(miss.length){ say('أكمل الحقول المطلوبة: '+miss.join('، '),6000); return; }
+    var parent=$('fParent').value.trim().toUpperCase();
+    if(parent){
+      if(parent===code){ say('لا تتبع الحملة نفسها. اترك الحقل فارغًا أو اكتب كودًا آخر.',6000); return; }
+      if(!campByCode(parent)){ say('لا توجد حملة أساسية بالكود «'+parent+'».',6000); return; }
+      if(isDescendant(parent, code)){
+        say('«'+parent+'» مدرجة تحت هذه الحملة، فلا تصلح أن تكون أساسية لها.',9000); return;
+      }
+    }
     if(!$('fEnd').value) endFromWeeks();
     if(dayms($('fEnd').value) < dayms(start)){
       say('تاريخ الانتهاء قبل تاريخ البدء. صحّح التاريخين.',6000); return;
@@ -846,7 +947,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
         say('كود الحملة «'+code+'» مستخدم في حملة أخرى. اختر كودًا مختلفًا.',6000); return;
       }
     }
-    var rec={code:code, name:name, start:start, end:$('fEnd').value,
+    var rec={code:code, name:name, parent:parent, start:start, end:$('fEnd').value,
              weeks:weeks||null, days:daysOf(start,$('fEnd').value),
              stations:draft.stations.slice(), tools:draft.tools.slice(),
              goal:goal, kpi:$('fKpi').value.trim(), target:$('fTarget').value.trim(),
@@ -861,9 +962,14 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   $('btnDel').addEventListener('click',function(){
     if(!editing) return;
     var gone=editing, at=campaigns.indexOf(gone);
+    var kids=childrenOf(gone.code), had=kids.map(function(k){ return k.parent; });
+    for(var i=0;i<kids.length;i++){ kids[i].parent=''; stamp(kids[i]); }
     campaigns.splice(at,1); persist(); closeForm(); render();
-    say('حُذفت الحملة '+gone.code+'.',9000,'تراجع',function(){
-      campaigns.splice(at,0,gone); persist(); render();
+    say('حُذفت الحملة '+gone.code+'.'+(kids.length?' وتحرّرت منها '+nSub(kids.length)+'.':''),
+        10000,'تراجع',function(){
+      campaigns.splice(at,0,gone);
+      for(var j=0;j<kids.length;j++){ kids[j].parent=had[j]; stamp(kids[j]); }
+      persist(); render();
     });
   });
 
@@ -879,7 +985,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   function matches(c,q){
     if(!q) return true;
     q=q.toLowerCase();
-    var hay=[c.code,c.name,c.goal,c.offer,c.terms,c.target,c.kpi,c.notes].join(' ');
+    var hay=[c.code,c.name,c.parent||'',c.goal,c.offer,c.terms,c.target,c.kpi,c.notes].join(' ');
     hay+=' '+(c.tools||[]).join(' ');
     hay+=' '+(c.stations||[]).map(function(x){ var s=byCode[x];
               return x+' '+(s?s.name+' '+(s.city||''):''); }).join(' ');
@@ -903,20 +1009,48 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     }
     return h+'</tbody></table></div>';
   }
-  function card(c,idx){
+  /* a campaign is listed under the one it belongs to, indented by its depth */
+  function ordered(list){
+    var here={}, byParent={};
+    list.forEach(function(c){ here[c.code]=1; });
+    list.forEach(function(c){
+      var p=(c.parent && here[c.parent]) ? c.parent : '';
+      (byParent[p]=byParent[p]||[]).push(c);
+    });
+    var out=[], seen={};
+    function push(c,depth){
+      if(seen[c.code]) return;
+      seen[c.code]=1;
+      out.push({c:c, depth:depth});
+      (byParent[c.code]||[]).forEach(function(k){ push(k,depth+1); });
+    }
+    (byParent['']||[]).forEach(function(c){ push(c,0); });
+    list.forEach(function(c){ push(c,0); });        /* anything a cycle left behind */
+    return out;
+  }
+  function card(c,idx,depth){
     var s=statusOf(c);
     var stx=(c.stations||[]).map(function(x){ return stLabel(x); });
-    return '<article class="card" data-i="'+idx+'">'+
+    var par=c.parent?campByCode(c.parent):null;
+    var kids=childrenOf(c.code);
+    return '<article class="card'+(depth?' sub':'')+'" data-i="'+idx+'"'+
+      (depth?' style="margin-inline-start:'+(depth*26)+'px"':'')+'>'+
       '<div class="top"><div>'+
+        (par?'<span class="par">↳ ضمن '+esc(par.code)+' · '+esc(par.name||'')+'</span><br>':'')+
         '<span class="code">'+esc(c.code)+'</span>'+
         '<h3>'+esc(c.name)+'</h3>'+
         '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+durOf(c)+' · '+
-        nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+'</p>'+
+        nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+
+        (kids.length?' · '+nSub(kids.length):'')+'</p>'+
       '</div><div style="display:flex;gap:8px;align-items:center">'+
         '<span class="badge '+s.k+'">'+s.t+'</span>'+
         '<button type="button" class="btn sm edit">تعديل</button>'+
       '</div></div>'+
       '<div class="body"><dl class="dl">'+
+        (par?'<dt>الحملة الأساسية</dt><dd>'+esc(par.code)+' — '+esc(par.name||'')+'</dd>':'')+
+        (kids.length?'<dt>الحملات الفرعية</dt><dd class="chips">'+
+          kids.map(function(k){ return '<span class="chip"><b>'+esc(k.code)+'</b> '+esc(k.name||'')+'</span>'; }).join('')+
+          '</dd>':'')+
         '<dt>المحطات المشمولة</dt><dd class="chips">'+chipList(stx)+'</dd>'+
         '<dt>الأدوات المستخدمة</dt><dd class="chips">'+chipList(c.tools||[])+'</dd>'+
         '<dt>الهدف</dt><dd>'+esc(c.goal||'—')+'</dd>'+
@@ -933,7 +1067,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     var shown=campaigns.filter(function(c){
       return matches(c,q) && (!fs || statusOf(c).k===fs);
     });
-    $('list').innerHTML=shown.map(function(c){ return card(c,campaigns.indexOf(c)); }).join('');
+    $('list').innerHTML=ordered(shown).map(function(r){
+      return card(r.c, campaigns.indexOf(r.c), r.depth); }).join('');
     $('empty').hidden=shown.length>0;
     var st={}, pa={}, live=0;
     for(var i=0;i<campaigns.length;i++){
@@ -1081,12 +1216,12 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   });
   $('btnCsv').addEventListener('click',function(){
     if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
-    var head=['كود الحملة','اسم الحملة','تاريخ البدء','تاريخ الانتهاء','المدة بالأيام','المدة بالأسابيع','الحالة',
+    var head=['كود الحملة','اسم الحملة','الحملة الأساسية','تاريخ البدء','تاريخ الانتهاء','المدة بالأيام','المدة بالأسابيع','الحالة',
               'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','العرض المقترح','الشروط',
               'الشريك','نوع الشريك','محطة الشريك','فكرة العرض','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
     var rows=[head];
     campaigns.forEach(function(c){
-      var base=[c.code,c.name,c.start,c.end,daysOf(c.start,c.end)||'',c.weeks||'',statusOf(c).t,
+      var base=[c.code,c.name,c.parent||'',c.start,c.end,daysOf(c.start,c.end)||'',c.weeks||'',statusOf(c).t,
                 (c.stations||[]).join(' | '),(c.tools||[]).join(' | '),
                 c.goal,c.kpi,c.target,c.offer,(c.terms||'').replace(/\n/g,' / ')];
       if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','','',''])); return; }
