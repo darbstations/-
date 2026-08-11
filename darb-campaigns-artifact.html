@@ -261,6 +261,21 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
     </div>
   </section>
 
+  <!-- ---------------- share ---------------- -->
+  <section class="panel form" id="share" hidden>
+    <h2>مشاركة السجل مع زميل</h2>
+    <p class="hint">لا يوجد خادم مشترك خلف هذه الصفحة، فما تكتبه يبقى في متصفحك أنت.
+      لنقل التعديلات: اضغط «نسخ رمز المشاركة»، وأرسل الرمز في أي محادثة، ثم يلصقه الطرف الآخر هنا.
+      الدمج يوازن بين النسختين بكود الحملة ووقت آخر تعديل، فلا يضيع عمل أحد.</p>
+    <label class="f" for="shareBox">الصق رمز المشاركة الذي وصلك</label>
+    <textarea id="shareBox" style="min-height:140px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px" placeholder="DARB1:…"></textarea>
+    <div class="bar" style="margin-top:14px">
+      <button type="button" class="btn primary" id="btnMergeCode">ادمج ما لصقته</button>
+      <button type="button" class="btn" id="btnImport">استيراد من ملف JSON</button>
+      <button type="button" class="btn ghost" id="btnShareClose">إغلاق</button>
+    </div>
+  </section>
+
   <!-- ---------------- list ---------------- -->
   <div id="list" class="cards"></div>
   <div class="empty" id="empty" hidden>لا توجد حملات مطابقة. اضغط «+ حملة جديدة» لتسجيل أول حملة.</div>
@@ -268,13 +283,14 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
 <div class="dock">
   <button type="button" class="btn primary" id="btnNew2">+ حملة جديدة</button>
+  <button type="button" class="btn" id="btnShare">نسخ رمز المشاركة</button>
+  <button type="button" class="btn" id="btnRecv">استلام تعديلات</button>
   <button type="button" class="btn" id="btnJson">تصدير JSON</button>
   <button type="button" class="btn" id="btnCsv">تصدير CSV</button>
   <button type="button" class="btn" id="btnPrint">طباعة / PDF</button>
-  <button type="button" class="btn ghost" id="btnImport">استيراد</button>
   <span class="savestate" id="savestate">جاهز</span>
 </div>
-<input type="file" id="fileimp" accept=".json,application/json" hidden>
+<input type="file" id="fileimp" accept=".json,application/json,.txt" hidden>
 <div class="toast" id="toast"><span id="toastmsg"></span><button type="button" id="toastact" hidden></button></div>
 
 <script>
@@ -318,6 +334,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     if(!storageOK) return;
     try{ var raw=localStorage.getItem(KEY); if(raw) campaigns=JSON.parse(raw)||[]; }catch(e){ campaigns=[]; }
   }
+  function stamp(c){ c.updatedAt=new Date().toISOString(); return c; }
   function persist(){
     if(!storageOK){ $('savestate').textContent='لا يحفظ في هذا المتصفح'; return; }
     try{
@@ -550,6 +567,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
              goal:goal, kpi:$('fKpi').value.trim(), target:$('fTarget').value.trim(),
              terms:$('fTerms').value.trim(), partners:readPartners(),
              offer:$('fOffer').value.trim(), notes:$('fNotes').value.trim()};
+    stamp(rec);
     if(editing){ campaigns[campaigns.indexOf(editing)]=rec; }
     else campaigns.unshift(rec);
     persist(); closeForm(); render();
@@ -651,6 +669,96 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   $('q').addEventListener('input',render);
   $('fStatus').addEventListener('change',render);
 
+
+  /* ---------------- sharing ----------------
+     No shared server storage is available to this page, so the register
+     travels as a code the reader pastes to the other side. Merging is by
+     campaign code, and the more recently edited copy of a code wins. */
+  function encodeShare(){
+    var json=JSON.stringify({v:1, at:new Date().toISOString(), campaigns:campaigns});
+    try{ return 'DARB1:'+btoa(unescape(encodeURIComponent(json))); }
+    catch(e){ return json; }
+  }
+  function decodeShare(txt){
+    txt=(txt||'').trim();
+    if(!txt) return null;
+    if(txt.indexOf('DARB1:')===0){
+      try{ txt=decodeURIComponent(escape(atob(txt.slice(6)))); }catch(e){ return null; }
+    }
+    var got;
+    try{ got=JSON.parse(txt); }catch(e){ return null; }
+    if(Array.isArray(got)) return got;
+    if(got&&Array.isArray(got.campaigns)) return got.campaigns;
+    return null;
+  }
+  function mergeIncoming(list){
+    var before=campaigns.slice(), added=0, updated=0, kept=0;
+    for(var i=0;i<list.length;i++){
+      var c=list[i]; if(!c||!c.code) continue;
+      var at=-1;
+      for(var j=0;j<campaigns.length;j++) if(campaigns[j].code===c.code){ at=j; break; }
+      if(at===-1){ campaigns.push(c); added++; continue; }
+      var mine=campaigns[at].updatedAt||'', theirs=c.updatedAt||'';
+      if(theirs>mine){ campaigns[at]=c; updated++; } else kept++;
+    }
+    persist(); render();
+    return {before:before, added:added, updated:updated, kept:kept};
+  }
+  function reportMerge(r){
+    if(!r.added && !r.updated){ say('لا جديد — نسختك محدَّثة أصلًا ('+ar(r.kept)+' حملة).',6000); return; }
+    say('أُضيفت '+ar(r.added)+' حملة، وحُدِّثت '+ar(r.updated)+
+        (r.kept?'، وبقيت '+ar(r.kept)+' على نسختك لأنها أحدث':'')+'.',12000,'تراجع',function(){
+      campaigns=r.before; persist(); render();
+    });
+  }
+  function copyText(t,ok,fail){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(ok,function(){ legacyCopy(t)?ok():fail(); });
+    } else { legacyCopy(t)?ok():fail(); }
+  }
+  function legacyCopy(t){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=t; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-1000px';
+      document.body.appendChild(ta); ta.select();
+      var r=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return r;
+    }catch(e){ return false; }
+  }
+  $('btnShare').addEventListener('click',function(){
+    if(!campaigns.length){ say('لا توجد حملات لمشاركتها.',3500); return; }
+    var code=encodeShare();
+    copyText(code,function(){
+      say('نُسخ رمز المشاركة ('+ar(code.length)+' حرفًا). أرسله لزميلك، ويلصقه في «استلام تعديلات».',11000);
+    },function(){
+      $('share').hidden=false; $('shareBox').value=code; $('shareBox').select();
+      say('تعذّر النسخ التلقائي. الرمز ظاهر في الصندوق — انسخه يدويًا.',9000);
+    });
+  });
+  $('btnRecv').addEventListener('click',function(){
+    $('share').hidden=false; $('shareBox').value='';
+    $('share').scrollIntoView({behavior:'smooth',block:'start'});
+    $('shareBox').focus();
+  });
+  $('btnShareClose').addEventListener('click',function(){ $('share').hidden=true; });
+  $('btnMergeCode').addEventListener('click',function(){
+    var list=decodeShare($('shareBox').value);
+    if(!list){ say('الرمز غير مقروء. تأكد من نسخه كاملًا.',7000); return; }
+    var r=mergeIncoming(list);
+    $('share').hidden=true; $('shareBox').value='';
+    reportMerge(r);
+  });
+
+  /* two tabs of the same browser do see each other, so keep them in step */
+  window.addEventListener('storage',function(e){
+    if(e.key!==KEY||!e.newValue) return;
+    try{ campaigns=JSON.parse(e.newValue)||[]; }catch(err){ return; }
+    render();
+    say('وصلت تعديلات من نافذة أخرى في هذا المتصفح.',5000);
+  });
+
   /* ---------------- export ---------------- */
   function saveFile(name,data,type){
     if(window.claude&&window.claude.downloads){
@@ -705,22 +813,14 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   $('btnImport').addEventListener('click',function(){ $('fileimp').click(); });
   $('fileimp').addEventListener('change',function(){
     var f=this.files&&this.files[0]; if(!f) return;
-    var r=new FileReader();
-    r.onload=function(){
-      try{
-        var got=JSON.parse(r.result);
-        if(!Array.isArray(got)) throw 0;
-        var before=campaigns.slice();
-        var have={}; campaigns.forEach(function(c){ have[c.code]=1; });
-        var added=0;
-        got.forEach(function(c){ if(c&&c.code&&!have[c.code]){ campaigns.push(c); added++; } });
-        persist(); render();
-        say('أُضيفت '+ar(added)+' حملة من الملف.',9000,'تراجع',function(){
-          campaigns=before; persist(); render();
-        });
-      }catch(e){ say('الملف غير صالح. المتوقّع ملف JSON صادر من هذه الصفحة.',6000); }
+    var rd=new FileReader();
+    rd.onload=function(){
+      var list=decodeShare(rd.result);
+      if(!list){ say('الملف غير صالح. المتوقّع ملف JSON صادر من هذه الصفحة.',6000); return; }
+      $('share').hidden=true;
+      reportMerge(mergeIncoming(list));
     };
-    r.readAsText(f); this.value='';
+    rd.readAsText(f); this.value='';
   });
 
   /* ---------------- go ---------------- */
