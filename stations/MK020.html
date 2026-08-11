@@ -173,6 +173,33 @@ footer b{color:var(--ink2)}
 .dtbl thead th{position:sticky;top:0;z-index:2}
 .dtbl td,.dtbl th{padding:7px 12px;font-size:12.5px}
 .dnote{font-size:12px;color:var(--ink2);background:#FDEEE2;border-radius:10px;padding:9px 13px;margin-top:12px}
+details.moan{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+details.moan summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:13px 16px;flex-wrap:wrap}
+details.moan summary::-webkit-details-marker{display:none}
+details.moan summary:hover{background:#FBF6EF}
+details.moan .mnm{font-weight:800;font-size:16px;min-width:64px}
+details.moan .msum{font-size:13px;color:var(--ink2)}
+details.moan .msum b{color:var(--ink)}
+details.moan .mbadge{margin-inline-start:auto;font-size:12px;font-weight:800;padding:3px 12px;border-radius:8px}
+.mb-exc{background:#E9F2EC;color:#22694F}.mb-good{background:#F1EFEB;color:#6E6A64}.mb-down{background:#FBF0ED;color:#A6432E}
+details.moan .mbody{padding:4px 16px 16px;border-top:1px dashed var(--line2)}
+.mchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.mchips span{background:#FDFCFA;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:12.5px;color:var(--ink2)}
+.mchips span b{color:var(--ink);font-weight:800}
+.cksec{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+.cksec .ckh{font-size:13.5px;font-weight:800;margin-bottom:4px}
+.cksec .cksub{font-size:11.5px;color:var(--ink3);margin-bottom:9px}
+.ckchips{display:flex;gap:7px;flex-wrap:wrap}
+.ckchip{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:6px 13px;font-size:12.5px;color:var(--ink2);cursor:pointer;transition:.13s;user-select:none}
+.ckchip:hover{border-color:var(--orange)}
+.ckchip.ck{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+.ckchip.ck::before{content:"✔ "}
+.ckchip.free{border-style:dashed;color:var(--ink3);min-width:120px}
+.confsec{border:1px solid #CBE2D3;background:#F6FBF7;border-radius:12px;padding:12px 14px;margin-top:10px}
+.confsec .ckh{color:#22694F}
+.confbox{background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;color:var(--ink);min-height:56px;outline:none}
+.confbox:empty::before{content:attr(data-ph);color:var(--ink3)}
+.confbox:focus{border-color:var(--orange)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
@@ -489,7 +516,116 @@ html.editing .tabs .tab,html.editing .pgnav a,html.editing .stationbar .chip{pos
         <td>48٪</td><td>0٪</td></tr><tr><td><b>مايو</b></td><td>52٪</td>
         <td>48٪</td><td>0٪</td></tr><tr><td><b>يونيو</b></td><td>53٪</td>
         <td>47٪</td><td>0٪</td></tr></tbody></table></div></div>
-    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div></div>
+    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>
+    <div class="sec-h" style="margin-top:20px"><h2>تحليل كل شهر</h2><span>اضغط على الشهر لفتح بطاقته: مؤشراته، الأسباب المرشّحة، والسبب المؤكد والإجراء</span></div><details class="moan"><summary>
+          <span class="mnm">يناير</span>
+          <span class="msum">أول شهر مسجل · <b>56,947</b> ر.س/يوم</span>
+          <span class="mbadge mb-good">جيد</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>56,947</b> ر.س</span>
+          <span>زيارات/يوم <b>1,351</b></span>
+          <span>فاتورة <b>42</b> ر.س</span>
+          <span>لترات/يوم <b>25,203</b></span>
+          <span>ذروة <b>8م</b></span>
+          <span>أيام مسجلة <b>31</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><details class="moan"><summary>
+          <span class="mnm">فبراير</span>
+          <span class="msum">+1٪ عن الشهر السابق · <b>57,455</b> ر.س/يوم</span>
+          <span class="mbadge mb-good">جيد</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>57,455</b> ر.س</span>
+          <span>زيارات/يوم <b>1,360</b></span>
+          <span>فاتورة <b>42</b> ر.س</span>
+          <span>لترات/يوم <b>25,451</b></span>
+          <span>ذروة <b>9م</b></span>
+          <span>أيام مسجلة <b>28</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><details class="moan"><summary>
+          <span class="mnm">مارس</span>
+          <span class="msum">+3٪ عن الشهر السابق · <b>59,398</b> ر.س/يوم</span>
+          <span class="mbadge mb-good">جيد</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>59,398</b> ر.س</span>
+          <span>زيارات/يوم <b>1,342</b></span>
+          <span>فاتورة <b>44</b> ر.س</span>
+          <span>لترات/يوم <b>26,287</b></span>
+          <span>ذروة <b>9م</b></span>
+          <span>أيام مسجلة <b>31</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><details class="moan"><summary>
+          <span class="mnm">أبريل</span>
+          <span class="msum">+3٪ عن الشهر السابق · <b>61,219</b> ر.س/يوم</span>
+          <span class="mbadge mb-good">جيد</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>61,219</b> ر.س</span>
+          <span>زيارات/يوم <b>1,387</b></span>
+          <span>فاتورة <b>44</b> ر.س</span>
+          <span>لترات/يوم <b>27,087</b></span>
+          <span>ذروة <b>9م</b></span>
+          <span>أيام مسجلة <b>30</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><details class="moan"><summary>
+          <span class="mnm">مايو</span>
+          <span class="msum">-7٪ عن الشهر السابق · <b>56,633</b> ر.س/يوم</span>
+          <span class="mbadge mb-down">متراجع</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>56,633</b> ر.س</span>
+          <span>زيارات/يوم <b>1,267</b></span>
+          <span>فاتورة <b>45</b> ر.س</span>
+          <span>لترات/يوم <b>25,064</b></span>
+          <span>ذروة <b>9م</b></span>
+          <span>أيام مسجلة <b>31</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><details class="moan"><summary>
+          <span class="mnm">يونيو</span>
+          <span class="msum">+12٪ عن الشهر السابق · <b>63,359</b> ر.س/يوم</span>
+          <span class="mbadge mb-exc">ممتاز</span></summary>
+          <div class="mbody"><div class="mchips">
+          <span>إيراد/يوم <b>63,359</b> ر.س</span>
+          <span>زيارات/يوم <b>1,474</b></span>
+          <span>فاتورة <b>43</b> ر.س</span>
+          <span>لترات/يوم <b>28,053</b></span>
+          <span>ذروة <b>9م</b></span>
+          <span>أيام مسجلة <b>30</b></span>
+        </div>
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips"><span class="ckchip" onclick="this.classList.toggle('ck')">ذروة موسم الحج</span><span class="ckchip" onclick="this.classList.toggle('ck')">ارتفاع الحركة المرورية</span><span class="ckchip" onclick="this.classList.toggle('ck')">إعلان أو تحويلة طريق</span><span class="ckchip" onclick="this.classList.toggle('ck')">صيانة مضخات أو توقف جزئي</span><span class="ckchip" onclick="this.classList.toggle('ck')">انقطاع منتج</span><span class="ckchip" onclick="this.classList.toggle('ck')">منافس جديد قريب</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر أسعار</span><span class="ckchip" onclick="this.classList.toggle('ck')">حملة تسويقية</span><span class="ckchip" onclick="this.classList.toggle('ck')">تغيّر فريق التشغيل</span><span class="ckchip" onclick="this.classList.toggle('ck')">طقس أو أمطار</span><span class="ckchip" onclick="this.classList.toggle('ck')">أعمال إنشائية مجاورة</span><span class="ckchip" onclick="this.classList.toggle('ck')">موسم إجازات أو عودة مدارس</span><span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details><div class="dnote">(*) لترات الأشهر غير مكتملة اللترات محسوبة تقديريًا من نسبة لترات الفترة.</div></div>
   <div class="pgview" id="v-daily" hidden><div class="mini-head"><span class="badge">MK020</span><h2>درب ممشى الشوقية</h2>
     <span class="cls c-hd">حي ولي العهد</span>
     <span class="rg">📍 مكة</span><span class="stars">★ 4.9</span></div>

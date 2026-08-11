@@ -218,6 +218,33 @@ footer b{color:var(--ink2)}
 .dtbl thead th{position:sticky;top:0;z-index:2}
 .dtbl td,.dtbl th{padding:7px 12px;font-size:12.5px}
 .dnote{font-size:12px;color:var(--ink2);background:#FDEEE2;border-radius:10px;padding:9px 13px;margin-top:12px}
+details.moan{background:var(--card);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+details.moan summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:13px 16px;flex-wrap:wrap}
+details.moan summary::-webkit-details-marker{display:none}
+details.moan summary:hover{background:#FBF6EF}
+details.moan .mnm{font-weight:800;font-size:16px;min-width:64px}
+details.moan .msum{font-size:13px;color:var(--ink2)}
+details.moan .msum b{color:var(--ink)}
+details.moan .mbadge{margin-inline-start:auto;font-size:12px;font-weight:800;padding:3px 12px;border-radius:8px}
+.mb-exc{background:#E9F2EC;color:#22694F}.mb-good{background:#F1EFEB;color:#6E6A64}.mb-down{background:#FBF0ED;color:#A6432E}
+details.moan .mbody{padding:4px 16px 16px;border-top:1px dashed var(--line2)}
+.mchips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.mchips span{background:#FDFCFA;border:1px solid var(--line);border-radius:10px;padding:6px 12px;font-size:12.5px;color:var(--ink2)}
+.mchips span b{color:var(--ink);font-weight:800}
+.cksec{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:10px}
+.cksec .ckh{font-size:13.5px;font-weight:800;margin-bottom:4px}
+.cksec .cksub{font-size:11.5px;color:var(--ink3);margin-bottom:9px}
+.ckchips{display:flex;gap:7px;flex-wrap:wrap}
+.ckchip{border:1px solid var(--line2);background:#fff;border-radius:10px;padding:6px 13px;font-size:12.5px;color:var(--ink2);cursor:pointer;transition:.13s;user-select:none}
+.ckchip:hover{border-color:var(--orange)}
+.ckchip.ck{background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700}
+.ckchip.ck::before{content:"✔ "}
+.ckchip.free{border-style:dashed;color:var(--ink3);min-width:120px}
+.confsec{border:1px solid #CBE2D3;background:#F6FBF7;border-radius:12px;padding:12px 14px;margin-top:10px}
+.confsec .ckh{color:#22694F}
+.confbox{background:#fff;border:1px solid var(--line2);border-radius:10px;padding:10px 13px;font-size:13px;color:var(--ink);min-height:56px;outline:none}
+.confbox:empty::before{content:attr(data-ph);color:var(--ink3)}
+.confbox:focus{border-color:var(--orange)}
 .mini-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .mini-head h2{font-weight:800;font-size:21px}
 .mini-head .rg{font-size:12.5px;color:var(--ink2)}
@@ -641,6 +668,51 @@ def bars_chart(vals, labels, fmt, unit=''):
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{labels[i]}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
+CAND_CAUSES = ['ذروة موسم الحج','ارتفاع الحركة المرورية','إعلان أو تحويلة طريق','صيانة مضخات أو توقف جزئي','انقطاع منتج','منافس جديد قريب','تغيّر أسعار','حملة تسويقية','تغيّر فريق التشغيل','طقس أو أمطار','أعمال إنشائية مجاورة','موسم إجازات أو عودة مدارس']
+
+def month_cards(code, mm, keys):
+    ov = BYCODE[code]['overall']
+    base_ratio = (ov.get('volume') or 0) / ov['revenue'] if ov['revenue'] else 0
+    out = []
+    prev = None
+    for k in keys:
+        v = mm[k]
+        drev = v['daily_avg_rev']
+        if prev is None:
+            chtxt, badge, bcls = 'أول شهر مسجل', 'جيد', 'mb-good'
+        else:
+            ch = (drev/prev - 1) * 100
+            chtxt = (f'+{ch:.0f}٪' if ch >= 0 else f'{ch:.0f}٪') + ' عن الشهر السابق'
+            badge, bcls = ('ممتاز','mb-exc') if ch >= 10 else (('جيد','mb-good') if ch >= -5 else ('متراجع','mb-down'))
+        prev = drev
+        vol = v.get('volume')
+        litd = (vol/v['ndays']) if (vol and v['ndays']) else (drev*base_ratio if base_ratio else None)
+        litmark = '' if vol else '*'
+        chips = f'''<div class="mchips">
+          <span>إيراد/يوم <b>{n0(drev)}</b> ر.س</span>
+          <span>زيارات/يوم <b>{n0(v['daily_avg_vis'])}</b></span>
+          <span>فاتورة <b>{v['avg_invoice']:.0f}</b> ر.س</span>
+          <span>لترات/يوم <b>{n0(litd) if litd else '—'}{litmark}</b></span>
+          <span>ذروة <b>{hr_ar(v['peak_vis_hour'])}</b></span>
+          <span>أيام مسجلة <b>{v['ndays']}</b></span>
+        </div>'''
+        cand = ''.join(f'<span class="ckchip" onclick="this.classList.toggle(\'ck\')">{c}</span>' for c in CAND_CAUSES)
+        out.append(f'''<details class="moan"><summary>
+          <span class="mnm">{MONTH_AR.get(k,k)}</span>
+          <span class="msum">{chtxt} · <b>{n0(drev)}</b> ر.س/يوم</span>
+          <span class="mbadge {bcls}">{badge}</span></summary>
+          <div class="mbody">{chips}
+            <div class="cksec"><div class="ckh">أسباب مرشّحة للتحقق</div>
+              <div class="cksub">اضغط على السبب لتعليمه ✔ — ويمكن إضافة أسباب أخرى في الخانة الحرة. اختياراتك تُحفظ عند تنزيل النسخة المعدلة.</div>
+              <div class="ckchips">{cand}<span class="ckchip free" contenteditable="true" data-ph="+ سبب آخر…"></span></div></div>
+            <div class="confsec"><div class="ckh">✅ السبب المؤكد والإجراء</div>
+              <div class="cksub">اكتب مباشرة — الخانة قابلة للتحرير دائمًا وتُحفظ عند تنزيل النسخة</div>
+              <div class="confbox" contenteditable="true" data-ph="السبب المؤكد لأداء هذا الشهر… والإجراء المتخذ أو المقترح…"></div></div>
+          </div></details>''')
+    return ('<div class="sec-h" style="margin-top:20px"><h2>تحليل كل شهر</h2><span>اضغط على الشهر لفتح بطاقته: مؤشراته، الأسباب المرشّحة، والسبب المؤكد والإجراء</span></div>'
+            + ''.join(out)
+            + '<div class="dnote">(*) لترات الأشهر غير مكتملة اللترات محسوبة تقديريًا من نسبة لترات الفترة.</div>')
+
 def monthly_body(a):
     m = a['metrics']; code = m['code']
     st = BYCODE[code]; mm = st.get('monthly', {})
@@ -687,7 +759,8 @@ def monthly_body(a):
     <div class="ntable"><div class="tscroll"><table>
       <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
       <tbody>{fuel_rows}</tbody></table></div></div>
-    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>'''
+    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>
+    {month_cards(code, mm, keys)}'''
 
 def daily_line_chart(daily):
     if len(daily) < 2: return ''
