@@ -12,6 +12,12 @@ try:
 except FileNotFoundError:
     OPS = {}
 OPS_COUNTS = {'MK007': {'cs':117,'partners':47,'external':10,'plan':18}, 'MK017': {'cs':16,'partners':9,'external':8,'plan':18}, 'MK002': {'cs':7,'partners':16,'external':4,'plan':18}, 'MK023': {'cs':14,'partners':7,'external':9,'plan':18}, 'MK019': {'cs':11,'partners':7,'external':7,'plan':18}}
+try:
+    _extra = json.load(open('ops_counts_extra.json'))
+    for _c, _n in _extra.items():
+        OPS_COUNTS.setdefault(_c, {})['partners'] = _n
+except FileNotFoundError:
+    pass
 OPS_TABS = [('targets','المستهدفات'),('cs','استفسارات العملاء'),('partners','الشركاء عبر اليوم'),('external','الشركاء الخارجيون'),('plan','الخطة التشغيلية')]
 try:
     OPS_CSS = open('ops_clean.css', encoding='utf-8').read()
