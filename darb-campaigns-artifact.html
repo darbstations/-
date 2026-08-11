@@ -101,6 +101,9 @@ legend{font-size:12px;letter-spacing:.06em;font-weight:800;color:var(--orange);p
 .pickchip.on{border-color:var(--orange);
   background:color-mix(in srgb,var(--orange-hi) 18%,transparent)}
 .pickchip.on .tick{display:inline}
+.poolst.ext{border-color:var(--cool)}
+.poolst.ext .poolhd b{color:var(--cool)}
+.pickchip .x{color:var(--bad);font-weight:800;padding:0 1px;margin-inline-start:2px}
 .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
 .tool{display:flex;gap:9px;align-items:flex-start;background:var(--ground);
   border:1px solid var(--line);border-radius:5px;padding:9px 12px;cursor:pointer;font-size:13.5px}
@@ -110,11 +113,14 @@ legend{font-size:12px;letter-spacing:.06em;font-weight:800;color:var(--orange);p
 /* ---------- tables ---------- */
 .tablewrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:6px;margin-top:11px}
 table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px;background:var(--ground)}
+.panel table{min-width:880px}   /* eight columns in the partner form table */
 th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
 thead th{background:var(--sand);font-size:11px;letter-spacing:.06em;color:var(--ink-2);white-space:nowrap}
 tbody tr:last-child td{border-bottom:0}
 td input,td select{padding:7px 9px;font-size:13px;background:var(--ground)}
-td select.p-code{min-width:106px}   /* the arrow was clipping the station code */
+td select.p-code{min-width:112px}   /* the arrow was clipping the station code */
+td select.p-type{min-width:158px}
+td select.p-status{min-width:134px}
 td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
 /* ---------- campaign cards ---------- */
@@ -252,13 +258,27 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
       <div class="tablewrap">
         <table>
           <thead><tr>
-            <th>الشريك</th><th>المحطة</th><th>العرض المقترح</th>
+            <th>الشريك</th><th>النوع</th><th>المحطة</th><th>فكرة العرض</th>
             <th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th><th></th>
           </tr></thead>
           <tbody id="paBody"></tbody>
         </table>
       </div>
       <button type="button" class="btn sm" id="btnPaRow" style="margin-top:10px">+ إضافة صف شريك</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>إضافة شريك خارجي</legend>
+      <p class="poolnote" style="margin:0 0 11px">شريك من خارج المحطة — علامة تجارية أو بنك أو تطبيق توصيل أو أي جهة غير مستأجرة في الموقع. يُحفظ في قائمة الشركاء الخارجيين ليظهر في الحملات القادمة.</p>
+      <div class="grid3">
+        <div><label class="f" for="exName">اسم الشريك *</label>
+          <input type="text" id="exName" placeholder="مثال: بنك البلاد"></div>
+        <div><label class="f" for="exType">نوع الشريك *</label>
+          <select id="exType"></select></div>
+        <div><label class="f" for="exOffer">فكرة العرض</label>
+          <input type="text" id="exOffer" placeholder="مثال: كاشباك ٥٪ على تعبئة الوقود"></div>
+      </div>
+      <button type="button" class="btn primary" id="btnExAdd" style="margin-top:13px">أضِف الشريك الخارجي</button>
     </fieldset>
 
     <fieldset>
@@ -319,6 +339,9 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   var TOOLS=['فيديو تشويقي','فيديو عروض الحملة','فيديوهات المؤثّرين','حملة واتساب',
              'توزيع كروت العرض','لوحات المضخات','لافتات الطريق','رمز QR للتفعيل',
              'بروشور مطبوع','النشر على منصات التواصل','إعلانات مدفوعة','تدريب عمال المحطة'];
+  var EXTKEY='darb-partners-ext-v1';
+  var PTYPES=['مطعم','مقهى','مخبز أو حلويات','عصائر','سوبرماركت','خدمات سيارات','مغسلة سيارات',
+              'صراف أو بنك','تطبيق توصيل','علامة تجارية راعية','اتصالات','تأمين','جهة حكومية','أخرى'];
   var TERMS='١. يلتزم الشريك بتقديم العرض طوال مدة الحملة وبالسعر المتفق عليه.\n'+
             '٢. يلتزم الشريك بالفتح في الموعد المحدّد للحملة وبتوفير الكمية اليومية المتفق عليها.\n'+
             '٣. تتحمّل درب تنفيذ المحتوى والتصوير والنشر والتوزيع الميداني داخل المحطة.\n'+
@@ -338,6 +361,18 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); tact.hidden=true; }, ms||3200);
   }
   function ar(n){ return Number(n||0).toLocaleString('ar-EG'); }
+  /* ١ مفرد، ٢ مثنى، ٣–١٠ جمع، وما فوقها تمييز منصوب */
+  function count(n,one,two,few,many){
+    n=Number(n)||0;
+    if(n===1) return one;
+    if(n===2) return two;
+    if(n>=3&&n<=10) return ar(n)+' '+few;
+    return ar(n)+' '+many;
+  }
+  function nPartner(n){ return count(n,'شريك واحد','شريكان','شركاء','شريكًا'); }
+  function nStation(n){ return count(n,'محطة واحدة','محطتان','محطات','محطة'); }
+  function nWeek(n){ return count(n,'أسبوع واحد','أسبوعان','أسابيع','أسبوعًا'); }
+  function nCampaign(n){ return count(n,'حملة واحدة','حملتان','حملات','حملة'); }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
     return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
 
@@ -423,7 +458,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
       var c=draft.stations[i];
       var n=((byCode[c]||{}).tenants||[]).length;
       h+='<span class="chip"><b>'+esc(c)+'</b> '+esc(stName(c))+
-         (n?' <span style="color:var(--ink-3);font-size:12px">'+ar(n)+' شريكًا</span>':'')+
+         (n?' <span style="color:var(--ink-3);font-size:12px">'+nPartner(n)+'</span>':'')+
          ' <button type="button" data-c="'+esc(c)+'" title="إزالة">×</button></span>';
     }
     $('stChips').innerHTML=h||'<span style="color:var(--ink-3);font-size:13px">لم تُختر محطة بعد.</span>';
@@ -444,7 +479,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
       var n=(s.tenants||[]).length;
       return '<button type="button" data-c="'+esc(s.code)+'"><span class="c">'+esc(s.code)+'</span> '+
              esc(s.name)+' <span class="m">· '+esc(s.city||'')+(s.units?' · '+ar(s.units)+' وحدة':'')+
-             (n?' · '+ar(n)+' شريكًا':'')+'</span></button>';
+             (n?' · '+nPartner(n):'')+'</span></button>';
     });
   });
   $('stQ').addEventListener('focus',function(){ this.dispatchEvent(new Event('input')); });
@@ -456,16 +491,27 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   });
 
   /* partners */
+  function typeOptions(cur){
+    var list=PTYPES.slice();
+    if(cur && list.indexOf(cur)===-1) list.push(cur);          /* keep an imported value */
+    return '<option value="">—</option>'+list.map(function(t){
+      return '<option'+(cur===t?' selected':'')+'>'+esc(t)+'</option>'; }).join('');
+  }
+  function stationOptions(cur){
+    return '<option value="">—</option>'+
+           '<option value="EXT"'+(cur==='EXT'?' selected':'')+'>خارجي</option>'+
+           draft.stations.map(function(c){
+             return '<option value="'+esc(c)+'"'+(cur===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('');
+  }
   function paRow(p){
     p=p||{};
     var opts=['مؤكد','بانتظار الرد','معتذر'].map(function(o){
       return '<option'+(p.status===o?' selected':'')+'>'+o+'</option>'; }).join('');
-    var stOpts='<option value="">—</option>'+draft.stations.map(function(c){
-      return '<option value="'+esc(c)+'"'+(p.code===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('');
     return '<tr>'+
       '<td><input type="text" class="p-name" value="'+esc(p.name||'')+'" placeholder="اسم الشريك"></td>'+
-      '<td><select class="p-code">'+stOpts+'</select></td>'+
-      '<td><input type="text" class="p-offer" value="'+esc(p.offer||'')+'" placeholder="الصنف أو العرض"></td>'+
+      '<td><select class="p-type">'+typeOptions(p.type||'')+'</select></td>'+
+      '<td><select class="p-code">'+stationOptions(p.code||'')+'</select></td>'+
+      '<td><input type="text" class="p-offer" value="'+esc(p.offer||'')+'" placeholder="فكرة العرض"></td>'+
       '<td><input type="text" class="p-old" value="'+esc(p.old||'')+'" placeholder="٢٠ ر.س"></td>'+
       '<td><input type="text" class="p-new" value="'+esc(p.newp||'')+'" placeholder="١٥ ر.س"></td>'+
       '<td><select class="p-status">'+opts+'</select></td>'+
@@ -477,7 +523,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     for(var i=0;i<trs.length;i++){
       var t=trs[i], n=t.querySelector('.p-name').value.trim();
       if(!n) continue;
-      out.push({name:n, code:t.querySelector('.p-code').value,
+      out.push({name:n, type:t.querySelector('.p-type').value,
+                code:t.querySelector('.p-code').value,
                 offer:t.querySelector('.p-offer').value.trim(),
                 old:t.querySelector('.p-old').value.trim(),
                 newp:t.querySelector('.p-new').value.trim(),
@@ -494,10 +541,10 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     var trs=$('paBody').querySelectorAll('tr');
     for(var i=0;i<trs.length;i++){
       var sel=trs[i].querySelector('.p-code'), cur=sel.value;
-      var opts='<option value="">—</option>'+draft.stations.map(function(c){
-        return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
-      if(cur && draft.stations.indexOf(cur)===-1) opts+='<option value="'+esc(cur)+'">'+esc(cur)+'</option>';
-      sel.innerHTML=opts; sel.value=cur;
+      var html=stationOptions(cur);
+      if(cur && cur!=='EXT' && draft.stations.indexOf(cur)===-1)
+        html+='<option value="'+esc(cur)+'" selected>'+esc(cur)+'</option>';
+      sel.innerHTML=html; sel.value=cur;
     }
   }
   $('btnPaRow').addEventListener('click',function(){
@@ -526,26 +573,79 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     }
     return null;
   }
-  function addPartnerRow(name,code){
+  function addPartnerRow(name,code,extra){
     var tb=$('paBody'), first=tb.querySelector('tr');
-    var html=paRow({name:name, code:code, status:'بانتظار الرد'});
+    var rec={name:name, code:code, status:'بانتظار الرد'};
+    if(extra){ rec.type=extra.type||''; rec.offer=extra.offer||''; }
+    var html=paRow(rec);
     if(first && !first.querySelector('.p-name').value.trim()) first.outerHTML=html;
     else tb.insertAdjacentHTML('beforeend', html);
   }
+
+  /* ---- partners that are not tenants of any station ---- */
+  var extPartners=[];
+  function loadExt(){
+    try{ var raw=localStorage.getItem(EXTKEY); if(raw) extPartners=JSON.parse(raw)||[]; }
+    catch(e){ extPartners=[]; }
+  }
+  function saveExt(){ try{ localStorage.setItem(EXTKEY, JSON.stringify(extPartners)); }catch(e){} }
+  function findExt(name){
+    for(var i=0;i<extPartners.length;i++) if(extPartners[i].name===name) return extPartners[i];
+    return null;
+  }
+  (function(){
+    var sel=$('exType'), h='<option value="">— اختر النوع —</option>';
+    for(var i=0;i<PTYPES.length;i++) h+='<option>'+esc(PTYPES[i])+'</option>';
+    sel.innerHTML=h;
+  })();
+  $('btnExAdd').addEventListener('click',function(){
+    var name=$('exName').value.trim(), type=$('exType').value, offer=$('exOffer').value.trim();
+    if(!name){ say('اكتب اسم الشريك الخارجي.',4000); $('exName').focus(); return; }
+    if(!type){ say('اختر نوع الشريك.',4000); $('exType').focus(); return; }
+    var was=findExt(name);
+    if(was){ was.type=type; if(offer) was.offer=offer; }
+    else extPartners.push({name:name, type:type, offer:offer});
+    saveExt();
+    if(!findRow(name,'EXT')) addPartnerRow(name,'EXT',{type:type, offer:offer});
+    $('exName').value=''; $('exOffer').value=''; $('exType').value='';
+    drawPool();
+    say(was?('حُدِّث الشريك الخارجي «'+name+'» وأُضيف إلى الحملة.')
+           :('أُضيف الشريك الخارجي «'+name+'» إلى الحملة وإلى قائمة الشركاء الخارجيين.'),7000);
+  });
   function drawPool(){
     var box=$('paPool');
-    if(!draft.stations.length){
-      box.innerHTML='<p class="poolnote">اختر محطة أعلاه لتظهر قائمة شركائها هنا.</p>';
+    if(!draft.stations.length && !extPartners.length){
+      box.innerHTML='<p class="poolnote">اختر محطة أعلاه لتظهر قائمة شركائها هنا، أو أضِف شريكًا خارجيًا من الحقول أسفل الجدول.</p>';
       return;
     }
     var q=$('paQ').value.trim().toLowerCase(), sel=chosenKeys(), h='';
+    if(extPartners.length){
+      var visE=extPartners.filter(function(p){
+        return !q || (p.name+' '+(p.type||'')).toLowerCase().indexOf(q)!==-1; });
+      var pickedE=extPartners.filter(function(p){ return sel[p.name+'|EXT']; }).length;
+      h+='<div class="poolst ext"><div class="poolhd"><b>خارجي</b> شركاء من خارج المحطات '+
+         '<span class="m">'+nPartner(extPartners.length)+' في القائمة'+
+         (pickedE?' · مختار منهم '+ar(pickedE):'')+'</span></div>';
+      if(!visE.length) h+='<p class="poolnote">لا شريك خارجي مطابق للبحث.</p>';
+      else{
+        h+='<div class="chips">';
+        for(var e=0;e<visE.length;e++)
+          h+='<button type="button" class="chip pickchip'+(sel[visE[e].name+'|EXT']?' on':'')+
+             '" data-n="'+esc(visE[e].name)+'" data-c="EXT">'+esc(visE[e].name)+
+             (visE[e].type?' <span class="m">· '+esc(visE[e].type)+'</span>':'')+
+             '<span class="tick">✓</span>'+
+             '<span class="x" data-del="'+esc(visE[e].name)+'" title="حذف من القائمة">×</span></button>';
+        h+='</div>';
+      }
+      h+='</div>';
+    }
     for(var i=0;i<draft.stations.length;i++){
       var code=draft.stations[i], st=byCode[code]||{}, ts=st.tenants||[];
       var vis=ts.filter(function(t){ return !q || t.toLowerCase().indexOf(q)!==-1; });
       var picked=ts.filter(function(t){ return sel[t+'|'+code]; }).length;
       h+='<div class="poolst"><div class="poolhd"><b>'+esc(code)+'</b> '+esc(st.name||'')+
          (st.city?' · '+esc(st.city):'')+
-         ' <span class="m">'+(ts.length?ar(ts.length)+' شريكًا في المحطة'+
+         ' <span class="m">'+(ts.length?nPartner(ts.length)+' في المحطة'+
            (picked?' · مختار منهم '+ar(picked):''):'لا شركاء مسجّلون في الملف')+'</span>'+
          '<span class="sp"></span>'+
          (vis.length?'<button type="button" class="btn sm ghost" data-all="'+esc(code)+'">اختر الكل</button>':'')+
@@ -565,6 +665,17 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     box.innerHTML=h;
   }
   $('paPool').addEventListener('click',function(e){
+    var del=e.target.closest('[data-del]');
+    if(del){
+      e.stopPropagation();
+      var gone=del.getAttribute('data-del'), keep=extPartners.slice();
+      extPartners=extPartners.filter(function(p){ return p.name!==gone; });
+      saveExt(); drawPool();
+      say('حُذف «'+gone+'» من قائمة الشركاء الخارجيين.',8000,'تراجع',function(){
+        extPartners=keep; saveExt(); drawPool();
+      });
+      return;
+    }
     var all=e.target.closest('button[data-all]');
     if(all){
       var code=all.getAttribute('data-all'), ts=(byCode[code]||{}).tenants||[];
@@ -574,7 +685,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
         if(!findRow(ts[i],code)){ addPartnerRow(ts[i],code); n++; }
       }
       drawPool();
-      say(n?('أُضيف '+ar(n)+' شريكًا من '+code+' إلى الجدول.'):'كل شركاء '+code+' مضافون أصلًا.',5000);
+      say(n?('أُضيف '+nPartner(n)+' من '+code+' إلى الجدول.'):'كل شركاء '+code+' مضافون أصلًا.',5000);
       return;
     }
     var b=e.target.closest('.pickchip'); if(!b) return;
@@ -583,7 +694,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     if(row){
       row.parentNode.removeChild(row);
       if(!$('paBody').querySelector('tr')) $('paBody').innerHTML=paRow({});
-    } else addPartnerRow(name,c);
+    } else addPartnerRow(name,c, c==='EXT'?findExt(name):null);
     drawPool();
   });
   $('paQ').addEventListener('input',drawPool);
@@ -685,7 +796,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     hay+=' '+(c.tools||[]).join(' ');
     hay+=' '+(c.stations||[]).map(function(x){ var s=byCode[x];
               return x+' '+(s?s.name+' '+(s.city||''):''); }).join(' ');
-    hay+=' '+(c.partners||[]).map(function(p){ return p.name+' '+(p.offer||''); }).join(' ');
+    hay+=' '+(c.partners||[]).map(function(p){
+              return p.name+' '+(p.type||'')+' '+(p.offer||'')+(p.code==='EXT'?' خارجي':''); }).join(' ');
     return hay.toLowerCase().indexOf(q)!==-1;
   }
   function chipList(arr){
@@ -694,10 +806,11 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   }
   function partnerTable(ps){
     if(!ps||!ps.length) return '<p style="color:var(--ink-3)">لم يُسجَّل شركاء بعد.</p>';
-    var h='<div class="tablewrap"><table><thead><tr><th>الشريك</th><th>المحطة</th>'+
-          '<th>العرض المقترح</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr></thead><tbody>';
+    var h='<div class="tablewrap"><table><thead><tr><th>الشريك</th><th>النوع</th><th>المحطة</th>'+
+          '<th>فكرة العرض</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr></thead><tbody>';
     for(var i=0;i<ps.length;i++){ var p=ps[i];
-      h+='<tr><td>'+esc(p.name)+'</td><td class="num">'+esc(p.code||'—')+'</td><td>'+esc(p.offer||'—')+
+      h+='<tr><td>'+esc(p.name)+'</td><td>'+esc(p.type||'—')+'</td><td class="num">'+
+         (p.code==='EXT'?'خارجي':esc(p.code||'—'))+'</td><td>'+esc(p.offer||'—')+
          '</td><td class="num">'+esc(p.old||'—')+'</td><td class="num">'+esc(p.newp||'—')+
          '</td><td>'+esc(p.status||'—')+'</td></tr>';
     }
@@ -710,8 +823,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
       '<div class="top"><div>'+
         '<span class="code">'+esc(c.code)+'</span>'+
         '<h3>'+esc(c.name)+'</h3>'+
-        '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+ar(c.weeks)+' أسابيع · '+
-        ar((c.stations||[]).length)+' محطة · '+ar((c.partners||[]).length)+' شريك</p>'+
+        '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+nWeek(c.weeks)+' · '+
+        nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+'</p>'+
       '</div><div style="display:flex;gap:8px;align-items:center">'+
         '<span class="badge '+s.k+'">'+s.t+'</span>'+
         '<button type="button" class="btn sm edit">تعديل</button>'+
@@ -762,7 +875,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
      travels as a code the reader pastes to the other side. Merging is by
      campaign code, and the more recently edited copy of a code wins. */
   function encodeShare(){
-    var json=JSON.stringify({v:1, at:new Date().toISOString(), campaigns:campaigns});
+    var json=JSON.stringify({v:1, at:new Date().toISOString(), campaigns:campaigns, ext:extPartners});
     try{ return 'DARB1:'+btoa(unescape(encodeURIComponent(json))); }
     catch(e){ return json; }
   }
@@ -775,7 +888,14 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     var got;
     try{ got=JSON.parse(txt); }catch(e){ return null; }
     if(Array.isArray(got)) return got;
-    if(got&&Array.isArray(got.campaigns)) return got.campaigns;
+    if(got&&Array.isArray(got.campaigns)){
+      if(Array.isArray(got.ext)){                       /* fold in their external partners too */
+        for(var i=0;i<got.ext.length;i++)
+          if(got.ext[i]&&got.ext[i].name&&!findExt(got.ext[i].name)) extPartners.push(got.ext[i]);
+        saveExt();
+      }
+      return got.campaigns;
+    }
     return null;
   }
   function mergeIncoming(list){
@@ -792,8 +912,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     return {before:before, added:added, updated:updated, kept:kept};
   }
   function reportMerge(r){
-    if(!r.added && !r.updated){ say('لا جديد — نسختك محدَّثة أصلًا ('+ar(r.kept)+' حملة).',6000); return; }
-    say('أُضيفت '+ar(r.added)+' حملة، وحُدِّثت '+ar(r.updated)+
+    if(!r.added && !r.updated){ say('لا جديد — نسختك محدَّثة أصلًا ('+nCampaign(r.kept)+').',6000); return; }
+    say('أُضيفت '+nCampaign(r.added)+'، وحُدِّثت '+ar(r.updated)+
         (r.kept?'، وبقيت '+ar(r.kept)+' على نسختك لأنها أحدث':'')+'.',12000,'تراجع',function(){
       campaigns=r.before; persist(); render();
     });
@@ -875,15 +995,16 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
     var head=['كود الحملة','اسم الحملة','تاريخ البدء','تاريخ الانتهاء','المدة بالأسابيع','الحالة',
               'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','العرض المقترح','الشروط',
-              'الشريك','محطة الشريك','عرض الشريك','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
+              'الشريك','نوع الشريك','محطة الشريك','فكرة العرض','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
     var rows=[head];
     campaigns.forEach(function(c){
       var base=[c.code,c.name,c.start,c.end,c.weeks,statusOf(c).t,
                 (c.stations||[]).join(' | '),(c.tools||[]).join(' | '),
                 c.goal,c.kpi,c.target,c.offer,(c.terms||'').replace(/\n/g,' / ')];
-      if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','',''])); return; }
+      if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','','',''])); return; }
       c.partners.forEach(function(p){
-        rows.push(base.concat([p.name,p.code,p.offer,p.old,p.newp,p.status]));
+        rows.push(base.concat([p.name,p.type,p.code==='EXT'?'خارجي':p.code,
+                               p.offer,p.old,p.newp,p.status]));
       });
     });
     var csv='﻿'+rows.map(function(r){
@@ -911,7 +1032,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   });
 
   /* ---------------- go ---------------- */
-  load();
+  load(); loadExt();
   if(!campaigns.length){
     campaigns=[{
       code:'CMP-2026-01', name:'حملة فطور محطة العمرة',
