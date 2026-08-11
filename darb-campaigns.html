@@ -140,6 +140,14 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 .card .code{font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.08em;
   font-variant-numeric:tabular-nums}
 .card .meta{font-size:13px;color:var(--ink-2);margin-top:4px}
+.card .codes{font-size:12.5px;color:var(--orange);font-weight:700;letter-spacing:.04em;
+  margin-top:3px;font-variant-numeric:tabular-nums}
+.card .codes span{color:var(--ink-3);font-weight:400}
+.card.flash{animation:flash 1.6s ease-out}
+@keyframes flash{
+  0%{box-shadow:0 0 0 3px var(--orange-hi)}
+  100%{box-shadow:0 0 0 3px transparent}
+}
 .badge{display:inline-block;border-radius:99px;padding:3px 11px;font-size:11.5px;font-weight:800;
   border:1px solid}
 .badge.soon{color:var(--warn);border-color:var(--warn)}
@@ -202,6 +210,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
   <div class="bar">
     <div class="grow"><input type="text" id="q" placeholder="ابحث بكود الحملة، أو كود المحطة، أو اسم المحطة أو المدينة، أو اسم الشريك…"></div>
     <select id="fStatus" style="width:auto"><option value="">كل الحالات</option><option value="soon">قادمة</option><option value="live">جارية</option><option value="done">منتهية</option></select>
+    <button type="button" class="btn" id="btnExpand">توسيع الكل</button>
     <button type="button" class="btn primary" id="btnNew">+ حملة جديدة</button>
   </div>
 
@@ -919,10 +928,29 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     $('form').hidden=false;
     $('form').scrollIntoView({behavior:'smooth',block:'start'});
   }
-  function closeForm(){ $('form').hidden=true; editing=null; }
+  var formDirty=false;
+  $('form').addEventListener('input',function(){ formDirty=true; });
+  $('form').addEventListener('change',function(){ formDirty=true; });
+  function closeForm(){ $('form').hidden=true; editing=null; formDirty=false; cancelArm=false;
+    $('btnCancel').textContent='إلغاء'; }
+  window.addEventListener('beforeunload',function(e){
+    if($('form').hidden || !formDirty) return;
+    e.preventDefault(); e.returnValue='';
+  });
   $('btnNew').addEventListener('click',function(){ openForm(null); });
   $('btnNew2').addEventListener('click',function(){ openForm(null); });
-  $('btnCancel').addEventListener('click',closeForm);
+  var cancelArm=false, cancelT;
+  $('btnCancel').addEventListener('click',function(){
+    if(formDirty && !cancelArm){
+      cancelArm=true; this.textContent='تأكيد الإلغاء؟';
+      say('لم تُحفظ تعديلاتك على هذه الحملة. اضغط مرة أخرى لتجاهلها، أو «حفظ الحملة» لحفظها.',7000);
+      clearTimeout(cancelT);
+      var btn=this;
+      cancelT=setTimeout(function(){ cancelArm=false; btn.textContent='إلغاء'; },7000);
+      return;
+    }
+    clearTimeout(cancelT); closeForm();
+  });
 
   $('btnSave').addEventListener('click',function(){
     var name=$('fName').value.trim(), code=$('fCode').value.trim().toUpperCase();
@@ -961,8 +989,11 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     stamp(rec);
     if(editing){ campaigns[campaigns.indexOf(editing)]=rec; }
     else campaigns.unshift(rec);
-    persist(); closeForm(); render();
-    say('حُفظت الحملة '+rec.code+'.',4000);
+    openCodes[rec.code]=1;                      /* show what was just saved */
+    persist(); closeForm(); formDirty=false; render();
+    reveal(rec.code);
+    say('حُفظت الحملة '+rec.code+' ومعها '+nStation((rec.stations||[]).length)+
+        ' و'+nPartner((rec.partners||[]).length)+'.',6000);
   });
   $('btnDel').addEventListener('click',function(){
     if(!editing) return;
@@ -977,6 +1008,20 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
       persist(); render();
     });
   });
+
+  /* bring a card into view and mark it, so a save never looks like nothing happened */
+  function reveal(code){
+    var all=$('list').querySelectorAll('.card');
+    for(var i=0;i<all.length;i++){
+      var c=campaigns[+all[i].getAttribute('data-i')];
+      if(c && c.code===code){
+        all[i].classList.add('open','flash');
+        all[i].scrollIntoView({behavior:'smooth', block:'center'});
+        (function(el){ setTimeout(function(){ el.classList.remove('flash'); },1800); })(all[i]);
+        return;
+      }
+    }
+  }
 
   /* ---------------- render ---------------- */
   function statusOf(c){
@@ -1033,12 +1078,13 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     list.forEach(function(c){ push(c,0); });        /* anything a cycle left behind */
     return out;
   }
+  var openCodes={};           /* which cards are expanded, kept across renders */
   function card(c,idx,depth){
     var s=statusOf(c);
     var stx=(c.stations||[]).map(function(x){ return stLabel(x); });
     var par=c.parent?campByCode(c.parent):null;
     var kids=childrenOf(c.code);
-    return '<article class="card'+(depth?' sub':'')+'" data-i="'+idx+'"'+
+    return '<article class="card'+(depth?' sub':'')+(openCodes[c.code]?' open':'')+'" data-i="'+idx+'"'+
       (depth?' style="margin-inline-start:'+(depth*26)+'px"':'')+'>'+
       '<div class="top"><div>'+
         (par?'<span class="par">↳ ضمن '+esc(par.code)+' · '+esc(par.name||'')+'</span><br>':'')+
@@ -1047,6 +1093,10 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
         '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+durOf(c)+' · '+
         nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+
         (kids.length?' · '+nSub(kids.length):'')+'</p>'+
+        '<p class="codes">'+((c.stations||[]).length
+            ? esc((c.stations||[]).slice(0,8).join(' · '))+
+              ((c.stations||[]).length>8?' <span>+'+ar(c.stations.length-8)+'</span>':'')
+            : '<span>لم تُسنَد محطات لهذه الحملة</span>')+'</p>'+
       '</div><div style="display:flex;gap:8px;align-items:center">'+
         '<span class="badge '+s.k+'">'+s.t+'</span>'+
         '<button type="button" class="btn sm edit">تعديل</button>'+
@@ -1092,7 +1142,21 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   $('list').addEventListener('click',function(e){
     var art=e.target.closest('.card'); if(!art) return;
     if(e.target.closest('.edit')){ openForm(campaigns[+art.getAttribute('data-i')]); return; }
-    if(e.target.closest('.top')) art.classList.toggle('open');
+    if(e.target.closest('.top')){
+      art.classList.toggle('open');
+      var c=campaigns[+art.getAttribute('data-i')];
+      if(c){ if(art.classList.contains('open')) openCodes[c.code]=1; else delete openCodes[c.code]; }
+    }
+  });
+  $('btnExpand').addEventListener('click',function(){
+    var all=$('list').querySelectorAll('.card');
+    var opening=[].some.call(all,function(a){ return !a.classList.contains('open'); });
+    for(var i=0;i<all.length;i++){
+      all[i].classList.toggle('open', opening);
+      var c=campaigns[+all[i].getAttribute('data-i')];
+      if(c){ if(opening) openCodes[c.code]=1; else delete openCodes[c.code]; }
+    }
+    this.textContent = opening ? 'طيّ الكل' : 'توسيع الكل';
   });
   $('q').addEventListener('input',render);
   $('fStatus').addEventListener('change',render);
