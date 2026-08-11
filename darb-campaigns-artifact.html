@@ -354,6 +354,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
     <div class="bar" style="margin-top:14px">
       <button type="button" class="btn primary" id="btnMergeCode">ادمج ما لصقته</button>
       <button type="button" class="btn" id="btnImport">استيراد من ملف JSON</button>
+      <button type="button" class="btn" id="btnScan">ابحث عن حملاتي في هذا المتصفح</button>
       <button type="button" class="btn ghost" id="btnShareClose">إغلاق</button>
     </div>
   </section>
@@ -1256,6 +1257,41 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     $('shareBox').focus();
   });
   $('btnShareClose').addEventListener('click',function(){ $('share').hidden=true; });
+  /* A register saved under an older key, or by an older build, is invisible to
+     the normal load. Sweep the whole store and offer back whatever looks like
+     campaigns. */
+  $('btnScan').addEventListener('click',function(){
+    var found=[], keys=[];
+    try{ for(var i=0;i<localStorage.length;i++) keys.push(localStorage.key(i)); }
+    catch(e){ say('هذا المتصفح لا يسمح بقراءة المخزَّن. لا يمكن البحث هنا.',8000); return; }
+    for(var k=0;k<keys.length;k++){
+      var raw=null; try{ raw=localStorage.getItem(keys[k]); }catch(e){ continue; }
+      if(!raw||raw.length<40) continue;
+      var val=null; try{ val=JSON.parse(raw); }catch(e){ continue; }
+      var list=Array.isArray(val)?val:(val&&Array.isArray(val.campaigns)?val.campaigns:null);
+      if(!list||!list.length) continue;
+      var real=list.filter(function(c){ return c && c.code && c.name; });
+      if(real.length) found.push({key:keys[k], list:real});
+    }
+    if(!found.length){
+      say('بحثتُ في '+ar(keys.length)+' مدخلًا في هذا المتصفح ولم أجد أي حملة محفوظة. '+
+          'غالبًا أنك سجّلتها على جهاز أو متصفح آخر، أو أن بيانات الموقع مُسحت.',14000);
+      return;
+    }
+    var best=found[0];
+    for(var f=1;f<found.length;f++) if(found[f].list.length>best.list.length) best=found[f];
+    var names=best.list.map(function(c){ return c.code+' — '+c.name; }).join('، ');
+    if(best.key===KEY){
+      say('حملاتك موجودة ومعروضة أصلًا ('+nCampaign(best.list.length)+'): '+names,16000);
+      return;
+    }
+    say('وجدتُ '+nCampaign(best.list.length)+' محفوظة تحت مفتاح آخر ('+best.key+'): '+names,
+        30000,'استرجعها',function(){
+      var r=mergeIncoming(best.list);
+      $('share').hidden=true;
+      reportMerge(r);
+    });
+  });
   $('btnMergeCode').addEventListener('click',function(){
     var list=decodeShare($('shareBox').value);
     if(!list){ say('الرمز غير مقروء. تأكد من نسخه كاملًا.',7000); return; }
