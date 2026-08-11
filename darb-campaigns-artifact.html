@@ -210,9 +210,10 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
     <div class="grid3" style="margin-top:15px">
       <div><label class="f" for="fStart">تاريخ البدء *</label><input type="date" id="fStart"></div>
-      <div><label class="f" for="fWeeks">المدة (أسابيع) *</label><input type="number" id="fWeeks" min="1" max="52" value="4"></div>
-      <div><label class="f" for="fEnd">تاريخ الانتهاء</label><input type="date" id="fEnd" readonly></div>
+      <div><label class="f" for="fWeeks">المدة (أسابيع)</label><input type="number" id="fWeeks" min="1" max="104" value="4"></div>
+      <div><label class="f" for="fEnd">تاريخ الانتهاء</label><input type="date" id="fEnd"></div>
     </div>
+    <p class="poolnote" id="fDur" style="margin:8px 0 0"></p>
 
     <fieldset>
       <legend>المحطات المشمولة</legend>
@@ -278,7 +279,15 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
         <div><label class="f" for="exOffer">فكرة العرض</label>
           <input type="text" id="exOffer" placeholder="مثال: كاشباك ٥٪ على تعبئة الوقود"></div>
       </div>
-      <button type="button" class="btn primary" id="btnExAdd" style="margin-top:13px">أضِف الشريك الخارجي</button>
+      <div class="bar" style="margin-top:13px;align-items:flex-end">
+        <div style="flex:0 1 280px;min-width:200px">
+          <label class="f" for="exCamp">كود الحملة</label>
+          <input type="text" id="exCamp" list="campCodes" autocomplete="off" placeholder="CMP-2026-01">
+        </div>
+        <button type="button" class="btn primary" id="btnExAdd">أضِف الشريك الخارجي</button>
+      </div>
+      <datalist id="campCodes"></datalist>
+      <p class="poolnote">يأتي الكود من الحملة المفتوحة. اكتب كود حملة أخرى مسجّلة ليُضاف الشريك إليها مباشرةً.</p>
     </fieldset>
 
     <fieldset>
@@ -420,14 +429,45 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     while(used['CMP-'+y+'-'+('0'+n).slice(-2)]) n++;
     return 'CMP-'+y+'-'+('0'+n).slice(-2);
   }
-  function recalcEnd(){
-    var s=$('fStart').value, w=parseInt($('fWeeks').value,10);
-    if(!s||!w||w<1){ $('fEnd').value=''; return; }
-    var d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+w*7-1);
-    $('fEnd').value=d.toISOString().slice(0,10);
+  /* Weeks and the end date each drive the other; neither is compulsory on its
+     own, so a run of ten days or one that must end on a set date is sayable. */
+  function dayms(v){ return v? new Date(v+'T00:00:00').getTime() : 0; }
+  function daysOf(start,end){
+    var a=dayms(start), b=dayms(end);
+    if(!a||!b||b<a) return 0;
+    return Math.round((b-a)/86400000)+1;
   }
-  $('fStart').addEventListener('change',recalcEnd);
-  $('fWeeks').addEventListener('input',recalcEnd);
+  function nDay(n){ return count(n,'يوم واحد','يومان','أيام','يومًا'); }
+  function durOf(c){
+    var d=daysOf(c.start,c.end);
+    if(d) return (d%7===0)? nWeek(d/7) : nDay(d);
+    return c.weeks? nWeek(c.weeks) : '—';
+  }
+  function showDur(){
+    var a=$('fStart').value, b=$('fEnd').value, d=daysOf(a,b);
+    if(d) $('fDur').textContent='المدة: '+nDay(d)+(d%7===0?' — أي '+nWeek(d/7):'');
+    else if(a&&b) $('fDur').textContent='تاريخ الانتهاء قبل تاريخ البدء.';
+    else $('fDur').textContent='اكتب المدة بالأسابيع فيُحسب تاريخ الانتهاء، أو حدّد تاريخ الانتهاء مباشرةً بأي عدد من الأيام.';
+  }
+  function endFromWeeks(){
+    var s=$('fStart').value, w=parseInt($('fWeeks').value,10);
+    if(s&&w&&w>0){
+      var d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+w*7-1);
+      $('fEnd').value=d.toISOString().slice(0,10);
+    }
+    showDur();
+  }
+  function weeksFromEnd(){
+    var d=daysOf($('fStart').value,$('fEnd').value);
+    $('fWeeks').value=(d&&d%7===0)?(d/7):'';
+    showDur();
+  }
+  $('fStart').addEventListener('change',function(){
+    if($('fWeeks').value) endFromWeeks(); else showDur();
+  });
+  $('fWeeks').addEventListener('input',endFromWeeks);
+  $('fEnd').addEventListener('change',weeksFromEnd);
+  $('fEnd').addEventListener('input',weeksFromEnd);
 
   /* tools */
   (function(){
@@ -598,19 +638,59 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     for(var i=0;i<PTYPES.length;i++) h+='<option>'+esc(PTYPES[i])+'</option>';
     sel.innerHTML=h;
   })();
+  function fillCampCodes(){
+    var dl=$('campCodes'); if(!dl) return;
+    dl.innerHTML=campaigns.map(function(c){
+      return '<option value="'+esc(c.code)+'">'+esc(c.name||'')+'</option>'; }).join('');
+  }
+  function campByCode(code){
+    for(var i=0;i<campaigns.length;i++) if(campaigns[i].code===code) return campaigns[i];
+    return null;
+  }
+  /* keep the code in step with the form until the writer overrides it */
+  var exCampAuto=true;
+  $('exCamp').addEventListener('input',function(){ exCampAuto=false; });
+  $('fCode').addEventListener('input',function(){
+    if(exCampAuto) $('exCamp').value=this.value;
+  });
   $('btnExAdd').addEventListener('click',function(){
     var name=$('exName').value.trim(), type=$('exType').value, offer=$('exOffer').value.trim();
+    var target=$('exCamp').value.trim().toUpperCase(), cur=$('fCode').value.trim().toUpperCase();
     if(!name){ say('اكتب اسم الشريك الخارجي.',4000); $('exName').focus(); return; }
     if(!type){ say('اختر نوع الشريك.',4000); $('exType').focus(); return; }
+
+    var elsewhere=null;
+    if(target && target!==cur){
+      elsewhere=campByCode(target);
+      if(!elsewhere){
+        say('لا توجد حملة بالكود «'+target+'». اكتب كود حملة مسجّلة، أو أعِده إلى كود الحملة المفتوحة.',10000);
+        $('exCamp').focus(); return;
+      }
+    }
     var was=findExt(name);
-    if(was){ was.type=type; if(offer) was.offer=offer; }
-    else extPartners.push({name:name, type:type, offer:offer});
+    if(was){ was.type=type; if(offer) was.offer=offer; was.camp=target||cur; }
+    else extPartners.push({name:name, type:type, offer:offer, camp:target||cur});
     saveExt();
-    if(!findRow(name,'EXT')) addPartnerRow(name,'EXT',{type:type, offer:offer});
+
+    if(elsewhere){
+      elsewhere.partners=elsewhere.partners||[];
+      var have=false;
+      for(var i=0;i<elsewhere.partners.length;i++)
+        if(elsewhere.partners[i].name===name && elsewhere.partners[i].code==='EXT') have=true;
+      if(have) say('«'+name+'» مسجّل أصلًا في الحملة '+target+'.',6000);
+      else{
+        elsewhere.partners.push({name:name, type:type, code:'EXT', offer:offer,
+                                 old:'', newp:'', status:'بانتظار الرد'});
+        stamp(elsewhere); persist(); render();
+        say('أُضيف «'+name+'» إلى الحملة '+target+'، وحُفظ في قائمة الشركاء الخارجيين.',8000);
+      }
+    } else {
+      if(!findRow(name,'EXT')) addPartnerRow(name,'EXT',{type:type, offer:offer});
+      say(was?('حُدِّث الشريك الخارجي «'+name+'» وأُضيف إلى الحملة المفتوحة.')
+             :('أُضيف الشريك الخارجي «'+name+'» إلى الحملة المفتوحة وإلى قائمة الشركاء الخارجيين.'),7000);
+    }
     $('exName').value=''; $('exOffer').value=''; $('exType').value='';
     drawPool();
-    say(was?('حُدِّث الشريك الخارجي «'+name+'» وأُضيف إلى الحملة.')
-           :('أُضيف الشريك الخارجي «'+name+'» إلى الحملة وإلى قائمة الشركاء الخارجيين.'),7000);
   });
   function drawPool(){
     var box=$('paPool');
@@ -722,8 +802,9 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     $('fName').value=c?c.name:'';
     $('fCode').value=c?c.code:newCode();
     $('fStart').value=c?c.start:'';
-    $('fWeeks').value=c?c.weeks:4;
+    $('fWeeks').value=c?(c.weeks||''):4;
     $('fEnd').value=c?c.end:'';
+    showDur();
     $('fGoal').value=c?c.goal:'';
     $('fKpi').value=c?(c.kpi||''):'';
     $('fTarget').value=c?(c.target||''):'';
@@ -734,6 +815,8 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     setTools(c?c.tools:[]);
     setPartners(c?c.partners:[]);
     drawStChips();
+    exCampAuto=true; $('exCamp').value=$('fCode').value;
+    fillCampCodes();
     $('btnDel').hidden=!c;
     $('form').hidden=false;
     $('form').scrollIntoView({behavior:'smooth',block:'start'});
@@ -745,22 +828,26 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
 
   $('btnSave').addEventListener('click',function(){
     var name=$('fName').value.trim(), code=$('fCode').value.trim().toUpperCase();
-    var start=$('fStart').value, weeks=parseInt($('fWeeks').value,10);
+    var start=$('fStart').value, weeks=parseInt($('fWeeks').value,10)||0;
     var goal=$('fGoal').value.trim();
     var miss=[];
     if(!name) miss.push('اسم الحملة');
     if(!code) miss.push('كود الحملة');
     if(!start) miss.push('تاريخ البدء');
-    if(!weeks||weeks<1) miss.push('المدة');
+    if(!$('fEnd').value && weeks<1) miss.push('المدة بالأسابيع أو تاريخ الانتهاء');
     if(!goal) miss.push('الهدف');
     if(miss.length){ say('أكمل الحقول المطلوبة: '+miss.join('، '),6000); return; }
+    if(!$('fEnd').value) endFromWeeks();
+    if(dayms($('fEnd').value) < dayms(start)){
+      say('تاريخ الانتهاء قبل تاريخ البدء. صحّح التاريخين.',6000); return;
+    }
     for(var i=0;i<campaigns.length;i++){
       if(campaigns[i].code===code && campaigns[i]!==editing){
         say('كود الحملة «'+code+'» مستخدم في حملة أخرى. اختر كودًا مختلفًا.',6000); return;
       }
     }
-    recalcEnd();
-    var rec={code:code, name:name, start:start, weeks:weeks, end:$('fEnd').value,
+    var rec={code:code, name:name, start:start, end:$('fEnd').value,
+             weeks:weeks||null, days:daysOf(start,$('fEnd').value),
              stations:draft.stations.slice(), tools:draft.tools.slice(),
              goal:goal, kpi:$('fKpi').value.trim(), target:$('fTarget').value.trim(),
              terms:$('fTerms').value.trim(), partners:readPartners(),
@@ -823,7 +910,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
       '<div class="top"><div>'+
         '<span class="code">'+esc(c.code)+'</span>'+
         '<h3>'+esc(c.name)+'</h3>'+
-        '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+nWeek(c.weeks)+' · '+
+        '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+durOf(c)+' · '+
         nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+'</p>'+
       '</div><div style="display:flex;gap:8px;align-items:center">'+
         '<span class="badge '+s.k+'">'+s.t+'</span>'+
@@ -860,6 +947,7 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     $('kSt').textContent=ar(Object.keys(st).length);
     $('kPa').textContent=ar(Object.keys(pa).length);
     $('kAll').textContent=ar(STATIONS.length);
+    fillCampCodes();
   }
   $('list').addEventListener('click',function(e){
     var art=e.target.closest('.card'); if(!art) return;
@@ -993,12 +1081,12 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   });
   $('btnCsv').addEventListener('click',function(){
     if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
-    var head=['كود الحملة','اسم الحملة','تاريخ البدء','تاريخ الانتهاء','المدة بالأسابيع','الحالة',
+    var head=['كود الحملة','اسم الحملة','تاريخ البدء','تاريخ الانتهاء','المدة بالأيام','المدة بالأسابيع','الحالة',
               'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','العرض المقترح','الشروط',
               'الشريك','نوع الشريك','محطة الشريك','فكرة العرض','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
     var rows=[head];
     campaigns.forEach(function(c){
-      var base=[c.code,c.name,c.start,c.end,c.weeks,statusOf(c).t,
+      var base=[c.code,c.name,c.start,c.end,daysOf(c.start,c.end)||'',c.weeks||'',statusOf(c).t,
                 (c.stations||[]).join(' | '),(c.tools||[]).join(' | '),
                 c.goal,c.kpi,c.target,c.offer,(c.terms||'').replace(/\n/g,' / ')];
       if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','','',''])); return; }
