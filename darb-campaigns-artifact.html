@@ -88,6 +88,19 @@ legend{font-size:12px;letter-spacing:.06em;font-weight:800;color:var(--orange);p
 .picklist button:hover{background:var(--sand)}
 .picklist .c{font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums}
 .picklist .m{color:var(--ink-3);font-size:12px}
+.pool{margin-bottom:15px}
+.poolst{border:1px solid var(--line);border-radius:6px;padding:11px 13px 13px;
+  margin-bottom:9px;background:var(--surface)}
+.poolhd{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:13px}
+.poolhd b{color:var(--orange);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.poolhd .m{color:var(--ink-3);font-size:12px}
+.poolhd .sp{flex:1 1 0}
+.poolnote{color:var(--ink-3);font-size:12.5px;margin:6px 0 0}
+.pickchip{cursor:pointer;text-align:right}
+.pickchip .tick{display:none;color:var(--ok);font-weight:800}
+.pickchip.on{border-color:var(--orange);
+  background:color-mix(in srgb,var(--orange-hi) 18%,transparent)}
+.pickchip.on .tick{display:inline}
 .tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
 .tool{display:flex;gap:9px;align-items:flex-start;background:var(--ground);
   border:1px solid var(--line);border-radius:5px;padding:9px 12px;cursor:pointer;font-size:13.5px}
@@ -101,6 +114,7 @@ th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);vert
 thead th{background:var(--sand);font-size:11px;letter-spacing:.06em;color:var(--ink-2);white-space:nowrap}
 tbody tr:last-child td{border-bottom:0}
 td input,td select{padding:7px 9px;font-size:13px;background:var(--ground)}
+td select.p-code{min-width:106px}   /* the arrow was clipping the station code */
 td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
 /* ---------- campaign cards ---------- */
@@ -230,9 +244,10 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
     <fieldset>
       <legend>الشركاء المشاركون والعرض المقترح</legend>
-      <div class="pick">
-        <input type="text" id="paQ" placeholder="اكتب اسم الشريك، أو اختر من مستأجري المحطات المختارة…" autocomplete="off">
-        <div class="picklist" id="paList"></div>
+      <div class="pool" id="paPool"></div>
+      <div class="bar" style="margin:0 0 4px">
+        <div class="grow"><input type="text" id="paQ" placeholder="ابحث في شركاء المحطات المختارة، أو اكتب اسم شريك جديد…" autocomplete="off"></div>
+        <button type="button" class="btn" id="btnPaNew">أضِفه شريكًا جديدًا</button>
       </div>
       <div class="tablewrap">
         <table>
@@ -406,10 +421,13 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     var h='';
     for(var i=0;i<draft.stations.length;i++){
       var c=draft.stations[i];
+      var n=((byCode[c]||{}).tenants||[]).length;
       h+='<span class="chip"><b>'+esc(c)+'</b> '+esc(stName(c))+
+         (n?' <span style="color:var(--ink-3);font-size:12px">'+ar(n)+' شريكًا</span>':'')+
          ' <button type="button" data-c="'+esc(c)+'" title="إزالة">×</button></span>';
     }
     $('stChips').innerHTML=h||'<span style="color:var(--ink-3);font-size:13px">لم تُختر محطة بعد.</span>';
+    refreshRowStations(); drawPool();
   }
   $('stChips').addEventListener('click',function(e){
     var b=e.target.closest('button[data-c]'); if(!b) return;
@@ -423,8 +441,10 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   $('stQ').addEventListener('input',function(){
     var res=searchStations(this.value).filter(function(s){ return draft.stations.indexOf(s.code)===-1; });
     openList($('stList'),res.slice(0,25),function(s){
+      var n=(s.tenants||[]).length;
       return '<button type="button" data-c="'+esc(s.code)+'"><span class="c">'+esc(s.code)+'</span> '+
-             esc(s.name)+' <span class="m">· '+esc(s.city||'')+(s.units?' · '+s.units+' وحدة':'')+'</span></button>';
+             esc(s.name)+' <span class="m">· '+esc(s.city||'')+(s.units?' · '+ar(s.units)+' وحدة':'')+
+             (n?' · '+ar(n)+' شريكًا':'')+'</span></button>';
     });
   });
   $('stQ').addEventListener('focus',function(){ this.dispatchEvent(new Event('input')); });
@@ -436,17 +456,6 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   });
 
   /* partners */
-  function partnerPool(){
-    var out=[], seen={};
-    for(var i=0;i<draft.stations.length;i++){
-      var s=byCode[draft.stations[i]]; if(!s||!s.tenants) continue;
-      for(var j=0;j<s.tenants.length;j++){
-        var k=s.tenants[j]+'|'+s.code;
-        if(!seen[k]){ seen[k]=1; out.push({name:s.tenants[j], code:s.code}); }
-      }
-    }
-    return out;
-  }
   function paRow(p){
     p=p||{};
     var opts=['مؤكد','بانتظار الرد','معتذر'].map(function(o){
@@ -479,6 +488,17 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   function setPartners(list){
     draft.partners=(list||[]).slice();
     $('paBody').innerHTML=draft.partners.length?draft.partners.map(paRow).join(''):paRow({});
+    drawPool();
+  }
+  function refreshRowStations(){
+    var trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var sel=trs[i].querySelector('.p-code'), cur=sel.value;
+      var opts='<option value="">—</option>'+draft.stations.map(function(c){
+        return '<option value="'+esc(c)+'">'+esc(c)+'</option>'; }).join('');
+      if(cur && draft.stations.indexOf(cur)===-1) opts+='<option value="'+esc(cur)+'">'+esc(cur)+'</option>';
+      sel.innerHTML=opts; sel.value=cur;
+    }
   }
   $('btnPaRow').addEventListener('click',function(){
     $('paBody').insertAdjacentHTML('beforeend', paRow({}));
@@ -489,28 +509,95 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
     tr.parentNode.removeChild(tr);
     if(!tb.querySelector('tr')) tb.innerHTML=paRow({});
   });
-  $('paQ').addEventListener('input',function(){
-    var q=this.value.trim().toLowerCase();
-    var pool=partnerPool().filter(function(p){ return !q || p.name.toLowerCase().indexOf(q)!==-1; });
-    openList($('paList'),pool.slice(0,25),function(p){
-      return '<button type="button" data-n="'+esc(p.name)+'" data-c="'+esc(p.code)+'">'+
-             esc(p.name)+' <span class="m">· '+esc(p.code)+' '+esc(stName(p.code))+'</span></button>';
-    });
-    if(!pool.length && q) $('paList').classList.remove('show');
-  });
-  $('paQ').addEventListener('focus',function(){ this.dispatchEvent(new Event('input')); });
-  $('paList').addEventListener('click',function(e){
-    var b=e.target.closest('button[data-n]'); if(!b) return;
-    var tb=$('paBody'), first=tb.querySelector('tr');
-    var empty=first && !first.querySelector('.p-name').value.trim();
-    var html=paRow({name:b.getAttribute('data-n'), code:b.getAttribute('data-c'), status:'بانتظار الرد'});
-    if(empty) first.outerHTML=html; else tb.insertAdjacentHTML('beforeend', html);
-    $('paQ').value=''; this.classList.remove('show');
-  });
-  document.addEventListener('click',function(e){
-    if(!e.target.closest('.pick')){
-      $('stList').classList.remove('show'); $('paList').classList.remove('show');
+  /* the tenants of each chosen station, laid out as toggles */
+  function chosenKeys(){
+    var set={}, trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var n=trs[i].querySelector('.p-name').value.trim();
+      if(n) set[n+'|'+trs[i].querySelector('.p-code').value]=1;
     }
+    return set;
+  }
+  function findRow(name,code){
+    var trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      if(trs[i].querySelector('.p-name').value.trim()===name &&
+         trs[i].querySelector('.p-code').value===code) return trs[i];
+    }
+    return null;
+  }
+  function addPartnerRow(name,code){
+    var tb=$('paBody'), first=tb.querySelector('tr');
+    var html=paRow({name:name, code:code, status:'بانتظار الرد'});
+    if(first && !first.querySelector('.p-name').value.trim()) first.outerHTML=html;
+    else tb.insertAdjacentHTML('beforeend', html);
+  }
+  function drawPool(){
+    var box=$('paPool');
+    if(!draft.stations.length){
+      box.innerHTML='<p class="poolnote">اختر محطة أعلاه لتظهر قائمة شركائها هنا.</p>';
+      return;
+    }
+    var q=$('paQ').value.trim().toLowerCase(), sel=chosenKeys(), h='';
+    for(var i=0;i<draft.stations.length;i++){
+      var code=draft.stations[i], st=byCode[code]||{}, ts=st.tenants||[];
+      var vis=ts.filter(function(t){ return !q || t.toLowerCase().indexOf(q)!==-1; });
+      var picked=ts.filter(function(t){ return sel[t+'|'+code]; }).length;
+      h+='<div class="poolst"><div class="poolhd"><b>'+esc(code)+'</b> '+esc(st.name||'')+
+         (st.city?' · '+esc(st.city):'')+
+         ' <span class="m">'+(ts.length?ar(ts.length)+' شريكًا في المحطة'+
+           (picked?' · مختار منهم '+ar(picked):''):'لا شركاء مسجّلون في الملف')+'</span>'+
+         '<span class="sp"></span>'+
+         (vis.length?'<button type="button" class="btn sm ghost" data-all="'+esc(code)+'">اختر الكل</button>':'')+
+         '</div>';
+      if(!ts.length) h+='<p class="poolnote">أضِف شركاء هذه المحطة يدويًا من الجدول أدناه.</p>';
+      else if(!vis.length) h+='<p class="poolnote">لا شريك مطابق للبحث في هذه المحطة.</p>';
+      else{
+        h+='<div class="chips">';
+        for(var j=0;j<vis.length;j++)
+          h+='<button type="button" class="chip pickchip'+(sel[vis[j]+'|'+code]?' on':'')+
+             '" data-n="'+esc(vis[j])+'" data-c="'+esc(code)+'">'+esc(vis[j])+
+             '<span class="tick">✓</span></button>';
+        h+='</div>';
+      }
+      h+='</div>';
+    }
+    box.innerHTML=h;
+  }
+  $('paPool').addEventListener('click',function(e){
+    var all=e.target.closest('button[data-all]');
+    if(all){
+      var code=all.getAttribute('data-all'), ts=(byCode[code]||{}).tenants||[];
+      var q=$('paQ').value.trim().toLowerCase(), n=0;
+      for(var i=0;i<ts.length;i++){
+        if(q && ts[i].toLowerCase().indexOf(q)===-1) continue;
+        if(!findRow(ts[i],code)){ addPartnerRow(ts[i],code); n++; }
+      }
+      drawPool();
+      say(n?('أُضيف '+ar(n)+' شريكًا من '+code+' إلى الجدول.'):'كل شركاء '+code+' مضافون أصلًا.',5000);
+      return;
+    }
+    var b=e.target.closest('.pickchip'); if(!b) return;
+    var name=b.getAttribute('data-n'), c=b.getAttribute('data-c');
+    var row=findRow(name,c);
+    if(row){
+      row.parentNode.removeChild(row);
+      if(!$('paBody').querySelector('tr')) $('paBody').innerHTML=paRow({});
+    } else addPartnerRow(name,c);
+    drawPool();
+  });
+  $('paQ').addEventListener('input',drawPool);
+  $('btnPaNew').addEventListener('click',function(){
+    var n=$('paQ').value.trim();
+    if(!n){ say('اكتب اسم الشريك في الصندوق أولًا.',4000); return; }
+    addPartnerRow(n, draft.stations[0]||'');
+    $('paQ').value=''; drawPool();
+    say('أُضيف «'+n+'» إلى جدول الشركاء.',4500);
+  });
+  $('paBody').addEventListener('input',drawPool);
+  $('paBody').addEventListener('change',drawPool);
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.pick')) $('stList').classList.remove('show');
   });
   $('btnTerms').addEventListener('click',function(){
     var t=$('fTerms');
