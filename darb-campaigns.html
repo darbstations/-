@@ -162,6 +162,9 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 @media (max-width:620px){.dl{grid-template-columns:1fr}.dl dt{margin-top:8px}}
 .empty{text-align:center;color:var(--ink-3);padding:44px 20px;border:1px dashed var(--line);
   border-radius:7px;margin-top:16px}
+.warn{margin-top:18px;border:1px solid var(--bad);border-radius:7px;padding:14px 17px;
+  background:color-mix(in srgb,var(--bad) 12%,transparent);font-size:14px}
+.warn b{display:block;margin-bottom:4px}
 
 /* ---------- toast ---------- */
 .toast{position:fixed;inset-inline:0;bottom:74px;margin:auto;width:max-content;max-width:92vw;
@@ -206,6 +209,8 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 </header>
 
 <div class="wrap">
+
+  <div class="warn" id="warn" hidden></div>
 
   <div class="bar">
     <div class="grow"><input type="text" id="q" placeholder="ابحث بكود الحملة، أو كود المحطة، أو اسم المحطة أو المدينة، أو اسم الشريك…"></div>
@@ -427,6 +432,14 @@ var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","cit
   var campaigns=[], editing=null;
   var storageOK=true;
   try{ localStorage.setItem(KEY+':t','1'); localStorage.removeItem(KEY+':t'); }catch(e){ storageOK=false; }
+  if(!storageOK){
+    var w=document.getElementById('warn');
+    w.hidden=false;
+    w.innerHTML='<b>هذا المتصفح يمنع الحفظ في هذه الصفحة.</b>'+
+      'ما تسجّله يبقى ما دامت الصفحة مفتوحة فقط، ويضيع عند إغلاقها أو تحديثها. '+
+      'صدّر عملك بزرّ «تصدير JSON» أو «نسخ رمز المشاركة» قبل أن تغادر. '+
+      'وغالبًا يكون السبب وضع التصفّح المتخفّي أو منع بيانات المواقع في إعدادات المتصفح.';
+  }
   function load(){
     if(!storageOK) return;
     try{ var raw=localStorage.getItem(KEY); if(raw) campaigns=JSON.parse(raw)||[]; }catch(e){ campaigns=[]; }
