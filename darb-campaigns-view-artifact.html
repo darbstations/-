@@ -1377,11 +1377,13 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
       if(code==='declined'){ say('أُلغي التنزيل.',3500); return; }
       if(code==='too_large'){ say('الملف أكبر من الحد المسموح هنا. استخدم «تصدير JSON».',8000); return; }
       try{ blobSave('darb-campaigns.html', html, 'text/html;charset=utf-8'); }catch(e){}
-      window.claude.downloads.save({filename:'darb-campaigns.txt', data:html}).then(function(){
-        say('صيغة html مقفلة هنا، فحُفظ الملف باسم darb-campaigns.txt ومحتواه صفحة كاملة ومعه '+stamp+
-            ' — غيّر الامتداد إلى .html ليفتح كصفحة.',15000);
+      window.claude.downloads.save({filename:'darb-campaigns.html.txt', data:html}).then(function(){
+        say('صيغة html مقفلة في هذا العرض، فنزل الملف باسم darb-campaigns.html.txt ومعه '+stamp+'. '+
+            'احذف «.txt» من آخر الاسم ليصير darb-campaigns.html ويفتح كصفحة. '+
+            'وإن تعذّر تغيير الاسم على جهازك: اضغط «تصدير JSON» وأرسل الملف في المحادثة ليعود إليك ملف html جاهزًا.',
+            22000);
       },function(){
-        say('تعذّر الحفظ من الموقع. جرّبنا التنزيل المباشر — إن لم يصل ملف، استخدم «تصدير JSON».',10000);
+        say('تعذّر الحفظ من الموقع. اضغط «تصدير JSON» وأرسل الملف في المحادثة ليعود إليك ملف html جاهزًا.',12000);
       });
     });
   });
