@@ -1,4 +1,9 @@
-<title>درب · سجل الحملات التسويقية (نسخة للاطّلاع)</title>
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>درب · إدارة الحملات التسويقية</title>
 <style>
 :root{
   --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
@@ -185,12 +190,14 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
   body{background:#fff;padding:0}
 }
 </style>
+</head>
+<body>
 
 <header>
   <div class="wrap">
     <p class="eyebrow">درب · التسويق التجاري</p>
     <h1>إدارة الحملات التسويقية في المحطات</h1>
-    <p>سجل الحملات التسويقية في محطات درب. هذه نسخة للاطّلاع: محتواها مثبَّت داخل الرابط، فتفتح من أي جهاز وتعرض السجل كما هو دون أي خطوة. آخر تثبيت للسجل: ١١ أغسطس ٢٠٢٦ — أربع حملات.</p>
+    <p>سجِّل الحملة ومدّتها وتاريخ بدئها والمحطات المشمولة والأدوات المستخدمة وهدفها وشروطها والشركاء المشاركين والعرض المقترح، وابحث عنها لاحقًا بكود الحملة أو كود المحطة أو اسم الشريك.</p>
     <div class="kpis">
       <div class="kpi"><div class="k">الحملات المسجّلة</div><div class="v" id="kCamp">٠</div></div>
       <div class="kpi"><div class="k">حملات جارية</div><div class="v" id="kLive">٠</div></div>
@@ -386,9 +393,7 @@ var SEED = [{"code":"CMP-2026-04","name":"حملة الكافيهات في ال�
 </script>
 <script>
 (function(){
-  document.documentElement.lang='ar';
-  document.documentElement.dir='rtl';
-  var KEY='darb-campaigns-view-v1';
+  var KEY='darb-campaigns-v1';
   var TOOLS=['فيديو تشويقي','فيديو عروض الحملة','فيديوهات المؤثّرين','حملة واتساب',
              'توزيع كروت العرض','لوحات المضخات','لافتات الطريق','رمز QR للتفعيل',
              'بروشور مطبوع','النشر على منصات التواصل','إعلانات مدفوعة','تدريب عمال المحطة'];
@@ -1093,8 +1098,7 @@ var SEED = [{"code":"CMP-2026-04","name":"حملة الكافيهات في ال�
     list.forEach(function(c){ push(c,0); });        /* anything a cycle left behind */
     return out;
   }
-  var openCodes={};
-  (function(){ for(var i=0;i<SEED.length;i++) openCodes[SEED[i].code]=1; })();           /* which cards are expanded, kept across renders */
+  var openCodes={};           /* which cards are expanded, kept across renders */
   function card(c,idx,depth){
     var s=statusOf(c);
     var stx=(c.stations||[]).map(function(x){ return stLabel(x); });
@@ -1461,3 +1465,8 @@ var SEED = [{"code":"CMP-2026-04","name":"حملة الكافيهات في ال�
   setPartners([]);
 })();
 </script>
+<script>
+setTimeout(function(){var b=document.getElementById("btnExpand");if(b)b.click();},250);
+</script>
+</body>
+</html>
