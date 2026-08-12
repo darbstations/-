@@ -1432,9 +1432,22 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
 
   /* ---------------- go ---------------- */
   load(); loadExt();
-  if(!campaigns.length && SEED && SEED.length){
-    campaigns=JSON.parse(JSON.stringify(SEED));
-    persist();
+  if(SEED && SEED.length){
+    if(!campaigns.length){
+      campaigns=JSON.parse(JSON.stringify(SEED));
+      persist();
+    } else if(typeof SEEDMODE!=='undefined' && SEEDMODE==='merge'){
+      var mine={}, changed=false;
+      for(var si=0;si<campaigns.length;si++) mine[campaigns[si].code]=si;
+      for(var sj=0;sj<SEED.length;sj++){
+        var sc=SEED[sj], at=mine[sc.code];
+        if(at===undefined){ campaigns.push(JSON.parse(JSON.stringify(sc))); changed=true; }
+        else if((sc.updatedAt||'')>(campaigns[at].updatedAt||'')){
+          campaigns[at]=JSON.parse(JSON.stringify(sc)); changed=true;
+        }
+      }
+      if(changed) persist();
+    }
   }
   if(!campaigns.length){
     campaigns=[{
