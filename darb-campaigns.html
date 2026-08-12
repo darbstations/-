@@ -375,6 +375,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
   <button type="button" class="btn primary" id="btnNew2">+ حملة جديدة</button>
   <button type="button" class="btn" id="btnShare">نسخ رمز المشاركة</button>
   <button type="button" class="btn" id="btnRecv">استلام تعديلات</button>
+  <button type="button" class="btn primary" id="btnHtml">تنزيل ملف HTML</button>
   <button type="button" class="btn" id="btnJson">تصدير JSON</button>
   <button type="button" class="btn" id="btnCsv">تصدير CSV</button>
   <button type="button" class="btn" id="btnPrint">طباعة / PDF</button>
@@ -1334,6 +1335,60 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     a.href=u; a.download=name; document.body.appendChild(a); a.click();
     document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(u); },1000);
   }
+
+  /* ---- the page itself, as a file, with today's register inside it ---- */
+  function standaloneHTML(){
+    var st=document.querySelector('style');
+    var app='', sc=document.querySelectorAll('script');
+    for(var i=0;i<sc.length;i++){
+      var t=sc[i].textContent||'';
+      if(t.indexOf('var KEY=')!==-1){ app=t; break; }
+    }
+    var clone=document.body.cloneNode(true);
+    var kill=clone.querySelectorAll('script');
+    for(var j=kill.length-1;j>=0;j--) kill[j].parentNode.removeChild(kill[j]);
+    var hide=['#form','#share','#warn'];
+    for(var h=0;h<hide.length;h++){ var el=clone.querySelector(hide[h]); if(el){ el.hidden=true; } }
+    var w=clone.querySelector('#warn'); if(w) w.innerHTML='';
+    var tm=clone.querySelector('#toastmsg'); if(tm) tm.textContent='';
+    var ta=clone.querySelector('#toastact'); if(ta){ ta.hidden=true; ta.textContent=''; }
+    var to=clone.querySelector('#toast'); if(to) to.className='toast';
+    var O='<'+'script>', C='<'+'/'+'script>';
+    return '<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="utf-8">\n'+
+      '<meta name="viewport" content="width=device-width, initial-scale=1">\n'+
+      '<title>'+(document.title||'درب · سجل الحملات التسويقية')+'</title>\n'+
+      (st?st.outerHTML:'')+'\n</head>\n<body>\n'+clone.innerHTML+'\n'+
+      O+'\nvar STATIONS = '+JSON.stringify(STATIONS)+';\n'+
+      'var SEED = '+JSON.stringify(campaigns)+';\n'+C+'\n'+
+      O+'\n'+app+'\n'+C+'\n'+
+      O+'\nsetTimeout(function(){var b=document.getElementById("btnExpand");if(b)b.click();},250);\n'+C+
+      '\n</body>\n</html>\n';
+  }
+  $('btnHtml').addEventListener('click',function(){
+    var html=standaloneHTML();
+    var stamp=nCampaign(campaigns.length);
+    if(!(window.claude&&window.claude.downloads)){
+      blobSave('darb-campaigns.html', html, 'text/html;charset=utf-8');
+      say('نُزّل الملف ومعه '+stamp+'.',7000);
+      return;
+    }
+    /* .html sits in the host's extended set and is often switched off;
+       .txt is always allowed and carries exactly the same page */
+    window.claude.downloads.save({filename:'darb-campaigns.html', data:html}).then(function(){
+      say('نُزّل الملف darb-campaigns.html ومعه '+stamp+'. يفتح في أي متصفح.',9000);
+    },function(err){
+      var code=(err&&err.code)||'unavailable';
+      if(code==='declined'){ say('أُلغي التنزيل.',3500); return; }
+      if(code==='too_large'){ say('الملف أكبر من الحد المسموح هنا. استخدم «تصدير JSON».',8000); return; }
+      try{ blobSave('darb-campaigns.html', html, 'text/html;charset=utf-8'); }catch(e){}
+      window.claude.downloads.save({filename:'darb-campaigns.txt', data:html}).then(function(){
+        say('صيغة html مقفلة هنا، فحُفظ الملف باسم darb-campaigns.txt ومحتواه صفحة كاملة ومعه '+stamp+
+            ' — غيّر الامتداد إلى .html ليفتح كصفحة.',15000);
+      },function(){
+        say('تعذّر الحفظ من الموقع. جرّبنا التنزيل المباشر — إن لم يصل ملف، استخدم «تصدير JSON».',10000);
+      });
+    });
+  });
   $('btnJson').addEventListener('click',function(){
     if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
     saveFile('darb-campaigns.json', JSON.stringify(campaigns,null,2), 'application/json');
