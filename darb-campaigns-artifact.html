@@ -157,6 +157,38 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 @media (max-width:620px){.dl{grid-template-columns:1fr}.dl dt{margin-top:8px}}
 .empty{text-align:center;color:var(--ink-3);padding:44px 20px;border:1px dashed var(--line);
   border-radius:7px;margin-top:16px}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 18px;
+  font-weight:800;font-size:15px;color:var(--ink-2);cursor:pointer;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--orange);border-bottom-color:var(--orange)}
+.tabpanel h2{font-size:20px;margin-top:22px}
+.tabpanel .hint{font-size:13.5px;color:var(--ink-2);margin:6px 0 0;max-width:80ch}
+
+/* ---------- summary ---------- */
+.sumkpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-top:18px}
+.sumkpi .box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 15px}
+.sumkpi .k{font-size:11px;letter-spacing:.06em;color:var(--ink-2)}
+.sumkpi .v{font-size:22px;font-weight:800;line-height:1.35;font-variant-numeric:tabular-nums}
+tr.month td{background:var(--sand);font-weight:800;font-size:13px;letter-spacing:.04em;
+  color:var(--orange)}
+td.code{font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.small{font-size:12.5px;color:var(--ink-2)}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:800;border:1px solid}
+.pill.soon{color:var(--warn);border-color:var(--warn)}
+.pill.live{color:var(--ok);border-color:var(--ok)}
+.pill.done{color:var(--ink-3);border-color:var(--line)}
+
+/* ---------- budget plan ---------- */
+.money{font-variant-numeric:tabular-nums;font-weight:800;white-space:nowrap}
+.money.neg{color:var(--bad)}
+.bar-track{height:10px;border-radius:99px;background:var(--sand);overflow:hidden;margin-top:12px;
+  border:1px solid var(--line)}
+.bar-fill{height:100%;background:var(--orange);width:0}
+.bar-fill.over{background:var(--bad)}
+td input.w-budget{min-width:120px;text-align:right}
 .warn{margin-top:18px;border:1px solid var(--bad);border-radius:7px;padding:14px 17px;
   background:color-mix(in srgb,var(--bad) 12%,transparent);font-size:14px}
 .warn b{display:block;margin-bottom:4px}
@@ -203,7 +235,64 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
 
 <div class="wrap">
 
+  <div class="tabs" role="tablist">
+    <button type="button" class="tab on" data-tab="sum">ملخّص الحملات</button>
+    <button type="button" class="tab" data-tab="camp">الحملات</button>
+    <button type="button" class="tab" data-tab="wash">خطة واش واي</button>
+  </div>
+
   <div class="warn" id="warn" hidden></div>
+
+  <!-- ---------------- summary ---------------- -->
+  <section class="tabpanel" id="panel-sum">
+    <h2>ملخّص الحملات</h2>
+    <p class="hint">كل الحملات في جدول واحد مرتّب بحسب شهر انطلاقها. يُبنى من صفحة الحملات في كل مرة، فما تضيفينه هناك يظهر هنا فورًا.</p>
+    <div class="sumkpi" id="sumKpi"></div>
+    <div id="sumTable"></div>
+  </section>
+
+  <!-- ---------------- plan ---------------- -->
+  <section class="tabpanel" id="panel-wash" hidden>
+    <h2>خطة حملات واش واي</h2>
+    <p class="hint">ميزانية الشريك تُصرف خلال المدة المحدّدة. اكتبي ميزانية كل حملة في الجدول فتُخصم من الإجمالي، ويظهر أمام كل حملة ما تبقّى بعدها.</p>
+    <div class="grid3" style="margin-top:16px">
+      <div><label class="f" for="wBudget">إجمالي الميزانية (ريال)</label>
+        <input type="number" id="wBudget" min="0" step="500" value="150000"></div>
+      <div><label class="f" for="wMonths">المدة (أشهر)</label>
+        <input type="number" id="wMonths" min="1" max="24" value="5"></div>
+      <div><label class="f" for="wPartner">اسم الشريك</label>
+        <input type="text" id="wPartner" value="واش واي"></div>
+    </div>
+    <div class="sumkpi" id="wKpi"></div>
+    <div class="bar-track"><div class="bar-fill" id="wBar"></div></div>
+    <div id="wTable"></div>
+
+    <fieldset>
+      <legend>أضِف حملة لهذا الشريك</legend>
+      <div class="grid3">
+        <div><label class="f" for="waName">اسم الحملة *</label>
+          <input type="text" id="waName" placeholder="مثال: حملة اليوم الوطني"></div>
+        <div><label class="f" for="waStart">تاريخ البدء *</label><input type="date" id="waStart"></div>
+        <div><label class="f" for="waEnd">تاريخ الانتهاء</label><input type="date" id="waEnd"></div>
+      </div>
+      <div class="grid3" style="margin-top:13px">
+        <div><label class="f" for="waStation">المحطة</label>
+          <input type="text" id="waStation" list="waCodes" placeholder="MK007" autocomplete="off"></div>
+        <div><label class="f" for="waBudget">ميزانية الحملة (ريال)</label>
+          <input type="number" id="waBudget" min="0" step="500" placeholder="٢٨٠٠٠"></div>
+        <div><label class="f" for="waOffer">العرض</label>
+          <input type="text" id="waOffer" placeholder="مثال: غسلة بريال مع تعبئة كاملة"></div>
+      </div>
+      <datalist id="waCodes"></datalist>
+      <button type="button" class="btn primary" id="btnWaAdd" style="margin-top:14px">أضِف الحملة إلى الخطة</button>
+    </fieldset>
+
+    <h3 style="font-size:15px;margin-top:24px">التوزيع على الأشهر</h3>
+    <div id="wMonthly"></div>
+  </section>
+
+  <!-- ---------------- campaigns ---------------- -->
+  <section class="tabpanel" id="panel-camp" hidden>
 
   <div class="bar">
     <div class="grow"><input type="text" id="q" placeholder="ابحث بكود الحملة، أو كود المحطة، أو اسم المحطة أو المدينة، أو اسم الشريك…"></div>
@@ -276,6 +365,8 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
           <input type="text" id="fKpi" placeholder="مثال: عمليات مسح QR ÷ عدد سيارات الفترة">
           <label class="f" for="fTarget" style="margin-top:13px">المستهدف الرقمي</label>
           <input type="text" id="fTarget" placeholder="مثال: معدل التقاط ٥٪ من سيارات الصباح">
+          <label class="f" for="fBudget" style="margin-top:13px">ميزانية الحملة (ريال)</label>
+          <input type="number" id="fBudget" min="0" step="500" placeholder="اتركه فارغًا إن لم تُحدَّد">
         </div>
       </div>
     </fieldset>
@@ -362,6 +453,7 @@ td.num{font-variant-numeric:tabular-nums;font-weight:700}
   <!-- ---------------- list ---------------- -->
   <div id="list" class="cards"></div>
   <div class="empty" id="empty" hidden>لا توجد حملات مطابقة. اضغط «+ حملة جديدة» لتسجيل أول حملة.</div>
+  </section>
 </div>
 
 <div class="dock">
@@ -928,6 +1020,7 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     $('fGoal').value=c?c.goal:'';
     $('fKpi').value=c?(c.kpi||''):'';
     $('fTarget').value=c?(c.target||''):'';
+    $('fBudget').value=c&&c.budget?c.budget:'';
     $('fTerms').value=c?(c.terms||''):'';
     $('fOffer').value=c?(c.offer||''):'';
     $('fNotes').value=c?(c.notes||''):'';
@@ -999,6 +1092,7 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
              weeks:weeks||null, days:daysOf(start,$('fEnd').value),
              stations:draft.stations.slice(), tools:draft.tools.slice(),
              goal:goal, kpi:$('fKpi').value.trim(), target:$('fTarget').value.trim(),
+             budget:Number($('fBudget').value)||0,
              terms:$('fTerms').value.trim(), partners:readPartners(),
              offer:$('fOffer').value.trim(), notes:$('fNotes').value.trim()};
     stamp(rec);
@@ -1153,6 +1247,8 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     $('kPa').textContent=ar(Object.keys(pa).length);
     $('kAll').textContent=ar(STATIONS.length);
     fillCampCodes();
+    renderSummary();
+    renderWash();
   }
   $('list').addEventListener('click',function(e){
     var art=e.target.closest('.card'); if(!art) return;
@@ -1309,6 +1405,206 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
     say('وصلت تعديلات من نافذة أخرى في هذا المتصفح.',5000);
   });
 
+
+  /* ---------------- pages ---------------- */
+  var MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو',
+              'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  function money(n){ return ar(Math.round(Number(n)||0))+' ر.س'; }
+  function monthKey(d){ return d? String(d).slice(0,7) : ''; }
+  function monthLabel(k){
+    if(!k) return 'بلا تاريخ';
+    var y=k.slice(0,4), m=parseInt(k.slice(5,7),10);
+    return (MONTHS[m-1]||k)+' '+ar(y).replace(/٬/g,'');
+  }
+  var tabs=document.querySelectorAll('.tab');
+  function showTab(name){
+    for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-tab')===name);
+    $('panel-sum').hidden = name!=='sum';
+    $('panel-camp').hidden = name!=='camp';
+    $('panel-wash').hidden = name!=='wash';
+    window.scrollTo(0,0);
+  }
+  for(var ti=0;ti<tabs.length;ti++)
+    tabs[ti].addEventListener('click',function(){ showTab(this.getAttribute('data-tab')); });
+
+  /* ---- summary: every campaign, grouped by the month it starts ---- */
+  function renderSummary(){
+    var list=campaigns.slice().sort(function(a,b){
+      return String(a.start||'9999').localeCompare(String(b.start||'9999')); });
+    var st={}, pa={}, budget=0, live=0;
+    for(var i=0;i<list.length;i++){
+      var c=list[i];
+      budget+=Number(c.budget)||0;
+      if(statusOf(c).k==='live') live++;
+      (c.stations||[]).forEach(function(x){ st[x]=1; });
+      (c.partners||[]).forEach(function(x){ pa[x.name]=1; });
+    }
+    var months={};
+    list.forEach(function(c){ months[monthKey(c.start)]=1; });
+    $('sumKpi').innerHTML=
+      '<div class="box"><div class="k">الحملات</div><div class="v">'+ar(list.length)+'</div></div>'+
+      '<div class="box"><div class="k">الأشهر المغطّاة</div><div class="v">'+ar(Object.keys(months).length)+'</div></div>'+
+      '<div class="box"><div class="k">المحطات</div><div class="v">'+ar(Object.keys(st).length)+'</div></div>'+
+      '<div class="box"><div class="k">الشركاء</div><div class="v">'+ar(Object.keys(pa).length)+'</div></div>'+
+      '<div class="box"><div class="k">مجموع الميزانيات</div><div class="v">'+money(budget)+'</div></div>';
+
+    if(!list.length){
+      $('sumTable').innerHTML='<p class="empty">لا توجد حملات بعد.</p>';
+      return;
+    }
+    var h='<div class="tablewrap"><table><thead><tr>'+
+      '<th>الكود</th><th>الحملة</th><th>الفترة</th><th>المدة</th><th>المحطات</th>'+
+      '<th>الشركاء</th><th>الهدف</th><th>المستهدف</th><th>الميزانية</th><th>الحالة</th>'+
+      '</tr></thead><tbody>';
+    var seen='';
+    for(var j=0;j<list.length;j++){
+      var c=list[j], k=monthKey(c.start);
+      if(k!==seen){
+        seen=k;
+        var inMonth=list.filter(function(x){ return monthKey(x.start)===k; });
+        var mb=0; inMonth.forEach(function(x){ mb+=Number(x.budget)||0; });
+        h+='<tr class="month"><td colspan="10">'+esc(monthLabel(k))+' · '+
+           nCampaign(inMonth.length)+(mb?' · '+money(mb):'')+'</td></tr>';
+      }
+      var s2=statusOf(c);
+      var sts=(c.stations||[]);
+      var pas=(c.partners||[]).map(function(x){ return x.name; });
+      h+='<tr>'+
+        '<td class="code">'+esc(c.code)+'</td>'+
+        '<td>'+esc(c.name||'')+(c.parent?'<div class="small">ضمن '+esc(c.parent)+'</div>':'')+'</td>'+
+        '<td class="small">'+esc(c.start||'—')+'<br>'+esc(c.end||'—')+'</td>'+
+        '<td class="small">'+esc(durOf(c))+'</td>'+
+        '<td class="small">'+(sts.length?esc(sts.join(' · ')):'—')+'</td>'+
+        '<td class="small">'+(pas.length?esc(pas.join('، ')):'—')+'</td>'+
+        '<td class="small">'+esc(c.goal||'—')+'</td>'+
+        '<td class="small">'+esc(c.target||'—')+'</td>'+
+        '<td class="money">'+(Number(c.budget)?money(c.budget):'—')+'</td>'+
+        '<td><span class="pill '+s2.k+'">'+s2.t+'</span></td>'+
+      '</tr>';
+    }
+    $('sumTable').innerHTML=h+'</tbody></table></div>';
+  }
+
+  /* ---- the partner's budget plan ---- */
+  var WKEY='darb-wash-plan-v1';
+  var plan={budget:150000, months:5, partner:'واش واي'};
+  try{ var wraw=localStorage.getItem(WKEY); if(wraw) plan=JSON.parse(wraw)||plan; }catch(e){}
+  function savePlan(){ try{ localStorage.setItem(WKEY, JSON.stringify(plan)); }catch(e){} }
+  function planCampaigns(){
+    var name=(plan.partner||'').trim();
+    if(!name) return [];
+    return campaigns.filter(function(c){
+      return (c.partners||[]).some(function(x){ return (x.name||'').indexOf(name)!==-1; });
+    }).sort(function(a,b){ return String(a.start||'9999').localeCompare(String(b.start||'9999')); });
+  }
+  function paintPlan(){
+    var list=planCampaigns(), total=Number(plan.budget)||0, run=0;
+    var rows=$('wTable').querySelectorAll('tr[data-code]');
+    for(var i=0;i<rows.length;i++){
+      var c=campByCode(rows[i].getAttribute('data-code'));
+      run+=c?(Number(c.budget)||0):0;
+      var left=total-run, cell=rows[i].querySelector('.w-left');
+      if(cell){ cell.textContent=money(left); cell.className='money w-left'+(left<0?' neg':''); }
+    }
+    var left=total-run;
+    var perMonth=(Number(plan.months)||1);
+    $('wKpi').innerHTML=
+      '<div class="box"><div class="k">الميزانية</div><div class="v">'+money(total)+'</div></div>'+
+      '<div class="box"><div class="k">المخصَّص</div><div class="v">'+money(run)+'</div></div>'+
+      '<div class="box"><div class="k">المتبقي</div><div class="v'+(left<0?' neg':'')+'">'+money(left)+'</div></div>'+
+      '<div class="box"><div class="k">حملات الشريك</div><div class="v">'+ar(list.length)+'</div></div>'+
+      '<div class="box"><div class="k">المتاح شهريًا</div><div class="v">'+money(total/perMonth)+'</div></div>';
+    var pct=total>0?Math.min(100,Math.round(run/total*100)):0;
+    var fill=$('wBar');
+    fill.style.width=pct+'%';
+    fill.className='bar-fill'+(left<0?' over':'');
+
+    /* month by month, against the monthly allowance */
+    var per=total/perMonth, byMonth={};
+    list.forEach(function(c){
+      var k=monthKey(c.start);
+      byMonth[k]=(byMonth[k]||0)+(Number(c.budget)||0);
+    });
+    var keys=Object.keys(byMonth).sort();
+    if(!keys.length){ $('wMonthly').innerHTML='<p class="poolnote">لا حملات بميزانية بعد.</p>'; return; }
+    var mh='<div class="tablewrap"><table><thead><tr><th>الشهر</th><th>المخصَّص</th>'+
+           '<th>حدّ الشهر</th><th>الفرق</th></tr></thead><tbody>';
+    for(var m=0;m<keys.length;m++){
+      var v=byMonth[keys[m]], diff=per-v;
+      mh+='<tr><td>'+esc(monthLabel(keys[m]))+'</td><td class="money">'+money(v)+
+          '</td><td class="money">'+money(per)+'</td><td class="money'+(diff<0?' neg':'')+'">'+
+          (diff<0?'تجاوز '+money(-diff):'متاح '+money(diff))+'</td></tr>';
+    }
+    $('wMonthly').innerHTML=mh+'</tbody></table></div>';
+  }
+  function renderWash(){
+    $('wBudget').value=plan.budget;
+    $('wMonths').value=plan.months;
+    if(document.activeElement!==$('wPartner')) $('wPartner').value=plan.partner;
+    $('waCodes').innerHTML=STATIONS.map(function(x){
+      return '<option value="'+esc(x.code)+'">'+esc(x.name||'')+'</option>'; }).join('');
+    var list=planCampaigns();
+    if(!list.length){
+      $('wTable').innerHTML='<p class="empty">لا توجد حملات مسجّلة لهذا الشريك. أضِف واحدة من الحقول أدناه، '+
+        'أو أضِف الشريك «'+esc(plan.partner)+'» إلى حملة قائمة من صفحة الحملات.</p>';
+      paintPlan(); return;
+    }
+    var h='<div class="tablewrap"><table><thead><tr>'+
+      '<th>الكود</th><th>الحملة</th><th>الشهر</th><th>الفترة</th><th>المحطات</th>'+
+      '<th>ميزانية الحملة</th><th>المتبقي بعدها</th><th>الحالة</th>'+
+      '</tr></thead><tbody>';
+    for(var i=0;i<list.length;i++){
+      var c=list[i], s3=statusOf(c);
+      h+='<tr data-code="'+esc(c.code)+'">'+
+        '<td class="code">'+esc(c.code)+'</td>'+
+        '<td>'+esc(c.name||'')+'</td>'+
+        '<td class="small">'+esc(monthLabel(monthKey(c.start)))+'</td>'+
+        '<td class="small">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+'</td>'+
+        '<td class="small">'+((c.stations||[]).length?esc(c.stations.join(' · ')):'—')+'</td>'+
+        '<td><input type="number" class="w-budget" min="0" step="500" value="'+
+            (Number(c.budget)||'')+'" data-code="'+esc(c.code)+'"></td>'+
+        '<td class="money w-left">—</td>'+
+        '<td><span class="pill '+s3.k+'">'+s3.t+'</span></td>'+
+      '</tr>';
+    }
+    $('wTable').innerHTML=h+'</tbody></table></div>';
+    paintPlan();
+  }
+  $('wTable').addEventListener('input',function(e){
+    var box=e.target.closest('.w-budget'); if(!box) return;
+    var c=campByCode(box.getAttribute('data-code')); if(!c) return;
+    c.budget=Number(box.value)||0;
+    stamp(c); persist();
+    paintPlan(); renderSummary();
+  });
+  $('wBudget').addEventListener('input',function(){ plan.budget=Number(this.value)||0; savePlan(); paintPlan(); });
+  $('wMonths').addEventListener('input',function(){ plan.months=Number(this.value)||1; savePlan(); paintPlan(); });
+  $('wPartner').addEventListener('input',function(){ plan.partner=this.value; savePlan(); renderWash(); });
+  $('btnWaAdd').addEventListener('click',function(){
+    var name=$('waName').value.trim(), start=$('waStart').value;
+    if(!name){ say('اكتبي اسم الحملة.',4000); $('waName').focus(); return; }
+    if(!start){ say('حدّدي تاريخ البدء.',4000); $('waStart').focus(); return; }
+    var end=$('waEnd').value||start;
+    if(dayms(end)<dayms(start)){ say('تاريخ الانتهاء قبل تاريخ البدء.',5000); return; }
+    var stn=$('waStation').value.trim().toUpperCase();
+    var d=daysOf(start,end);
+    var rec={code:newCode(), name:name, parent:'', start:start, end:end,
+             weeks:(d&&d%7===0)?d/7:null, days:d,
+             stations:stn?[stn]:[], tools:[], goal:'حملة ضمن خطة '+plan.partner,
+             kpi:'', target:'', budget:Number($('waBudget').value)||0,
+             terms:'', offer:'', notes:'',
+             partners:[{name:plan.partner, type:'', code:stn||'',
+                        offer:$('waOffer').value.trim(), old:'', newp:'', status:'بانتظار الرد'}]};
+    stamp(rec);
+    campaigns.unshift(rec);
+    openCodes[rec.code]=1;
+    persist(); render();
+    $('waName').value=''; $('waStart').value=''; $('waEnd').value='';
+    $('waStation').value=''; $('waBudget').value=''; $('waOffer').value='';
+    say('أُضيفت «'+name+'» إلى خطة '+plan.partner+' بكود '+rec.code+
+        (rec.budget?' وميزانية '+money(rec.budget):'')+'.',9000);
+  });
+
   /* ---------------- export ---------------- */
   function saveFile(name,data,type){
     if(window.claude&&window.claude.downloads){
@@ -1393,13 +1689,13 @@ var SEED = [{"code":"CMP-2026-01","name":"حملة فطور محطة العمر�
   $('btnCsv').addEventListener('click',function(){
     if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
     var head=['كود الحملة','اسم الحملة','الحملة الأساسية','تاريخ البدء','تاريخ الانتهاء','المدة بالأيام','المدة بالأسابيع','الحالة',
-              'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','العرض المقترح','الشروط',
+              'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','ميزانية الحملة','العرض المقترح','الشروط',
               'الشريك','نوع الشريك','محطة الشريك','فكرة العرض','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
     var rows=[head];
     campaigns.forEach(function(c){
       var base=[c.code,c.name,c.parent||'',c.start,c.end,daysOf(c.start,c.end)||'',c.weeks||'',statusOf(c).t,
                 (c.stations||[]).join(' | '),(c.tools||[]).join(' | '),
-                c.goal,c.kpi,c.target,c.offer,(c.terms||'').replace(/\n/g,' / ')];
+                c.goal,c.kpi,c.target,c.budget||'',c.offer,(c.terms||'').replace(/\n/g,' / ')];
       if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','','',''])); return; }
       c.partners.forEach(function(p){
         rows.push(base.concat([p.name,p.type,p.code==='EXT'?'خارجي':p.code,
