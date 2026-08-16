@@ -1,0 +1,1745 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>درب · إدارة الحملات التسويقية</title>
+<style>
+:root{
+  --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
+  --ground:#FBF6EF; --surface:#F4E9DB; --line:#E0D0BA; --sand:#F1E2CC;
+  --orange:#C85E05; --orange-hi:#E8760C; --amber:#F59A2E; --deep:#3A2416;
+  --ok:#1B7A4B; --warn:#B8770B; --bad:#A33A22; --cool:#7C8B84;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ink:#F6EDE2; --ink-2:#C9B7A2; --ink-3:#9A8674;
+    --ground:#1A120B; --surface:#241809; --line:#3D2C1A; --sand:#2E1F10;
+    --orange:#E8760C; --orange-hi:#F59A2E; --deep:#F1E2CC;
+    --ok:#4FB782; --warn:#E0A83C; --bad:#E07A5F;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#F6EDE2; --ink-2:#C9B7A2; --ink-3:#9A8674;
+  --ground:#1A120B; --surface:#241809; --line:#3D2C1A; --sand:#2E1F10;
+  --orange:#E8760C; --orange-hi:#F59A2E; --deep:#F1E2CC;
+  --ok:#4FB782; --warn:#E0A83C; --bad:#E07A5F;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:"Noto Naskh Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  font-size:15px;line-height:1.75;padding-bottom:96px}
+h1,h2,h3{margin:0;line-height:1.35;font-weight:800}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* ---------- head ---------- */
+header{background:#3A2416;color:#F1E2CC;padding:26px 0 22px;
+  border-bottom:3px solid #E8760C}
+header .eyebrow{font-size:11.5px;letter-spacing:.14em;color:#F59A2E;font-weight:700;margin:0 0 6px}
+header h1{font-size:27px;color:#FBF6EF}
+header p{margin:8px 0 0;font-size:14.5px;color:#D9C7B2;max-width:70ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-top:20px}
+.kpi{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+  border-radius:6px;padding:12px 15px}
+.kpi .k{font-size:11px;letter-spacing:.07em;color:#C6B29A}
+.kpi .v{font-size:23px;font-weight:800;color:#FBF6EF;line-height:1.3}
+
+/* ---------- bars ---------- */
+.bar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin:22px 0 4px}
+.bar .grow{flex:1 1 240px;min-width:200px}
+input[type=text],input[type=date],input[type=number],select,textarea{
+  width:100%;background:var(--surface);border:1px solid var(--line);border-radius:5px;
+  padding:10px 13px;color:var(--ink)}
+textarea{min-height:78px;resize:vertical;line-height:1.8}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--orange-hi);outline-offset:1px}
+label.f{display:block;font-size:12px;letter-spacing:.05em;color:var(--ink-2);
+  font-weight:700;margin:0 0 5px}
+.btn{background:var(--surface);border:1px solid var(--line);border-radius:5px;
+  padding:10px 16px;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--orange-hi)}
+.btn.primary{background:var(--orange);border-color:var(--orange);color:#fff}
+.btn.primary:hover{background:var(--orange-hi)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--bad);border-color:var(--line)}
+.btn.sm{padding:6px 11px;font-size:13px}
+
+/* ---------- panels ---------- */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:7px;
+  padding:22px;margin-top:18px}
+.panel h2{font-size:19px;margin-bottom:4px}
+.panel .hint{font-size:13.5px;color:var(--ink-2);margin:0 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+@media (max-width:820px){.grid2,.grid3{grid-template-columns:1fr}}
+fieldset{border:1px solid var(--line);border-radius:6px;padding:15px 17px;margin:18px 0 0;
+  background:var(--ground);min-width:0}
+legend{font-size:12px;letter-spacing:.06em;font-weight:800;color:var(--orange);padding:0 6px}
+
+/* ---------- chips ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;min-height:6px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--sand);
+  border:1px solid var(--line);border-radius:99px;padding:5px 12px;font-size:13px}
+.chip b{font-weight:800;font-variant-numeric:tabular-nums}
+.chip button{background:none;border:0;cursor:pointer;color:var(--bad);font-size:15px;
+  line-height:1;padding:0 2px}
+.pick{position:relative}
+.picklist{position:absolute;z-index:30;inset-inline:0;top:calc(100% + 4px);max-height:260px;
+  overflow:auto;background:var(--ground);border:1px solid var(--line);border-radius:6px;
+  box-shadow:0 14px 34px rgba(0,0,0,.18);display:none}
+.picklist.show{display:block}
+.picklist button{display:block;width:100%;text-align:right;background:none;border:0;
+  border-bottom:1px solid var(--line);padding:9px 13px;cursor:pointer;font-size:13.5px}
+.picklist button:hover{background:var(--sand)}
+.picklist .c{font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums}
+.picklist .m{color:var(--ink-3);font-size:12px}
+.pool{margin-bottom:15px}
+.poolst{border:1px solid var(--line);border-radius:6px;padding:11px 13px 13px;
+  margin-bottom:9px;background:var(--surface)}
+.poolhd{display:flex;flex-wrap:wrap;gap:9px;align-items:center;font-size:13px}
+.poolhd b{color:var(--orange);font-variant-numeric:tabular-nums;letter-spacing:.05em}
+.poolhd .m{color:var(--ink-3);font-size:12px}
+.poolhd .sp{flex:1 1 0}
+.poolnote{color:var(--ink-3);font-size:12.5px;margin:6px 0 0}
+.pickchip{cursor:pointer;text-align:right}
+.pickchip .tick{display:none;color:var(--ok);font-weight:800}
+.pickchip.on{border-color:var(--orange);
+  background:color-mix(in srgb,var(--orange-hi) 18%,transparent)}
+.pickchip.on .tick{display:inline}
+.poolst.ext{border-color:var(--cool)}
+.poolst.ext .poolhd b{color:var(--cool)}
+.pickchip .x{color:var(--bad);font-weight:800;padding:0 1px;margin-inline-start:2px}
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px}
+.tool{display:flex;gap:9px;align-items:flex-start;background:var(--ground);
+  border:1px solid var(--line);border-radius:5px;padding:9px 12px;cursor:pointer;font-size:13.5px}
+.tool input{margin-top:5px;accent-color:var(--orange)}
+.tool.on{border-color:var(--orange);background:color-mix(in srgb,var(--orange-hi) 10%,transparent)}
+
+/* ---------- tables ---------- */
+.tablewrap{overflow-x:auto;max-width:100%;border:1px solid var(--line);border-radius:6px;margin-top:11px}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:13.5px;background:var(--ground)}
+.panel table{min-width:880px}   /* eight columns in the partner form table */
+th,td{padding:9px 11px;text-align:right;border-bottom:1px solid var(--line);vertical-align:middle}
+thead th{background:var(--sand);font-size:11px;letter-spacing:.06em;color:var(--ink-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td input,td select{padding:7px 9px;font-size:13px;background:var(--ground)}
+td select.p-code{min-width:112px}   /* the arrow was clipping the station code */
+td select.p-type{min-width:158px}
+td select.p-status{min-width:134px}
+td.num{font-variant-numeric:tabular-nums;font-weight:700}
+
+/* ---------- campaign cards ---------- */
+.cards{display:grid;gap:14px;margin-top:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:7px;
+  border-inline-start:4px solid var(--orange);overflow:hidden}
+.card.sub{border-inline-start-color:var(--cool)}
+.card .par{font-size:12px;color:var(--cool);font-weight:700}
+.card .top{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;
+  justify-content:space-between;padding:16px 19px;cursor:pointer}
+.card h3{font-size:17.5px}
+.card .code{font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.08em;
+  font-variant-numeric:tabular-nums}
+.card .meta{font-size:13px;color:var(--ink-2);margin-top:4px}
+.card .codes{font-size:12.5px;color:var(--orange);font-weight:700;letter-spacing:.04em;
+  margin-top:3px;font-variant-numeric:tabular-nums}
+.card .codes span{color:var(--ink-3);font-weight:400}
+.card.flash{animation:flash 1.6s ease-out}
+@keyframes flash{
+  0%{box-shadow:0 0 0 3px var(--orange-hi)}
+  100%{box-shadow:0 0 0 3px transparent}
+}
+.badge{display:inline-block;border-radius:99px;padding:3px 11px;font-size:11.5px;font-weight:800;
+  border:1px solid}
+.badge.soon{color:var(--warn);border-color:var(--warn)}
+.badge.live{color:var(--ok);border-color:var(--ok);
+  background:color-mix(in srgb,var(--ok) 12%,transparent)}
+.badge.done{color:var(--ink-3);border-color:var(--line)}
+.card .body{display:none;padding:0 19px 19px;border-top:1px solid var(--line)}
+.card.open .body{display:block}
+.dl{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;margin-top:15px;font-size:14px}
+.dl dt{color:var(--ink-2);font-size:12.5px;font-weight:700;padding-top:2px}
+.dl dd{margin:0}
+@media (max-width:620px){.dl{grid-template-columns:1fr}.dl dt{margin-top:8px}}
+.empty{text-align:center;color:var(--ink-3);padding:44px 20px;border:1px dashed var(--line);
+  border-radius:7px;margin-top:16px}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px;border-bottom:1px solid var(--line)}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 18px;
+  font-weight:800;font-size:15px;color:var(--ink-2);cursor:pointer;margin-bottom:-1px}
+.tab:hover{color:var(--ink)}
+.tab.on{color:var(--orange);border-bottom-color:var(--orange)}
+.tabpanel h2{font-size:20px;margin-top:22px}
+.tabpanel .hint{font-size:13.5px;color:var(--ink-2);margin:6px 0 0;max-width:80ch}
+
+/* ---------- summary ---------- */
+.sumkpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:11px;margin-top:18px}
+.sumkpi .box{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px 15px}
+.sumkpi .k{font-size:11px;letter-spacing:.06em;color:var(--ink-2)}
+.sumkpi .v{font-size:22px;font-weight:800;line-height:1.35;font-variant-numeric:tabular-nums}
+tr.month td{background:var(--sand);font-weight:800;font-size:13px;letter-spacing:.04em;
+  color:var(--orange)}
+td.code{font-weight:800;color:var(--orange);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.small{font-size:12.5px;color:var(--ink-2)}
+.pill{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:800;border:1px solid}
+.pill.soon{color:var(--warn);border-color:var(--warn)}
+.pill.live{color:var(--ok);border-color:var(--ok)}
+.pill.done{color:var(--ink-3);border-color:var(--line)}
+
+/* ---------- budget plan ---------- */
+.money{font-variant-numeric:tabular-nums;font-weight:800;white-space:nowrap}
+.money.neg{color:var(--bad)}
+.bar-track{height:10px;border-radius:99px;background:var(--sand);overflow:hidden;margin-top:12px;
+  border:1px solid var(--line)}
+.bar-fill{height:100%;background:var(--orange);width:0}
+.bar-fill.over{background:var(--bad)}
+td input.w-budget{min-width:120px;text-align:right}
+.warn{margin-top:18px;border:1px solid var(--bad);border-radius:7px;padding:14px 17px;
+  background:color-mix(in srgb,var(--bad) 12%,transparent);font-size:14px}
+.warn b{display:block;margin-bottom:4px}
+
+/* ---------- toast ---------- */
+.toast{position:fixed;inset-inline:0;bottom:74px;margin:auto;width:max-content;max-width:92vw;
+  background:#3A2416;color:#FBF6EF;border-radius:6px;padding:11px 18px;font-size:13.5px;
+  display:flex;gap:14px;align-items:center;opacity:0;transform:translateY(8px);
+  transition:.18s;pointer-events:none;z-index:60}
+.toast.show{opacity:1;transform:none;pointer-events:auto}
+.toast button{background:var(--orange);border:0;color:#fff;border-radius:4px;
+  padding:5px 12px;font-weight:700;cursor:pointer}
+.dock{position:fixed;inset-inline:0;bottom:0;z-index:50;background:var(--surface);
+  border-top:1px solid var(--line);padding:9px 20px;display:flex;flex-wrap:wrap;gap:8px;
+  align-items:center;justify-content:center}
+.dock .sp{flex:1 1 0}
+.savestate{font-size:12px;color:var(--ink-3)}
+.savestate.ok{color:var(--ok)}
+
+@media print{
+  header{background:#fff;color:#000;border-bottom:2px solid #000}
+  header h1,.kpi .v{color:#000}
+  .bar,.dock,.toast,.panel.form,.picklist,.rowdel,.btn{display:none !important}
+  .card .body{display:block !important}
+  .card{break-inside:avoid;page-break-inside:avoid;border:1px solid #999}
+  body{background:#fff;padding:0}
+}
+</style>
+</head>
+<body>
+
+
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">درب · التسويق التجاري</p>
+    <h1>إدارة الحملات التسويقية في المحطات</h1>
+    <p>سجِّل الحملة ومدّتها وتاريخ بدئها والمحطات المشمولة والأدوات المستخدمة وهدفها وشروطها والشركاء المشاركين والعرض المقترح، وابحث عنها لاحقًا بكود الحملة أو كود المحطة أو اسم الشريك.</p>
+    <div class="kpis">
+      <div class="kpi"><div class="k">الحملات المسجّلة</div><div class="v" id="kCamp">١</div></div>
+      <div class="kpi"><div class="k">حملات جارية</div><div class="v" id="kLive">٠</div></div>
+      <div class="kpi"><div class="k">المحطات المشمولة</div><div class="v" id="kSt">٧</div></div>
+      <div class="kpi"><div class="k">الشركاء المشاركون</div><div class="v" id="kPa">٤</div></div>
+      <div class="kpi"><div class="k">محطات درب في القاعدة</div><div class="v" id="kAll">١٢٧</div></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="warn" id="warn" hidden=""></div>
+
+  <!-- ---------------- campaigns ---------------- -->
+  <section class="tabpanel" id="panel-camp">
+
+  <div class="bar">
+    <div class="grow"><input type="text" id="q" placeholder="ابحث بكود الحملة، أو كود المحطة، أو اسم المحطة أو المدينة، أو اسم الشريك…"></div>
+    <select id="fStatus" style="width:auto"><option value="">كل الحالات</option><option value="soon">قادمة</option><option value="live">جارية</option><option value="done">منتهية</option></select>
+    <button type="button" class="btn" id="btnExpand">طيّ الكل</button>
+    <button type="button" class="btn primary" id="btnNew">+ حملة جديدة</button>
+  </div>
+
+  <!-- ---------------- form ---------------- -->
+  <section class="panel form" id="form" hidden="">
+    <h2 id="formTitle">تعديل الحملة · CMP-2026-02</h2>
+    <p class="hint">الحقول المعلّمة بنجمة مطلوبة. تُحفظ الحملة في هذا المتصفح، ويمكن تصديرها ملفًا في أي وقت.</p>
+
+    <div class="grid2">
+      <div><label class="f" for="fName">اسم الحملة *</label>
+        <input type="text" id="fName" placeholder="مثال: حملة فطور محطة العمرة"></div>
+      <div><label class="f" for="fCode">كود الحملة *</label>
+        <input type="text" id="fCode" placeholder="CMP-2026-01"></div>
+    </div>
+
+    <div class="grid3" style="margin-top:15px">
+      <div><label class="f" for="fStart">تاريخ البدء *</label><input type="date" id="fStart"></div>
+      <div><label class="f" for="fWeeks">المدة (أسابيع)</label><input type="number" id="fWeeks" min="1" max="104" value="4"></div>
+      <div><label class="f" for="fEnd">تاريخ الانتهاء</label><input type="date" id="fEnd"></div>
+    </div>
+    <p class="poolnote" id="fDur" style="margin:8px 0 0">المدة: ٣ أيام</p>
+
+    <fieldset>
+      <legend>الحملة الأساسية والحملات الفرعية</legend>
+      <div class="grid2">
+        <div>
+          <label class="f" for="fParent">تتبع الحملة الأساسية</label>
+          <input type="text" id="fParent" list="campCodes" autocomplete="off" placeholder="كود الحملة الأساسية">
+          <p class="poolnote">اتركه فارغًا إن كانت هذه حملة مستقلة.</p>
+        </div>
+        <div>
+          <label class="f" for="subQ">أدرج حملة قائمة تحت هذه الحملة</label>
+          <input type="text" id="subQ" list="subCodes" autocomplete="off" placeholder="كود الحملة الفرعية">
+          <div class="bar" style="margin:9px 0 0">
+            <button type="button" class="btn sm" id="btnSubAdd">أدرجها</button>
+            <button type="button" class="btn sm ghost" id="btnSubNew">+ حملة فرعية جديدة</button>
+          </div>
+        </div>
+      </div>
+      <div class="chips" id="subChips"><span class="poolnote">لا حملات فرعية تحت هذه الحملة.</span></div>
+      <datalist id="subCodes"><option value="CMP-2026-03">حملة السيارات- التشغيل</option></datalist>
+    </fieldset>
+
+    <fieldset>
+      <legend>المحطات المشمولة</legend>
+      <div class="pick">
+        <input type="text" id="stQ" placeholder="اكتب كود المحطة أو اسمها أو مدينتها…" autocomplete="off">
+        <div class="picklist" id="stList"></div>
+      </div>
+      <div class="chips" id="stChips"><span class="chip"><b>MK007</b> النوارية <span style="color:var(--ink-3);font-size:12px">٤٧ شريكًا</span> <button type="button" data-c="MK007" title="إزالة">×</button></span></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>الأدوات المستخدمة في الحملة</legend>
+      <div class="tools" id="toolBox"><label class="tool on" data-t="فيديو تشويقي"><input type="checkbox" value="فيديو تشويقي"><span>فيديو تشويقي</span></label><label class="tool on" data-t="فيديو عروض الحملة"><input type="checkbox" value="فيديو عروض الحملة"><span>فيديو عروض الحملة</span></label><label class="tool on" data-t="فيديوهات المؤثّرين"><input type="checkbox" value="فيديوهات المؤثّرين"><span>فيديوهات المؤثّرين</span></label><label class="tool on" data-t="حملة واتساب"><input type="checkbox" value="حملة واتساب"><span>حملة واتساب</span></label><label class="tool on" data-t="توزيع كروت العرض"><input type="checkbox" value="توزيع كروت العرض"><span>توزيع كروت العرض</span></label><label class="tool" data-t="لوحات المضخات"><input type="checkbox" value="لوحات المضخات"><span>لوحات المضخات</span></label><label class="tool" data-t="لافتات الطريق"><input type="checkbox" value="لافتات الطريق"><span>لافتات الطريق</span></label><label class="tool on" data-t="رمز QR للتفعيل"><input type="checkbox" value="رمز QR للتفعيل"><span>رمز QR للتفعيل</span></label><label class="tool" data-t="بروشور مطبوع"><input type="checkbox" value="بروشور مطبوع"><span>بروشور مطبوع</span></label><label class="tool" data-t="النشر على منصات التواصل"><input type="checkbox" value="النشر على منصات التواصل"><span>النشر على منصات التواصل</span></label><label class="tool" data-t="إعلانات مدفوعة"><input type="checkbox" value="إعلانات مدفوعة"><span>إعلانات مدفوعة</span></label><label class="tool" data-t="تدريب عمال المحطة"><input type="checkbox" value="تدريب عمال المحطة"><span>تدريب عمال المحطة</span></label></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>الهدف</legend>
+      <div class="grid2">
+        <div><label class="f" for="fGoal">هدف الحملة *</label>
+          <textarea id="fGoal" placeholder="مثال: تفعيل الفترة الصباحية ورفع مبيعات الوحدات الغذائية بين ٠٥:٠٠ و١١:٠٠."></textarea></div>
+        <div>
+          <label class="f" for="fKpi">مؤشر القياس</label>
+          <input type="text" id="fKpi" placeholder="مثال: عمليات مسح QR ÷ عدد سيارات الفترة">
+          <label class="f" for="fTarget" style="margin-top:13px">المستهدف الرقمي</label>
+          <input type="text" id="fTarget" placeholder="مثال: معدل التقاط ٥٪ من سيارات الصباح">
+          <label class="f" for="fBudget" style="margin-top:13px">ميزانية الحملة (ريال)</label>
+          <input type="number" id="fBudget" min="0" step="500" placeholder="اتركه فارغًا إن لم تُحدَّد">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>الشروط</legend>
+      <textarea id="fTerms" placeholder="شروط المشاركة والالتزامات على كل طرف…"></textarea>
+      <button type="button" class="btn sm ghost" id="btnTerms" style="margin-top:9px">أدرج الشروط الافتراضية</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>الشركاء المشاركون والعرض المقترح</legend>
+      <div class="pool" id="paPool"><div class="poolst"><div class="poolhd"><b>MK007</b> النوارية · مكة <span class="m">٤٧ شريكًا في المحطة</span><span class="sp"></span><button type="button" class="btn sm ghost" data-all="MK007">اختر الكل</button></div><div class="chips"><button type="button" class="chip pickchip" data-n="درب الصيانة" data-c="MK007">درب الصيانة<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="كار شيلد" data-c="MK007">كار شيلد<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="هانكوك" data-c="MK007">هانكوك<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="واش واي" data-c="MK007">واش واي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="برنت" data-c="MK007">برنت<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="العكبري" data-c="MK007">العكبري<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="البركة" data-c="MK007">البركة<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="قطب" data-c="MK007">قطب<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="كار ليزر" data-c="MK007">كار ليزر<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="كار هب برو" data-c="MK007">كار هب برو<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="صامولجي" data-c="MK007">صامولجي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ترويقة زمان" data-c="MK007">ترويقة زمان<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بيتزا ريتا" data-c="MK007">بيتزا ريتا<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ماكدونالدز" data-c="MK007">ماكدونالدز<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="قيس ايسكريم" data-c="MK007">قيس ايسكريم<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بابا سنفور" data-c="MK007">بابا سنفور<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بف" data-c="MK007">بف<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="اندو محموس" data-c="MK007">اندو محموس<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="مدور" data-c="MK007">مدور<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ضيافة البركة" data-c="MK007">ضيافة البركة<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="عريكة عم قاسم" data-c="MK007">عريكة عم قاسم<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="شاورمر" data-c="MK007">شاورمر<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ايتر" data-c="MK007">ايتر<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="مكبب" data-c="MK007">مكبب<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="لمة برجر" data-c="MK007">لمة برجر<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="قادري" data-c="MK007">قادري<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="كافتيرجي" data-c="MK007">كافتيرجي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="هنش برجر" data-c="MK007">هنش برجر<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ركن مندي حضرموت" data-c="MK007">ركن مندي حضرموت<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ورق عنب سوما" data-c="MK007">ورق عنب سوما<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ناصية حلم" data-c="MK007">ناصية حلم<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ركن الجمبري" data-c="MK007">ركن الجمبري<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="رو" data-c="MK007">رو<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="انسول" data-c="MK007">انسول<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="المذاق المغربي" data-c="MK007">المذاق المغربي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="جوينت" data-c="MK007">جوينت<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ريشو" data-c="MK007">ريشو<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بوبا بيرلز" data-c="MK007">بوبا بيرلز<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="تشاميقوس" data-c="MK007">تشاميقوس<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="كوف" data-c="MK007">كوف<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بون" data-c="MK007">بون<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="اودز" data-c="MK007">اودز<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="يو كافي" data-c="MK007">يو كافي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="٣٦٠ كافي" data-c="MK007">٣٦٠ كافي<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="سكيليتون" data-c="MK007">سكيليتون<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="ستار جوس" data-c="MK007">ستار جوس<span class="tick">✓</span></button><button type="button" class="chip pickchip" data-n="بنده" data-c="MK007">بنده<span class="tick">✓</span></button></div></div></div>
+      <div class="bar" style="margin:0 0 4px">
+        <div class="grow"><input type="text" id="paQ" placeholder="ابحث في شركاء المحطات المختارة، أو اكتب اسم شريك جديد…" autocomplete="off"></div>
+        <button type="button" class="btn" id="btnPaNew">أضِفه شريكًا جديدًا</button>
+      </div>
+      <div class="tablewrap">
+        <table>
+          <thead><tr>
+            <th>الشريك</th><th>النوع</th><th>المحطة</th><th>فكرة العرض</th>
+            <th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th><th></th>
+          </tr></thead>
+          <tbody id="paBody"><tr><td><input type="text" class="p-name" value="واش واي" placeholder="اسم الشريك"></td><td><select class="p-type"><option value="">—</option><option>مطعم</option><option>مقهى</option><option>مخبز أو حلويات</option><option>عصائر</option><option>سوبرماركت</option><option>خدمات سيارات</option><option>مغسلة سيارات</option><option>صراف أو بنك</option><option>تطبيق توصيل</option><option>علامة تجارية راعية</option><option>اتصالات</option><option>تأمين</option><option>جهة حكومية</option><option>أخرى</option></select></td><td><select class="p-code"><option value="">—</option><option value="EXT">خارجي</option><option value="MK007">MK007</option></select></td><td><input type="text" class="p-offer" value="غسلة خارجية ب١٠ ريال" placeholder="فكرة العرض"></td><td><input type="text" class="p-old" value="١" placeholder="٢٠ ر.س"></td><td><input type="text" class="p-new" value="" placeholder="١٥ ر.س"></td><td><select class="p-status"><option>مؤكد</option><option selected="">بانتظار الرد</option><option>معتذر</option></select></td><td><button type="button" class="btn sm danger rowdel" title="حذف الصف">×</button></td></tr></tbody>
+        </table>
+      </div>
+      <button type="button" class="btn sm" id="btnPaRow" style="margin-top:10px">+ إضافة صف شريك</button>
+    </fieldset>
+
+    <fieldset>
+      <legend>إضافة شريك خارجي</legend>
+      <p class="poolnote" style="margin:0 0 11px">شريك من خارج المحطة — علامة تجارية أو بنك أو تطبيق توصيل أو أي جهة غير مستأجرة في الموقع. يُحفظ في قائمة الشركاء الخارجيين ليظهر في الحملات القادمة.</p>
+      <div class="grid3">
+        <div><label class="f" for="exName">اسم الشريك *</label>
+          <input type="text" id="exName" placeholder="مثال: بنك البلاد"></div>
+        <div><label class="f" for="exType">نوع الشريك *</label>
+          <select id="exType"><option value="">— اختر النوع —</option><option>مطعم</option><option>مقهى</option><option>مخبز أو حلويات</option><option>عصائر</option><option>سوبرماركت</option><option>خدمات سيارات</option><option>مغسلة سيارات</option><option>صراف أو بنك</option><option>تطبيق توصيل</option><option>علامة تجارية راعية</option><option>اتصالات</option><option>تأمين</option><option>جهة حكومية</option><option>أخرى</option></select></div>
+        <div><label class="f" for="exOffer">فكرة العرض</label>
+          <input type="text" id="exOffer" placeholder="مثال: كاشباك ٥٪ على تعبئة الوقود"></div>
+      </div>
+      <div class="bar" style="margin-top:13px;align-items:flex-end">
+        <div style="flex:0 1 280px;min-width:200px">
+          <label class="f" for="exCamp">كود الحملة</label>
+          <input type="text" id="exCamp" list="campCodes" autocomplete="off" placeholder="CMP-2026-01">
+        </div>
+        <button type="button" class="btn primary" id="btnExAdd">أضِف الشريك الخارجي</button>
+      </div>
+      <datalist id="campCodes"><option value="CMP-2026-03">حملة السيارات- التشغيل</option></datalist>
+      <p class="poolnote">يأتي الكود من الحملة المفتوحة. اكتب كود حملة أخرى مسجّلة ليُضاف الشريك إليها مباشرةً.</p>
+    </fieldset>
+
+    <fieldset>
+      <legend>العرض المقترح للحملة ككل</legend>
+      <textarea id="fOffer" placeholder="مثال: وجبة فطور بسعر خاص أو مشروب مجاني مع أي فطور، مقابل تعبئة وقود بقيمة يحدّدها الاتفاق، ويُفعَّل بمسح رمز QR على كرت الفطور."></textarea>
+      <label class="f" for="fNotes" style="margin-top:13px">ملاحظات</label>
+      <textarea id="fNotes" placeholder="أي تفاصيل إضافية…"></textarea>
+    </fieldset>
+
+    <div class="bar" style="margin-top:20px">
+      <button type="button" class="btn primary" id="btnSave">حفظ الحملة</button>
+      <button type="button" class="btn" id="btnCancel">إلغاء</button>
+      <span class="sp" style="flex:1"></span>
+      <button type="button" class="btn danger" id="btnDel">حذف الحملة</button>
+    </div>
+  </section>
+
+  <!-- ---------------- share ---------------- -->
+  <section class="panel form" id="share" hidden="">
+    <h2>مشاركة السجل مع زميل</h2>
+    <p class="hint">لا يوجد خادم مشترك خلف هذه الصفحة، فما تكتبه يبقى في متصفحك أنت، ولا يراه من تفتح له الرابط.
+      طريقان: <b>لزميل</b> — اضغط «نسخ رمز المشاركة» وأرسل الرمز، ويلصقه هو هنا؛ والدمج يوازن بين النسختين
+      بكود الحملة ووقت آخر تعديل فلا يضيع عمل أحد. <b>وللإدارة</b> — أرسل الرمز نفسه إلى كلود ليُثبّته داخل
+      الرابط، فيرى كل من يفتحه السجل كاملًا بلا لصق ولا خطوات.</p>
+    <label class="f" for="shareBox">الصق رمز المشاركة الذي وصلك</label>
+    <textarea id="shareBox" style="min-height:140px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px" placeholder="DARB1:…"></textarea>
+    <div class="bar" style="margin-top:14px">
+      <button type="button" class="btn primary" id="btnMergeCode">ادمج ما لصقته</button>
+      <button type="button" class="btn" id="btnImport">استيراد من ملف JSON</button>
+      <button type="button" class="btn" id="btnScan">ابحث عن حملاتي في هذا المتصفح</button>
+      <button type="button" class="btn ghost" id="btnShareClose">إغلاق</button>
+    </div>
+  </section>
+
+  <!-- ---------------- list ---------------- -->
+  <div id="list" class="cards"><article class="card open" data-i="0"><div class="top"><div><span class="code">CMP-2026-03</span><h3>حملة السيارات- التشغيل</h3><p class="meta">2026-08-23 ← 2026-08-28 · ٦ أيام · ٧ محطات · ٤ شركاء</p><p class="codes">RY075 · MK023 · MK017 · MK035 · MK099 · MK015 · JA069</p></div><div style="display:flex;gap:8px;align-items:center"><span class="badge soon">قادمة</span><button type="button" class="btn sm edit">تعديل</button></div></div><div class="body"><dl class="dl"><dt>المحطات المشمولة</dt><dd class="chips"><span class="chip">RY075 — الدايري الشمالي · الرياض</span><span class="chip">MK023 — بن درويش · مكة</span><span class="chip">MK017 — عرفات الشوقية · مكة</span><span class="chip">MK035 — الجمعية الوسام( طريق الملك فهد) · الطائف</span><span class="chip">MK099 — البيعه · الطائف</span><span class="chip">MK015 — النسيم · جدة</span><span class="chip">JA069 — كورنيش جيزان · جازان</span></dd><dt>الأدوات المستخدمة</dt><dd class="chips"><span class="chip">فيديو تشويقي</span><span class="chip">فيديو عروض الحملة</span><span class="chip">فيديوهات المؤثّرين</span><span class="chip">حملة واتساب</span><span class="chip">توزيع كروت العرض</span><span class="chip">رمز QR للتفعيل</span></dd><dt>الهدف</dt><dd>زيادة المبيعات</dd><dt>مؤشر القياس</dt><dd>—</dd><dt>العرض المقترح</dt><dd>—</dd><dt>الشروط</dt><dd style="white-space:pre-wrap">تعبئة المتوسط من كل محطة بالرجوع للتحليلات</dd></dl><h3 style="font-size:14px;margin-top:18px">الشركاء المشاركون</h3><div class="tablewrap"><table><thead><tr><th>الشريك</th><th>النوع</th><th>المحطة</th><th>فكرة العرض</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr></thead><tbody><tr><td>واش واي</td><td>—</td><td class="num">RY075</td><td>—</td><td class="num">—</td><td class="num">١٥</td><td>بانتظار الرد</td></tr><tr><td>مغسلة water wash</td><td>—</td><td class="num">MK017</td><td>—</td><td class="num">—</td><td class="num">١٠</td><td>بانتظار الرد</td></tr><tr><td>ترويشة غسيل سيارات</td><td>—</td><td class="num">MK099</td><td>—</td><td class="num">—</td><td class="num">١٠</td><td>بانتظار الرد</td></tr><tr><td>درب الصيانة غسيل وبنشر</td><td>—</td><td class="num">MK023</td><td>—</td><td class="num">—</td><td class="num">10</td><td>بانتظار الرد</td></tr></tbody></table></div></div></article></div>
+  <div class="empty" id="empty" hidden="">لا توجد حملات مطابقة. اضغط «+ حملة جديدة» لتسجيل أول حملة.</div>
+  </section>
+</div>
+
+<div class="dock">
+  <button type="button" class="btn primary" id="btnNew2">+ حملة جديدة</button>
+  <button type="button" class="btn" id="btnShare">نسخ رمز المشاركة</button>
+  <button type="button" class="btn" id="btnRecv">استلام تعديلات</button>
+  <button type="button" class="btn primary" id="btnHtml">تنزيل ملف HTML</button>
+  <button type="button" class="btn" id="btnJson">تصدير JSON</button>
+  <button type="button" class="btn" id="btnCsv">تصدير CSV</button>
+  <button type="button" class="btn" id="btnPrint">طباعة / PDF</button>
+  <span class="savestate ok" id="savestate">محفوظ 17:31</span>
+</div>
+<input type="file" id="fileimp" accept=".json,application/json,.txt" hidden="">
+<div class="toast" id="toast"><span id="toastmsg"></span><button type="button" id="toastact" hidden=""></button></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+var STATIONS = [{"code":"AS081","name":"خميس مشيط العزيزيه","city":"خميس مشيط","status":"تعمل","op":"امتياز","tenants":["بترومين","KRO كافيه"],"units":6,"rented":3,"vacant":3},{"code":"AS085","name":"خيبر بيشة","city":"عسير","status":"تعمل","op":"امتياز","units":12,"rented":0,"vacant":12},{"code":"AS124","name":"الصفاء","city":"عسير","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"AS141","name":"الأمير سلطان","city":"عسير","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"AS153","name":"مدخل محايل","city":"عسير","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"AS192","name":"محطه الرؤيا","city":"عسير","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"AS197","name":"سوق الاشواق","city":"خميس مشيط","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"AS271","name":"مسارات درب عقبة شعار","city":"عسير","status":"تعمل","op":"امتياز","tenants":["بارنز كافيه"]},{"code":"AS286","name":"صناعية محائل","city":"محايل عسير","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"BH050","name":"الاطاولة","city":"الباحة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"BH065","name":"النزهه","city":"الباحة","status":"تعمل","op":"امتياز","tenants":["بترومين","كودو","دوز كافيه","ودق ماركت","صراف بنك الاهلي"]},{"code":"BH126","name":"محطة الحميدان","city":"الباحة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"EB102","name":"طريق احد","city":"القطيف","status":"تعمل","op":"امتياز","units":2,"rented":0,"vacant":2},{"code":"EP051","name":"كورنيش الخبر","city":"الخبر","status":"تعمل","op":"مُدارة من درب"},{"code":"EP074","name":"حي الورود","city":"حفر الباطن","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"EP102","name":"شارع أحد تاروت-القطيف","city":"الشرقية","status":"تعمل","op":"امتياز","tenants":["تموينات الذاهب","صراف بنك الجزيرة"]},{"code":"EP132","name":"الذيبة","city":"حفر الباطن","status":"تحت التنفيذ","op":"امتياز","units":5,"rented":4,"vacant":1},{"code":"EP133","name":"طريق الملك عبدالله","city":"حفر الباطن","status":"تحت التنفيذ","op":"امتياز"},{"code":"EP134","name":"حفر الباطن - الواحة","city":"الشرقية","status":"تحت التنفيذ","op":"امتياز","units":8,"rented":7,"vacant":1},{"code":"HA043","name":"العريفي","city":"حائل","status":"تعمل","op":"مُدارة من درب","tenants":["مغسلة طمس","مركز التقدم الذهبي خدمات سيارات","DOB كافيه","بوبايز","بارنز كافيه","تموينات شموع"]},{"code":"HA050","name":"مطار حائل","city":"حائل","status":"تحت التنفيذ","op":"امتياز"},{"code":"HA052","name":"الأمير سعود","city":"حائل","status":"تحت التنفيذ","op":"امتياز","units":10,"rented":5,"vacant":5},{"code":"JA041","name":"احد المسارحة - القسوم","city":"جازان","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"JA053","name":"خبت نخلان(الملك عبد العزيز)-جيزان","city":"جازان","status":"تعمل","op":"مُدارة من درب","tenants":["سوبر ماركت مترو مارت"]},{"code":"JA056","name":"الروابي-المودة","city":"جازان","status":"تعمل","op":"مُدارة من درب"},{"code":"JA059","name":"طريق الملك فهد جازان","city":"جازان","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"JA060","name":"صناعية صامطه","city":"جازان","status":"تعمل","op":"مُدارة من درب","tenants":["اويل زون","مطعم لهب الطعام"]},{"code":"JA061","name":"طريق صبيا","city":"جازان","status":"تعمل","op":"مُدارة من درب","tenants":["البترول الذهبي","كوفي بلاك اند وايت","دوز كافيه","Cove كافيه","فريش واي"]},{"code":"JA069","name":"كورنيش جيزان","city":"جازان","status":"تعمل","op":"مُدارة من درب","tenants":["مرسى مطروح","كوفي لوتسو سويت آند ستوري","ماهو كافيه -المذاق المغربي","كوفي 24","مزاج المغربي -","فرست مارت"]},{"code":"JA070","name":"محطة الظبية","city":"جازان","status":"تحت التنفيذ","op":"امتياز","units":31,"rented":1,"vacant":30},{"code":"JA092","name":"احد المسارحة - البلدية","city":"جازان","status":"تعمل","op":"امتياز"},{"code":"JA094","name":"الكربوس (محطة الزهور )","city":"جازان","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"JA155","name":"محطة بترو بارك","city":"جازان","status":"تحت التنفيذ","op":"امتياز"},{"code":"JA156","name":"العيدابي","city":"جازان","status":"تعمل","op":"امتياز"},{"code":"JA188","name":"محطة طريق الملك عبدالعزيز بيش","city":"بيشة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"JA227","name":"العارضة","city":"جازان","status":"تعمل","op":"مُدارة من درب","tenants":["البترول الذهبي","صراف بنك البلاد"],"units":7,"rented":0,"vacant":7},{"code":"JA256","name":"الفطيحة","city":"جازان","status":"تعمل","op":"امتياز"},{"code":"JA272","name":"الفيصلية","city":"جازان","status":"تعمل","op":"امتياز"},{"code":"JA302","name":"جزيرة فرسان -","city":"جازان","status":"تعمل","op":"امتياز"},{"code":"MD009","name":"طريق السلام","city":"المدينة المنورة","status":"تعمل","op":"امتياز","units":11,"rented":0,"vacant":11},{"code":"MD096","name":"الهجرة","city":"المدينة المنورة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MD123","name":"محطة بترو بارك - المدينة المنورة","city":"المدينة المنورة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MD194","name":"محطة النواة","city":"المدينة المنورة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MD224","name":"محطة الجمعية العربية","city":"المدينة المنورة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK001","name":"جبل النور","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["درب الصيانة","يو كافي","فريش واي"]},{"code":"MK002","name":"المعيصم","city":"مكة","status":"تعمل","tenants":["البترول الذهبي","مغسلة","ماكدونالدز","كرسبي كريم","باباسنفور","- تيم هورتنز","دانكن","ملتن","يو كوفي","بون","قيس ايسكريم","تفطيرة","بارنز","المذاق المغربي","سينابون","فريش واي"]},{"code":"MK003","name":"العوالي","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["بترومين","مغسلة صقر","باباسنفور","بف","طعمية السلطان","الطازج","كازاباستا- برقر كينق","شاورمر- بوقا","لمة","حاشي باشا","مندي الدعدي","فطيرة و شاي T80-  باسكن","دومينوز","فروتي الرضاء","فاير جريل","شاورما وصوص","شيفز","محطة العصائر","مذاق المنئوشة","تيم هورتنز","قهوة الامراء","يو كوفي","براتو","- بارنز","المذاق المغربي","بون","قهوة هيام","زيكا","بنز كوكيز","قيس ايسكريم","تموينات السلطان","لوازم الرحلات","Redbox"]},{"code":"MK004","name":"عاصفة الصحراء","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["مغسلة From","بنشر اكس ماكس","كرك شباتي","كنتاكي","ماكدونالدز","بون","يو كوفي","كرسبي كريم","بارنز","تيم هورتنز","دانكن","أسواق الحليس"]},{"code":"MK005","name":"الشيباني","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["الشموخ خدمات سيارات","كرك وشباتي","كافتيريا باجيت","ماكدونالدز","بارنز","مزاج مغربي","ايت اوز كوفي","تيم هورتنز","دانكن","كرسبي كريم","بون","يو كوفي","أسواق الحليس"]},{"code":"MK006","name":"جنوب الطائف","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["بنشر اويل روز","جاب كوكيز -- بارنز","دانكن","يو كوفي","أسواق الحليس"]},{"code":"MK007","name":"النوارية","city":"مكة","status":"تعمل","tenants":["درب الصيانة","كار شيلد","هانكوك","واش واي","برنت","العكبري","البركة","قطب","كار ليزر","كار هب برو","صامولجي","ترويقة زمان","بيتزا ريتا","ماكدونالدز","قيس ايسكريم","بابا سنفور","بف","اندو محموس","مدور","ضيافة البركة","عريكة عم قاسم","شاورمر","ايتر","مكبب","لمة برجر","قادري","كافتيرجي","هنش برجر","ركن مندي حضرموت","ورق عنب سوما","ناصية حلم","ركن الجمبري","رو","انسول","المذاق المغربي","جوينت","ريشو","بوبا بيرلز","تشاميقوس","كوف","بون","اودز","يو كافي","٣٦٠ كافي","سكيليتون","ستار جوس","بنده"]},{"code":"MK008","name":"الحسينية","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["مغسلة درب الصيانة","بنشر درب الصيانة","طعمية السلطان","سندويشة وشاورما","جاب كوكيز","قهوة الامراء","فريش واي","صراف بنك الرياض"]},{"code":"MK012","name":"طيبه","city":"جدة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK013","name":"بن العباس_الشوقية","city":"مكة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK014","name":"خليص","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["كافيانو كوفي"]},{"code":"MK015","name":"النسيم","city":"جدة","status":"تعمل","op":"مُدارة من درب","tenants":["كاراجي","بترومين","كنتاكي","هارديز -الطازج","بارنز كوفي","كرسبي كريم","بون","فريش واي"]},{"code":"MK016","name":"الرصيفة","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["درب الصيانة","مغسلة  car wash","تست شطائر","طعمية السلطان","قهوة الامراء","بون كوفي","عنوان القهوة","UP كوفي","فريش واي"]},{"code":"MK017","name":"عرفات الشوقية","city":"مكة","status":"تعمل","tenants":["بنشر رواد الصيانة","بترومين","مغسلة water wash","بوبايز","قيس ايسكريم","بارنز","بون","ريناز","فريش واي"]},{"code":"MK018","name":"الرصيفة المسار","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["درب الصيانة","بارنز","فنو ومنو مشروبات","اسواق درب"]},{"code":"MK019","name":"الشرايع","city":"مكة","status":"تعمل","tenants":["رواد الصيانة (بنشر- غسيل )","كنتاكي","هارديز -","بون","بارنز","فريش واي"]},{"code":"MK020","name":"ممشى الشوقية","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["بترومين","واش واي","مذاق المنئوشة","هيام","- مشراق","كيمس","بوبا بيرلز","UP coffee","كوف","فريش واي"]},{"code":"MK021","name":"الوسام","city":"الطائف","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK022","name":"1بطحاء قريش","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["واش واي","بنشر درب الصيانة","ديبو","فريش واي"]},{"code":"MK023","name":"بن درويش","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["بترومين","درب الصيانة غسيل وبنشر","بون","زيكا","كودو","عنوان القهوة","فريش واي"]},{"code":"MK027","name":"الصيانة-طريق المطار","city":"الطائف","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK028","name":"احلى مساء","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["اويل روز بنشر","الطازج","ماكدونالدز","كافتيريا باجيت","مزاج مغربي","يو كوفي","كيان","بون","ايت اوز","دوز كافيه","فريش واي"]},{"code":"MK029","name":"الدائري الثالث-الذكرى","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["بترومين","car shield","T3 autocarwash","ماكدونالدز","كرك وشباتي","مشراق","بوبايز","معلوم","بون","جوينت","وزنة براد","أسواق درب"]},{"code":"MK031","name":"2بطحاء قريش","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["رواد الصيانة","الطازج","بون","فريش واي"]},{"code":"MK033","name":"العمرة الجديدة","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["تكانة كافيه","فريش واي"]},{"code":"MK035","name":"الجمعية الوسام( طريق الملك فهد)","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["أسواق درب"]},{"code":"MK037","name":"الراشدية","city":"مكة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK040","name":"درب - الروضة","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK044","name":"القنفذة","city":"مكة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK045","name":"مدينة الملك عبد الله","city":"رابغ","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK046","name":"الحليس(طريق الجنوب)","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["بنشر الشموخ","مغاسل","مملوح وسمسم","كرز البن- Pulse","ديوانية ذوق الشيوخ"]},{"code":"MK047","name":"القادسية","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["Express care","valvoline by aramco","ماكدونالدز","اوريف كافيه","تيم هورتينز","فريش واي"]},{"code":"MK049","name":"السلولي","city":"مكة","status":"تعمل","op":"امتياز","tenants":["مغسلة السلام","خدمات سيارات السلام","بون","براتو","Savve Mart"]},{"code":"MK054","name":"محطة طريق السيل","city":"مكة","status":"تعمل","op":"مُدارة من درب"},{"code":"MK063","name":"السواط(شهار)","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["ناشونال ويل ستوب","ايت اوز","جوينت","بارنز","دانكن","فريش واي"]},{"code":"MK064","name":"جعرانه","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["رواد الصيانة","طعمية السلطان","سناك تشيكن","أسواق ومخابز البوابة الكبرى"]},{"code":"MK066","name":"الأمير فواز","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK067","name":"تربه","city":"الطائف","status":"تعمل","op":"امتياز","tenants":["بنشر ناشونال اويل ستوب","مغسلة Spot less","كيمس","شاي خادر"]},{"code":"MK068","name":"الجموم - الكنيدري","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["كوفي بولس","تموينات بشرى"]},{"code":"MK071","name":"الاجاويد","city":"جدة","status":"تعمل","op":"مُدارة من درب","tenants":["ستوري لزينة السيارات","كورس جرايند","تموينات الخير"]},{"code":"MK072","name":"العزيزية","city":"مكة","status":"تعمل","tenants":["مغسلة سيارات ازدان- حلول كار","عنوان القهوة","راشن زون ماركت"]},{"code":"MK082","name":"امنيتي(اسكان المدائن)","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK084","name":"الكر النازل","city":"مكة","status":"تعمل","op":"مُدارة من درب","tenants":["كرك شباتي","ديوانية جهز للقهوة","كرز البن","المذاق المغربي -كويك سيب Quick sip كوفي","أسواق ومخابز سنابل العز"]},{"code":"MK091","name":"محطة السر","city":"الطائف","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK093","name":"الملك خالد","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["دبل كير لغسيل السيارات","البترول الذهبي"]},{"code":"MK099","name":"البيعه","city":"الطائف","status":"تعمل","op":"مُدارة من درب","tenants":["ترويشة غسيل سيارات","بترومين -","مطعم سولو سالت"]},{"code":"MK100","name":"الكوثر","city":"جدة","status":"تعمل","op":"مُدارة من درب","tenants":["كافيه فولت","تموينات جنى"]},{"code":"MK103","name":"المعلمي","city":"جدة","status":"تعمل","op":"امتياز","units":2,"rented":0,"vacant":2},{"code":"MK154","name":"العليا","city":"جدة","status":"تعمل","op":"امتياز","tenants":["بترومين","كنتاكي","ايسو كافيه","اليخت للتسوق"]},{"code":"MK160","name":"محطة الشامل","city":"مكة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK161","name":"الحزم","city":"جدة","status":"تحت التنفيذ","op":"امتياز","units":7,"rented":0,"vacant":7},{"code":"MK164","name":"محطة ولي العهد 3","city":"مكة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK191","name":"الربوة التلاتين","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK205","name":"نقز - الربوة","city":"جدة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK206","name":"نقز - الاجواد","city":"جدة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK210","name":"الفلاح-فلسطين","city":"جدة","status":"تعمل","op":"امتياز","tenants":["الواحه ماكس اكسبريس","صراف بنك الانماء"]},{"code":"MK216","name":"الواحة","city":"جدة","status":"تعمل","op":"امتياز","units":1,"rented":0,"vacant":1},{"code":"MK217","name":"محطة المظليف","city":"مكة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK222","name":"بترولايز- طيبة","city":"جدة","status":"تعمل","op":"امتياز","units":1,"rented":0,"vacant":1},{"code":"MK223","name":"الحمراء","city":"جدة","status":"تعمل","op":"امتياز","units":1,"rented":0,"vacant":1},{"code":"MK228","name":"جدةالملك خالد - دلهام","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK241","name":"بترولايز - الياقوت","city":"جدة","status":"تعمل","op":"امتياز","units":3,"rented":0,"vacant":3},{"code":"MK260","name":"ابحر الشمالية","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK285","name":"القرينية","city":"جدة","status":"تحت التنفيذ","op":"امتياز"},{"code":"MK289","name":"طريق الليث التعاون","city":"جدة","status":"تعمل","op":"مُدارة من درب"},{"code":"MK300","name":"البغدادية","city":"جدة","status":"تعمل","op":"امتياز"},{"code":"MK310","name":"الشاطئ","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK311","name":"قويزه","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"MK326","name":"محطة الحمدانية","city":"جدة","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"NB130","name":"طريف - العقيلي -طريق الامير سلطان","city":"منطقة الحدود الشمالية","status":"تعمل","op":"امتياز"},{"code":"NB131","name":"طريف -  العقيلي- طريق ابو بكر","city":"منطقة الحدود الشمالية","status":"تعمل","op":"امتياز"},{"code":"NJ219","name":"المركب","city":"نجران","status":"تحت التنفيذ","op":"مُدارة من درب"},{"code":"QS055","name":"الدائري الشرقي","city":"القصيم","status":"تعمل","op":"مُدارة من درب"},{"code":"RY024","name":"غرناطة - الخرج طريق الملك عبد الله","city":"الخرج","status":"تعمل","op":"مُدارة من درب","tenants":["براعة الغسيل الالي","الزيت الذهبي","تيكا واي","بوبايز","كودو","مزاج مغربي","دوز كافيه","تيم هورتينز"]},{"code":"RY025","name":"الحمرا - الخرج طريق الملك عبد الله","city":"الخرج","status":"تعمل","op":"مُدارة من درب","tenants":["فال كارز مغسلة سيارات","الوقت الذهبي لغيار الزيوت","كودو","جباتي وكرك","مزاج مغربي","فريش واي"]},{"code":"RY042","name":"الناصفة-الخزامى","city":"الخرج","status":"تعمل","op":"مُدارة من درب","tenants":["مغسلة واش واي","ليدر اكسبريس","كنتاكي","ريشو قهوة"]},{"code":"RY075","name":"الدايري الشمالي","city":"الرياض","status":"تعمل","op":"مُدارة من درب","tenants":["واش واي","بترومين","الطازج","شاورما وصوص","تسالي مرصى مطروح","كودو","كنتاكي","مطعم طابور","باسكن روبنز","هاف مليون","مزاج مغربي","يو كافيه","Trolley","ترولي"]},{"code":"RY083","name":"الحوميات","city":"الرياض","status":"تحت التنفيذ","op":"امتياز"},{"code":"RY095","name":"الخرج - السفير 4 ( الهدا )","city":"الخرج","status":"تحت التنفيذ","op":"امتياز","units":11,"rented":8,"vacant":3},{"code":"RY105","name":"الأمير سعد","city":"الرياض","status":"تحت التنفيذ","op":"مُدارة من درب","units":3,"rented":1,"vacant":2},{"code":"RY106","name":"نجم الدين الايوبي","city":"الرياض","status":"تعمل","op":"امتياز","units":7,"rented":3,"vacant":4},{"code":"RY200","name":"نبض - ثادج","city":"الرياض","status":"تحت التنفيذ","op":"امتياز"},{"code":"RY201","name":"الرياض - ظهرة البديعة","city":"الرياض","status":"تعمل","op":"امتياز"}];
+var SEED = [{"code":"CMP-2026-03","name":"حملة السيارات- التشغيل","parent":"","start":"2026-08-23","end":"2026-08-28","weeks":1,"days":6,"stations":["RY075","MK023","MK017","MK035","MK099","MK015","JA069"],"tools":["فيديو تشويقي","فيديو عروض الحملة","فيديوهات المؤثّرين","حملة واتساب","توزيع كروت العرض","رمز QR للتفعيل"],"goal":"زيادة المبيعات","kpi":"","target":"","budget":0,"terms":"تعبئة المتوسط من كل محطة بالرجوع للتحليلات","partners":[{"name":"واش واي","type":"","code":"RY075","offer":"","old":"","newp":"١٥","status":"بانتظار الرد"},{"name":"مغسلة water wash","type":"","code":"MK017","offer":"","old":"","newp":"١٠","status":"بانتظار الرد"},{"name":"ترويشة غسيل سيارات","type":"","code":"MK099","offer":"","old":"","newp":"١٠","status":"بانتظار الرد"},{"name":"درب الصيانة غسيل وبنشر","type":"","code":"MK023","offer":"","old":"","newp":"10","status":"بانتظار الرد"}],"offer":"","notes":"","updatedAt":"2026-08-16T14:13:00.985Z"}];
+</script>
+<script>
+
+
+(function(){
+  var KEY='darb-campaigns-v1';
+  var TOOLS=['فيديو تشويقي','فيديو عروض الحملة','فيديوهات المؤثّرين','حملة واتساب',
+             'توزيع كروت العرض','لوحات المضخات','لافتات الطريق','رمز QR للتفعيل',
+             'بروشور مطبوع','النشر على منصات التواصل','إعلانات مدفوعة','تدريب عمال المحطة'];
+  var EXTKEY='darb-partners-ext-v1';
+  var PTYPES=['مطعم','مقهى','مخبز أو حلويات','عصائر','سوبرماركت','خدمات سيارات','مغسلة سيارات',
+              'صراف أو بنك','تطبيق توصيل','علامة تجارية راعية','اتصالات','تأمين','جهة حكومية','أخرى'];
+  var TERMS='١. يلتزم الشريك بتقديم العرض طوال مدة الحملة وبالسعر المتفق عليه.\n'+
+            '٢. يلتزم الشريك بالفتح في الموعد المحدّد للحملة وبتوفير الكمية اليومية المتفق عليها.\n'+
+            '٣. تتحمّل درب تنفيذ المحتوى والتصوير والنشر والتوزيع الميداني داخل المحطة.\n'+
+            '٤. لا تتحمّل درب قيمة العرض ولا تكلفة التعاقد مع المؤثّرين.\n'+
+            '٥. يُفعَّل العرض بمسح رمز QR، ولا يُجمع مع أي عرض آخر.\n'+
+            '٦. يُرسل تقرير القياس أسبوعيًا، وتُراجع العروض في نهاية الأسبوع الثالث.\n'+
+            '٧. لأي طرف إنهاء المشاركة بإشعار مكتوب قبل سبعة أيام.';
+
+  var $=function(id){ return document.getElementById(id); };
+  var toast=$('toast'), tmsg=$('toastmsg'), tact=$('toastact'), tT;
+  function say(m,ms,label,fn){
+    tmsg.textContent=m;
+    if(label){ tact.textContent=label; tact.hidden=false;
+      tact.onclick=function(){ tact.hidden=true; toast.classList.remove('show'); fn(); }; }
+    else { tact.hidden=true; tact.onclick=null; }
+    toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); tact.hidden=true; }, ms||3200);
+  }
+  function ar(n){ return Number(n||0).toLocaleString('ar-EG'); }
+  /* ١ مفرد، ٢ مثنى، ٣–١٠ جمع، وما فوقها تمييز منصوب */
+  function count(n,one,two,few,many){
+    n=Number(n)||0;
+    if(n===1) return one;
+    if(n===2) return two;
+    if(n>=3&&n<=10) return ar(n)+' '+few;
+    return ar(n)+' '+many;
+  }
+  function nPartner(n){ return count(n,'شريك واحد','شريكان','شركاء','شريكًا'); }
+  function nStation(n){ return count(n,'محطة واحدة','محطتان','محطات','محطة'); }
+  function nWeek(n){ return count(n,'أسبوع واحد','أسبوعان','أسابيع','أسبوعًا'); }
+  function nCampaign(n){ return count(n,'حملة واحدة','حملتان','حملات','حملة'); }
+  function nSub(n){ return count(n,'حملة فرعية واحدة','حملتان فرعيتان','حملات فرعية','حملة فرعية'); }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+
+  /* ---------------- storage ---------------- */
+  var campaigns=[], editing=null;
+  var storageOK=true;
+  try{ localStorage.setItem(KEY+':t','1'); localStorage.removeItem(KEY+':t'); }catch(e){ storageOK=false; }
+  if(!storageOK){
+    var w=document.getElementById('warn');
+    w.hidden=false;
+    w.innerHTML='<b>هذا المتصفح يمنع الحفظ في هذه الصفحة.</b>'+
+      'ما تسجّله يبقى ما دامت الصفحة مفتوحة فقط، ويضيع عند إغلاقها أو تحديثها. '+
+      'صدّر عملك بزرّ «تصدير JSON» أو «نسخ رمز المشاركة» قبل أن تغادر. '+
+      'وغالبًا يكون السبب وضع التصفّح المتخفّي أو منع بيانات المواقع في إعدادات المتصفح.';
+  }
+  function load(){
+    if(!storageOK) return;
+    try{ var raw=localStorage.getItem(KEY); if(raw) campaigns=JSON.parse(raw)||[]; }catch(e){ campaigns=[]; }
+  }
+  function stamp(c){ c.updatedAt=new Date().toISOString(); return c; }
+  function persist(){
+    if(!storageOK){ $('savestate').textContent='لا يحفظ في هذا المتصفح'; return; }
+    try{
+      localStorage.setItem(KEY, JSON.stringify(campaigns));
+      var d=new Date();
+      $('savestate').textContent='محفوظ '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+      $('savestate').className='savestate ok';
+    }catch(e){ $('savestate').textContent='تعذّر الحفظ — صدّر نسخة JSON'; }
+  }
+
+  /* ---------------- stations ---------------- */
+  var byCode={};
+  for(var i=0;i<STATIONS.length;i++) byCode[STATIONS[i].code]=STATIONS[i];
+  function stName(code){ var s=byCode[code]; return s?s.name:code; }
+  function stLabel(code){ var s=byCode[code]; return s?(code+' — '+s.name+(s.city?' · '+s.city:'')):code; }
+  function searchStations(q){
+    q=(q||'').trim().toLowerCase();
+    var out=[];
+    for(var i=0;i<STATIONS.length && out.length<40;i++){
+      var s=STATIONS[i];
+      var hay=(s.code+' '+s.name+' '+(s.city||'')+' '+(s.op||'')).toLowerCase();
+      if(!q || hay.indexOf(q)!==-1) out.push(s);
+    }
+    return out;
+  }
+
+  /* ---------------- form state ---------------- */
+  var draft={stations:[], tools:[], partners:[]};
+
+  function newCode(){
+    var y=new Date().getFullYear(), n=1;
+    var used={}; for(var i=0;i<campaigns.length;i++) used[campaigns[i].code]=1;
+    while(used['CMP-'+y+'-'+('0'+n).slice(-2)]) n++;
+    return 'CMP-'+y+'-'+('0'+n).slice(-2);
+  }
+  /* Weeks and the end date each drive the other; neither is compulsory on its
+     own, so a run of ten days or one that must end on a set date is sayable. */
+  function dayms(v){ return v? new Date(v+'T00:00:00').getTime() : 0; }
+  function daysOf(start,end){
+    var a=dayms(start), b=dayms(end);
+    if(!a||!b||b<a) return 0;
+    return Math.round((b-a)/86400000)+1;
+  }
+  function nDay(n){ return count(n,'يوم واحد','يومان','أيام','يومًا'); }
+  function durOf(c){
+    var d=daysOf(c.start,c.end);
+    if(d) return (d%7===0)? nWeek(d/7) : nDay(d);
+    return c.weeks? nWeek(c.weeks) : '—';
+  }
+  function showDur(){
+    var a=$('fStart').value, b=$('fEnd').value, d=daysOf(a,b);
+    if(d) $('fDur').textContent='المدة: '+nDay(d)+(d%7===0?' — أي '+nWeek(d/7):'');
+    else if(a&&b) $('fDur').textContent='تاريخ الانتهاء قبل تاريخ البدء.';
+    else $('fDur').textContent='اكتب المدة بالأسابيع فيُحسب تاريخ الانتهاء، أو حدّد تاريخ الانتهاء مباشرةً بأي عدد من الأيام.';
+  }
+  function endFromWeeks(){
+    var s=$('fStart').value, w=parseInt($('fWeeks').value,10);
+    if(s&&w&&w>0){
+      var d=new Date(s+'T00:00:00'); d.setDate(d.getDate()+w*7-1);
+      $('fEnd').value=d.toISOString().slice(0,10);
+    }
+    showDur();
+  }
+  function weeksFromEnd(){
+    var d=daysOf($('fStart').value,$('fEnd').value);
+    $('fWeeks').value=(d&&d%7===0)?(d/7):'';
+    showDur();
+  }
+  $('fStart').addEventListener('change',function(){
+    if($('fWeeks').value) endFromWeeks(); else showDur();
+  });
+  $('fWeeks').addEventListener('input',endFromWeeks);
+  $('fEnd').addEventListener('change',weeksFromEnd);
+  $('fEnd').addEventListener('input',weeksFromEnd);
+
+  /* tools */
+  (function(){
+    var box=$('toolBox'), h='';
+    for(var i=0;i<TOOLS.length;i++)
+      h+='<label class="tool" data-t="'+esc(TOOLS[i])+'"><input type="checkbox" value="'+esc(TOOLS[i])+'"><span>'+esc(TOOLS[i])+'</span></label>';
+    box.innerHTML=h;
+    box.addEventListener('change',function(e){
+      var lab=e.target.closest('.tool'); if(!lab) return;
+      lab.classList.toggle('on', e.target.checked);
+      draft.tools=[].filter.call(box.querySelectorAll('input'),function(x){return x.checked;})
+                      .map(function(x){return x.value;});
+    });
+  })();
+  function setTools(list){
+    draft.tools=(list||[]).slice();
+    var ins=$('toolBox').querySelectorAll('input');
+    for(var i=0;i<ins.length;i++){
+      ins[i].checked=draft.tools.indexOf(ins[i].value)!==-1;
+      ins[i].closest('.tool').classList.toggle('on', ins[i].checked);
+    }
+  }
+
+  /* station picker */
+  function drawStChips(){
+    var h='';
+    for(var i=0;i<draft.stations.length;i++){
+      var c=draft.stations[i];
+      var n=((byCode[c]||{}).tenants||[]).length;
+      h+='<span class="chip"><b>'+esc(c)+'</b> '+esc(stName(c))+
+         (n?' <span style="color:var(--ink-3);font-size:12px">'+nPartner(n)+'</span>':'')+
+         ' <button type="button" data-c="'+esc(c)+'" title="إزالة">×</button></span>';
+    }
+    $('stChips').innerHTML=h||'<span style="color:var(--ink-3);font-size:13px">لم تُختر محطة بعد.</span>';
+    refreshRowStations(); drawPool();
+  }
+  $('stChips').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-c]'); if(!b) return;
+    var i=draft.stations.indexOf(b.getAttribute('data-c'));
+    if(i>-1){ draft.stations.splice(i,1); drawStChips(); }
+  });
+  function openList(el,items,render){
+    el.innerHTML=items.map(render).join('');
+    el.classList.toggle('show', items.length>0);
+  }
+  $('stQ').addEventListener('input',function(){
+    var res=searchStations(this.value).filter(function(s){ return draft.stations.indexOf(s.code)===-1; });
+    openList($('stList'),res.slice(0,25),function(s){
+      var n=(s.tenants||[]).length;
+      return '<button type="button" data-c="'+esc(s.code)+'"><span class="c">'+esc(s.code)+'</span> '+
+             esc(s.name)+' <span class="m">· '+esc(s.city||'')+(s.units?' · '+ar(s.units)+' وحدة':'')+
+             (n?' · '+nPartner(n):'')+'</span></button>';
+    });
+  });
+  $('stQ').addEventListener('focus',function(){ this.dispatchEvent(new Event('input')); });
+  $('stList').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-c]'); if(!b) return;
+    var c=b.getAttribute('data-c');
+    if(draft.stations.indexOf(c)===-1) draft.stations.push(c);
+    $('stQ').value=''; this.classList.remove('show'); drawStChips();
+  });
+
+  /* partners */
+  function typeOptions(cur){
+    var list=PTYPES.slice();
+    if(cur && list.indexOf(cur)===-1) list.push(cur);          /* keep an imported value */
+    return '<option value="">—</option>'+list.map(function(t){
+      return '<option'+(cur===t?' selected':'')+'>'+esc(t)+'</option>'; }).join('');
+  }
+  function stationOptions(cur){
+    return '<option value="">—</option>'+
+           '<option value="EXT"'+(cur==='EXT'?' selected':'')+'>خارجي</option>'+
+           draft.stations.map(function(c){
+             return '<option value="'+esc(c)+'"'+(cur===c?' selected':'')+'>'+esc(c)+'</option>'; }).join('');
+  }
+  function paRow(p){
+    p=p||{};
+    var opts=['مؤكد','بانتظار الرد','معتذر'].map(function(o){
+      return '<option'+(p.status===o?' selected':'')+'>'+o+'</option>'; }).join('');
+    return '<tr>'+
+      '<td><input type="text" class="p-name" value="'+esc(p.name||'')+'" placeholder="اسم الشريك"></td>'+
+      '<td><select class="p-type">'+typeOptions(p.type||'')+'</select></td>'+
+      '<td><select class="p-code">'+stationOptions(p.code||'')+'</select></td>'+
+      '<td><input type="text" class="p-offer" value="'+esc(p.offer||'')+'" placeholder="فكرة العرض"></td>'+
+      '<td><input type="text" class="p-old" value="'+esc(p.old||'')+'" placeholder="٢٠ ر.س"></td>'+
+      '<td><input type="text" class="p-new" value="'+esc(p.newp||'')+'" placeholder="١٥ ر.س"></td>'+
+      '<td><select class="p-status">'+opts+'</select></td>'+
+      '<td><button type="button" class="btn sm danger rowdel" title="حذف الصف">×</button></td></tr>';
+  }
+  function readPartners(){
+    var out=[];
+    var trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var t=trs[i], n=t.querySelector('.p-name').value.trim();
+      if(!n) continue;
+      out.push({name:n, type:t.querySelector('.p-type').value,
+                code:t.querySelector('.p-code').value,
+                offer:t.querySelector('.p-offer').value.trim(),
+                old:t.querySelector('.p-old').value.trim(),
+                newp:t.querySelector('.p-new').value.trim(),
+                status:t.querySelector('.p-status').value});
+    }
+    return out;
+  }
+  function setPartners(list){
+    draft.partners=(list||[]).slice();
+    $('paBody').innerHTML=draft.partners.length?draft.partners.map(paRow).join(''):paRow({});
+    drawPool();
+  }
+  function refreshRowStations(){
+    var trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var sel=trs[i].querySelector('.p-code'), cur=sel.value;
+      var html=stationOptions(cur);
+      if(cur && cur!=='EXT' && draft.stations.indexOf(cur)===-1)
+        html+='<option value="'+esc(cur)+'" selected>'+esc(cur)+'</option>';
+      sel.innerHTML=html; sel.value=cur;
+    }
+  }
+  $('btnPaRow').addEventListener('click',function(){
+    $('paBody').insertAdjacentHTML('beforeend', paRow({}));
+  });
+  $('paBody').addEventListener('click',function(e){
+    var b=e.target.closest('.rowdel'); if(!b) return;
+    var tr=b.closest('tr'), tb=$('paBody');
+    tr.parentNode.removeChild(tr);
+    if(!tb.querySelector('tr')) tb.innerHTML=paRow({});
+  });
+  /* the tenants of each chosen station, laid out as toggles */
+  function chosenKeys(){
+    var set={}, trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      var n=trs[i].querySelector('.p-name').value.trim();
+      if(n) set[n+'|'+trs[i].querySelector('.p-code').value]=1;
+    }
+    return set;
+  }
+  function findRow(name,code){
+    var trs=$('paBody').querySelectorAll('tr');
+    for(var i=0;i<trs.length;i++){
+      if(trs[i].querySelector('.p-name').value.trim()===name &&
+         trs[i].querySelector('.p-code').value===code) return trs[i];
+    }
+    return null;
+  }
+  function addPartnerRow(name,code,extra){
+    var tb=$('paBody'), first=tb.querySelector('tr');
+    var rec={name:name, code:code, status:'بانتظار الرد'};
+    if(extra){ rec.type=extra.type||''; rec.offer=extra.offer||''; }
+    var html=paRow(rec);
+    if(first && !first.querySelector('.p-name').value.trim()) first.outerHTML=html;
+    else tb.insertAdjacentHTML('beforeend', html);
+  }
+
+  /* ---- partners that are not tenants of any station ---- */
+  var extPartners=[];
+  function loadExt(){
+    try{ var raw=localStorage.getItem(EXTKEY); if(raw) extPartners=JSON.parse(raw)||[]; }
+    catch(e){ extPartners=[]; }
+  }
+  function saveExt(){ try{ localStorage.setItem(EXTKEY, JSON.stringify(extPartners)); }catch(e){} }
+  function findExt(name){
+    for(var i=0;i<extPartners.length;i++) if(extPartners[i].name===name) return extPartners[i];
+    return null;
+  }
+  (function(){
+    var sel=$('exType'), h='<option value="">— اختر النوع —</option>';
+    for(var i=0;i<PTYPES.length;i++) h+='<option>'+esc(PTYPES[i])+'</option>';
+    sel.innerHTML=h;
+  })();
+  function fillCampCodes(){
+    var dl=$('campCodes'); if(!dl) return;
+    dl.innerHTML=campaigns.map(function(c){
+      return '<option value="'+esc(c.code)+'">'+esc(c.name||'')+'</option>'; }).join('');
+  }
+  function childrenOf(code){
+    if(!code) return [];
+    return campaigns.filter(function(c){ return (c.parent||'')===code; });
+  }
+  /* is `code` somewhere inside `ancestor`'s subtree? guards against cycles */
+  function isDescendant(code, ancestor){
+    var seen={};
+    function walk(k){
+      if(seen[k]) return false;
+      seen[k]=1;
+      var kids=childrenOf(k);
+      for(var i=0;i<kids.length;i++){
+        if(kids[i].code===code) return true;
+        if(walk(kids[i].code)) return true;
+      }
+      return false;
+    }
+    return walk(ancestor);
+  }
+  function campByCode(code){
+    for(var i=0;i<campaigns.length;i++) if(campaigns[i].code===code) return campaigns[i];
+    return null;
+  }
+  function drawSubs(){
+    var me=$('fCode').value.trim().toUpperCase();
+    var kids=childrenOf(me);
+    $('subChips').innerHTML = kids.length ? kids.map(function(c){
+      return '<span class="chip"><b>'+esc(c.code)+'</b> '+esc(c.name||'')+
+             ' <button type="button" data-sub="'+esc(c.code)+'" title="فصلها">×</button></span>';
+    }).join('') : '<span class="poolnote">لا حملات فرعية تحت هذه الحملة.</span>';
+    var dl=$('subCodes');
+    if(dl) dl.innerHTML=campaigns.filter(function(c){
+      return c.code!==me && (c.parent||'')!==me && !isDescendant(me, c.code);
+    }).map(function(c){
+      return '<option value="'+esc(c.code)+'">'+esc(c.name||'')+'</option>'; }).join('');
+  }
+  $('fCode').addEventListener('input',drawSubs);
+  $('btnSubAdd').addEventListener('click',function(){
+    var me=$('fCode').value.trim().toUpperCase(), t=$('subQ').value.trim().toUpperCase();
+    if(!t){ say('اكتب كود الحملة الفرعية.',4000); $('subQ').focus(); return; }
+    if(!campByCode(me)){ say('احفظ هذه الحملة أولًا، ثم أدرج تحتها حملات فرعية.',8000); return; }
+    if(t===me){ say('لا تُدرج الحملة تحت نفسها.',5000); return; }
+    var c=campByCode(t);
+    if(!c){ say('لا توجد حملة بالكود «'+t+'».',6000); return; }
+    if((c.parent||'')===me){ say('«'+t+'» مدرجة تحتها بالفعل.',4500); return; }
+    if(isDescendant(me,t)){ say('«'+t+'» تحتوي هذه الحملة أصلًا، وإدراجها يصنع دائرة مغلقة.',9000); return; }
+    var prev=c.parent||'';
+    c.parent=me; stamp(c); persist(); render(); drawSubs();
+    $('subQ').value='';
+    say('أُدرجت «'+(c.name||t)+'» تحت '+me+'.',9000,'تراجع',function(){
+      c.parent=prev; stamp(c); persist(); render(); drawSubs();
+    });
+  });
+  $('subChips').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-sub]'); if(!b) return;
+    var c=campByCode(b.getAttribute('data-sub')); if(!c) return;
+    var prev=c.parent||'';
+    c.parent=''; stamp(c); persist(); render(); drawSubs();
+    say('فُصلت «'+(c.name||c.code)+'» وصارت حملة مستقلة.',9000,'تراجع',function(){
+      c.parent=prev; stamp(c); persist(); render(); drawSubs();
+    });
+  });
+  $('btnSubNew').addEventListener('click',function(){
+    var me=$('fCode').value.trim().toUpperCase();
+    if(!campByCode(me)){ say('احفظ هذه الحملة أولًا لتصير حملةً أساسية.',8000); return; }
+    openForm(null);
+    $('fParent').value=me;
+    $('fName').focus();
+    say('حملة جديدة تتبع '+me+'. أكمل بياناتها ثم احفظها.',8000);
+  });
+
+  /* keep the code in step with the form until the writer overrides it */
+  var exCampAuto=true;
+  $('exCamp').addEventListener('input',function(){ exCampAuto=false; });
+  $('fCode').addEventListener('input',function(){
+    if(exCampAuto) $('exCamp').value=this.value;
+  });
+  $('btnExAdd').addEventListener('click',function(){
+    var name=$('exName').value.trim(), type=$('exType').value, offer=$('exOffer').value.trim();
+    var target=$('exCamp').value.trim().toUpperCase(), cur=$('fCode').value.trim().toUpperCase();
+    if(!name){ say('اكتب اسم الشريك الخارجي.',4000); $('exName').focus(); return; }
+    if(!type){ say('اختر نوع الشريك.',4000); $('exType').focus(); return; }
+
+    var elsewhere=null;
+    if(target && target!==cur){
+      elsewhere=campByCode(target);
+      if(!elsewhere){
+        say('لا توجد حملة بالكود «'+target+'». اكتب كود حملة مسجّلة، أو أعِده إلى كود الحملة المفتوحة.',10000);
+        $('exCamp').focus(); return;
+      }
+    }
+    var was=findExt(name);
+    if(was){ was.type=type; if(offer) was.offer=offer; was.camp=target||cur; }
+    else extPartners.push({name:name, type:type, offer:offer, camp:target||cur});
+    saveExt();
+
+    if(elsewhere){
+      elsewhere.partners=elsewhere.partners||[];
+      var have=false;
+      for(var i=0;i<elsewhere.partners.length;i++)
+        if(elsewhere.partners[i].name===name && elsewhere.partners[i].code==='EXT') have=true;
+      if(have) say('«'+name+'» مسجّل أصلًا في الحملة '+target+'.',6000);
+      else{
+        elsewhere.partners.push({name:name, type:type, code:'EXT', offer:offer,
+                                 old:'', newp:'', status:'بانتظار الرد'});
+        stamp(elsewhere); persist(); render();
+        say('أُضيف «'+name+'» إلى الحملة '+target+'، وحُفظ في قائمة الشركاء الخارجيين.',8000);
+      }
+    } else {
+      if(!findRow(name,'EXT')) addPartnerRow(name,'EXT',{type:type, offer:offer});
+      say(was?('حُدِّث الشريك الخارجي «'+name+'» وأُضيف إلى الحملة المفتوحة.')
+             :('أُضيف الشريك الخارجي «'+name+'» إلى الحملة المفتوحة وإلى قائمة الشركاء الخارجيين.'),7000);
+    }
+    $('exName').value=''; $('exOffer').value=''; $('exType').value='';
+    drawPool();
+  });
+  function drawPool(){
+    var box=$('paPool');
+    if(!draft.stations.length && !extPartners.length){
+      box.innerHTML='<p class="poolnote">اختر محطة أعلاه لتظهر قائمة شركائها هنا، أو أضِف شريكًا خارجيًا من الحقول أسفل الجدول.</p>';
+      return;
+    }
+    var q=$('paQ').value.trim().toLowerCase(), sel=chosenKeys(), h='';
+    if(extPartners.length){
+      var visE=extPartners.filter(function(p){
+        return !q || (p.name+' '+(p.type||'')).toLowerCase().indexOf(q)!==-1; });
+      var pickedE=extPartners.filter(function(p){ return sel[p.name+'|EXT']; }).length;
+      h+='<div class="poolst ext"><div class="poolhd"><b>خارجي</b> شركاء من خارج المحطات '+
+         '<span class="m">'+nPartner(extPartners.length)+' في القائمة'+
+         (pickedE?' · مختار منهم '+ar(pickedE):'')+'</span></div>';
+      if(!visE.length) h+='<p class="poolnote">لا شريك خارجي مطابق للبحث.</p>';
+      else{
+        h+='<div class="chips">';
+        for(var e=0;e<visE.length;e++)
+          h+='<button type="button" class="chip pickchip'+(sel[visE[e].name+'|EXT']?' on':'')+
+             '" data-n="'+esc(visE[e].name)+'" data-c="EXT">'+esc(visE[e].name)+
+             (visE[e].type?' <span class="m">· '+esc(visE[e].type)+'</span>':'')+
+             '<span class="tick">✓</span>'+
+             '<span class="x" data-del="'+esc(visE[e].name)+'" title="حذف من القائمة">×</span></button>';
+        h+='</div>';
+      }
+      h+='</div>';
+    }
+    for(var i=0;i<draft.stations.length;i++){
+      var code=draft.stations[i], st=byCode[code]||{}, ts=st.tenants||[];
+      var vis=ts.filter(function(t){ return !q || t.toLowerCase().indexOf(q)!==-1; });
+      var picked=ts.filter(function(t){ return sel[t+'|'+code]; }).length;
+      h+='<div class="poolst"><div class="poolhd"><b>'+esc(code)+'</b> '+esc(st.name||'')+
+         (st.city?' · '+esc(st.city):'')+
+         ' <span class="m">'+(ts.length?nPartner(ts.length)+' في المحطة'+
+           (picked?' · مختار منهم '+ar(picked):''):'لا شركاء مسجّلون في الملف')+'</span>'+
+         '<span class="sp"></span>'+
+         (vis.length?'<button type="button" class="btn sm ghost" data-all="'+esc(code)+'">اختر الكل</button>':'')+
+         '</div>';
+      if(!ts.length) h+='<p class="poolnote">أضِف شركاء هذه المحطة يدويًا من الجدول أدناه.</p>';
+      else if(!vis.length) h+='<p class="poolnote">لا شريك مطابق للبحث في هذه المحطة.</p>';
+      else{
+        h+='<div class="chips">';
+        for(var j=0;j<vis.length;j++)
+          h+='<button type="button" class="chip pickchip'+(sel[vis[j]+'|'+code]?' on':'')+
+             '" data-n="'+esc(vis[j])+'" data-c="'+esc(code)+'">'+esc(vis[j])+
+             '<span class="tick">✓</span></button>';
+        h+='</div>';
+      }
+      h+='</div>';
+    }
+    box.innerHTML=h;
+  }
+  $('paPool').addEventListener('click',function(e){
+    var del=e.target.closest('[data-del]');
+    if(del){
+      e.stopPropagation();
+      var gone=del.getAttribute('data-del'), keep=extPartners.slice();
+      extPartners=extPartners.filter(function(p){ return p.name!==gone; });
+      saveExt(); drawPool();
+      say('حُذف «'+gone+'» من قائمة الشركاء الخارجيين.',8000,'تراجع',function(){
+        extPartners=keep; saveExt(); drawPool();
+      });
+      return;
+    }
+    var all=e.target.closest('button[data-all]');
+    if(all){
+      var code=all.getAttribute('data-all'), ts=(byCode[code]||{}).tenants||[];
+      var q=$('paQ').value.trim().toLowerCase(), n=0;
+      for(var i=0;i<ts.length;i++){
+        if(q && ts[i].toLowerCase().indexOf(q)===-1) continue;
+        if(!findRow(ts[i],code)){ addPartnerRow(ts[i],code); n++; }
+      }
+      drawPool();
+      say(n?('أُضيف '+nPartner(n)+' من '+code+' إلى الجدول.'):'كل شركاء '+code+' مضافون أصلًا.',5000);
+      return;
+    }
+    var b=e.target.closest('.pickchip'); if(!b) return;
+    var name=b.getAttribute('data-n'), c=b.getAttribute('data-c');
+    var row=findRow(name,c);
+    if(row){
+      row.parentNode.removeChild(row);
+      if(!$('paBody').querySelector('tr')) $('paBody').innerHTML=paRow({});
+    } else addPartnerRow(name,c, c==='EXT'?findExt(name):null);
+    drawPool();
+  });
+  $('paQ').addEventListener('input',drawPool);
+  $('btnPaNew').addEventListener('click',function(){
+    var n=$('paQ').value.trim();
+    if(!n){ say('اكتب اسم الشريك في الصندوق أولًا.',4000); return; }
+    addPartnerRow(n, draft.stations[0]||'');
+    $('paQ').value=''; drawPool();
+    say('أُضيف «'+n+'» إلى جدول الشركاء.',4500);
+  });
+  $('paBody').addEventListener('input',drawPool);
+  $('paBody').addEventListener('change',drawPool);
+  document.addEventListener('click',function(e){
+    if(!e.target.closest('.pick')) $('stList').classList.remove('show');
+  });
+  $('btnTerms').addEventListener('click',function(){
+    var t=$('fTerms');
+    t.value = t.value.trim() ? t.value.trim()+'\n'+TERMS : TERMS;
+  });
+
+  /* ---------------- open / save ---------------- */
+  function openForm(c){
+    editing=c||null;
+    $('formTitle').textContent=c?('تعديل الحملة · '+c.code):'حملة جديدة';
+    $('fName').value=c?c.name:'';
+    $('fCode').value=c?c.code:newCode();
+    $('fStart').value=c?c.start:'';
+    $('fWeeks').value=c?(c.weeks||''):4;
+    $('fEnd').value=c?c.end:'';
+    showDur();
+    $('fGoal').value=c?c.goal:'';
+    $('fKpi').value=c?(c.kpi||''):'';
+    $('fTarget').value=c?(c.target||''):'';
+    $('fBudget').value=c&&c.budget?c.budget:'';
+    $('fTerms').value=c?(c.terms||''):'';
+    $('fOffer').value=c?(c.offer||''):'';
+    $('fNotes').value=c?(c.notes||''):'';
+    draft.stations=c?(c.stations||[]).slice():[];
+    setTools(c?c.tools:[]);
+    setPartners(c?c.partners:[]);
+    drawStChips();
+    $('fParent').value=c?(c.parent||''):'';
+    $('subQ').value='';
+    exCampAuto=true; $('exCamp').value=$('fCode').value;
+    fillCampCodes(); drawSubs();
+    $('btnDel').hidden=!c;
+    $('form').hidden=false;
+    $('form').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  var formDirty=false;
+  $('form').addEventListener('input',function(){ formDirty=true; });
+  $('form').addEventListener('change',function(){ formDirty=true; });
+  function closeForm(){ $('form').hidden=true; editing=null; formDirty=false; cancelArm=false;
+    $('btnCancel').textContent='إلغاء'; }
+  window.addEventListener('beforeunload',function(e){
+    if($('form').hidden || !formDirty) return;
+    e.preventDefault(); e.returnValue='';
+  });
+  $('btnNew').addEventListener('click',function(){ openForm(null); });
+  $('btnNew2').addEventListener('click',function(){ openForm(null); });
+  var cancelArm=false, cancelT;
+  $('btnCancel').addEventListener('click',function(){
+    if(formDirty && !cancelArm){
+      cancelArm=true; this.textContent='تأكيد الإلغاء؟';
+      say('لم تُحفظ تعديلاتك على هذه الحملة. اضغط مرة أخرى لتجاهلها، أو «حفظ الحملة» لحفظها.',7000);
+      clearTimeout(cancelT);
+      var btn=this;
+      cancelT=setTimeout(function(){ cancelArm=false; btn.textContent='إلغاء'; },7000);
+      return;
+    }
+    clearTimeout(cancelT); closeForm();
+  });
+
+  $('btnSave').addEventListener('click',function(){
+    var name=$('fName').value.trim(), code=$('fCode').value.trim().toUpperCase();
+    var start=$('fStart').value, weeks=parseInt($('fWeeks').value,10)||0;
+    var goal=$('fGoal').value.trim();
+    var miss=[];
+    if(!name) miss.push('اسم الحملة');
+    if(!code) miss.push('كود الحملة');
+    if(!start) miss.push('تاريخ البدء');
+    if(!$('fEnd').value && weeks<1) miss.push('المدة بالأسابيع أو تاريخ الانتهاء');
+    if(!goal) miss.push('الهدف');
+    if(miss.length){ say('أكمل الحقول المطلوبة: '+miss.join('، '),6000); return; }
+    var parent=$('fParent').value.trim().toUpperCase();
+    if(parent){
+      if(parent===code){ say('لا تتبع الحملة نفسها. اترك الحقل فارغًا أو اكتب كودًا آخر.',6000); return; }
+      if(!campByCode(parent)){ say('لا توجد حملة أساسية بالكود «'+parent+'».',6000); return; }
+      if(isDescendant(parent, code)){
+        say('«'+parent+'» مدرجة تحت هذه الحملة، فلا تصلح أن تكون أساسية لها.',9000); return;
+      }
+    }
+    if(!$('fEnd').value) endFromWeeks();
+    if(dayms($('fEnd').value) < dayms(start)){
+      say('تاريخ الانتهاء قبل تاريخ البدء. صحّح التاريخين.',6000); return;
+    }
+    for(var i=0;i<campaigns.length;i++){
+      if(campaigns[i].code===code && campaigns[i]!==editing){
+        say('كود الحملة «'+code+'» مستخدم في حملة أخرى. اختر كودًا مختلفًا.',6000); return;
+      }
+    }
+    var rec={code:code, name:name, parent:parent, start:start, end:$('fEnd').value,
+             weeks:weeks||null, days:daysOf(start,$('fEnd').value),
+             stations:draft.stations.slice(), tools:draft.tools.slice(),
+             goal:goal, kpi:$('fKpi').value.trim(), target:$('fTarget').value.trim(),
+             budget:Number($('fBudget').value)||0,
+             terms:$('fTerms').value.trim(), partners:readPartners(),
+             offer:$('fOffer').value.trim(), notes:$('fNotes').value.trim()};
+    stamp(rec);
+    if(editing){ campaigns[campaigns.indexOf(editing)]=rec; }
+    else campaigns.unshift(rec);
+    openCodes[rec.code]=1;                      /* show what was just saved */
+    persist(); closeForm(); formDirty=false; render();
+    reveal(rec.code);
+    say('حُفظت الحملة '+rec.code+' ومعها '+nStation((rec.stations||[]).length)+
+        ' و'+nPartner((rec.partners||[]).length)+'.',6000);
+  });
+  $('btnDel').addEventListener('click',function(){
+    if(!editing) return;
+    var gone=editing, at=campaigns.indexOf(gone);
+    var kids=childrenOf(gone.code), had=kids.map(function(k){ return k.parent; });
+    for(var i=0;i<kids.length;i++){ kids[i].parent=''; stamp(kids[i]); }
+    campaigns.splice(at,1); persist(); closeForm(); render();
+    say('حُذفت الحملة '+gone.code+'.'+(kids.length?' وتحرّرت منها '+nSub(kids.length)+'.':''),
+        10000,'تراجع',function(){
+      campaigns.splice(at,0,gone);
+      for(var j=0;j<kids.length;j++){ kids[j].parent=had[j]; stamp(kids[j]); }
+      persist(); render();
+    });
+  });
+
+  /* bring a card into view and mark it, so a save never looks like nothing happened */
+  function reveal(code){
+    var all=$('list').querySelectorAll('.card');
+    for(var i=0;i<all.length;i++){
+      var c=campaigns[+all[i].getAttribute('data-i')];
+      if(c && c.code===code){
+        all[i].classList.add('open','flash');
+        all[i].scrollIntoView({behavior:'smooth', block:'center'});
+        (function(el){ setTimeout(function(){ el.classList.remove('flash'); },1800); })(all[i]);
+        return;
+      }
+    }
+  }
+
+  /* ---------------- render ---------------- */
+  function statusOf(c){
+    var t=new Date(); t.setHours(0,0,0,0);
+    var s=c.start?new Date(c.start+'T00:00:00'):null;
+    var e=c.end?new Date(c.end+'T00:00:00'):null;
+    if(s&&t<s) return {k:'soon',t:'قادمة'};
+    if(e&&t>e) return {k:'done',t:'منتهية'};
+    return {k:'live',t:'جارية'};
+  }
+  function matches(c,q){
+    if(!q) return true;
+    q=q.toLowerCase();
+    var hay=[c.code,c.name,c.parent||'',c.goal,c.offer,c.terms,c.target,c.kpi,c.notes].join(' ');
+    hay+=' '+(c.tools||[]).join(' ');
+    hay+=' '+(c.stations||[]).map(function(x){ var s=byCode[x];
+              return x+' '+(s?s.name+' '+(s.city||''):''); }).join(' ');
+    hay+=' '+(c.partners||[]).map(function(p){
+              return p.name+' '+(p.type||'')+' '+(p.offer||'')+(p.code==='EXT'?' خارجي':''); }).join(' ');
+    return hay.toLowerCase().indexOf(q)!==-1;
+  }
+  function chipList(arr){
+    return arr.length ? arr.map(function(x){ return '<span class="chip">'+esc(x)+'</span>'; }).join('')
+                      : '<span style="color:var(--ink-3)">—</span>';
+  }
+  function partnerTable(ps){
+    if(!ps||!ps.length) return '<p style="color:var(--ink-3)">لم يُسجَّل شركاء بعد.</p>';
+    var h='<div class="tablewrap"><table><thead><tr><th>الشريك</th><th>النوع</th><th>المحطة</th>'+
+          '<th>فكرة العرض</th><th>السعر الاعتيادي</th><th>سعر الحملة</th><th>الحالة</th></tr></thead><tbody>';
+    for(var i=0;i<ps.length;i++){ var p=ps[i];
+      h+='<tr><td>'+esc(p.name)+'</td><td>'+esc(p.type||'—')+'</td><td class="num">'+
+         (p.code==='EXT'?'خارجي':esc(p.code||'—'))+'</td><td>'+esc(p.offer||'—')+
+         '</td><td class="num">'+esc(p.old||'—')+'</td><td class="num">'+esc(p.newp||'—')+
+         '</td><td>'+esc(p.status||'—')+'</td></tr>';
+    }
+    return h+'</tbody></table></div>';
+  }
+  /* a campaign is listed under the one it belongs to, indented by its depth */
+  function ordered(list){
+    var here={}, byParent={};
+    list.forEach(function(c){ here[c.code]=1; });
+    list.forEach(function(c){
+      var p=(c.parent && here[c.parent]) ? c.parent : '';
+      (byParent[p]=byParent[p]||[]).push(c);
+    });
+    var out=[], seen={};
+    function push(c,depth){
+      if(seen[c.code]) return;
+      seen[c.code]=1;
+      out.push({c:c, depth:depth});
+      (byParent[c.code]||[]).forEach(function(k){ push(k,depth+1); });
+    }
+    (byParent['']||[]).forEach(function(c){ push(c,0); });
+    list.forEach(function(c){ push(c,0); });        /* anything a cycle left behind */
+    return out;
+  }
+  var openCodes={};           /* which cards are expanded, kept across renders */
+  function card(c,idx,depth){
+    var s=statusOf(c);
+    var stx=(c.stations||[]).map(function(x){ return stLabel(x); });
+    var par=c.parent?campByCode(c.parent):null;
+    var kids=childrenOf(c.code);
+    return '<article class="card'+(depth?' sub':'')+(openCodes[c.code]?' open':'')+'" data-i="'+idx+'"'+
+      (depth?' style="margin-inline-start:'+(depth*26)+'px"':'')+'>'+
+      '<div class="top"><div>'+
+        (par?'<span class="par">↳ ضمن '+esc(par.code)+' · '+esc(par.name||'')+'</span><br>':'')+
+        '<span class="code">'+esc(c.code)+'</span>'+
+        '<h3>'+esc(c.name)+'</h3>'+
+        '<p class="meta">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+' · '+durOf(c)+' · '+
+        nStation((c.stations||[]).length)+' · '+nPartner((c.partners||[]).length)+
+        (kids.length?' · '+nSub(kids.length):'')+'</p>'+
+        '<p class="codes">'+((c.stations||[]).length
+            ? esc((c.stations||[]).slice(0,8).join(' · '))+
+              ((c.stations||[]).length>8?' <span>+'+ar(c.stations.length-8)+'</span>':'')
+            : '<span>لم تُسنَد محطات لهذه الحملة</span>')+'</p>'+
+      '</div><div style="display:flex;gap:8px;align-items:center">'+
+        '<span class="badge '+s.k+'">'+s.t+'</span>'+
+        '<button type="button" class="btn sm edit">تعديل</button>'+
+      '</div></div>'+
+      '<div class="body"><dl class="dl">'+
+        (par?'<dt>الحملة الأساسية</dt><dd>'+esc(par.code)+' — '+esc(par.name||'')+'</dd>':'')+
+        (kids.length?'<dt>الحملات الفرعية</dt><dd class="chips">'+
+          kids.map(function(k){ return '<span class="chip"><b>'+esc(k.code)+'</b> '+esc(k.name||'')+'</span>'; }).join('')+
+          '</dd>':'')+
+        '<dt>المحطات المشمولة</dt><dd class="chips">'+chipList(stx)+'</dd>'+
+        '<dt>الأدوات المستخدمة</dt><dd class="chips">'+chipList(c.tools||[])+'</dd>'+
+        '<dt>الهدف</dt><dd>'+esc(c.goal||'—')+'</dd>'+
+        '<dt>مؤشر القياس</dt><dd>'+esc(c.kpi||'—')+(c.target?' · المستهدف: '+esc(c.target):'')+'</dd>'+
+        '<dt>العرض المقترح</dt><dd>'+esc(c.offer||'—')+'</dd>'+
+        '<dt>الشروط</dt><dd style="white-space:pre-wrap">'+esc(c.terms||'—')+'</dd>'+
+        (c.notes?'<dt>ملاحظات</dt><dd style="white-space:pre-wrap">'+esc(c.notes)+'</dd>':'')+
+      '</dl>'+
+      '<h3 style="font-size:14px;margin-top:18px">الشركاء المشاركون</h3>'+partnerTable(c.partners)+
+      '</div></article>';
+  }
+  function render(){
+    var q=$('q').value.trim(), fs=$('fStatus').value;
+    var shown=campaigns.filter(function(c){
+      return matches(c,q) && (!fs || statusOf(c).k===fs);
+    });
+    $('list').innerHTML=ordered(shown).map(function(r){
+      return card(r.c, campaigns.indexOf(r.c), r.depth); }).join('');
+    $('empty').hidden=shown.length>0;
+    var st={}, pa={}, live=0;
+    for(var i=0;i<campaigns.length;i++){
+      var c=campaigns[i];
+      if(statusOf(c).k==='live') live++;
+      (c.stations||[]).forEach(function(x){ st[x]=1; });
+      (c.partners||[]).forEach(function(p){ pa[p.name]=1; });
+    }
+    $('kCamp').textContent=ar(campaigns.length);
+    $('kLive').textContent=ar(live);
+    $('kSt').textContent=ar(Object.keys(st).length);
+    $('kPa').textContent=ar(Object.keys(pa).length);
+    $('kAll').textContent=ar(STATIONS.length);
+    fillCampCodes();
+    renderSummary();
+    renderWash();
+  }
+  $('list').addEventListener('click',function(e){
+    var art=e.target.closest('.card'); if(!art) return;
+    if(e.target.closest('.edit')){ openForm(campaigns[+art.getAttribute('data-i')]); return; }
+    if(e.target.closest('.top')){
+      art.classList.toggle('open');
+      var c=campaigns[+art.getAttribute('data-i')];
+      if(c){ if(art.classList.contains('open')) openCodes[c.code]=1; else delete openCodes[c.code]; }
+    }
+  });
+  $('btnExpand').addEventListener('click',function(){
+    var all=$('list').querySelectorAll('.card');
+    var opening=[].some.call(all,function(a){ return !a.classList.contains('open'); });
+    for(var i=0;i<all.length;i++){
+      all[i].classList.toggle('open', opening);
+      var c=campaigns[+all[i].getAttribute('data-i')];
+      if(c){ if(opening) openCodes[c.code]=1; else delete openCodes[c.code]; }
+    }
+    this.textContent = opening ? 'طيّ الكل' : 'توسيع الكل';
+  });
+  $('q').addEventListener('input',render);
+  $('fStatus').addEventListener('change',render);
+
+
+  /* ---------------- sharing ----------------
+     No shared server storage is available to this page, so the register
+     travels as a code the reader pastes to the other side. Merging is by
+     campaign code, and the more recently edited copy of a code wins. */
+  function encodeShare(){
+    var json=JSON.stringify({v:1, at:new Date().toISOString(), campaigns:campaigns, ext:extPartners});
+    try{ return 'DARB1:'+btoa(unescape(encodeURIComponent(json))); }
+    catch(e){ return json; }
+  }
+  function decodeShare(txt){
+    txt=(txt||'').trim();
+    if(!txt) return null;
+    if(txt.indexOf('DARB1:')===0){
+      try{ txt=decodeURIComponent(escape(atob(txt.slice(6)))); }catch(e){ return null; }
+    }
+    var got;
+    try{ got=JSON.parse(txt); }catch(e){ return null; }
+    if(Array.isArray(got)) return got;
+    if(got&&Array.isArray(got.campaigns)){
+      if(Array.isArray(got.ext)){                       /* fold in their external partners too */
+        for(var i=0;i<got.ext.length;i++)
+          if(got.ext[i]&&got.ext[i].name&&!findExt(got.ext[i].name)) extPartners.push(got.ext[i]);
+        saveExt();
+      }
+      return got.campaigns;
+    }
+    return null;
+  }
+  function mergeIncoming(list){
+    var before=campaigns.slice(), added=0, updated=0, kept=0;
+    for(var i=0;i<list.length;i++){
+      var c=list[i]; if(!c||!c.code) continue;
+      var at=-1;
+      for(var j=0;j<campaigns.length;j++) if(campaigns[j].code===c.code){ at=j; break; }
+      if(at===-1){ campaigns.push(c); added++; continue; }
+      var mine=campaigns[at].updatedAt||'', theirs=c.updatedAt||'';
+      if(theirs>mine){ campaigns[at]=c; updated++; } else kept++;
+    }
+    persist(); render();
+    return {before:before, added:added, updated:updated, kept:kept};
+  }
+  function reportMerge(r){
+    if(!r.added && !r.updated){ say('لا جديد — نسختك محدَّثة أصلًا ('+nCampaign(r.kept)+').',6000); return; }
+    say('أُضيفت '+nCampaign(r.added)+'، وحُدِّثت '+ar(r.updated)+
+        (r.kept?'، وبقيت '+ar(r.kept)+' على نسختك لأنها أحدث':'')+'.',12000,'تراجع',function(){
+      campaigns=r.before; persist(); render();
+    });
+  }
+  function copyText(t,ok,fail){
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t).then(ok,function(){ legacyCopy(t)?ok():fail(); });
+    } else { legacyCopy(t)?ok():fail(); }
+  }
+  function legacyCopy(t){
+    try{
+      var ta=document.createElement('textarea');
+      ta.value=t; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-1000px';
+      document.body.appendChild(ta); ta.select();
+      var r=document.execCommand('copy');
+      document.body.removeChild(ta);
+      return r;
+    }catch(e){ return false; }
+  }
+  $('btnShare').addEventListener('click',function(){
+    if(!campaigns.length){ say('لا توجد حملات لمشاركتها.',3500); return; }
+    var code=encodeShare();
+    copyText(code,function(){
+      say('نُسخ رمز المشاركة ('+ar(code.length)+' حرفًا). أرسله لزميلك ليلصقه في «استلام تعديلات»، '+
+          'أو أرسله لكلود ليُثبّته داخل الرابط فيراه كل من يفتحه دون أي خطوة.',14000);
+    },function(){
+      $('share').hidden=false; $('shareBox').value=code; $('shareBox').select();
+      say('تعذّر النسخ التلقائي. الرمز ظاهر في الصندوق — انسخه يدويًا.',9000);
+    });
+  });
+  $('btnRecv').addEventListener('click',function(){
+    $('share').hidden=false; $('shareBox').value='';
+    $('share').scrollIntoView({behavior:'smooth',block:'start'});
+    $('shareBox').focus();
+  });
+  $('btnShareClose').addEventListener('click',function(){ $('share').hidden=true; });
+  /* A register saved under an older key, or by an older build, is invisible to
+     the normal load. Sweep the whole store and offer back whatever looks like
+     campaigns. */
+  $('btnScan').addEventListener('click',function(){
+    var found=[], keys=[];
+    try{ for(var i=0;i<localStorage.length;i++) keys.push(localStorage.key(i)); }
+    catch(e){ say('هذا المتصفح لا يسمح بقراءة المخزَّن. لا يمكن البحث هنا.',8000); return; }
+    for(var k=0;k<keys.length;k++){
+      var raw=null; try{ raw=localStorage.getItem(keys[k]); }catch(e){ continue; }
+      if(!raw||raw.length<40) continue;
+      var val=null; try{ val=JSON.parse(raw); }catch(e){ continue; }
+      var list=Array.isArray(val)?val:(val&&Array.isArray(val.campaigns)?val.campaigns:null);
+      if(!list||!list.length) continue;
+      var real=list.filter(function(c){ return c && c.code && c.name; });
+      if(real.length) found.push({key:keys[k], list:real});
+    }
+    if(!found.length){
+      say('بحثتُ في '+ar(keys.length)+' مدخلًا في هذا المتصفح ولم أجد أي حملة محفوظة. '+
+          'غالبًا أنك سجّلتها على جهاز أو متصفح آخر، أو أن بيانات الموقع مُسحت.',14000);
+      return;
+    }
+    var best=found[0];
+    for(var f=1;f<found.length;f++) if(found[f].list.length>best.list.length) best=found[f];
+    var names=best.list.map(function(c){ return c.code+' — '+c.name; }).join('، ');
+    if(best.key===KEY){
+      say('حملاتك موجودة ومعروضة أصلًا ('+nCampaign(best.list.length)+'): '+names,16000);
+      return;
+    }
+    say('وجدتُ '+nCampaign(best.list.length)+' محفوظة تحت مفتاح آخر ('+best.key+'): '+names,
+        30000,'استرجعها',function(){
+      var r=mergeIncoming(best.list);
+      $('share').hidden=true;
+      reportMerge(r);
+    });
+  });
+  $('btnMergeCode').addEventListener('click',function(){
+    var list=decodeShare($('shareBox').value);
+    if(!list){ say('الرمز غير مقروء. تأكد من نسخه كاملًا.',7000); return; }
+    var r=mergeIncoming(list);
+    $('share').hidden=true; $('shareBox').value='';
+    reportMerge(r);
+  });
+
+  /* two tabs of the same browser do see each other, so keep them in step */
+  window.addEventListener('storage',function(e){
+    if(e.key!==KEY||!e.newValue) return;
+    try{ campaigns=JSON.parse(e.newValue)||[]; }catch(err){ return; }
+    render();
+    say('وصلت تعديلات من نافذة أخرى في هذا المتصفح.',5000);
+  });
+
+
+  /* ---------------- pages ---------------- */
+  var MONTHS=['يناير','فبراير','مارس','أبريل','مايو','يونيو',
+              'يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  function money(n){ return ar(Math.round(Number(n)||0))+' ر.س'; }
+  function monthKey(d){ return d? String(d).slice(0,7) : ''; }
+  function monthLabel(k){
+    if(!k) return 'بلا تاريخ';
+    var y=k.slice(0,4), m=parseInt(k.slice(5,7),10);
+    return (MONTHS[m-1]||k)+' '+ar(y).replace(/٬/g,'');
+  }
+  var tabs=document.querySelectorAll('.tab');
+  function showTab(name){
+    for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-tab')===name);
+    $('panel-sum').hidden = name!=='sum';
+    $('panel-camp').hidden = name!=='camp';
+    $('panel-wash').hidden = name!=='wash';
+    window.scrollTo(0,0);
+  }
+  for(var ti=0;ti<tabs.length;ti++)
+    tabs[ti].addEventListener('click',function(){ showTab(this.getAttribute('data-tab')); });
+
+  /* ---- summary: every campaign, grouped by the month it starts ---- */
+  function renderSummary(){
+        if(!$('sumTable')) return;   /* صفحة الملخّص محذوفة */
+    var list=campaigns.slice().sort(function(a,b){
+      return String(a.start||'9999').localeCompare(String(b.start||'9999')); });
+    var st={}, pa={}, budget=0, live=0;
+    for(var i=0;i<list.length;i++){
+      var c=list[i];
+      budget+=Number(c.budget)||0;
+      if(statusOf(c).k==='live') live++;
+      (c.stations||[]).forEach(function(x){ st[x]=1; });
+      (c.partners||[]).forEach(function(x){ pa[x.name]=1; });
+    }
+    var months={};
+    list.forEach(function(c){ months[monthKey(c.start)]=1; });
+    $('sumKpi').innerHTML=
+      '<div class="box"><div class="k">الحملات</div><div class="v">'+ar(list.length)+'</div></div>'+
+      '<div class="box"><div class="k">الأشهر المغطّاة</div><div class="v">'+ar(Object.keys(months).length)+'</div></div>'+
+      '<div class="box"><div class="k">المحطات</div><div class="v">'+ar(Object.keys(st).length)+'</div></div>'+
+      '<div class="box"><div class="k">الشركاء</div><div class="v">'+ar(Object.keys(pa).length)+'</div></div>'+
+      '<div class="box"><div class="k">مجموع الميزانيات</div><div class="v">'+money(budget)+'</div></div>';
+
+    if(!list.length){
+      $('sumTable').innerHTML='<p class="empty">لا توجد حملات بعد.</p>';
+      return;
+    }
+    var h='<div class="tablewrap"><table><thead><tr>'+
+      '<th>الكود</th><th>الحملة</th><th>الفترة</th><th>المدة</th><th>المحطات</th>'+
+      '<th>الشركاء</th><th>الهدف</th><th>المستهدف</th><th>الميزانية</th><th>الحالة</th>'+
+      '</tr></thead><tbody>';
+    var seen='';
+    for(var j=0;j<list.length;j++){
+      var c=list[j], k=monthKey(c.start);
+      if(k!==seen){
+        seen=k;
+        var inMonth=list.filter(function(x){ return monthKey(x.start)===k; });
+        var mb=0; inMonth.forEach(function(x){ mb+=Number(x.budget)||0; });
+        h+='<tr class="month"><td colspan="10">'+esc(monthLabel(k))+' · '+
+           nCampaign(inMonth.length)+(mb?' · '+money(mb):'')+'</td></tr>';
+      }
+      var s2=statusOf(c);
+      var sts=(c.stations||[]);
+      var pas=(c.partners||[]).map(function(x){ return x.name; });
+      h+='<tr>'+
+        '<td class="code">'+esc(c.code)+'</td>'+
+        '<td>'+esc(c.name||'')+(c.parent?'<div class="small">ضمن '+esc(c.parent)+'</div>':'')+'</td>'+
+        '<td class="small">'+esc(c.start||'—')+'<br>'+esc(c.end||'—')+'</td>'+
+        '<td class="small">'+esc(durOf(c))+'</td>'+
+        '<td class="small">'+(sts.length?esc(sts.join(' · ')):'—')+'</td>'+
+        '<td class="small">'+(pas.length?esc(pas.join('، ')):'—')+'</td>'+
+        '<td class="small">'+esc(c.goal||'—')+'</td>'+
+        '<td class="small">'+esc(c.target||'—')+'</td>'+
+        '<td class="money">'+(Number(c.budget)?money(c.budget):'—')+'</td>'+
+        '<td><span class="pill '+s2.k+'">'+s2.t+'</span></td>'+
+      '</tr>';
+    }
+    $('sumTable').innerHTML=h+'</tbody></table></div>';
+  }
+
+  /* ---- the partner's budget plan ---- */
+  var WKEY='darb-wash-plan-v1';
+  var plan={budget:150000, months:5, partner:'واش واي'};
+  try{ var wraw=localStorage.getItem(WKEY); if(wraw) plan=JSON.parse(wraw)||plan; }catch(e){}
+  function savePlan(){ try{ localStorage.setItem(WKEY, JSON.stringify(plan)); }catch(e){} }
+  function planCampaigns(){
+    var name=(plan.partner||'').trim();
+    if(!name) return [];
+    return campaigns.filter(function(c){
+      return (c.partners||[]).some(function(x){ return (x.name||'').indexOf(name)!==-1; });
+    }).sort(function(a,b){ return String(a.start||'9999').localeCompare(String(b.start||'9999')); });
+  }
+  function paintPlan(){
+    if(!$('wTable')) return;
+    var list=planCampaigns(), total=Number(plan.budget)||0, run=0;
+    var rows=$('wTable').querySelectorAll('tr[data-code]');
+    for(var i=0;i<rows.length;i++){
+      var c=campByCode(rows[i].getAttribute('data-code'));
+      run+=c?(Number(c.budget)||0):0;
+      var left=total-run, cell=rows[i].querySelector('.w-left');
+      if(cell){ cell.textContent=money(left); cell.className='money w-left'+(left<0?' neg':''); }
+    }
+    var left=total-run;
+    var perMonth=(Number(plan.months)||1);
+    $('wKpi').innerHTML=
+      '<div class="box"><div class="k">الميزانية</div><div class="v">'+money(total)+'</div></div>'+
+      '<div class="box"><div class="k">المخصَّص</div><div class="v">'+money(run)+'</div></div>'+
+      '<div class="box"><div class="k">المتبقي</div><div class="v'+(left<0?' neg':'')+'">'+money(left)+'</div></div>'+
+      '<div class="box"><div class="k">حملات الشريك</div><div class="v">'+ar(list.length)+'</div></div>'+
+      '<div class="box"><div class="k">المتاح شهريًا</div><div class="v">'+money(total/perMonth)+'</div></div>';
+    var pct=total>0?Math.min(100,Math.round(run/total*100)):0;
+    var fill=$('wBar');
+    fill.style.width=pct+'%';
+    fill.className='bar-fill'+(left<0?' over':'');
+
+    /* month by month, against the monthly allowance */
+    var per=total/perMonth, byMonth={};
+    list.forEach(function(c){
+      var k=monthKey(c.start);
+      byMonth[k]=(byMonth[k]||0)+(Number(c.budget)||0);
+    });
+    var keys=Object.keys(byMonth).sort();
+    if(!keys.length){ $('wMonthly').innerHTML='<p class="poolnote">لا حملات بميزانية بعد.</p>'; return; }
+    var mh='<div class="tablewrap"><table><thead><tr><th>الشهر</th><th>المخصَّص</th>'+
+           '<th>حدّ الشهر</th><th>الفرق</th></tr></thead><tbody>';
+    for(var m=0;m<keys.length;m++){
+      var v=byMonth[keys[m]], diff=per-v;
+      mh+='<tr><td>'+esc(monthLabel(keys[m]))+'</td><td class="money">'+money(v)+
+          '</td><td class="money">'+money(per)+'</td><td class="money'+(diff<0?' neg':'')+'">'+
+          (diff<0?'تجاوز '+money(-diff):'متاح '+money(diff))+'</td></tr>';
+    }
+    $('wMonthly').innerHTML=mh+'</tbody></table></div>';
+  }
+  function renderWash(){
+        if(!$('wTable')) return;   /* صفحة الخطة محذوفة */
+    $('wBudget').value=plan.budget;
+    $('wMonths').value=plan.months;
+    if(document.activeElement!==$('wPartner')) $('wPartner').value=plan.partner;
+    $('waCodes').innerHTML=STATIONS.map(function(x){
+      return '<option value="'+esc(x.code)+'">'+esc(x.name||'')+'</option>'; }).join('');
+    var list=planCampaigns();
+    if(!list.length){
+      $('wTable').innerHTML='<p class="empty">لا توجد حملات مسجّلة لهذا الشريك. أضِف واحدة من الحقول أدناه، '+
+        'أو أضِف الشريك «'+esc(plan.partner)+'» إلى حملة قائمة من صفحة الحملات.</p>';
+      paintPlan(); return;
+    }
+    var h='<div class="tablewrap"><table><thead><tr>'+
+      '<th>الكود</th><th>الحملة</th><th>الشهر</th><th>الفترة</th><th>المحطات</th>'+
+      '<th>ميزانية الحملة</th><th>المتبقي بعدها</th><th>الحالة</th>'+
+      '</tr></thead><tbody>';
+    for(var i=0;i<list.length;i++){
+      var c=list[i], s3=statusOf(c);
+      h+='<tr data-code="'+esc(c.code)+'">'+
+        '<td class="code">'+esc(c.code)+'</td>'+
+        '<td>'+esc(c.name||'')+'</td>'+
+        '<td class="small">'+esc(monthLabel(monthKey(c.start)))+'</td>'+
+        '<td class="small">'+esc(c.start||'—')+' ← '+esc(c.end||'—')+'</td>'+
+        '<td class="small">'+((c.stations||[]).length?esc(c.stations.join(' · ')):'—')+'</td>'+
+        '<td><input type="number" class="w-budget" min="0" step="500" value="'+
+            (Number(c.budget)||'')+'" data-code="'+esc(c.code)+'"></td>'+
+        '<td class="money w-left">—</td>'+
+        '<td><span class="pill '+s3.k+'">'+s3.t+'</span></td>'+
+      '</tr>';
+    }
+    $('wTable').innerHTML=h+'</tbody></table></div>';
+    paintPlan();
+  }
+  if($('wTable')) $('wTable').addEventListener('input',function(e){
+    var box=e.target.closest('.w-budget'); if(!box) return;
+    var c=campByCode(box.getAttribute('data-code')); if(!c) return;
+    c.budget=Number(box.value)||0;
+    stamp(c); persist();
+    paintPlan(); renderSummary();
+  });
+  if($('wBudget')) $('wBudget').addEventListener('input',function(){ plan.budget=Number(this.value)||0; savePlan(); paintPlan(); });
+  if($('wMonths')) $('wMonths').addEventListener('input',function(){ plan.months=Number(this.value)||1; savePlan(); paintPlan(); });
+  if($('wPartner')) $('wPartner').addEventListener('input',function(){ plan.partner=this.value; savePlan(); renderWash(); });
+  if($('btnWaAdd')) $('btnWaAdd').addEventListener('click',function(){
+    var name=$('waName').value.trim(), start=$('waStart').value;
+    if(!name){ say('اكتبي اسم الحملة.',4000); $('waName').focus(); return; }
+    if(!start){ say('حدّدي تاريخ البدء.',4000); $('waStart').focus(); return; }
+    var end=$('waEnd').value||start;
+    if(dayms(end)<dayms(start)){ say('تاريخ الانتهاء قبل تاريخ البدء.',5000); return; }
+    var stn=$('waStation').value.trim().toUpperCase();
+    var d=daysOf(start,end);
+    var rec={code:newCode(), name:name, parent:'', start:start, end:end,
+             weeks:(d&&d%7===0)?d/7:null, days:d,
+             stations:stn?[stn]:[], tools:[], goal:'حملة ضمن خطة '+plan.partner,
+             kpi:'', target:'', budget:Number($('waBudget').value)||0,
+             terms:'', offer:'', notes:'',
+             partners:[{name:plan.partner, type:'', code:stn||'',
+                        offer:$('waOffer').value.trim(), old:'', newp:'', status:'بانتظار الرد'}]};
+    stamp(rec);
+    campaigns.unshift(rec);
+    openCodes[rec.code]=1;
+    persist(); render();
+    $('waName').value=''; $('waStart').value=''; $('waEnd').value='';
+    $('waStation').value=''; $('waBudget').value=''; $('waOffer').value='';
+    say('أُضيفت «'+name+'» إلى خطة '+plan.partner+' بكود '+rec.code+
+        (rec.budget?' وميزانية '+money(rec.budget):'')+'.',9000);
+  });
+
+  /* ---------------- export ---------------- */
+  function saveFile(name,data,type){
+    if(window.claude&&window.claude.downloads){
+      window.claude.downloads.save({filename:name,data:data}).then(function(){
+        say('حُفظ الملف '+name+'.',5000);
+      },function(err){
+        var code=(err&&err.code)||'unavailable';
+        if(code==='declined'){ say('أُلغي الحفظ.',3000); return; }
+        blobSave(name,data,type);
+        say('تعذّر الحفظ عبر الموقع ('+code+') — جُرّب التنزيل المباشر.',7000);
+      });
+      return;
+    }
+    blobSave(name,data,type);
+  }
+  function blobSave(name,data,type){
+    var b=new Blob([data],{type:type||'text/plain;charset=utf-8'});
+    var u=URL.createObjectURL(b), a=document.createElement('a');
+    a.href=u; a.download=name; document.body.appendChild(a); a.click();
+    document.body.removeChild(a); setTimeout(function(){ URL.revokeObjectURL(u); },1000);
+  }
+
+  /* ---- the page itself, as a file, with today's register inside it ---- */
+  function standaloneHTML(){
+    var st=document.querySelector('style');
+    var app='', sc=document.querySelectorAll('script');
+    for(var i=0;i<sc.length;i++){
+      var t=sc[i].textContent||'';
+      if(t.indexOf('var KEY=')!==-1){ app=t; break; }
+    }
+    var clone=document.body.cloneNode(true);
+    var kill=clone.querySelectorAll('script');
+    for(var j=kill.length-1;j>=0;j--) kill[j].parentNode.removeChild(kill[j]);
+    var hide=['#form','#share','#warn'];
+    for(var h=0;h<hide.length;h++){ var el=clone.querySelector(hide[h]); if(el){ el.hidden=true; } }
+    var w=clone.querySelector('#warn'); if(w) w.innerHTML='';
+    var tm=clone.querySelector('#toastmsg'); if(tm) tm.textContent='';
+    var ta=clone.querySelector('#toastact'); if(ta){ ta.hidden=true; ta.textContent=''; }
+    var to=clone.querySelector('#toast'); if(to) to.className='toast';
+    var O='<'+'script>', C='<'+'/'+'script>';
+    return '<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="utf-8">\n'+
+      '<meta name="viewport" content="width=device-width, initial-scale=1">\n'+
+      '<title>'+(document.title||'درب · سجل الحملات التسويقية')+'</title>\n'+
+      (st?st.outerHTML:'')+'\n</head>\n<body>\n'+clone.innerHTML+'\n'+
+      O+'\nvar STATIONS = '+JSON.stringify(STATIONS)+';\n'+
+      'var SEED = '+JSON.stringify(campaigns)+';\n'+C+'\n'+
+      O+'\n'+app+'\n'+C+'\n'+
+      O+'\nsetTimeout(function(){var b=document.getElementById("btnExpand");if(b)b.click();},250);\n'+C+
+      '\n</body>\n</html>\n';
+  }
+  $('btnHtml').addEventListener('click',function(){
+    var html=standaloneHTML();
+    var stamp=nCampaign(campaigns.length);
+    if(!(window.claude&&window.claude.downloads)){
+      blobSave('darb-campaigns.html', html, 'text/html;charset=utf-8');
+      say('نُزّل الملف ومعه '+stamp+'.',7000);
+      return;
+    }
+    /* .html sits in the host's extended set and is often switched off;
+       .txt is always allowed and carries exactly the same page */
+    window.claude.downloads.save({filename:'darb-campaigns.html', data:html}).then(function(){
+      say('نُزّل الملف darb-campaigns.html ومعه '+stamp+'. يفتح في أي متصفح.',9000);
+    },function(err){
+      var code=(err&&err.code)||'unavailable';
+      if(code==='declined'){ say('أُلغي التنزيل.',3500); return; }
+      if(code==='too_large'){ say('الملف أكبر من الحد المسموح هنا. استخدم «تصدير JSON».',8000); return; }
+      try{ blobSave('darb-campaigns.html', html, 'text/html;charset=utf-8'); }catch(e){}
+      window.claude.downloads.save({filename:'darb-campaigns.html.txt', data:html}).then(function(){
+        say('صيغة html مقفلة في هذا العرض، فنزل الملف باسم darb-campaigns.html.txt ومعه '+stamp+'. '+
+            'احذف «.txt» من آخر الاسم ليصير darb-campaigns.html ويفتح كصفحة. '+
+            'وإن تعذّر تغيير الاسم على جهازك: اضغط «تصدير JSON» وأرسل الملف في المحادثة ليعود إليك ملف html جاهزًا.',
+            22000);
+      },function(){
+        say('تعذّر الحفظ من الموقع. اضغط «تصدير JSON» وأرسل الملف في المحادثة ليعود إليك ملف html جاهزًا.',12000);
+      });
+    });
+  });
+  $('btnJson').addEventListener('click',function(){
+    if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
+    saveFile('darb-campaigns.json', JSON.stringify(campaigns,null,2), 'application/json');
+  });
+  $('btnCsv').addEventListener('click',function(){
+    if(!campaigns.length){ say('لا توجد حملات لتصديرها.',3500); return; }
+    var head=['كود الحملة','اسم الحملة','الحملة الأساسية','تاريخ البدء','تاريخ الانتهاء','المدة بالأيام','المدة بالأسابيع','الحالة',
+              'المحطات','الأدوات','الهدف','مؤشر القياس','المستهدف','ميزانية الحملة','العرض المقترح','الشروط',
+              'الشريك','نوع الشريك','محطة الشريك','فكرة العرض','السعر الاعتيادي','سعر الحملة','حالة الشريك'];
+    var rows=[head];
+    campaigns.forEach(function(c){
+      var base=[c.code,c.name,c.parent||'',c.start,c.end,daysOf(c.start,c.end)||'',c.weeks||'',statusOf(c).t,
+                (c.stations||[]).join(' | '),(c.tools||[]).join(' | '),
+                c.goal,c.kpi,c.target,c.budget||'',c.offer,(c.terms||'').replace(/\n/g,' / ')];
+      if(!(c.partners||[]).length){ rows.push(base.concat(['','','','','','',''])); return; }
+      c.partners.forEach(function(p){
+        rows.push(base.concat([p.name,p.type,p.code==='EXT'?'خارجي':p.code,
+                               p.offer,p.old,p.newp,p.status]));
+      });
+    });
+    var csv='﻿'+rows.map(function(r){
+      return r.map(function(v){ return '"'+String(v==null?'':v).replace(/"/g,'""')+'"'; }).join(',');
+    }).join('\r\n');
+    saveFile('darb-campaigns.csv', csv, 'text/csv;charset=utf-8');
+  });
+  $('btnPrint').addEventListener('click',function(){
+    var open=$('list').querySelectorAll('.card');
+    for(var i=0;i<open.length;i++) open[i].classList.add('open');
+    say('اختر «حفظ بصيغة PDF» وجهةً للطباعة.',5000);
+    setTimeout(function(){ try{ window.print(); }catch(e){} },700);
+  });
+  $('btnImport').addEventListener('click',function(){ $('fileimp').click(); });
+  $('fileimp').addEventListener('change',function(){
+    var f=this.files&&this.files[0]; if(!f) return;
+    var rd=new FileReader();
+    rd.onload=function(){
+      var list=decodeShare(rd.result);
+      if(!list){ say('الملف غير صالح. المتوقّع ملف JSON صادر من هذه الصفحة.',6000); return; }
+      $('share').hidden=true;
+      reportMerge(mergeIncoming(list));
+    };
+    rd.readAsText(f); this.value='';
+  });
+
+  /* ---------------- go ---------------- */
+  load(); loadExt();
+  if(SEED && SEED.length){
+    if(!campaigns.length){
+      campaigns=JSON.parse(JSON.stringify(SEED));
+      persist();
+    } else if(typeof SEEDMODE!=='undefined' && SEEDMODE==='merge'){
+      var mine={}, changed=false;
+      for(var si=0;si<campaigns.length;si++) mine[campaigns[si].code]=si;
+      for(var sj=0;sj<SEED.length;sj++){
+        var sc=SEED[sj], at=mine[sc.code];
+        if(at===undefined){ campaigns.push(JSON.parse(JSON.stringify(sc))); changed=true; }
+        else if((sc.updatedAt||'')>(campaigns[at].updatedAt||'')){
+          campaigns[at]=JSON.parse(JSON.stringify(sc)); changed=true;
+        }
+      }
+      if(changed) persist();
+    }
+  }
+  if(!campaigns.length){
+    campaigns=[{
+      code:'CMP-2026-01', name:'حملة فطور محطة العمرة',
+      start:'2026-08-19', weeks:4, end:'2026-09-15',
+      stations:['MK007'],
+      tools:['فيديو تشويقي','فيديو عروض الحملة','فيديوهات المؤثّرين','حملة واتساب',
+             'توزيع كروت العرض','لوحات المضخات','لافتات الطريق','رمز QR للتفعيل',
+             'النشر على منصات التواصل','تدريب عمال المحطة'],
+      goal:'تفعيل الفترة الصباحية في محطة العمرة ورفع مبيعات الوحدات الغذائية بين ٠٥:٠٠ و١١:٠٠، '+
+           'وتحويل عملاء الوقود تحت المظلة إلى عملاء للوحدات.',
+      kpi:'عمليات مسح QR الخاصة بالوحدة ÷ عدد سيارات الفترة الصباحية',
+      target:'معدل التقاط ٥٪ من ٩٥٣ سيارة صباحًا',
+      terms:TERMS,
+      partners:[],
+      offer:'وجبة فطور بسعر خاص، أو مشروب مجاني مع أي فطور، مقابل تعبئة وقود بقيمة يحدّدها الاتفاق، '+
+            'ويُفعَّل بمسح رمز QR على كرت الفطور بين ٠٥:٠٠ و١١:٠٠.',
+      notes:'حملة نموذجية أُدرجت لتوضيح شكل التسجيل. احذفها أو عدّلها كما تشاء.'
+    }];
+    persist();
+  }
+  render();
+  setPartners([]);
+})();
+
+
+</script>
+<script>
+setTimeout(function(){var b=document.getElementById("btnExpand");if(b)b.click();},250);
+</script>
+</body>
+</html>
