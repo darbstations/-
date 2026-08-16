@@ -116,6 +116,21 @@ td.no{color:var(--ink-3)}
 .bar button:hover{background:var(--orange-hi)}
 .bar button.ghost{background:transparent;border:1px solid #5A4330;color:#E4D3BC}
 .bar .hint{font-size:12px;color:#9A8674}
+/* ---------- editing ---------- */
+body.editing .pg{height:auto;min-height:630px;overflow:visible}
+body.editing [data-block]{outline:1px dashed transparent;transition:outline-color .12s}
+body.editing [data-block]:hover{outline-color:var(--line)}
+body.editing [data-block].hot{outline:2px solid var(--orange-hi);outline-offset:2px}
+.blockbar{position:absolute;z-index:50;display:none;gap:5px;background:#151515;
+  border-radius:7px;padding:5px 7px;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+.blockbar.show{display:flex;align-items:center}
+.blockbar .kind{color:#E4D8C8;font-size:12px;padding:0 6px 0 2px;white-space:nowrap}
+.blockbar button{background:#2C2C2C;border:0;color:#fff;border-radius:5px;padding:5px 10px;
+  font:inherit;font-size:12px;cursor:pointer}
+.blockbar button:hover{background:var(--orange)}
+.blockbar button.del:hover{background:#A33A22}
+.savedot{font-size:12px;color:#9A8674}
+.savedot.ok{color:#7BC49A}
 .toast{position:fixed;inset-inline:0;bottom:22px;margin:auto;width:max-content;max-width:92vw;
   background:#151515;color:#fff;border-radius:7px;padding:12px 20px;font-size:13.5px;
   opacity:0;transition:.18s;pointer-events:none;z-index:60}
@@ -149,13 +164,27 @@ td.no{color:var(--ink-3)}
   <div class="in">
     <label for="pick">المحطة</label>
     <select id="pick"><option value="MK072" selected>MK072 · العزيزية — مكة</option><option value="MK015">MK015 · النسيم — جدة</option><option value="MK017">MK017 · عرفات الشوقية — مكة</option><option value="RY075">RY075 · الدائري الشمالي — الرياض</option><option value="JA069">JA069 · كورنيش جيزان — جازان</option><option value="MK002">MK002 · المعيصم — مكة</option><option value="MK035">MK035 · الجمعية الوسام — الطائف</option><option value="MK023">MK023 · بن درويش — مكة</option><option value="MK019">MK019 · الشرايع — مكة</option><option value="MK099">MK099 · البيعة — الطائف</option><option value="RY042">RY042 · الناصفة — الخرج</option></select>
+    <button type="button" id="edit" class="ghost">تحرير</button>
+    <button type="button" id="addpg" class="ghost" hidden>+ شريحة</button>
+    <button type="button" id="undo" class="ghost" hidden disabled>↶ تراجع</button>
+    <button type="button" id="redo" class="ghost" hidden disabled>↷ إعادة</button>
+    <button type="button" id="reset" class="ghost" hidden>استعادة الأصل</button>
     <button type="button" id="dl">تنزيل ملف هذه المحطة</button>
     <button type="button" class="ghost" id="dlall">تنزيل ملفات كل المحطات</button>
     <button type="button" class="ghost" id="pr">طباعة / PDF</button>
-    <span class="hint">الملف المُنزَّل شرائح جاهزة للإرسال للشريك، بأرقام هذه المحطة وحدها.</span>
+    <span class="savedot" id="savedot">جاهز</span>
+    <span class="hint">اضغط «تحرير» لتعديل الشرائح أو حذفها أو إضافة شريحة — وما تعدّله ينزل مع الملف.</span>
   </div>
 </div>
 <div class="wrap"><div id="deck"></div></div>
+<div class="blockbar" id="bb">
+  <span class="kind" id="bbk">فقرة</span>
+  <button type="button" data-a="out" title="تحديد العنصر الأكبر">⤴</button>
+  <button type="button" data-a="up" title="لأعلى">▲</button>
+  <button type="button" data-a="down" title="لأسفل">▼</button>
+  <button type="button" data-a="dup">تكرار</button>
+  <button type="button" data-a="del" class="del">حذف</button>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -168,17 +197,63 @@ var IMGS={"hero": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQ
   var toast=document.getElementById('toast'), tT;
   function say(m,ms){ toast.textContent=m; toast.classList.add('show');
     clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }
-  function show(c){ box.innerHTML=fill(DECKS[c]); document.title='حملة غسيل السيارات — '+NAMES[c]+' '+c;
-    window.scrollTo(0,0); }
+  /* كل عنصر يمكن تعديله أو حذفه يُوسم تلقائيًا، فتشمل الأداة الشرائح الأصلية والمضافة */
+  var BSEL='.pg > *, .pg > .in > *, .split > *, .strip > .fact, .gains > .gain,'+
+           '.grid > .card, .tools > .tool, .clips > *, tbody > tr, li';
+  function mark(){
+    var p=box.querySelectorAll('.pg'), i;
+    for(i=0;i<p.length;i++) p[i].setAttribute('data-block','pg');
+    var n=box.querySelectorAll(BSEL);
+    for(i=0;i<n.length;i++){
+      if(n[i].classList.contains('art')||n[i].classList.contains('veil')) continue;
+      if(!n[i].hasAttribute('data-block')) n[i].setAttribute('data-block','');
+    }
+  }
+  function kind(el){
+    if(el.classList.contains('pg')) return 'شريحة كاملة';
+    if(el.classList.contains('gain')) return 'ميزة';
+    if(el.classList.contains('card')) return 'بطاقة';
+    if(el.classList.contains('tool')) return 'خدمة';
+    if(el.classList.contains('fact')) return 'رقم';
+    if(el.classList.contains('gains')||el.classList.contains('grid')||
+       el.classList.contains('tools')||el.classList.contains('clips')) return 'مجموعة';
+    var t=el.tagName;
+    if(t==='TR') return 'صف';
+    if(t==='TABLE') return 'جدول';
+    if(t==='IMG') return 'صورة';
+    if(t==='LI') return 'بند';
+    if(t==='H1'||t==='H2'||t==='H3') return 'عنوان';
+    return 'فقرة';
+  }
+  function show(c){
+    box.innerHTML = (saved && saved[c]) ? saved[c] : fill(DECKS[c]);
+    mark();
+    document.title='حملة غسيل السيارات — '+NAMES[c]+' '+c;
+    stack=[]; at=-1; snap(); place(null);
+    window.scrollTo(0,0);
+  }
   sel.addEventListener('change',function(){ show(this.value); });
-  show(sel.value);
 
+  /* الملف المُرسَل للشريك يخرج نظيفًا من آثار أدوات التحرير */
+  function clean(h){
+    var t=document.createElement('div'); t.innerHTML=h;
+    var n=t.querySelectorAll('[data-block]'), i;
+    for(i=0;i<n.length;i++) n[i].removeAttribute('data-block');
+    n=t.querySelectorAll('.hot');
+    for(i=0;i<n.length;i++) n[i].classList.remove('hot');
+    n=t.querySelectorAll('[contenteditable]');
+    for(i=0;i<n.length;i++) n[i].removeAttribute('contenteditable');
+    return t.innerHTML;
+  }
   function fileFor(c){
     var css=document.querySelector('style').outerHTML;
+    var body = (c===sel.value) ? box.innerHTML
+             : ((saved&&saved[c]) ? saved[c] : fill(DECKS[c]));
     return '<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="utf-8">\n'+
       '<meta name="viewport" content="width=device-width, initial-scale=1">\n'+
       '<title>حملة غسيل السيارات — '+NAMES[c]+' '+c+'</title>\n'+css+
-      '\n</head>\n<body>\n<div class="wrap">'+fill(DECKS[c])+'</div>\n</body>\n</html>\n';
+      '\n</head>\n<body>\n<div class="wrap">'+clean(body)+
+      '</div>\n</body>\n</html>\n';
   }
   function drop(name, html){
     var b=new Blob([html],{type:'text/html;charset=utf-8'});
@@ -211,10 +286,131 @@ var IMGS={"hero": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAcFBQ
     })();
     say('يجري تنزيل ملف لكل محطة…',6000);
   });
+  /* ---------------- editing ---------------- */
+  var SKEY='darb-carwash-slides-v1';
+  var saved={};
+  try{ var raw=localStorage.getItem(SKEY); if(raw) saved=JSON.parse(raw)||{}; }catch(e){}
+  var dot=document.getElementById('savedot');
+  function keep(){
+    try{
+      saved[sel.value]=box.innerHTML;
+      localStorage.setItem(SKEY, JSON.stringify(saved));
+      var d=new Date();
+      if(dot){ dot.textContent='محفوظ '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+               dot.className='savedot ok'; }
+    }catch(e){ if(dot){ dot.textContent='تعذّر الحفظ'; dot.className='savedot'; } }
+  }
+  var stack=[], at=-1, snapT;
+  function ubtn(){
+    document.getElementById('undo').disabled = at<=0;
+    document.getElementById('redo').disabled = at>=stack.length-1;
+  }
+  function snap(){
+    var h=box.innerHTML;
+    if(at>=0 && stack[at]===h) return;
+    stack=stack.slice(0,at+1); stack.push(h);
+    if(stack.length>60) stack.shift();
+    at=stack.length-1; ubtn();
+  }
+  function restore(h){ box.innerHTML=h; mark(); place(null); keep(); ubtn(); }
+  document.getElementById('undo').addEventListener('click',function(){
+    if(at<=0) return; at--; restore(stack[at]); say('تراجع.',2000); });
+  document.getElementById('redo').addEventListener('click',function(){
+    if(at>=stack.length-1) return; at++; restore(stack[at]); say('إعادة.',2000); });
+
+  var bb=document.getElementById('bb'), target=null;
+  function place(el){
+    target=el;
+    var hot=box.querySelectorAll('.hot');
+    for(var i=0;i<hot.length;i++) hot[i].classList.remove('hot');
+    if(!el){ bb.classList.remove('show'); return; }
+    el.classList.add('hot');
+    document.getElementById('bbk').textContent=kind(el);
+    var r=el.getBoundingClientRect();
+    bb.classList.add('show');
+    var top=window.scrollY+r.top-40;
+    if(top < window.scrollY+6) top=window.scrollY+r.top+6;
+    bb.style.top=top+'px';
+    bb.style.left=Math.max(6, window.scrollX+r.left)+'px';
+  }
+  box.addEventListener('click',function(e){
+    if(!editing) return;
+    var el=e.target.closest('[data-block]');
+    place(el&&box.contains(el)?el:null);
+  });
+  bb.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b||!target) return;
+    var a=b.getAttribute('data-a');
+    if(a==='out'){
+      var up=target.parentElement && target.parentElement.closest('[data-block]');
+      if(up && box.contains(up)) place(up); else say('هذه أكبر وحدة — الشريحة كاملة.',3000);
+      return;
+    }
+    snap();
+    if(a==='del'){ var g=target; target=null; g.parentNode.removeChild(g); place(null); }
+    else if(a==='dup'){ var c2=target.cloneNode(true); target.parentNode.insertBefore(c2,target.nextSibling); place(c2); }
+    else if(a==='up'&&target.previousElementSibling){ target.parentNode.insertBefore(target,target.previousElementSibling); place(target); }
+    else if(a==='down'&&target.nextElementSibling){ target.parentNode.insertBefore(target.nextElementSibling,target); place(target); }
+    snap(); keep();
+  });
+  box.addEventListener('input',function(){
+    if(!editing) return;
+    clearTimeout(snapT);
+    snapT=setTimeout(function(){ snap(); keep(); },400);
+  });
+  var editing=false;
+  function setEdit(on){
+    editing=on;
+    box.setAttribute('contenteditable', on?'true':'false');
+    box.spellcheck=false;
+    document.body.classList.toggle('editing', on);
+    document.getElementById('edit').textContent = on?'إنهاء التحرير':'تحرير';
+    ['addpg','undo','redo','reset'].forEach(function(id){ document.getElementById(id).hidden=!on; });
+    if(!on) place(null);
+    ubtn();
+  }
+  document.getElementById('edit').addEventListener('click',function(){ setEdit(!editing); });
+  document.getElementById('addpg').addEventListener('click',function(){
+    snap();
+    var d=document.createElement('section');
+    d.className='pg'; d.setAttribute('data-block','');
+    d.innerHTML='<p class="eyebrow" data-block>عنوان فرعي</p><h2 data-block>عنوان الشريحة</h2>'+
+      '<p class="lede" data-block>اكتب هنا نص الشريحة. اضغط على أي عنصر ليظهر شريط الحذف والتكرار.</p>';
+    var last=box.querySelector('.pg:last-of-type');
+    if(last) last.parentNode.insertBefore(d,last.nextSibling); else box.appendChild(d);
+    d.scrollIntoView({behavior:'smooth',block:'center'});
+    snap(); keep(); say('أُضيفت شريحة في آخر العرض.',4000);
+  });
+  var armed=false, armT;
+  document.getElementById('reset').addEventListener('click',function(){
+    var btn=this;
+    if(!armed){ armed=true; btn.textContent='تأكيد؟';
+      say('سيُلغى كل تعديل على شرائح هذه المحطة. اضغط مرة أخرى للتأكيد.',5000);
+      clearTimeout(armT); armT=setTimeout(function(){ armed=false; btn.textContent='استعادة الأصل'; },5000);
+      return; }
+    clearTimeout(armT); armed=false; btn.textContent='استعادة الأصل';
+    snap();
+    delete saved[sel.value];
+    try{ localStorage.setItem(SKEY, JSON.stringify(saved)); }catch(e){}
+    box.innerHTML=fill(DECKS[sel.value]); mark();
+    snap(); place(null);
+    say('رجعت شرائح هذه المحطة إلى الأصل. «تراجع» يعيد تعديلاتك.',8000);
+  });
+  document.addEventListener('keydown',function(e){
+    var m=e.ctrlKey||e.metaKey; if(!m) return;
+    if(e.key==='z'||e.key==='Z'){ e.preventDefault();
+      document.getElementById(e.shiftKey?'redo':'undo').click(); }
+    if(e.key==='y'||e.key==='Y'){ e.preventDefault(); document.getElementById('redo').click(); }
+  });
+
   document.getElementById('pr').addEventListener('click',function(){
     say('اختر «حفظ بصيغة PDF» وجهةً للطباعة، والاتجاه أفقيًا.',6000);
     setTimeout(function(){ try{ window.print(); }catch(e){} },700);
   });
+
+  /* آخر خطوة: كل الأدوات جاهزة، فنعرض شرائح المحطة المختارة */
+  show(sel.value);
+  if(Object.keys(saved).length) say('فيه تعديلات محفوظة على شرائحك، رجعناها لك.',5000);
 })();
 </script>
 </body>
