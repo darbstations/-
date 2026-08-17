@@ -1,0 +1,764 @@
+<title>رسائل درب للمستأجرين</title>
+<style>
+  :root{
+    --ground:#FBF6EF;
+    --surface:#FFFFFF;
+    --surface-2:#F4E9DB;
+    --ink:#332417;
+    --ink-2:#6B5744;
+    --ink-3:#9A8674;
+    --line:#E4D6C4;
+    --line-strong:#C7B49E;
+    --accent:#B44E05;
+    --accent-2:#E8760C;
+    --accent-wash:#FBE3C6;
+    --ok:#4A6B3A;
+    --ok-wash:#E5EEDF;
+    --est:#9A6B12;
+    --est-wash:#F7EBD2;
+    --gap:#8A5A52;
+    --gap-wash:#F3E0DC;
+    --shadow:0 1px 2px rgba(51,36,23,.06),0 8px 24px -12px rgba(51,36,23,.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#191310;
+      --surface:#221A15;
+      --surface-2:#2C221B;
+      --ink:#F4E9DB;
+      --ink-2:#C7B49E;
+      --ink-3:#9A8674;
+      --line:#3A2D24;
+      --line-strong:#4E3D31;
+      --accent:#F59A2E;
+      --accent-2:#E8760C;
+      --accent-wash:#3A2A18;
+      --ok:#9DBE86;
+      --ok-wash:#25301E;
+      --est:#DCA83F;
+      --est-wash:#332714;
+      --gap:#D69C91;
+      --gap-wash:#332020;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#191310;
+    --surface:#221A15;
+    --surface-2:#2C221B;
+    --ink:#F4E9DB;
+    --ink-2:#C7B49E;
+    --ink-3:#9A8674;
+    --line:#3A2D24;
+    --line-strong:#4E3D31;
+    --accent:#F59A2E;
+    --accent-2:#E8760C;
+    --accent-wash:#3A2A18;
+    --ok:#9DBE86;
+    --ok-wash:#25301E;
+    --est:#DCA83F;
+    --est-wash:#332714;
+    --gap:#D69C91;
+    --gap-wash:#332020;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    direction:rtl;
+    text-align:right;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:56px}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.3;font-weight:800}
+  p{margin:0}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:4px}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex;flex-direction:column;gap:20px;border-bottom:3px solid var(--accent);padding-bottom:28px}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
+  }
+  .mast h1{font-size:clamp(1.9rem,4.6vw,3rem);letter-spacing:-.01em}
+  .mast .lede{font-size:1.075rem;color:var(--ink-2);max-width:62ch}
+  .mast-meta{
+    display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.82rem;color:var(--ink-3);
+    padding-top:6px;font-variant-numeric:tabular-nums;
+  }
+  .mast-meta b{color:var(--ink-2);font-weight:700}
+
+  /* ---------- answer callout ---------- */
+  .finding{
+    background:var(--ok-wash);
+    border:1px solid var(--ok);
+    border-radius:2px;
+    padding:20px 24px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .finding h3{font-size:1rem;color:var(--ok);letter-spacing:.01em}
+  .finding p{color:var(--ink);font-size:.95rem}
+  .finding code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.85em;background:var(--surface);padding:1px 6px;border-radius:3px;
+    border:1px solid var(--line);direction:ltr;display:inline-block;
+  }
+
+  /* ---------- section heads ---------- */
+  .sec{display:flex;flex-direction:column;gap:24px}
+  .sec-head{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line-strong);padding-bottom:12px}
+  .sec-head h2{font-size:1.5rem}
+  .sec-head p{font-size:.9rem;color:var(--ink-3);max-width:66ch}
+
+  /* ---------- confidence chips ---------- */
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.7rem;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:2px;white-space:nowrap;
+    border:1px solid currentColor;
+  }
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+  .chip-file{color:var(--ok);background:var(--ok-wash)}
+  .chip-est{color:var(--est);background:var(--est-wash)}
+  .chip-gap{color:var(--gap);background:var(--gap-wash)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+  .legend span.txt{font-size:.82rem;color:var(--ink-3)}
+
+  /* ---------- comparison table ---------- */
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:840px;font-size:.86rem}
+  thead th{
+    background:var(--surface-2);color:var(--ink);text-align:right;
+    font-size:.74rem;letter-spacing:.06em;font-weight:800;
+    padding:12px 14px;border-bottom:2px solid var(--line-strong);white-space:nowrap;
+  }
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 45%,transparent)}
+  .code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-weight:700;color:var(--accent);direction:ltr;display:inline-block;font-size:.9em;
+  }
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* ---------- station cards ---------- */
+  .cards{display:flex;flex-direction:column;gap:28px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:2px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .card-head{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
+    padding:18px 24px;background:var(--surface-2);border-bottom:1px solid var(--line-strong);
+  }
+  .card-head .c{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:1.15rem;font-weight:800;color:var(--accent);direction:ltr;
+  }
+  .card-head h3{font-size:1.15rem;flex:1;min-width:200px}
+  .card-head .where{font-size:.85rem;color:var(--ink-2)}
+  .card-body{padding:8px 24px 22px;display:flex;flex-direction:column}
+
+  .row{display:grid;grid-template-columns:150px 1fr;gap:4px 20px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .row:last-child{border-bottom:none}
+  .row-label{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+  .row-label b{font-size:.83rem;font-weight:800;color:var(--ink-2);letter-spacing:.01em}
+  .row-body{font-size:.93rem;display:flex;flex-direction:column;gap:9px;min-width:0}
+  .row-body p{color:var(--ink)}
+  .muted{color:var(--ink-3);font-size:.87rem}
+
+  ul.brands{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  ul.brands li{
+    font-size:.8rem;background:var(--accent-wash);color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    padding:3px 9px;border-radius:2px;
+  }
+  ul.brands li.k{background:transparent;color:var(--ink-2);border-color:var(--line-strong)}
+
+  .metrics{display:flex;flex-wrap:wrap;gap:10px}
+  .metric{
+    border:1px solid var(--line-strong);border-radius:2px;padding:9px 14px;
+    display:flex;flex-direction:column;gap:1px;min-width:120px;background:var(--ground);
+  }
+  .metric .k{font-size:.68rem;letter-spacing:.07em;color:var(--ink-3);font-weight:700}
+  .metric .v{font-size:1.05rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .metric.hi .v{color:var(--accent)}
+
+  ul.plain{margin:0;padding:0 18px 0 0;display:flex;flex-direction:column;gap:5px;font-size:.92rem}
+  ul.plain li::marker{color:var(--accent-2)}
+
+  /* ---------- method ---------- */
+  .method{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px 26px;display:flex;flex-direction:column;gap:20px}
+  .steps{display:flex;flex-direction:column;gap:16px;counter-reset:s;margin:0;padding:0;list-style:none}
+  .steps li{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    font-family:ui-monospace,monospace;font-size:.78rem;font-weight:800;
+    color:var(--accent);border:1px solid var(--accent);border-radius:50%;
+    width:26px;height:26px;display:grid;place-items:center;margin-top:2px;
+  }
+  .steps b{display:block;font-size:.93rem;margin-bottom:2px}
+  .steps p{font-size:.88rem;color:var(--ink-2)}
+  .formula{
+    background:var(--ground);border:1px solid var(--line-strong);border-right:3px solid var(--accent);
+    padding:12px 16px;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.83rem;direction:ltr;text-align:left;overflow-x:auto;color:var(--ink);
+    border-radius:2px;line-height:1.9;
+  }
+  .caveat{
+    background:var(--gap-wash);border:1px solid var(--gap);border-radius:2px;
+    padding:18px 22px;display:flex;flex-direction:column;gap:8px;
+  }
+  .caveat h4{font-size:.95rem;color:var(--gap)}
+  .caveat p,.caveat li{font-size:.89rem;color:var(--ink)}
+
+
+  /* --- whatsapp bubble --- */
+  .msg{
+    background:#E7F6D8;color:#101a10;border-radius:14px 14px 14px 4px;
+    padding:16px 18px;font-size:.95rem;line-height:1.85;white-space:pre-wrap;
+    position:relative;box-shadow:0 1px 2px rgba(0,0,0,.10);
+  }
+  :root:not([data-theme="light"]) .msg{background:#0F3A2E;color:#E6F2EA}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]) .msg{background:#E7F6D8;color:#101a10}}
+  :root[data-theme="dark"] .msg{background:#0F3A2E;color:#E6F2EA}
+  .msg-wrap{display:flex;flex-direction:column;gap:8px}
+  .msg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+  .msg-kind{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--ink-3)}
+  .copy{
+    font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;
+    background:var(--accent);color:#fff;border:1px solid var(--accent);
+    padding:5px 14px;border-radius:2px;transition:opacity .15s;
+  }
+  .copy:hover{opacity:.88}
+  .copy.done{background:var(--ok);border-color:var(--ok)}
+  .target{
+    font-size:.8rem;color:var(--ink-2);background:var(--surface-2);
+    border:1px solid var(--line);border-radius:2px;padding:8px 12px;
+  }
+  .target b{color:var(--accent)}
+  .safe{font-size:.83rem;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+  .safe li{margin:0}
+  footer{border-top:1px solid var(--line-strong);padding-top:20px;font-size:.8rem;color:var(--ink-3);display:flex;flex-direction:column;gap:6px}
+
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;gap:44px}
+    .row{grid-template-columns:1fr;gap:10px}
+    .row-label{flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap}
+    .card-body{padding:8px 18px 18px}
+    .card-head{padding:16px 18px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="eyebrow">درب · تطوير الأعمال</div>
+    <h1>رسائل درب للمستأجرين</h1>
+    <p class="lede">
+      ثماني رسائل واتساب جاهزة للإرسال — واحدة لكل محطة، مبنية على مزايا الموقع المقيسة فعليًا،
+      مع رسالة متابعة لكل موقع وقائمة بالأرقام المسموح استخدامها.
+    </p>
+    <div class="mast-meta">
+      <span>الجمهور: <b>مستأجرون محتملون (علامات تجارية)</b></span>
+      <span>عدد الرسائل: <b>٨ + ٨ متابعات</b></span>
+      <span>الأرقام: <b>مقيسة من الخرائط وسجلاتكم</b></span>
+    </div>
+  </header>
+
+  <section class="finding">
+    <h3>افتراض بنيت عليه الرسائل</h3>
+    <p>
+      كتبتها <strong>موجَّهة للعلامات التجارية لتأجير الوحدات</strong> — لأن المزايا التي وثّقناها
+      (الحركة، المنافسون، قرب المولات) حجج مؤجِّر لا حجج مستهلك. لو كنتِ تريدين رسائل
+      <strong>للعملاء النهائيين</strong> بدلًا من ذلك، قولي وأعيد كتابتها بنبرة مختلفة تمامًا.
+    </p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>قاعدتان قبل الإرسال</h2>
+      <p>الرسائل ستذهب لأطراف خارجية في سياق تفاوضي — لذلك انتبهي لأمرين.</p>
+    </div>
+    <div class="caveat">
+      <h4>١. لم أضع أي رقم حركة مرورية في أي رسالة — وهذا مقصود</h4>
+      <p>
+        أرقام «١٤٣ ألف سيارة يوميًا» تقديرات هندسية لا قياسات، ولا يصح تقديمها لمستأجر كأنها مقاسة.
+        بنيت كل رسالة على <strong>حقائق موثّقة فقط</strong>: تقييم قوقل وعدد المراجعات، والمسافات
+        المقيسة للمولات، وبُعد أقرب منافس، والعلامات العاملة فعلًا.
+        إن سأل المستأجر عن أعداد السيارات، قدّميها بصيغة: «تقدير أولي بحسب تصنيف الطريق، ونؤكده بعدّاد مروري عند الجدية».
+      </p>
+      <h4>٢. أكّدي الوحدة الشاغرة قبل الإرسال</h4>
+      <p>
+        بحثت في ورقة «الامتياز» ولا تحتوي إلا ١٩ محطة، وليست فيها أي من محطاتنا الثمانية —
+        فلا توجد بيانات شواغر لها في الملف. الرسائل تتحدث عن «المتاح» بصيغة عامة،
+        ويجب تثبيت رقم الوحدة ونوعها قبل الإرسال.
+      </p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>الرسائل</h2><p>مرتّبة بحسب أولوية العمل، لا بترتيب الصورة. اضغطي «نسخ» لأخذ النص جاهزًا.</p></div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK035</span>
+          <h3>الطائف · القراحين — دائري الملك فهد</h3>
+          <span class="where">أولوية ١</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">مطاعم ومقاهي وسلاسل وجبات سريعة — الموقع بلا أي علامة مطاعم حتى الآن</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m0a">نسخ</button></div>
+              <div class="msg" id="m0a">مساء الخير أستاذ [الاسم] 🌿
+
+معك [اسمك] من محطات درب.
+
+عندنا محطة على دائري الملك فهد بالطائف، تقييمها ٥٫٠ على قوقل وفوق ٣٥٠٠ مراجعة — يعني الحركة عليها قائمة فعلًا وموثّقة.
+
+اللافت أنه ما فيها ولا مطعم ولا مقهى حتى الآن. العميل موجود قبل ما تفتحون.
+
+وموسم صيف الطائف يرفع الحركة على الدائري بشكل واضح.
+
+أرسل لك كراسة الموقع والمساحات؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m0b">نسخ</button></div>
+              <div class="msg" id="m0b">تحية طيبة أستاذ [الاسم] 🌿
+
+متابعة بسيطة لموضوع محطة دائري الملك فهد بالطائف.
+
+اللي يميزها إنها الوحيدة عندنا بهذا الحجم من الحركة (٣٥٠٠+ مراجعة، تقييم ٥٫٠) وما فيها منافس داخلي — تعني أول علامة مطاعم تدخلها تأخذ السوق كامل.
+
+أحجز لك زيارة للموقع هذا الأسبوع؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>تقييم ٥٫٠ و٣٬٥٠٦ مراجعة على قوقل</li><li>لا توجد علامة مطاعم أو مقاهي في الموقع</li><li>طريق الملك فهد الدائري، حي القراحين</li><li>ساسكو على ٣٥٠ م — <b>لا تذكره</b>، لكن استعد لو سأل عن المنافسة</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK099</span>
+          <h3>الطائف · حي الجال — البيعة</h3>
+          <span class="where">أولوية ٢</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">علامات القهوة المختصة والوجبات الخفيفة — وحدة درايف ثرو</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m1a">نسخ</button></div>
+              <div class="msg" id="m1a">مساء الخير أستاذ [الاسم] ☕
+
+معك [اسمك] من محطات درب.
+
+عندنا وحدة درايف ثرو في محطة درب – البيعة بالطائف، وموقعها قوي:
+
+• تيرا مول على ٦٣٠ متر
+• سينومي الجوري مول على ٧٩٠ متر
+
+يعني حركة عائلات ومتسوقين على مدار اليوم، مع قاعدة سكنية في حي الجال.
+
+ومعها كشكان لو تفكرون بأكثر من صيغة.
+
+أبعث لك المخطط والتفاصيل؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m1b">نسخ</button></div>
+              <div class="msg" id="m1b">تحية طيبة أستاذ [الاسم] ☕
+
+بخصوص درايف ثرو محطة البيعة بالطائف — وحدات الدرايف ثرو عندنا محدودة، وهذي من القليلة اللي في نطاق مولين كبار.
+
+تحب نحدد موعد معاينة؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>تيرا مول ٠٫٦٣ كم · سينومي الجوري مول ٠٫٧٩ كم</li><li>وحدة درايف ثرو + كشكان في سجل الموقع</li><li>حي الجال، الطائف</li><li>ثلاث محطات دريس ضمن ٠٫٨ كم — منافسة حقيقية، لا تتجاهلها في التقييم الداخلي</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">RY042</span>
+          <h3>الخرج · الناصفة</h3>
+          <span class="where">أولوية ٣</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">مطاعم سريعة ومقاهي تبحث عن درايف ثرو</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m2a">نسخ</button></div>
+              <div class="msg" id="m2a">مساء الخير أستاذ [الاسم] 🚗
+
+معك [اسمك] من محطات درب.
+
+عندنا ٤ وحدات درايف ثرو في محطة درب – الناصفة بالخرج، وهذا أعلى عدد درايف ثرو في محفظتنا كلها.
+
+والموقع مجرّب فعلًا: ريزينج كينز وكنتاكي مفتوحين فيه.
+
+والخرج سوق أقل تشبّعًا من الرياض، وتكلفة الدخول أقل.
+
+أرسل لك المخطط والمساحات؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m2b">نسخ</button></div>
+              <div class="msg" id="m2b">تحية طيبة أستاذ [الاسم] 🚗
+
+متابعة لموضوع محطة الناصفة بالخرج.
+
+نقطة تهمكم: ريزينج كينز اختارت الموقع وفتحت فيه — يعني الجدوى مدروسة من علامة عالمية قبلكم، وما تحتاجون تجربوا من الصفر.
+
+متى يناسبكم نمر على الموقع؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>٤ وحدات درايف ثرو (أعلى عدد في المحفظة)</li><li>ريزينج كينز و Wooden Coffee في الموقع — مؤكد بالمسح</li><li>تقييم ٥٫٠ · ٨٩١ مراجعة</li><li>حي الناصفة، الخرج · محطة الدريس على ٣٤٠ م</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK015</span>
+          <h3>جدة · النسيم — طريق الملك عبدالله</h3>
+          <span class="where">أصل مميّز</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">علامات عالمية ومطاعم راقية — أعلى قوة تسعير في المحفظة</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m3a">نسخ</button></div>
+              <div class="msg" id="m3a">مساء الخير أستاذ [الاسم] ✨
+
+معك [اسمك] من محطات درب.
+
+محطة درب – النسيم على طريق الملك عبدالله بجدة، وأرقام موقعها من الأقوى عندنا:
+
+• سينومي السلام مول — ٥٨٠ متر
+• الدانوب — ٧١٠ متر
+• الأندلس مول — كيلومتر واحد
+• أقرب محطة منافسة — ١٫٨٧ كم
+
+وداخل المحطة: كنتاكي، هارديز، بارنز كوفي، كرسبي كريم، الطازج.
+
+تقييمها ٤٫٩ وفوق ٤١٠٠ مراجعة.
+
+تحب نرتب لك زيارة؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m3b">نسخ</button></div>
+              <div class="msg" id="m3b">تحية طيبة أستاذ [الاسم] ✨
+
+بخصوص محطة النسيم بجدة — نقطة أحب أوضحها: أقرب محطة وقود منافسة على ١٫٨٧ كم، وهذي أبعد مسافة منافس في محفظتنا كلها بالمدن الكبرى.
+
+يعني الحركة في النطاق تجيك أنت.
+
+أحدد لك موعد؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>سينومي السلام ٠٫٥٨ كم · الدانوب ٠٫٧١ · الأندلس ١٫٠٣ · هايبر بنده ١٫٠٨</li><li>أقرب منافس وقود ١٫٨٧ كم</li><li>تقييم ٤٫٩ · ٤٬١٤٩ مراجعة (الأعلى في المحفظة)</li><li>كنتاكي · هارديز · بارنز · كرسبي كريم · الطازج داخل المحطة</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">RY075</span>
+          <h3>الرياض · الفلاح — الدائري الشمالي</h3>
+          <span class="where">أصل ناضج</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">مطاعم ومقاهي تبحث عن حجم حركة — التفاوض على التجديد ورفع الإيجار</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m4a">نسخ</button></div>
+              <div class="msg" id="m4a">مساء الخير أستاذ [الاسم] 🏙
+
+معك [اسمك] من محطات درب.
+
+محطة درب – الفلاح على الدائري الشمالي بالرياض:
+
+• تقييم ٥٫٠ وفوق ٤١٣٠ مراجعة على قوقل
+• ١٥ علامة عاملة داخلها — كودو، كنتاكي، باسكن روبنز، هاف مليون، الطازج، بارنز وغيرها
+• وحدتا درايف ثرو
+
+الموقع على طريق حر شمال الرياض وسط أحد أسرع نطاقات التوسع السكني.
+
+أرسل لك الكراسة والمتاح؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m4b">نسخ</button></div>
+              <div class="msg" id="m4b">تحية طيبة أستاذ [الاسم] 🏙
+
+متابعة لموضوع محطة الفلاح — الدائري الشمالي.
+
+اللي يفرّقها: ١٥ علامة تشتغل في موقع واحد، وهذا يخلق حركة متبادلة بين المستأجرين ما تلقاها في محطة وقود عادية.
+
+تحب أرتب لك معاينة؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>تقييم ٥٫٠ · ٤٬١٣٤ مراجعة</li><li>١٥ علامة داخل المحطة (من سجلاتكم)</li><li>الدائري الشمالي، حي الفلاح</li><li>٤ محطات دريس ضمن كيلومترين — منافسة شديدة، للعلم الداخلي فقط</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK017</span>
+          <h3>مكة · الشوقية</h3>
+          <span class="where">الأداء المفاجئ</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">خدمات سيارات ومقاهي وعلامات تعتمد التردد اليومي المتكرر</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m5a">نسخ</button></div>
+              <div class="msg" id="m5a">مساء الخير أستاذ [الاسم] 🕌
+
+معك [اسمك] من محطات درب.
+
+محطة درب – الشوقية بمكة فيها رقم يستحق الوقوف عنده: فوق ٤١٣٠ مراجعة وتقييم ٤٫٩ — وهذا رقم يضاهي محطاتنا على الطرق السريعة، مع إنها على شريان داخلي.
+
+معناه قاعدة عملاء محلية متكررة، لا حركة عابرة.
+
+وفيها منظومة خدمات سيارات كاملة: بنشر ومغسلة ومحطة زيوت، مع بوبايز وبارنز وبون وفريش واي.
+
+تحب نتكلم عن المتاح فيها؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m5b">نسخ</button></div>
+              <div class="msg" id="m5b">تحية طيبة أستاذ [الاسم] 🕌
+
+بخصوص محطة الشوقية بمكة — الميزة فيها إن العميل يرجع أسبوعيًا لا موسميًا، لأن الحركة سكنية لا عبور حجاج.
+
+هذا يعني إيرادًا مستقرًا على مدار السنة بدل ذروة موسمين.
+
+أرسل لك التفاصيل؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>تقييم ٤٫٩ · ٤٬١٣٠ مراجعة على شريان داخلي</li><li>بنشر + مغسلة + محطة زيوت + بوبايز + بارنز + بون + فريش واي</li><li>حي الشوقية، مكة (لا عرفات)</li><li>خمس محطات منافسة ضمن ١٫٦ كم — للعلم الداخلي</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">JA069</span>
+          <h3>جازان · الشاطئ — طريق الكورنيش</h3>
+          <span class="where">فرصة توقيت</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">مقاهي وحلويات ومفاهيم جلسات خارجية — موقع وجهة لا عبور</p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m6a">نسخ</button></div>
+              <div class="msg" id="m6a">مساء الخير أستاذ [الاسم] 🌊
+
+معك [اسمك] من محطات درب.
+
+عندنا موقع مختلف عن باقي محطاتنا — محطة درب على كورنيش جازان:
+
+• ممشى الكورنيش على ٣٩٠ متر فقط
+• لا توجد أي محطة منافسة ضمن كيلومترين
+• حركة مسائية وعائلية ونهايات أسبوع
+
+وفيها اليوم ٥ مقاهي — لوتسو، ماهو، المذاق المغربي، كوفي ٢٤، مزاج المغربي.
+
+ومشروع الكورنيش الأوسط (١٦٨ ألف م²) قادم بالشراكة مع أمانة جازان، ويرفع أعداد الزوار.
+
+تحب تدخل قبل ما يكتمل المشروع؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m6b">نسخ</button></div>
+              <div class="msg" id="m6b">تحية طيبة أستاذ [الاسم] 🌊
+
+متابعة لموضوع كورنيش جازان.
+
+نقطة التوقيت مهمة: مشروع الكورنيش الأوسط بـ ١٦٨ ألف م² لما يفتح، أسعار المتر في النطاق ما ترجع لمكانها. الدخول الآن يثبّت لك السعر.
+
+أرتب لك زيارة؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>ممشى طريق الكورنيش ٠٫٣٩ كم</li><li>صفر محطات منافسة ضمن كيلومترين — أنظف نطاق في المحفظة</li><li>تقييم ٤٫٩ · ١٬٠٣٨ مراجعة</li><li>مشروع الكورنيش الأوسط ١٦٨ ألف م² مع العثيم للاستثمار وأمانة جازان</li></ul></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK029</span>
+          <h3>مكة · الرصيفة — الدائري الثالث</h3>
+          <span class="where">تحفّظ — راجع الملاحظة</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الجمهور المستهدف</b></div>
+            <div class="row-body"><p class="target">علامات تبحث عن نطاق تجاري كثيف — <b>لا ترسل وعودًا عن حجم التردد</b></p></div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الرسالة الأولى</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">أول تواصل</span>
+                <button class="copy" data-t="m7a">نسخ</button></div>
+              <div class="msg" id="m7a">مساء الخير أستاذ [الاسم] 🕋
+
+معك [اسمك] من محطات درب.
+
+محطة درب على الطريق الدائري الثالث بمكة، حي الرصيفة — والنطاق حولها من أكثف ما عندنا تجاريًا:
+
+• لولو هايبر ماركت الرصيفة — ٦٣٠ متر
+• عيد غاليريا — ٤٢٠ متر
+• الجروشي مول — ٦٩٠ متر
+• النخيل بلازا والأهلة مول — أقل من كيلومتر
+
+وداخل المحطة ماكدونالدز وبوبايز وبون وأسواق درب.
+
+والدائري الثالث لا يزال قيد الاستكمال، ومع كل جزء يُفتح ترتفع الحركة على المحور.
+
+تحب نستعرض المتاح؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>رسالة المتابعة</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">بعد ٣–٤ أيام بلا رد</span>
+                <button class="copy" data-t="m7b">نسخ</button></div>
+              <div class="msg" id="m7b">تحية طيبة أستاذ [الاسم] 🕋
+
+متابعة لموضوع محطة الدائري الثالث بمكة.
+
+اللي يميزها موقعها داخل نطاق فيه ستة مراكز تسوق ولولو هايبر ضمن كيلومترين — قاعدة زوار جاهزة، ومكة عمومًا في نمو مستمر مع مستهدفات ٢٠٣٠.
+
+أرسل لك الكراسة؟</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>الأرقام الموثّقة</b><span class="chip chip-map">مقيس</span></div>
+            <div class="row-body"><ul class="plain safe"><li>عيد غاليريا ٠٫٤٢ كم · لولو هايبر ٠٫٦٣ · الجروشي ٠٫٦٩ · النخيل بلازا ٠٫٨٤ · الأهلة ٠٫٨٧</li><li>ماكدونالدز · بوبايز · بون · أسواق درب داخل المحطة</li><li>حي الرصيفة، الطريق الدائري الثالث</li><li><b>تحذير:</b> ٤٣٨ مراجعة فقط — الأدنى في المحفظة. لا تذكر أي رقم تردد أو تقييم قوقل في الرسالة، واعتمد على وصف النطاق وحده</li></ul></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head"><h2>ملاحظات على الاستخدام</h2></div>
+    <div class="method">
+      <ul class="plain" style="gap:12px">
+        <li><strong>استبدلي [الاسم] و[اسمك]</strong> قبل الإرسال — الرسالة باسم شخص تُقرأ، والمعمَّمة تُهمل.</li>
+        <li><strong>رسالة واحدة لكل علامة، لا نسخة موحّدة.</strong> كل رسالة هنا مبنية على ميزة موقعها تحديدًا، وهذا سبب اختلافها.</li>
+        <li><strong>لا ترسلي المتابعة قبل ٣–٤ أيام</strong>، ولا أكثر من متابعتين. بعدها انتقلي للاتصال المباشر.</li>
+        <li><strong>MK029 حالة خاصة:</strong> رسالتها تعتمد وصف النطاق فقط بلا أي رقم تردد، لأن عدد مراجعاتها (٤٣٨) هو الأدنى في المحفظة ولا يخدم العرض. راجعي سبب ذلك — تكدّس محطات درب الخمس — قبل التوسع فيها.</li>
+        <li><strong>أرفقي الكراسة</strong> عند أول رد إيجابي؛ الرسالة تفتح الباب فقط ولا تُغلق الصفقة.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>الأرقام في «الأرقام الموثّقة» مقيسة من مسح Google Maps عبر Apify (١٧ أغسطس ٢٠٢٦) ومن ملف Darb_Units_1.xlsx. لا تحتوي أي رسالة على تقديرات حركة مرورية.</p>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll(".copy").forEach(function(b){
+  b.addEventListener("click", function(){
+    var el = document.getElementById(b.dataset.t);
+    if(!el) return;
+    var txt = el.innerText;
+    var done = function(){
+      var o = b.textContent; b.textContent = "تم النسخ ✓"; b.classList.add("done");
+      setTimeout(function(){ b.textContent = o; b.classList.remove("done"); }, 1800);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt, done); });
+    } else { fallback(txt, done); }
+  });
+});
+function fallback(txt, cb){
+  var t = document.createElement("textarea");
+  t.value = txt; t.setAttribute("readonly","");
+  t.style.position = "fixed"; t.style.top = "-1000px";
+  document.body.appendChild(t); t.select();
+  try { document.execCommand("copy"); cb(); } catch(e){}
+  document.body.removeChild(t);
+}
+</script>
