@@ -1,0 +1,815 @@
+<title>رحلة العميل في محطة درب</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* ============================================================
+   DARB · CUSTOMER JOURNEY
+   Palette inherited from the Darb identity used in
+   station-facade-banner-70x3.5m.html + station-leasing-banner.html
+   ============================================================ */
+:root{
+  /* warm neutral ground, biased toward the Darb orange */
+  --paper:#F5F2EC; --paper-2:#EBE5D9; --surface:#FFFFFF;
+  --ink:#211C17; --ink-2:#6A6055; --ink-3:#958B7D; --line:#DED7CA;
+  /* brand */
+  --orange:#DA711C; --orange-bright:#EE8630; --orange-deep:#B85A12; --orange-soft:#FAE6CF;
+  --gold:#A87F2E; --gold-bright:#D3A048; --gold-soft:#F1E3C4;
+  --rose:#B93E60; --rose-soft:#FADDE4;
+  --green:#2F6E4A; --green-soft:#DCEDE1;
+  /* dark bands (same as the printed banners) */
+  --band-1:#181614; --band-2:#100E0C; --band-3:#0A0908;
+  --band-ink:#F3EDE3; --band-ink-2:#C6BCAC; --band-ink-3:#948A7A;
+  --shadow:0 18px 42px -26px rgba(40,24,8,.45);
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#14120F; --paper-2:#1C1916; --surface:#201C18;
+    --ink:#F1EBE1; --ink-2:#B7AB9B; --ink-3:#8A8071; --line:#332E27;
+    --orange:#EE8630; --orange-bright:#F59A4B; --orange-deep:#DA711C; --orange-soft:#3A2614;
+    --gold:#D3A048; --gold-bright:#E7C079; --gold-soft:#3A2E19;
+    --rose:#E27F9B; --rose-soft:#3B1D26;
+    --green:#66B98C; --green-soft:#17301F;
+    --band-1:#1B1815; --band-2:#100E0C; --band-3:#080706;
+    --shadow:0 18px 44px -24px rgba(0,0,0,.75);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#14120F; --paper-2:#1C1916; --surface:#201C18;
+  --ink:#F1EBE1; --ink-2:#B7AB9B; --ink-3:#8A8071; --line:#332E27;
+  --orange:#EE8630; --orange-bright:#F59A4B; --orange-deep:#DA711C; --orange-soft:#3A2614;
+  --gold:#D3A048; --gold-bright:#E7C079; --gold-soft:#3A2E19;
+  --rose:#E27F9B; --rose-soft:#3B1D26;
+  --green:#66B98C; --green-soft:#17301F;
+  --band-1:#1B1815; --band-2:#100E0C; --band-3:#080706;
+  --shadow:0 18px 44px -24px rgba(0,0,0,.75);
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+  font-size:16px; line-height:1.65; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{margin:0; line-height:1.2; text-wrap:balance; font-weight:800}
+p,ul,ol{margin:0}
+.tnum{font-variant-numeric:tabular-nums}
+/* latin phone numbers inside RTL text */
+.num{direction:ltr; display:inline-block; font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px; margin-inline:auto; padding-inline:clamp(16px,4vw,28px)}
+.band{background:linear-gradient(165deg,var(--band-1),var(--band-2) 58%,var(--band-3)); color:var(--band-ink)}
+
+/* ---------- utility label ---------- */
+.eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:12px; font-weight:800;
+  letter-spacing:2.6px; color:var(--gold)}
+.eyebrow::before{content:""; inline-size:24px; block-size:2px; background:var(--gold-bright); flex:none}
+
+/* ============ TOGGLE ============ */
+/* sits on the far side from the road spine so it never covers a stage marker */
+.toggle{position:fixed; inset-block-start:12px; inset-inline-end:12px; z-index:60;
+  background:var(--surface); color:var(--ink-2); border:1px solid var(--line);
+  border-radius:100px; padding:7px 14px; font:inherit; font-size:13px; font-weight:600; cursor:pointer;
+  box-shadow:var(--shadow)}
+.toggle:hover{color:var(--orange)}
+.toggle:focus-visible{outline:2px solid var(--orange); outline-offset:2px}
+
+/* ============ MASTHEAD ============ */
+.masthead{position:relative; overflow:hidden;
+  background:
+    radial-gradient(60% 120% at 88% -10%, rgba(238,134,48,.20), transparent 62%),
+    radial-gradient(60% 130% at 8% 115%, rgba(211,160,72,.13), transparent 60%),
+    linear-gradient(165deg,var(--band-1),var(--band-2) 58%,var(--band-3));
+  color:var(--band-ink)}
+.masthead::after{content:""; position:absolute; inset-inline:0; inset-block-end:0; block-size:3px;
+  background:linear-gradient(90deg,transparent,var(--gold-bright) 12%,var(--orange-bright) 50%,var(--gold-bright) 88%,transparent)}
+.masthead .wrap{position:relative; z-index:2; padding-block:clamp(26px,5vw,44px) clamp(30px,5vw,52px)}
+.mh-top{display:flex; align-items:center; gap:14px; flex-wrap:wrap}
+.logo{display:inline-flex; align-items:center; gap:12px; background:#58595B; border:3px solid var(--orange-bright);
+  border-radius:100px; padding:8px 18px}
+.logo .ar{font-size:19px; font-weight:800; color:#fff; letter-spacing:1px; line-height:1}
+.logo .en{font-size:11px; font-weight:800; color:#E9E4DC; letter-spacing:2.4px; line-height:1; margin-block-start:3px}
+.logo .stack{display:flex; flex-direction:column}
+.mh-top .sep{flex:1}
+.tagpill{font-size:12.5px; font-weight:700; color:var(--band-ink-2); border:1px solid rgba(255,255,255,.18);
+  background:rgba(0,0,0,.22); border-radius:100px; padding:6px 13px}
+.mh-title{margin-block-start:clamp(20px,4vw,32px); font-size:clamp(28px,5.6vw,46px); letter-spacing:-.6px; color:#fff}
+.mh-title em{font-style:normal; color:var(--orange-bright)}
+.mh-lede{margin-block-start:14px; max-width:62ch; font-size:clamp(14.5px,1.9vw,17px); color:var(--band-ink-2); line-height:1.75}
+.mh-meta{margin-block-start:22px; display:flex; gap:10px 12px; flex-wrap:wrap}
+.mh-meta span{font-size:12.5px; color:var(--band-ink-2); display:inline-flex; align-items:center; gap:7px}
+.mh-meta i{inline-size:7px; block-size:7px; border-radius:50%; background:var(--gold-bright); flex:none; font-style:normal}
+
+/* ============ SECTIONS ============ */
+section{padding-block:clamp(38px,6vw,64px)}
+.sec-title{font-size:clamp(21px,3.4vw,29px); margin-block-start:10px}
+.sec-note{margin-block-start:12px; max-width:70ch; color:var(--ink-2); font-size:15.5px}
+.alt{background:var(--paper-2)}
+
+/* ============ PERSONAS ============ */
+.who{display:grid; grid-template-columns:repeat(auto-fit,minmax(212px,1fr)); gap:14px; margin-block-start:26px}
+.who-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px;
+  display:flex; flex-direction:column; gap:9px}
+.who-card .tag{font-size:11.5px; font-weight:800; letter-spacing:1.4px; color:var(--orange)}
+.who-card h3{font-size:16.5px}
+.who-card p{font-size:14px; color:var(--ink-2)}
+.who-card .need{margin-block-start:auto; font-size:13px; color:var(--ink); background:var(--gold-soft);
+  border-radius:9px; padding:9px 11px}
+
+/* ============ EMOTION CURVE ============ */
+.curve-card{margin-block-start:28px; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r); padding:clamp(16px,2.6vw,24px); box-shadow:var(--shadow)}
+.curve-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap}
+.curve-head h3{font-size:16.5px}
+.curve-head p{font-size:13px; color:var(--ink-3)}
+.curve-scroll{overflow-x:auto; margin-block-start:16px}
+.curve-scroll svg{display:block; inline-size:100%; min-inline-size:680px; block-size:auto}
+.legend{display:flex; gap:16px 22px; flex-wrap:wrap; margin-block-start:14px}
+.legend span{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:var(--ink-2)}
+.legend i{inline-size:22px; block-size:0; border-block-start:3px solid currentColor; border-radius:2px; flex:none}
+.legend .l-base{color:var(--ink-3)}
+.legend .l-base i{border-block-start-style:dashed}
+.legend .l-goal{color:var(--orange)}
+
+/* ============ ROAD / STAGES ============ */
+/* the journey spine reads as a road: gold dashes down the RTL start edge */
+.road{--gutter:clamp(32px,6vw,56px); --half:calc(var(--gutter)/2);
+  margin-block-start:30px; position:relative; padding-inline-start:var(--gutter)}
+.road::before{content:""; position:absolute; inset-block:6px 6px;
+  inset-inline-start:calc(var(--half) - 1.5px);
+  inline-size:3px; background:repeating-linear-gradient(var(--gold-bright) 0 14px, transparent 14px 26px);
+  opacity:.75}
+.stop{position:relative; margin-block-end:14px}
+.stop::before{content:"";
+  position:absolute; inset-inline-start:calc(-1 * var(--half) - 8.5px); inset-block-start:28px;
+  inline-size:17px; block-size:17px; border-radius:50%; background:var(--paper);
+  border:3px solid var(--orange); z-index:2}
+.alt .stop::before{background:var(--paper-2)}
+.stop-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+  padding:clamp(15px,2.4vw,21px); box-shadow:var(--shadow)}
+.stop-top{display:flex; align-items:flex-start; gap:13px; flex-wrap:wrap}
+.stop-n{flex:none; font-size:12px; font-weight:800; letter-spacing:1px; color:var(--orange);
+  background:var(--orange-soft); border-radius:8px; padding:5px 9px; line-height:1}
+.stop-top h3{font-size:17.5px; flex:1; min-inline-size:180px}
+.dwell{font-size:12.5px; font-weight:700; color:var(--ink-2); border:1px solid var(--line);
+  border-radius:100px; padding:4px 11px; white-space:nowrap}
+.goal{margin-block-start:11px; font-size:14.5px; color:var(--ink-2)}
+.goal b{color:var(--ink)}
+.grid3{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin-block-start:16px}
+.box{border:1px solid var(--line); border-radius:11px; padding:12px 13px; background:var(--paper)}
+.alt .box{background:var(--paper-2)}
+.box .bt{font-size:11.5px; font-weight:800; letter-spacing:1.2px; color:var(--ink-3); margin-block-end:7px}
+.box ul{padding-inline-start:17px; display:grid; gap:5px; font-size:13.5px; color:var(--ink-2)}
+.box.risk{background:var(--rose-soft); border-color:transparent}
+.box.risk .bt{color:var(--rose)}
+.box.risk ul{color:var(--ink)}
+.box.gain{background:var(--green-soft); border-color:transparent}
+.box.gain .bt{color:var(--green)}
+.box.gain ul{color:var(--ink)}
+.kpi-line{margin-block-start:14px; font-size:13.5px; color:var(--ink-2);
+  border-block-start:1px dashed var(--line); padding-block-start:12px}
+.kpi-line b{color:var(--orange); font-weight:800}
+
+/* ============ MOMENTS OF TRUTH ============ */
+.mot{display:grid; grid-template-columns:repeat(auto-fit,minmax(232px,1fr)); gap:14px; margin-block-start:26px}
+.mot-card{background:var(--surface); border:1px solid var(--line); border-inline-end:4px solid var(--rose);
+  border-radius:var(--r); padding:18px}
+.mot-card .when{font-size:11.5px; font-weight:800; letter-spacing:1.3px; color:var(--rose)}
+.mot-card h3{font-size:16px; margin-block-start:8px}
+.mot-card p{font-size:13.5px; color:var(--ink-2); margin-block-start:8px}
+.mot-card .fix{margin-block-start:11px; font-size:13px; font-weight:700; color:var(--ink)}
+.mot-card .fix::before{content:"◂ "; color:var(--orange)}
+
+/* ============ TENANT TIMELINE ============ */
+.tl{margin-block-start:28px; display:grid; gap:0}
+.tl-row{display:grid; grid-template-columns:150px 1fr; gap:0; align-items:stretch}
+@media(max-width:720px){.tl-row{grid-template-columns:1fr}}
+.tl-when{padding:20px 0 20px 18px; border-inline-end:2px solid var(--line); position:relative}
+@media(max-width:720px){.tl-when{border-inline-end:0; padding:16px 0 0}}
+.tl-when::after{content:""; position:absolute; inset-inline-end:-8px; inset-block-start:26px;
+  inline-size:14px; block-size:14px; border-radius:50%; background:var(--gold-bright);
+  box-shadow:0 0 0 4px var(--paper)}
+.alt .tl-when::after{box-shadow:0 0 0 4px var(--paper-2)}
+@media(max-width:720px){.tl-when::after{display:none}}
+.tl-when .n{font-size:12px; font-weight:800; color:var(--ink-3); letter-spacing:1.4px}
+.tl-when .sla{font-size:15px; font-weight:800; color:var(--orange); margin-block-start:4px}
+.tl-body{padding:20px 22px 22px}
+@media(max-width:720px){.tl-body{padding:10px 0 22px; border-block-end:1px solid var(--line)}}
+.tl-body h3{font-size:17px}
+.tl-body p{font-size:14.5px; color:var(--ink-2); margin-block-start:8px}
+.chips{display:flex; gap:8px; flex-wrap:wrap; margin-block-start:12px}
+.chips span{font-size:12.5px; font-weight:600; color:var(--ink); background:var(--paper-2);
+  border:1px solid var(--line); border-radius:100px; padding:5px 12px}
+.alt .chips span{background:var(--surface)}
+.chips span.own{color:var(--orange); border-color:color-mix(in srgb,var(--orange) 40%,transparent);
+  background:var(--orange-soft)}
+
+/* ============ BRIDGE ============ */
+.bridge{position:relative; overflow:hidden;
+  background:linear-gradient(165deg,var(--band-1),var(--band-2) 60%,var(--band-3)); color:var(--band-ink)}
+.bridge h2{color:#fff}
+.bridge .sec-note{color:var(--band-ink-2)}
+.chain{display:grid; grid-template-columns:repeat(auto-fit,minmax(168px,1fr)); gap:12px; margin-block-start:26px}
+.link{background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.13); border-radius:var(--r);
+  padding:17px}
+.link .k{font-size:11.5px; font-weight:800; letter-spacing:1.3px; color:var(--gold-bright)}
+.link .v{font-size:15.5px; font-weight:800; color:#fff; margin-block-start:8px}
+.link p{font-size:13px; color:var(--band-ink-2); margin-block-start:7px}
+.pitch{margin-block-start:22px; border-inline-start:3px solid var(--orange-bright);
+  background:rgba(238,134,48,.10); border-radius:12px; padding:18px 20px}
+.pitch h3{font-size:15.5px; color:var(--orange-bright)}
+.pitch ul{margin-block-start:10px; padding-inline-start:19px; display:grid; gap:7px;
+  font-size:14.5px; color:var(--band-ink)}
+
+/* ============ KPI TABLE ============ */
+.t-scroll{overflow-x:auto; margin-block-start:26px; border:1px solid var(--line);
+  border-radius:var(--r); background:var(--surface)}
+table{border-collapse:collapse; inline-size:100%; min-inline-size:620px; font-size:14px}
+thead th{text-align:start; font-size:12px; font-weight:800; letter-spacing:1.2px; color:var(--ink-3);
+  padding:14px 16px; border-block-end:1px solid var(--line); white-space:nowrap}
+tbody td{padding:13px 16px; border-block-end:1px solid var(--line); color:var(--ink-2); vertical-align:top}
+tbody tr:last-child td{border-block-end:0}
+tbody td:first-child{color:var(--ink); font-weight:700}
+tbody td.goalcell{color:var(--orange); font-weight:800; white-space:nowrap}
+
+/* ============ CHECKLIST ============ */
+.check{display:grid; grid-template-columns:repeat(auto-fit,minmax(258px,1fr)); gap:14px; margin-block-start:26px}
+.check-col{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:18px}
+.check-col h3{font-size:15.5px; color:var(--orange)}
+.check-col ul{margin-block-start:12px; padding:0; display:grid; gap:10px}
+.check-col li{list-style:none; display:flex; gap:10px; font-size:14px; color:var(--ink-2)}
+.check-col li::before{content:"☐"; color:var(--gold); font-weight:800; flex:none}
+
+.note{margin-block-start:26px; font-size:12.5px; color:var(--ink-3); max-width:78ch; line-height:1.8}
+
+/* ============ FOOTER ============ */
+.foot{background:linear-gradient(165deg,var(--band-1),var(--band-3)); color:var(--band-ink); text-align:center}
+.foot h2{font-size:clamp(20px,3.4vw,28px); color:#fff}
+.foot p{margin-block-start:12px; color:var(--band-ink-2); max-width:54ch; margin-inline:auto; font-size:15px}
+.contacts{margin-block-start:24px; display:flex; gap:14px 26px; justify-content:center; flex-wrap:wrap;
+  font-size:14.5px; color:var(--band-ink-2)}
+.contacts b{color:#fff; font-weight:800}
+.contacts .num{direction:ltr; display:inline-block; font-variant-numeric:tabular-nums}
+.finmark{margin-block-start:28px; padding-block-start:18px; border-block-start:1px solid rgba(255,255,255,.12);
+  font-size:12.5px; color:var(--band-ink-3)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important}}
+</style>
+
+<button class="toggle" id="tg" type="button" aria-label="تبديل الوضع الليلي">◐ الوضع</button>
+
+<!-- ==================== MASTHEAD ==================== -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="mh-top">
+      <span class="logo">
+        <span class="stack"><span class="ar">درب</span><span class="en">DARB</span></span>
+      </span>
+      <span class="sep"></span>
+      <span class="tagpill">📍 الطائف · حي شِهار · طريق المطار</span>
+      <span class="tagpill">وثيقة تشغيل وتأجير</span>
+    </div>
+
+    <span class="eyebrow" style="margin-block-start:26px">خريطة تجربة · نسخة أولى</span>
+    <h1 class="mh-title">رحلة العميل في <em>محطة درب</em></h1>
+    <p class="mh-lede">رحلتان متلازمتان في مكان واحد: <b>زائر</b> يتوقّف دقائق على طريق المطار، و<b>مستأجر</b>
+    يبحث عن موقع يبيع. الأولى تُصنع في الميدان، والثانية تُغلق في مكتب التأجير — وكل ريال إيجار في المحطة
+    مسنود بما يعيشه الزائر بين البوابة والمخرج. هذه الوثيقة تفصّل المرحلتين: أهدافها، نقاط تلامسها،
+    مواضع الاحتكاك فيها، ومؤشر قياس واحد لكل مرحلة.</p>
+
+    <div class="mh-meta">
+      <span><i></i> ٧ مراحل لرحلة الزائر</span>
+      <span><i></i> ٨ مراحل لرحلة المستأجر</span>
+      <span><i></i> ٤ لحظات حقيقة حاسمة</span>
+      <span><i></i> مؤشرات قابلة للقياس من أول موسم</span>
+    </div>
+  </div>
+</header>
+
+<!-- ==================== PERSONAS ==================== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">مَن يتوقّف عندنا</span>
+    <h2 class="sec-title">أربعة أنماط زوّار، وحاجة مختلفة لكل نمط</h2>
+    <p class="sec-note">تصميم المحطة والتشكيلة التجارية لا يخدم «زائراً» واحداً. هذه الأنماط الأربعة تتناوب على
+    الموقع بنِسَب تتغيّر بين ساعات اليوم وبين الموسم وبقيّة السنة، وكل نمط يفرض قراراً مختلفاً في الوحدات
+    وساعات العمل.</p>
+
+    <div class="who">
+      <div class="who-card">
+        <span class="tag">العابر</span>
+        <h3>مسافر إلى المطار أو منه</h3>
+        <p>يقود على طريق المطار بجدول مضغوط، القرار عنده بالثواني والتوقّف وظيفي بحت.</p>
+        <span class="need">حاجته: وقود سريع + قهوة + دورة مياه نظيفة، ودخول وخروج بلا مناورة.</span>
+      </div>
+      <div class="who-card">
+        <span class="tag">المصيف</span>
+        <h3>أسرة زائرة في الموسم</h3>
+        <p>سيارة عائلية محمّلة، أطفال، الرحلة طويلة والتوقّف اجتماعي لا وظيفي فقط.</p>
+        <span class="need">حاجتها: ركن آمن + دورات مياه للأطفال + مطعم عائلي + هدايا الطائف (ورد وعسل ورمّان).</span>
+      </div>
+      <div class="who-card">
+        <span class="tag">الجار</span>
+        <h3>ساكن شِهار والأحياء المجاورة</h3>
+        <p>زيارة متكررة قصيرة على مدار السنة — هو من يحمل إيرادات المحطة خارج الموسم.</p>
+        <span class="need">حاجته: أسعار ثابتة، سرعة، وأسباب للتكرار: قهوة الصباح، بقالة، غسيل، مغسلة.</span>
+      </div>
+      <div class="who-card">
+        <span class="tag">المركبة الكهربائية</span>
+        <h3>سائق يشحن ٣٠ دقيقة</h3>
+        <p>الوحيد الذي يبقى في الموقع بالإجبار لا بالاختيار — وقت انتظار طويل لا بد أن يُستهلك في مكان ما.</p>
+        <span class="need">حاجته: شاحن يعمل + جلسة مريحة + واي فاي + مقهى مفتوح بجوار الشاحن.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== VISITOR JOURNEY ==================== -->
+<section class="alt" id="visitor">
+  <div class="wrap">
+    <span class="eyebrow">الرحلة الأولى</span>
+    <h2 class="sec-title">رحلة الزائر — من لوحة الطريق إلى قرار العودة</h2>
+    <p class="sec-note">سبع مراحل، من لحظة ظهور المحطة في مجال النظر إلى لحظة اختيارها مرة ثانية في الرحلة
+    القادمة. لكل مرحلة: هدف الزائر، نقاط التلامس التي يحكم عليها، الاحتكاك الذي يخسّرنا الزيارة، والفرصة
+    التجارية التي تُترجم إلى إيجار.</p>
+
+    <!-- emotion curve -->
+    <div class="curve-card">
+      <div class="curve-head">
+        <h3>منحنى الرضا على امتداد الرحلة</h3>
+        <p>يُقرأ من اليمين إلى اليسار · مقياس نسبي 0–100</p>
+      </div>
+      <div class="curve-scroll">
+        <svg viewBox="0 0 700 268" role="img" aria-label="منحنى رضا الزائر عبر سبع مراحل: الوضع المتوقع دون تدخّل ينخفض بشدة عند مرحلة الاستراحة والخدمات، بينما المسار المستهدف بعد التدخلات يصعد تدريجياً حتى مرحلة العودة.">
+          <!-- grid -->
+          <g stroke="var(--line)" stroke-width="1">
+            <line x1="30" y1="30" x2="670" y2="30"/>
+            <line x1="30" y1="115" x2="670" y2="115"/>
+            <line x1="30" y1="200" x2="670" y2="200"/>
+          </g>
+          <g fill="var(--ink-3)" font-size="10" font-family="Tahoma,sans-serif">
+            <text x="676" y="33">ممتاز</text>
+            <text x="676" y="118">مقبول</text>
+            <text x="676" y="203">متعِب</text>
+          </g>
+          <!-- baseline: no intervention (dashed) -->
+          <polyline fill="none" stroke="var(--ink-3)" stroke-width="2.4" stroke-dasharray="7 6"
+            stroke-linejoin="round" stroke-linecap="round"
+            points="650,111 550,135 450,106 350,152 250,125 150,115 50,122"/>
+          <!-- target line -->
+          <polyline fill="none" stroke="var(--orange)" stroke-width="3.4"
+            stroke-linejoin="round" stroke-linecap="round"
+            points="650,91 550,67 450,71 350,74 250,54 150,64 50,47"/>
+          <g fill="var(--orange)">
+            <circle cx="650" cy="91" r="5"/><circle cx="550" cy="67" r="5"/><circle cx="450" cy="71" r="5"/>
+            <circle cx="350" cy="74" r="5"/><circle cx="250" cy="54" r="5"/><circle cx="150" cy="64" r="5"/>
+            <circle cx="50" cy="47" r="5"/>
+          </g>
+          <!-- risk marker on the dip -->
+          <circle cx="350" cy="152" r="6" fill="var(--rose)"/>
+          <text x="350" y="176" fill="var(--rose)" font-size="10.5" font-weight="bold"
+            text-anchor="middle" font-family="Tahoma,sans-serif">أخطر انخفاض</text>
+          <!-- stage labels -->
+          <g fill="var(--ink-2)" font-size="11" font-weight="bold" text-anchor="middle"
+             font-family="Tahoma,sans-serif">
+            <text x="650" y="228">ما قبل الوصول</text>
+            <text x="550" y="228">الاقتراب</text>
+            <text x="450" y="228">التزوّد</text>
+            <text x="350" y="228">الاستراحة</text>
+            <text x="250" y="228">الأكل والتسوّق</text>
+            <text x="150" y="228">المغادرة</text>
+            <text x="50" y="228">العودة</text>
+          </g>
+          <g fill="var(--ink-3)" font-size="10" text-anchor="middle" font-family="Tahoma,sans-serif">
+            <text x="650" y="246">١</text><text x="550" y="246">٢</text><text x="450" y="246">٣</text>
+            <text x="350" y="246">٤</text><text x="250" y="246">٥</text><text x="150" y="246">٦</text>
+            <text x="50" y="246">٧</text>
+          </g>
+        </svg>
+      </div>
+      <div class="legend">
+        <span class="l-goal"><i></i> المسار المستهدف بعد التدخلات المقترحة</span>
+        <span class="l-base"><i></i> المسار المتوقّع دون تدخّل</span>
+      </div>
+    </div>
+
+    <!-- stages on the road -->
+    <div class="road">
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ١</span>
+            <h3>ما قبل الوصول — أن نوجد في ذهنه وفي خريطته</h3>
+            <span class="dwell">قبل التوقّف بـ ١٠–٣٠ دقيقة</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> أن يعرف أين يتوقّف قبل أن يحتاج التوقّف — وأن يطمئن أن الخدمات التي
+          يريدها موجودة فعلاً.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>لوحات الطريق ولوحة الواجهة ٧٠م</li><li>خرائط جوجل وبطاقة النشاط</li><li>تطبيقات الشحن الكهربائي</li><li>حساب المحطة في التواصل</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>بطاقة خرائط ناقصة: لا صور ولا ساعات عمل ولا قائمة خدمات</li><li>الشواحن غير مُدرجة في تطبيقات الشحن فلا يعرف بها أحد</li><li>الاسم لا يظهر في البحث عن «محطة قريبة»</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>بطاقة خرائط مكتملة بصور المحطة والوحدات وأسماء العلامات</li><li>إدراج الشواحن في المنصات المتخصصة</li><li>ذكر المطاعم بالاسم — العلامة تجرّ الزيارة</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> عدد مرات الظهور والاتجاهات المطلوبة من بطاقة خرائط جوجل شهرياً.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٢</span>
+            <h3>الاقتراب والدخول — قرار يُتخذ في عشر ثوانٍ</h3>
+            <span class="dwell">٥–١٥ ثانية</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> أن يرى المحطة ويقرأ ما فيها ويدخل بأمان دون كبح مفاجئ ولا التفاف
+          حول المبنى.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>واجهة المحطة وإضاءة المظلّة</li><li>لوحة الأسعار</li><li>سهم المدخل وتقسيم الحركة داخل الساحة</li><li>وضوح المخرج من الشارع</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>لوحة أسعار لا تُقرأ من مسافة كافية على سرعة الطريق</li><li>مدخل ملتبس فيتجاوز المحطة ولا يعود</li><li>ازدحام المضخّات في الذروة يظهر من الشارع فيقرأه سائق آخر «طابور»</li><li>الواجهة معتمة ليلاً</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>لوحة أسعار وخدمات بحجم يُقرأ من ١٥٠م</li><li>إضاءة مظلّة قوية = الإشارة الأولى على النظافة والأمان</li><li>مسار منفصل للداخل إلى المطاعم دون المرور بالمضخّات</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> نسبة الالتقاط — الداخلون إلى الساحة ÷ المرور العابر أمام الواجهة.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٣</span>
+            <h3>التزوّد بالوقود أو الشحن — الوقت الذي نملكه</h3>
+            <span class="dwell">٤–٧ دقائق وقود · ٢٥–٤٥ دقيقة شحن</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> أن ينتهي بسرعة ويدفع بسهولة — وأن يجد ما يفعله إن كان انتظاره طويلاً.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>المضخّة وموظّف الخدمة</li><li>وسيلة الدفع والفاتورة</li><li>الشاحن الكهربائي وشاشته</li><li>ما يراه من مكان وقوفه</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>الدفع البطيء أو شبكة مقطوعة في الذروة</li><li>شاحن معطّل أو مشغول بلا بديل ولا معرفة مسبقة</li><li>لا شيء مرئي من المضخّة يدعو للنزول من السيارة</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>الشحن الكهربائي = ٣٠ دقيقة أسرة مُقيمة في الموقع: أثمن نافذة بيع في المحطة كلها</li><li>وضع المقهى في مواجهة الشاحن مباشرة</li><li>عرض على الفاتورة: قهوة بسعر خاص مع التزوّد</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> نسبة التحويل من الساحة إلى الوحدات التجارية، ومتوسط زمن البقاء.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٤</span>
+            <h3>الاستراحة والخدمات — المرحلة التي تُقرَّر فيها العودة</h3>
+            <span class="dwell">٥–١٥ دقيقة</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> دورة مياه نظيفة، صلاة، وموضع يستريح فيه الأطفال — بلا حرج ولا انتظار.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>دورات المياه</li><li>مصلّى الرجال والنساء</li><li>ركن تغيير الأطفال</li><li>الظل والجلسات الخارجية</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>نظافة دورات المياه: الحكم الأقوى على المحطة كلها، وأسرع سبب لعدم العودة</li><li>مدخل واحد للنساء والرجال أو مسار غير مريح للأسر</li><li>مصلّى صغير لا يكفي في الذروة</li><li>لا ظل في وقت الظهيرة</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>جدول تنظيف معلَن بالساعة وموقّع — يراه الزائر بعينه</li><li>تقييم فوري برمز QR داخل دورة المياه يصل للمشغّل مباشرة</li><li>جلسات مظلّلة للأسر تصنع البقاء، والبقاء يصنع الإنفاق</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> نتيجة تقييم النظافة الأسبوعي، وعدد الشكاوى المسجّلة عبر رمز QR.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٥</span>
+            <h3>الأكل والتسوّق — حيث يتحقّق الإيراد</h3>
+            <span class="dwell">١٠–٣٥ دقيقة</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> أن يأكل شيئاً يثق به بسرعة تناسب رحلته، وأن يجد ما يأخذه معه.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>المطاعم والمقاهي</li><li>البقالة والتجزئة</li><li>منتجات الطائف: ورد وعسل ورمّان</li><li>الطابور وشاشة الطلب</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>الانتظار الطويل مع أطفال في السيارة يُلغي الطلب قبل إتمامه</li><li>خيارات متشابهة كلها وجبات سريعة بلا بديل عائلي</li><li>إغلاق المقهى في ساعات الذروة الليلية بينما الحركة مستمرة</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>نافذة خدمة السيارة لمن لا ينزل أصلاً</li><li>سلة هدايا الطائف عند نقطة الدفع — شراء لحظي عالي الهامش</li><li>ساعات عمل موحّدة على مستأجري المحطة تغطّي الذروة الليلية صيفاً</li><li>أكشاك موسمية بعقود قصيرة في ذروة يونيو–سبتمبر</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> متوسط الإنفاق للزيارة، وعدد الوحدات التي زارها الزائر الواحد.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٦</span>
+            <h3>المغادرة — آخر ثلاثين ثانية هي التي تُحكى</h3>
+            <span class="dwell">٣٠–٩٠ ثانية</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> أن يخرج إلى الطريق بسهولة، ومعه انطباع يستحقّ أن يُذكر لمن معه.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>مسار الخروج والتقاء الحركة</li><li>الفاتورة الإلكترونية</li><li>سلة النفايات وتعبئة المياه</li><li>رمز التقييم عند المخرج</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>مخرج ضيّق يلتقي بحركة الداخلين فيتحوّل آخر انطباع إلى ضيق</li><li>لا قناة للشكوى فتذهب مباشرة إلى تقييم عام في خرائط جوجل</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>فصل مسار الخروج عن الدخول</li><li>رمز QR للتقييم يصل للمشغّل قبل أن يصل للعلن</li><li>عرض عودة مطبوع على الفاتورة يقيس التكرار بدقة</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> متوسط تقييم خرائط جوجل، ونسبة استرجاع عرض العودة.</p>
+        </div>
+      </div>
+
+      <div class="stop">
+        <div class="stop-card">
+          <div class="stop-top">
+            <span class="stop-n">مرحلة ٧</span>
+            <h3>العودة — أن نصبح «محطتنا» في هذا الطريق</h3>
+            <span class="dwell">الرحلة القادمة</span>
+          </div>
+          <p class="goal"><b>هدف الزائر:</b> ألّا يفكّر في المرة القادمة — أن يكون التوقّف عندنا هو الافتراضي.</p>
+          <div class="grid3">
+            <div class="box"><div class="bt">نقاط التلامس</div>
+              <ul><li>الذاكرة والتوصية الشفهية</li><li>تقييمات خرائط جوجل</li><li>برنامج الولاء</li><li>العرض الموسمي</li></ul></div>
+            <div class="box risk"><div class="bt">الاحتكاك</div>
+              <ul><li>تجربة غير ثابتة: زيارة ممتازة وأخرى سيّئة تساوي عدم التذكّر</li><li>ولاء منفصل لكل مستأجر فلا يتراكم لصالح المحطة</li></ul></div>
+            <div class="box gain"><div class="bt">الفرصة</div>
+              <ul><li>برنامج ولاء واحد على مستوى المحطة يشترك فيه المستأجرون — نقاط الوقود تُصرف في المطعم</li><li>فعالية موسمية واحدة في ذروة الصيف تصنع سبب زيارة لا مجرد توقّف</li><li>معايير خدمة موحّدة في العقد تضمن ثبات التجربة</li></ul></div>
+          </div>
+          <p class="kpi-line"><b>المؤشر:</b> نسبة الزوّار المتكرّرين، ومعدّل تكرار الزيارة للساكن المجاور شهرياً.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==================== MOMENTS OF TRUTH ==================== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">لحظات الحقيقة</span>
+    <h2 class="sec-title">أربع لحظات تُحسم فيها الرحلة كلها</h2>
+    <p class="sec-note">ليست كل المراحل متساوية. هذه أربع لحظات إن فشلت واحدة منها لم تنفع بقيّة المحطة —
+    وهي الأولى في ترتيب الاستثمار التشغيلي.</p>
+
+    <div class="mot">
+      <div class="mot-card">
+        <span class="when">مرحلة ٢ · ١٠ ثوانٍ</span>
+        <h3>قرار الدخول من الطريق</h3>
+        <p>على سرعة الطريق، الواجهة واللوحة والمدخل هي كل ما يملكه السائق ليقرّر. من يتجاوزنا لا يعود.</p>
+        <p class="fix">اقرأ الواجهة من ١٥٠م نهاراً وليلاً، وصحّح ما لا يُقرأ.</p>
+      </div>
+      <div class="mot-card">
+        <span class="when">مرحلة ٤ · دقيقتان</span>
+        <h3>باب دورة المياه</h3>
+        <p>هذه اللحظة وحدها تُحدّد إن كانت المحطة «نظيفة» في ذهن الأسرة — ومعها تُقرَّر العودة والتقييم العام.</p>
+        <p class="fix">جدول تنظيف بالساعة معلَن وموقَّع، ومراقبة يومية لا أسبوعية.</p>
+      </div>
+      <div class="mot-card">
+        <span class="when">مرحلة ٥ · الذروة</span>
+        <h3>الطابور في ذروة الموسم</h3>
+        <p>في يونيو–سبتمبر يتضاعف الطلب على نفس عدد الكاشيرات. الانتظار هنا يُلغي الطلب ويُنتج شكوى.</p>
+        <p class="fix">اشتراط تعزيز الطاقم الموسمي على المستأجر في بند تعاقدي.</p>
+      </div>
+      <div class="mot-card">
+        <span class="when">مرحلة ٣ · ٣٠ دقيقة</span>
+        <h3>انتظار الشحن الكهربائي</h3>
+        <p>الأسرة عالقة في الموقع نصف ساعة. إن لم يوجد ما يُقضى فيه الوقت فهو ضيق، وإن وُجد فهو أعلى إنفاق في المحطة.</p>
+        <p class="fix">مقهى وجلسات مظلّلة في مواجهة الشاحن مباشرة.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TENANT JOURNEY ==================== -->
+<section class="alt" id="tenant">
+  <div class="wrap">
+    <span class="eyebrow">الرحلة الثانية</span>
+    <h2 class="sec-title">رحلة المستأجر — من رؤية اللوحة إلى تجديد العقد</h2>
+    <p class="sec-note">عميل التأجير لا يشتري متراً مربّعاً، بل يشتري حركة مرور موثّقة. الرحلة أدناه مرتّبة
+    بزمن مستهدف لكل مرحلة ومخرَج واضح — لأن التأخّر في الرد هو أكثر ما يُفقد الصفقات في هذا القطاع.</p>
+
+    <div class="tl">
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ١</div><div class="sla">مستمرّ</div></div>
+        <div class="tl-body">
+          <h3>الوعي بالفرصة</h3>
+          <p>يرى صاحب العلامة اللوحة على الواجهة، أو يصل عبر وسيط عقاري أو إحالة من مستأجر قائم. هنا يُقاس
+          نجاح البانر برمز QR الذي عليه، لا بجماله.</p>
+          <div class="chips"><span>لوحة الواجهة ٧٠×٣.٥م</span><span>رمز QR ← صفحة الفرصة</span><span>وسطاء وإحالات</span><span class="own">المسؤول: التسويق</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٢</div><div class="sla">≤ ٤ ساعات عمل</div></div>
+        <div class="tl-body">
+          <h3>الاستفسار الأول</h3>
+          <p>مكالمة أو رسالة على قنوات التأجير المعلنة. سرعة الرد هي أول برهان على أن المحطة مُدارة باحتراف،
+          ومخرَج هذه المرحلة ملف واحد جاهز لا وعد بإرساله لاحقاً.</p>
+          <div class="chips"><span class="num">053 600 8383</span><span class="num">920 005804</span><span>DarbREM@Darbstations.com.sa</span><span class="own">المسؤول: إدارة الأملاك</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٣</div><div class="sla">≤ ٤٨ ساعة</div></div>
+        <div class="tl-body">
+          <h3>ملف الفرصة والبيانات</h3>
+          <p>يُرسل ملف واحد يجمع: مخطط الوحدات ومساحاتها، الواجهات والارتفاعات، التحليل الديموغرافي لمحافظة
+          الطائف، موسمية الطلب، والخدمات المشتركة. البيانات هي ما يُقنع، والموقع هو ما يُسعّر.</p>
+          <div class="chips"><span>مخطط الوحدات والمساحات</span><span>ورقة الديموغرافيا</span><span>منحنى الموسمية</span><span>صور ورندر المحطة</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٤</div><div class="sla">≤ ٧ أيام</div></div>
+        <div class="tl-body">
+          <h3>زيارة الموقع</h3>
+          <p>المعاينة الميدانية في وقت الذروة لا في وقت هادئ — أن يرى بعينه الحركة على المضخّات ومسار
+          المشاة وواجهة وحدته المحتملة من الشارع.</p>
+          <div class="chips"><span>موعد في ذروة العصر</span><span>عدّاد حركة إن توفّر</span><span>معاينة الواجهة من الطريق</span><span class="own">المسؤول: إدارة الأملاك</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٥</div><div class="sla">≤ ١٠ أيام</div></div>
+        <div class="tl-body">
+          <h3>العرض والتفاوض</h3>
+          <p>عرض تجاري مكتوب: قيمة الإيجار وصيغته (سنوي ثابت، أو نسبة من المبيعات، أو موسمي للأكشاك)،
+          مدة العقد، الضمان، فترة التجهيز المجانية، ونصيب الوحدة من الخدمات المشتركة.</p>
+          <div class="chips"><span>سنوي · موسمي · نسبة مبيعات</span><span>فترة تجهيز مجانية</span><span>الضمان والدفعات</span><span>الخدمات المشتركة</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٦</div><div class="sla">≤ ١٤ يوماً</div></div>
+        <div class="tl-body">
+          <h3>العقد والتوثيق</h3>
+          <p>توثيق العقد ثم استكمال متطلبات النشاط. أكثر ما يُطيل هذه المرحلة نقص مستند واحد لدى المستأجر —
+          فتُعطى له القائمة كاملة من مرحلة العرض لا بعد التوقيع.</p>
+          <div class="chips"><span>عقد موثّق</span><span>سجل تجاري</span><span>رخصة بلدية</span><span>سلامة ودفاع مدني</span><span>تأمين</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٧</div><div class="sla">٣٠–٦٠ يوماً</div></div>
+        <div class="tl-body">
+          <h3>التجهيز والافتتاح</h3>
+          <p>تسليم الوحدة وتنفيذ التجهيز وفق دليل الواجهات: اللوحات والإضاءة ومعايير الهوية، والتوصيلات
+          الكهربائية والصرف والتكييف. ثم افتتاح مربوط بالموسم لا بجهوزية الوحدة فقط.</p>
+          <div class="chips"><span>دليل الواجهات واللوحات</span><span>تصاريح التنفيذ</span><span>محضر تسليم</span><span>توقيت الافتتاح مع الموسم</span></div>
+        </div>
+      </div>
+
+      <div class="tl-row">
+        <div class="tl-when"><div class="n">مرحلة ٨</div><div class="sla">سنوي</div></div>
+        <div class="tl-body">
+          <h3>التشغيل والتجديد</h3>
+          <p>ما يُجدَّد به العقد ليس التذكير قبل انتهائه، بل تقرير يُثبت أن المحطة جلبت له حركة: أرقام الزوّار،
+          الفعاليات المشتركة، والتسويق الذي نفّذته المحطة لصالح وحدته. ومن يُجدّد هو أول مرشّح للتوسّع في محطة أخرى.</p>
+          <div class="chips"><span>تقرير حركة نصف سنوي</span><span>حملة موسمية مشتركة</span><span>مراجعة الأداء والصيانة</span><span>عرض توسّع لمحطة أخرى</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== BRIDGE ==================== -->
+<section class="bridge">
+  <div class="wrap">
+    <span class="eyebrow">الرابط بين الرحلتين</span>
+    <h2 class="sec-title">تجربة الزائر هي ورقة البيع في مفاوضة الإيجار</h2>
+    <p class="sec-note">كل تدخّل في رحلة الزائر يتحوّل إلى رقم في ملف التأجير. هذه هي السلسلة التي يجب أن
+    تُقاس بالترتيب، لأن كل حلقة فيها تضاعف التي بعدها.</p>
+
+    <div class="chain">
+      <div class="link"><div class="k">الحلقة ١</div><div class="v">ظهور ووضوح</div>
+        <p>واجهة تُقرأ من الطريق ومدخل مفهوم ⇒ نسبة التقاط أعلى من المرور العابر.</p></div>
+      <div class="link"><div class="k">الحلقة ٢</div><div class="v">زمن بقاء أطول</div>
+        <p>شحن كهربائي وجلسات مظلّلة ودورات مياه نظيفة ⇒ دقائق إضافية داخل الموقع.</p></div>
+      <div class="link"><div class="k">الحلقة ٣</div><div class="v">تحويل إلى الوحدات</div>
+        <p>مسار مشاة وتشكيلة تجارية صحيحة ⇒ نسبة أعلى من زوّار الساحة تدخل المتاجر.</p></div>
+      <div class="link"><div class="k">الحلقة ٤</div><div class="v">إيجار أعلى وإشغال ثابت</div>
+        <p>أرقام موثّقة في ملف الفرصة ⇒ قدرة تفاوضية على السعر ونسبة تجديد مرتفعة.</p></div>
+    </div>
+
+    <div class="pitch">
+      <h3>ما يجب أن يُقال للمستأجر — وما يجب أن يكون صحيحاً قبل أن يُقال</h3>
+      <ul>
+        <li><b>سوق مزدوج المحرّك:</b> قاعدة سكانية محلية تحمل الطلب طوال السنة، وموجة مصيف تضاعف الحركة
+        في يونيو–سبتمبر. إشغال أقل تذبذباً على المستأجر.</li>
+        <li><b>موقع على شريان المطار:</b> واجهة على طريق حركة مستمرة، ومواقف تجعل التوقّف قراراً سهلاً.</li>
+        <li><b>وقت مُقيم لا مجرد عبور:</b> الشحن الكهربائي والاستراحة يصنعان بقاءً حقيقياً، والبقاء هو ما يشتريه
+        المطعم والمقهى فعلاً.</li>
+        <li><b>ولاء على مستوى المحطة:</b> برنامج نقاط مشترك يعيد الزائر إلى كل وحدة، لا إلى واحدة فقط.</li>
+        <li><b>الشرط الصادق:</b> لا يُعرض أي رقم حركة على مستأجر قبل قياسه فعلياً في الموقع. الرقم غير المسنود
+        يُكتشف في أول شهر تشغيل ويُكلّف التجديد.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== KPI TABLE ==================== -->
+<section>
+  <div class="wrap">
+    <span class="eyebrow">القياس</span>
+    <h2 class="sec-title">لوحة مؤشرات الرحلة</h2>
+    <p class="sec-note">مؤشر واحد لكل مرحلة، بطريقة قياس عملية لا تحتاج نظاماً معقّداً. المستهدفات أدناه
+    مقترحات تخطيطية للانطلاق، تُعاير بأرقام الموقع الحقيقية بعد أول موسم قياس.</p>
+
+    <div class="t-scroll">
+      <table>
+        <thead>
+          <tr><th>المؤشر</th><th>المرحلة</th><th>طريقة القياس</th><th>مستهدف مقترح</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>الظهور في البحث المحلي</td><td>١</td><td>تقرير بطاقة خرائط جوجل الشهري</td><td class="goalcell">نمو شهري مطّرد</td></tr>
+          <tr><td>نسبة الالتقاط من المرور</td><td>٢</td><td>عدّاد دخول الساحة ÷ عدّاد المرور على الطريق</td><td class="goalcell">تُحدَّد بعد أول قياس</td></tr>
+          <tr><td>متوسط زمن البقاء</td><td>٣–٥</td><td>عيّنة رصد يدوي في ٣ فترات يومية</td><td class="goalcell">+٥ دقائق عن خط الأساس</td></tr>
+          <tr><td>نسبة التحويل إلى الوحدات</td><td>٣–٥</td><td>عدد فواتير الوحدات ÷ عدد مركبات الساحة</td><td class="goalcell">نمو ربعي</td></tr>
+          <tr><td>تقييم النظافة</td><td>٤</td><td>جولة تفتيش يومية + شكاوى رمز QR</td><td class="goalcell">صفر شكوى متكرّرة</td></tr>
+          <tr><td>متوسط الإنفاق للزيارة</td><td>٥</td><td>إجمالي مبيعات الوحدات ÷ عدد الزيارات</td><td class="goalcell">نمو ربعي</td></tr>
+          <tr><td>تقييم خرائط جوجل</td><td>٦</td><td>المتوسط التراكمي وعدد التقييمات الجديدة</td><td class="goalcell">٤.٥ وما فوق</td></tr>
+          <tr><td>نسبة الزوّار المتكرّرين</td><td>٧</td><td>برنامج الولاء أو استرجاع عرض العودة</td><td class="goalcell">نمو مطّرد</td></tr>
+          <tr><td>زمن الرد على الاستفسار</td><td>مستأجر ٢</td><td>سجل المكالمات والبريد</td><td class="goalcell">≤ ٤ ساعات عمل</td></tr>
+          <tr><td>زمن الإغلاق: استفسار ← توقيع</td><td>مستأجر ٢–٦</td><td>سجل الصفقات</td><td class="goalcell">≤ ٣٠ يوماً</td></tr>
+          <tr><td>نسبة الإشغال</td><td>مستأجر ٧</td><td>الوحدات المؤجّرة ÷ إجمالي الوحدات</td><td class="goalcell">أعلى ما يمكن قبل الموسم</td></tr>
+          <tr><td>نسبة التجديد</td><td>مستأجر ٨</td><td>العقود المجدّدة ÷ العقود المنتهية</td><td class="goalcell">الأغلبية</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== CHECKLIST ==================== -->
+<section class="alt">
+  <div class="wrap">
+    <span class="eyebrow">التنفيذ</span>
+    <h2 class="sec-title">أول ما يُنفَّذ من هذه الوثيقة</h2>
+    <p class="sec-note">إجراءات لا تحتاج قراراً استثمارياً كبيراً، ومعظمها ينفَّذ قبل ذروة الموسم القادم.</p>
+
+    <div class="check">
+      <div class="check-col">
+        <h3>قبل الموسم — تجربة الزائر</h3>
+        <ul>
+          <li>قراءة الواجهة ولوحة الأسعار من ١٥٠م نهاراً وليلاً وتصحيح ما لا يُقرأ</li>
+          <li>استكمال بطاقة خرائط جوجل: صور، ساعات، خدمات، أسماء العلامات</li>
+          <li>إدراج الشواحن الكهربائية في تطبيقات الشحن</li>
+          <li>جدول تنظيف دورات المياه بالساعة معلَن وموقَّع</li>
+          <li>رمز QR للتقييم عند دورات المياه والمخرج</li>
+          <li>مراجعة مسار الدخول والخروج وفصلهما إن أمكن</li>
+        </ul>
+      </div>
+      <div class="check-col">
+        <h3>قبل الموسم — التأجير</h3>
+        <ul>
+          <li>ملف فرصة واحد جاهز للإرسال في نفس اليوم</li>
+          <li>قائمة مستندات المستأجر تُرسل مع العرض لا بعد التوقيع</li>
+          <li>تعريف مسؤول واحد للرد خلال ٤ ساعات عمل</li>
+          <li>صيغة عقد موسمي قصير للأكشاك جاهزة مسبقاً</li>
+          <li>بند تعاقدي بساعات عمل موحّدة وتعزيز الطاقم في الذروة</li>
+          <li>بدء قياس حركة الموقع الفعلية لتُستخدم في المفاوضة القادمة</li>
+        </ul>
+      </div>
+      <div class="check-col">
+        <h3>خلال الموسم</h3>
+        <ul>
+          <li>رصد زمن البقاء والطوابير في ٣ فترات يومياً</li>
+          <li>متابعة تقييمات خرائط جوجل أسبوعياً والرد عليها</li>
+          <li>فعالية موسمية واحدة مشتركة مع المستأجرين</li>
+          <li>تقرير حركة نصف سنوي يُرسل لكل مستأجر</li>
+          <li>مراجعة المستهدفات بأرقام الموقع الحقيقية بعد الموسم</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="note"><b>عن الأرقام في هذه الوثيقة:</b> مدد البقاء ونطاقات الأزمنة والمستهدفات مؤشرات تخطيطية
+    للاسترشاد في التشغيل، وليست أرقام رصد ميداني لهذا الموقع. الخاصية الأهم في الوثيقة أنها تحدّد <b>ما يُقاس</b>
+    وكيف — والأرقام تُستبدل بقيَم الموقع الحقيقية بعد أول موسم قياس. خصائص السوق (حجم سكان الطائف، تركيبته،
+    وموسمية المصيف) موثّقة في ورقة التحليل الديموغرافي المرفقة ببانر التأجير ومصادرها مذكورة فيها.</p>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<section class="foot">
+  <div class="wrap">
+    <h2>كن شريكًا لنا وشاركنا النجاح</h2>
+    <p>للتأجير والاستفسار عن الوحدات التجارية في محطة درب — حي شِهار، الطائف.</p>
+    <div class="contacts">
+      <span>📞 <b><span class="num">053 600 8383</span></b></span>
+      <span>☎ <b><span class="num">920 005804</span></b></span>
+      <span>✉ <b>DarbREM@Darbstations.com.sa</b></span>
+      <span>📍 <b>حي شِهار · طريق مطار الطائف</b></span>
+    </div>
+    <div class="finmark">محطة درب · DARB STATION — الطائف، المملكة العربية السعودية</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('tg');
+  function cur(){
+    var d=root.getAttribute('data-theme');
+    if(d) return d;
+    return window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+  }
+  btn.addEventListener('click', function(){
+    root.setAttribute('data-theme', cur()==='dark' ? 'light' : 'dark');
+  });
+})();
+</script>
