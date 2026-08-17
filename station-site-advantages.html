@@ -1,0 +1,1067 @@
+<title>كراسة مواقع درب</title>
+<style>
+  :root{
+    --ground:#FBF6EF;
+    --surface:#FFFFFF;
+    --surface-2:#F4E9DB;
+    --ink:#332417;
+    --ink-2:#6B5744;
+    --ink-3:#9A8674;
+    --line:#E4D6C4;
+    --line-strong:#C7B49E;
+    --accent:#B44E05;
+    --accent-2:#E8760C;
+    --accent-wash:#FBE3C6;
+    --ok:#4A6B3A;
+    --ok-wash:#E5EEDF;
+    --est:#9A6B12;
+    --est-wash:#F7EBD2;
+    --gap:#8A5A52;
+    --gap-wash:#F3E0DC;
+    --shadow:0 1px 2px rgba(51,36,23,.06),0 8px 24px -12px rgba(51,36,23,.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#191310;
+      --surface:#221A15;
+      --surface-2:#2C221B;
+      --ink:#F4E9DB;
+      --ink-2:#C7B49E;
+      --ink-3:#9A8674;
+      --line:#3A2D24;
+      --line-strong:#4E3D31;
+      --accent:#F59A2E;
+      --accent-2:#E8760C;
+      --accent-wash:#3A2A18;
+      --ok:#9DBE86;
+      --ok-wash:#25301E;
+      --est:#DCA83F;
+      --est-wash:#332714;
+      --gap:#D69C91;
+      --gap-wash:#332020;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#191310;
+    --surface:#221A15;
+    --surface-2:#2C221B;
+    --ink:#F4E9DB;
+    --ink-2:#C7B49E;
+    --ink-3:#9A8674;
+    --line:#3A2D24;
+    --line-strong:#4E3D31;
+    --accent:#F59A2E;
+    --accent-2:#E8760C;
+    --accent-wash:#3A2A18;
+    --ok:#9DBE86;
+    --ok-wash:#25301E;
+    --est:#DCA83F;
+    --est-wash:#332714;
+    --gap:#D69C91;
+    --gap-wash:#332020;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    direction:rtl;
+    text-align:right;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:56px}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.3;font-weight:800}
+  p{margin:0}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:4px}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex;flex-direction:column;gap:20px;border-bottom:3px solid var(--accent);padding-bottom:28px}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
+  }
+  .mast h1{font-size:clamp(1.9rem,4.6vw,3rem);letter-spacing:-.01em}
+  .mast .lede{font-size:1.075rem;color:var(--ink-2);max-width:62ch}
+  .mast-meta{
+    display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.82rem;color:var(--ink-3);
+    padding-top:6px;font-variant-numeric:tabular-nums;
+  }
+  .mast-meta b{color:var(--ink-2);font-weight:700}
+
+  /* ---------- answer callout ---------- */
+  .finding{
+    background:var(--ok-wash);
+    border:1px solid var(--ok);
+    border-radius:2px;
+    padding:20px 24px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .finding h3{font-size:1rem;color:var(--ok);letter-spacing:.01em}
+  .finding p{color:var(--ink);font-size:.95rem}
+  .finding code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.85em;background:var(--surface);padding:1px 6px;border-radius:3px;
+    border:1px solid var(--line);direction:ltr;display:inline-block;
+  }
+
+  /* ---------- section heads ---------- */
+  .sec{display:flex;flex-direction:column;gap:24px}
+  .sec-head{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line-strong);padding-bottom:12px}
+  .sec-head h2{font-size:1.5rem}
+  .sec-head p{font-size:.9rem;color:var(--ink-3);max-width:66ch}
+
+  /* ---------- confidence chips ---------- */
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.7rem;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:2px;white-space:nowrap;
+    border:1px solid currentColor;
+  }
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+  .chip-file{color:var(--ok);background:var(--ok-wash)}
+  .chip-est{color:var(--est);background:var(--est-wash)}
+  .chip-gap{color:var(--gap);background:var(--gap-wash)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+  .legend span.txt{font-size:.82rem;color:var(--ink-3)}
+
+  /* ---------- comparison table ---------- */
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:840px;font-size:.86rem}
+  thead th{
+    background:var(--surface-2);color:var(--ink);text-align:right;
+    font-size:.74rem;letter-spacing:.06em;font-weight:800;
+    padding:12px 14px;border-bottom:2px solid var(--line-strong);white-space:nowrap;
+  }
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 45%,transparent)}
+  .code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-weight:700;color:var(--accent);direction:ltr;display:inline-block;font-size:.9em;
+  }
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* ---------- station cards ---------- */
+  .cards{display:flex;flex-direction:column;gap:28px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:2px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .card-head{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
+    padding:18px 24px;background:var(--surface-2);border-bottom:1px solid var(--line-strong);
+  }
+  .card-head .c{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:1.15rem;font-weight:800;color:var(--accent);direction:ltr;
+  }
+  .card-head h3{font-size:1.15rem;flex:1;min-width:200px}
+  .card-head .where{font-size:.85rem;color:var(--ink-2)}
+  .card-body{padding:8px 24px 22px;display:flex;flex-direction:column}
+
+  .row{display:grid;grid-template-columns:150px 1fr;gap:4px 20px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .row:last-child{border-bottom:none}
+  .row-label{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+  .row-label b{font-size:.83rem;font-weight:800;color:var(--ink-2);letter-spacing:.01em}
+  .row-body{font-size:.93rem;display:flex;flex-direction:column;gap:9px;min-width:0}
+  .row-body p{color:var(--ink)}
+  .muted{color:var(--ink-3);font-size:.87rem}
+
+  ul.brands{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  ul.brands li{
+    font-size:.8rem;background:var(--accent-wash);color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    padding:3px 9px;border-radius:2px;
+  }
+  ul.brands li.k{background:transparent;color:var(--ink-2);border-color:var(--line-strong)}
+
+  .metrics{display:flex;flex-wrap:wrap;gap:10px}
+  .metric{
+    border:1px solid var(--line-strong);border-radius:2px;padding:9px 14px;
+    display:flex;flex-direction:column;gap:1px;min-width:120px;background:var(--ground);
+  }
+  .metric .k{font-size:.68rem;letter-spacing:.07em;color:var(--ink-3);font-weight:700}
+  .metric .v{font-size:1.05rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .metric.hi .v{color:var(--accent)}
+
+  ul.plain{margin:0;padding:0 18px 0 0;display:flex;flex-direction:column;gap:5px;font-size:.92rem}
+  ul.plain li::marker{color:var(--accent-2)}
+
+  /* ---------- method ---------- */
+  .method{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px 26px;display:flex;flex-direction:column;gap:20px}
+  .steps{display:flex;flex-direction:column;gap:16px;counter-reset:s;margin:0;padding:0;list-style:none}
+  .steps li{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    font-family:ui-monospace,monospace;font-size:.78rem;font-weight:800;
+    color:var(--accent);border:1px solid var(--accent);border-radius:50%;
+    width:26px;height:26px;display:grid;place-items:center;margin-top:2px;
+  }
+  .steps b{display:block;font-size:.93rem;margin-bottom:2px}
+  .steps p{font-size:.88rem;color:var(--ink-2)}
+  .formula{
+    background:var(--ground);border:1px solid var(--line-strong);border-right:3px solid var(--accent);
+    padding:12px 16px;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.83rem;direction:ltr;text-align:left;overflow-x:auto;color:var(--ink);
+    border-radius:2px;line-height:1.9;
+  }
+  .caveat{
+    background:var(--gap-wash);border:1px solid var(--gap);border-radius:2px;
+    padding:18px 22px;display:flex;flex-direction:column;gap:8px;
+  }
+  .caveat h4{font-size:.95rem;color:var(--gap)}
+  .caveat p,.caveat li{font-size:.89rem;color:var(--ink)}
+
+  footer{border-top:1px solid var(--line-strong);padding-top:20px;font-size:.8rem;color:var(--ink-3);display:flex;flex-direction:column;gap:6px}
+
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;gap:44px}
+    .row{grid-template-columns:1fr;gap:10px}
+    .row-label{flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap}
+    .card-body{padding:8px 18px 18px}
+    .card-head{padding:16px 18px}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="eyebrow">درب · تقييم مواقع</div>
+    <h1>كراسة مواقع درب — ثماني محطات</h1>
+    <p class="lede">
+      ملف مزايا لكل محطة من المحطات الثمانية الواردة في الصورة المرفقة: وصف الطريق، البراندات،
+      المشاريع القائمة حول الموقع، وتقدير الحركة المرورية مع منهجية الحساب كاملة.
+    </p>
+    <div class="mast-meta">
+      <span>المصدر: <b>Darb_Units_1.xlsx</b> — ورقة <b>Stations 2025</b></span>
+      <span>عدد المواقع: <b>8</b></span>
+      <span>تاريخ الإعداد: <b>١٧ أغسطس ٢٠٢٦</b></span>
+    </div>
+  </header>
+
+  <section class="finding">
+    <h3>إجابة سؤال «الكود اللي ما له رابط لوكيشن»</h3>
+    <p>
+      فحصت الأكواد الثمانية خلية بخلية في ملف الإكسل، وقرأت روابط الـ hyperlink المضمّنة في عمود
+      <code>Locations</code> — <strong>الأكواد الثمانية جميعها لديها رابط موقع على خرائط جوجل، ولا يوجد كود بدون رابط.</strong>
+      الروابط ثمانية مختلفة عن بعضها (لا تكرار)، وكلها من نوع <code>maps.app.goo.gl</code>، وكل صف يحمل
+      أيضًا رابط صورة على Google Drive في عمود <code>Photo</code>.
+    </p>
+    <p class="muted">
+      ملاحظة مهمة: نصّ الخلية الظاهر في كل الصفوف هو «محطة درب» فقط، والرابط مخفي خلف النص —
+      لذلك تبدو الخلايا وكأنها بلا روابط عند النظر السريع أو عند نسخ الملف كنص. الروابط موجودة فعليًا في طبقة الـ hyperlink.
+    </p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>كيف تقرأ هذه الكراسة</h2>
+      <p>كل معلومة في هذا الملف تحمل وسمًا يوضّح مصدرها ودرجة الثقة بها. هذا ليس تنسيقًا شكليًا — بل تمييز ضروري بين ما هو موثّق وما هو مُقدَّر وما يحتاج تحققًا ميدانيًا.</p>
+    </div>
+    <div class="legend">
+      <span class="chip chip-file">من ملف الإكسل</span>
+      <span class="txt">بيانات مقروءة حرفيًا من الملف — موثوقة.</span>
+    </div>
+    <div class="legend">
+      <span class="chip chip-est">تقدير هندسي</span>
+      <span class="txt">أرقام محسوبة بنموذج سعة الطريق الموضّح في آخر الكراسة — نطاقات لا أرقام قاطعة.</span>
+    </div>
+    <div class="legend">
+      <span class="chip chip-gap">يحتاج تحقق ميداني</span>
+      <span class="txt">لم أتمكن من التحقق منه في هذه البيئة — مذكور مع طريقة استخراجه.</span>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>الجدول المقارن</h2>
+      <p>نظرة واحدة على المواقع الثمانية مرتّبة تنازليًا بحسب حجم الحركة المرورية المقدّر على الطريق المجاور.</p>
+    </div>
+    <div class="tscroll">
+      <table>
+        <thead>
+          <tr>
+            <th>الكود</th>
+            <th>المدينة</th>
+            <th>الطريق</th>
+            <th>تصنيف الطريق</th>
+            <th>حركة يومية تقديرية</th>
+            <th>ساعة الذروة</th>
+            <th>براندات داخل المحطة</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="code">RY075</span></td><td>الرياض</td><td>الدائري الشمالي — حي الفلاح</td>
+            <td>طريق حر</td><td class="num">١٣٠٬٠٠٠–١٦٠٬٠٠٠</td><td class="num">١١٬٧٠٠–١٤٬٤٠٠</td><td class="num">١٥</td>
+          </tr>
+          <tr>
+            <td><span class="code">MK029</span></td><td>مكة</td><td>الدائري الثالث — الذكرى</td>
+            <td>طريق حر</td><td class="num">٨٠٬٠٠٠–١١٠٬٠٠٠</td><td class="num">٧٬٢٠٠–٩٬٩٠٠</td><td class="num">١٢</td>
+          </tr>
+          <tr>
+            <td><span class="code">MK015</span></td><td>جدة</td><td>طريق الملك عبدالله — النسيم</td>
+            <td>شرياني رئيسي</td><td class="num">٨٠٬٠٠٠–١١٠٬٠٠٠</td><td class="num">٧٬٢٠٠–٩٬٩٠٠</td><td class="num">٩</td>
+          </tr>
+          <tr>
+            <td><span class="code">MK035</span></td><td>الطائف</td><td>دائري الملك فهد — الوسام</td>
+            <td>شرياني دائري</td><td class="num">٣٥٬٠٠٠–٥٥٬٠٠٠</td><td class="num">٣٬٢٠٠–٥٬٠٠٠</td><td class="num">١</td>
+          </tr>
+          <tr>
+            <td><span class="code">MK017</span></td><td>مكة</td><td>عرفات / الشوقية</td>
+            <td>شرياني رئيسي</td><td class="num">٣٥٬٠٠٠–٥٥٬٠٠٠</td><td class="num">٣٬٢٠٠–٥٬٠٠٠</td><td class="num">٩</td>
+          </tr>
+          <tr>
+            <td><span class="code">RY042</span></td><td>الخرج</td><td>الناصفة — الخزامى</td>
+            <td>شرياني داخلي</td><td class="num">٢٠٬٠٠٠–٣٥٬٠٠٠</td><td class="num">١٬٩٠٠–٣٬٣٠٠</td><td class="num">٤</td>
+          </tr>
+          <tr>
+            <td><span class="code">MK099</span></td><td>الطائف</td><td>البيعة — حي الجال</td>
+            <td>شرياني فرعي</td><td class="num">١٥٬٠٠٠–٢٥٬٠٠٠</td><td class="num">١٬٤٠٠–٢٬٤٠٠</td><td class="num">٣</td>
+          </tr>
+          <tr>
+            <td><span class="code">JA069</span></td><td>جازان</td><td>كورنيش جازان</td>
+            <td>كورنيش ترفيهي</td><td class="num">١٥٬٠٠٠–٢٨٬٠٠٠</td><td class="num">١٬٥٠٠–٢٬٨٠٠</td><td class="num">٧</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="muted">
+      «براندات داخل المحطة» = عدد العلامات التجارية المذكورة فعليًا في أعمدة
+      Car Services / Restaurants / Cafe / Market لذلك الصف في الإكسل.
+      أرقام الحركة تقديرية بالكامل — انظر المنهجية.
+    </p>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head">
+      <h2>ملفات المواقع</h2>
+      <p>مرتّبة بنفس ترتيب الصورة المرفقة.</p>
+    </div>
+
+    <div class="cards">
+
+      <!-- ============ RY075 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">RY075</span>
+          <h3>درب — الفلاح، الدائري الشمالي</h3>
+          <span class="where">الرياض · صف ٤٧</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>الطريق الدائري الشمالي أحد أهم المحاور السريعة في الرياض، ويعمل كحزام يربط شمال المدينة من الشرق إلى الغرب، ويغذّي طريق الملك فهد وطريق الملك عبدالعزيز وطريق أبي بكر الصديق. طريق حر متعدد المسارات (٤ مسارات لكل اتجاه تقريبًا) بفواصل وتقاطعات مفصولة المستوى.</p>
+              <p class="muted">نقطة تشغيلية مهمة: المحطات على الطرق الحرة تُخدم عادة من <strong>الطريق الموازي (السيرفس)</strong> لا من المسار الرئيسي، وهذا يخفض نسبة الالتقاط رغم ضخامة الحركة. يجب التأكد من جهة الدخول والخروج ميدانيًا.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <p class="muted">أقوى تشكيلة تجارية بين المواقع الثمانية — ١٥ علامة، أغلبها مطاعم سريعة معروفة.</p>
+              <ul class="brands">
+                <li>الطازج</li><li>شاورما وصوص</li><li>مرسى مطروح</li><li>كودو</li><li>كنتاكي</li>
+                <li>مطعم طابور</li><li>باسكن روبنز</li><li>هاف مليون</li><li>مزاج مغربي</li><li>يو كافيه</li>
+                <li>Trolley ترولي</li><li class="k">واش واي</li><li class="k">بترومين</li>
+              </ul>
+              <div class="metrics">
+                <div class="metric"><span class="k">درايف ثرو</span><span class="v">٢</span></div>
+                <div class="metric"><span class="k">أكشاك</span><span class="v">٠</span></div>
+                <div class="metric"><span class="k">محلات</span><span class="v">٠</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body">
+              <p>لم أتمكن من حصر العلامات المجاورة — بيئة العمل هنا تحجب الوصول إلى خرائط جوجل، فتعذّر فتح رابط الموقع أو تشغيل بحث نطاقي حول الإحداثيات. أي قائمة أكتبها ستكون تخمينًا، ولن أضعها في ملف يُستخدم للتأجير.</p>
+              <p class="muted">الطريقة الصحيحة لاستخراجها: افتح رابط الموقع من الإكسل، خذ الإحداثيات، ثم شغّل Google Places Nearby Search بنصف قطر ٥٠٠٠ و١٠٠٠٠ متر على التصنيفات <em>gas_station / restaurant / supermarket / shopping_mall</em>. تفاصيل التنفيذ في آخر الكراسة.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>برنامج تطوير محاور الطرق الرئيسية والدائرية بالرياض</strong> — يضيف أكثر من ٥٠٠ كم لشبكة طرق المدينة، وتشمل إحدى حزمه ٦١ كم من الطرق و٣٢ جسرًا و٦ أنفاق. أثره المباشر: إعادة توزيع الحركة على الدائري الشمالي وزيادة أحجامها.</li>
+                <li><strong>النمو السكني شمال الرياض</strong> — حي الفلاح ومحيطه ضمن أسرع نطاقات التوسع السكني في المدينة، ما يعني قاعدة عملاء يومية متجددة لا تعتمد على العابرين وحدهم.</li>
+                <li><strong>مترو الرياض</strong> — تشغيل المسارات الشمالية يعيد تشكيل أنماط التنقل في النطاق؛ يُنصح بقياس أثره على الحركة بعد سنة من التشغيل الكامل.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">١٣٠–١٦٠ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">١١٬٧٠٠–١٤٬٤٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">١٬٢٠٠–٢٬٠٠٠</span></div>
+              </div>
+              <p class="muted">الحساب: ٤ مسارات × ١٬٩٠٠ مركبة/مسار/ساعة × اتجاهين × نسبة إشغال ٠٫٨٥ = ١٢٬٩٢٠ مركبة في ساعة الذروة ← ÷ ٠٫٠٩ = نحو ١٤٣٬٠٠٠ مركبة يوميًا. نسبة الالتقاط المستخدمة ١٫٥–٢٫٥٪ (منخفضة عمدًا بسبب الخدمة من الطريق الموازي).</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>أعلى المواقع الثمانية حركةً وأغناها تشكيلةً تجارية.</strong> الجمع بين طريق حر بكثافة عالية وقاعدة سكنية نشطة شمال الرياض و١٥ علامة عاملة يجعله الموقع الأقوى تفاوضيًا في المحفظة. الوحدتان بنظام درايف ثرو ميزة إضافية للعلامات التي تشترط ذلك.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ MK029 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK029</span>
+          <h3>درب — الذكرى، الدائري الثالث</h3>
+          <span class="where">مكة المكرمة · صف ١٥</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>الطريق الدائري الثالث بمكة مشروع تنفذه الهيئة الملكية لمدينة مكة المكرمة والمشاعر المقدسة، بطول إجمالي نحو ٣٠ كم، أُنجز منه قرابة ٢٥ كم موزعة على ستة أجزاء، دخل عدد منها الخدمة المرورية فعليًا. وظيفته ربط أحياء مكة بمداخلها الرئيسية وتحويل حركة العبور بعيدًا عن قلب المدينة.</p>
+              <p class="muted">طبيعة الحركة هنا موسمية بشدة: رمضان والحج يرفعان الأحجام أضعافًا مقارنة بالأشهر العادية، مع تغيّر في التركيبة نحو الحافلات والمركبات غير المحلية.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <p class="muted">النبذة في الملف تذكر «أكثر من ١٠ علامات تجارية»، والمرصود تفصيليًا ١٢ علامة.</p>
+              <ul class="brands">
+                <li>ماكدونالدز</li><li>كرك وشباتي</li><li>مشراق</li><li>بوبايز</li><li>معلوم</li>
+                <li>بون</li><li>جوينت</li><li>وزنة براد</li><li>أسواق درب</li>
+                <li class="k">بترومين</li><li class="k">Car Shield</li><li class="k">T3 Autocarwash</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body">
+              <p>غير متاح في هذه البيئة لنفس السبب (حجب خرائط جوجل). يُستخرج بنفس طريقة Places Nearby Search الموضحة في المنهجية.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>استكمال الطريق الدائري الثالث</strong> — الأجزاء المتبقية عند اكتمالها ستحوّل حركة عبور إضافية إلى المحور الذي تقع عليه المحطة، وهو عامل نمو مباشر لا يحتاج أي استثمار من درب.</li>
+                <li><strong>منظومة الطرق الدائرية والنقل العام بمكة</strong> — الدائريان الأول والثاني ومشاريع النقل العام تعيد توزيع الحركة داخل المدينة.</li>
+                <li><strong>التوسع في مشاريع الإسكان والضيافة</strong> بمحيط الدائري الثالث، مدفوعًا بنمو أعداد المعتمرين ضمن مستهدفات رؤية ٢٠٣٠.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٨٠–١١٠ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">٧٬٢٠٠–٩٬٩٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٩٠٠–١٬٦٠٠</span></div>
+                <div class="metric"><span class="k">معامل الموسم</span><span class="v">×١٫٥–٢٫٠</span></div>
+              </div>
+              <p class="muted">الحساب: ٣ مسارات × ١٬٩٠٠ × اتجاهين × ٠٫٨٠ = ٩٬١٢٠ في الذروة ← ÷ ٠٫٠٩ = نحو ١٠١٬٠٠٠ يوميًا. معامل الموسم يُطبّق على رمضان وذي الحجة ويجب رصده من بيانات المضخات لا تقديره.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>موقع على محور استراتيجي ما زال في طور الاكتمال — أي أن حركته المستقبلية أعلى من حركته الحالية.</strong> وجود ماكدونالدز وبوبايز كعلامات مرساة يقوّي عرض التأجير لبقية الوحدات. الموسمية سلاح ذو حدين: ذروة استثنائية في موسمين، وركود نسبي بينهما — يُنصح بعقود تجمع إيجارًا ثابتًا مع نسبة من المبيعات.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ MK017 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK017</span>
+          <h3>درب — الشوقية</h3>
+          <span class="where">مكة المكرمة · صف ٩</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body">
+              <p>الملف يسجّل الطريق باسم «عرفات الشوقية». الاسمان يشيران إلى نطاقين مختلفين في مكة — الشوقية حي كبير في الغرب قرب مخرج طريق مكة–جدة السريع، وعرفات في الشرق باتجاه المشاعر. لم أستطع الحسم بينهما دون فتح رابط الموقع.</p>
+              <p class="muted">أوصي بتصحيح هذه الخانة في الإكسل بعد التحقق، لأنها تؤثر مباشرة على وصف الموقع في أي عرض تأجيري. النبذة في الملف تكتفي بعبارة «داخل مكة المكرمة» دون تحديد.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <ul class="brands">
+                <li>بوبايز</li><li>قيس آيسكريم</li><li>بارنز</li><li>بون</li><li>ريناز</li><li>فريش واي</li>
+                <li class="k">بنشر رواد الصيانة</li><li class="k">بترومين</li><li class="k">مغسلة Water Wash</li>
+              </ul>
+              <div class="metrics">
+                <div class="metric"><span class="k">أكشاك</span><span class="v">١</span></div>
+                <div class="metric"><span class="k">محلات</span><span class="v">٠</span></div>
+                <div class="metric"><span class="k">درايف ثرو</span><span class="v">٠</span></div>
+              </div>
+              <p class="muted">تشكيلة خدمات سيارات كاملة (بنشر + محطة زيوت + مغسلة) — ميزة تفاوضية مع العلامات التي تبحث عن حركة صيانة لا حركة عبور.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة — يُستخرج بطريقة Places Nearby Search الموضحة في المنهجية، بعد حسم موقع المحطة أولًا.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li>مشاريع الهيئة الملكية لمكة في شبكة الطرق الدائرية ومنظومة النقل العام تشمل النطاق الغربي للمدينة.</li>
+                <li>الشوقية من نطاقات التوسع السكني والخدمي في غرب مكة، وقريبة من محور مكة–جدة السريع.</li>
+                <li>نمو أعداد المعتمرين ضمن مستهدفات رؤية ٢٠٣٠ ينعكس على كل مداخل مكة.</li>
+              </ul>
+              <p class="muted">هذه المشاريع مرتبطة بالنطاق العام لا بالموقع بدقة — تحتاج تثبيتًا بعد حسم الإحداثيات.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٣٥–٥٥ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">٣٬٢٠٠–٥٬٠٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٦٠٠–١٬٠٠٠</span></div>
+              </div>
+              <p class="muted">الحساب: ٣ مسارات × ٨٠٠ مركبة/مسار/ساعة (شرياني بإشارات) × اتجاهين × ٠٫٨٥ = ٤٬٠٨٠ في الذروة ← ÷ ٠٫٠٩ = نحو ٤٥٬٠٠٠ يوميًا. نسبة الالتقاط ٣٪ لأن الشرياني الحضري يُخدم مباشرة دون طريق موازٍ.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>محطة خدمات متكاملة تعتمد على قاعدة محلية لا على العبور.</strong> اجتماع بنشر ومغسلة ومحطة زيوت مع مقهيين ومطعم ومتجر تموين يجعلها نموذج «محطة الحي» — أقل تأثرًا بالموسمية من مواقع المشاعر، وأنسب للعلامات التي تريد تدفقًا يوميًا مستقرًا.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ MK035 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK035</span>
+          <h3>درب — الوسام، دائري الملك فهد</h3>
+          <span class="where">الطائف · صف ٢٨</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>طريق الملك فهد الدائري هو الحزام الدائري للطائف، ويعمل كمحور توزيع رئيسي يربط أحياء المدينة بمداخلها وبطرق الهدا والشفا والرياض. الطائف تشهد طفرة في البنية التحتية للطرق تربط معالمها التاريخية بمرافقها الحديثة.</p>
+              <p class="muted">سياق مهم للتفاوض: مشروع الدائري نفسه عانى تأخرًا ممتدًا في الإنجاز، وهو ما ساهم في ازدحام الشوارع الداخلية خصوصًا في الصيف والإجازات الرسمية. اكتمال المشروع سيرفع الحركة على المحور بشكل ملموس.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <ul class="brands"><li>أسواق درب</li></ul>
+              <p class="muted"><strong>هذه أكبر فرصة تأجيرية في القائمة.</strong> الملف لا يسجّل أي مطعم أو مقهى أو خدمة سيارات في هذا الموقع — علامة واحدة فقط. موقع على دائري مدينة سياحية بحركة صيفية مرتفعة ومساحة تجارية شبه خالية.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة. هذا الموقع تحديدًا يستحق مسحًا ميدانيًا كاملًا قبل طرحه، لأن غياب المنافسة في النطاق يرفع سعر الوحدة، ووجودها يفرض تسعيرًا مختلفًا.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>شبكة الطرق المتطورة بالطائف</strong> — سبعة مشاريع طرق تعزز جودة الحياة وتنعش السياحة، إضافة إلى مشروع تطوير طريق الطائف الذي بدأت الهيئة الملكية لمدينة الرياض تنفيذ جسرين ضمنه.</li>
+                <li><strong>موسم صيف السعودية</strong> — الطائف وجهة رئيسية بمشروعات سياحية يتابعها وزير السياحة ميدانيًا: الهدا، الشفا، منتزه الردف، حديقة الملك فهد، ومزارع الورد الطائفي ومنها مزرعة بن سلمان للورد.</li>
+                <li><strong>ساحة درب الطائف (Darb Plaza)</strong> — مجمع تجاري لدرب على دائري الملك فهد، مسجّل في الملف بحالة «قيد التنفيذ» بـ ١٤ محلًا و٣ أكشاك ودرايف ثرو. أصل على نفس المحور، ويصلح كورقة تفاوض مشتركة مع المستأجرين.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٣٥–٥٥ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">٣٬٢٠٠–٥٬٠٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٤٠٠–٨٠٠</span></div>
+                <div class="metric"><span class="k">معامل الصيف</span><span class="v">×١٫٤</span></div>
+              </div>
+              <p class="muted">الحساب: ٣ مسارات × ٩٠٠ × اتجاهين × ٠٫٨٠ = ٤٬٣٢٠ في الذروة ← ÷ ٠٫٠٩ = نحو ٤٨٬٠٠٠ يوميًا. نسبة الالتقاط المستخدمة ٢٪ فقط — منخفضة لأن ضعف التشكيلة التجارية الحالية لا يمنح سببًا للتوقف؛ وهي ترتفع تلقائيًا مع كل علامة تُضاف.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>أعلى المواقع الثمانية في الفرصة غير المستغلة.</strong> حركة جيدة على دائري مدينة سياحية، وموسم صيفي يرفع الطلب ٤٠٪ تقريبًا، ووحدة تجارية واحدة فقط عاملة. أوصي بجعله أولوية أولى في خطة التأجير، وربط طرحه بمشروع ساحة درب الطائف على المحور نفسه.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ MK099 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK099</span>
+          <h3>درب — البيعة، حي الجال</h3>
+          <span class="where">الطائف · صف ٣٣</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>موقع داخلي في حي الجال بالطائف، على شارع خدمي/شرياني فرعي يخدم نطاقًا سكنيًا نشطًا. النبذة في الملف تصفه بأنه «حي نشط وسهل الوصول» يخدم السكان وعابري الطريق للاحتياجات اليومية.</p>
+              <p class="muted">طبيعة الحركة هنا مختلفة جوهريًا عن المواقع الدائرية: تدفق محلي متكرر بمعدلات زيارة أعلى للفرد، لا حركة عبور. هذا يرفع نسبة الالتقاط ويخفض حجم المرور في آن.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <ul class="brands">
+                <li>مطعم سولو سالت</li><li class="k">ترويشة غسيل سيارات</li><li class="k">بترومين</li>
+              </ul>
+              <div class="metrics">
+                <div class="metric"><span class="k">أكشاك</span><span class="v">٢</span></div>
+                <div class="metric"><span class="k">درايف ثرو</span><span class="v">١</span></div>
+                <div class="metric"><span class="k">محلات</span><span class="v">٠</span></div>
+              </div>
+              <p class="muted">وحدة درايف ثرو شاغرة في موقع سكني — منتج مطلوب جدًا لعلامات القهوة. فرصة تأجيرية واضحة.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة. للمواقع السكنية تحديدًا، المسح الأهم ليس ٥–١٠ كم بل نطاق ١–٣ كم — لأن قرار الزيارة اليومية يُتخذ ضمن مسافة قصيرة.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li>شبكة الطرق المتطورة بالطائف ومشروع تطوير طريق الطائف تحسّن الوصول إلى الأحياء الداخلية.</li>
+                <li>موسم صيف السعودية في الطائف يرفع الطلب على الخدمات داخل الأحياء لا على الطرق السياحية وحدها.</li>
+                <li>النمو السكني في نطاق حي الجال ومحيطه.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">١٥–٢٥ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">١٬٤٠٠–٢٬٤٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٣٠٠–٥٥٠</span></div>
+              </div>
+              <p class="muted">الحساب: مساران × ٦٥٠ مركبة/مسار/ساعة × اتجاهين × ٠٫٧٥ = ١٬٩٥٠ في الذروة ← ÷ ٠٫٠٩٥ = نحو ٢٠٬٥٠٠ يوميًا. نسبة الالتقاط المستخدمة ٣٫٥٪ — الأعلى بين المواقع البرية لأن الطابع السكني يرفع تكرار الزيارة.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>محطة حي بتدفق مستقر ووحدات شاغرة جاهزة.</strong> الحجم المروري متواضع، لكن جودته أعلى: عملاء متكررون لا عابرون. الدرايف ثرو والكشكان الشاغران يمثلان منتجًا مباشرًا لعلامات القهوة والوجبات الخفيفة.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ MK015 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK015</span>
+          <h3>درب — النسيم، طريق الملك عبدالله</h3>
+          <span class="where">جدة · صف ٣٤</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>طريق الملك عبدالله أحد المحاور الرئيسية في جدة، ويعمل كشريان عرضي يربط شرق المدينة بغربها ويتقاطع مع طريق الملك عبدالعزيز وطريق الأمير متعب وطريق المدينة. حركته مستمرة على مدار اليوم وتخدم السكان والسياح وعابري الطريق معًا، وهو ما تؤكده نبذة الملف.</p>
+              <p class="muted">حي النسيم في شمال شرق جدة نطاق سكني كثيف، ما يمنح المحطة مزيجًا نادرًا: حركة شريان رئيسي + قاعدة سكنية مجاورة.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <p class="muted">تشكيلة عالمية قوية — ثاني أقوى مزيج بعد RY075.</p>
+              <ul class="brands">
+                <li>كنتاكي</li><li>هارديز</li><li>الطازج</li><li>بارنز كوفي</li><li>كرسبي كريم</li>
+                <li>بون</li><li>فريش واي</li><li class="k">كاراجي</li><li class="k">بترومين</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة — يُستخرج بطريقة Places Nearby Search الموضحة في المنهجية.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>مشروع تطوير طرق جدة</strong> — محاور بطول ٢٩ كم مصممة لاستيعاب حركة يومية تصل إلى ٣٥٣٬٠٠٠ مركبة، ما يعكس حجم الأحجام المرورية المستهدفة في شبكة المدينة.</li>
+                <li><strong>مشاريع تطوير وسط جدة والواجهة البحرية</strong> ضمن رؤية ٢٠٣٠ ترفع حركة التنقل العرضي في المدينة.</li>
+                <li><strong>الكثافة السكنية في شمال شرق جدة</strong> تواصل النمو، وتغذّي المحطة بقاعدة يومية ثابتة.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٨٠–١١٠ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">٧٬٢٠٠–٩٬٩٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">١٬٠٠٠–١٬٦٠٠</span></div>
+              </div>
+              <p class="muted">الحساب: ٤ مسارات × ١٬٢٠٠ مركبة/مسار/ساعة (شرياني رئيسي جزئي الفصل) × اتجاهين × ٠٫٨٥ = ٨٬١٦٠ في الذروة ← ÷ ٠٫٠٩ = نحو ٩١٬٠٠٠ يوميًا. نسبة الالتقاط ٢٫٥٪.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>أفضل توازن في المحفظة بين حجم الحركة وجودة العلامات.</strong> اجتماع كنتاكي وهارديز وبارنز وكرسبي كريم في موقع واحد يجعل المحطة وجهة بحد ذاتها لا مجرد نقطة تزوّد، ويمنحها قوة تسعير عالية لأي وحدة تُطرح لاحقًا.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ JA069 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">JA069</span>
+          <h3>درب — كورنيش جازان</h3>
+          <span class="where">جازان · صف ٤٢</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>كورنيش جازان طريق واجهة بحرية ذو طابع ترفيهي لا عبوري: حركته تتركّز في المساء ونهايات الأسبوع والإجازات، وتتباطأ في ساعات العمل. الملف يصفه بأنه يجمع «الإطلالة البحرية والحركة المستمرة» ويقع قرب أبرز مرافق الكورنيش ومناطق التنزّه.</p>
+              <p class="muted">هذا التوصيف يغيّر منطق التأجير كليًا: الجدوى هنا تُقاس بعدد الزوار المشاة والجالسين لا بعدد المركبات المارة، ومدة البقاء أطول بكثير من محطة على طريق سريع.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <p class="muted">تشكيلة مقاهٍ مكثّفة (٥ مقاهٍ) — متسقة تمامًا مع طبيعة الموقع الترفيهية.</p>
+              <ul class="brands">
+                <li>لوتسو سويت آند ستوري</li><li>ماهو كافيه</li><li>المذاق المغربي</li><li>كوفي ٢٤</li>
+                <li>مزاج المغربي</li><li>مرسى مطروح</li><li>فرست مارت</li>
+              </ul>
+              <div class="metrics">
+                <div class="metric"><span class="k">محلات</span><span class="v">٣</span></div>
+                <div class="metric"><span class="k">درايف ثرو</span><span class="v">١</span></div>
+                <div class="metric"><span class="k">أكشاك</span><span class="v">٠</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة. لموقع كورنيشي يُفضّل مسح المنافسة على امتداد الواجهة البحرية نفسها بدل نصف قطر دائري، لأن المنافسة الحقيقية خطية على طول الكورنيش.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>الواجهة البحرية للكورنيش الجنوبي (كورنيش المرجان)</strong> — مشروع على مساحة نحو ٨٠ ألف م٢ يضم ممرات مطلة على الشاطئ وممرات داخلية ومظلات ومنطقة ألعاب ودورات مياه، وأصبح وجهة عائلية بارزة.</li>
+                <li><strong>مشروع الكورنيش الأوسط مع العثيم للاستثمار</strong> — مشروع استثماري متكامل على مساحة ١٦٨ ألف م٢ بالشراكة مع أمانة منطقة جازان. مشروع بهذا الحجم يعيد تعريف حركة الزوار على الكورنيش بالكامل.</li>
+                <li><strong>مشاريع أمانة جازان</strong> لتطوير الواجهات البحرية والمماشي والحدائق والمساحات المفتوحة.</li>
+              </ul>
+              <p class="muted">هذه أوضح حزمة مشاريع مؤثرة بين المواقع الثمانية — استثمارات حكومية وخاصة مجاورة مباشرة ترفع أعداد الزوار دون أي إنفاق من درب.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">١٥–٢٨ ألف</span></div>
+                <div class="metric"><span class="k">ذروة مسائية</span><span class="v">١٬٥٠٠–٢٬٨٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٣٥٠–٧٠٠</span></div>
+                <div class="metric"><span class="k">معامل الإجازة</span><span class="v">×١٫٦–٢٫٢</span></div>
+              </div>
+              <p class="muted">الحساب: مساران × ٧٠٠ مركبة/مسار/ساعة × اتجاهين × ٠٫٧٠ = ١٬٩٦٠ في ذروة المساء ← ÷ ٠٫١٠ = نحو ١٩٬٦٠٠ يوميًا. استخدمت معامل ذروة ٠٫١٠ بدل ٠٫٠٩ لأن الحركة الترفيهية أكثر تركّزًا في ساعات محددة. نسبة الالتقاط ٤٪ — الأعلى في القائمة لأن الوجهة نفسها سبب الرحلة.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>الموقع الوحيد الذي يبيع تجربة لا خدمة طريق.</strong> الإطلالة البحرية ومدة البقاء الطويلة ومشاريع تطوير الواجهة المجاورة تجعله الأنسب لعلامات المقاهي والحلويات ومفاهيم الجلسات الخارجية، ويحتمل أسعار إيجار للمتر أعلى من أحجام المرور وحدها.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- ============ RY042 ============ -->
+      <article class="card">
+        <div class="card-head">
+          <span class="c">RY042</span>
+          <h3>درب — الناصفة / الخزامى</h3>
+          <span class="where">الخرج · صف ٤٦</span>
+        </div>
+        <div class="card-body">
+
+          <div class="row">
+            <div class="row-label"><b>وصف الطريق</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <p>موقع داخل محافظة الخرج، تسجّله خانة الطريق باسم «الناصفة – الخزامى» وتذكر النبذة حي الحمراء. شارع شرياني داخلي مرتبط بالطرق الرئيسية للمدينة، يخدم نطاقًا سكنيًا. الخرج مركز زراعي وصناعي مهم جنوب الرياض ومرتبط بها بطريق سريع.</p>
+              <p class="muted">تعارض بسيط في الملف: خانة الطريق تذكر حيّين (الناصفة والخزامى) والنبذة تذكر حي الحمراء. يُنصح بتوحيدها بعد التحقق.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات داخل المحطة</b><span class="chip chip-file">من ملف الإكسل</span></div>
+            <div class="row-body">
+              <ul class="brands">
+                <li>كنتاكي</li><li>ريشو قهوة</li><li class="k">مغسلة واش واي</li><li class="k">ليدر اكسبريس</li>
+              </ul>
+              <div class="metrics">
+                <div class="metric hi"><span class="k">درايف ثرو</span><span class="v">٤</span></div>
+                <div class="metric"><span class="k">أكشاك</span><span class="v">١</span></div>
+                <div class="metric"><span class="k">محلات</span><span class="v">١</span></div>
+              </div>
+              <p class="muted"><strong>أربع وحدات درايف ثرو — الأعلى في المحفظة كاملة.</strong> هذا المنتج تحديدًا هو الأكثر طلبًا من علامات القهوة والوجبات السريعة، ووجود كنتاكي كعلامة مرساة يسهّل استقطاب البقية.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>البراندات على الطريق ٥–١٠ كم</b><span class="chip chip-gap">يحتاج تحقق ميداني</span></div>
+            <div class="row-body"><p>غير متاح في هذه البيئة. في مدينة بحجم الخرج، نطاق ٥ كم قد يغطي جزءًا كبيرًا من العمران — لذا يفيد المسح هنا في رسم خريطة المنافسة الكاملة تقريبًا.</p></div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>المشاريع القائمة</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <ul class="plain">
+                <li><strong>التوسع العمراني في الخرج</strong> مدفوعًا بقربها من الرياض وبدورها كمركز زراعي وصناعي.</li>
+                <li><strong>ارتباط الخرج بمنظومة طرق الرياض</strong> — برنامج تطوير محاور الرياض يحسّن الربط الإقليمي مع المحافظات المجاورة.</li>
+                <li><strong>المشاريع الصناعية واللوجستية</strong> في نطاق الخرج ترفع حركة المركبات الثقيلة والتنقل اليومي للعمالة.</li>
+              </ul>
+              <p class="muted">هذه اتجاهات عامة للمحافظة — تحتاج تثبيتًا بمشاريع محددة بالاسم من أمانة المنطقة قبل استخدامها في عرض تأجيري.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٢٠–٣٥ ألف</span></div>
+                <div class="metric"><span class="k">ساعة الذروة</span><span class="v">١٬٩٠٠–٣٬٣٠٠</span></div>
+                <div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٤٠٠–٧٠٠</span></div>
+              </div>
+              <p class="muted">الحساب: ٢٫٥ مسار (متوسط) × ٧٥٠ مركبة/مسار/ساعة × اتجاهين × ٠٫٧٥ = ٢٬٨١٠ في الذروة ← ÷ ٠٫٠٩٥ = نحو ٢٩٬٦٠٠ يوميًا. نسبة الالتقاط ٣٪.</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="row-label"><b>خلاصة الميزة</b></div>
+            <div class="row-body">
+              <p><strong>الموقع الأفضل من حيث نوع الوحدات المتاحة.</strong> أربع وحدات درايف ثرو في سوق أقل تشبّعًا من الرياض، مع كنتاكي كعلامة مرساة، ومنافسة أضعف على العلامات المطلوبة. تكلفة الاستحواذ على المستأجر هنا أقل، والعائد على الوحدة قد يفوق مواقع أعلى حركةً.</p>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ METHODOLOGY ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2>منهجية حساب الحركة المرورية</h2>
+      <p>كما طلبت — هذه هي الطريقة كاملة بخطواتها وثوابتها، حتى تتمكن من مراجعتها أو تعديل أي افتراض فيها.</p>
+    </div>
+
+    <div class="method">
+      <p>
+        لا توجد بيانات عدّ مروري رسمية منشورة لهذه الطرق تحديدًا — بحثت عنها ولم أجد أرقام
+        AADT معلنة لأي منها. لذلك استخدمت <strong>نموذج التقدير المرتكز على سعة الطريق</strong>،
+        وهو أسلوب هندسي قياسي يُعتمد عند غياب بيانات العدّ الفعلي.
+      </p>
+
+      <ol class="steps">
+        <li>
+          <div>
+            <b>تصنيف الطريق وتحديد سعة المسار</b>
+            <p>كل طريق يُصنّف حسب طبيعته، ولكل تصنيف سعة قياسية بالمركبة لكل مسار لكل ساعة: طريق حر ١٬٩٠٠ · شرياني رئيسي مفصول جزئيًا ١٬٢٠٠ · شرياني بإشارات ٨٠٠–٩٠٠ · شرياني فرعي أو محلي ٦٥٠–٧٥٠ · كورنيش ترفيهي ٧٠٠.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>حساب حجم ساعة الذروة</b>
+            <p>عدد المسارات في الاتجاه × سعة المسار × ٢ (الاتجاهان) × نسبة الإشغال V/C. استخدمت نسبة إشغال ٠٫٧٠–٠٫٨٥ حسب مستوى الازدحام المتوقع؛ لا تصل الطرق عمليًا إلى سعتها النظرية الكاملة.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>الاشتقاق إلى الحركة اليومية</b>
+            <p>ساعة الذروة تمثّل نسبة ثابتة تقريبًا من حركة اليوم كامل، تُسمى معامل الذروة K. استخدمت ٠٫٠٩ للطرق الحضرية (أي أن ساعة الذروة ≈ ٩٪ من حركة اليوم)، و٠٫٠٩٥ للطرق المحلية، و٠٫١٠ للكورنيش لأن حركته أكثر تركّزًا.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>الحركة المفيدة للمحطة</b>
+            <p>المحطة تخدم اتجاهًا واحدًا فقط. طبّقت معامل توزيع اتجاهي ٥٥٪ لحساب الحركة المارة على جهة المحطة فعليًا.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>نسبة الالتقاط ← عدد الداخلين</b>
+            <p>نسبة السيارات المارة التي تدخل المحطة فعلًا: ١٫٥–٢٫٥٪ على الطرق الحرة (لأن الخدمة من طريق موازٍ) · ٢–٣٪ على الشرايين الحضرية · ٣٫٥–٤٪ على المواقع السكنية والترفيهية حيث تكون المحطة وجهة لا نقطة عبور. النسبة ترتفع كلما قويت التشكيلة التجارية.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="formula">
+Peak_hour = lanes × lane_capacity × 2 × (V/C)
+AADT      = Peak_hour ÷ K
+Passing   = AADT × 0.55
+Entries   = Passing × capture_rate
+
+<span style="opacity:.7"># مثال كامل — RY075، الدائري الشمالي بالرياض</span>
+Peak_hour = 4 × 1,900 × 2 × 0.85 = 12,920 veh/h
+AADT      = 12,920 ÷ 0.09        ≈ 143,000 veh/day
+Passing   = 143,000 × 0.55       ≈ 78,650 veh/day
+Entries   = 78,650 × 0.02        ≈ 1,573 visits/day
+      </div>
+    </div>
+
+    <div class="caveat">
+      <h4>حدود هذه الأرقام — اقرأها قبل استخدامها في أي عرض</h4>
+      <p>
+        هذه <strong>تقديرات هندسية وليست قياسات</strong>. مبنية على تصنيف الطريق وافتراضات السعة القياسية،
+        لا على عدّادات مرورية ولا على بيانات مسار فعلية. النطاقات واسعة عمدًا لأن الدقة الحقيقية غير متاحة هنا،
+        ولا يصح تقديمها لمستأجر على أنها أرقام مقاسة.
+      </p>
+      <ul class="plain">
+        <li><strong>أدق مصدر تملكونه أصلًا هو بياناتكم:</strong> عدد عمليات المضخات اليومية في كل محطة رقم حقيقي مسجّل. اضربه في ١٫٤–١٫٨ لتقدير إجمالي الزوار (يشمل زوار المطاعم دون تزوّد) وستحصل على عدد داخلين فعلي يتفوق على أي تقدير في هذه الكراسة. ثم اعكس المعادلة لاستخراج نسبة الالتقاط الحقيقية ومعايرة باقي المواقع بها.</li>
+        <li><strong>للحصول على AADT رسمي:</strong> وزارة النقل والخدمات اللوجستية والهيئة العامة للطرق تحتفظان ببيانات عدّ مروري غير منشورة، وأمانات المناطق تملك دراسات مرورية للمشاريع الكبرى.</li>
+        <li><strong>لبيانات تجارية جاهزة:</strong> منصات مثل TomTom Traffic Stats وGoogle Maps Platform Roads/Traffic توفّر أحجامًا وسرعات مبنية على بيانات فعلية بالاشتراك.</li>
+        <li><strong>للقياس المباشر:</strong> عدّاد مروري مؤقت (Pneumatic Tube Counter) لمدة أسبوع أمام المحطة يكلّف قليلًا ويعطي رقمًا قاطعًا لا يقبل الجدل في التفاوض.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ THE 5/10 KM GAP ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2>البراندات في نطاق ٥ و١٠ كم — لماذا لم أكتبها وكيف تُستخرج</h2>
+      <p>هذا هو الجزء الوحيد من طلبك الذي لم أستطع إنجازه، وأفضّل توضيح السبب بدل ملء الفراغ بتخمينات.</p>
+    </div>
+
+    <div class="caveat">
+      <h4>السبب</h4>
+      <p>
+        بيئة التشغيل هنا تحجب الوصول إلى نطاق <code>maps.app.goo.gl</code> وخرائط جوجل عمومًا
+        (سياسة الشبكة ترفض الاتصال). جرّبت فتح الروابط الثمانية مباشرةً وعبر أداة جلب الصفحات،
+        وكلها رُفضت. بدون فتح الرابط لا يمكن الحصول على الإحداثيات، وبدون الإحداثيات لا يمكن حصر
+        العلامات ضمن نصف قطر محدد. أي قائمة أكتبها في هذه الحالة ستكون مؤلَّفة، وهذا ضرر مباشر
+        على ملف يُستخدم في التأجير والتفاوض.
+      </p>
+    </div>
+
+    <div class="method">
+      <h4 style="font-size:1rem">الطريقة العملية لاستخراجها</h4>
+      <ol class="steps">
+        <li>
+          <div>
+            <b>استخرج الإحداثيات من الروابط الموجودة</b>
+            <p>الروابط الثمانية موجودة في الملف. افتح كل رابط ودع الصفحة تتحوّل إلى الرابط الطويل، ثم خذ الإحداثيات من مقطع <code>@lat,lng</code>. هذه خطوة يدوية لا تتجاوز عشر دقائق للمواقع الثمانية.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>شغّل بحثًا نطاقيًا حول كل إحداثي</b>
+            <p>عبر Google Places API — Nearby Search بنصف قطر ٥٠٠٠ ثم ١٠٠٠٠ متر، على التصنيفات: <code>gas_station</code> · <code>restaurant</code> · <code>cafe</code> · <code>supermarket</code> · <code>shopping_mall</code> · <code>car_repair</code>.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>افصل المنافس عن المُكمِّل</b>
+            <p>محطات الوقود المجاورة منافسة مباشرة تُحسب سلبًا. المولات والمدارس والمستشفيات ومراكز العمل مولّدات حركة تُحسب إيجابًا. هذا الفصل هو ما يحوّل القائمة من بيانات إلى قرار.</p>
+          </div>
+        </li>
+        <li>
+          <div>
+            <b>احسب زمن الوصول لا المسافة</b>
+            <p>٥ كم على الدائري الشمالي بالرياض ≠ ٥ كم داخل حي الجال بالطائف. استخدم Distance Matrix لحساب نطاق ٥ و١٠ دقائق قيادة — وهو المقياس الذي تستخدمه علامات التجزئة فعليًا في قرارات الموقع.</p>
+          </div>
+        </li>
+      </ol>
+      <p class="muted">إن أردت، أستطيع كتابة سكربت جاهز ينفّذ الخطوات من ٢ إلى ٤ ويُخرج النتائج في ملف إكسل بعمود لكل نطاق — كل ما يلزم هو مفتاح Google Maps API والإحداثيات من الخطوة ١.</p>
+    </div>
+  </section>
+
+  <!-- ============ RECOMMENDATIONS ============ -->
+  <section class="sec">
+    <div class="sec-head">
+      <h2>خلاصة تنفيذية</h2>
+      <p>ترتيب المواقع بحسب أولوية العمل عليها، لا بحسب حجمها.</p>
+    </div>
+    <div class="method">
+      <ul class="plain" style="gap:14px">
+        <li><strong>MK035 الطائف — أولوية أولى.</strong> حركة جيدة على دائري مدينة سياحية، وعلامة تجارية واحدة فقط عاملة. أكبر فجوة بين الإمكانات والاستغلال في المحفظة.</li>
+        <li><strong>RY042 الخرج — أولوية ثانية.</strong> أربع وحدات درايف ثرو، وهو المنتج الأكثر طلبًا، في سوق أقل تشبّعًا وبتكلفة استحواذ أقل على المستأجر.</li>
+        <li><strong>MK099 الطائف — أولوية ثالثة.</strong> درايف ثرو وكشكان شاغران في موقع سكني بتدفق مستقر — منتج مباشر لعلامات القهوة.</li>
+        <li><strong>JA069 جازان — فرصة مرتبطة بالتوقيت.</strong> مشروع الكورنيش الأوسط بمساحة ١٦٨ ألف م٢ سيغيّر أعداد الزوار جذريًا. التسعير الآن يجب أن يستبق ذلك، لا أن يلحق به.</li>
+        <li><strong>RY075 وMK015 — أصول ناضجة.</strong> الأقوى حركةً وتشكيلةً؛ العمل عليهما هو تحسين مزيج المستأجرين ورفع الإيجارات عند التجديد، لا ملء الشواغر.</li>
+        <li><strong>MK029 مكة — نمو مؤجل.</strong> اكتمال الدائري الثالث سيرفع الحركة تلقائيًا. يُفضّل تجنّب عقود طويلة بأسعار اليوم على هذا الموقع.</li>
+        <li><strong>MK017 مكة — يحتاج حسم البيانات أولًا.</strong> تعارض «عرفات / الشوقية» في الملف يجب حلّه قبل أي طرح تأجيري.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>المصادر الموثّقة:</strong> ملف Darb_Units_1.xlsx (ورقة Stations 2025) لكل بيانات المحطات والعلامات والوحدات · واس والصحف السعودية لمشاريع الدائري الثالث بمكة وطرق الطائف والواجهة البحرية بجازان · تقارير البنية التحتية لبرنامج محاور الرياض ومشروع طرق جدة.</p>
+    <p>أرقام الحركة المرورية كلها تقديرات محسوبة بالنموذج الموضّح أعلاه، وليست بيانات عدّ فعلي. قوائم البراندات في نطاق ٥ و١٠ كم غير مُدرجة لتعذّر التحقق منها في بيئة العمل.</p>
+  </footer>
+
+</div>
