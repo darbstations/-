@@ -1,5 +1,5 @@
 <title>درب · سجل الحملات التسويقية (نسخة للاطّلاع)</title>
-<style>
+<style id="darbcss">
 :root{
   --ink:#2A1D12; --ink-2:#6B5744; --ink-3:#9A8674;
   --ground:#FBF6EF; --surface:#F4E9DB; --line:#E0D0BA; --sand:#F1E2CC;
@@ -1631,7 +1631,14 @@ var SEEDMODE = 'merge';
 
   /* ---- the page itself, as a file, with today's register inside it ---- */
   function standaloneHTML(){
-    var st=document.querySelector('style');
+    var st=(function(){
+      var mine=document.getElementById('darbcss');
+      if(mine) return mine;
+      var all=document.querySelectorAll('style');
+      for(var i=0;i<all.length;i++)
+        if(all[i].textContent.indexOf('.card{')>=0) return all[i];
+      return all.length?all[all.length-1]:document.createElement('style');
+    })();
     var app='', sc=document.querySelectorAll('script');
     for(var i=0;i<sc.length;i++){
       var t=sc[i].textContent||'';
