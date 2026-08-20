@@ -18,7 +18,7 @@ const {chromium} = require('playwright-core');
     headerTemplate:'<div></div>',
     footerTemplate:`<div style="width:100%;font-size:7.5pt;color:#9A8674;padding:0 14mm;
       font-family:sans-serif;display:flex;justify-content:space-between;direction:rtl">
-      <span>درب · كراسة مواقع — ثماني محطات</span>
+      <span>درب · كراسة مواقع المحطات</span>
       <span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>`});
   await b.close();
 })();
