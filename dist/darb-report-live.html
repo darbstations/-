@@ -2800,11 +2800,29 @@ fillSel();
         'مشرف الذروة','مسؤول تطوير الأعمال','فريق خدمة العملاء','الوحدة الشريكة']},
       {k:'kpi',l:'المستهدف',t:'text',wide:1,list:['تغطية 50٪ من سيارات الفترة',
         'رفع سيارات الفترة 8٪','200 تفاعل يوميًا','تحويل 10 عملاء لعقد أسطول']}
+    ],
+    wash:[
+      {k:'item',l:'الخدمة',t:'select',req:1,opts:['مسح خارجي سريع',
+        'مسح زجاج فقط','غسيل خارجي','غسيل خارجي وداخلي','غسيل شامل وتلميع',
+        'تنظيف جنوط','معطر وتلميع داخلي','غسيل بالبخار']},
+      {k:'mode',l:'صيغة التشغيل',t:'select',req:1,opts:[
+        'عمالة المحطة — مجانية ترويجية','عمالة المحطة — مدفوعة',
+        'مشغّل متعاقد بنسبة إيراد','شريك خارجي بامتياز وإيجار شهري']},
+      {k:'period',l:'الفترة',t:'select',req:1,src:'periods'},
+      {k:'crew',l:'عدد العمال',t:'number'},
+      {k:'price',l:'السعر (ر.س)',t:'number',step:'0.5'},
+      {k:'cap',l:'الطاقة اليومية (غسلة)',t:'number',req:1},
+      {k:'owner',l:'المسؤول',t:'text',list:['مشرف الغسيل','مدير المحطة',
+        'مشرف الوردية الصباحية','مشرف الذروة','المشغّل المتعاقد']},
+      {k:'kpi',l:'المستهدف',t:'text',wide:1,list:['تجاوز نقطة التعادل',
+        '10 غسلات/يوم','32 غسلة/يوم','التقاط 4٪ من سيارات الفترة',
+        'استرداد التجهيز خلال شهرين','رفع تكرار الزيارة']}
     ]
   };
   var TITLE={camp:['حملة تشجيع مبيعات','املأ ما يلزمك واترك الباقي فارغًا'],
              part:['شراكة جديدة','داخلية من وحدات المحطة أو خارجية من المنشآت المرصودة'],
-             dist:['توزيع داخل المحطة','التكلفة اليومية = الكمية × تكلفة الوحدة']};
+             dist:['توزيع داخل المحطة','التكلفة اليومية = الكمية × تكلفة الوحدة'],
+             wash:['خدمة مسح سيارات','الإيراد اليومي المتوقع = السعر × الطاقة اليومية']};
   var NUM=function(v){var n=parseFloat(String(v).replace(/[^\d.\-]/g,''));return isNaN(n)?0:n;};
   var FMT=function(n){return Math.round(n).toLocaleString('en-US');};
   var ESC=function(s){var d=document.createElement('div');d.textContent=s==null?'':s;return d.innerHTML;};
@@ -2934,6 +2952,12 @@ fillSel();
     if(kind==='camp')return [v.name,v.period,v.dur,v.units,v.terms,v.mats,
       v.budget?FMT(NUM(v.budget)):'',v.kpi,v.field];
     if(kind==='part')return [v.name,v.type,v.dur,v.terms,v.goal,v.kpi,v.field,v.reach];
+    if(kind==='wash'){
+      var rev=NUM(v.price)*NUM(v.cap);
+      return [v.item,v.mode,v.period,v.crew?FMT(NUM(v.crew)):'',
+              v.price?String(v.price):'',v.cap?FMT(NUM(v.cap)):'',
+              rev?FMT(rev):'',v.owner,v.kpi];
+    }
     var daily=NUM(v.qty)*NUM(v.cost);
     return [v.item,v.period,v.qty?FMT(NUM(v.qty)):'',v.dur,
             v.cost?String(v.cost):'',daily?FMT(daily):'',v.owner,v.kpi];
@@ -2983,6 +3007,9 @@ fillSel();
     if(kind==='camp')return old[i]||'';
     if(kind==='part'){var map={name:0,type:1,dur:2,terms:3,goal:4,kpi:5,field:6,reach:7};
       return old[map[f.k]]||'';}
+    if(kind==='wash'){
+      var m3={item:0,mode:1,period:2,crew:3,price:4,cap:5,owner:7,kpi:8};
+      return old[m3[f.k]]||'';}
     var m2={item:0,period:1,qty:2,dur:3,cost:4,owner:6,kpi:7};
     return old[m2[f.k]]||'';
   }
@@ -3042,6 +3069,14 @@ fillSel();
           var t2=r.cells[1]?r.cells[1].textContent.trim():'';
           if(t2==='خارجي')x++; else if(t2==='داخلي')i++;});
         txt='<b>'+rows.length+'</b> شراكة · داخلي <b>'+i+'</b> · خارجي <b>'+x+'</b>';
+      }else if(kind==='wash'){
+        var cap=0,rev=0;
+        rows.forEach(function(r){
+          cap+=NUM(r.cells[5]?r.cells[5].textContent:0);
+          rev+=NUM(r.cells[6]?r.cells[6].textContent:0);});
+        txt='<b>'+rows.length+'</b> خدمة · الطاقة اليومية <b>'+FMT(cap)+'</b> غسلة'
+            +' · الإيراد اليومي المتوقع <b>'+FMT(rev)+'</b> ر.س'
+            +' · الشهري <b>'+FMT(rev*30)+'</b> ر.س';
       }else{
         var dsum=0; rows.forEach(function(r){dsum+=NUM(r.cells[5]?r.cells[5].textContent:0);});
         txt='<b>'+rows.length+'</b> صنف · التكلفة اليومية <b>'+FMT(dsum)+'</b> ر.س'
@@ -3255,6 +3290,42 @@ fillSel();
 })();
 </script>
 
+<script id="wash-js">
+/* ═══ المحور الرابع: كتلة إدخال خدمات مسح السيارات في كل صفحة خطة ═══
+   تُحقن وقت التشغيل بعد أن تستعيد طبقة التحرير المحتوى المحفوظ محليًا،
+   وإلا مُحيت لدى من سبق أن عدّل صفحة الخطة. الدالة عديمة الأثر عند
+   إعادة النداء: تتخطّى أي صفحة فيها الجدول أصلًا.                    */
+(function(){
+  var HTML="<div class=\"sec-h\" style=\"margin-top:6px\"><h2 style=\"font-size:15px\">🚿 خدمات المسح المضافة<\/h2><span>صيغة التشغيل والسعر والطاقة اليومية — والإيراد اليومي المتوقع يُحسب تلقائيًا<\/span><\/div><div class=\"planbar\" data-kind=\"wash\"><button type=\"button\" class=\"planadd\" data-kind=\"wash\">＋ أضف خدمة مسح<\/button><span class=\"plansum\" data-sum=\"wash\"><\/span><\/div><div class=\"ntable plantbl\" data-plan=\"wash\"><div class=\"tscroll\"><table><thead><tr><th>الخدمة<\/th><th>صيغة التشغيل<\/th><th>الفترة<\/th><th>عدد العمال<\/th><th>السعر (ر.س)<\/th><th>الطاقة اليومية (غسلة)<\/th><th>الإيراد اليومي المتوقع (ر.س)<\/th><th>المسؤول<\/th><th>المستهدف<\/th><\/tr><\/thead><tbody><tr class=\"planempty\"><td colspan=\"9\">لم تُضف خدمة مسح بعد — اضغط «＋ أضف خدمة مسح» أعلاه<\/td><\/tr><\/tbody><\/table><\/div><\/div>";
+  function inject(){
+    var made=0;
+    document.querySelectorAll('.pgview[id$="-plan"]').forEach(function(pv){
+      if(pv.querySelector('.plantbl[data-plan="wash"]'))return;
+      var anchor=null;
+      pv.querySelectorAll('.sec-h').forEach(function(s){
+        if(!anchor&&s.textContent.indexOf('لوحة المتابعة')>=0)anchor=s;
+      });
+      var frag=document.createElement('div'); frag.innerHTML=HTML;
+      var nodes=[].slice.call(frag.childNodes);
+      if(anchor&&anchor.parentNode){
+        nodes.forEach(function(n){anchor.parentNode.insertBefore(n,anchor);});
+      }else{
+        var host=pv.querySelector('[data-ez]')||pv;
+        nodes.forEach(function(n){host.appendChild(n);});
+      }
+      made++;
+    });
+    return made;
+  }
+  var n=inject();
+  if(n){
+    /* الحقن غيّر بنية المناطق: أعِد ضبط لقطة التراجع حتى لا يُقرأ كتعديل */
+    if(window.DARB&&DARB.rebase)DARB.rebase();
+    if(window.DARB&&DARB.planSync)DARB.planSync();
+  }
+  window.addEventListener('hashchange',function(){setTimeout(inject,0);});
+})();
+</script>
 <script id="hubreg-js">
 /* ═══ سجلّات الخطة في الصفحة الأولى ═══
    عرض حيّ لجداول «… المضافة» في صفحات الخطة. مصدر الحقيقة هو جدول المحطة؛
@@ -3275,7 +3346,12 @@ fillSel();
       sub:'ما يوزَّع داخل المحطات، وكميته وتكلفته اليومية',
       cols:['الصنف','الفترة','الكمية اليومية','المدة','تكلفة الوحدة (ر.س)',
             'التكلفة اليومية (ر.س)','المسؤول','المستهدف'],
-      empty:'لا توجد توزيعات مسجَّلة بعد'}
+      empty:'لا توجد توزيعات مسجَّلة بعد'},
+    wash:{tab:'🚿 مسح السيارات', title:'سجل خدمات مسح السيارات', add:'＋ أضف خدمة مسح',
+      sub:'صيغ تشغيل خدمة المسح في المحطات، وطاقتها اليومية وإيرادها المتوقع',
+      cols:['الخدمة','صيغة التشغيل','الفترة','عدد العمال','السعر (ر.س)',
+            'الطاقة اليومية (غسلة)','الإيراد اليومي المتوقع (ر.س)','المسؤول','المستهدف'],
+      empty:'لا توجد خدمات مسح مسجَّلة بعد'}
   };
   var NUM=function(v){var n=parseFloat(String(v).replace(/[^\d.\-]/g,''));return isNaN(n)?0:n;};
   var FMT=function(n){return Math.round(n).toLocaleString('en-US');};
@@ -3316,6 +3392,13 @@ fillSel();
       var i=0,x=0; d.forEach(function(r){
         var t=(r.cells[1]||'').trim(); if(t==='خارجي')x++; else if(t==='داخلي')i++;});
       return '<b>'+d.length+'</b> شراكة · داخلي <b>'+i+'</b> · خارجي <b>'+x+'</b> · '+spread;
+    }
+    if(kind==='wash'){
+      var cap=d.reduce(function(a,r){return a+NUM(r.cells[5]);},0);
+      var rev=d.reduce(function(a,r){return a+NUM(r.cells[6]);},0);
+      return '<b>'+d.length+'</b> خدمة · الطاقة اليومية <b>'+FMT(cap)+'</b> غسلة · '
+        +'الإيراد اليومي المتوقع <b>'+FMT(rev)+'</b> ر.س · الشهري <b>'+FMT(rev*30)
+        +'</b> ر.س · '+spread;
     }
     var s=d.reduce(function(a,r){return a+NUM(r.cells[5]);},0);
     return '<b>'+d.length+'</b> صنف · التكلفة اليومية <b>'+FMT(s)+'</b> ر.س · الشهرية <b>'
