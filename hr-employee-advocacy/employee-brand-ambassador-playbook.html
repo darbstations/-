@@ -1,0 +1,1523 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>سفير درب</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="دليل تفعيل دور الموظف في إيصال صورة إيجابية عن محطات درب، وبرنامج الموارد البشرية لتحفيز الموظفين عبر البريد الإلكتروني.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@400;500;600;700&display=swap">
+<style>
+/* ═══════════════════ TOKENS — light is the base, all three theme states covered ═══════════════════ */
+:root{
+  color-scheme:light dark;
+  --paper:#FBF6EF; --paper-2:#F3E9DC; --surface:#FFFFFF; --surface-2:#FDFAF4;
+  --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
+  --line:#E4D6C4; --line-2:#F0E4D3;
+  --amber:#E8760C; --amber-2:#C85E05; --amber-soft:#FBE3C6;
+  --green:#1B7A4B; --green-soft:#DFEFE6;
+  --rose:#B23E60; --rose-soft:#F8E0E7;
+  --gold:#9C7726;
+  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
+  --hero-ink:#F7EEDF; --hero-ink-2:#E8D3B6;
+  --shadow:0 20px 44px -28px rgba(52,28,10,.5);
+  --shadow-sm:0 6px 18px -14px rgba(52,28,10,.6);
+  --r:14px; --r-sm:10px;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#17100A; --paper-2:#1E150D; --surface:#211710; --surface-2:#1B120B;
+    --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+    --line:#33241A; --line-2:#2A1D13;
+    --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+    --green:#5FB689; --green-soft:#13301F;
+    --rose:#E27795; --rose-soft:#331621;
+    --gold:#D9B45B;
+    --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+    --shadow:0 20px 48px -26px rgba(0,0,0,.75);
+    --shadow-sm:0 6px 18px -14px rgba(0,0,0,.85);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#17100A; --paper-2:#1E150D; --surface:#211710; --surface-2:#1B120B;
+  --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
+  --line:#33241A; --line-2:#2A1D13;
+  --amber:#F59A2E; --amber-2:#E8760C; --amber-soft:#3A2614;
+  --green:#5FB689; --green-soft:#13301F;
+  --rose:#E27795; --rose-soft:#331621;
+  --gold:#D9B45B;
+  --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
+  --shadow:0 20px 48px -26px rgba(0,0,0,.75);
+  --shadow-sm:0 6px 18px -14px rgba(0,0,0,.85);
+}
+
+/* ═══════════════════ BASE ═══════════════════ */
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{animation:none !important; transition:none !important} }
+body{
+  margin:0; direction:rtl; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans Arabic","Noto Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  font-size:16px; line-height:1.75; -webkit-font-smoothing:antialiased;
+}
+.doc{direction:rtl}
+h1,h2,h3,h4{font-family:"Readex Pro","Noto Kufi Arabic",Tahoma,sans-serif; text-wrap:balance; margin:0; line-height:1.3; font-weight:600}
+p{margin:0}
+ul,ol{margin:0; padding-inline-start:1.35em}
+li{margin-block:.3em}
+a{color:var(--amber-2)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--amber); outline-offset:3px; border-radius:4px}
+.tnum{font-variant-numeric:tabular-nums}
+.wrap{max-width:1160px; margin-inline:auto; padding-inline:22px}
+
+/* ═══════════════════ THEME TOGGLE — lives in the masthead so it never overlays content ═══════════════════ */
+.toggle{
+  background:rgba(0,0,0,.2); color:#EBD5B7; border:1px solid rgba(255,255,255,.2);
+  border-radius:100px; padding:6px 14px; font:inherit; font-size:12.5px; font-weight:500;
+  cursor:pointer; line-height:1.5;
+}
+.toggle:hover{color:#fff; border-color:var(--amber)}
+
+/* ═══════════════════ MASTHEAD ═══════════════════ */
+.masthead{
+  position:relative; overflow:hidden; color:var(--hero-ink);
+  background:
+    radial-gradient(115% 85% at 84% -12%, rgba(232,118,12,.32), transparent 56%),
+    radial-gradient(72% 66% at 6% 118%, rgba(27,122,75,.26), transparent 62%),
+    linear-gradient(158deg,var(--hero-1),var(--hero-2) 56%,var(--hero-3));
+  border-block-end:1px solid rgba(232,118,12,.34);
+}
+.grain{position:absolute; inset:0; opacity:.055; mix-blend-mode:overlay; pointer-events:none;
+  background-image:radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px); background-size:4px 4px}
+.masthead .wrap{position:relative; z-index:2; padding-block:clamp(30px,6vw,58px) clamp(34px,6vw,64px)}
+.brandbar{display:flex; align-items:center; gap:13px; flex-wrap:wrap}
+.mark{display:inline-flex; align-items:center; gap:11px}
+.mark .glyph{
+  inline-size:44px; block-size:44px; border-radius:13px; display:grid; place-items:center;
+  background:linear-gradient(150deg,#F08A1B,#B44E05); box-shadow:0 10px 22px -10px rgba(232,118,12,.85);
+}
+.mark .glyph svg{inline-size:24px; block-size:24px; color:#fff}
+.mark b{font-family:"Readex Pro",Tahoma,sans-serif; font-size:20px; font-weight:700; letter-spacing:.2px; display:block; line-height:1.2}
+.mark span{display:block; font-size:10.5px; font-weight:600; color:#E7C9A2; letter-spacing:2.6px}
+.brandbar .sep{flex:1}
+.brandbar .unit{
+  font-size:12.5px; color:#EBD5B7; border:1px solid rgba(255,255,255,.2);
+  padding:6px 14px; border-radius:100px; background:rgba(0,0,0,.2);
+}
+.eyebrow{
+  margin-block-start:clamp(26px,4.6vw,44px); display:inline-flex; align-items:center; gap:10px;
+  font-size:12px; letter-spacing:3px; font-weight:700; color:var(--gold);
+}
+.masthead .eyebrow{color:#D9B45B}
+.eyebrow::before{content:""; inline-size:24px; block-size:2px; background:currentColor; border-radius:2px}
+.masthead h1{margin-block-start:14px; font-size:clamp(38px,7.4vw,68px); font-weight:700; letter-spacing:-.6px}
+.masthead h1 .en{
+  display:block; font-family:"Readex Pro",sans-serif; direction:ltr; text-align:start;
+  font-size:clamp(12px,1.9vw,15px); letter-spacing:5px; font-weight:500; color:#C9A876; margin-block-start:10px;
+}
+.masthead .lede{
+  margin-block-start:18px; max-width:56ch; font-size:clamp(15.5px,2.1vw,19px);
+  color:#EDDCC5; line-height:1.8;
+}
+.factbar{
+  margin-block-start:26px; display:flex; gap:9px; flex-wrap:wrap;
+}
+.fact{
+  display:inline-flex; align-items:baseline; gap:7px; font-size:12.5px; color:#F0E1CA;
+  background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.13);
+  padding:7px 14px; border-radius:100px;
+}
+.fact b{color:#F6A94A; font-weight:600}
+
+/* ═══════════════════ LAYOUT ═══════════════════ */
+.layout{display:grid; gap:clamp(26px,4vw,54px); grid-template-columns:minmax(0,1fr) 236px; padding-block:clamp(34px,5vw,58px)}
+@media (max-width:980px){ .layout{grid-template-columns:minmax(0,1fr)} }
+
+/* ── index rail ── */
+.rail{position:sticky; inset-block-start:20px; align-self:start}
+@media (max-width:980px){ .rail{position:static} }
+.rail h4{font-size:11.5px; letter-spacing:2.4px; color:var(--ink-3); font-weight:700; margin-block-end:12px}
+.rail ol{list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:1px;
+  border-inline-start:2px solid var(--line); padding-inline-start:0}
+.rail a{
+  display:block; padding:7px 14px; font-size:13.5px; color:var(--ink-2); text-decoration:none;
+  border-inline-start:2px solid transparent; margin-inline-start:-2px; line-height:1.45;
+}
+.rail a:hover{color:var(--amber-2); border-inline-start-color:var(--amber)}
+.rail .part{padding:12px 0 5px; font-size:10.5px; letter-spacing:2px; color:var(--ink-3); font-weight:700}
+.rail .part:first-child{padding-block-start:0}
+
+/* ── content column ── */
+.col{min-width:0; display:flex; flex-direction:column; gap:clamp(38px,5vw,62px)}
+section{scroll-margin-block-start:20px}
+.sec-num{
+  font-family:"Readex Pro",sans-serif; font-size:12px; font-weight:700; letter-spacing:1.5px;
+  color:var(--amber-2); display:block; margin-block-end:6px;
+}
+.sec-head h2{font-size:clamp(23px,3.5vw,31px); letter-spacing:-.3px}
+.sec-head .note{margin-block-start:10px; color:var(--ink-2); font-size:15.5px; max-width:62ch}
+.sec-body{margin-block-start:22px; display:flex; flex-direction:column; gap:18px; max-width:74ch}
+.sec-body.wide{max-width:none}
+p.body{max-width:66ch; color:var(--ink); font-size:16px}
+p.body + p.body{margin-block-start:-4px}
+
+/* road-lane divider — the center line of a highway, in brand amber */
+.lane{block-size:5px; border-radius:5px; border:0; margin:0;
+  background:repeating-linear-gradient(to left, var(--amber-soft) 0 28px, transparent 28px 50px)}
+
+/* ═══════════════════ COMPONENTS ═══════════════════ */
+.card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px 20px; box-shadow:var(--shadow-sm)}
+.grid-2{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(268px,1fr))}
+.grid-3{display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(212px,1fr))}
+
+/* opening thesis pull-quote */
+.thesis{
+  background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r);
+  padding:clamp(22px,3.4vw,32px); position:relative; overflow:hidden;
+}
+/* corner glow sits in the start corner (right, in RTL) and fades outward from it */
+.thesis::after{content:""; position:absolute; inset-block-start:0; inset-inline-start:0;
+  inline-size:160px; block-size:160px; pointer-events:none;
+  background:radial-gradient(circle at 100% 0,var(--amber-soft),transparent 72%)}
+.thesis p{position:relative; z-index:1; font-family:"Readex Pro",Tahoma,sans-serif;
+  font-size:clamp(17px,2.6vw,22px); line-height:1.75; font-weight:500; max-width:44ch}
+.thesis cite{position:relative; z-index:1; display:block; margin-block-start:14px; font-style:normal;
+  font-size:12.5px; letter-spacing:1.6px; color:var(--ink-3); font-weight:600}
+
+/* the causal chain */
+.chain{display:flex; flex-wrap:wrap; align-items:stretch; gap:8px}
+.chain .link{
+  flex:1 1 150px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-sm);
+  padding:14px 15px; position:relative;
+}
+.chain .link b{display:block; font-family:"Readex Pro",sans-serif; font-size:14.5px; font-weight:600; color:var(--ink)}
+.chain .link span{display:block; margin-block-start:4px; font-size:12.5px; color:var(--ink-2); line-height:1.6}
+/* connector sits on the inline-end side, so each dash lands in a gap between two links */
+.chain .link::before{
+  content:""; position:absolute; inset-block-start:50%; inset-inline-end:-9px; inline-size:10px; block-size:2px;
+  background:var(--amber); opacity:.75;
+}
+.chain .link:last-child::before{display:none}
+.chain .link:last-child{border-color:var(--amber); background:var(--amber-soft)}
+
+/* principle rows */
+.principle{display:flex; gap:16px; align-items:flex-start; padding-block:15px; border-block-end:1px dashed var(--line)}
+.principle:last-child{border-block-end:0; padding-block-end:0}
+.principle .n{
+  flex:none; inline-size:32px; block-size:32px; border-radius:9px; display:grid; place-items:center;
+  background:var(--amber-soft); color:var(--amber-2); font-family:"Readex Pro",sans-serif;
+  font-weight:700; font-size:14px; margin-block-start:2px;
+}
+.principle b{display:block; font-family:"Readex Pro",sans-serif; font-size:16.5px; font-weight:600}
+.principle p{margin-block-start:4px; color:var(--ink-2); font-size:14.5px; line-height:1.7}
+
+/* role cards */
+.role{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px; display:flex; flex-direction:column; gap:11px}
+.role .top{display:flex; align-items:center; gap:11px}
+.role .ico{flex:none; inline-size:36px; block-size:36px; border-radius:10px; display:grid; place-items:center;
+  background:var(--amber-soft); color:var(--amber-2)}
+.role .ico svg{inline-size:19px; block-size:19px}
+.role h3{font-size:16.5px}
+.role .who{display:block; font-size:11.5px; letter-spacing:1.6px; color:var(--ink-3); font-weight:600; margin-block-start:2px; font-family:"IBM Plex Sans Arabic",sans-serif}
+.role ul{font-size:14px; color:var(--ink-2); line-height:1.7; padding-inline-start:1.15em}
+.role ul li::marker{color:var(--amber)}
+
+/* moments of truth */
+.moment{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.moment .mhead{display:flex; align-items:center; gap:12px; padding:14px 18px; background:var(--surface-2); border-block-end:1px solid var(--line)}
+.moment .mhead .t{font-family:"Readex Pro",sans-serif; font-weight:600; font-size:15.5px}
+.moment .mhead .sec-time{margin-inline-start:auto; font-size:11.5px; color:var(--ink-3); letter-spacing:1.2px; font-weight:600}
+.moment .mbody{display:grid; grid-template-columns:1fr 1fr; gap:0}
+@media (max-width:620px){ .moment .mbody{grid-template-columns:1fr} }
+.moment .half{padding:15px 18px}
+.moment .half + .half{border-inline-start:1px solid var(--line)}
+@media (max-width:620px){ .moment .half + .half{border-inline-start:0; border-block-start:1px solid var(--line)} }
+.moment .lbl{display:flex; align-items:center; gap:7px; font-size:11.5px; letter-spacing:1.5px; font-weight:700; margin-block-end:8px}
+.moment .yes .lbl{color:var(--green)}
+.moment .no .lbl{color:var(--rose)}
+.moment .half p{font-size:14px; color:var(--ink-2); line-height:1.7}
+.dotm{inline-size:7px; block-size:7px; border-radius:50%; background:currentColor; flex:none}
+
+/* charter */
+.charter{background:var(--paper-2); border:1px solid var(--line); border-radius:var(--r); padding:clamp(20px,3vw,28px)}
+.charter ol{list-style:none; padding:0; margin:0; display:grid; gap:11px; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); counter-reset:c}
+.charter li{
+  counter-increment:c; display:flex; gap:11px; align-items:flex-start; font-size:14.5px; line-height:1.65;
+  background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r-sm); padding:13px 14px;
+}
+.charter li::before{
+  content:counter(c,decimal); flex:none; font-family:"Readex Pro",sans-serif; font-size:11.5px; font-weight:700;
+  color:var(--amber-2); background:var(--amber-soft); inline-size:22px; block-size:22px;
+  border-radius:6px; display:grid; place-items:center; margin-block-start:2px;
+}
+.charter .sign{margin-block-start:18px; padding-block-start:16px; border-block-start:1px dashed var(--line);
+  display:flex; gap:26px; flex-wrap:wrap; font-size:13px; color:var(--ink-2)}
+.charter .sign span{display:flex; gap:8px; align-items:baseline}
+.charter .sign i{font-style:normal; color:var(--ink-3); border-block-end:1px dotted var(--ink-3); min-inline-size:130px; display:inline-block}
+
+/* do / don't columns */
+.dodont{display:grid; gap:14px; grid-template-columns:1fr 1fr}
+@media (max-width:720px){ .dodont{grid-template-columns:1fr} }
+.dd{border-radius:var(--r); padding:18px 19px; border:1px solid var(--line)}
+.dd.yes{background:var(--green-soft); border-color:color-mix(in srgb, var(--green) 26%, transparent)}
+.dd.no{background:var(--rose-soft); border-color:color-mix(in srgb, var(--rose) 26%, transparent)}
+.dd h3{font-size:15px; display:flex; align-items:center; gap:8px; margin-block-end:12px}
+.dd.yes h3{color:var(--green)}
+.dd.no h3{color:var(--rose)}
+.dd ul{padding-inline-start:1.1em; font-size:14px; line-height:1.7; color:var(--ink); margin:0}
+.dd li{margin-block:.45em}
+.dd.yes li::marker{color:var(--green)}
+.dd.no li::marker{color:var(--rose)}
+
+/* rules of the email programme */
+.rules{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.rule{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-sm); padding:15px 16px;
+  border-block-start:3px solid var(--amber)}
+.rule b{display:block; font-family:"Readex Pro",sans-serif; font-size:14.5px; font-weight:600; margin-block-end:5px}
+.rule p{font-size:13.5px; color:var(--ink-2); line-height:1.65}
+
+/* tone: say this / not that */
+.tone{display:flex; flex-direction:column; gap:10px}
+.tone-row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+@media (max-width:660px){ .tone-row{grid-template-columns:1fr} }
+.tone-cell{padding:13px 15px; border-radius:var(--r-sm); font-size:14.5px; line-height:1.65; border:1px solid var(--line)}
+.tone-cell .tag{display:block; font-size:10.5px; letter-spacing:1.6px; font-weight:700; margin-block-end:6px}
+.tone-cell.bad{background:var(--surface-2); color:var(--ink-3)}
+.tone-cell.bad .tag{color:var(--rose)}
+.tone-cell.bad .txt{text-decoration:line-through; text-decoration-color:color-mix(in srgb,var(--rose) 50%,transparent)}
+.tone-cell.good{background:var(--surface); color:var(--ink); border-color:color-mix(in srgb,var(--green) 32%,transparent)}
+.tone-cell.good .tag{color:var(--green)}
+
+/* tables */
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface)}
+table{border-collapse:collapse; inline-size:100%; min-inline-size:600px; font-size:14px}
+thead th{
+  text-align:start; padding:12px 15px; background:var(--surface-2); color:var(--ink-2);
+  font-size:11.5px; letter-spacing:1.4px; font-weight:700; border-block-end:1px solid var(--line); white-space:nowrap;
+}
+tbody td{padding:12px 15px; border-block-end:1px solid var(--line-2); vertical-align:top; line-height:1.65; color:var(--ink-2)}
+tbody tr:last-child td{border-block-end:0}
+tbody td:first-child{color:var(--ink); font-weight:600; white-space:nowrap}
+tbody tr:hover td{background:var(--surface-2)}
+td .pill{display:inline-block; font-size:11.5px; font-weight:600; padding:3px 10px; border-radius:100px; white-space:nowrap}
+.pill.rec{background:var(--amber-soft); color:var(--amber-2)}
+.pill.news{background:var(--green-soft); color:var(--green)}
+.pill.care{background:var(--rose-soft); color:var(--rose)}
+.pill.lead{background:var(--paper-2); color:var(--ink-2); border:1px solid var(--line)}
+
+/* email template cards */
+.mail{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow-sm)}
+.mail .mtop{padding:14px 18px; background:var(--surface-2); border-block-end:1px solid var(--line);
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap}
+.mail .mtop .code{font-family:"Readex Pro",sans-serif; font-size:11.5px; font-weight:700; color:var(--amber-2);
+  background:var(--amber-soft); padding:3px 9px; border-radius:6px; letter-spacing:.5px}
+.mail .mtop h3{font-size:15.5px}
+.mail .mtop .when{margin-inline-start:auto; font-size:12px; color:var(--ink-3); font-weight:600}
+.mail .meta{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:0; border-block-end:1px solid var(--line)}
+.mail .meta div{padding:11px 18px; font-size:13px; color:var(--ink-2); border-inline-start:1px solid var(--line-2)}
+.mail .meta div:last-child{border-inline-start:0}
+.mail .meta span{display:block; font-size:10.5px; letter-spacing:1.5px; color:var(--ink-3); font-weight:700; margin-block-end:3px}
+.mail .meta b{color:var(--ink); font-weight:600}
+.mail .mbodytxt{padding:18px; white-space:pre-wrap; font-size:14.5px; line-height:1.85; color:var(--ink)}
+.mail .mfoot{padding:11px 18px; border-block-start:1px solid var(--line); display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  background:var(--surface-2)}
+.mail .mfoot .hint{font-size:12.5px; color:var(--ink-3)}
+.copy{
+  font:inherit; font-size:12.5px; font-weight:600; padding:7px 15px; border-radius:100px; cursor:pointer;
+  background:var(--surface); color:var(--amber-2); border:1px solid var(--amber);
+  display:inline-flex; align-items:center; gap:7px; margin-inline-start:auto;
+}
+.copy:hover{background:var(--amber); color:#fff}
+.copy svg{inline-size:14px; block-size:14px}
+.copy[data-done="1"]{background:var(--green); border-color:var(--green); color:#fff}
+
+/* email anatomy diagram */
+.anatomy{display:grid; grid-template-columns:minmax(0,300px) minmax(0,1fr); gap:22px; align-items:start}
+@media (max-width:760px){ .anatomy{grid-template-columns:1fr} }
+.preview{border:1px solid var(--line); border-radius:var(--r); overflow:hidden; background:var(--surface); box-shadow:var(--shadow)}
+.preview .pv-head{background:linear-gradient(150deg,var(--hero-1),var(--hero-3)); padding:16px; color:var(--hero-ink); display:flex; align-items:center; gap:9px}
+.preview .pv-head .g{inline-size:26px; block-size:26px; border-radius:8px; background:linear-gradient(150deg,#F08A1B,#B44E05); display:grid; place-items:center}
+.preview .pv-head .g svg{inline-size:15px; block-size:15px; color:#fff}
+.preview .pv-head b{font-family:"Readex Pro",sans-serif; font-size:13.5px; font-weight:600}
+.preview .pv-band{background:linear-gradient(150deg,var(--amber),var(--amber-2)); color:#fff; padding:15px 16px}
+.preview .pv-band .k{font-size:9.5px; letter-spacing:2px; font-weight:700; opacity:.9}
+.preview .pv-band .h{font-family:"Readex Pro",sans-serif; font-size:16px; font-weight:600; margin-block-start:4px}
+.preview .pv-body{padding:16px; display:flex; flex-direction:column; gap:9px}
+.preview .ln{block-size:8px; border-radius:4px; background:var(--line)}
+.preview .ln.s{inline-size:55%}
+.preview .ln.m{inline-size:82%}
+.preview .pv-box{background:var(--amber-soft); border-inline-start:3px solid var(--amber); border-radius:6px; padding:11px 12px; display:flex; flex-direction:column; gap:7px}
+.preview .pv-box .ln{background:color-mix(in srgb,var(--amber) 32%,transparent)}
+.preview .pv-btn{align-self:flex-start; background:var(--amber); color:#fff; font-size:12px; font-weight:600;
+  padding:9px 20px; border-radius:100px; margin-block-start:4px; font-family:"Readex Pro",sans-serif}
+.preview .pv-foot{background:var(--surface-2); border-block-start:1px solid var(--line); padding:13px 16px;
+  font-size:10.5px; color:var(--ink-3); line-height:1.7; text-align:center}
+.spec{display:flex; flex-direction:column; gap:9px}
+.spec .row{display:flex; gap:13px; align-items:flex-start; padding-block:9px; border-block-end:1px dashed var(--line)}
+.spec .row:last-child{border-block-end:0}
+.spec .row .k{flex:none; inline-size:24px; block-size:24px; border-radius:7px; background:var(--brown,var(--hero-1)); color:#F7EEDF;
+  display:grid; place-items:center; font-family:"Readex Pro",sans-serif; font-size:11px; font-weight:700; margin-block-start:2px;
+  background:var(--hero-1)}
+.spec .row b{display:block; font-family:"Readex Pro",sans-serif; font-size:14.5px; font-weight:600}
+.spec .row p{font-size:13.5px; color:var(--ink-2); line-height:1.65; margin-block-start:2px}
+
+/* code / merge tags */
+code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; direction:ltr; unicode-bidi:embed;
+  background:var(--paper-2); border:1px solid var(--line); border-radius:5px; padding:1px 7px; font-size:13px; color:var(--amber-2);
+  display:inline-block}
+
+/* 90-day plan — a genuine sequence, so it is numbered */
+.plan{display:flex; flex-direction:column; gap:0}
+.step{display:grid; grid-template-columns:74px minmax(0,1fr); gap:18px; padding-block:17px; border-block-end:1px solid var(--line)}
+.step:last-child{border-block-end:0}
+@media (max-width:560px){ .step{grid-template-columns:1fr; gap:8px} }
+.step .wk{font-family:"Readex Pro",sans-serif; font-size:12px; font-weight:700; color:var(--amber-2);
+  letter-spacing:.5px; padding-block-start:3px}
+.step h4{font-size:16px}
+.step ul{margin-block-start:7px; font-size:14px; color:var(--ink-2); line-height:1.7; padding-inline-start:1.15em}
+.step ul li::marker{color:var(--amber)}
+
+/* checklist */
+.check{display:grid; gap:9px; grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.check label{display:flex; gap:10px; align-items:flex-start; background:var(--surface); border:1px solid var(--line);
+  border-radius:var(--r-sm); padding:12px 14px; font-size:14px; line-height:1.6; cursor:pointer}
+.check label:hover{border-color:var(--amber)}
+.check input{accent-color:var(--amber); inline-size:16px; block-size:16px; margin-block-start:3px; flex:none}
+.check input:checked + span{color:var(--ink-3); text-decoration:line-through; text-decoration-color:var(--line)}
+
+/* callout */
+.callout{background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 34%,transparent);
+  border-radius:var(--r); padding:17px 19px; display:flex; gap:13px; align-items:flex-start}
+.callout .ci{flex:none; color:var(--amber-2); margin-block-start:2px}
+.callout .ci svg{inline-size:19px; block-size:19px}
+.callout p{font-size:14.5px; line-height:1.7; color:var(--ink)}
+.callout b{color:var(--ink)}
+
+/* nomination form */
+.form-fields{display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.field{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-sm); padding:12px 14px}
+.field span{display:block; font-size:10.5px; letter-spacing:1.5px; color:var(--ink-3); font-weight:700; margin-block-end:6px}
+.field .box{block-size:2px; background:var(--line); border-radius:2px}
+.field b{display:block; font-size:14px; font-weight:600; color:var(--ink)}
+.field p{font-size:12.5px; color:var(--ink-3); margin-block-start:3px; line-height:1.55}
+
+/* footer */
+.docfoot{border-block-start:1px solid var(--line); background:var(--paper-2); padding-block:30px; margin-block-start:clamp(30px,5vw,52px)}
+.docfoot .inner{display:flex; gap:20px; flex-wrap:wrap; align-items:flex-start; justify-content:space-between}
+.docfoot .who b{font-family:"Readex Pro",sans-serif; font-size:15px; display:block}
+.docfoot .who p{font-size:13px; color:var(--ink-2); margin-block-start:5px; line-height:1.7}
+.docfoot .contact{font-size:13px; color:var(--ink-2); line-height:1.9; text-align:end}
+.docfoot .contact b{color:var(--ink); font-weight:600}
+.docfoot .rev{margin-block-start:20px; padding-block-start:16px; border-block-start:1px dashed var(--line);
+  font-size:12px; color:var(--ink-3); display:flex; gap:18px; flex-wrap:wrap}
+</style>
+</head>
+<body>
+<div class="doc" dir="rtl" lang="ar">
+
+<!-- ═══════════════════════ MASTHEAD ═══════════════════════ -->
+<header class="masthead">
+  <div class="grain" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="brandbar">
+      <span class="mark">
+        <span class="glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 21V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v15"/><path d="M2 21h15"/>
+            <path d="M14 10h3a2 2 0 0 1 2 2v4a1.5 1.5 0 0 0 3 0V9l-2.5-2.5"/><path d="M6 8h5"/>
+          </svg>
+        </span>
+        <span><b>محطات درب</b><span>DARB STATIONS</span></span>
+      </span>
+      <span class="sep"></span>
+      <span class="unit">إدارة الموارد البشرية · الاتصال المؤسسي</span>
+      <button class="toggle" id="themeBtn" type="button" aria-label="تبديل الوضع الفاتح والداكن">◐ الوضع</button>
+    </div>
+
+    <p class="eyebrow">دليل داخلي معتمد</p>
+    <h1>سفير درب<span class="en">DARB AMBASSADOR PROGRAMME</span></h1>
+    <p class="lede">
+      كيف نُفعّل دور الموظف في إيصال صورة إيجابية عن الشركة، وكيف تُشغّل الموارد البشرية
+      محرّك التحفيز عبر البريد الإلكتروني — بقواعد واضحة، وتقويم سنوي، وقوالب جاهزة للإرسال.
+    </p>
+
+    <div class="factbar">
+      <span class="fact"><b>الإصدار</b> <span class="tnum">1.0</span></span>
+      <span class="fact"><b>النطاق</b> جميع المحطات والإدارات</span>
+      <span class="fact"><b>المالك</b> الموارد البشرية</span>
+      <span class="fact"><b>الشريك</b> التسويق والاتصال</span>
+      <span class="fact"><b>المراجعة</b> سنويًا</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════════════ BODY ═══════════════════════ -->
+<div class="wrap">
+<div class="layout">
+
+  <!-- ── content ── -->
+  <main class="col">
+
+    <!-- 1 · لماذا -->
+    <section id="s1">
+      <div class="sec-head">
+        <span class="sec-num">القسم الأول</span>
+        <h2>لماذا الموظف هو الرسالة</h2>
+        <p class="note">
+          العميل في قطاع المحطات لا يزور المقر الرئيسي، ولا يقرأ خطة الشركة الاستراتيجية.
+          هو يرى موظفًا واحدًا لدقيقتين — وذلك الموظف هو «درب» بالنسبة له.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="thesis">
+          <p>صورة درب لا تُبنى في الحملات الإعلانية وحدها. تُبنى في ثلاثين ثانية عند نافذة التعبئة، وفي نبرة الردّ على شكوى، وفي دورة مياه نظيفة عند الثانية فجرًا.</p>
+          <cite>مبدأ الدليل</cite>
+        </div>
+
+        <p class="body">
+          الإعلان يَعِد، والموظف يُثبت. حين تتطابق التجربة مع الوعد تتحول الحملة إلى سمعة؛
+          وحين تختلف عنه تتحول الحملة إلى عبء. لذلك فإن أول استثمار في صورة الشركة ليس المساحة الإعلانية،
+          بل الموظف الواقف خلف الخدمة.
+        </p>
+        <p class="body">
+          وهناك سبب ثانٍ لا يقل أهمية: الرسالة القادمة من موظف تُصدَّق أكثر من الرسالة القادمة من حساب الشركة.
+          موظف يكتب عن يوم عمله بصدق يصل إلى دائرته الاجتماعية بمصداقية لا تشتريها أي ميزانية إعلانية.
+          لكن هذا لا يحدث بالإلزام — يحدث حين يشعر الموظف فعلًا بالفخر.
+        </p>
+
+        <h3 style="font-size:16px; margin-block-start:8px">السلسلة التي يقوم عليها هذا الدليل</h3>
+        <div class="chain">
+          <span class="link"><b>تقدير منتظم</b><span>رسالة تصل في وقتها، باسم الموظف، وبسبب محدد</span></span>
+          <span class="link"><b>فخر وظيفي</b><span>الموظف يشعر أنه مرئي وأن عمله له قيمة</span></span>
+          <span class="link"><b>سلوك واجهة أفضل</b><span>ترحيب، سرعة، نظافة، صبر عند الشكوى</span></span>
+          <span class="link"><b>صورة إيجابية</b><span>انطباع العميل ثم حديثه عنّا ونشره طوعًا</span></span>
+          <span class="link"><b>ولاء وتكرار زيارة</b><span>«الاختيار الأول» تصبح واقعًا لا شعارًا</span></span>
+        </div>
+
+        <div class="callout">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/>
+            </svg>
+          </span>
+          <p>
+            <b>الترتيب مقصود.</b> لا تبدأ بمطالبة الموظفين بالنشر عن الشركة. ابدأ بالحلقة الأولى — التقدير —
+            ودع النشر يأتي نتيجة طبيعية. أي محاولة لقلب الترتيب تُنتج محتوى مُصطنعًا يكشفه الجمهور فورًا.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 2 · المبادئ -->
+    <section id="s2">
+      <div class="sec-head">
+        <span class="sec-num">القسم الثاني</span>
+        <h2>خمسة مبادئ تحكم البرنامج</h2>
+        <p class="note">أي قرار داخل هذا البرنامج — رسالة، تكريم، حملة — يُقاس على هذه الخمسة قبل التنفيذ.</p>
+      </div>
+
+      <div class="sec-body">
+        <div class="card">
+          <div class="principle">
+            <span class="n">١</span>
+            <div>
+              <b>الصدق قبل التلميع</b>
+              <p>لا نطلب من الموظف الترويج لتجربة لا يعيشها. إذا كانت الاستراحة غير مهيأة أو الجدول مرهقًا، فالحل إصلاحه لا تغليفه برسالة تحفيزية. البرنامج يكشف الخلل ولا يخفيه.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <span class="n">٢</span>
+            <div>
+              <b>التقدير في وقته</b>
+              <p>التقدير المتأخر يفقد أكثر من نصف أثره. القاعدة: كل موقف يستحق الشكر تصله رسالة خلال ٤٨ ساعة من وقوعه، لا في نهاية الشهر ولا في حفل سنوي.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <span class="n">٣</span>
+            <div>
+              <b>الاسم قبل الرقم</b>
+              <p>نخاطب الموظف باسمه الأول، ونذكر محطته وموقفه تحديدًا. الرسالة العامة الموجّهة إلى «الزملاء الكرام» لا تُحفّز أحدًا؛ الرسالة التي تقول «يا خالد، في محطة شِهار، يوم الخميس» تُحفّز فعلًا.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <span class="n">٤</span>
+            <div>
+              <b>المشاركة اختيارية والمساحة محمية</b>
+              <p>حساب الموظف الشخصي ملكه. لا نُلزم بالنشر ولا نربطه بالتقييم الوظيفي، ولا نطلب كلمات مرور أو متابعة إجبارية. من يشارك نشكره، ومن لا يشارك لا يُسأل.</p>
+            </div>
+          </div>
+          <div class="principle">
+            <span class="n">٥</span>
+            <div>
+              <b>قناة واحدة موثوقة</b>
+              <p>كل ما يخص الموظف يصل من عنوان واحد معروف. تعدد المرسِلين يُنتج إرباكًا ويفتح الباب للانتحال. عنوان البرنامج المعتمد واحد لا يتغير.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 3 · الأدوار -->
+    <section id="s3">
+      <div class="sec-head">
+        <span class="sec-num">القسم الثالث</span>
+        <h2>من يفعل ماذا</h2>
+        <p class="note">البرنامج يفشل حين يصبح «مبادرة من الموارد البشرية». ينجح حين يكون لكل طرف دور محدد ومطالَب به.</p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="grid-2">
+
+          <article class="role">
+            <div class="top">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
+                </svg>
+              </span>
+              <div><h3>الموظف</h3><span class="who">السفير · نقطة التماس</span></div>
+            </div>
+            <ul>
+              <li>يطبّق ميثاق السفير في كل تعامل مع عميل.</li>
+              <li>يحافظ على مظهر المحطة ونظافتها كأنها ملكه.</li>
+              <li>ينقل شكوى العميل عبر القناة الصحيحة بدل الدفاع أو التجاهل.</li>
+              <li>يشارك في حملات المحتوى الداخلية متى رغب، ضمن الإرشادات.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <div class="top">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3l2.4 5 5.6.8-4 3.9 1 5.6L12 15.6 6.9 18.3l1-5.6-4-3.9 5.6-.8z"/>
+                </svg>
+              </span>
+              <div><h3>المدير المباشر</h3><span class="who">المُلاحِظ · المُرشِّح</span></div>
+            </div>
+            <ul>
+              <li>يرشّح موظفًا واحدًا على الأقل شهريًا عبر نموذج الترشيح.</li>
+              <li>يشكر شفهيًا في الموقع فورًا، ثم يوثّق الترشيح.</li>
+              <li>يصحّح على انفراد ويشكر أمام الفريق — لا العكس.</li>
+              <li>يمرّر ملاحظات الميدان للموارد البشرية شهريًا.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <div class="top">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>
+                </svg>
+              </span>
+              <div><h3>الموارد البشرية</h3><span class="who">محرّك التحفيز · مالك البرنامج</span></div>
+            </div>
+            <ul>
+              <li>تملك تقويم الرسائل السنوي وتلتزم بمواعيده.</li>
+              <li>تكتب وترسل وتؤرشف كل رسائل البرنامج.</li>
+              <li>تدير نموذج الترشيح وتغلق الحلقة خلال ٤٨ ساعة.</li>
+              <li>تقيس المؤشرات وترفع تقريرًا ربعيًا للإدارة.</li>
+            </ul>
+          </article>
+
+          <article class="role">
+            <div class="top">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6L7 10H4a1 1 0 0 0-1 1z"/><path d="M17.5 9a4 4 0 0 1 0 6"/>
+                </svg>
+              </span>
+              <div><h3>التسويق والاتصال</h3><span class="who">حارس الهوية · مزوّد المحتوى</span></div>
+            </div>
+            <ul>
+              <li>يوفّر القالب البصري والصور والشعارات المعتمدة.</li>
+              <li>يراجع أي محتوى قبل النشر على قنوات الشركة.</li>
+              <li>يعيد نشر مساهمات الموظفين المميزة رسميًا.</li>
+              <li>يحدّث إرشادات وسائل التواصل عند أي تغيّر.</li>
+            </ul>
+          </article>
+
+        </div>
+
+        <div class="tablewrap" style="margin-block-start:16px">
+          <table>
+            <caption class="visually-hidden" style="position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip:rect(0 0 0 0)">مصفوفة المسؤوليات</caption>
+            <thead>
+              <tr><th>النشاط</th><th>المسؤول عن التنفيذ</th><th>المعتمِد</th><th>الدورية</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>رسالة الشكر الفوري</td><td>الموارد البشرية</td><td>مدير الموارد البشرية</td><td>عند الحدث · خلال ٤٨ ساعة</td></tr>
+              <tr><td>ترشيح نجم الشهر</td><td>المدير المباشر</td><td>لجنة التقدير</td><td>شهريًا · قبل يوم ٢٥</td></tr>
+              <tr><td>النشرة الداخلية</td><td>الموارد البشرية + التسويق</td><td>مدير الموارد البشرية</td><td>شهريًا · أول أحد</td></tr>
+              <tr><td>رسالة القيادة</td><td>مكتب الرئيس التنفيذي</td><td>الرئيس التنفيذي</td><td>ربعيًا</td></tr>
+              <tr><td>حملة محتوى الموظفين</td><td>التسويق والاتصال</td><td>مدير التسويق</td><td>ربعيًا</td></tr>
+              <tr><td>تقرير المؤشرات</td><td>الموارد البشرية</td><td>الإدارة التنفيذية</td><td>ربعيًا</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 4 · لحظات الحقيقة -->
+    <section id="s4">
+      <div class="sec-head">
+        <span class="sec-num">القسم الرابع</span>
+        <h2>لحظات الحقيقة في المحطة</h2>
+        <p class="note">
+          خمس لحظات تتشكّل فيها الصورة كاملة. كل لحظة أقصر من دقيقتين، وكل واحدة منها قابلة للتدريب والقياس.
+        </p>
+      </div>
+
+      <div class="sec-body wide" style="gap:12px">
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--amber)"></span><span class="t">الوصول والاستقبال</span><span class="sec-time">أول ١٥ ثانية</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>الالتفات نحو السيارة، تحية واضحة، والإشارة إلى المضخة الفارغة قبل أن يسأل العميل. الوقوف مستعدًا لا الجلوس.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>الانشغال بالجوال، تجاهل العميل حتى ينادي، تحية بلا نظر، أو انتظاره ليخمّن أين يقف.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--amber)"></span><span class="t">أثناء الخدمة</span><span class="sec-time">٦٠–٩٠ ثانية</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>تأكيد نوع الوقود والمبلغ بصوت مسموع، إغلاق الفوهة بعناية، وذِكر الخدمات المتاحة مرة واحدة بلا إلحاح.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>التعبئة قبل التأكيد، الحديث الجانبي مع الزملاء أثناء الخدمة، أو الإلحاح في عرض إضافي بعد رفض العميل.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--amber)"></span><span class="t">المرافق والنظافة</span><span class="sec-time">طوال الوردية</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>جولة تفقّد كل ساعتين، توقيع سجل النظافة، وإبلاغ فوري عن أي عطل. دورة المياه هي أكثر ما يُحكى عنه بعد الزيارة.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>تأجيل التنظيف لآخر الوردية، أو اعتبار المرافق «مسؤولية غيري»، أو ترك لافتة عطل بلا تاريخ.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--amber)"></span><span class="t">الشكوى والاعتراض</span><span class="sec-time">أخطر لحظة</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>الاستماع دون مقاطعة، الاعتذار عن الأثر لا عن الذنب، حلّ ما يمكن حلّه فورًا، وتصعيد الباقي مع رقم متابعة يُعطى للعميل.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>الجدال، تحميل الإدارة المسؤولية أمام العميل، أو الرد «هذا مو شغلي». شكوى تُدار جيدًا تصنع عميلًا أوفى من قبلها.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--amber)"></span><span class="t">الوداع</span><span class="sec-time">آخر ٥ ثوانٍ</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>تسليم الإيصال باليد مع كلمة وداع ودعوة صادقة للعودة. آخر انطباع هو ما يبقى في ذاكرة العميل.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>الانصراف قبل أن تتحرك السيارة، أو رمي الإيصال، أو الصمت التام عند المغادرة.</p></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 5 · الميثاق -->
+    <section id="s5">
+      <div class="sec-head">
+        <span class="sec-num">القسم الخامس</span>
+        <h2>ميثاق سفير درب</h2>
+        <p class="note">
+          يُوقَّع مع عقد العمل ويُعلَّق في استراحة كل محطة. ثمانية التزامات مكتوبة بلغة الموظف لا بلغة اللوائح.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="charter">
+          <ol>
+            <li>أُعامل كل عميل كما أُحب أن يُعامَل أحد أهلي في محطة بعيدة عن بيته.</li>
+            <li>أُبادر بالتحية قبل أن يبادرني، وأنظر في عينيه حين أتحدث إليه.</li>
+            <li>المحطة التي أعمل فيها واجهتي أنا، فلا أمرّ بجانب ما يُفسد منظرها.</li>
+            <li>لا أجادل عميلًا غاضبًا؛ أستمع أولًا، ثم أحلّ أو أُصعّد.</li>
+            <li>أحترم سلامتي وسلامة من حولي، فلا صورة تستحق مخالفة إجراء سلامة.</li>
+            <li>ما أراه من بيانات أو مواقف داخل العمل لا يُنشر خارجه.</li>
+            <li>حين أتحدث عن درب في حسابي الشخصي أتحدث بصدق وباسمي، لا نيابة عن الشركة.</li>
+            <li>إن رأيت خللًا أبلغت عنه، وإن رأيت زميلًا مميزًا رشّحته.</li>
+          </ol>
+          <div class="sign">
+            <span>الاسم: <i></i></span>
+            <span>المحطة / الإدارة: <i></i></span>
+            <span>التاريخ: <i></i></span>
+            <span>التوقيع: <i></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 6 · وسائل التواصل -->
+    <section id="s6">
+      <div class="sec-head">
+        <span class="sec-num">القسم السادس</span>
+        <h2>الموظف على وسائل التواصل</h2>
+        <p class="note">
+          الهدف من هذه الإرشادات حماية الموظف أولًا، ثم حماية سمعة الشركة. المشاركة اختيارية دائمًا،
+          والالتزام بحدود السلامة والخصوصية إلزامي دائمًا.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="dodont">
+          <div class="dd yes">
+            <h3><span class="dotm"></span>افعل</h3>
+            <ul>
+              <li>انشر عن تجربتك أنت: يوم عمل، إنجاز فريق، تدريب حضرته.</li>
+              <li>اذكر أنك تعمل في درب في نبذة حسابك المهني — هذا يكفي.</li>
+              <li>استخدم الوسم الموحّد <code>#درب_الاختيار_الأول</code> ليصل المحتوى للتسويق.</li>
+              <li>صوّر من زاوية آمنة وبعيدًا عن مناطق التعبئة والمواد الخطرة.</li>
+              <li>استخدم الصور والشعارات المعتمدة من التسويق فقط.</li>
+              <li>إن سُئلت سؤالًا رسميًا، أحِل السائل إلى القنوات الرسمية للشركة.</li>
+            </ul>
+          </div>
+          <div class="dd no">
+            <h3><span class="dotm"></span>تجنّب</h3>
+            <ul>
+              <li>تصوير العملاء أو مركباتهم أو لوحاتها دون إذن صريح.</li>
+              <li>نشر أرقام مبيعات أو عقود أو مراسلات داخلية أو صور مستندات.</li>
+              <li>الحديث باسم الشركة أو الرد على أزمة نيابة عنها.</li>
+              <li>الدخول في جدال مع منتقد أو منافس من حسابك الشخصي.</li>
+              <li>التصوير أثناء أداء مهمة تتطلب تركيزًا أو داخل نطاق السلامة.</li>
+              <li>نشر محتوى يخالف الأنظمة أو يمسّ فردًا أو جهة بالإساءة.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-block-start:14px">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7.5 3.4v5.1c0 4.4-3.1 8.2-7.5 9.5-4.4-1.3-7.5-5.1-7.5-9.5V6.4z"/><path d="M9.4 12.2l1.9 1.9 3.5-3.7"/>
+            </svg>
+          </span>
+          <p>
+            <b>قاعدة الحماية:</b> إذا ترددت في نشر شيء، أرسله أولًا إلى
+            <code>DarbHR@Darbstations.com.sa</code> — الرد خلال يوم عمل واحد.
+            التردد نفسه إشارة كافية للسؤال قبل النشر.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 7 · برنامج البريد -->
+    <section id="s7">
+      <div class="sec-head">
+        <span class="sec-num">القسم السابع</span>
+        <h2>محرّك التحفيز: البريد الإلكتروني</h2>
+        <p class="note">
+          أرخص أدوات التحفيز وأكثرها استمرارية، وأسرعها فقدانًا للأثر عند إساءة استخدامها.
+          هذه القواعد تفصل بين رسالة تُحفّز ورسالة تُحذف قبل قراءتها.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+
+        <h3 style="font-size:17px">القواعد السبع للإرسال</h3>
+        <div class="rules">
+          <div class="rule"><b>رسالة واحدة لهدف واحد</b><p>لا تجمع تكريمًا مع تعميم إداري مع تذكير بالحضور. دمج الأهداف يقتل الأثر العاطفي للتكريم.</p></div>
+          <div class="rule"><b>العنوان يقول الخبر</b><p>٥٥ حرفًا كحد أقصى، بلا غموض وبلا مبالغة. «شكرًا خالد — موقفك أمس في شِهار» أقوى من «رسالة تقدير».</p></div>
+          <div class="rule"><b>أول سطرين يحملان الجوهر</b><p>الكثير يقرأ من إشعار الجوال فقط. ضع السبب في أول سطرين، والتفاصيل بعدهما.</p></div>
+          <div class="rule"><b>الاسم في السطر الأول</b><p>الاسم الأول لا اللقب الوظيفي، ولا «الزميل العزيز». الشخصنة هي الفرق بين رسالة ونشرة.</p></div>
+          <div class="rule"><b>سبب محدد لا مجاملة عامة</b><p>«ساعدت عميلًا تعطلت سيارته بعد نهاية ورديتك» — لا «لجهودك المبذولة».</p></div>
+          <div class="rule"><b>زر واحد فقط</b><p>إجراء واحد واضح لكل رسالة. أزرار متعددة تعني صفر نقرات.</p></div>
+          <div class="rule"><b>وقت الإرسال مقصود</b><p>الأحد–الخميس، ٨:٣٠–٩:٣٠ صباحًا. لا إرسال في الإجازات ولا بعد الدوام إلا للتهاني.</p></div>
+        </div>
+
+        <div class="callout">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+            </svg>
+          </span>
+          <p>
+            <b>سقف الإرهاق:</b> بحد أقصى ٤ رسائل داخلية أسبوعيًا لكل موظف من كل الإدارات مجتمعة.
+            تتولى الموارد البشرية ضبط هذا السقف؛ ما يتجاوزه يؤجَّل للأسبوع التالي.
+          </p>
+        </div>
+
+        <h3 style="font-size:17px; margin-block-start:6px">نبرة الصوت: قُل هذا لا ذاك</h3>
+        <div class="tone">
+          <div class="tone-row">
+            <div class="tone-cell bad"><span class="tag">لا تكتب</span><span class="txt">تتقدم إدارة الموارد البشرية بخالص الشكر والتقدير لجهودكم المبذولة.</span></div>
+            <div class="tone-cell good"><span class="tag">اكتب</span><span class="txt">يا خالد، وصلَنا ما فعلته أمس — وقفت مع عميل تعطلت سيارته بعد نهاية ورديتك بنصف ساعة. شكرًا.</span></div>
+          </div>
+          <div class="tone-row">
+            <div class="tone-cell bad"><span class="tag">لا تكتب</span><span class="txt">نأمل منكم الالتزام بحضور الدورة التدريبية المقررة.</span></div>
+            <div class="tone-cell good"><span class="tag">اكتب</span><span class="txt">حجزنا لك مقعدًا في ورشة «التعامل مع العميل الغاضب» — ساعتان، الأربعاء ١٠ص. تحتاج تغيير الموعد؟ ردّ على هذي الرسالة.</span></div>
+          </div>
+          <div class="tone-row">
+            <div class="tone-cell bad"><span class="tag">لا تكتب</span><span class="txt">يُرجى العلم بأنه تم اعتماد الموظف المثالي لشهر…</span></div>
+            <div class="tone-cell good"><span class="tag">اكتب</span><span class="txt">نجم درب هذا الشهر: منصور الحارثي — محطة شِهار. السبب في الرسالة، ويستاهل.</span></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 8 · التقويم -->
+    <section id="s8">
+      <div class="sec-head">
+        <span class="sec-num">القسم الثامن</span>
+        <h2>تقويم الرسائل السنوي</h2>
+        <p class="note">
+          خطة ثابتة تُبنى مرة وتُشغَّل سنويًا، مع مسار مستمر لا يرتبط بشهر معيّن.
+          المواعيد الدينية تُضبط على التقويم الهجري كل عام.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>الشهر</th><th>المناسبة</th><th>نوع الرسالة</th><th>المُرسِل</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>يناير</td><td>انطلاقة العام وأهدافه</td><td><span class="pill lead">رسالة قيادة</span></td><td>الرئيس التنفيذي</td></tr>
+              <tr><td>فبراير</td><td>يوم التأسيس · ٢٢ فبراير</td><td><span class="pill news">اعتزاز وانتماء</span></td><td>الاتصال المؤسسي</td></tr>
+              <tr><td>مارس</td><td>رمضان · جداول مرنة</td><td><span class="pill care">رعاية</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>أبريل</td><td>عيد الفطر + نتائج الربع الأول</td><td><span class="pill care">تهنئة</span> <span class="pill rec">تكريم</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>مايو</td><td>شهر السلامة</td><td><span class="pill news">توعية محفّزة</span></td><td>السلامة + الموارد البشرية</td></tr>
+              <tr><td>يونيو</td><td>استعداد موسم الصيف</td><td><span class="pill lead">تعبئة وتحفيز</span></td><td>العمليات</td></tr>
+              <tr><td>يوليو</td><td>ذروة الموسم</td><td><span class="pill rec">تقدير أسبوعي مكثّف</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>أغسطس</td><td>عيد الأضحى + منتصف الموسم</td><td><span class="pill care">تهنئة</span> <span class="pill rec">شكر</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>سبتمبر</td><td>اليوم الوطني · ٢٣ سبتمبر</td><td><span class="pill news">فخر وطني</span></td><td>الاتصال المؤسسي</td></tr>
+              <tr><td>أكتوبر</td><td>موسم التطوير والمهارات</td><td><span class="pill news">دعوة تدريب</span></td><td>التدريب</td></tr>
+              <tr><td>نوفمبر</td><td>صوتك يهمّنا · استبيان الرضا</td><td><span class="pill care">دعوة مشاركة</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>ديسمبر</td><td>حصاد العام + سفير العام</td><td><span class="pill rec">تكريم ختامي</span></td><td>الرئيس التنفيذي</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:18px">المسار المستمر — لا يرتبط بشهر</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>الرسالة</th><th>المُشغِّل</th><th>الدورية</th><th>المهلة القصوى</th></tr></thead>
+            <tbody>
+              <tr><td>ترحيب بموظف جديد</td><td>مباشرة العمل</td><td>لكل موظف</td><td>اليوم الأول</td></tr>
+              <tr><td>شكر فوري</td><td>ترشيح من مدير أو إشادة عميل</td><td>عند الحدث</td><td>٤٨ ساعة</td></tr>
+              <tr><td>نجم الشهر</td><td>قرار لجنة التقدير</td><td>شهريًا</td><td>أول ٣ أيام من الشهر</td></tr>
+              <tr><td>ذكرى الانضمام</td><td>تاريخ المباشرة</td><td>سنويًا</td><td>في اليوم نفسه</td></tr>
+              <tr><td>النشرة الداخلية «من الطريق»</td><td>مجدولة</td><td>شهريًا</td><td>أول أحد من الشهر</td></tr>
+              <tr><td>دعوة حملة محتوى</td><td>إطلاق حملة</td><td>ربعيًا</td><td>قبل أسبوع من الحملة</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 9 · القوالب النصية -->
+    <section id="s9">
+      <div class="sec-head">
+        <span class="sec-num">القسم التاسع</span>
+        <h2>القوالب الجاهزة للإرسال</h2>
+        <p class="note">
+          ثمانية قوالب مكتوبة بالكامل. انسخ النص، بدّل الحقول بين
+          <code>{{ }}</code>، وأدرجه داخل القالب البصري في القسم العاشر.
+        </p>
+      </div>
+
+      <div class="sec-body wide" style="gap:14px">
+
+        <!-- T1 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-01</span><h3>ترحيب بموظف جديد</h3><span class="when">اليوم الأول · ٨:٣٠ ص</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>أهلًا {{FIRST_NAME}} — أول يوم لك في درب</b></div>
+            <div><span>نص المعاينة</span><b>محطتك، مديرك، ومن تتواصل معه لأي شيء.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">أهلًا {{FIRST_NAME}}،
+
+من اليوم أنت جزء من درب، وتحديدًا في {{STATION}} مع فريق {{MANAGER_NAME}}.
+
+قبل أي شيء: نحن لا نستقبلك كموظف رقم كذا. أنت من هنا فصاعدًا الوجه الذي يراه عميلنا. ما تقوله وتفعله في دقيقتين عند المضخة هو انطباع الناس عن الشركة كلها — وهذي مسؤولية نثق أنك أهل لها.
+
+ثلاثة أشياء تحتاجها اليوم:
+• مديرك المباشر {{MANAGER_NAME}} — {{MANAGER_PHONE}}
+• ميثاق سفير درب المرفق — اقرأه ووقّعه مع {{MANAGER_NAME}}
+• لأي استفسار في أي وقت: DarbHR@Darbstations.com.sa
+
+خلال أسبوعين بنسألك عن انطباعك الأول، وبنسمع منك بصدق.
+
+أهلًا بك،
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">مرفق: ميثاق سفير درب (PDF) · الزر: «اقرأ دليل السفير»</span>
+            <button class="copy" type="button" data-copy="t1">نسخ النص</button></div>
+        </article>
+
+        <!-- T2 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-02</span><h3>شكر فوري على موقف</h3><span class="when">خلال ٤٨ ساعة من الحدث</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>شكرًا {{FIRST_NAME}} — موقفك {{DAY}} في {{STATION}}</b></div>
+            <div><span>نص المعاينة</span><b>وصلَنا الخبر، ووصل للإدارة أيضًا.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+وصلَنا ما حصل {{DAY}} في {{STATION}}:
+{{INCIDENT_ONE_LINE}}
+
+ما كان مطلوبًا منك نظاميًا، وسويته. هذا بالضبط الفرق بين موظف يؤدي مهمة وسفير يمثّل شركة.
+
+الخبر وصل لـ{{MANAGER_NAME}} وللإدارة، وانضاف لملفك المهني.
+
+شكرًا، ونعتز فيك.
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">لا تُرسل هذه الرسالة جماعيًا · نسخة للمدير المباشر · الزر: لا يلزم</span>
+            <button class="copy" type="button" data-copy="t2">نسخ النص</button></div>
+        </article>
+
+        <!-- T3 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-03</span><h3>نجم درب لهذا الشهر</h3><span class="when">أول ٣ أيام من الشهر</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>نجم درب لشهر {{MONTH}}: {{STAR_NAME}}</b></div>
+            <div><span>نص المعاينة</span><b>السبب كامل داخل الرسالة — ويستاهل.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">زملاء درب،
+
+نجم هذا الشهر: {{STAR_NAME}} — {{STAR_ROLE}}، {{STATION}}.
+
+اختير لسبب محدد لا لمجاملة:
+{{REASON_BULLET_1}}
+{{REASON_BULLET_2}}
+{{REASON_BULLET_3}}
+
+{{STAR_FIRST_NAME}}، مبروك. التكريم: {{REWARD}}، وصورتك بتكون على لوحة الشرف في {{STATION}} هذا الشهر.
+
+ولبقية الزملاء: الترشيح مفتوح دائمًا. إذا شفت زميلًا يستاهل، رشّحه عبر النموذج — دقيقة وحدة تكفي.
+
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">الزر: «رشّح زميلًا للشهر القادم» · تُرسل لكل الموظفين</span>
+            <button class="copy" type="button" data-copy="t3">نسخ النص</button></div>
+        </article>
+
+        <!-- T4 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-04</span><h3>ذكرى الانضمام</h3><span class="when">في تاريخ المباشرة سنويًا</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>{{YEARS}} سنوات معنا، {{FIRST_NAME}}</b></div>
+            <div><span>نص المعاينة</span><b>شكرًا على كل يوم منها.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+في مثل هذا اليوم قبل {{YEARS}} سنوات باشرت العمل معنا في {{FIRST_STATION}}.
+
+منذ ذلك اليوم:
+• خدمت في {{STATIONS_COUNT}} من محطاتنا
+• حضرت {{TRAINING_COUNT}} برنامجًا تدريبيًا
+• وصلَك {{RECOGNITION_COUNT}} تقديرًا موثقًا
+
+الأرقام تختصر، لكن اللي ما تختصره هو أن الفريق تعوّد عليك، وأن عملاءنا في {{STATION}} صاروا يعرفونك بالاسم.
+
+شكرًا على {{YEARS}} سنوات، ونتطلع للقادم.
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">تُملأ الأرقام من نظام الموارد البشرية · لا تُرسل إن كانت البيانات ناقصة</span>
+            <button class="copy" type="button" data-copy="t4">نسخ النص</button></div>
+        </article>
+
+        <!-- T5 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-05</span><h3>دعوة لحملة محتوى الموظفين</h3><span class="when">قبل أسبوع من الحملة</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>شارِك يومك في درب — المشاركة اختيارية</b></div>
+            <div><span>نص المعاينة</span><b>صورة أو سطرين، وأنت صاحب القرار.</b></div>
+            <div><span>المُرسِل</span><b>التسويق والاتصال · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+بنطلق حملة «{{CAMPAIGN_NAME}}» يوم {{DATE}}، وحبينا نبدأ منكم أنتم.
+
+الفكرة بسيطة: صورة أو سطرين عن يوم عملك في {{STATION}} — لحظة خدمة، زاوية تحبها في المحطة، أو موقف تتذكره.
+
+قبل ما تشارك، ثلاث نقاط مهمة:
+• المشاركة اختيارية تمامًا وما لها أي علاقة بتقييمك الوظيفي
+• لا تصوّر عميلًا أو لوحة سيارة دون إذنه
+• ابتعد عن مناطق التعبئة والسلامة أثناء التصوير
+
+طريقتان للمشاركة: أرسلها على {{SUBMIT_EMAIL}}، أو انشرها بحسابك مع وسم #درب_الاختيار_الأول.
+
+أفضل المشاركات بننشرها على حسابات درب الرسمية باسم صاحبها، وبنكرّم ثلاثة منها.
+
+التسويق والاتصال المؤسسي — محطات درب</div>
+          <div class="mfoot"><span class="hint">الزر: «أرسل مشاركتك» · تُراجع كل مشاركة قبل النشر</span>
+            <button class="copy" type="button" data-copy="t5">نسخ النص</button></div>
+        </article>
+
+        <!-- T6 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-06</span><h3>النشرة الداخلية «من الطريق»</h3><span class="when">أول أحد من كل شهر</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>من الطريق · {{MONTH}}: {{HEADLINE}}</b></div>
+            <div><span>نص المعاينة</span><b>نجم الشهر، ما تغيّر، وما ينتظرنا.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">زملاء درب،
+
+هذي أخبار {{MONTH}} في خمس دقائق قراءة أو أقل.
+
+■ نجم الشهر
+{{STAR_NAME}} — {{STATION}}. السبب: {{STAR_REASON}}
+
+■ ما أنجزناه
+{{ACHIEVEMENT_1}}
+{{ACHIEVEMENT_2}}
+
+■ وجوه جديدة
+انضم لنا هذا الشهر: {{NEW_JOINERS}}
+
+■ ما نحتاجه منكم
+{{ASK_OF_THE_MONTH}}
+
+■ سؤال الشهر
+{{QUESTION}} — ردّ على هذي الرسالة، والإجابات تُنشر في العدد القادم بلا أسماء إذا رغبت.
+
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">أقسام ثابتة كل شهر · الزر: «شارك خبرًا من محطتك»</span>
+            <button class="copy" type="button" data-copy="t6">نسخ النص</button></div>
+        </article>
+
+        <!-- T7 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-07</span><h3>دعوة تدريب</h3><span class="when">قبل ٥ أيام عمل</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>حجزنا لك مقعدًا: {{COURSE_NAME}}</b></div>
+            <div><span>نص المعاينة</span><b>{{DURATION}} · {{DATE}} · {{LOCATION}}</b></div>
+            <div><span>المُرسِل</span><b>التدريب والتطوير · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+حجزنا لك مقعدًا في «{{COURSE_NAME}}».
+
+• المدة: {{DURATION}}
+• الموعد: {{DATE}} — {{TIME}}
+• المكان: {{LOCATION}}
+• المدرّب: {{TRAINER}}
+
+ليش أنت تحديدًا؟ {{WHY_YOU}}
+
+بعد الورشة بتقدر: {{OUTCOME_1}}، و{{OUTCOME_2}}.
+
+الموعد ما يناسبك؟ ردّ على هذي الرسالة وبندوّر لك موعدًا ثانيًا — بدون أي إجراء إداري.
+
+التدريب والتطوير — محطات درب</div>
+          <div class="mfoot"><span class="hint">الزر: «أكّد حضورك» · تُرسل نسخة للمدير المباشر لترتيب الوردية</span>
+            <button class="copy" type="button" data-copy="t7">نسخ النص</button></div>
+        </article>
+
+        <!-- T8 -->
+        <article class="mail">
+          <div class="mtop"><span class="code">T-08</span><h3>تهنئة مناسبة وطنية أو دينية</h3><span class="when">صباح المناسبة</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>{{OCCASION}} — من درب إلى بيتك</b></div>
+            <div><span>نص المعاينة</span><b>وشكرًا لمن يقف في المحطات هذي الأيام.</b></div>
+            <div><span>المُرسِل</span><b>الرئيس التنفيذي · درب</b></div>
+          </div>
+          <div class="mbodytxt">زملاء درب،
+
+{{OCCASION_GREETING}}
+
+وفي هذي المناسبة تحديدًا نتذكر أن الطرق ما تهدأ حين يرتاح الناس — بل تزدحم. وأن هناك من زملائنا من يقف في ورديته اليوم بينما غيره مع أهله.
+
+لكم أنتم تحديدًا: شكرًا. المحطة المفتوحة في يوم مثل هذا هي أصدق ما تقوله الشركة عن نفسها.
+
+كل عام وأنتم وعوائلكم بخير.
+
+{{CEO_NAME}}
+الرئيس التنفيذي — محطات درب</div>
+          <div class="mfoot"><span class="hint">تُضبط المناسبات الدينية على التقويم الهجري سنويًا · الزر: لا يلزم</span>
+            <button class="copy" type="button" data-copy="t8">نسخ النص</button></div>
+        </article>
+
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 10 · القالب البصري -->
+    <section id="s10">
+      <div class="sec-head">
+        <span class="sec-num">القسم العاشر</span>
+        <h2>القالب البصري للإيميل</h2>
+        <p class="note">
+          قالب واحد موحّد بهوية درب، مبني بجداول HTML ليعمل في Outlook وGmail وتطبيقات الجوال،
+          ويدعم العربية من اليمين لليسار والوضع الداكن.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="anatomy">
+
+          <div class="preview" aria-label="معاينة القالب البصري">
+            <div class="pv-head">
+              <span class="g" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 21V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v15"/><path d="M2 21h15"/>
+                  <path d="M14 10h3a2 2 0 0 1 2 2v4a1.5 1.5 0 0 0 3 0V9l-2.5-2.5"/>
+                </svg>
+              </span>
+              <b>محطات درب</b>
+            </div>
+            <div class="pv-band">
+              <div class="k">تقدير</div>
+              <div class="h">شكرًا خالد</div>
+            </div>
+            <div class="pv-body">
+              <span class="ln m"></span><span class="ln"></span><span class="ln s"></span>
+              <div class="pv-box"><span class="ln m"></span><span class="ln s"></span></div>
+              <span class="ln"></span><span class="ln s"></span>
+              <span class="pv-btn">اقرأ التفاصيل</span>
+            </div>
+            <div class="pv-foot">محطات درب · الاختيار الأول<br>DarbHR@Darbstations.com.sa · 920 005804</div>
+          </div>
+
+          <div class="spec">
+            <div class="row"><span class="k">١</span><div><b>الترويسة</b><p>شعار درب على خلفية بُنية داكنة (<code>#2E1D12</code>). ثابتة في كل الرسائل ولا تتغير — هي ما يجعل الرسالة تُعرَف قبل قراءتها.</p></div></div>
+            <div class="row"><span class="k">٢</span><div><b>شريط النوع</b><p>خلفية كهرمانية (<code>#E8760C</code>) تحمل تصنيف الرسالة والعنوان الرئيسي. اللون يتغير بحسب النوع: كهرماني للتقدير، أخضر للأخبار، بُني للقيادة.</p></div></div>
+            <div class="row"><span class="k">٣</span><div><b>المتن</b><p>عرض ٦٠٠ بكسل، محاذاة يمين، حجم ١٦ بكسل وارتفاع سطر ١٫٨. لا يزيد عن ٢٠٠ كلمة في رسائل التقدير.</p></div></div>
+            <div class="row"><span class="k">٤</span><div><b>صندوق الإبراز</b><p>خلفية <code>#FBE3C6</code> بحد كهرماني على الجانب. يُستخدم لسبب التكريم أو لتفاصيل الموعد — عنصر واحد فقط في الرسالة.</p></div></div>
+            <div class="row"><span class="k">٥</span><div><b>الزر</b><p>زر واحد مبني بجدول (bulletproof) ليظهر في Outlook. نص الزر فعل واضح: «أكّد حضورك» لا «اضغط هنا».</p></div></div>
+            <div class="row"><span class="k">٦</span><div><b>التذييل</b><p>اسم الشركة، الشعار النصي «الاختيار الأول»، بريد الموارد البشرية ورقم التواصل، وسطر يوضح سبب وصول الرسالة.</p></div></div>
+          </div>
+
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:22px">حقول الدمج المعتمدة</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>الحقل</th><th>المعنى</th><th>مثال</th></tr></thead>
+            <tbody>
+              <tr><td><code>{{FIRST_NAME}}</code></td><td>الاسم الأول للموظف</td><td>خالد</td></tr>
+              <tr><td><code>{{FULL_NAME}}</code></td><td>الاسم الكامل</td><td>خالد بن سعد الحارثي</td></tr>
+              <tr><td><code>{{STATION}}</code></td><td>المحطة أو الإدارة</td><td>محطة شِهار — الطائف</td></tr>
+              <tr><td><code>{{MANAGER_NAME}}</code></td><td>اسم المدير المباشر</td><td>منصور العتيبي</td></tr>
+              <tr><td><code>{{MONTH}}</code></td><td>الشهر الميلادي</td><td>سبتمبر</td></tr>
+              <tr><td><code>{{YEARS}}</code></td><td>سنوات الخدمة</td><td>٣</td></tr>
+              <tr><td><code>{{CTA_URL}}</code></td><td>رابط الزر</td><td>رابط النموذج أو الدليل</td></tr>
+              <tr><td><code>{{CTA_LABEL}}</code></td><td>نص الزر</td><td>رشّح زميلًا</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-block-start:16px">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h11l5 5v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v6h6"/>
+            </svg>
+          </span>
+          <p>
+            <b>ملفات القالب</b> موجودة في مجلد <code>email-templates/</code> بجانب هذا الدليل:
+            <code>00-master-template.html</code> هو الأساس، وبقية الملفات نسخ جاهزة لكل نوع رسالة.
+            افتح الملف في المتصفح للمعاينة، وانسخ الكود كاملًا في محرر الرسائل لدى الموارد البشرية.
+          </p>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:16px">قائمة التحقق قبل الإرسال</h3>
+        <div class="check">
+          <label><input type="checkbox"><span>الاسم الأول صحيح في السطر الأول ولا يوجد حقل دمج غير مستبدل</span></label>
+          <label><input type="checkbox"><span>العنوان أقل من ٥٥ حرفًا ويقول الخبر مباشرة</span></label>
+          <label><input type="checkbox"><span>نص المعاينة مكتوب ولا يبدأ بـ«إذا لم تظهر الرسالة»</span></label>
+          <label><input type="checkbox"><span>زر واحد فقط ورابطه يعمل</span></label>
+          <label><input type="checkbox"><span>اختُبرت الرسالة على Outlook وGmail وجوال</span></label>
+          <label><input type="checkbox"><span>قائمة المستلمين صحيحة ولا تحتوي على من غادر الشركة</span></label>
+          <label><input type="checkbox"><span>الإرسال في الأحد–الخميس بين ٨:٣٠ و٩:٣٠ صباحًا</span></label>
+          <label><input type="checkbox"><span>سقف الأربع رسائل الأسبوعي لم يُتجاوز</span></label>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 11 · المؤشرات -->
+    <section id="s11">
+      <div class="sec-head">
+        <span class="sec-num">القسم الحادي عشر</span>
+        <h2>كيف نعرف أن البرنامج يعمل</h2>
+        <p class="note">
+          المستهدفات أدناه نقطة انطلاق تُراجَع بعد الربع الأول على ضوء أرقام درب الفعلية،
+          لا أرقامًا نهائية. المهم أن يُقاس كل مؤشر من مصدر واحد ثابت.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>المؤشر</th><th>مصدر القياس</th><th>مستهدف مقترح</th><th>الدورية</th></tr></thead>
+            <tbody>
+              <tr><td>نسبة فتح الرسائل</td><td>نظام البريد</td><td class="tnum">٥٥٪ فأعلى</td><td>شهريًا</td></tr>
+              <tr><td>نسبة النقر على الزر</td><td>نظام البريد</td><td class="tnum">١٢٪ فأعلى</td><td>شهريًا</td></tr>
+              <tr><td>ترشيحات التقدير</td><td>نموذج الترشيح</td><td>ترشيح واحد على الأقل من كل محطة</td><td>شهريًا</td></tr>
+              <tr><td>زمن إغلاق حلقة التقدير</td><td>سجل الموارد البشرية</td><td class="tnum">٤٨ ساعة كحد أقصى</td><td>مستمر</td></tr>
+              <tr><td>مشاركة الموظفين في الحملات</td><td>صندوق المشاركات</td><td class="tnum">٢٠٪ من الموظفين</td><td>ربعيًا</td></tr>
+              <tr><td>رضا الموظفين eNPS</td><td>استبيان داخلي</td><td>تحسّن عن القياس السابق</td><td>نصف سنوي</td></tr>
+              <tr><td>تقييم العميل للمحطة</td><td>قنوات التقييم المتاحة</td><td>اتجاه صاعد ربعًا بعد ربع</td><td>ربعيًا</td></tr>
+              <tr><td>دوران الموظفين</td><td>الموارد البشرية</td><td>انخفاض مقارنة بالعام السابق</td><td>سنويًا</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/>
+            </svg>
+          </span>
+          <p>
+            <b>المؤشر الحقيقي ليس نسبة الفتح.</b> نسبة الفتح تقيس جودة العنوان فقط.
+            المؤشر الذي يستحق المتابعة الشهرية هو عدد الترشيحات القادمة من المدراء — لأنه يقيس
+            ما إذا كان البرنامج انتقل من الموارد البشرية إلى الميدان فعلًا.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 12 · خطة الإطلاق -->
+    <section id="s12">
+      <div class="sec-head">
+        <span class="sec-num">القسم الثاني عشر</span>
+        <h2>خطة الإطلاق في ٩٠ يومًا</h2>
+        <p class="note">
+          تسلسل مقصود: البنية أولًا، ثم المدراء، ثم الموظفون، ثم الحملة الخارجية.
+          تقديم أي مرحلة على ما قبلها يُفرغ البرنامج من مضمونه.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="plan">
+          <div class="step">
+            <span class="wk">أسبوع ١–٢</span>
+            <div>
+              <h4>تجهيز البنية</h4>
+              <ul>
+                <li>اعتماد الدليل والميثاق من الإدارة التنفيذية.</li>
+                <li>تفعيل البريد الموحّد <code>DarbHR@Darbstations.com.sa</code> وضبط التوقيع.</li>
+                <li>رفع القالب البصري والقوالب الثمانية في نظام البريد.</li>
+                <li>بناء نموذج الترشيح الإلكتروني وربطه بصندوق الموارد البشرية.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <span class="wk">أسبوع ٣–٤</span>
+            <div>
+              <h4>تمكين المدراء</h4>
+              <ul>
+                <li>جلسة ٤٥ دقيقة لكل مدراء المحطات: لماذا البرنامج، وكيف يُرشَّح موظف.</li>
+                <li>تدريب عملي على كتابة سبب الترشيح في ثلاثة أسطر محددة.</li>
+                <li>الاتفاق على التزام: ترشيح واحد على الأقل من كل محطة شهريًا.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <span class="wk">أسبوع ٥–٦</span>
+            <div>
+              <h4>الإطلاق الداخلي</h4>
+              <ul>
+                <li>رسالة القيادة تُعلن البرنامج وتشرح الغرض منه بصدق.</li>
+                <li>توقيع الميثاق في كل المحطات وتعليقه في الاستراحات.</li>
+                <li>إصدار أول نشرة «من الطريق».</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <span class="wk">أسبوع ٧–٩</span>
+            <div>
+              <h4>تشغيل حلقة التقدير</h4>
+              <ul>
+                <li>بدء الشكر الفوري خلال ٤٨ ساعة بلا استثناء.</li>
+                <li>الإعلان عن أول «نجم درب» مع نشر السبب كاملًا.</li>
+                <li>مراجعة أسبوعية: أي محطة لم تُرشّح أحدًا، ولماذا.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="step">
+            <span class="wk">أسبوع ١٠–١٢</span>
+            <div>
+              <h4>الخروج إلى الجمهور والقياس</h4>
+              <ul>
+                <li>إطلاق أول حملة محتوى من مشاركات الموظفين.</li>
+                <li>إعادة نشر أفضل المشاركات على حسابات درب باسم أصحابها.</li>
+                <li>تقرير الربع الأول: المؤشرات، ما نجح، وما يُعدَّل قبل الربع الثاني.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 13 · الحوكمة والنموذج -->
+    <section id="s13">
+      <div class="sec-head">
+        <span class="sec-num">القسم الثالث عشر</span>
+        <h2>الحوكمة ونموذج الترشيح</h2>
+        <p class="note">قواعد تحمي البرنامج من التحول إلى بريد إداري، ونموذج يجعل الترشيح عملية دقيقة واحدة.</p>
+      </div>
+
+      <div class="sec-body wide">
+
+        <div class="grid-2">
+          <div class="card">
+            <h3 style="font-size:16px; margin-block-end:10px">ضوابط ثابتة</h3>
+            <ul style="font-size:14.5px; color:var(--ink-2); line-height:1.75">
+              <li>البريد الموحّد للبرنامج لا يُستخدم لأي غرض تسويقي خارجي.</li>
+              <li>لا تُنشر بيانات موظف (صورة، اسم، محطة) خارجيًا دون موافقته المكتوبة.</li>
+              <li>الشكوى أو الملاحظة السلبية لا تُعالج عبر هذا البريد إطلاقًا؛ لها قناتها الخاصة.</li>
+              <li>سقف ٤ رسائل داخلية أسبوعيًا لكل موظف من كل الإدارات مجتمعة.</li>
+              <li>كل رسالة تُؤرشف بتاريخها ونسختها النهائية في سجل البرنامج.</li>
+              <li>يُراجع الدليل سنويًا، وعند أي تغيّر في الهوية أو الأنظمة.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="font-size:16px; margin-block-end:10px">لجنة التقدير</h3>
+            <ul style="font-size:14.5px; color:var(--ink-2); line-height:1.75">
+              <li>ثلاثة أعضاء: الموارد البشرية، العمليات، والتسويق.</li>
+              <li>تجتمع مرة شهريًا قبل يوم ٢٨ لاعتماد نجم الشهر.</li>
+              <li>تُرجّح المواقف الموثقة بشهادة عميل أو زميل.</li>
+              <li>لا يُكرَّم الموظف نفسه مرتين خلال ستة أشهر لضمان التوزيع.</li>
+              <li>كل ترشيح مرفوض يصل صاحبه رد يوضّح السبب — لا تجاهل.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:20px">نموذج الترشيح — ست خانات فقط</h3>
+        <div class="form-fields">
+          <div class="field"><span>الخانة ١</span><b>اسم المُرشَّح ومحطته</b><p>اسم كامل + المحطة أو الإدارة</p></div>
+          <div class="field"><span>الخانة ٢</span><b>تاريخ الموقف</b><p>اليوم والتاريخ تحديدًا</p></div>
+          <div class="field"><span>الخانة ٣</span><b>ماذا حدث</b><p>ثلاثة أسطر كحد أقصى، بالوقائع لا بالأوصاف</p></div>
+          <div class="field"><span>الخانة ٤</span><b>لماذا يستحق</b><p>ما الذي تجاوز فيه المطلوب منه نظاميًا</p></div>
+          <div class="field"><span>الخانة ٥</span><b>هل يوجد شاهد أو دليل</b><p>شهادة عميل، زميل، أو تسجيل</p></div>
+          <div class="field"><span>الخانة ٦</span><b>اسم المُرشِّح</b><p>المدير المباشر أو أي زميل</p></div>
+        </div>
+
+        <div class="callout" style="margin-block-start:16px">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6 9 17l-5-5"/>
+            </svg>
+          </span>
+          <p>
+            <b>إغلاق الحلقة إلزامي.</b> كل ترشيح يصل يُرد عليه خلال ٤٨ ساعة — بقبول أو باعتذار مسبَّب.
+            الترشيح الذي يُهمل مرة واحدة يُنهي ثقة المدير بالبرنامج، ولا يعود يرشّح.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── index rail ── -->
+  <nav class="rail" aria-label="فهرس الدليل">
+    <h4>محتويات الدليل</h4>
+    <ol>
+      <li class="part">الأساس</li>
+      <li><a href="#s1">لماذا الموظف هو الرسالة</a></li>
+      <li><a href="#s2">خمسة مبادئ تحكم البرنامج</a></li>
+      <li><a href="#s3">من يفعل ماذا</a></li>
+      <li class="part">السلوك</li>
+      <li><a href="#s4">لحظات الحقيقة في المحطة</a></li>
+      <li><a href="#s5">ميثاق سفير درب</a></li>
+      <li><a href="#s6">الموظف على وسائل التواصل</a></li>
+      <li class="part">التحفيز بالبريد</li>
+      <li><a href="#s7">محرّك التحفيز</a></li>
+      <li><a href="#s8">تقويم الرسائل السنوي</a></li>
+      <li><a href="#s9">القوالب الجاهزة</a></li>
+      <li><a href="#s10">القالب البصري</a></li>
+      <li class="part">التشغيل</li>
+      <li><a href="#s11">كيف نعرف أنه يعمل</a></li>
+      <li><a href="#s12">خطة ٩٠ يومًا</a></li>
+      <li><a href="#s13">الحوكمة والترشيح</a></li>
+    </ol>
+  </nav>
+
+</div>
+</div>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer class="docfoot">
+  <div class="wrap">
+    <div class="inner">
+      <div class="who">
+        <b>سفير درب</b>
+        <p>دليل تفعيل دور الموظف في إيصال صورة إيجابية عن الشركة،<br>وبرنامج التحفيز الداخلي عبر البريد الإلكتروني.</p>
+      </div>
+      <div class="contact">
+        <b>محطات درب</b> · الاختيار الأول<br>
+        DarbHR@Darbstations.com.sa<br>
+        <span class="tnum">920 005804</span> · <span class="tnum">053 600 8383</span>
+      </div>
+    </div>
+    <div class="rev">
+      <span>الإصدار <span class="tnum">1.0</span></span>
+      <span>المالك: إدارة الموارد البشرية</span>
+      <span>الشريك: التسويق والاتصال المؤسسي</span>
+      <span>المراجعة القادمة: بعد ١٢ شهرًا من الاعتماد</span>
+      <span>وثيقة داخلية — غير مخصصة للتداول الخارجي</span>
+    </div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  /* theme toggle — writes data-theme so it beats both the OS setting and the host stamp */
+  var btn = document.getElementById('themeBtn');
+  var root = document.documentElement;
+  btn.addEventListener('click', function(){
+    var explicit = root.getAttribute('data-theme');
+    var isDark = explicit ? explicit === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+
+  /* copy the ready-to-send body of each template */
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click', function(){
+      var card = b.closest('.mail');
+      var subject = card.querySelector('.meta div b').textContent.trim();
+      var body = card.querySelector('.mbodytxt').textContent.trim();
+      var text = 'الموضوع: ' + subject + '\n\n' + body;
+      var done = function(){
+        var old = b.textContent;
+        b.textContent = 'تم النسخ';
+        b.setAttribute('data-done','1');
+        setTimeout(function(){ b.textContent = old; b.removeAttribute('data-done'); }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+      } else { fallback(text, done); }
+    });
+  });
+  function fallback(text, done){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.setAttribute('readonly','');
+    ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch(e){}
+    document.body.removeChild(ta);
+  }
+})();
+</script>
+</body>
+</html>
