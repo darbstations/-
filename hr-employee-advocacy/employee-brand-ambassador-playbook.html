@@ -201,6 +201,56 @@ p.body + p.body{margin-block-start:-4px}
 .chain .link:last-child::before{display:none}
 .chain .link:last-child{border-color:var(--amber); background:var(--amber-soft)}
 
+/* ── track system: amber = الميدان, green = المكاتب, neutral = مشترك ── */
+.sec-num.field{color:var(--amber-2)}
+.sec-num.office{color:var(--green)}
+.sec-num.both{color:var(--ink-3)}
+
+/* part opener — marks which track the sections below belong to */
+.part-head{
+  display:flex; gap:16px; align-items:flex-start; padding:20px 22px; border-radius:var(--r);
+  background:var(--paper-2); border:1px solid var(--line); border-inline-start:4px solid var(--ink-3);
+}
+.part-head.field{border-inline-start-color:var(--amber)}
+.part-head.office{border-inline-start-color:var(--green)}
+.part-head .pn{
+  flex:none; font-family:"Readex Pro",sans-serif; font-size:11px; font-weight:700; letter-spacing:1.6px;
+  padding:5px 11px; border-radius:100px; background:var(--surface); border:1px solid var(--line);
+  color:var(--ink-3); margin-block-start:3px; white-space:nowrap;
+}
+.part-head.field .pn{color:var(--amber-2); border-color:color-mix(in srgb,var(--amber) 40%,transparent)}
+.part-head.office .pn{color:var(--green); border-color:color-mix(in srgb,var(--green) 40%,transparent)}
+.part-head h2{font-size:clamp(19px,2.8vw,24px)}
+.part-head p{margin-block-start:6px; font-size:14.5px; color:var(--ink-2); line-height:1.7; max-width:60ch}
+
+/* the two tracks, side by side */
+.tracks{display:grid; gap:14px; grid-template-columns:1fr 1fr}
+@media (max-width:720px){ .tracks{grid-template-columns:1fr} }
+.track{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px;
+  border-block-start:3px solid var(--line); display:flex; flex-direction:column; gap:12px}
+.track.field{border-block-start-color:var(--amber)}
+.track.office{border-block-start-color:var(--green)}
+.track .thead{display:flex; align-items:baseline; gap:9px; flex-wrap:wrap}
+.track h3{font-size:17px}
+.track .count{font-size:11.5px; font-weight:700; letter-spacing:1.4px; color:var(--ink-3)}
+.track .who-sees{font-size:13.5px; color:var(--ink-2); line-height:1.7; padding-block-end:10px;
+  border-block-end:1px dashed var(--line)}
+.track dl{margin:0; display:flex; flex-direction:column; gap:9px}
+.track dt{font-size:11px; letter-spacing:1.5px; font-weight:700; color:var(--ink-3)}
+.track.field dt{color:var(--amber-2)}
+.track.office dt{color:var(--green)}
+.track dd{margin:2px 0 0 0; font-size:14px; color:var(--ink); line-height:1.7}
+
+/* the office employee's three audiences */
+.aud{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.aud .a{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:17px 18px;
+  display:flex; flex-direction:column; gap:8px}
+.aud .a .tag{font-size:10.5px; letter-spacing:1.8px; font-weight:700; color:var(--green)}
+.aud .a b{font-family:"Readex Pro",sans-serif; font-size:16px; font-weight:600}
+.aud .a p{font-size:13.5px; color:var(--ink-2); line-height:1.7}
+.aud .a .ex{font-size:12.5px; color:var(--ink-3); line-height:1.65; padding-block-start:8px;
+  border-block-start:1px dashed var(--line)}
+
 /* principle rows */
 .principle{display:flex; gap:16px; align-items:flex-start; padding-block:15px; border-block-end:1px dashed var(--line)}
 .principle:last-child{border-block-end:0; padding-block-end:0}
@@ -305,6 +355,10 @@ td .pill{display:inline-block; font-size:11.5px; font-weight:600; padding:3px 10
 .pill.news{background:var(--green-soft); color:var(--green)}
 .pill.care{background:var(--rose-soft); color:var(--rose)}
 .pill.lead{background:var(--paper-2); color:var(--ink-2); border:1px solid var(--line)}
+/* track pills for the calendar's audience column */
+.pill.tf{background:var(--amber-soft); color:var(--amber-2)}
+.pill.to{background:var(--green-soft); color:var(--green)}
+.pill.tb{background:var(--paper-2); color:var(--ink-2); border:1px solid var(--line)}
 
 /* email template cards */
 .mail{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; box-shadow:var(--shadow-sm)}
@@ -438,13 +492,15 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <p class="eyebrow">دليل داخلي معتمد</p>
     <h1>سفير درب<span class="en">DARB AMBASSADOR PROGRAMME</span></h1>
     <p class="lede">
-      كيف نُفعّل دور الموظف في إيصال صورة إيجابية عن الشركة، وكيف تُشغّل الموارد البشرية
-      محرّك التحفيز عبر البريد الإلكتروني — بقواعد واضحة، وتقويم سنوي، وقوالب جاهزة للإرسال.
+      كيف نُفعّل دور الموظف في إيصال صورة إيجابية عن الشركة — في المحطة وفي المكتب —
+      وكيف تُشغّل الموارد البشرية محرّك التحفيز عبر البريد الإلكتروني بقواعد واضحة
+      وتقويم سنوي وقوالب جاهزة للإرسال.
     </p>
 
     <div class="factbar">
-      <span class="fact"><b>الإصدار</b> <span class="tnum">1.0</span></span>
-      <span class="fact"><b>النطاق</b> جميع المحطات والإدارات</span>
+      <span class="fact"><b>الإصدار</b> <span class="tnum">2.0</span></span>
+      <span class="fact"><b>النطاق</b> <span class="tnum">١٢</span> إدارة · <span class="tnum">+٥٠٠</span> موظف</span>
+      <span class="fact"><b>المساران</b> الميدان والمكاتب</span>
       <span class="fact"><b>المالك</b> الموارد البشرية</span>
       <span class="fact"><b>الشريك</b> التسويق والاتصال</span>
       <span class="fact"><b>المراجعة</b> سنويًا</span>
@@ -459,14 +515,24 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
   <!-- ── content ── -->
   <main class="col">
 
+    <!-- ═══ الجزء الأول ═══ -->
+    <div class="part-head">
+      <span class="pn">الجزء الأول</span>
+      <div>
+        <h2>الأساس المشترك</h2>
+        <p>ما ينطبق على كل موظف في درب — في المحطة وفي المكتب — قبل أن يفترق المساران.</p>
+      </div>
+    </div>
+
     <!-- 1 · لماذا -->
     <section id="s1">
       <div class="sec-head">
-        <span class="sec-num">القسم الأول</span>
+        <span class="sec-num both">الأساس</span>
         <h2>لماذا الموظف هو الرسالة</h2>
         <p class="note">
           العميل في قطاع المحطات لا يزور المقر الرئيسي، ولا يقرأ خطة الشركة الاستراتيجية.
-          هو يرى موظفًا واحدًا لدقيقتين — وذلك الموظف هو «درب» بالنسبة له.
+          هو يرى موظفًا واحدًا لدقيقتين. والمورّد والجهة الحكومية والمرشّح للتوظيف
+          لا يرون المحطة أصلًا — يرون موظفًا مكتبيًا واحدًا. كلاهما «درب» في تلك اللحظة.
         </p>
       </div>
 
@@ -485,6 +551,12 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
           وهناك سبب ثانٍ لا يقل أهمية: الرسالة القادمة من موظف تُصدَّق أكثر من الرسالة القادمة من حساب الشركة.
           موظف يكتب عن يوم عمله بصدق يصل إلى دائرته الاجتماعية بمصداقية لا تشتريها أي ميزانية إعلانية.
           لكن هذا لا يحدث بالإلزام — يحدث حين يشعر الموظف فعلًا بالفخر.
+        </p>
+        <p class="body">
+          وسبب ثالث كثيرًا ما يُنسى: <b>نصف صورة الشركة تُبنى بعيدًا عن العميل</b>. المورّد الذي
+          يُسدَّد له في موعده يتحدث عن درب في سوقه. الجهة الحكومية التي تصلها ملفات مرتبة تتعامل معنا
+          بثقة في المرة القادمة. والمرشّح الذي قابلناه ولم نوظّفه يحكي عن تجربته أمام عشرة من زملائه.
+          هذه كلها لحظات يصنعها موظف مكتبي لا يرى مضخة وقود أبدًا.
         </p>
 
         <h3 style="font-size:16px; margin-block-start:8px">السلسلة التي يقوم عليها هذا الدليل</h3>
@@ -512,10 +584,71 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
 
     <hr class="lane">
 
+    <!-- 1ب · المساران -->
+    <section id="s1b">
+      <div class="sec-head">
+        <span class="sec-num both">الأساس</span>
+        <h2>مساران، رسالة واحدة</h2>
+        <p class="note">
+          نفس الهدف ونفس المبادئ، لكن أدوات مختلفة. أكبر خطأ في برامج كهذه هو تعميم أدوات الميدان
+          على المكاتب: ميثاق مكتوب عن «الترحيب بالعميل عند المضخة» يقرأه موظف في المالية فيغلقه،
+          ويستنتج أن البرنامج ليس له.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="tracks">
+
+          <article class="track field">
+            <div class="thead"><h3>مسار الميدان</h3><span class="count">المحطات</span></div>
+            <p class="who-sees">موظف يقف بين الشركة والعميل النهائي مباشرة، ويُحكم عليه في ثوانٍ.</p>
+            <dl>
+              <dt>من يراه</dt><dd>العميل النهائي، عشرات المرات يوميًا</dd>
+              <dt>لحظة الحقيقة</dt><dd>دقيقتان عند المضخة أو الصندوق</dd>
+              <dt>ما يُقاس</dt><dd>سلوك الخدمة، النظافة، إدارة الشكوى</dd>
+              <dt>عمله</dt><dd>مرئي — الموقف يُشاهَد ويُروى</dd>
+              <dt>منصته</dt><dd>سناب · إنستقرام · تيك توك</dd>
+              <dt>وصول الرسالة</dt><dd>جوال، بين الورديات، نص قصير</dd>
+            </dl>
+          </article>
+
+          <article class="track office">
+            <div class="thead"><h3>مسار المكاتب</h3><span class="count">١٢ إدارة</span></div>
+            <p class="who-sees">موظف يبني الصورة عبر أطراف لا يراها العميل، وأثره يظهر بعد أسابيع.</p>
+            <dl>
+              <dt>من يراه</dt><dd>المحطات، الموردون، الجهات، المرشحون</dd>
+              <dt>لحظة الحقيقة</dt><dd>ردّ على طلب، سداد، اجتماع، مقابلة</dd>
+              <dt>ما يُقاس</dt><dd>زمن الاستجابة، الالتزام بالوعد، جودة المخرج</dd>
+              <dt>عمله</dt><dd>غير مرئي — يحتاج من يرشّحه ليُرى</dd>
+              <dt>منصته</dt><dd>لينكدإن بالدرجة الأولى</dd>
+              <dt>وصول الرسالة</dt><dd>بريد مكتبي، صباحًا، نص أطول</dd>
+            </dl>
+          </article>
+
+        </div>
+
+        <div class="callout">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 16v-5"/><path d="M12 8h.01"/>
+            </svg>
+          </span>
+          <p>
+            <b>الفرق الجوهري: الرؤية.</b> موظف المحطة الذي يساعد عميلًا متعطلًا يراه عشرة أشخاص فيُرشَّح
+            تلقائيًا. أما من أنهى دفعة مورّد قبل موعدها بأسبوع، أو أصلح عطلًا في نظام المحطات الساعة الثانية
+            فجرًا، فلا يراه أحد. لذلك مسار المكاتب يحتاج آلية ترشيح مختلفة —
+            <b>الترشيح المتقاطع</b>: من استفاد من العمل هو من يرشّح صاحبه، لا مديره فقط.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
     <!-- 2 · المبادئ -->
     <section id="s2">
       <div class="sec-head">
-        <span class="sec-num">القسم الثاني</span>
+        <span class="sec-num both">الأساس</span>
         <h2>خمسة مبادئ تحكم البرنامج</h2>
         <p class="note">أي قرار داخل هذا البرنامج — رسالة، تكريم، حملة — يُقاس على هذه الخمسة قبل التنفيذ.</p>
       </div>
@@ -566,9 +699,13 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 3 · الأدوار -->
     <section id="s3">
       <div class="sec-head">
-        <span class="sec-num">القسم الثالث</span>
+        <span class="sec-num both">الأساس</span>
         <h2>من يفعل ماذا</h2>
-        <p class="note">البرنامج يفشل حين يصبح «مبادرة من الموارد البشرية». ينجح حين يكون لكل طرف دور محدد ومطالَب به.</p>
+        <p class="note">
+          البرنامج يفشل حين يصبح «مبادرة من الموارد البشرية». ينجح حين يكون لكل طرف دور محدد ومطالَب به.
+          وعند ١٢ إدارة، لا تستطيع الموارد البشرية أن تعرف ما يحدث داخل كل إدارة — فيظهر دور خامس ضروري:
+          <b>سفير الإدارة</b>.
+        </p>
       </div>
 
       <div class="sec-body wide">
@@ -642,6 +779,35 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             </ul>
           </article>
 
+          <article class="role" style="grid-column:1/-1; border-color:color-mix(in srgb,var(--green) 34%,transparent)">
+            <div class="top">
+              <span class="ico" aria-hidden="true" style="background:var(--green-soft); color:var(--green)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="6" r="2"/><circle cx="19.5" cy="6" r="2"/>
+                  <circle cx="4.5" cy="18" r="2"/><circle cx="19.5" cy="18" r="2"/>
+                  <path d="M6.3 7.2 9.6 10M17.7 7.2 14.4 10M6.3 16.8 9.6 14M17.7 16.8 14.4 14"/>
+                </svg>
+              </span>
+              <div><h3>سفير الإدارة</h3><span class="who">واحد لكل إدارة · ١٢ سفيرًا · الدور الجديد</span></div>
+            </div>
+            <p style="font-size:14.5px; color:var(--ink-2); line-height:1.7">
+              موظف — لا مدير بالضرورة — يتطوّع أو يُرشَّح ليكون صلة الوصل بين إدارته وبين البرنامج.
+              نصف ساعة شهريًا لا أكثر. بدونه تبقى ١٢ إدارة صندوقًا مغلقًا أمام الموارد البشرية.
+            </p>
+            <div class="grid-2" style="gap:12px">
+              <ul style="font-size:14px; color:var(--ink-2); line-height:1.7; padding-inline-start:1.15em">
+                <li>يجمع من زملائه ما يستحق الترشيح ويرفعه شهريًا.</li>
+                <li>يكتب فقرة إدارته في النشرة الداخلية.</li>
+                <li>ينبّه إذا وصلت إدارته رسائل أكثر من اللازم.</li>
+              </ul>
+              <ul style="font-size:14px; color:var(--ink-2); line-height:1.7; padding-inline-start:1.15em">
+                <li>يوصل ملاحظات زملائه للموارد البشرية بلا أسماء إن لزم.</li>
+                <li>يُجدَّد سنويًا حتى لا يتحول إلى عبء دائم.</li>
+                <li>يُذكر اسمه في النشرة تقديرًا للدور.</li>
+              </ul>
+            </div>
+          </article>
+
         </div>
 
         <div class="tablewrap" style="margin-block-start:16px">
@@ -652,10 +818,14 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             </thead>
             <tbody>
               <tr><td>رسالة الشكر الفوري</td><td>الموارد البشرية</td><td>مدير الموارد البشرية</td><td>عند الحدث · خلال ٤٨ ساعة</td></tr>
-              <tr><td>ترشيح نجم الشهر</td><td>المدير المباشر</td><td>لجنة التقدير</td><td>شهريًا · قبل يوم ٢٥</td></tr>
+              <tr><td>ترشيح نجم الميدان</td><td>مدير المحطة</td><td>لجنة التقدير</td><td>شهريًا · قبل يوم ٢٥</td></tr>
+              <tr><td>ترشيح نجم المكاتب</td><td>سفير الإدارة + الترشيح المتقاطع</td><td>لجنة التقدير</td><td>شهريًا · قبل يوم ٢٥</td></tr>
+              <tr><td>جمع أخبار الإدارة</td><td>سفير الإدارة</td><td>مدير الإدارة</td><td>شهريًا · قبل يوم ٢٨</td></tr>
               <tr><td>النشرة الداخلية</td><td>الموارد البشرية + التسويق</td><td>مدير الموارد البشرية</td><td>شهريًا · أول أحد</td></tr>
+              <tr><td>ضبط سقف الرسائل</td><td>الموارد البشرية</td><td>مدير الموارد البشرية</td><td>أسبوعيًا</td></tr>
               <tr><td>رسالة القيادة</td><td>مكتب الرئيس التنفيذي</td><td>الرئيس التنفيذي</td><td>ربعيًا</td></tr>
               <tr><td>حملة محتوى الموظفين</td><td>التسويق والاتصال</td><td>مدير التسويق</td><td>ربعيًا</td></tr>
+              <tr><td>استبيان العميل الداخلي</td><td>الموارد البشرية</td><td>الإدارة التنفيذية</td><td>ربعيًا</td></tr>
               <tr><td>تقرير المؤشرات</td><td>الموارد البشرية</td><td>الإدارة التنفيذية</td><td>ربعيًا</td></tr>
             </tbody>
           </table>
@@ -665,10 +835,19 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
 
     <hr class="lane">
 
+    <!-- ═══ الجزء الثاني ═══ -->
+    <div class="part-head field">
+      <span class="pn">الجزء الثاني</span>
+      <div>
+        <h2>مسار الميدان</h2>
+        <p>موظفو المحطات — من يقف بين درب والعميل النهائي مباشرة. هذا الجزء يخصّهم وحدهم.</p>
+      </div>
+    </div>
+
     <!-- 4 · لحظات الحقيقة -->
     <section id="s4">
       <div class="sec-head">
-        <span class="sec-num">القسم الرابع</span>
+        <span class="sec-num field">الميدان</span>
         <h2>لحظات الحقيقة في المحطة</h2>
         <p class="note">
           خمس لحظات تتشكّل فيها الصورة كاملة. كل لحظة أقصر من دقيقتين، وكل واحدة منها قابلة للتدريب والقياس.
@@ -725,10 +904,11 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 5 · الميثاق -->
     <section id="s5">
       <div class="sec-head">
-        <span class="sec-num">القسم الخامس</span>
-        <h2>ميثاق سفير درب</h2>
+        <span class="sec-num field">الميدان</span>
+        <h2>ميثاق سفير درب — الميدان</h2>
         <p class="note">
           يُوقَّع مع عقد العمل ويُعلَّق في استراحة كل محطة. ثمانية التزامات مكتوبة بلغة الموظف لا بلغة اللوائح.
+          للمكاتب ميثاق مستقل في الجزء الثالث — لا تُرسل هذا لموظف مكتبي.
         </p>
       </div>
 
@@ -756,10 +936,242 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
 
     <hr class="lane">
 
+    <!-- ═══ الجزء الثالث ═══ -->
+    <div class="part-head office">
+      <span class="pn">الجزء الثالث</span>
+      <div>
+        <h2>مسار المكاتب</h2>
+        <p>
+          ١٢ إدارة لا يمرّ عليها عميل نهائي. صورتها تُبنى عبر المحطات التي تخدمها، والأطراف الخارجية
+          التي تتعامل معها، وسوق العمل الذي يراقبها. هذا الجزء بديل عن الجزء الثاني، لا إضافة عليه.
+        </p>
+      </div>
+    </div>
+
+    <!-- 5أ · العميل الثلاثي -->
+    <section id="s5a">
+      <div class="sec-head">
+        <span class="sec-num office">المكاتب</span>
+        <h2>لمن يعمل الموظف المكتبي</h2>
+        <p class="note">
+          السؤال الذي يوقف أي نقاش عن «دور المكتب في صورة الشركة»: من عميلك؟
+          الجواب ثلاثة، وكلهم يتكلمون عنّا في مكان ما.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="aud">
+          <div class="a">
+            <span class="tag">العميل الأول</span>
+            <b>المحطة</b>
+            <p>
+              المكتب موجود لأجل المحطة، لا العكس. كل طلب صيانة متأخر، وكل فاتورة معلّقة، وكل نظام معطّل —
+              يتحول خلال ساعات إلى موظف محطة متوتر أمام عميل.
+            </p>
+            <p class="ex">القاعدة: تأخيرك يومًا في المكتب قد يكلّف محطة يومًا كاملًا من الخدمة الرديئة.</p>
+          </div>
+          <div class="a">
+            <span class="tag">العميل الثاني</span>
+            <b>الطرف الخارجي</b>
+            <p>
+              موردون، مقاولون، جهات حكومية، بنوك، ملاك عقارات، مستأجرو الوحدات التجارية.
+              هؤلاء يتعاملون مع درب دون أن يزوروا محطة، وأحكامهم تنتقل داخل أسواقهم.
+            </p>
+            <p class="ex">مورّد يُسدَّد له في موعده يرشّحنا لغيره. ومورّد يُماطَل يحكيها لعشرة.</p>
+          </div>
+          <div class="a">
+            <span class="tag">العميل الثالث</span>
+            <b>سوق العمل</b>
+            <p>
+              كل موظف مكتبي هو إعلان توظيف متحرك. من يكتب «درب» في ملفه المهني على لينكدإن يجعل
+              اسم الشركة يمرّ أمام مئات المختصين في مجاله.
+            </p>
+            <p class="ex">والمرشّح الذي قابلناه ولم نوظّفه يبقى شاهدًا على أخلاقنا، لا على قرارنا.</p>
+          </div>
+        </div>
+
+        <div class="callout" style="background:var(--green-soft); border-color:color-mix(in srgb,var(--green) 34%,transparent)">
+          <span class="ci" aria-hidden="true" style="color:var(--green)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 12h4l3 7 4-14 3 7h4"/>
+            </svg>
+          </span>
+          <p>
+            <b>قلب المسار المكتبي كله:</b> المحطة عميل داخلي له نفس حقوق العميل الخارجي —
+            ردّ في وقته، وعد يُحترم، واحترام في النبرة. أي إدارة تعامل المحطة بمنطق
+            «هم يطلبون ونحن نقرر متى» تُنتج موظف محطة محبَطًا، وموظف المحطة المحبَط
+            يقف بعد ساعة أمام عميل حقيقي.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 5ب · لحظات الحقيقة في المكتب -->
+    <section id="s5b">
+      <div class="sec-head">
+        <span class="sec-num office">المكاتب</span>
+        <h2>لحظات الحقيقة في المكتب</h2>
+        <p class="note">
+          ست لحظات مقابلة للحظات المحطة. الفرق أنها لا تُقاس بالثواني بل بالساعات والأيام،
+          ولا يشهدها عميل بل زميل أو طرف خارجي.
+        </p>
+      </div>
+
+      <div class="sec-body wide" style="gap:12px">
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">طلب يصل من محطة</span><span class="sec-time">أول ٤ ساعات عمل</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>إشعار استلام خلال ٤ ساعات ولو بجملة «وصلني، وبردّ عليك قبل الخميس». تحديد موعد واقعي والالتزام به.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>الصمت حتى يتصل مدير المحطة مرتين، أو الرد بـ«معك حق بس هذا نظام»، أو تحويل الطلب بين ثلاثة موظفين.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">وعد بموعد</span><span class="sec-time">أهم عادة مكتبية</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>وعد بموعد تستطيع الوفاء به لا الموعد الذي يُرضي السائل. وإن تأخرت، أخبِر قبل الموعد لا بعده.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>«بكرة إن شاء الله» بلا نية جادة. الوعد المخلَف مرتين يجعل كل وعد لاحق من الشركة كلها بلا قيمة.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">التعامل مع مورّد أو مقاول</span><span class="sec-time">سمعتنا في السوق</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>وضوح في الشروط، ردّ على العروض المرفوضة بشكر، والتزام بمواعيد السداد. التفاوض الحازم لا يمنع الاحترام.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>تجاهل عرض دون رد، أو تأخير سداد مستحق دون إبلاغ، أو استخدام حجم الشركة كأداة ضغط على مورّد صغير.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">تمثيل درب خارجيًا</span><span class="sec-time">اجتماع أو زيارة</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>الحضور قبل الموعد، ملف مكتمل ومرتب، ومعرفة حدود صلاحيتك. ما لا تعرفه تقول «سأعود لك بالإجابة» وتعود فعلًا.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>التأخر، أو مستندات ناقصة تُعيد الزيارة مرة ثانية، أو وعد بصلاحية لا تملكها فتُنقض لاحقًا.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">مقابلة مرشّح للتوظيف</span><span class="sec-time">أقوى إعلان توظيفي</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>بدء المقابلة في وقتها، تعريف واضح بالدور، وإبلاغ كل من قابلناه بالنتيجة — قبولًا أو اعتذارًا — خلال أسبوعين.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>الصمت بعد المقابلة. المرشّح المهمَل يكتب تجربته علنًا، فتخسر الشركة عشرة مرشحين لم تقابلهم بعد.</p></div>
+          </div>
+        </article>
+
+        <article class="moment">
+          <div class="mhead"><span class="dotm" style="color:var(--green)"></span><span class="t">البريد والاجتماعات الداخلية</span><span class="sec-time">كل يوم</span></div>
+          <div class="mbody">
+            <div class="half yes"><p class="lbl"><span class="dotm"></span>المطلوب</p><p>موضوع واضح، طلب محدد، ومن يلزم فقط في «إلى». الاجتماع له أجندة ومحضر بقرارات ومسؤولين ومواعيد.</p></div>
+            <div class="half no"><p class="lbl"><span class="dotm"></span>ما يُفسد الانطباع</p><p>نسخ الإدارة العليا للضغط على زميل، أو اجتماع ساعة بلا قرار، أو نقاش خلاف بين إدارتين أمام الجميع.</p></div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 5ج · مصفوفة الإدارات -->
+    <section id="s5c">
+      <div class="sec-head">
+        <span class="sec-num office">المكاتب</span>
+        <h2>مصفوفة الإدارات الاثنتي عشرة</h2>
+        <p class="note">
+          لكل إدارة جمهور مختلف ومساهمة مختلفة في الصورة — ولذلك معيار تقدير مختلف.
+          هذا الجدول هو ما يجعل البرنامج ملموسًا لموظف المالية بقدر ما هو ملموس لموظف المحطة.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="callout">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+            </svg>
+          </span>
+          <p>
+            <b>عدّلوا أسماء الإدارات لتطابق هيكلكم.</b> القائمة أدناه مبنية على الهيكل المعتاد لمشغّل محطات،
+            والمهم فيها الأعمدة الثلاثة لا الأسماء. أرسلوا لي الأسماء الفعلية وتوزيع الموظفين عليها
+            ويُحدَّث الجدول في دقائق.
+          </p>
+        </div>
+
+        <div class="tablewrap">
+          <table>
+            <thead>
+              <tr><th>الإدارة</th><th>جمهورها خارج المكتب</th><th>مساهمتها في صورة درب</th><th>ما يستحق التقدير فيها</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>العمليات وتشغيل المحطات</td><td>مدراء المحطات · العملاء</td><td>الجسر بين القرار والتنفيذ؛ كل معيار خدمة يمرّ منها</td><td>حلّ اختناق ميداني قبل أن يصل للعميل</td></tr>
+              <tr><td>الموارد البشرية</td><td>الموظفون · المرشحون · التأمينات</td><td>تجربة الموظف من أول مقابلة إلى آخر يوم</td><td>إغلاق طلب موظف بسرعة غير معتادة</td></tr>
+              <tr><td>المالية</td><td>الموردون · البنوك · المحاسبة</td><td>سمعة ائتمانية: من يُسدَّد له في موعده يتحدث عنّا</td><td>سداد قبل الاستحقاق أو حلّ نزاع فاتورة بهدوء</td></tr>
+              <tr><td>المشتريات والعقود</td><td>الموردون · المقاولون</td><td>عدالة المنافسة واحترام من يخسر العرض</td><td>الرد على كل عرض مرفوض بشكر مسبَّب</td></tr>
+              <tr><td>التسويق والاتصال</td><td>الجمهور · الإعلام · الشركاء</td><td>حارس الهوية وصوت الشركة المعلن</td><td>إبراز عمل زميل من إدارة أخرى لا عمل الإدارة نفسها</td></tr>
+              <tr><td>تقنية المعلومات</td><td>كل الموظفين · أنظمة المحطات</td><td>توقّف النظام في محطة = طابور وعميل غاضب</td><td>إصلاح خارج الدوام أو منع عطل قبل وقوعه</td></tr>
+              <tr><td>الشؤون القانونية والالتزام</td><td>الجهات الحكومية · الشركاء</td><td>التزام نظامي يحمي رخصة العمل والسمعة</td><td>تبسيط إجراء معقّد لغير المختصين</td></tr>
+              <tr><td>الهندسة والمشاريع</td><td>المقاولون · البلديات</td><td>جودة ما يراه العميل: المظلة، الأرضية، الإنارة</td><td>تسليم مرحلة في موعدها دون تجاوز الميزانية</td></tr>
+              <tr><td>السلامة والصحة والبيئة</td><td>الدفاع المدني · الجهات الرقابية</td><td>حادث واحد يمحو سنوات من بناء الصورة</td><td>ملاحظة خطر وإيقافه قبل أن يتحول إلى حادث</td></tr>
+              <tr><td>التطوير العقاري والتأجير</td><td>الملاك · المستأجرون</td><td>وجه درب أمام شركاء الوحدات التجارية</td><td>الاحتفاظ بمستأجر جيد أو إنهاء عقد باحترام</td></tr>
+              <tr><td>سلسلة الإمداد والنقل</td><td>الناقلون · المستودعات</td><td>محطة بلا وقود هي أسوأ ما يراه العميل</td><td>تفادي انقطاع في ذروة موسم أو ظرف طارئ</td></tr>
+              <tr><td>الجودة وتجربة العميل</td><td>العملاء · قنوات التقييم</td><td>الأذن التي تسمع الشكوى وتحوّلها إلى تحسين</td><td>إغلاق شكوى بحلّ دائم لا باعتذار مؤقت</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- 5د · ميثاق المكاتب -->
+    <section id="s5d">
+      <div class="sec-head">
+        <span class="sec-num office">المكاتب</span>
+        <h2>ميثاق الموظف المكتبي</h2>
+        <p class="note">
+          نفس فكرة ميثاق الميدان، بلغة المكتب. يُوقَّع مع عقد العمل ويُعلَّق في كل دور من المقر.
+        </p>
+      </div>
+
+      <div class="sec-body wide">
+        <div class="charter" style="border-color:color-mix(in srgb,var(--green) 28%,transparent)">
+          <ol>
+            <li>أتعامل مع طلب المحطة كما أتعامل مع طلب عميل يقف أمامي.</li>
+            <li>أشعر بالاستلام خلال أربع ساعات عمل، ولو لم يكن عندي الجواب بعد.</li>
+            <li>لا أعد بموعد لا أستطيع الوفاء به، وإن تأخرت أخبرت قبل الموعد لا بعده.</li>
+            <li>أتعامل مع المورّد والمقاول باحترام مهما اختلفنا على الشروط.</li>
+            <li>حين أمثّل درب خارجيًا أحضر مستعدًا، وأعرف حدود صلاحيتي.</li>
+            <li>لا أترك مرشّحًا قابلته بلا رد، ولو كان الرد اعتذارًا.</li>
+            <li>ما يمرّ عليّ من عقود وأسعار وبيانات موظفين لا يخرج من مكتبي.</li>
+            <li>إن استفدت من عمل زميل في إدارة أخرى، رشّحته — لأن عمله لا يراه أحد غيري.</li>
+          </ol>
+          <div class="sign">
+            <span>الاسم: <i></i></span>
+            <span>الإدارة: <i></i></span>
+            <span>التاريخ: <i></i></span>
+            <span>التوقيع: <i></i></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="lane">
+
+    <!-- ═══ الجزء الرابع ═══ -->
+    <div class="part-head">
+      <span class="pn">الجزء الرابع</span>
+      <div>
+        <h2>الحضور الرقمي والتحفيز</h2>
+        <p>يعود المساران للالتقاء: إرشادات النشر، ومحرّك التحفيز بالبريد الذي يخدم الـ٥٠٠ جميعًا.</p>
+      </div>
+    </div>
+
     <!-- 6 · وسائل التواصل -->
     <section id="s6">
       <div class="sec-head">
-        <span class="sec-num">القسم السادس</span>
+        <span class="sec-num both">المساران</span>
         <h2>الموظف على وسائل التواصل</h2>
         <p class="note">
           الهدف من هذه الإرشادات حماية الموظف أولًا، ثم حماية سمعة الشركة. المشاركة اختيارية دائمًا،
@@ -793,6 +1205,37 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
           </div>
         </div>
 
+        <h3 style="font-size:16.5px; margin-block-start:20px">المنصة تختلف باختلاف المسار</h3>
+        <div class="tracks">
+          <article class="track field">
+            <div class="thead"><h3 style="font-size:15.5px">الميدان</h3><span class="count">سناب · إنستقرام · تيك توك</span></div>
+            <p style="font-size:14px; color:var(--ink-2); line-height:1.75">
+              محتوى لحظي وبصري: زاوية من المحطة عند الغروب، فريق الوردية، تجهيز الموسم.
+              لا نطلب منه كتابة مقالات — نطلب صورة صادقة وسطرًا واحدًا.
+            </p>
+            <p style="font-size:13.5px; color:var(--ink-3); line-height:1.7; padding-block-start:10px; border-block-start:1px dashed var(--line)">
+              الخطر الأكبر هنا: تصوير عميل أو لوحة سيارة، والتصوير داخل نطاق السلامة.
+            </p>
+          </article>
+          <article class="track office">
+            <div class="thead"><h3 style="font-size:15.5px">المكاتب</h3><span class="count">لينكدإن أولًا</span></div>
+            <p style="font-size:14px; color:var(--ink-2); line-height:1.75">
+              محتوى مهني: مشروع أُنجز، شهادة حصل عليها، درس من ملف صعب، أو ترحيب بزميل جديد.
+              هنا يُبنى «درب مكان يستحق العمل فيه» أمام سوق العمل.
+            </p>
+            <p style="font-size:13.5px; color:var(--ink-3); line-height:1.7; padding-block-start:10px; border-block-start:1px dashed var(--line)">
+              الخطر الأكبر هنا: تسريب رقم عقد أو اسم مورّد أو تفصيل تفاوضي في منشور «احتفالي».
+            </p>
+          </article>
+        </div>
+
+        <h3 style="font-size:16.5px; margin-block-start:18px">خاص بلينكدإن — ثلاث قواعد</h3>
+        <div class="rules">
+          <div class="rule" style="border-block-start-color:var(--green)"><b>حدّث ملفك بالمسمّى الصحيح</b><p>المسمّى الوظيفي كما هو في العقد. المسمّيات المبالغ فيها تُحرج الشركة أمام من يعرف حجمها الحقيقي.</p></div>
+          <div class="rule" style="border-block-start-color:var(--green)"><b>احتفل بالإنجاز لا بالتفاصيل</b><p>«أنهينا توسعة ثلاث محطات هذا الربع» جيدة. ذِكر قيمة العقد أو اسم المقاول أو شروط التفاوض ليس جيدًا.</p></div>
+          <div class="rule" style="border-block-start-color:var(--green)"><b>لا ترد على منتقد باسم الشركة</b><p>حسابك الشخصي لا يصلح لإدارة موقف. مرّر المنشور للتسويق والاتصال ودعهم يقرّرون.</p></div>
+        </div>
+
         <div class="callout" style="margin-block-start:14px">
           <span class="ci" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -813,7 +1256,7 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 7 · برنامج البريد -->
     <section id="s7">
       <div class="sec-head">
-        <span class="sec-num">القسم السابع</span>
+        <span class="sec-num both">المساران</span>
         <h2>محرّك التحفيز: البريد الإلكتروني</h2>
         <p class="note">
           أرخص أدوات التحفيز وأكثرها استمرارية، وأسرعها فقدانًا للأثر عند إساءة استخدامها.
@@ -842,9 +1285,56 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
           </span>
           <p>
             <b>سقف الإرهاق:</b> بحد أقصى ٤ رسائل داخلية أسبوعيًا لكل موظف من كل الإدارات مجتمعة.
-            تتولى الموارد البشرية ضبط هذا السقف؛ ما يتجاوزه يؤجَّل للأسبوع التالي.
+            عند ١٢ إدارة، لو أرسلت كل إدارة رسالة واحدة شهريًا فقط لوصل الموظف ١٢ رسالة — قبل أن
+            تبدأ الموارد البشرية أصلًا. تتولى الموارد البشرية ضبط السقف؛ ما يتجاوزه يؤجَّل للأسبوع التالي.
           </p>
         </div>
+
+        <h3 style="font-size:17px; margin-block-start:6px">قاعدة الجمهور: من يستحق أن تصله هذه الرسالة</h3>
+        <p class="body">
+          الرسالة التي تصل لمن لا تعنيه لا تُهدر انتباهه فقط — بل تُعلّمه أن رسائل درب لا تعنيه، فيتوقف
+          عن فتح الرسالة التي تعنيه فعلًا. عند ٥٠٠+ موظف هذا الضرر تراكمي ولا يُصلَح بسهولة.
+        </p>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>القائمة</th><th>الحجم التقريبي</th><th>متى تُستخدم</th><th>الحد الأقصى</th></tr></thead>
+            <tbody>
+              <tr><td>الجميع</td><td class="tnum">+٥٠٠</td><td>قيادة · مناسبة وطنية أو دينية · نشرة شهرية · أزمة</td><td class="tnum">٢ شهريًا</td></tr>
+              <tr><td>الميدان فقط</td><td>موظفو المحطات</td><td>تعبئة موسم · سلامة تشغيلية · تقدير ميداني</td><td class="tnum">٤ شهريًا</td></tr>
+              <tr><td>المكاتب فقط</td><td>١٢ إدارة</td><td>تطوير مهني · تقدير متقاطع · استبيان داخلي</td><td class="tnum">٤ شهريًا</td></tr>
+              <tr><td>إدارة واحدة</td><td>حسب الإدارة</td><td>إنجاز الإدارة · تدريب متخصص · تغيير إجراء</td><td>بلا حد — بموافقة سفير الإدارة</td></tr>
+              <tr><td>محطة واحدة</td><td>فريق الوردية</td><td>تقدير جماعي · تغيير تشغيلي محلي</td><td>بلا حد</td></tr>
+              <tr><td>فرد</td><td class="tnum">١</td><td>شكر فوري · ذكرى انضمام · ترحيب · دعوة تدريب</td><td>بلا حد</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="background:var(--green-soft); border-color:color-mix(in srgb,var(--green) 34%,transparent)">
+          <span class="ci" aria-hidden="true" style="color:var(--green)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16M7 12h10M10 18h4"/>
+            </svg>
+          </span>
+          <p>
+            <b>اختبار قبل كل إرسال جماعي:</b> اسأل «ما الذي يفعله هذا الموظف مختلفًا بعد قراءة الرسالة؟»
+            إن لم يكن هناك جواب، فهذه الرسالة إعلان لا رسالة — انقلها للنشرة الشهرية بدل إرسالها وحدها.
+          </p>
+        </div>
+
+        <h3 style="font-size:17px; margin-block-start:6px">مشكلة الميدان: نصف الموظفين بلا بريد مكتبي</h3>
+        <p class="body">
+          كثير من موظفي المحطات لا يفتحون بريدًا إلكترونيًا يوميًا، وبعضهم لا يملك حسابًا أصلًا.
+          البرنامج المبني على البريد وحده يصل إلى المكاتب ويفشل في الميدان. الحل ثلاث طبقات:
+        </p>
+        <div class="grid-3">
+          <div class="rule"><b>البريد</b><p>القناة الرسمية للمكاتب، ولمن يملك حسابًا في الميدان. هي السجل الموثّق دائمًا.</p></div>
+          <div class="rule"><b>رسالة نصية أو واتساب</b><p>للميدان: سطران من نفس نص الرسالة مع رابط. الأثر التحفيزي لا يحتاج تصميمًا.</p></div>
+          <div class="rule"><b>لوحة الاستراحة</b><p>نسخة مطبوعة من رسالة نجم الشهر تُعلَّق في كل محطة — يقرأها من لا يفتح بريدًا.</p></div>
+        </div>
+        <p class="body">
+          القاعدة: <b>كل رسالة تقدير تصل بطبقتين على الأقل.</b> رسالة تقدير لم يرها صاحبها لم تحدث.
+        </p>
+
 
         <h3 style="font-size:17px; margin-block-start:6px">نبرة الصوت: قُل هذا لا ذاك</h3>
         <div class="tone">
@@ -870,10 +1360,11 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 8 · التقويم -->
     <section id="s8">
       <div class="sec-head">
-        <span class="sec-num">القسم الثامن</span>
+        <span class="sec-num both">المساران</span>
         <h2>تقويم الرسائل السنوي</h2>
         <p class="note">
           خطة ثابتة تُبنى مرة وتُشغَّل سنويًا، مع مسار مستمر لا يرتبط بشهر معيّن.
+          عمود «الجمهور» هو ما يمنع إغراق الـ٥٠٠ برسائل لا تخصهم.
           المواعيد الدينية تُضبط على التقويم الهجري كل عام.
         </p>
       </div>
@@ -882,21 +1373,21 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
         <div class="tablewrap">
           <table>
             <thead>
-              <tr><th>الشهر</th><th>المناسبة</th><th>نوع الرسالة</th><th>المُرسِل</th></tr>
+              <tr><th>الشهر</th><th>المناسبة</th><th>نوع الرسالة</th><th>الجمهور</th><th>المُرسِل</th></tr>
             </thead>
             <tbody>
-              <tr><td>يناير</td><td>انطلاقة العام وأهدافه</td><td><span class="pill lead">رسالة قيادة</span></td><td>الرئيس التنفيذي</td></tr>
-              <tr><td>فبراير</td><td>يوم التأسيس · ٢٢ فبراير</td><td><span class="pill news">اعتزاز وانتماء</span></td><td>الاتصال المؤسسي</td></tr>
-              <tr><td>مارس</td><td>رمضان · جداول مرنة</td><td><span class="pill care">رعاية</span></td><td>الموارد البشرية</td></tr>
-              <tr><td>أبريل</td><td>عيد الفطر + نتائج الربع الأول</td><td><span class="pill care">تهنئة</span> <span class="pill rec">تكريم</span></td><td>الموارد البشرية</td></tr>
-              <tr><td>مايو</td><td>شهر السلامة</td><td><span class="pill news">توعية محفّزة</span></td><td>السلامة + الموارد البشرية</td></tr>
-              <tr><td>يونيو</td><td>استعداد موسم الصيف</td><td><span class="pill lead">تعبئة وتحفيز</span></td><td>العمليات</td></tr>
-              <tr><td>يوليو</td><td>ذروة الموسم</td><td><span class="pill rec">تقدير أسبوعي مكثّف</span></td><td>الموارد البشرية</td></tr>
-              <tr><td>أغسطس</td><td>عيد الأضحى + منتصف الموسم</td><td><span class="pill care">تهنئة</span> <span class="pill rec">شكر</span></td><td>الموارد البشرية</td></tr>
-              <tr><td>سبتمبر</td><td>اليوم الوطني · ٢٣ سبتمبر</td><td><span class="pill news">فخر وطني</span></td><td>الاتصال المؤسسي</td></tr>
-              <tr><td>أكتوبر</td><td>موسم التطوير والمهارات</td><td><span class="pill news">دعوة تدريب</span></td><td>التدريب</td></tr>
-              <tr><td>نوفمبر</td><td>صوتك يهمّنا · استبيان الرضا</td><td><span class="pill care">دعوة مشاركة</span></td><td>الموارد البشرية</td></tr>
-              <tr><td>ديسمبر</td><td>حصاد العام + سفير العام</td><td><span class="pill rec">تكريم ختامي</span></td><td>الرئيس التنفيذي</td></tr>
+              <tr><td>يناير</td><td>انطلاقة العام وأهدافه</td><td><span class="pill lead">رسالة قيادة</span></td><td><span class="pill tb">الجميع</span></td><td>الرئيس التنفيذي</td></tr>
+              <tr><td>فبراير</td><td>يوم التأسيس · ٢٢ فبراير</td><td><span class="pill news">اعتزاز وانتماء</span></td><td><span class="pill tb">الجميع</span></td><td>الاتصال المؤسسي</td></tr>
+              <tr><td>مارس</td><td>رمضان · جداول مرنة</td><td><span class="pill care">رعاية</span></td><td><span class="pill tb">الجميع</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>أبريل</td><td>عيد الفطر + نتائج الربع الأول</td><td><span class="pill care">تهنئة</span> <span class="pill rec">تكريم</span></td><td><span class="pill tb">الجميع</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>مايو</td><td>شهر السلامة</td><td><span class="pill news">توعية محفّزة</span></td><td><span class="pill tf">الميدان</span></td><td>السلامة والصحة والبيئة</td></tr>
+              <tr><td>يونيو</td><td>استعداد موسم الصيف</td><td><span class="pill lead">تعبئة وتحفيز</span></td><td><span class="pill tf">الميدان</span> <span class="pill to">الإدارات الساندة</span></td><td>العمليات</td></tr>
+              <tr><td>يوليو</td><td>ذروة الموسم</td><td><span class="pill rec">تقدير أسبوعي مكثّف</span></td><td><span class="pill tf">الميدان</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>أغسطس</td><td>عيد الأضحى + منتصف الموسم</td><td><span class="pill care">تهنئة</span> <span class="pill rec">شكر</span></td><td><span class="pill tb">الجميع</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>سبتمبر</td><td>اليوم الوطني · ٢٣ سبتمبر</td><td><span class="pill news">فخر وطني</span></td><td><span class="pill tb">الجميع</span></td><td>الاتصال المؤسسي</td></tr>
+              <tr><td>أكتوبر</td><td>موسم التطوير والمهارات</td><td><span class="pill news">دعوة تدريب</span></td><td><span class="pill tb">الجميع</span> · بمسارين منفصلين</td><td>التدريب والتطوير</td></tr>
+              <tr><td>نوفمبر</td><td>صوتك يهمّنا · استبيان الرضا</td><td><span class="pill care">دعوة مشاركة</span></td><td><span class="pill tb">الجميع</span></td><td>الموارد البشرية</td></tr>
+              <tr><td>ديسمبر</td><td>حصاد العام + سفير العام</td><td><span class="pill rec">تكريم ختامي</span></td><td><span class="pill tb">الجميع</span></td><td>الرئيس التنفيذي</td></tr>
             </tbody>
           </table>
         </div>
@@ -904,16 +1395,33 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
         <h3 style="font-size:16px; margin-block-start:18px">المسار المستمر — لا يرتبط بشهر</h3>
         <div class="tablewrap">
           <table>
-            <thead><tr><th>الرسالة</th><th>المُشغِّل</th><th>الدورية</th><th>المهلة القصوى</th></tr></thead>
+            <thead><tr><th>الرسالة</th><th>المُشغِّل</th><th>الجمهور</th><th>المهلة القصوى</th></tr></thead>
             <tbody>
-              <tr><td>ترحيب بموظف جديد</td><td>مباشرة العمل</td><td>لكل موظف</td><td>اليوم الأول</td></tr>
-              <tr><td>شكر فوري</td><td>ترشيح من مدير أو إشادة عميل</td><td>عند الحدث</td><td>٤٨ ساعة</td></tr>
-              <tr><td>نجم الشهر</td><td>قرار لجنة التقدير</td><td>شهريًا</td><td>أول ٣ أيام من الشهر</td></tr>
-              <tr><td>ذكرى الانضمام</td><td>تاريخ المباشرة</td><td>سنويًا</td><td>في اليوم نفسه</td></tr>
-              <tr><td>النشرة الداخلية «من الطريق»</td><td>مجدولة</td><td>شهريًا</td><td>أول أحد من الشهر</td></tr>
-              <tr><td>دعوة حملة محتوى</td><td>إطلاق حملة</td><td>ربعيًا</td><td>قبل أسبوع من الحملة</td></tr>
+              <tr><td>ترحيب بموظف جديد</td><td>مباشرة العمل</td><td><span class="pill tb">فرد</span> · نسختان حسب المسار</td><td>اليوم الأول</td></tr>
+              <tr><td>شكر فوري</td><td>ترشيح مدير أو إشادة عميل</td><td><span class="pill tf">فرد ميداني</span></td><td>٤٨ ساعة</td></tr>
+              <tr><td>شكر متقاطع بين إدارتين</td><td>ترشيح من إدارة مستفيدة</td><td><span class="pill to">فرد مكتبي</span> + إدارته</td><td>٤٨ ساعة</td></tr>
+              <tr><td>تقدير «خدمة الميدان»</td><td>ترشيح من محطة لموظف مكتبي</td><td><span class="pill to">فرد مكتبي</span></td><td>٤٨ ساعة</td></tr>
+              <tr><td>نجم الميدان</td><td>قرار لجنة التقدير</td><td><span class="pill tf">الميدان</span></td><td>أول ٣ أيام من الشهر</td></tr>
+              <tr><td>نجم المكاتب</td><td>قرار لجنة التقدير</td><td><span class="pill to">المكاتب</span></td><td>أول ٣ أيام من الشهر</td></tr>
+              <tr><td>إدارة تعرّف بنفسها</td><td>دورة الإدارات الـ١٢</td><td><span class="pill tb">الجميع</span></td><td>شهريًا · إدارة واحدة</td></tr>
+              <tr><td>ذكرى الانضمام</td><td>تاريخ المباشرة</td><td><span class="pill tb">فرد</span></td><td>في اليوم نفسه</td></tr>
+              <tr><td>النشرة الداخلية «من الطريق»</td><td>مجدولة</td><td><span class="pill tb">الجميع</span></td><td>أول أحد من الشهر</td></tr>
+              <tr><td>دعوة حملة محتوى</td><td>إطلاق حملة</td><td><span class="pill tb">الجميع</span> · بنصين مختلفين</td><td>قبل أسبوع من الحملة</td></tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="callout" style="margin-block-start:16px">
+          <span class="ci" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M8 12h8"/><path d="M12 8v8"/>
+            </svg>
+          </span>
+          <p>
+            <b>«إدارة تعرّف بنفسها» هي أرخص علاج للصوامع.</b> اثنتا عشرة إدارة تعني اثني عشر شهرًا:
+            كل شهر إدارة تكتب في النشرة من هي، ماذا تفعل فعلًا، ومتى يجب أن يتواصل معها الآخرون.
+            بعد سنة يعرف كل موظف في درب إلى أين يذهب بطلبه — وهذا وحده يقلّل نصف الاحتكاك الداخلي.
+          </p>
         </div>
       </div>
     </section>
@@ -923,11 +1431,11 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 9 · القوالب النصية -->
     <section id="s9">
       <div class="sec-head">
-        <span class="sec-num">القسم التاسع</span>
+        <span class="sec-num both">المساران</span>
         <h2>القوالب الجاهزة للإرسال</h2>
         <p class="note">
-          ثمانية قوالب مكتوبة بالكامل. انسخ النص، بدّل الحقول بين
-          <code>{{ }}</code>، وأدرجه داخل القالب البصري في القسم العاشر.
+          ثلاثة عشر قالبًا مكتوبة بالكامل — ثمانية مشتركة أو ميدانية، وخمسة للمكاتب.
+          انسخ النص، بدّل الحقول بين <code>{{ }}</code>، وأدرجه داخل القالب البصري.
         </p>
       </div>
 
@@ -1147,6 +1655,151 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             <button class="copy" type="button" data-copy="t8">نسخ النص</button></div>
         </article>
 
+        <h3 style="font-size:17px; margin-block-start:14px; color:var(--green)">قوالب مسار المكاتب</h3>
+
+        <!-- T9 -->
+        <article class="mail" style="border-color:color-mix(in srgb,var(--green) 30%,transparent)">
+          <div class="mtop"><span class="code" style="background:var(--green-soft); color:var(--green)">T-09</span><h3>شكر متقاطع بين إدارتين</h3><span class="when">خلال ٤٨ ساعة</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>{{DEPT_FROM}} تشكر {{FIRST_NAME}} من {{DEPT_TO}}</b></div>
+            <div><span>نص المعاينة</span><b>شهادة من إدارة استفادت فعلًا، لا مجاملة.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+وصلَنا ترشيح باسمك من {{DEPT_FROM}}، وهذا نصّه كما كتبوه:
+
+«{{NOMINATION_TEXT}}»
+
+نحب نوقف عند نقطة: هذا الترشيح ما جاء من مديرك، جاء من إدارة ثانية استفادت من شغلك. وهذي أصدق شهادة يقدر يحصل عليها موظف مكتبي — لأن الشغل المكتبي الجيد عادة ما يشوفه أحد إلا اللي انتفع منه.
+
+نسخة من هذي الرسالة وصلت {{MANAGER_NAME}} ومدير إدارتك، وانضافت لملفك المهني.
+
+شكرًا،
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">نسخة لمدير الإدارة ولمدير الإدارة المُرشِّحة · الزر: لا يلزم</span>
+            <button class="copy" type="button" data-copy="t9">نسخ النص</button></div>
+        </article>
+
+        <!-- T10 -->
+        <article class="mail" style="border-color:color-mix(in srgb,var(--green) 30%,transparent)">
+          <div class="mtop"><span class="code" style="background:var(--green-soft); color:var(--green)">T-10</span><h3>تقدير «خدمة الميدان»</h3><span class="when">خلال ٤٨ ساعة</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>محطة {{STATION}} ترشّحك، {{FIRST_NAME}}</b></div>
+            <div><span>نص المعاينة</span><b>الميدان لاحظ شغلك — وهذا نادر.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+ترشيحك ما جاء من المقر. جاء من {{STATION}}.
+
+كتب لنا {{NOMINATOR_NAME}}:
+«{{NOMINATION_TEXT}}»
+
+في درب نقيس الإدارات المكتبية بمقياس واحد قبل أي مقياس: هل سهّلت على المحطة أو عقّدت عليها؟ وأنت هالمرة سهّلت.
+
+المحطة اللي شغلها ماشي بسبب استجابتك تخدم يوميًا مئات العملاء. أثرك وصلهم وإن ما شفتهم.
+
+شكرًا،
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">أقوى قالب في المسار المكتبي — لا تُخفّف صياغته · الزر: لا يلزم</span>
+            <button class="copy" type="button" data-copy="t10">نسخ النص</button></div>
+        </article>
+
+        <!-- T11 -->
+        <article class="mail" style="border-color:color-mix(in srgb,var(--green) 30%,transparent)">
+          <div class="mtop"><span class="code" style="background:var(--green-soft); color:var(--green)">T-11</span><h3>نجم المكاتب لهذا الشهر</h3><span class="when">أول ٣ أيام من الشهر</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>نجم المكاتب لشهر {{MONTH}}: {{STAR_NAME}}</b></div>
+            <div><span>نص المعاينة</span><b>{{DEPARTMENT}} — والسبب بالتفصيل.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">زملاء درب،
+
+نجم المكاتب لهذا الشهر: {{STAR_NAME}} — {{STAR_ROLE}}، إدارة {{DEPARTMENT}}.
+
+قبل السبب، جملة مهمة: تكريم موظف مكتبي أصعب من تكريم موظف محطة، لأن شغل المكتب ما له مشهد يُروى. علشان كذا نكتب السبب بالتفصيل — عشان يُرى.
+
+ما الذي فعله:
+{{REASON_BULLET_1}}
+{{REASON_BULLET_2}}
+{{REASON_BULLET_3}}
+
+من استفاد: {{WHO_BENEFITED}}
+
+{{STAR_FIRST_NAME}}، مبروك. التكريم: {{REWARD}}.
+
+ولبقية الزملاء: إذا إدارة ثانية سهّلت عليك شغلك هذا الشهر، رشّح صاحبها. الترشيح المتقاطع مفتوح للجميع، وما يحتاج إذن مديرك.
+
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">الزر: «رشّح زميلًا من إدارة أخرى» · تُرسل لقائمة المكاتب</span>
+            <button class="copy" type="button" data-copy="t11">نسخ النص</button></div>
+        </article>
+
+        <!-- T12 -->
+        <article class="mail" style="border-color:color-mix(in srgb,var(--green) 30%,transparent)">
+          <div class="mtop"><span class="code" style="background:var(--green-soft); color:var(--green)">T-12</span><h3>إدارة تعرّف بنفسها</h3><span class="when">شهريًا · إدارة واحدة</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>تعرّف على {{DEPARTMENT}} — وش تسوي بالضبط</b></div>
+            <div><span>نص المعاينة</span><b>ومتى المفروض تتواصل معهم.</b></div>
+            <div><span>المُرسِل</span><b>سفير الإدارة · درب</b></div>
+          </div>
+          <div class="mbodytxt">زملاء درب،
+
+هذا الشهر نفتح باب إدارة {{DEPARTMENT}}.
+
+■ من نحن
+{{TEAM_SIZE}} زميلًا، يقودهم {{DEPT_HEAD}}.
+
+■ وش نسوي فعلًا
+{{WHAT_WE_DO_1}}
+{{WHAT_WE_DO_2}}
+{{WHAT_WE_DO_3}}
+
+■ متى تتواصل معنا
+{{WHEN_TO_CONTACT}}
+
+■ متى ما نكون الجهة الصحيحة
+{{WHEN_NOT_US}} — بهذي الحالة توجّه لـ{{RIGHT_DEPT}} مباشرة وتوفّر على نفسك أسبوعًا.
+
+■ أسرع طريقة توصلنا
+{{CONTACT_CHANNEL}} — ونرد خلال {{SLA}}.
+
+■ شيء ما تعرفونه عنّا
+{{SURPRISING_FACT}}
+
+{{AMBASSADOR_NAME}}
+سفير إدارة {{DEPARTMENT}}</div>
+          <div class="mfoot"><span class="hint">يكتبها سفير الإدارة · دورة ١٢ شهرًا تغطي كل الإدارات · الزر: «دليل الإدارات»</span>
+            <button class="copy" type="button" data-copy="t12">نسخ النص</button></div>
+        </article>
+
+        <!-- T13 -->
+        <article class="mail" style="border-color:color-mix(in srgb,var(--green) 30%,transparent)">
+          <div class="mtop"><span class="code" style="background:var(--green-soft); color:var(--green)">T-13</span><h3>استبيان العميل الداخلي</h3><span class="when">ربعيًا</span></div>
+          <div class="meta">
+            <div><span>الموضوع</span><b>٣ أسئلة عن الإدارات اللي تتعامل معها</b></div>
+            <div><span>نص المعاينة</span><b>دقيقتان — والنتائج تُنشر بالكامل.</b></div>
+            <div><span>المُرسِل</span><b>الموارد البشرية · درب</b></div>
+          </div>
+          <div class="mbodytxt">{{FIRST_NAME}}،
+
+ثلاثة أسئلة، دقيقتان، وبدون اسمك.
+
+السؤال هو: الإدارات اللي تعاملت معها هذا الربع — كيف كانت؟
+• هل وصلك رد في وقت معقول؟
+• هل التزموا بالوعد اللي أعطوك إياه؟
+• وش الشي الوحيد اللي لو تغيّر يسهّل شغلك؟
+
+ليش نسأل: لأن كل إدارة في درب لها عميل داخلي، ومن غير المنطقي نقيس رضا العميل في المحطة ولا نقيس رضاك أنت.
+
+وعدنا: النتائج تُنشر كاملة على الجميع — بالجيد والسيئ — مع خطة الإدارات اللي جاءت أقل من المتوقع. استبيان تختفي نتائجه لا يستحق دقيقتين من وقتك، ونعرف ذلك.
+
+إدارة الموارد البشرية — محطات درب</div>
+          <div class="mfoot"><span class="hint">مجهول الهوية إلزاميًا · نشر النتائج شرط لمصداقية الاستبيان القادم · الزر: «ابدأ الاستبيان»</span>
+            <button class="copy" type="button" data-copy="t13">نسخ النص</button></div>
+        </article>
+
       </div>
     </section>
 
@@ -1155,7 +1808,7 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 10 · القالب البصري -->
     <section id="s10">
       <div class="sec-head">
-        <span class="sec-num">القسم العاشر</span>
+        <span class="sec-num both">المساران</span>
         <h2>القالب البصري للإيميل</h2>
         <p class="note">
           قالب واحد موحّد بهوية درب، مبني بجداول HTML ليعمل في Outlook وGmail وتطبيقات الجوال،
@@ -1246,30 +1899,66 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
 
     <hr class="lane">
 
+    <!-- ═══ الجزء الخامس ═══ -->
+    <div class="part-head">
+      <span class="pn">الجزء الخامس</span>
+      <div>
+        <h2>التشغيل والقياس</h2>
+        <p>ما يحوّل الدليل من وثيقة معتمدة إلى برنامج يعمل فعلًا: مؤشرات، خطة إطلاق، وحوكمة.</p>
+      </div>
+    </div>
+
     <!-- 11 · المؤشرات -->
     <section id="s11">
       <div class="sec-head">
-        <span class="sec-num">القسم الحادي عشر</span>
+        <span class="sec-num both">المساران</span>
         <h2>كيف نعرف أن البرنامج يعمل</h2>
         <p class="note">
           المستهدفات أدناه نقطة انطلاق تُراجَع بعد الربع الأول على ضوء أرقام درب الفعلية،
-          لا أرقامًا نهائية. المهم أن يُقاس كل مؤشر من مصدر واحد ثابت.
+          لا أرقامًا نهائية. لكل مسار مؤشراته، لأن قياس المكتب بمقياس المحطة يعطي صورة كاذبة.
         </p>
       </div>
 
       <div class="sec-body wide">
+        <h3 style="font-size:16px">مؤشرات مشتركة</h3>
         <div class="tablewrap">
           <table>
             <thead><tr><th>المؤشر</th><th>مصدر القياس</th><th>مستهدف مقترح</th><th>الدورية</th></tr></thead>
             <tbody>
               <tr><td>نسبة فتح الرسائل</td><td>نظام البريد</td><td class="tnum">٥٥٪ فأعلى</td><td>شهريًا</td></tr>
               <tr><td>نسبة النقر على الزر</td><td>نظام البريد</td><td class="tnum">١٢٪ فأعلى</td><td>شهريًا</td></tr>
-              <tr><td>ترشيحات التقدير</td><td>نموذج الترشيح</td><td>ترشيح واحد على الأقل من كل محطة</td><td>شهريًا</td></tr>
               <tr><td>زمن إغلاق حلقة التقدير</td><td>سجل الموارد البشرية</td><td class="tnum">٤٨ ساعة كحد أقصى</td><td>مستمر</td></tr>
-              <tr><td>مشاركة الموظفين في الحملات</td><td>صندوق المشاركات</td><td class="tnum">٢٠٪ من الموظفين</td><td>ربعيًا</td></tr>
               <tr><td>رضا الموظفين eNPS</td><td>استبيان داخلي</td><td>تحسّن عن القياس السابق</td><td>نصف سنوي</td></tr>
-              <tr><td>تقييم العميل للمحطة</td><td>قنوات التقييم المتاحة</td><td>اتجاه صاعد ربعًا بعد ربع</td><td>ربعيًا</td></tr>
               <tr><td>دوران الموظفين</td><td>الموارد البشرية</td><td>انخفاض مقارنة بالعام السابق</td><td>سنويًا</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:18px; color:var(--amber-2)">مؤشرات الميدان</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>المؤشر</th><th>مصدر القياس</th><th>مستهدف مقترح</th><th>الدورية</th></tr></thead>
+            <tbody>
+              <tr><td>ترشيحات المحطات</td><td>نموذج الترشيح</td><td>ترشيح واحد على الأقل من كل محطة</td><td>شهريًا</td></tr>
+              <tr><td>تقييم العميل للمحطة</td><td>قنوات التقييم المتاحة</td><td>اتجاه صاعد ربعًا بعد ربع</td><td>ربعيًا</td></tr>
+              <tr><td>وصول التقدير بطبقتين</td><td>سجل الإرسال</td><td class="tnum">١٠٠٪ من رسائل التقدير</td><td>شهريًا</td></tr>
+              <tr><td>مشاركة الميدان في الحملات</td><td>صندوق المشاركات</td><td class="tnum">٢٠٪ من موظفي المحطات</td><td>ربعيًا</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:18px; color:var(--green)">مؤشرات المكاتب</h3>
+        <div class="tablewrap">
+          <table>
+            <thead><tr><th>المؤشر</th><th>مصدر القياس</th><th>مستهدف مقترح</th><th>الدورية</th></tr></thead>
+            <tbody>
+              <tr><td>رضا العميل الداخلي</td><td>استبيان الإدارات</td><td>لا إدارة تحت ٧ من ١٠</td><td>ربعيًا</td></tr>
+              <tr><td>زمن الرد على طلب محطة</td><td>نظام الطلبات أو البريد</td><td class="tnum">٤ ساعات عمل للإشعار</td><td>شهريًا</td></tr>
+              <tr><td>الترشيحات المتقاطعة</td><td>نموذج الترشيح</td><td>ترشيح واحد على الأقل من كل إدارة</td><td>شهريًا</td></tr>
+              <tr><td>ترشيحات واردة من المحطات للمكاتب</td><td>نموذج الترشيح</td><td class="tnum">٣ ترشيحات فأكثر</td><td>شهريًا</td></tr>
+              <tr><td>إبلاغ المرشحين بنتيجة المقابلة</td><td>الموارد البشرية</td><td class="tnum">١٠٠٪ خلال أسبوعين</td><td>شهريًا</td></tr>
+              <tr><td>الالتزام بمواعيد سداد الموردين</td><td>المالية</td><td>لا تأخير دون إبلاغ مسبق</td><td>ربعيًا</td></tr>
+              <tr><td>تغطية «إدارة تعرّف بنفسها»</td><td>سجل النشرة</td><td class="tnum">١٢ من ١٢</td><td>سنويًا</td></tr>
             </tbody>
           </table>
         </div>
@@ -1281,9 +1970,10 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             </svg>
           </span>
           <p>
-            <b>المؤشر الحقيقي ليس نسبة الفتح.</b> نسبة الفتح تقيس جودة العنوان فقط.
-            المؤشر الذي يستحق المتابعة الشهرية هو عدد الترشيحات القادمة من المدراء — لأنه يقيس
-            ما إذا كان البرنامج انتقل من الموارد البشرية إلى الميدان فعلًا.
+            <b>المؤشر الحقيقي ليس نسبة الفتح.</b> نسبة الفتح تقيس جودة العنوان فقط. المؤشران اللذان
+            يستحقان المتابعة الشهرية هما: <b>عدد الترشيحات القادمة من المدراء</b> — يقيس هل انتقل البرنامج
+            من الموارد البشرية إلى الميدان — و<b>عدد الترشيحات المتقاطعة بين الإدارات</b>، لأنه يقيس
+            شيئًا لا يقيسه غيره: هل الإدارات الاثنتا عشرة تعرف بعضها أصلًا.
           </p>
         </div>
       </div>
@@ -1294,10 +1984,10 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 12 · خطة الإطلاق -->
     <section id="s12">
       <div class="sec-head">
-        <span class="sec-num">القسم الثاني عشر</span>
+        <span class="sec-num both">المساران</span>
         <h2>خطة الإطلاق في ٩٠ يومًا</h2>
         <p class="note">
-          تسلسل مقصود: البنية أولًا، ثم المدراء، ثم الموظفون، ثم الحملة الخارجية.
+          تسلسل مقصود: البنية أولًا، ثم المدراء وسفراء الإدارات، ثم الموظفون، ثم الحملة الخارجية.
           تقديم أي مرحلة على ما قبلها يُفرغ البرنامج من مضمونه.
         </p>
       </div>
@@ -1309,43 +1999,46 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             <div>
               <h4>تجهيز البنية</h4>
               <ul>
-                <li>اعتماد الدليل والميثاق من الإدارة التنفيذية.</li>
+                <li>اعتماد الدليل والميثاقين من الإدارة التنفيذية.</li>
                 <li>تفعيل البريد الموحّد <code>DarbHR@Darbstations.com.sa</code> وضبط التوقيع.</li>
-                <li>رفع القالب البصري والقوالب الثمانية في نظام البريد.</li>
-                <li>بناء نموذج الترشيح الإلكتروني وربطه بصندوق الموارد البشرية.</li>
+                <li>بناء القوائم البريدية الست: الجميع · الميدان · المكاتب · كل إدارة · كل محطة · فرد.</li>
+                <li>رفع القالب البصري والقوالب الثلاثة عشر في نظام البريد.</li>
+                <li>بناء نموذجَي الترشيح — الميداني والمتقاطع — وربطهما بصندوق الموارد البشرية.</li>
               </ul>
             </div>
           </div>
           <div class="step">
             <span class="wk">أسبوع ٣–٤</span>
             <div>
-              <h4>تمكين المدراء</h4>
+              <h4>تمكين المدراء وتعيين سفراء الإدارات</h4>
               <ul>
-                <li>جلسة ٤٥ دقيقة لكل مدراء المحطات: لماذا البرنامج، وكيف يُرشَّح موظف.</li>
+                <li>جلسة ٤٥ دقيقة لمدراء المحطات: لماذا البرنامج، وكيف يُرشَّح موظف.</li>
+                <li>ترشيح سفير لكل إدارة من الإدارات الاثنتي عشرة، وجلسة منفصلة لهم.</li>
                 <li>تدريب عملي على كتابة سبب الترشيح في ثلاثة أسطر محددة.</li>
-                <li>الاتفاق على التزام: ترشيح واحد على الأقل من كل محطة شهريًا.</li>
+                <li>الاتفاق على التزامين: ترشيح شهري من كل محطة، وترشيح متقاطع من كل إدارة.</li>
               </ul>
             </div>
           </div>
           <div class="step">
             <span class="wk">أسبوع ٥–٦</span>
             <div>
-              <h4>الإطلاق الداخلي</h4>
+              <h4>الإطلاق الداخلي على المسارين</h4>
               <ul>
-                <li>رسالة القيادة تُعلن البرنامج وتشرح الغرض منه بصدق.</li>
-                <li>توقيع الميثاق في كل المحطات وتعليقه في الاستراحات.</li>
-                <li>إصدار أول نشرة «من الطريق».</li>
+                <li>رسالة القيادة تُعلن البرنامج وتشرح الغرض منه بصدق — لقائمة «الجميع».</li>
+                <li>توقيع ميثاق الميدان في المحطات، وميثاق المكاتب في المقر.</li>
+                <li>إصدار أول نشرة «من الطريق»، وفيها أول «إدارة تعرّف بنفسها».</li>
               </ul>
             </div>
           </div>
           <div class="step">
             <span class="wk">أسبوع ٧–٩</span>
             <div>
-              <h4>تشغيل حلقة التقدير</h4>
+              <h4>تشغيل حلقتَي التقدير</h4>
               <ul>
-                <li>بدء الشكر الفوري خلال ٤٨ ساعة بلا استثناء.</li>
-                <li>الإعلان عن أول «نجم درب» مع نشر السبب كاملًا.</li>
-                <li>مراجعة أسبوعية: أي محطة لم تُرشّح أحدًا، ولماذا.</li>
+                <li>بدء الشكر الفوري خلال ٤٨ ساعة بلا استثناء، على المسارين.</li>
+                <li>الإعلان عن أول «نجم الميدان» وأول «نجم المكاتب» مع نشر السببين كاملين.</li>
+                <li>مراجعة أسبوعية: أي محطة أو إدارة لم تُرشّح أحدًا، ولماذا.</li>
+                <li>إطلاق أول استبيان للعميل الداخلي ونشر نتائجه كاملة.</li>
               </ul>
             </div>
           </div>
@@ -1354,9 +2047,9 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
             <div>
               <h4>الخروج إلى الجمهور والقياس</h4>
               <ul>
-                <li>إطلاق أول حملة محتوى من مشاركات الموظفين.</li>
+                <li>إطلاق أول حملة محتوى بنصين: نص للميدان ونص للمكاتب.</li>
                 <li>إعادة نشر أفضل المشاركات على حسابات درب باسم أصحابها.</li>
-                <li>تقرير الربع الأول: المؤشرات، ما نجح، وما يُعدَّل قبل الربع الثاني.</li>
+                <li>تقرير الربع الأول لكل مسار على حدة، وما يُعدَّل قبل الربع الثاني.</li>
               </ul>
             </div>
           </div>
@@ -1369,8 +2062,8 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <!-- 13 · الحوكمة والنموذج -->
     <section id="s13">
       <div class="sec-head">
-        <span class="sec-num">القسم الثالث عشر</span>
-        <h2>الحوكمة ونموذج الترشيح</h2>
+        <span class="sec-num both">المساران</span>
+        <h2>الحوكمة ونماذج الترشيح</h2>
         <p class="note">قواعد تحمي البرنامج من التحول إلى بريد إداري، ونموذج يجعل الترشيح عملية دقيقة واحدة.</p>
       </div>
 
@@ -1391,23 +2084,51 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
           <div class="card">
             <h3 style="font-size:16px; margin-block-end:10px">لجنة التقدير</h3>
             <ul style="font-size:14.5px; color:var(--ink-2); line-height:1.75">
-              <li>ثلاثة أعضاء: الموارد البشرية، العمليات، والتسويق.</li>
-              <li>تجتمع مرة شهريًا قبل يوم ٢٨ لاعتماد نجم الشهر.</li>
-              <li>تُرجّح المواقف الموثقة بشهادة عميل أو زميل.</li>
+              <li>أربعة أعضاء: الموارد البشرية، العمليات، التسويق، وسفير إدارة بالتناوب.</li>
+              <li>تجتمع مرة شهريًا قبل يوم ٢٨ لاعتماد نجمَي الشهر — واحد لكل مسار.</li>
+              <li>تُرجّح المواقف الموثقة بشهادة عميل أو زميل أو محطة.</li>
               <li>لا يُكرَّم الموظف نفسه مرتين خلال ستة أشهر لضمان التوزيع.</li>
+              <li>تراقب توازن الإدارات: إدارة لم يُكرَّم أحد منها ستة أشهر تُبحث أسبابها.</li>
               <li>كل ترشيح مرفوض يصل صاحبه رد يوضّح السبب — لا تجاهل.</li>
             </ul>
           </div>
         </div>
 
-        <h3 style="font-size:16px; margin-block-start:20px">نموذج الترشيح — ست خانات فقط</h3>
+        <h3 style="font-size:16px; margin-block-start:20px; color:var(--amber-2)">نموذج الترشيح الميداني — ست خانات</h3>
         <div class="form-fields">
-          <div class="field"><span>الخانة ١</span><b>اسم المُرشَّح ومحطته</b><p>اسم كامل + المحطة أو الإدارة</p></div>
+          <div class="field"><span>الخانة ١</span><b>اسم المُرشَّح ومحطته</b><p>اسم كامل + المحطة</p></div>
           <div class="field"><span>الخانة ٢</span><b>تاريخ الموقف</b><p>اليوم والتاريخ تحديدًا</p></div>
           <div class="field"><span>الخانة ٣</span><b>ماذا حدث</b><p>ثلاثة أسطر كحد أقصى، بالوقائع لا بالأوصاف</p></div>
           <div class="field"><span>الخانة ٤</span><b>لماذا يستحق</b><p>ما الذي تجاوز فيه المطلوب منه نظاميًا</p></div>
           <div class="field"><span>الخانة ٥</span><b>هل يوجد شاهد أو دليل</b><p>شهادة عميل، زميل، أو تسجيل</p></div>
           <div class="field"><span>الخانة ٦</span><b>اسم المُرشِّح</b><p>المدير المباشر أو أي زميل</p></div>
+        </div>
+
+        <h3 style="font-size:16px; margin-block-start:20px; color:var(--green)">نموذج الترشيح المتقاطع — للمكاتب</h3>
+        <p class="body" style="margin-block-start:-4px">
+          نموذج مختلف عمدًا: لا يسأل «ماذا فعل» بل <b>«كيف أثّر عليك أنت»</b> — لأن المُرشِّح هنا
+          هو المستفيد لا المشرف، وهو وحده من يعرف حجم الأثر.
+        </p>
+        <div class="form-fields">
+          <div class="field"><span>الخانة ١</span><b>اسم المُرشَّح وإدارته</b><p>اسم كامل + الإدارة</p></div>
+          <div class="field"><span>الخانة ٢</span><b>أنت من أي جهة</b><p>إدارة أخرى أو محطة — لا ترشّح من إدارتك</p></div>
+          <div class="field"><span>الخانة ٣</span><b>ماذا كنت تحتاج</b><p>الطلب أو المشكلة التي كانت عندك</p></div>
+          <div class="field"><span>الخانة ٤</span><b>ماذا فعل هو</b><p>سطران، بالوقائع: متى ردّ وماذا قدّم</p></div>
+          <div class="field"><span>الخانة ٥</span><b>ما الفرق الذي أحدثه</b><p>وقت وُفّر، عطل تفادى، عميل ما وصله الأثر</p></div>
+          <div class="field"><span>الخانة ٦</span><b>اسمك</b><p>ويُنشر مع الترشيح — الشهادة الموقّعة أقوى</p></div>
+        </div>
+
+        <div class="callout" style="background:var(--green-soft); border-color:color-mix(in srgb,var(--green) 34%,transparent); margin-block-start:14px">
+          <span class="ci" aria-hidden="true" style="color:var(--green)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8V6a3 3 0 0 0-6 0"/><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M9 15h6"/>
+            </svg>
+          </span>
+          <p>
+            <b>لماذا مُنع الترشيح داخل الإدارة الواحدة؟</b> لأن الترشيح الداخلي يتحول خلال شهرين إلى
+            مجاملة متبادلة بين زملاء المكتب الواحد، فيفقد التكريم قيمته. اشتراط أن يأتي الترشيح من
+            جهة مستفيدة خارجية يجعله شهادة حقيقية — ويكشف في الوقت نفسه أي الإدارات تخدم غيرها فعلًا.
+          </p>
         </div>
 
         <div class="callout" style="margin-block-start:16px">
@@ -1430,20 +2151,26 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
   <nav class="rail" aria-label="فهرس الدليل">
     <h4>محتويات الدليل</h4>
     <ol>
-      <li class="part">الأساس</li>
+      <li class="part">١ · الأساس المشترك</li>
       <li><a href="#s1">لماذا الموظف هو الرسالة</a></li>
+      <li><a href="#s1b">مساران، رسالة واحدة</a></li>
       <li><a href="#s2">خمسة مبادئ تحكم البرنامج</a></li>
       <li><a href="#s3">من يفعل ماذا</a></li>
-      <li class="part">السلوك</li>
+      <li class="part">٢ · مسار الميدان</li>
       <li><a href="#s4">لحظات الحقيقة في المحطة</a></li>
-      <li><a href="#s5">ميثاق سفير درب</a></li>
+      <li><a href="#s5">ميثاق الميدان</a></li>
+      <li class="part">٣ · مسار المكاتب</li>
+      <li><a href="#s5a">لمن يعمل الموظف المكتبي</a></li>
+      <li><a href="#s5b">لحظات الحقيقة في المكتب</a></li>
+      <li><a href="#s5c">مصفوفة الإدارات الـ١٢</a></li>
+      <li><a href="#s5d">ميثاق المكاتب</a></li>
+      <li class="part">٤ · الحضور والتحفيز</li>
       <li><a href="#s6">الموظف على وسائل التواصل</a></li>
-      <li class="part">التحفيز بالبريد</li>
-      <li><a href="#s7">محرّك التحفيز</a></li>
+      <li><a href="#s7">محرّك التحفيز والتوزيع</a></li>
       <li><a href="#s8">تقويم الرسائل السنوي</a></li>
-      <li><a href="#s9">القوالب الجاهزة</a></li>
+      <li><a href="#s9">القوالب الـ١٣ الجاهزة</a></li>
       <li><a href="#s10">القالب البصري</a></li>
-      <li class="part">التشغيل</li>
+      <li class="part">٥ · التشغيل</li>
       <li><a href="#s11">كيف نعرف أنه يعمل</a></li>
       <li><a href="#s12">خطة ٩٠ يومًا</a></li>
       <li><a href="#s13">الحوكمة والترشيح</a></li>
@@ -1459,7 +2186,7 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
     <div class="inner">
       <div class="who">
         <b>سفير درب</b>
-        <p>دليل تفعيل دور الموظف في إيصال صورة إيجابية عن الشركة،<br>وبرنامج التحفيز الداخلي عبر البريد الإلكتروني.</p>
+        <p>دليل تفعيل دور الموظف في إيصال صورة إيجابية عن الشركة — في المحطة وفي المكتب —<br>وبرنامج التحفيز الداخلي عبر البريد الإلكتروني.</p>
       </div>
       <div class="contact">
         <b>محطات درب</b> · الاختيار الأول<br>
@@ -1468,7 +2195,7 @@ code{font-family:"IBM Plex Sans Arabic",ui-monospace,Menlo,Consolas,monospace; d
       </div>
     </div>
     <div class="rev">
-      <span>الإصدار <span class="tnum">1.0</span></span>
+      <span>الإصدار <span class="tnum">2.0</span> — مسارا الميدان والمكاتب</span>
       <span>المالك: إدارة الموارد البشرية</span>
       <span>الشريك: التسويق والاتصال المؤسسي</span>
       <span>المراجعة القادمة: بعد ١٢ شهرًا من الاعتماد</span>
