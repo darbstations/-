@@ -634,7 +634,7 @@ def station_body(a):
     </div>{ecob}'''
     return head + kpis + sig + grid
 
-MONTH_AR = {'2026-01':'يناير','2026-02':'فبراير','2026-03':'مارس','2026-04':'أبريل','2026-05':'مايو','2026-06':'يونيو'}
+MONTH_AR = {'2026-01':'يناير','2026-02':'فبراير','2026-03':'مارس','2026-04':'أبريل','2026-05':'مايو','2026-06':'يونيو','2026-07':'يوليو','2026-08':'أغسطس','2026-09':'سبتمبر','2026-10':'أكتوبر','2026-11':'نوفمبر','2026-12':'ديسمبر'}
 WD_AR = ['الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','الأحد']
 import datetime as _dt
 
@@ -675,6 +675,88 @@ def bars_chart(vals, labels, fmt, unit=''):
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
 CAND_CAUSES = ['ذروة موسم الحج','ارتفاع الحركة المرورية','إعلان أو تحويلة طريق','صيانة مضخات أو توقف جزئي','انقطاع منتج','منافس جديد قريب','تغيّر أسعار','حملة تسويقية','تغيّر فريق التشغيل','طقس أو أمطار','أعمال إنشائية مجاورة','موسم إجازات أو عودة مدارس']
+
+def _camp_hours_svg(vis):
+    W, H, PB = 1100, 250, 34
+    mx = max(vis) or 1
+    slot = (W-24)/24; bw = slot-8
+    out = ['<defs><linearGradient id="gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    for h, v in enumerate(vis):
+        x = 12 + h*slot + 4
+        bh = max(2, v/mx*(H-64))
+        fill = 'url(#gC)' if 17 <= h <= 20 else 'var(--bar)'
+        out.append(f'<rect x="{x:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="6" fill="{fill}"/>')
+        if v: out.append(f'<text x="{x+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ink)">{v}</text>')
+        out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
+    x17 = 12 + 17*slot + 4
+    out.append(f'<line x1="{x17-4:.1f}" y1="14" x2="{x17-4:.1f}" y2="{H-PB}" stroke="#C0503A" stroke-width="2" stroke-dasharray="5 4"/>')
+    out.append(f'<text x="{x17+2:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">انطلاق الحملة 5م</text>')
+    return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def nj219_campaign():
+    try:
+        tx = json.load(open('nj219_tx.json'))
+    except FileNotFoundError:
+        return ''
+    jul = [f'2026-07-{i:02d}' for i in range(1, 32)]
+    def per(days):
+        T = [t for t in tx if t['d'] in days]
+        n = len(T); rev = sum(t['amt'] for t in T); vol = sum(t['vol'] for t in T); nd = len(days)
+        return dict(nd=nd, n=n, n_d=n/nd, rev_d=rev/nd, vol_d=vol/nd, inv=(rev/n if n else 0))
+    pre, camp = per(jul[0:3]), per([jul[3]])
+    wk, rest, aft = per(jul[4:11]), per(jul[11:31]), per(jul[4:31])
+    C = [t for t in tx if t['d'] == '2026-07-04']
+    ex50 = [t for t in C if abs(t['amt']-50) < 0.005]
+    zero = sum(1 for t in C if t['amt'] == 0)
+    ex50_pre = sum(1 for t in tx if t['d'] in jul[0:3] and abs(t['amt']-50) < 0.005) / 3
+    vouchers = len(ex50) - ex50_pre + zero
+    ex50_cash = sum(1 for t in ex50 if t['pay'] == 'Cash'); ex50_card = sum(1 for t in ex50 if t['pay'] == 'Card')
+    vis_h = [0]*24
+    for t in C: vis_h[t['h']] += 1
+    def lift(a, b):
+        ch = (a/b-1)*100
+        return f'+{ch:.0f}٪' if ch >= 0 else f'{ch:.0f}٪'
+    def cell(a, b):
+        ch = (a/b-1)*100
+        cls = 'up' if ch >= 0 else 'dn'
+        return f'<span class="{cls}">{"+" if ch>=0 else ""}{ch:.0f}٪</span>'
+    rowsdef = [
+        ('قبل الحملة (١–٣ يوليو)', pre, 'الأساس'),
+        ('يوم الحملة (الجمعة ٤ يوليو) 🎁', camp, None),
+        ('الأسبوع التالي (٥–١١ يوليو)', wk, None),
+        ('بقية الشهر (١٢–٣١ يوليو)', rest, None),
+        ('كامل ما بعد الحملة (٥–٣١ يوليو)', aft, None),
+    ]
+    trs = ''
+    for lab, p, base in rowsdef:
+        chv = base or cell(p['n_d'], pre['n_d'])
+        chr_ = base or cell(p['rev_d'], pre['rev_d'])
+        hl = ' style="background:rgba(243,112,33,.07)"' if '🎁' in lab else ''
+        trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{chv}</td><td>{chr_}</td></tr>'''
+    return f'''
+    <div class="sec-h" style="margin-top:26px"><h2>🎁 حملة البنزين المجاني — الجمعة ٤ يوليو 2026</h2><span>بنزين مجاني بقيمة 50 ر.س لأول 300 سيارة</span></div>
+    <div class="card" style="border:2px solid rgba(243,112,33,.4)">
+      <div class="cs" style="margin-bottom:12px">نفّذت المحطة حملة «البنزين المجاني بقيمة 50 ر.س لأول 300 سيارة» يوم الجمعة ٤ يوليو. تُظهر بيانات المعاملات أن الحملة انطلقت فعليًا الساعة 5 مساءً — الساعة 4–5م سجلت صفر عمليات (إغلاق تجهيزي)، ثم قفزت الحركة إلى 163 عملية في ساعة الذروة 6–7م (~2.7 عملية بالدقيقة).</div>
+      <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi hot"><div class="kl">عمليات يوم الحملة</div><div class="kv">{camp['n']}</div><div class="kn">{lift(camp['n_d'], pre['n_d'])} عن متوسط ١–٣ يوليو ({n0(pre['n_d'])}/يوم)</div></div>
+        <div class="kpi"><div class="kl">لترات يوم الحملة</div><div class="kv">{n0(camp['vol_d'])}</div><div class="kn">{lift(camp['vol_d'], pre['vol_d'])} عن متوسط ما قبل الحملة</div></div>
+        <div class="kpi"><div class="kl">إيراد يوم الحملة</div><div class="kv">{sar(camp['rev_d'])}</div><div class="kn">{lift(camp['rev_d'], pre['rev_d'])} عن متوسط ما قبل الحملة</div></div>
+        <div class="kpi"><div class="kl">قسائم مقدّرة</div><div class="kv">~{vouchers:.0f}</div><div class="kn">{len(ex50)} عملية بقيمة 50 ر.س بالضبط (مقابل ~{ex50_pre:.0f}/يوم عادةً) + {zero} مجانية بالكامل</div></div>
+      </div>
+      <div class="chartbox"><h3>عمليات يوم الحملة ساعة بساعة</h3><div class="cs">الأعمدة البرتقالية = ساعات الحملة (5م–9م) · لاحظ التوقف الكامل 4–5م ثم الذروة الاستثنائية 6–7م</div>{_camp_hours_svg(vis_h)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>المقارنة: قبل الحملة → يومها → بعدها</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام</span></div>
+      <div class="ntable"><div class="tscroll"><table>
+        <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
+        <tbody>{trs}</tbody></table></div></div>
+      <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
+        <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
+          <li><b>أثناء الحملة:</b> {camp['n']} عملية يوم ٤ يوليو مقابل {n0(aft['n_d'])} عملية/يوم في المتوسط بعدها — أي أعلى بـ{lift(camp['n_d'], aft['n_d'])}، وأعلى بـ{lift(camp['n_d'], pre['n_d'])} من متوسط الأيام الثلاثة قبلها.</li>
+          <li><b>أثر باقٍ بعد الحملة:</b> متوسط العمليات اليومية بعد الحملة ({n0(aft['n_d'])}/يوم) أعلى بـ{lift(aft['n_d'], pre['n_d'])} من مستواه قبلها ({n0(pre['n_d'])}/يوم)، والإيراد اليومي أعلى بـ{lift(aft['rev_d'], pre['rev_d'])} — الحملة اجتذبت عملاء واصلوا التعبئة من المحطة، والأثر أقوى في الأسبوع الأول ({lift(wk['n_d'], pre['n_d'])} عمليات) ثم استقر عند {lift(rest['n_d'], pre['n_d'])} في بقية الشهر.</li>
+          <li><b>الفاتورة لم تتأثر سلبًا:</b> {camp['inv']:.1f} ر.س يوم الحملة مقابل {pre['inv']:.1f} قبلها، وارتفعت إلى {aft['inv']:.1f} بعدها.</li>
+          <li><b>آلية القسائم:</b> {len(ex50)} عملية بقيمة 50 ر.س بالضبط يوم الحملة ({ex50_cash} نقدًا / {ex50_card} بطاقة) مقابل ~{ex50_pre:.0f} عملية مماثلة في اليوم العادي، إضافة إلى {zero} عملية بقيمة صفر — أي ~{vouchers:.0f} عملية إضافية تطابق تقريبًا سقف «أول 300 سيارة» المعلن وتؤكد انضباط تنفيذ العرض.</li>
+        </ul></div>
+      <div class="dnote">المصدر: ملفا معاملات درب المركب NJ219 لشهري يونيو ويوليو 2026 (10,406 عملية بيع). المتوسطات محسوبة على الأيام المسجلة فعليًا.</div>
+    </div>'''
 
 def month_cards(code, mm, keys):
     ov = BYCODE[code]['overall']
@@ -766,7 +848,8 @@ def monthly_body(a):
       <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
       <tbody>{fuel_rows}</tbody></table></div></div>
     <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>
-    {month_cards(code, mm, keys)}'''
+    {month_cards(code, mm, keys)}
+    {nj219_campaign() if code == 'NJ219' else ''}'''
 
 def daily_line_chart(daily):
     if len(daily) < 2: return ''
