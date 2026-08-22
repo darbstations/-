@@ -684,13 +684,13 @@ def _camp_hours_svg(vis):
     for h, v in enumerate(vis):
         x = 12 + h*slot + 4
         bh = max(2, v/mx*(H-64))
-        fill = 'url(#gC)' if 17 <= h <= 20 else 'var(--bar)'
+        fill = 'url(#gC)' if h >= 18 else 'var(--bar)'
         out.append(f'<rect x="{x:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="6" fill="{fill}"/>')
         if v: out.append(f'<text x="{x+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ink)">{v}</text>')
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
-    x17 = 12 + 17*slot + 4
-    out.append(f'<line x1="{x17-4:.1f}" y1="14" x2="{x17-4:.1f}" y2="{H-PB}" stroke="#C0503A" stroke-width="2" stroke-dasharray="5 4"/>')
-    out.append(f'<text x="{x17+2:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">انطلاق الحملة 5م</text>')
+    x18 = 12 + 18*slot + 4
+    out.append(f'<line x1="{x18-4:.1f}" y1="14" x2="{x18-4:.1f}" y2="{H-PB}" stroke="#C0503A" stroke-width="2" stroke-dasharray="5 4"/>')
+    out.append(f'<text x="{x18-10:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">انطلاق الحملة 6م (المغرب)</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
 def nj219_campaign():
@@ -702,10 +702,11 @@ def nj219_campaign():
     def per(days):
         T = [t for t in tx if t['d'] in days]
         n = len(T); rev = sum(t['amt'] for t in T); vol = sum(t['vol'] for t in T); nd = len(days)
-        return dict(nd=nd, n=n, n_d=n/nd, rev_d=rev/nd, vol_d=vol/nd, inv=(rev/n if n else 0))
+        return dict(nd=nd, n=n, vol=vol, n_d=n/nd, rev_d=rev/nd, vol_d=vol/nd, inv=(rev/n if n else 0))
     pre, camp = per(jul[0:3]), per([jul[3]])
     wk, rest, aft = per(jul[4:11]), per(jul[11:31]), per(jul[4:31])
     C = [t for t in tx if t['d'] == '2026-07-04']
+    camp_win_vol = sum(t['vol'] for t in C if t['h'] >= 18)
     ex50 = [t for t in C if abs(t['amt']-50) < 0.005]
     zero = sum(1 for t in C if t['amt'] == 0)
     ex50_pre = sum(1 for t in tx if t['d'] in jul[0:3] and abs(t['amt']-50) < 0.005) / 3
@@ -722,7 +723,7 @@ def nj219_campaign():
         return f'<span class="{cls}">{"+" if ch>=0 else ""}{ch:.0f}٪</span>'
     rowsdef = [
         ('قبل الحملة (١–٣ يوليو)', pre, 'الأساس'),
-        ('يوم الحملة (الجمعة ٤ يوليو) 🎁', camp, None),
+        ('يوم الحملة (السبت ٤ يوليو) 🎁', camp, None),
         ('الأسبوع التالي (٥–١١ يوليو)', wk, None),
         ('بقية الشهر (١٢–٣١ يوليو)', rest, None),
         ('كامل ما بعد الحملة (٥–٣١ يوليو)', aft, None),
@@ -732,26 +733,33 @@ def nj219_campaign():
         chv = base or cell(p['n_d'], pre['n_d'])
         chr_ = base or cell(p['rev_d'], pre['rev_d'])
         hl = ' style="background:rgba(243,112,33,.07)"' if '🎁' in lab else ''
-        trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{chv}</td><td>{chr_}</td></tr>'''
+        trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td><b>{n0(p['vol'])}</b></td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{chv}</td><td>{chr_}</td></tr>'''
     return f'''
-    <div class="sec-h" style="margin-top:26px"><h2>🎁 حملة البنزين المجاني — الجمعة ٤ يوليو 2026</h2><span>بنزين مجاني بقيمة 50 ر.س لأول 300 سيارة</span></div>
+    <div class="sec-h" style="margin-top:26px"><h2>🎁 حملة البنزين المجاني — السبت ٤ يوليو 2026</h2><span>بنزين مجاني بقيمة 50 ر.س لأول 300 سيارة · الانطلاق الساعة 6م (المغرب)</span></div>
     <div class="card" style="border:2px solid rgba(243,112,33,.4)">
-      <div class="cs" style="margin-bottom:12px">نفّذت المحطة حملة «البنزين المجاني بقيمة 50 ر.س لأول 300 سيارة» يوم الجمعة ٤ يوليو. تُظهر بيانات المعاملات أن الحملة انطلقت فعليًا الساعة 5 مساءً — الساعة 4–5م سجلت صفر عمليات (إغلاق تجهيزي)، ثم قفزت الحركة إلى 163 عملية في ساعة الذروة 6–7م (~2.7 عملية بالدقيقة).</div>
+      <div class="cs" style="margin-bottom:12px">نفّذت المحطة حملة «البنزين المجاني بقيمة 50 ر.س لأول 300 سيارة» يوم السبت ٤ يوليو، وانطلقت الساعة 6 مساءً (المغرب). تُظهر بيانات المعاملات إغلاقًا تجهيزيًا كاملًا بين 4–5م (صفر عمليات)، وتوافدًا مبكرًا بين 5–6م (70 عملية)، ثم قفزت الحركة مع الانطلاق إلى 163 عملية في ساعة الذروة 6–7م (~2.7 عملية بالدقيقة).</div>
       <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
         <div class="kpi hot"><div class="kl">عمليات يوم الحملة</div><div class="kv">{camp['n']}</div><div class="kn">{lift(camp['n_d'], pre['n_d'])} عن متوسط ١–٣ يوليو ({n0(pre['n_d'])}/يوم)</div></div>
         <div class="kpi"><div class="kl">لترات يوم الحملة</div><div class="kv">{n0(camp['vol_d'])}</div><div class="kn">{lift(camp['vol_d'], pre['vol_d'])} عن متوسط ما قبل الحملة</div></div>
         <div class="kpi"><div class="kl">إيراد يوم الحملة</div><div class="kv">{sar(camp['rev_d'])}</div><div class="kn">{lift(camp['rev_d'], pre['rev_d'])} عن متوسط ما قبل الحملة</div></div>
         <div class="kpi"><div class="kl">قسائم مقدّرة</div><div class="kv">~{vouchers:.0f}</div><div class="kn">{len(ex50)} عملية بقيمة 50 ر.س بالضبط (مقابل ~{ex50_pre:.0f}/يوم عادةً) + {zero} مجانية بالكامل</div></div>
       </div>
-      <div class="chartbox"><h3>عمليات يوم الحملة ساعة بساعة</h3><div class="cs">الأعمدة البرتقالية = ساعات الحملة (5م–9م) · لاحظ التوقف الكامل 4–5م ثم الذروة الاستثنائية 6–7م</div>{_camp_hours_svg(vis_h)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>إجمالي اللترات: قبل الحملة → خلالها → بعدها</h2><span>مجاميع كل فترة كاملة</span></div>
+      <div class="skpis" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi"><div class="kl">قبل الحملة (١–٣ يوليو · 3 أيام)</div><div class="kv">{n0(pre['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(pre['vol_d'])} لتر/يوم</div></div>
+        <div class="kpi hot"><div class="kl">يوم الحملة (السبت ٤ يوليو)</div><div class="kv">{n0(camp['vol'])} <small>لتر</small></div><div class="kn">منها {n0(camp_win_vol)} لترًا ({camp_win_vol/camp['vol']*100:.0f}٪) بعد الانطلاق 6م — يعادل {camp['vol']/pre['vol']*100:.0f}٪ من لترات الأيام الثلاثة قبله مجتمعة</div></div>
+        <div class="kpi"><div class="kl">بعد الحملة (٥–٣١ يوليو · 27 يومًا)</div><div class="kv">{n0(aft['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(aft['vol_d'])} لتر/يوم — {lift(aft['vol_d'], pre['vol_d'])} عن قبل الحملة</div></div>
+      </div>
+      <div class="chartbox"><h3>عمليات يوم الحملة ساعة بساعة</h3><div class="cs">الأعمدة البرتقالية = ما بعد انطلاق الحملة (6م المغرب حتى منتصف الليل) · توقف تجهيزي كامل 4–5م، توافد مبكر 5–6م، ثم الذروة الاستثنائية 6–7م</div>{_camp_hours_svg(vis_h)}</div>
       <div class="sec-h" style="margin-top:16px"><h2>المقارنة: قبل الحملة → يومها → بعدها</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام</span></div>
       <div class="ntable"><div class="tscroll"><table>
-        <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
+        <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
         <tbody>{trs}</tbody></table></div></div>
       <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
         <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
           <li><b>أثناء الحملة:</b> {camp['n']} عملية يوم ٤ يوليو مقابل {n0(aft['n_d'])} عملية/يوم في المتوسط بعدها — أي أعلى بـ{lift(camp['n_d'], aft['n_d'])}، وأعلى بـ{lift(camp['n_d'], pre['n_d'])} من متوسط الأيام الثلاثة قبلها.</li>
           <li><b>أثر باقٍ بعد الحملة:</b> متوسط العمليات اليومية بعد الحملة ({n0(aft['n_d'])}/يوم) أعلى بـ{lift(aft['n_d'], pre['n_d'])} من مستواه قبلها ({n0(pre['n_d'])}/يوم)، والإيراد اليومي أعلى بـ{lift(aft['rev_d'], pre['rev_d'])} — الحملة اجتذبت عملاء واصلوا التعبئة من المحطة، والأثر أقوى في الأسبوع الأول ({lift(wk['n_d'], pre['n_d'])} عمليات) ثم استقر عند {lift(rest['n_d'], pre['n_d'])} في بقية الشهر.</li>
+          <li><b>إجمالي اللترات:</b> {n0(pre['vol'])} لترًا في الأيام الثلاثة قبل الحملة، مقابل {n0(camp['vol'])} لترًا في يوم الحملة وحده (منها {n0(camp_win_vol)} لترًا بعد الانطلاق 6م)، ثم {n0(aft['vol'])} لترًا في الـ27 يومًا التالية بمعدل {n0(aft['vol_d'])} لترًا/يوم ({lift(aft['vol_d'], pre['vol_d'])} عن معدل ما قبل الحملة).</li>
           <li><b>الفاتورة لم تتأثر سلبًا:</b> {camp['inv']:.1f} ر.س يوم الحملة مقابل {pre['inv']:.1f} قبلها، وارتفعت إلى {aft['inv']:.1f} بعدها.</li>
           <li><b>آلية القسائم:</b> {len(ex50)} عملية بقيمة 50 ر.س بالضبط يوم الحملة ({ex50_cash} نقدًا / {ex50_card} بطاقة) مقابل ~{ex50_pre:.0f} عملية مماثلة في اليوم العادي، إضافة إلى {zero} عملية بقيمة صفر — أي ~{vouchers:.0f} عملية إضافية تطابق تقريبًا سقف «أول 300 سيارة» المعلن وتؤكد انضباط تنفيذ العرض.</li>
         </ul></div>
