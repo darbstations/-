@@ -221,6 +221,8 @@
   .caveat h4{font-size:.95rem;color:var(--gap)}
   .caveat p,.caveat li{font-size:.89rem;color:var(--ink)}
 
+  .calcrow{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+  .calcrow b{display:block;font-size:.92rem;margin-bottom:6px;color:var(--accent)}
   footer{border-top:1px solid var(--line-strong);padding-top:20px;font-size:.8rem;color:var(--ink-3);display:flex;flex-direction:column;gap:6px}
 
   @media (max-width:640px){
@@ -330,7 +332,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
           <tr><td><span class="code">MK099</span></td><td>الطائف • الجال</td><td>البيعة</td>
             <td class="num">١٥–٢٥ ألف</td><td class="num">٥٩٥</td><td class="num">٤٫٩</td><td class="num">٤</td><td class="num">٣</td></tr>
           <tr><td><span class="code">MK029</span></td><td>مكة • الرصيفة</td><td>الدائري الثالث</td>
-            <td class="num">٨٠–١١٠ ألف</td><td class="num">٤٣٨</td><td class="num">٤٫٧</td><td class="num">٤</td><td class="num">١٢</td></tr>
+            <td class="num">٤٦–٦٨ ألف</td><td class="num">٤٣٨</td><td class="num">٤٫٧</td><td class="num">٤</td><td class="num">١٢</td></tr>
         </tbody>
       </table>
     </div>
@@ -435,8 +437,8 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
           </div>
           <div class="row">
             <div class="row-label"><b>الحركة المرورية</b><span class="chip chip-est">تقدير هندسي</span></div>
-            <div class="row-body"><div class="metrics"><div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٨٠–١١٠ ألف</span></div><div class="metric"><span class="k">ساعة الذروة</span><span class="v">٧٬٢٠٠–٩٬٩٠٠</span></div><div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٩٠٠–١٬٦٠٠</span></div><div class="metric"><span class="k">مراجعات جوجل</span><span class="v">٤٣٨</span></div></div>
-              <p class="muted">الحساب: ٣ مسارات × ١٬٩٠٠ × اتجاهين × ٠٫٨٠ = ٩٬١٢٠ في الذروة ← ÷ ٠٫٠٩ = نحو ١٠١٬٠٠٠ يوميًا. لكن انتبه: <strong>عدد المراجعات ٤٣٨ فقط — الأدنى في المحفظة رغم أعلى حركة طريق.</strong> هذه فجوة صارخة بين حركة الطريق ونصيب المحطة منها، وأرجّح أنها نتيجة تقاسم الحركة مع أربع محطات درب مجاورة. لا تعتمد التقدير الأعلى هنا قبل مراجعة بيانات المضخات.</p></div>
+            <div class="row-body"><div class="metrics"><div class="metric hi"><span class="k">مركبة / يوم</span><span class="v">٤٦–٦٨ ألف</span></div><div class="metric"><span class="k">ساعة الذروة</span><span class="v">٤٬١٠٠–٦٬٢٠٠</span></div><div class="metric"><span class="k">دخول المحطة / يوم</span><span class="v">٥٠٠–٩٠٠</span></div><div class="metric"><span class="k">مراجعات جوجل</span><span class="v">٤٣٨</span></div></div>
+              <p class="muted"><strong>مُراجَع للأسفل:</strong> الحساب الآن ٣ مسارات × ١٬٩٠٠ × اتجاهين × <strong>٠٫٤٥</strong> = ٥٬١٣٠ في الذروة ← ÷ ٠٫٠٩ = نحو <strong>٥٧٬٠٠٠</strong> يوميًا. خفّضت نسبة الإشغال من ٠٫٨٠ إلى ٠٫٤٥ لأن الدائري الثالث ما زال قيد الاكتمال ولا يعمل بإشغال طريق ناضج. لكن انتبه: <strong>عدد المراجعات ٤٣٨ فقط — الأدنى في المحفظة رغم أعلى حركة طريق.</strong> هذه فجوة صارخة بين حركة الطريق ونصيب المحطة منها، وأرجّح أنها نتيجة تقاسم الحركة مع أربع محطات درب مجاورة. لا تعتمد التقدير الأعلى هنا قبل مراجعة بيانات المضخات.</p></div>
           </div>
           <div class="row">
             <div class="row-label"><b>خلاصة الميزة</b></div>
@@ -737,23 +739,23 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
       <table>
         <thead><tr><th>الكود</th><th>المدينة / الحي</th><th>وحدات شاغرة</th><th>تقييم جوجل</th><th>الحالة</th><th>ضمن الأولوية ١٠</th></tr></thead>
         <tbody><tr><td><span class="code">MK045</span></td><td>رابغ · KAEC</td>
-  <td class="num">41</td><td class="num">٤٫٢</td><td>قيد الإنشاء</td>
+  <td class="num">٤١</td><td class="num">٤٫٢</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">MD297</span></td><td>المدينة المنورة · عين الخيف</td>
-  <td class="num">33</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
+  <td class="num">٣٣</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">MK044</span></td><td>مكة · القنفذة</td>
-  <td class="num">32</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
+  <td class="num">٣٢</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">AS286</span></td><td>عسير · محايل — الخالدية</td>
-  <td class="num">27</td><td class="num">٤٫٤</td><td>قيد الإنشاء</td>
+  <td class="num">٢٧</td><td class="num">٤٫٤</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">JA188</span></td><td>جازان · بيش — طريق الملك عبدالعزيز</td>
-  <td class="num">21</td><td class="num">٤٫٠</td><td>قيد الإنشاء</td>
+  <td class="num">٢١</td><td class="num">٤٫٠</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">EP329</span></td><td>حفر الباطن · حي الورود</td>
-  <td class="num">17</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
+  <td class="num">١٧</td><td class="num">٥٫٠</td><td>قيد الإنشاء</td>
   <td>نعم</td></tr><tr><td><span class="code">MK054</span></td><td>مكة · طريق الملك فيصل — السيل</td>
-  <td class="num">15</td><td class="num">٤٫٦</td><td>مشغّلة</td>
+  <td class="num">١٥</td><td class="num">٤٫٦</td><td>مشغّلة</td>
   <td>—</td></tr><tr><td><span class="code">MK091</span></td><td>الطائف · السر</td>
-  <td class="num">15</td><td class="num">—</td><td>قيد الإنشاء</td>
+  <td class="num">١٥</td><td class="num">—</td><td>قيد الإنشاء</td>
   <td>—</td></tr><tr><td><span class="code">AS124</span></td><td>عسير · بيشة — حي الصفا</td>
-  <td class="num">15</td><td class="num">—</td><td>قيد الإنشاء</td>
+  <td class="num">١٥</td><td class="num">—</td><td>قيد الإنشاء</td>
   <td>—</td></tr></tbody>
       </table>
     </div>
@@ -790,7 +792,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">41</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">٤١</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٤٫٢</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٥</span></div>
               </div>
@@ -826,7 +828,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">33</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">٣٣</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٥٫٠</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">١</span></div>
               </div>
@@ -862,7 +864,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">32</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">٣٢</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٥٫٠</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٢</span></div>
               </div>
@@ -897,7 +899,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">27</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">٢٧</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٤٫٤</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٥٣</span></div>
               </div>
@@ -933,7 +935,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">21</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">٢١</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٤٫٠</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٣١</span></div>
               </div>
@@ -969,7 +971,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">17</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">١٧</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٥٫٠</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٣</span></div>
               </div>
@@ -1005,7 +1007,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">15</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">١٥</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">٤٫٦</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">٧٨</span></div>
               </div>
@@ -1041,7 +1043,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">15</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">١٥</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">—</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">—</span></div>
               </div>
@@ -1077,7 +1079,7 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
             <div class="row-label"><b>الوحدات والشواغر</b><span class="chip chip-file">من الملف والصورة</span></div>
             <div class="row-body">
               <div class="metrics">
-                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">15</span></div>
+                <div class="metric hi"><span class="k">وحدات شاغرة</span><span class="v">١٥</span></div>
                 <div class="metric"><span class="k">تقييم جوجل</span><span class="v">—</span></div>
                 <div class="metric"><span class="k">مراجعات</span><span class="v">—</span></div>
               </div>
@@ -1100,53 +1102,204 @@ Haversine:  a = sin²(Δφ/2) + cos φ₁ · cos φ₂ · sin²(Δλ/2)
     </div>
   </section>
 
-  <section class="sec">
-    <div class="sec-head">
-      <h2>منهجية حساب الحركة المرورية</h2>
-      <p>كما طلبتِ — الطريقة كاملة بخطواتها وثوابتها، حتى تتمكني من مراجعتها أو تعديل أي افتراض فيها.</p>
-    </div>
-    <div class="method">
-      <p>
-        لا توجد بيانات عدّ مروري رسمية منشورة لهذه الطرق تحديدًا — بحثت عنها ولم أجد أرقام AADT معلنة لأي منها.
-        لذلك استخدمت <strong>نموذج التقدير المرتكز على سعة الطريق</strong>، وهو أسلوب هندسي قياسي يُعتمد عند غياب بيانات العدّ الفعلي.
-      </p>
-      <ol class="steps">
-        <li><div><b>تصنيف الطريق وتحديد سعة المسار</b>
-          <p>لكل تصنيف سعة قياسية بالمركبة لكل مسار لكل ساعة: طريق حر ١٬٩٠٠ • شرياني رئيسي مفصول جزئيًا ١٬٢٠٠ • شرياني بإشارات ٨٠٠–٩٠٠ • شرياني فرعي أو محلي ٦٥٠–٧٥٠ • كورنيش ترفيهي ٧٠٠.</p></div></li>
-        <li><div><b>حساب حجم ساعة الذروة</b>
-          <p>عدد المسارات × سعة المسار × ٢ (الاتجاهان) × نسبة الإشغال V/C، بنسبة ٠٫٧٠–٠٫٨٥ حسب الازدحام المتوقع؛ لا تصل الطرق عمليًا إلى سعتها النظرية.</p></div></li>
-        <li><div><b>الاشتقاق إلى الحركة اليومية</b>
-          <p>ساعة الذروة تمثّل نسبة ثابتة تقريبًا من حركة اليوم، تُسمى معامل الذروة K: ٠٫٠٩ للطرق الحضرية، ٠٫٠٩٥ للمحلية، ٠٫١٠ للكورنيش.</p></div></li>
-        <li><div><b>الحركة المفيدة للمحطة</b>
-          <p>المحطة تخدم اتجاهًا واحدًا؛ طبّقت معامل توزيع اتجاهي ٥٥٪.</p></div></li>
-        <li><div><b>نسبة الالتقاط ← عدد الداخلين</b>
-          <p>١٫٥–٢٫٥٪ على الطرق الحرة (الخدمة من طريق موازٍ) • ٢–٣٪ على الشرايين الحضرية • ٣٫٥–٤٪ على المواقع السكنية والترفيهية حيث تكون المحطة وجهة لا نقطة عبور.</p></div></li>
-      </ol>
-      <div class="formula">
-Peak_hour = lanes × lane_capacity × 2 × (V/C)
-AADT      = Peak_hour ÷ K
-Passing   = AADT × 0.55
-Entries   = Passing × capture_rate
 
-<span style="opacity:.7"># مثال كامل — RY075، الدائري الشمالي بالرياض</span>
-Peak_hour = 4 × 1,900 × 2 × 0.85 = 12,920 veh/h
-AADT      = 12,920 ÷ 0.09        ≈ 143,000 veh/day
-Passing   = 143,000 × 0.55       ≈  78,650 veh/day
-Entries   =  78,650 × 0.02       ≈   1,573 visits/day
-      </div>
+  <section class="sec" id="roadtraffic">
+    <div class="sec-head">
+      <h2>عدد السيارات على شارع كل محطة</h2>
+      <p>الرقم المطلوب لكل موقع، مع الحساب كاملًا خطوةً بخطوة. الأرقام تقديرات هندسية لا قياسات — اقرأ حدودها في آخر القسم.</p>
     </div>
 
     <div class="caveat">
-      <h4>حدود هذه الأرقام — اقرئيها قبل استخدامها في أي عرض</h4>
+      <h4>تصحيح مهم على الطريقة السابقة</h4>
       <p>
-        أرقام الحركة <strong>تقديرات هندسية وليست قياسات</strong>، مبنية على تصنيف الطريق لا على عدّادات مرورية.
-        (أما بيانات النطاق والمسافات والمنافسين فمقيسة فعليًا ويمكن الاعتماد عليها.)
+        في الإصدار الأول استخدمت طريقة واحدة لكل المواقع: <strong>الانطلاق من سعة الطريق</strong>.
+        هذه الطريقة صحيحة فقط حيث يقترب الطلب من السعة — أي الطرق الحضرية المزدحمة في الرياض وجدة ومكة.
+      </p>
+      <p>
+        لكن تطبيقها على طرق البلدات الصغيرة والمحاور الريفية (القنفذة، محايل، بيش، السر، حفر الباطن) <strong>يبالغ في التقدير مبالغة كبيرة</strong>،
+        لأن هذه الطرق لا تقترب من سعتها أصلًا؛ القيد فيها هو <em>الطلب</em> لا السعة. طريق بمسارين في بلدة صغيرة قد تكون سعته ٢٠ ألف مركبة
+        بينما حركته الفعلية ٥ آلاف — والفارق ليس هامشًا بل أربعة أضعاف.
+      </p>
+      <p>
+        لذلك استخدمت هنا <strong>طريقتين</strong>: الأولى للطرق الحضرية المزدحمة، والثانية مبنية على عدد السكان وأنماط التنقل للبلدات والطرق الريفية.
+        كذلك خفّضت تقدير MK029 (الدائري الثالث بمكة) من ١٠١ ألف إلى ٥٧ ألفًا، لأن الطريق ما زال قيد الاكتمال ولا يعمل بإشغال طريق ناضج.
+      </p>
+    </div>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>الكود</th><th>الشارع</th><th>الطريقة</th><th>مركبة / يوم</th><th>النطاق</th><th>ساعة الذروة</th></tr></thead>
+        <tbody><tr><td><span class="code">RY075</span></td><td>الطريق الدائري الشمالي — الرياض</td>
+ <td class="num">أ</td><td class="num"><strong>١٤٣٬٥٥٦</strong></td>
+ <td class="num">١١٤٬٨٤٤–١٧٢٬٢٦٧</td><td class="num">١٢٬٩٢٠</td></tr><tr><td><span class="code">MK015</span></td><td>طريق الملك عبدالله — جدة</td>
+ <td class="num">أ</td><td class="num"><strong>٩٠٬٦٦٧</strong></td>
+ <td class="num">٧٢٬٥٣٣–١٠٨٬٨٠٠</td><td class="num">٨٬١٦٠</td></tr><tr><td><span class="code">MK029</span></td><td>الطريق الدائري الثالث — مكة</td>
+ <td class="num">أ</td><td class="num"><strong>٥٧٬٠٠٠</strong></td>
+ <td class="num">٤٥٬٦٠٠–٦٨٬٤٠٠</td><td class="num">٥٬١٣٠</td></tr><tr><td><span class="code">MK035</span></td><td>طريق الملك فهد الدائري — الطائف</td>
+ <td class="num">أ</td><td class="num"><strong>٤٨٬٠٠٠</strong></td>
+ <td class="num">٣٨٬٤٠٠–٥٧٬٦٠٠</td><td class="num">٤٬٣٢٠</td></tr><tr><td><span class="code">MK017</span></td><td>شرياني الشوقية — مكة</td>
+ <td class="num">أ</td><td class="num"><strong>٤٥٬٣٣٣</strong></td>
+ <td class="num">٣٦٬٢٦٧–٥٤٬٤٠٠</td><td class="num">٤٬٠٨٠</td></tr><tr><td><span class="code">RY042</span></td><td>شرياني الناصفة — الخرج</td>
+ <td class="num">أ</td><td class="num"><strong>٢٩٬٦٠٥</strong></td>
+ <td class="num">٢٣٬٦٨٤–٣٥٬٥٢٦</td><td class="num">٢٬٨١٢</td></tr><tr><td><span class="code">MK044</span></td><td>شرياني القنفذة قرب أفينو مول</td>
+ <td class="num">ب</td><td class="num"><strong>٢٢٬٥٠٠</strong></td>
+ <td class="num">١٥٬٧٥٠–٣٠٬٣٧٥</td><td class="num">٢٬١٣٨</td></tr><tr><td><span class="code">MD297</span></td><td>طريق الهجرة الفرعي — المدينة المنورة</td>
+ <td class="num">ب</td><td class="num"><strong>٢٢٬٤٠٠</strong></td>
+ <td class="num">١٥٬٦٨٠–٣٠٬٢٤٠</td><td class="num">٢٬١٢٨</td></tr><tr><td><span class="code">MK054</span></td><td>طريق الملك فيصل / السيل — مكة</td>
+ <td class="num">ب</td><td class="num"><strong>٢١٬٠٠٠</strong></td>
+ <td class="num">١٤٬٧٠٠–٢٨٬٣٥٠</td><td class="num">١٬٩٩٥</td></tr><tr><td><span class="code">MK099</span></td><td>شارع البيعة — الطائف</td>
+ <td class="num">أ</td><td class="num"><strong>٢٠٬٥٢٦</strong></td>
+ <td class="num">١٦٬٤٢١–٢٤٬٦٣٢</td><td class="num">١٬٩٥٠</td></tr><tr><td><span class="code">JA069</span></td><td>طريق الكورنيش — جازان</td>
+ <td class="num">أ</td><td class="num"><strong>١٩٬٦٠٠</strong></td>
+ <td class="num">١٥٬٦٨٠–٢٣٬٥٢٠</td><td class="num">١٬٩٦٠</td></tr><tr><td><span class="code">AS286</span></td><td>طريق الصناعية — محايل عسير</td>
+ <td class="num">ب</td><td class="num"><strong>١٨٬٧٠٠</strong></td>
+ <td class="num">١٣٬٠٩٠–٢٥٬٢٤٥</td><td class="num">١٬٧٧٦</td></tr><tr><td><span class="code">JA188</span></td><td>طريق الملك عبدالعزيز — بيش</td>
+ <td class="num">ب</td><td class="num"><strong>١٨٬٢٠٠</strong></td>
+ <td class="num">١٢٬٧٤٠–٢٤٬٥٧٠</td><td class="num">١٬٧٢٩</td></tr><tr><td><span class="code">MK045</span></td><td>الطريق الساحلي جنوب مدينة الملك عبدالله</td>
+ <td class="num">ب</td><td class="num"><strong>١٨٬٠٠٠</strong></td>
+ <td class="num">١٢٬٦٠٠–٢٤٬٣٠٠</td><td class="num">١٬٧١٠</td></tr><tr><td><span class="code">AS124</span></td><td>شارع ولي العهد — بيشة</td>
+ <td class="num">ب</td><td class="num"><strong>١٦٬٨٠٠</strong></td>
+ <td class="num">١١٬٧٦٠–٢٢٬٦٨٠</td><td class="num">١٬٥٩٦</td></tr><tr><td><span class="code">EP329</span></td><td>شارع حي الورود — حفر الباطن</td>
+ <td class="num">ب</td><td class="num"><strong>١٤٬٨٠٠</strong></td>
+ <td class="num">١٠٬٣٦٠–١٩٬٩٨٠</td><td class="num">١٬٤٠٦</td></tr><tr><td><span class="code">MK091</span></td><td>طريق السر — الطائف</td>
+ <td class="num">ب</td><td class="num"><strong>٥٬٠٠٠</strong></td>
+ <td class="num">٣٬٥٠٠–٦٬٧٥٠</td><td class="num">٤٧٥</td></tr></tbody>
+      </table>
+    </div>
+    <p class="muted">«الطريقة أ» = مرتكزة على سعة الطريق • «الطريقة ب» = مرتكزة على الطلب السكاني وحركة العبور.</p>
+
+    <div class="method">
+      <h4 style="font-size:1rem">الطريقة أ — الطرق الحضرية المزدحمة</h4>
+      <p class="muted">المنطق: الطريق المزدحم يعمل قرب سعته في الذروة، فنبدأ من السعة ثم نقسم على معامل الذروة K لنصل إلى حركة اليوم كامل.</p>
+      <div class="formula">ساعة الذروة = عدد المسارات × سعة المسار × ٢ (اتجاهان) × نسبة الإشغال V/C
+الحركة اليومية = ساعة الذروة ÷ K</div>
+      <p class="muted">سعات المسار القياسية: طريق حر ١٬٩٠٠ • شرياني مفصول ١٬٢٠٠ • شرياني بإشارات ٨٠٠–٩٠٠ • فرعي ٦٥٠–٧٥٠ • كورنيش ٧٠٠ مركبة/مسار/ساعة.
+      و K = ٠٫٠٩ حضري، ٠٫٠٩٥ محلي، ٠٫١٠ كورنيش.</p>
+      <div class="calcrow"><b>RY075 — الطريق الدائري الشمالي — الرياض</b>
+<div class="formula">ساعة الذروة = 4 مسار × 1900 مركبة/مسار/ساعة × 2 اتجاه × 0.85 إشغال = 12,920 مركبة/ساعة
+الحركة اليومية = 12,920 ÷ K=0.09 = 143,556 مركبة/يوم   →   النطاق 114,844–172,267</div>
+<p class="muted">التصنيف: طريق حر</p></div><div class="calcrow"><b>MK015 — طريق الملك عبدالله — جدة</b>
+<div class="formula">ساعة الذروة = 4 مسار × 1200 مركبة/مسار/ساعة × 2 اتجاه × 0.85 إشغال = 8,160 مركبة/ساعة
+الحركة اليومية = 8,160 ÷ K=0.09 = 90,667 مركبة/يوم   →   النطاق 72,533–108,800</div>
+<p class="muted">التصنيف: شرياني مفصول جزئيًا</p></div><div class="calcrow"><b>MK029 — الطريق الدائري الثالث — مكة</b>
+<div class="formula">ساعة الذروة = 3 مسار × 1900 مركبة/مسار/ساعة × 2 اتجاه × 0.45 إشغال = 5,130 مركبة/ساعة
+الحركة اليومية = 5,130 ÷ K=0.09 = 57,000 مركبة/يوم   →   النطاق 45,600–68,400</div>
+<p class="muted">التصنيف: طريق حر قيد الاكتمال</p></div><div class="calcrow"><b>MK035 — طريق الملك فهد الدائري — الطائف</b>
+<div class="formula">ساعة الذروة = 3 مسار × 900 مركبة/مسار/ساعة × 2 اتجاه × 0.8 إشغال = 4,320 مركبة/ساعة
+الحركة اليومية = 4,320 ÷ K=0.09 = 48,000 مركبة/يوم   →   النطاق 38,400–57,600</div>
+<p class="muted">التصنيف: شرياني دائري</p></div><div class="calcrow"><b>MK017 — شرياني الشوقية — مكة</b>
+<div class="formula">ساعة الذروة = 3 مسار × 800 مركبة/مسار/ساعة × 2 اتجاه × 0.85 إشغال = 4,080 مركبة/ساعة
+الحركة اليومية = 4,080 ÷ K=0.09 = 45,333 مركبة/يوم   →   النطاق 36,267–54,400</div>
+<p class="muted">التصنيف: شرياني بإشارات</p></div><div class="calcrow"><b>RY042 — شرياني الناصفة — الخرج</b>
+<div class="formula">ساعة الذروة = 2.5 مسار × 750 مركبة/مسار/ساعة × 2 اتجاه × 0.75 إشغال = 2,812 مركبة/ساعة
+الحركة اليومية = 2,812 ÷ K=0.095 = 29,605 مركبة/يوم   →   النطاق 23,684–35,526</div>
+<p class="muted">التصنيف: شرياني داخلي</p></div><div class="calcrow"><b>MK099 — شارع البيعة — الطائف</b>
+<div class="formula">ساعة الذروة = 2 مسار × 650 مركبة/مسار/ساعة × 2 اتجاه × 0.75 إشغال = 1,950 مركبة/ساعة
+الحركة اليومية = 1,950 ÷ K=0.095 = 20,526 مركبة/يوم   →   النطاق 16,421–24,632</div>
+<p class="muted">التصنيف: شرياني فرعي</p></div><div class="calcrow"><b>JA069 — طريق الكورنيش — جازان</b>
+<div class="formula">ساعة الذروة = 2 مسار × 700 مركبة/مسار/ساعة × 2 اتجاه × 0.7 إشغال = 1,960 مركبة/ساعة
+الحركة اليومية = 1,960 ÷ K=0.1 = 19,600 مركبة/يوم   →   النطاق 15,680–23,520</div>
+<p class="muted">التصنيف: كورنيش ترفيهي</p></div>
+    </div>
+
+    <div class="method">
+      <h4 style="font-size:1rem">الطريقة ب — البلدات الصغيرة والمحاور الريفية</h4>
+      <p class="muted">المنطق: نحسب كم رحلة مركبة تولّدها المدينة يوميًا، ثم كم منها يمر على هذا الشارع تحديدًا، ونضيف حركة العبور للمحاور الإقليمية.</p>
+      <div class="formula">رحلات المركبات/يوم = عدد السكان × ٢٫٨ رحلة لكل فرد ÷ ١٫٤ راكب لكل مركبة
+حركة الشارع = رحلات المركبات × نصيب الشارع من حركة المدينة + حركة العبور</div>
+      <p class="muted">
+        نصيب الشارع: محور رئيسي في بلدة صغيرة ١٥–٢٠٪ • شارع حي في مدينة كبيرة ١–٢٪ • طريق داخل مدينة اقتصادية ناشئة ٣٠٪.
+        أرقام السكان من تعداد السعودية ٢٠٢٢، وهي <strong>أرقام محافظات لا مدن</strong> — لذلك خفّضتها لتقدير الحضر وحده قبل الحساب.
+      </p>
+      <div class="calcrow"><b>MK044 — شرياني القنفذة قرب أفينو مول</b>
+<div class="formula">رحلات المركبات في المدينة = 75,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 150,000 مركبة/يوم
+نصيب هذا الشارع = 150,000 × 15.0% = 22,500
+الإجمالي ≈ 22,500 مركبة/يوم   →   النطاق 15,750–30,375</div>
+<p class="muted">حضر القنفذة (المحافظة ٢٠٥٬١٨٨)</p></div><div class="calcrow"><b>MD297 — طريق الهجرة الفرعي — المدينة المنورة</b>
+<div class="formula">رحلات المركبات في المدينة = 1,400,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 2,800,000 مركبة/يوم
+نصيب هذا الشارع = 2,800,000 × 0.8% = 22,400
+الإجمالي ≈ 22,400 مركبة/يوم   →   النطاق 15,680–30,240</div>
+<p class="muted">طرف شرقي لمدينة يقارب سكانها ١٫٤ مليون</p></div><div class="calcrow"><b>MK054 — طريق الملك فيصل / السيل — مكة</b>
+<div class="formula">حركة عبور على المحور = 21,000
+الإجمالي ≈ 21,000 مركبة/يوم   →   النطاق 14,700–28,350</div>
+<p class="muted">محور مكة–الطائف: حركة عبور بحتة</p></div><div class="calcrow"><b>AS286 — طريق الصناعية — محايل عسير</b>
+<div class="formula">رحلات المركبات في المدينة = 55,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 110,000 مركبة/يوم
+نصيب هذا الشارع = 110,000 × 17.0% = 18,700
+الإجمالي ≈ 18,700 مركبة/يوم   →   النطاق 13,090–25,245</div>
+<p class="muted">حضر محايل (المحافظة ٢٣٠٬٥٣٧)</p></div><div class="calcrow"><b>JA188 — طريق الملك عبدالعزيز — بيش</b>
+<div class="formula">رحلات المركبات في المدينة = 28,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 56,000 مركبة/يوم
+نصيب هذا الشارع = 56,000 × 20.0% = 11,200
+حركة عبور على المحور = 7,000
+الإجمالي ≈ 18,200 مركبة/يوم   →   النطاق 12,740–24,570</div>
+<p class="muted">مدخل بيش الجنوبي + عبور إقليمي</p></div><div class="calcrow"><b>MK045 — الطريق الساحلي جنوب مدينة الملك عبدالله</b>
+<div class="formula">رحلات المركبات في المدينة = 15,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 30,000 مركبة/يوم
+نصيب هذا الشارع = 30,000 × 30.0% = 9,000
+حركة عبور على المحور = 9,000
+الإجمالي ≈ 18,000 مركبة/يوم   →   النطاق 12,600–24,300</div>
+<p class="muted">سكان KAEC قليل + عبور ساحلي</p></div><div class="calcrow"><b>AS124 — شارع ولي العهد — بيشة</b>
+<div class="formula">رحلات المركبات في المدينة = 70,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 140,000 مركبة/يوم
+نصيب هذا الشارع = 140,000 × 12.0% = 16,800
+الإجمالي ≈ 16,800 مركبة/يوم   →   النطاق 11,760–22,680</div>
+<p class="muted">حضر بيشة (المحافظة ٢٠٢٬٠٩٦)</p></div><div class="calcrow"><b>EP329 — شارع حي الورود — حفر الباطن</b>
+<div class="formula">رحلات المركبات في المدينة = 370,000 نسمة × 2.8 رحلة/فرد ÷ 1.4 راكب/مركبة = 740,000 مركبة/يوم
+نصيب هذا الشارع = 740,000 × 2.0% = 14,800
+الإجمالي ≈ 14,800 مركبة/يوم   →   النطاق 10,360–19,980</div>
+<p class="muted">حضر حفر الباطن (المحافظة ٤٦٧٬٠٠٠)</p></div><div class="calcrow"><b>MK091 — طريق السر — الطائف</b>
+<div class="formula">حركة عبور على المحور = 5,000
+الإجمالي ≈ 5,000 مركبة/يوم   →   النطاق 3,500–6,750</div>
+<p class="muted">ريفي شرق الطائف: عبور خفيف</p></div>
+    </div>
+
+    <div class="method">
+      <h4 style="font-size:1rem">اختبار الاتساق — هل الأرقام معقولة؟</h4>
+      <p class="muted">
+        قسمت عدد مراجعات جوجل على الحركة اليومية المقدّرة لكل محطة مشغّلة. لو كانت التقديرات سليمة تكون النسبة متقاربة بينها.
+        هذا أفضل تحقق متاح، لأن جوجل لا ينشر بيانات «أوقات الذروة» لأي من هذه المحطات — بحثت عنها ولم تكن متوفرة.
+      </p>
+      <div class="tscroll">
+        <table>
+          <thead><tr><th>الكود</th><th>يومي مقدّر</th><th>مراجعات</th><th>مراجعة/١٠٠٠ مركبة</th><th>الحكم</th></tr></thead>
+          <tbody><tr><td><span class="code">MK017</span></td><td class="num">٤٥٬٣٣٣</td>
+ <td class="num">٤٬١٦٢</td><td class="num"><strong>٩١٫٨</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">MK035</span></td><td class="num">٤٨٬٠٠٠</td>
+ <td class="num">٣٬٥٠٦</td><td class="num"><strong>٧٣٫٠</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">JA069</span></td><td class="num">١٩٬٦٠٠</td>
+ <td class="num">١٬٠٣٩</td><td class="num"><strong>٥٣٫٠</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">MK015</span></td><td class="num">٩٠٬٦٦٧</td>
+ <td class="num">٤٬١٥٠</td><td class="num"><strong>٤٥٫٨</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">RY042</span></td><td class="num">٢٩٬٦٠٥</td>
+ <td class="num">٨٩٦</td><td class="num"><strong>٣٠٫٣</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">MK099</span></td><td class="num">٢٠٬٥٢٦</td>
+ <td class="num">٦٠٢</td><td class="num"><strong>٢٩٫٣</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">RY075</span></td><td class="num">١٤٣٬٥٥٦</td>
+ <td class="num">٤٬١٤٠</td><td class="num"><strong>٢٨٫٨</strong></td>
+ <td>✅ ضمن النطاق</td></tr><tr><td><span class="code">MK029</span></td><td class="num">٥٧٬٠٠٠</td>
+ <td class="num">٤٣٩</td><td class="num"><strong>٧٫٧</strong></td>
+ <td>⚠️ شاذ</td></tr></tbody>
+        </table>
+      </div>
+      <p class="muted">
+        سبع محطات من ثماني تقع بين ٢٩ و٩٢ — تشتّت مقبول. <strong>الشاذ الوحيد MK029 عند ٧٫٧</strong>، وقد بقي شاذًا حتى بعد
+        تخفيض تقديره من ١٠١ ألفًا إلى ٥٧ ألفًا. هذا يرجّح أن المشكلة ليست في تقدير حركة الطريق بل في نصيب المحطة منها —
+        أي تكدّس محطات درب الخمس في مكة. أما MK017 عند ٩١٫٨ فالأرجح أن حركة شارعه أعلى مما قدّرت، أو أن نسبة التقاطه استثنائية.
+      </p>
+      <p class="muted">
+        المحطات قيد الإنشاء (MK044 · MK045 · MD297 · EP329 · MK091 · AS124) لا يمكن اختبارها بهذه الطريقة لأنها لم تفتح بعد
+        ولا تملك مراجعات — تقديراتها تبقى بلا تحقق حتى التشغيل.
+      </p>
+    </div>
+
+    <div class="caveat">
+      <h4>حدود هذه الأرقام</h4>
+      <p>
+        <strong>كل رقم في هذا القسم تقدير هندسي وليس قياسًا.</strong> لا توجد بيانات عدّ مروري رسمية منشورة لأي من هذه الطرق — بحثت ولم أجد.
+        النطاقات واسعة عمدًا، ولا يصح تقديم أي منها لمستأجر على أنه رقم مقاس.
       </p>
       <ul class="plain">
-        <li><strong>أدق مصدر تملكونه أصلًا هو بياناتكم:</strong> عدد عمليات المضخات اليومية رقم حقيقي مسجّل. اضربيه في ١٫٤–١٫٨ لتقدير إجمالي الزوار، ثم اعكسي المعادلة لاستخراج نسبة الالتقاط الحقيقية ومعايرة باقي المواقع بها.</li>
-        <li><strong>مؤشر المراجعات مفيد للمقارنة النسبية:</strong> استخدمته كمؤشر مُلاحظ على التردد. وهو ما كشف تناقض MK029 — أعلى حركة طريق وأدنى عدد مراجعات.</li>
-        <li><strong>للحصول على AADT رسمي:</strong> وزارة النقل والخدمات اللوجستية والهيئة العامة للطرق تحتفظان ببيانات عدّ غير منشورة، وأمانات المناطق تملك دراسات مرورية للمشاريع الكبرى.</li>
-        <li><strong>للقياس المباشر:</strong> عدّاد مروري مؤقت (Pneumatic Tube Counter) لأسبوع أمام المحطة يعطي رقمًا قاطعًا لا يقبل الجدل في التفاوض.</li>
+        <li><strong>الطريقة ب أقل دقة من الطريقة أ</strong>، لأن «نصيب الشارع من حركة المدينة» تقدير اجتهادي يعتمد على أهمية الشارع في الشبكة. الخطأ فيه قد يصل إلى الضعف.</li>
+        <li><strong>أرقام السكان أرقام محافظات لا مدن</strong>، وقد خفّضتها اجتهادًا لتقدير الحضر. أي رقم حضري دقيق لديكم يحسّن النتيجة فورًا.</li>
+        <li><strong>أدق مصدر تملكونه هو بيانات المضخات.</strong> عدد العمليات اليومية × ١٫٤–١٫٨ يعطي عدد زوار حقيقيًا، ثم اعكس المعادلة لاستخراج نسبة الالتقاط الفعلية ومعايرة كل المواقع بها.</li>
+        <li><strong>للقياس القاطع:</strong> عدّاد أنبوبي (Pneumatic Tube Counter) لأسبوع أمام المحطة يعطي رقمًا لا يُجادَل فيه، وتكلفته زهيدة مقارنة بقيمة عقد إيجار واحد.</li>
       </ul>
     </div>
   </section>
