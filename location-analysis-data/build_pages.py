@@ -645,7 +645,7 @@ def mini_head(a):
     <span class="rg">📍 {esc(m['region'])}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>'''
 
 def tabs_html(code, active, mode):
-    items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية')]
+    items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية'),('camp','تقرير حملة البنزين المجاني')]
     cc = OPS_COUNTS.get(code, {})
     for k, lab in OPS_TABS:
         n = cc.get(k)
@@ -766,6 +766,26 @@ def nj219_campaign():
       <div class="dnote">المصدر: ملفا معاملات درب المركب NJ219 لشهري يونيو ويوليو 2026 (10,406 عملية بيع). المتوسطات محسوبة على الأيام المسجلة فعليًا.</div>
     </div>'''
 
+def camp_body(a):
+    code = a['metrics']['code']
+    if code == 'NJ219':
+        rpt = nj219_campaign()
+        if rpt: return rpt
+    return '''<div class="sec-h"><h2>🎁 تقرير حملة البنزين المجاني</h2><span>بانتظار بيانات حملة هذه المحطة</span></div>
+    <div class="card">
+      <div class="cs" style="margin-bottom:10px">لم تُزوَّد بيانات حملة لهذه المحطة بعد. عند توفر ملف معاملات فترة الحملة يُبنى التقرير هنا بنفس منهجية تقرير محطة درب المركب NJ219، ويشمل:</div>
+      <ul style="margin:0 18px 12px 0;padding:0;line-height:2">
+        <li>يوم الحملة وساعة الانطلاق ومؤشراته: العمليات، اللترات، الإيراد، متوسط الفاتورة.</li>
+        <li>إجمالي اللترات قبل الحملة وخلالها وبعدها.</li>
+        <li>رسم عمليات يوم الحملة ساعة بساعة مع لحظة الانطلاق.</li>
+        <li>جدول المقارنة: قبل الحملة → يومها → الأسبوع التالي → بقية الفترة.</li>
+        <li>آلية القسائم والعدد المقدّر منها.</li>
+        <li>قراءة النتائج والأثر الباقي بعد الحملة.</li>
+      </ul>
+      <div class="ckh">ملاحظات</div>
+      <div class="confbox" contenteditable="true" data-ph="سجّل هنا تاريخ حملة هذه المحطة وقيمتها وشروطها… وسيُستكمل التقرير عند وصول البيانات"></div>
+    </div>'''
+
 def month_cards(code, mm, keys):
     ov = BYCODE[code]['overall']
     base_ratio = (ov.get('volume') or 0) / ov['revenue'] if ov['revenue'] else 0
@@ -856,8 +876,7 @@ def monthly_body(a):
       <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
       <tbody>{fuel_rows}</tbody></table></div></div>
     <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب H1 2026.</div>
-    {month_cards(code, mm, keys)}
-    {nj219_campaign() if code == 'NJ219' else ''}'''
+    {month_cards(code, mm, keys)}'''
 
 def daily_line_chart(daily):
     if len(daily) < 2: return ''
@@ -985,13 +1004,14 @@ for idx, a in enumerate(ORDER):
   <div class="pgview" id="v-main"><section class="station">{station_body(a)}</section></div>
   <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
   <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
+  <div class="pgview" id="v-camp" hidden>{mini_head(a)}{camp_body(a)}</div>
   {''.join(f'<div class="pgview" id="v-{k}" hidden>{mini_head(a)}{ops_content(code, k)}</div>' for k, lab in OPS_TABS)}
   <footer>{FOOT_METH}</footer>
 </main>
 <script>
 function route(){{
   const h=location.hash.replace('#','');
-  const k=['monthly','daily','targets','cs','partners','external','plan'].includes(h)?h:'main';
+  const k=['monthly','daily','camp','targets','cs','partners','external','plan'].includes(h)?h:'main';
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   document.getElementById('v-'+k).hidden=false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
@@ -1077,6 +1097,8 @@ def spa_view(idx, a):
       {nav}{tabs_html(code, 'monthly', 'spa')}{mini_head(a)}{monthly_body(a)}{bottom}</div>'''
       f'''<div class="pgview" id="pg-{code}-daily" data-title="درب {esc(m['name'])} {code} · المبيعات اليومية" hidden>
       {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
+      f'''<div class="pgview" id="pg-{code}-camp" data-title="درب {esc(m['name'])} {code} · تقرير حملة البنزين المجاني" hidden>
+      {nav}{tabs_html(code, 'camp', 'spa')}{mini_head(a)}{camp_body(a)}{bottom}</div>'''
       + ''.join(
         f'''<div class="pgview" id="pg-{code}-{k}" data-title="درب {esc(m['name'])} {code} · {lab}" hidden>
         {nav}{tabs_html(code, k, 'spa')}{mini_head(a)}{ops_content(code, k)}{bottom}</div>'''
