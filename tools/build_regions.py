@@ -32,6 +32,48 @@ td.fill{background:var(--ground);color:var(--ink-3)}
 .stlist span{background:var(--surface);border:1px solid var(--line);border-radius:99px;
   padding:5px 13px;font-size:12.5px}
 .stlist span b{color:var(--orange);font-variant-numeric:tabular-nums}
+
+/* ---- الغلاف: شريط يعرض تحليلات منطقة بعد أخرى ---- */
+.pg.cover .rslider{margin-top:auto}
+.pg.cover .rframe{display:none}
+.pg.cover .rframe.is-on{display:block;animation:rfade .45s ease}
+@keyframes rfade{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.pg.cover .rhead{font-size:12.5px;font-weight:800;color:#E4D3BC;margin-bottom:9px}
+.pg.cover .rhead span{color:#B49F86;font-weight:400}
+.pg.cover .rframe .strip{margin-top:0;grid-template-columns:repeat(3,1fr)}
+.pg.cover .rframe .fact{padding:14px 16px}
+.pg.cover .rframe .fact .v{font-size:32px}
+.pg.cover .rbar{display:flex;align-items:center;gap:10px;margin-top:13px}
+.pg.cover .rdots{display:flex;gap:6px;flex:1}
+.pg.cover .rdot{width:8px;height:8px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.28);transition:width .25s,background .25s}
+.pg.cover .rdot.on{background:var(--amber);width:22px;border-radius:99px}
+.pg.cover .rnav{width:26px;height:26px;padding:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);color:#fff;
+  font-size:15px;line-height:1;display:flex;align-items:center;justify-content:center}
+.pg.cover .rnav:hover{background:rgba(255,255,255,.22)}
+
+/* ---- جدول الشركاء: أزرار الصفوف تظهر عند التحرير فقط ولا تنزل مع الملف ---- */
+.ptab .rowx{width:34px;padding:4px;text-align:center;background:transparent;border-bottom:0}
+.ptab .rowx button{display:none;width:24px;height:24px;padding:0;border-radius:6px;
+  background:transparent;border:1px solid var(--line);color:var(--ink-3);
+  font:inherit;font-size:12px;line-height:1;cursor:pointer}
+body.editing .ptab .rowx button{display:inline-flex;align-items:center;justify-content:center}
+body.editing .ptab .rowx button:hover{border-color:var(--orange);color:var(--orange)}
+.ptools{display:none;gap:10px;align-items:center;margin-top:12px}
+body.editing .ptools{display:flex}
+.ptools button{background:var(--orange);color:#fff;border:0;border-radius:7px;
+  padding:8px 15px;font:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
+.ptools button:hover{background:var(--orange-hi)}
+.ptools .n{font-size:12px;color:var(--ink-3)}
+
+/* ---- رسالة تحمل زرًا، لعرض التحديث على نسخة محفوظة قديمة ---- */
+.toast{display:flex;align-items:center;gap:12px;line-height:1.75}
+.toast.show{pointer-events:auto}
+#toastmsg{max-width:66ch}
+#toastact{background:var(--orange);color:#fff;border:0;border-radius:6px;padding:7px 15px;
+  font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+#toastact:hover{background:var(--orange-hi)}
 """
 
 # ---------------------------------------------------------------- المناطق
@@ -53,12 +95,13 @@ SLIDES = [
   <div class="in">
     <div class="brand"><img src="{logo}" alt="درب"><span>محطات درب — منطقة {region} · {nst}</span></div>
     <h1>حملة غسيل السيارات.<br><span class="hl">درب تنفّذ الحملة، وأنت تقدّم العرض.</span></h1>
-    <div class="strip">
-      <div class="fact"><div class="k">سيارات كل يوم</div><div class="v">{cars}</div><div class="u">اليوم كامل</div></div>
-      <div class="fact"><div class="k">سيارات في الشهر</div><div class="v">{month}</div><div class="u">على مدار اليوم</div></div>
-      <div class="fact"><div class="k">متوسط فاتورة الوقود</div><div class="v">{inv}</div><div class="u">لكل تعبئة</div></div>
-      <div class="fact"><div class="k">مشاهدات الحملة</div><div class="v">١٠٠ ألف</div><div class="u">خلال أسبوع</div></div>
-      <div class="fact"><div class="k">ذروة الحركة</div><div class="v">{peak}</div><div class="u">أفضل وقت للتوزيع</div></div>
+    <div class="rslider" data-rslider>
+      <div class="rframes">{rframes}</div>
+      <div class="rbar">
+        <button type="button" class="rnav" contenteditable="false" data-nav="1" data-r="prev" title="المنطقة السابقة">›</button>
+        <div class="rdots">{rdots}</div>
+        <button type="button" class="rnav" contenteditable="false" data-nav="1" data-r="next" title="المنطقة التالية">‹</button>
+      </div>
     </div>
   </div>
 </section>""",
@@ -228,6 +271,23 @@ SLIDES = [
   </table>
   {F}
 </section>""",
+
+    # ---- ١٠ · الشركاء — صفوف تُضاف وتُحذف باليد
+    """
+<section class="pg">
+  <p class="eyebrow">١٠ · الشركاء</p>
+  <h2>شركاء منطقة {region} وعروضهم</h2>
+  <p class="lede">اضغط «تحرير» ثم اكتب في أي خانة، و«+ شريك» يضيف صفًا و«✕» يحذفه. الملف الذي تنزّلينه للشريك يخرج بالجدول فقط بلا أزرار.</p>
+  <table class="ptab" data-ptab>
+    <thead><tr><th>الشريك</th><th>العرض</th><th>المدة</th><th>المنطقة</th><th class="rowx"></th></tr></thead>
+    <tbody>{partnerrows}</tbody>
+  </table>
+  <div class="ptools">
+    <button type="button" contenteditable="false" data-tool="addrow" data-region="{region}">+ شريك</button>
+    <span class="n">كل صف شريك واحد: اسمه، والعرض الذي يقدّمه، ومدة العرض، والمنطقة.</span>
+  </div>
+  {F}
+</section>""",
 ]
 
 AR = '٠١٢٣٤٥٦٧٨٩'
@@ -254,6 +314,41 @@ def hour(h):
 def nstations(n):
     return {1: 'محطة واحدة', 2: 'محطتان'}.get(n, '%s محطات' % ard(n) if n <= 10
                                               else '%s محطة' % ard(n))
+
+
+# الأرقام الثلاثة التي تظهر في شريط الغلاف، محسوبة مرّة لكل منطقة.
+# العمليات شهرية لتبقى المناطق قابلة للمقارنة داخل الشريط الواحد؛ سجلّ جدة
+# يغطي مدة أقصر من البقية، فأي رقم تراكمي كان سيقارن مددًا غير متساوية.
+def rstat(region):
+    ss = GROUP[region]
+    cars = sum(x['dvis'] for x in ss)
+    return dict(nst=nstations(len(ss)), cars=n0(cars), ops=n0(cars * 30),
+                pay=n1(sum(x['inv'] * x['dvis'] for x in ss) / cars) + ' ر.س')
+
+
+def rframes(current):
+    out = ''
+    for r in ORDER:
+        v = rstat(r)
+        out += ('<div class="rframe%s">'
+                '<div class="rhead">منطقة %s <span>· %s</span></div>'
+                '<div class="strip">'
+                '<div class="fact"><div class="k">عدد العمليات</div><div class="v">%s</div>'
+                '<div class="u">عملية تعبئة في الشهر</div></div>'
+                '<div class="fact"><div class="k">متوسط الدفع</div><div class="v">%s</div>'
+                '<div class="u">لكل عملية</div></div>'
+                '<div class="fact"><div class="k">السيارات يوميًا</div><div class="v">%s</div>'
+                '<div class="u">على مدار اليوم</div></div>'
+                '</div></div>') % (' is-on' if r == current else '',
+                                   r, v['nst'], v['ops'], v['pay'], v['cars'])
+    return out
+
+
+def rdots(current):
+    return ''.join('<button type="button" class="rdot%s" contenteditable="false" '
+                   'data-nav="1" data-r="%d" title="منطقة %s"></button>'
+                   % (' on' if r == current else '', i, r)
+                   for i, r in enumerate(ORDER))
 
 
 def vals(region):
@@ -293,9 +388,16 @@ def vals(region):
         '<td class="fill">…</td><td class="fill">…</td></tr>' % (x['name'], x['code'])
         for x in ss)
 
+    prows = ''.join(
+        '<tr><td class="fill">…</td><td class="fill">…</td><td class="fill">…</td>'
+        '<td>%s</td><td class="rowx"><button type="button" contenteditable="false" '
+        'data-tool="delrow" title="حذف الصف">✕</button></td></tr>' % region
+        for _ in range(4))
+
     return dict(region=region, nst=nstations(len(ss)),
                 cars=n0(cars), month=n0(cars * 30), inv=n1(wavg('inv')) + ' ر.س',
-                peak=hour(peak),
+                peak=hour(peak), partnerrows=prows,
+                rframes=rframes(region), rdots=rdots(region),
                 eve=ard(round(wavg('evening') * 100)) + '٪',
                 morn=ard(round(wavg('morning') * 100)) + '٪',
                 caprows=rows, strows=strows, offerrows=offers,
@@ -325,19 +427,209 @@ SLUG = {'مكة': 'makkah', 'جدة': 'jeddah', 'الطائف': 'taif', 'الر�
 for r in ORDER:
     SLUG.setdefault(r, 'region%d' % (ORDER.index(r) + 1))
 
-# the toolbar, editor and emit block are the ones already agreed for the decks
-exec(compile(open('slides_chrome.py', encoding='utf-8').read().replace(
-    'حملة غسيل السيارات — عروض المحطات', 'حملة غسيل السيارات — عروض المناطق')
-    .replace("'darb-carwash-'+c", "'darb-region-'+SLUG[c]")
-    .replace('var NAMES=%s;', 'var SLUG=' + json.dumps(SLUG, ensure_ascii=False) + ';\nvar NAMES=%s;')
-    .replace('darb-carwash-slides-v2-', 'darb-region-slides-v2-')
-    .replace("label for=\"pick\">المحطة", "label for=\"pick\">المنطقة")
-    .replace('تنزيل ملف هذه المحطة', 'تنزيل ملف هذه المنطقة')
-    .replace('تنزيل ملفات كل المحطات', 'تنزيل ملفات كل المناطق')
-    .replace("'نُزّل ملف محطة '+NAMES[c]", "'نُزّل ملف منطقة '+NAMES[c]")
-    .replace('نُزّلت ملفات المحطات الإحدى عشرة.', 'نُزّلت ملفات المناطق كلها.')
-    .replace("'حملة غسيل السيارات — '+NAMES[c]+' '+c", "'حملة غسيل السيارات — منطقة '+NAMES[c]")
-    .replace("/home/user/-/darb-carwash-slides.html", "/home/user/-/darb-region-slides.html")
-    .replace("/home/user/-/darb-carwash-slides-artifact.html",
-             "/home/user/-/darb-region-slides-artifact.html"),
-    'slides_chrome.py', 'exec'))
+# ------------------------------------------------------- الشريط والمحرّر
+# نفس أدوات ملف المحطات، مع ثلاث إضافات لهذا الملف: شريط تحليلات المناطق في
+# الغلاف، وأزرار الصفوف في جدول الشركاء، وتنظيفهما من الملف الذي ينزل للشريك.
+
+SLIDER = r"""
+/* ---------------------------------------------------------------------
+   شريط تحليلات المناطق في الغلاف: يعرض منطقة بعد أخرى.
+   مستقل تمامًا عن أدوات التحرير، فهو ينزل مع ملف الشريك ويعمل فيه.
+   ------------------------------------------------------------------ */
+function darbSlider(root){
+  var boxes=(root||document).querySelectorAll('[data-rslider]');
+  for(var i=0;i<boxes.length;i++) wire(boxes[i]);
+
+  function wire(s){
+    /* خاصية لا تُحفظ مع النص، فالنسخة المعادة من الذاكرة تُربط من جديد */
+    if(s.__darbwired) return;
+    s.__darbwired=true;
+    var frames=s.querySelectorAll('.rframe'), dots=s.querySelectorAll('.rdot');
+    if(frames.length<2) return;
+    var at=0, timer=null, i;
+    for(i=0;i<frames.length;i++) if(frames[i].classList.contains('is-on')) at=i;
+
+    function show(n){
+      at=(n%frames.length+frames.length)%frames.length;
+      for(var j=0;j<frames.length;j++){
+        frames[j].classList.toggle('is-on', j===at);
+        if(dots[j]) dots[j].classList.toggle('on', j===at);
+      }
+    }
+    function tick(){
+      if(document.body.classList.contains('editing')) return;  /* يقف أثناء التحرير */
+      show(at+1);
+    }
+    function start(){ stop(); timer=setInterval(tick, 5200); }
+    function stop(){ if(timer){ clearInterval(timer); timer=null; } }
+
+    s.addEventListener('click', function(e){
+      var b=e.target.closest('button'); if(!b||!s.contains(b)) return;
+      e.preventDefault();
+      var r=b.getAttribute('data-r');
+      if(r==='prev') show(at-1);
+      else if(r==='next') show(at+1);
+      else if(r!==null) show(Number(r));
+      start();
+    });
+    s.addEventListener('mouseenter', stop);
+    s.addEventListener('mouseleave', start);
+    show(at); start();
+  }
+}
+"""
+
+ROWTOOL = r"""
+  /* جدول الشركاء: صف يُضاف وصف يُحذف. الأزرار نفسها لا تنزل مع ملف الشريك */
+  function rowTool(b){
+    var a=b.getAttribute('data-tool');
+    if(a==='addrow'){
+      var pg=b.closest('.pg'), tb=pg&&pg.querySelector('table[data-ptab] tbody');
+      if(!tb) return;
+      snap();
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td class="fill">…</td><td class="fill">…</td><td class="fill">…</td>'+
+        '<td>'+(b.getAttribute('data-region')||'')+'</td>'+
+        '<td class="rowx"><button type="button" contenteditable="false" '+
+        'data-tool="delrow" title="حذف الصف">✕</button></td>';
+      tb.appendChild(tr); mark(); snap(); keep();
+      tr.scrollIntoView({behavior:'smooth',block:'center'});
+      say('أُضيف صف — اكتب اسم الشريك وعرضه ومدته.',4500);
+      return;
+    }
+    if(a==='delrow'){
+      var row=b.closest('tr'); if(!row||!row.parentNode) return;
+      if(row.parentNode.rows && row.parentNode.rows.length<=1){
+        say('هذا آخر صف — امسح ما فيه بدل حذفه.',5000); return;
+      }
+      snap();
+      if(target && row.contains(target)) place(null);
+      row.parentNode.removeChild(row);
+      snap(); keep(); say('حُذف الصف.',3000);
+      return;
+    }
+
+  }
+"""
+
+# (المرساة، البديل) — كل مرساة مؤكَّدة حتى لا يمرّ تعديل صامت
+CHROME = [
+    ('حملة غسيل السيارات — عروض المحطات', 'حملة غسيل السيارات — عروض المناطق'),
+    ("'darb-carwash-'+c", "'darb-region-'+SLUG[c]"),
+    ('var NAMES=%s;', 'var SLUG=' + json.dumps(SLUG, ensure_ascii=False) + ';\nvar NAMES=%s;'),
+    ('darb-carwash-slides-v2-', 'darb-region-slides-v2-'),
+    ('label for="pick">المحطة', 'label for="pick">المنطقة'),
+    ('تنزيل ملف هذه المحطة', 'تنزيل ملف هذه المنطقة'),
+    ('تنزيل ملفات كل المحطات', 'تنزيل ملفات كل المناطق'),
+    ("'نُزّل ملف محطة '+NAMES[c]", "'نُزّل ملف منطقة '+NAMES[c]"),
+    ('نُزّلت ملفات المحطات الإحدى عشرة.', 'نُزّلت ملفات المناطق كلها.'),
+    ("'حملة غسيل السيارات — '+NAMES[c]+' '+c", "'حملة غسيل السيارات — منطقة '+NAMES[c]"),
+    ('/home/user/-/darb-carwash-slides.html', '/home/user/-/darb-region-slides.html'),
+    ('/home/user/-/darb-carwash-slides-artifact.html',
+     '/home/user/-/darb-region-slides-artifact.html'),
+
+    # نص التلميح في الشريط العلوي
+    ('اضغط «تحرير» لتعديل النص أو حذفه أو إضافة شريحة، واضغط أي صورة لاستبدالها — وكل ذلك ينزل مع الملف.',
+     'اضغط «تحرير» لتعديل أي نص أو حذفه أو إضافة شريحة، واضغط أي صورة لاستبدالها، '
+     'وفي جدول الشركاء «+ شريك» يضيف صفًا و«✕» يحذفه — وكل ذلك ينزل مع الملف بلا أزرار.'),
+
+    # ١ · الشريط يُعرَّف قبل المحرّر ليكون متاحًا للصفحة وللملف المنزَّل
+    ('function darbEditor(opts){', SLIDER + '\nfunction darbEditor(opts){'),
+
+    # ٢ · بعد كل رسم: الأزرار ليست عناصر تُحذف، والشريط يُربط من جديد
+    ("""      if(n[i].classList.contains('art')||n[i].classList.contains('veil')) continue;
+      if(!n[i].hasAttribute('data-block')) n[i].setAttribute('data-block','');
+    }
+  }""",
+     """      if(n[i].classList.contains('art')||n[i].classList.contains('veil')) continue;
+      if(n[i].classList.contains('ptools')||n[i].hasAttribute('data-tool')) continue;
+      if(n[i].hasAttribute('data-nav')) continue;
+      if(!n[i].hasAttribute('data-block')) n[i].setAttribute('data-block','');
+    }
+    if(window.darbSlider) window.darbSlider(box);
+  }"""),
+
+    # ٣ · ضغطة على زر أداة تنفّذ الأداة ولا تحدّد عنصرًا
+    ("""  box.addEventListener('click',function(e){
+    if(!editing) return;
+    var el=e.target.closest('[data-block]');
+    place(el&&box.contains(el)?el:null);
+  });""",
+     """  box.addEventListener('click',function(e){
+    if(!editing) return;
+    if(e.target.closest('[data-nav]')) return;   /* أزرار الشريط تخصّ العرض */
+    var tb=e.target.closest('[data-tool]');
+    if(tb&&box.contains(tb)){ e.preventDefault(); rowTool(tb); return; }
+    var el=e.target.closest('[data-block]');
+    place(el&&box.contains(el)?el:null);
+  });"""),
+
+    # ٤ · أدوات الصفوف
+    ('  function setEdit(on){', ROWTOOL + '\n  function setEdit(on){'),
+
+    # ٥ · ملف الشريك: بلا أزرار ولا خانات أدوات
+    (r"""    n=t.querySelectorAll('[contenteditable]');""",
+     r"""    n=t.querySelectorAll('.rowx,.ptools,[data-tool]');
+    for(i=0;i<n.length;i++) if(n[i].parentNode) n[i].parentNode.removeChild(n[i]);
+    n=t.querySelectorAll('[contenteditable]');"""),
+
+    # ٧ · الرسالة تحمل زرًا يُنفّذ إجراءً
+    ('<div class="toast" id="toast"></div>',
+     '<div class="toast" id="toast"><span id="toastmsg"></span>'
+     '<button type="button" id="toastact" hidden></button></div>'),
+
+    (r"""  function say(m,ms){ if(!toast) return; toast.textContent=m; toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }""",
+     r"""  function say(m,ms,actLabel,actFn){
+    if(!toast) return;
+    var msg=document.getElementById('toastmsg'), act=document.getElementById('toastact');
+    if(msg) msg.textContent=m; else toast.textContent=m;
+    if(act){
+      if(actLabel){ act.hidden=false; act.textContent=actLabel;
+        act.onclick=function(){ act.hidden=true; toast.classList.remove('show');
+                                if(actFn) actFn(); }; }
+      else { act.hidden=true; act.onclick=null; }
+    }
+    toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }"""),
+
+    # عنوان الصفحة كان يكرّر اسم المنطقة: «— مكة مكة»
+    (r"""document.title='حملة غسيل السيارات — '+NAMES[this.value]+' '+this.value;""",
+     r"""document.title='حملة غسيل السيارات — منطقة '+NAMES[this.value];"""),
+
+    # ٨ · نسخة محفوظة من قبل التحديث لا تُستبدل من تلقاء نفسها، بل يُعرض عليها
+    (r"""  document.title='حملة غسيل السيارات — '+NAMES[sel.value]+' '+sel.value;""",
+     r"""  function offerFresh(c){
+    var old=null; try{ old=localStorage.getItem('darb-region-slides-v2-'+c); }catch(e){}
+    if(!old) return;
+    if(old.indexOf('data-rslider')>=0 && old.indexOf('data-ptab')>=0) return;
+    ed.say('نسختك المحفوظة من منطقة '+NAMES[c]+' سابقة للتحديث، فما ظهر فيها شريط '+
+           'تحليلات المناطق ولا جدول الشركاء. «حدّث» يجيبهما، و«تراجع» بعده يرجّع نسختك.',
+      20000, 'حدّث', function(){
+        ed.snap();
+        ed.box.innerHTML=fill(DECKS[c]);
+        ed.mark(); ed.snap(); ed.keep(); ed.place(null);
+        window.scrollTo(0,0);
+        ed.say('حُدّثت شرائح '+NAMES[c]+'. «تراجع» يرجّع نسختك السابقة.',9000);
+      });
+  }
+  offerFresh(sel.value);
+  document.title='حملة غسيل السيارات — منطقة '+NAMES[sel.value];"""),
+
+    (r"""    ed.show(load(this.value));""",
+     r"""    ed.show(load(this.value));
+    offerFresh(this.value);"""),
+
+    # ٦ · الشريط وحده ينزل مع ملف الشريك ليبقى متحرّكًا عنده
+    (r"""      '<div class="wrap"><div id="deck">'+body+'</div></div>\\n'+
+      '</body>\\n</html>\\n';""",
+     r"""      '<div class="wrap"><div id="deck">'+body+'</div></div>\\n'+
+      '<script>\\n'+darbSlider.toString()+'\\ndarbSlider(document);\\n<'+'/script>\\n'+
+      '</body>\\n</html>\\n';"""),
+]
+
+src = open('slides_chrome.py', encoding='utf-8').read()
+for old, new in CHROME:
+    assert old in src, 'chrome anchor missing: ' + old[:70]
+    src = src.replace(old, new)
+exec(compile(src, 'slides_chrome.py', 'exec'))
