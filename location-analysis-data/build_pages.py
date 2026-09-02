@@ -700,6 +700,9 @@ def _camp_hours_svg(vis, mark_h=18, mark_label='انطلاق الحملة 6م (�
 
 OPENINGS = {'MK040'}
 
+MK40_PLAN_VIEWS, MK40_VIEWS = 100000, 269812   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات إعلان افتتاح MK040)
+MK40_PLAN_ENG, MK40_ENG = 1.0, 7.0             # معدل التفاعل ٪: المخطط مقابل الفعلي
+
 def mk040_opening():
     try:
         tx = json.load(open('mk040_tx.json'))
@@ -744,8 +747,19 @@ def mk040_opening():
         <div class="kpi hot"><div class="kl">إيراد يوم الافتتاح</div><div class="kv">{n0(opn['rev'])} <small>ر.س</small></div><div class="kn">{lift(opn['rev_d'], soft['rev_d'])} عن متوسط التشغيل التجريبي ({n0(soft['rev_d'])}/يوم)</div></div>
         <div class="kpi"><div class="kl">عمليات يوم الافتتاح</div><div class="kv">{opn['vis']}</div><div class="kn">{lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي ({n0(soft['n_d'])}/يوم) · المساء {eve} عملية ({eve/opn['vis']*100:.0f}٪)</div></div>
         <div class="kpi"><div class="kl">لترات يوم الافتتاح</div><div class="kv">{n0(opn['vol'])}</div><div class="kn">{lift(opn['vol_d'], soft['vol_d'])} عن متوسط ما قبل الافتتاح</div></div>
-        <div class="kpi"><div class="kl">إجمالي المشاهدات (إعلان الافتتاح)</div><div class="kv"><span class="confbox" contenteditable="true" data-ph="أدخل الرقم…" style="display:inline-block;min-width:130px;min-height:0;padding:2px 10px"></span></div><div class="kn">بانتظار رقم لوحة مؤشرات الحملة — اكتبه هنا مباشرة (يُحفظ عند تنزيل النسخة) أو زوّدني به لأثبّته مع نسبة التحقيق</div></div>
+        <div class="kpi"><div class="kl">إجمالي المشاهدات (إعلان الافتتاح)</div><div class="kv">{n0(MK40_VIEWS)}</div><div class="kn">مقابل مخطط {n0(MK40_PLAN_VIEWS)} — نسبة تحقيق {MK40_VIEWS/MK40_PLAN_VIEWS*100:.1f}٪</div></div>
       </div>
+      <div class="sec-h" style="margin-top:16px"><h2>الأداء التسويقي لإعلان الافتتاح: المشاهدات والتفاعل</h2><span>المخطط مقابل الفعلي — من لوحة مؤشرات الحملة</span></div>
+      <div class="skpis" style="grid-template-columns:repeat(2,1fr)">
+        <div class="kpi hot"><div class="kl">إجمالي المشاهدات / الوصول</div><div class="kv">{n0(MK40_VIEWS)}</div><div class="kn">مقابل مخطط {n0(MK40_PLAN_VIEWS)} — نسبة تحقيق {MK40_VIEWS/MK40_PLAN_VIEWS*100:.1f}٪ (+{n0(MK40_VIEWS-MK40_PLAN_VIEWS)})</div></div>
+        <div class="kpi"><div class="kl">إجمالي التفاعل (تقديري)</div><div class="kv">~{n0(MK40_VIEWS*MK40_ENG/100)}</div><div class="kn">معدل تفاعل {MK40_ENG:.1f}٪ مقابل مخطط {MK40_PLAN_ENG:.1f}٪ — نسبة تحقيق {MK40_ENG/MK40_PLAN_ENG*100:.1f}٪ · الإجمالي محسوب: المشاهدات × المعدل</div></div>
+      </div>
+      <div class="ntable"><div class="tscroll"><table>
+        <thead><tr><th>المؤشر</th><th>المخطط</th><th>الفعلي</th><th>الفجوة</th><th>نسبة التحقيق</th></tr></thead>
+        <tbody>
+          <tr><td><b>الوصول / المشاهدات</b></td><td>{n0(MK40_PLAN_VIEWS)}</td><td><b>{n0(MK40_VIEWS)}</b></td><td><span class="up">+{n0(MK40_VIEWS-MK40_PLAN_VIEWS)}</span></td><td><span class="up">{MK40_VIEWS/MK40_PLAN_VIEWS*100:.1f}٪</span></td></tr>
+          <tr><td><b>معدل التفاعل ٪</b></td><td>{MK40_PLAN_ENG:.1f}٪</td><td><b>{MK40_ENG:.1f}٪</b></td><td><span class="up">+{MK40_ENG-MK40_PLAN_ENG:.1f} نقطة</span></td><td><span class="up">{MK40_ENG/MK40_PLAN_ENG*100:.1f}٪</span></td></tr>
+        </tbody></table></div></div>
       <div class="chartbox"><h3>عمليات يوم الافتتاح ساعة بساعة</h3><div class="cs">الأعمدة البرتقالية = ما بعد الافتتاح الرسمي (7م حتى منتصف الليل) · ذروة المساء 8–9م</div>{_camp_hours_svg(vis_h, mark_h=19, mark_label='الافتتاح الرسمي 7م', hi_from=19)}</div>
       <div class="sec-h" style="margin-top:16px"><h2>المقارنة: التشغيل التجريبي → يوم الافتتاح → بعده</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام · الأساس = فترة التجريب</span></div>
       <div class="ntable"><div class="tscroll"><table>
@@ -757,7 +771,7 @@ def mk040_opening():
           <li><b>الأثر بعد الافتتاح:</b> متوسط العمليات ارتفع إلى {n0(post['n_d'])}/يوم ({lift(post['n_d'], soft['n_d'])}) والإيراد إلى {n0(post['rev_d'])} ر.س/يوم ({lift(post['rev_d'], soft['rev_d'])}) في ٢٧–٣١ أغسطس، وسجل ٣١ أغسطس أعلى يوم منذ بدء التشغيل ({n0(best['rev'])} ر.س).</li>
           <li><b>إجمالي اللترات:</b> {n0(soft['vol'])} لترًا في فترة التجريب (١١ يومًا)، و{n0(opn['vol'])} لترًا يوم الافتتاح، ثم {n0(post['vol'])} لترًا في ٥ أيام بعده بمعدل {n0(post['vol_d'])} لتر/يوم.</li>
           <li><b>الفاتورة:</b> {opn['inv']:.1f} ر.س يوم الافتتاح مقابل {soft['inv']:.1f} في التجريب و{post['inv']:.1f} بعده — مستوى فاتورة مرتفع مقارنة بمتوسط الشبكة.</li>
-          <li><b>إجمالي المشاهدات:</b> بانتظار رقم لوحة مؤشرات إعلان الافتتاح — يُدرج هنا مع نسبة التحقيق فور توفره.</li>
+          <li><b>الأداء التسويقي:</b> {n0(MK40_VIEWS)} مشاهدة ({MK40_VIEWS/MK40_PLAN_VIEWS:.1f}× المستهدف 100 ألف) بمعدل تفاعل {MK40_ENG:.1f}٪ ({MK40_ENG/MK40_PLAN_ENG:.0f}× المستهدف) أي ~{n0(MK40_VIEWS*MK40_ENG/100)} تفاعلًا — وصول رقمي واسع في جدة مهّد ليوم الافتتاح وللمستوى الأعلى الثابت بعده.</li>
         </ul></div>
       <div class="dnote">المصدر: ملف معاملات درب الروضة — الخريجي MK040 لأغسطس 2026 ({n0(len(tx))} عملية بيع بعد استبعاد 60 عملية معايرة) · التشغيل التجريبي بدأ ١٥ أغسطس والافتتاح الرسمي مساء ٢٦ أغسطس.</div>
     </div>'''
