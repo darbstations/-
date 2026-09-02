@@ -502,5 +502,12 @@
   "gcity": "حائل",
   "rating": null,
   "reviews": null
+ },
+ "MK040": {
+  "hood": "شارع عبدالله الخريجي",
+  "address": "شارع عبدالله الخريجي، جدة",
+  "gcity": "جدة",
+  "rating": null,
+  "reviews": null
  }
 }
