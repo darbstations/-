@@ -790,7 +790,7 @@ def _ha_daily_svg(daily):
     out.append(f'<text x="{x22+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
-MK_PLAN_VIEWS, MK_VIEWS = 100000, 469000   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات حملة HA052)
+MK_PLAN_VIEWS, MK_VIEWS = 100000, 632353   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات حملة HA052)
 MK_PLAN_ENG, MK_ENG = 5.0, 16.805          # معدل التفاعل ٪: المخطط مقابل الفعلي
 
 def ha052_campaign():
