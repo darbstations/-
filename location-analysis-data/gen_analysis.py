@@ -211,7 +211,7 @@ def swot_for(m, g, comp):
     top_rank = m['rank_drev'] <= 14
     # Strengths
     if top_rank: s.append(f"ضمن أعلى 25٪ من الشبكة بإيراد يومي {fmt_sar(m['daily_rev'])} (المرتبة {m['rank_drev']} من {m['n_total']})")
-    if g and g.get('rating') and g['rating'] >= 4.8 and g.get('reviews',0) >= 300:
+    if g and g.get('rating') and g['rating'] >= 4.8 and (g.get('reviews') or 0) >= 300:
         s.append(f"سمعة قوية على خرائط جوجل: {g['rating']}★ من {g['reviews']:,} مراجعة")
     elif g and g.get('rating') and g['rating'] >= 4.5:
         s.append(f"تقييم جيد على خرائط جوجل ({g['rating']}★)")
@@ -228,7 +228,7 @@ def swot_for(m, g, comp):
     if m['night'] < 0.10: w.append(f"الليل شبه ميت ({m['night']*100:.0f}٪ من الزيارات) رغم التشغيل 24س")
     if m['nmonths'] < 6: w.append(f"بيانات {m['nmonths']} أشهر فقط — المقارنات الموسمية غير مكتملة")
     if g and g.get('rating') and g['rating'] < 4.5: w.append(f"تقييم جوجل {g['rating']}★ أقل من متوسط الشبكة (4.8) — يحتاج معالجة تجربة العميل")
-    if g and g.get('reviews', 0) < 100: w.append('حضور رقمي ضعيف (مراجعات قليلة) — المحطة غير مرئية للزوار الجدد')
+    if g and (g.get('reviews') or 0) < 100: w.append('حضور رقمي ضعيف (مراجعات قليلة) — المحطة غير مرئية للزوار الجدد')
     if m['avg_invoice'] < med_inv*0.85: w.append(f"متوسط فاتورة منخفض ({m['avg_invoice']:.0f} ر.س) — أغلب العملاء تعبئة جزئية")
     if not w: w.append('لا ضعف جوهري ظاهر في البيانات — الحفاظ على المستوى هو التحدي')
     # Opportunities

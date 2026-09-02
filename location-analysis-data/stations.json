@@ -1243,10 +1243,10 @@
   "num": "HA052",
   "city": "حائل",
   "name": "الأمير سعود",
-  "status": "Franchises",
+  "status": "Operation",
   "loc": "https://maps.app.goo.gl/7rLf2km3YaNFWczT8",
-  "open": false,
-  "install": false,
+  "open": true,
+  "install": true,
   "notes": null
  },
  {

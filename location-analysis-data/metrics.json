@@ -39,7 +39,7 @@
   "size": null,
   "rank_drev": 29,
   "rank_inv": 38,
-  "n_total": 55
+  "n_total": 56
  },
  "EP051": {
   "code": "EP051",
@@ -84,7 +84,7 @@
   "size": null,
   "rank_drev": 41,
   "rank_inv": 22,
-  "n_total": 55
+  "n_total": 56
  },
  "HA043": {
   "code": "HA043",
@@ -129,7 +129,7 @@
   "size": null,
   "rank_drev": 51,
   "rank_inv": 27,
-  "n_total": 55
+  "n_total": 56
  },
  "JA041": {
   "code": "JA041",
@@ -171,7 +171,7 @@
   "size": null,
   "rank_drev": 39,
   "rank_inv": 46,
-  "n_total": 55
+  "n_total": 56
  },
  "JA053": {
   "code": "JA053",
@@ -216,7 +216,7 @@
   "size": null,
   "rank_drev": 44,
   "rank_inv": 39,
-  "n_total": 55
+  "n_total": 56
  },
  "JA056": {
   "code": "JA056",
@@ -261,7 +261,7 @@
   "size": null,
   "rank_drev": 52,
   "rank_inv": 28,
-  "n_total": 55
+  "n_total": 56
  },
  "JA060": {
   "code": "JA060",
@@ -306,7 +306,7 @@
   "size": null,
   "rank_drev": 53,
   "rank_inv": 54,
-  "n_total": 55
+  "n_total": 56
  },
  "JA061": {
   "code": "JA061",
@@ -351,7 +351,7 @@
   "size": null,
   "rank_drev": 37,
   "rank_inv": 8,
-  "n_total": 55
+  "n_total": 56
  },
  "JA069": {
   "code": "JA069",
@@ -396,7 +396,7 @@
   "size": null,
   "rank_drev": 30,
   "rank_inv": 34,
-  "n_total": 55
+  "n_total": 56
  },
  "JA092": {
   "code": "JA092",
@@ -440,7 +440,7 @@
   "size": null,
   "rank_drev": 16,
   "rank_inv": 53,
-  "n_total": 55
+  "n_total": 56
  },
  "JA348": {
   "code": "JA348",
@@ -480,7 +480,7 @@
   "size": null,
   "rank_drev": 34,
   "rank_inv": 55,
-  "n_total": 55
+  "n_total": 56
  },
  "MD009": {
   "code": "MD009",
@@ -521,7 +521,7 @@
   "size": null,
   "rank_drev": 54,
   "rank_inv": 21,
-  "n_total": 55
+  "n_total": 56
  },
  "MK001": {
   "code": "MK001",
@@ -566,7 +566,7 @@
   "size": null,
   "rank_drev": 15,
   "rank_inv": 48,
-  "n_total": 55
+  "n_total": 56
  },
  "MK002": {
   "code": "MK002",
@@ -611,7 +611,7 @@
   "size": null,
   "rank_drev": 32,
   "rank_inv": 43,
-  "n_total": 55
+  "n_total": 56
  },
  "MK003": {
   "code": "MK003",
@@ -653,7 +653,7 @@
   "size": "كبيرة",
   "rank_drev": 2,
   "rank_inv": 16,
-  "n_total": 55
+  "n_total": 56
  },
  "MK004": {
   "code": "MK004",
@@ -695,7 +695,7 @@
   "size": null,
   "rank_drev": 3,
   "rank_inv": 3,
-  "n_total": 55
+  "n_total": 56
  },
  "MK005": {
   "code": "MK005",
@@ -737,7 +737,7 @@
   "size": null,
   "rank_drev": 7,
   "rank_inv": 19,
-  "n_total": 55
+  "n_total": 56
  },
  "MK006": {
   "code": "MK006",
@@ -778,7 +778,7 @@
   "size": null,
   "rank_drev": 14,
   "rank_inv": 23,
-  "n_total": 55
+  "n_total": 56
  },
  "MK007": {
   "code": "MK007",
@@ -823,7 +823,7 @@
   "size": "كبيرة جداً",
   "rank_drev": 1,
   "rank_inv": 12,
-  "n_total": 55
+  "n_total": 56
  },
  "MK008": {
   "code": "MK008",
@@ -865,7 +865,7 @@
   "size": "متوسطة",
   "rank_drev": 17,
   "rank_inv": 49,
-  "n_total": 55
+  "n_total": 56
  },
  "MK014": {
   "code": "MK014",
@@ -910,7 +910,7 @@
   "size": null,
   "rank_drev": 31,
   "rank_inv": 1,
-  "n_total": 55
+  "n_total": 56
  },
  "MK015": {
   "code": "MK015",
@@ -952,7 +952,7 @@
   "size": null,
   "rank_drev": 8,
   "rank_inv": 37,
-  "n_total": 55
+  "n_total": 56
  },
  "MK016": {
   "code": "MK016",
@@ -997,7 +997,7 @@
   "size": null,
   "rank_drev": 18,
   "rank_inv": 50,
-  "n_total": 55
+  "n_total": 56
  },
  "MK017": {
   "code": "MK017",
@@ -1042,7 +1042,7 @@
   "size": null,
   "rank_drev": 20,
   "rank_inv": 42,
-  "n_total": 55
+  "n_total": 56
  },
  "MK018": {
   "code": "MK018",
@@ -1085,7 +1085,7 @@
   "size": null,
   "rank_drev": 27,
   "rank_inv": 40,
-  "n_total": 55
+  "n_total": 56
  },
  "MK019": {
   "code": "MK019",
@@ -1130,7 +1130,7 @@
   "size": null,
   "rank_drev": 47,
   "rank_inv": 29,
-  "n_total": 55
+  "n_total": 56
  },
  "MK020": {
   "code": "MK020",
@@ -1175,7 +1175,7 @@
   "size": null,
   "rank_drev": 21,
   "rank_inv": 51,
-  "n_total": 55
+  "n_total": 56
  },
  "MK022": {
   "code": "MK022",
@@ -1220,7 +1220,7 @@
   "size": null,
   "rank_drev": 26,
   "rank_inv": 13,
-  "n_total": 55
+  "n_total": 56
  },
  "MK023": {
   "code": "MK023",
@@ -1265,7 +1265,7 @@
   "size": null,
   "rank_drev": 38,
   "rank_inv": 47,
-  "n_total": 55
+  "n_total": 56
  },
  "MK028": {
   "code": "MK028",
@@ -1310,7 +1310,7 @@
   "size": null,
   "rank_drev": 10,
   "rank_inv": 9,
-  "n_total": 55
+  "n_total": 56
  },
  "MK029": {
   "code": "MK029",
@@ -1355,7 +1355,7 @@
   "size": null,
   "rank_drev": 11,
   "rank_inv": 17,
-  "n_total": 55
+  "n_total": 56
  },
  "MK031": {
   "code": "MK031",
@@ -1400,7 +1400,7 @@
   "size": null,
   "rank_drev": 43,
   "rank_inv": 26,
-  "n_total": 55
+  "n_total": 56
  },
  "MK033": {
   "code": "MK033",
@@ -1445,7 +1445,7 @@
   "size": null,
   "rank_drev": 12,
   "rank_inv": 14,
-  "n_total": 55
+  "n_total": 56
  },
  "MK035": {
   "code": "MK035",
@@ -1490,7 +1490,7 @@
   "size": null,
   "rank_drev": 24,
   "rank_inv": 10,
-  "n_total": 55
+  "n_total": 56
  },
  "MK046": {
   "code": "MK046",
@@ -1531,7 +1531,7 @@
   "size": null,
   "rank_drev": 6,
   "rank_inv": 11,
-  "n_total": 55
+  "n_total": 56
  },
  "MK047": {
   "code": "MK047",
@@ -1576,7 +1576,7 @@
   "size": null,
   "rank_drev": 9,
   "rank_inv": 18,
-  "n_total": 55
+  "n_total": 56
  },
  "MK054": {
   "code": "MK054",
@@ -1619,7 +1619,7 @@
   "size": null,
   "rank_drev": 25,
   "rank_inv": 4,
-  "n_total": 55
+  "n_total": 56
  },
  "MK063": {
   "code": "MK063",
@@ -1664,7 +1664,7 @@
   "size": null,
   "rank_drev": 22,
   "rank_inv": 31,
-  "n_total": 55
+  "n_total": 56
  },
  "MK064": {
   "code": "MK064",
@@ -1709,7 +1709,7 @@
   "size": null,
   "rank_drev": 23,
   "rank_inv": 30,
-  "n_total": 55
+  "n_total": 56
  },
  "MK068": {
   "code": "MK068",
@@ -1754,7 +1754,7 @@
   "size": null,
   "rank_drev": 33,
   "rank_inv": 45,
-  "n_total": 55
+  "n_total": 56
  },
  "MK071": {
   "code": "MK071",
@@ -1799,7 +1799,7 @@
   "size": null,
   "rank_drev": 35,
   "rank_inv": 52,
-  "n_total": 55
+  "n_total": 56
  },
  "MK072": {
   "code": "MK072",
@@ -1844,7 +1844,7 @@
   "size": null,
   "rank_drev": 5,
   "rank_inv": 41,
-  "n_total": 55
+  "n_total": 56
  },
  "MK084": {
   "code": "MK084",
@@ -1889,7 +1889,7 @@
   "size": null,
   "rank_drev": 36,
   "rank_inv": 7,
-  "n_total": 55
+  "n_total": 56
  },
  "MK093": {
   "code": "MK093",
@@ -1934,7 +1934,7 @@
   "size": null,
   "rank_drev": 40,
   "rank_inv": 33,
-  "n_total": 55
+  "n_total": 56
  },
  "MK099": {
   "code": "MK099",
@@ -1979,7 +1979,7 @@
   "size": null,
   "rank_drev": 49,
   "rank_inv": 44,
-  "n_total": 55
+  "n_total": 56
  },
  "MK100": {
   "code": "MK100",
@@ -2024,7 +2024,7 @@
   "size": null,
   "rank_drev": 50,
   "rank_inv": 24,
-  "n_total": 55
+  "n_total": 56
  },
  "MK210": {
   "code": "MK210",
@@ -2068,7 +2068,7 @@
   "size": null,
   "rank_drev": 19,
   "rank_inv": 36,
-  "n_total": 55
+  "n_total": 56
  },
  "MK289": {
   "code": "MK289",
@@ -2113,7 +2113,7 @@
   "size": null,
   "rank_drev": 4,
   "rank_inv": 2,
-  "n_total": 55
+  "n_total": 56
  },
  "MK323": {
   "code": "MK323",
@@ -2155,7 +2155,7 @@
   "size": null,
   "rank_drev": 48,
   "rank_inv": 32,
-  "n_total": 55
+  "n_total": 56
  },
  "NJ219": {
   "code": "NJ219",
@@ -2197,7 +2197,7 @@
   "size": null,
   "rank_drev": 54,
   "rank_inv": 43,
-  "n_total": 55
+  "n_total": 56
  },
  "QS055": {
   "code": "QS055",
@@ -2242,7 +2242,7 @@
   "size": null,
   "rank_drev": 42,
   "rank_inv": 5,
-  "n_total": 55
+  "n_total": 56
  },
  "RY024": {
   "code": "RY024",
@@ -2287,7 +2287,7 @@
   "size": null,
   "rank_drev": 45,
   "rank_inv": 20,
-  "n_total": 55
+  "n_total": 56
  },
  "RY025": {
   "code": "RY025",
@@ -2332,7 +2332,7 @@
   "size": null,
   "rank_drev": 28,
   "rank_inv": 25,
-  "n_total": 55
+  "n_total": 56
  },
  "RY042": {
   "code": "RY042",
@@ -2377,7 +2377,7 @@
   "size": null,
   "rank_drev": 46,
   "rank_inv": 15,
-  "n_total": 55
+  "n_total": 56
  },
  "RY075": {
   "code": "RY075",
@@ -2422,6 +2422,46 @@
   "size": null,
   "rank_drev": 13,
   "rank_inv": 6,
-  "n_total": 55
+  "n_total": 56
+ },
+ "HA052": {
+  "code": "HA052",
+  "name": "حائل",
+  "region": "حائل",
+  "months": [
+   "2026-08"
+  ],
+  "nmonths": 1,
+  "revenue": 389485.14,
+  "visits": 7147,
+  "volume": 175574.5,
+  "ndays": 26,
+  "avg_invoice": 54.5,
+  "avg_liters": 24.57,
+  "daily_rev": 14980.2,
+  "daily_vis": 274.9,
+  "peak_hour": 21,
+  "peak_rev_hour": 21,
+  "evening": 0.525,
+  "night": 0.18,
+  "morning": 0.179,
+  "midday": 0.116,
+  "wk_avg": 301.5,
+  "we_avg": 276.9,
+  "we_ratio": 0.918,
+  "g91": 0.543,
+  "g95": 0.366,
+  "dsl": 0.091,
+  "cash": 0.291,
+  "card": 0.617,
+  "apps": 0.0914,
+  "cv": 0.395,
+  "growth": null,
+  "cls": "غير مصنفة",
+  "note": "افتُتحت 6 أغسطس 2026",
+  "size": null,
+  "rank_drev": 52,
+  "rank_inv": 26,
+  "n_total": 56
  }
 }

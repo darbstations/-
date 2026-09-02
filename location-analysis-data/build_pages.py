@@ -514,7 +514,7 @@ def station_body(a):
     cls_cl = {'حيوية':'c-viv','حي':'c-nbh','خط سفر':'c-hwy','مختلط':'c-mix','نائية':'c-rem'}.get(cls, 'c-un')
     growth = m['growth']
     gr_html = '—' if growth is None else (f'<span class="up">+{growth:.1f}٪</span>' if growth >= 0 else f'<span class="dn">{growth:.1f}٪</span>')
-    period = f"{len(m['months'])} أشهر" if m['nmonths'] < 6 else 'النصف الأول 2026'
+    period = 'شهر واحد' if m['nmonths'] == 1 else (f"{len(m['months'])} أشهر" if m['nmonths'] < 6 else 'النصف الأول 2026')
     maps_url = x.get('loc', '#')
 
     kpis = f'''
@@ -524,7 +524,7 @@ def station_body(a):
       <div class="kpi"><div class="kl">الزيارات اليومية</div><div class="kv">{n0(m['daily_vis'])}</div><div class="kn">ذروة الزيارات {hr_ar(m['peak_hour'])}</div></div>
       <div class="kpi"><div class="kl">متوسط الفاتورة</div><div class="kv">{m['avg_invoice']:.0f} <small>ر.س</small></div><div class="kn">متوسط التعبئة {m['avg_liters']:.0f} لترًا</div></div>
       <div class="kpi"><div class="kl">نمو Q2 مقابل Q1</div><div class="kv">{gr_html}</div><div class="kn">{'مقارنة ربعية مثل-بمثل' if growth is not None else 'لا تتوفر مقارنة (بيانات جزئية)'}</div></div>
-      <div class="kpi"><div class="kl">تقييم جوجل</div><div class="kv">{g['rating'] if g else '—'} <small>★</small></div><div class="kn">{n0(g['reviews']) if g else '—'} مراجعة</div></div>
+      <div class="kpi"><div class="kl">تقييم جوجل</div><div class="kv">{g['rating'] if g and g.get('rating') else '—'} <small>★</small></div><div class="kn">{n0(g['reviews']) + ' مراجعة' if g and g.get('reviews') else 'يُرصد بعد ترسيخ الملف على الخرائط'}</div></div>
     </div>'''
 
     sig = f'''
@@ -770,10 +770,94 @@ def nj219_campaign():
       <div class="dnote">المصدر: ملفا معاملات درب المركب NJ219 لشهري يونيو ويوليو 2026 (10,406 عملية بيع). المتوسطات محسوبة على الأيام المسجلة فعليًا.</div>
     </div>'''
 
+def _ha_daily_svg(daily):
+    W, H, PB = 1100, 260, 34
+    mx = max(x['rev'] for x in daily) or 1
+    n = len(daily); slot = (W-24)/n; bw = slot-6
+    out = ['<defs><linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    imax = max(range(n), key=lambda i: daily[i]['rev'])
+    for i, x in enumerate(daily):
+        day = int(x['date'][-2:])
+        cx = 12 + i*slot + 3
+        bh = max(2, x['rev']/mx*(H-70))
+        fill = 'url(#gH)' if day == 22 else ('#F5A623" opacity="0.55' if day > 22 else 'var(--bar)')
+        out.append(f'<rect x="{cx:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"><title>{x["date"]} — {n0(x["rev"])} ر.س · {x["vis"]} عملية · {n0(x["vol"])} لتر</title></rect>')
+        if day == 22 or i == imax:
+            out.append(f'<text x="{cx+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="11.5" font-weight="700" text-anchor="middle" fill="var(--ink)">{x["rev"]/1000:.1f}ألف</text>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-12:.1f}" font-size="10" text-anchor="middle" fill="var(--ink2)">{day}</text>')
+    d22 = next(i for i, x in enumerate(daily) if int(x['date'][-2:]) == 22)
+    x22 = 12 + d22*slot + 3
+    out.append(f'<text x="{x22+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
+    return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def ha052_campaign():
+    try:
+        d = json.load(open('ha052_aug.json'))
+    except FileNotFoundError:
+        return ''
+    daily = d['daily']
+    def seg(lo, hi):
+        rows = [x for x in daily if lo <= int(x['date'][-2:]) <= hi]
+        nd = len(rows); rev = sum(x['rev'] for x in rows); vis = sum(x['vis'] for x in rows); vol = sum(x['vol'] for x in rows)
+        return dict(nd=nd, rev=rev, vis=vis, vol=vol, n_d=vis/nd, rev_d=rev/nd, vol_d=vol/nd, inv=(rev/vis if vis else 0))
+    ramp, pre, camp, post = seg(6, 14), seg(15, 21), seg(22, 22), seg(23, 31)
+    def lift(a, b):
+        ch = (a/b-1)*100
+        return f'+{ch:.0f}٪' if ch >= 0 else f'{ch:.0f}٪'
+    def cell(a, b):
+        ch = (a/b-1)*100
+        return f'<span class="{"up" if ch>=0 else "dn"}">{"+" if ch>=0 else ""}{ch:.0f}٪</span>'
+    rows = [
+        ('الافتتاح والتهيئة (٦–١٤ أغسطس)', ramp, '—', '—'),
+        ('أسبوع ما قبل الحملة (١٥–٢١ أغسطس)', pre, 'الأساس', 'الأساس'),
+        ('يوم الحملة (السبت ٢٢ أغسطس) 🎁', camp, None, None),
+        ('بعد الحملة (٢٣–٣١ أغسطس)', post, None, None),
+    ]
+    trs = ''
+    for lab, p, cv, cr in rows:
+        cv = cv or cell(p['n_d'], pre['n_d']); cr = cr or cell(p['rev_d'], pre['rev_d'])
+        hl = ' style="background:rgba(243,112,33,.07)"' if '🎁' in lab else ''
+        trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td><b>{n0(p['vol'])}</b></td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{cv}</td><td>{cr}</td></tr>'''
+    peak22 = next(x for x in daily if int(x['date'][-2:]) == 22)['peak_h']
+    return f'''
+    <div class="sec-h" style="margin-top:6px"><h2>🎁 حملة البنزين المجاني — السبت ٢٢ أغسطس 2026</h2><span>بنزين مجاني لأول 100 سيارة · بعد نحو أسبوعين من الافتتاح</span></div>
+    <div class="card" style="border:2px solid rgba(243,112,33,.4)">
+      <div class="cs" style="margin-bottom:12px">نفّذت المحطة — المفتتحة في ٦ أغسطس — حملة «البنزين المجاني لأول 100 سيارة» يوم السبت ٢٢ أغسطس. سجّل يوم الحملة {camp['vis']:.0f} عملية بذروة عند {hr_ar(peak22)}، والأهم أن مستوى المبيعات بعد الحملة استقر أعلى بوضوح من مستواه قبلها — الحملة كانت نقطة انعطاف منحنى نمو المحطة الجديدة.</div>
+      <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi hot"><div class="kl">عمليات يوم الحملة</div><div class="kv">{camp['vis']:.0f}</div><div class="kn">{lift(camp['n_d'], pre['n_d'])} عن متوسط أسبوعه السابق ({n0(pre['n_d'])}/يوم)</div></div>
+        <div class="kpi"><div class="kl">لترات يوم الحملة</div><div class="kv">{n0(camp['vol'])}</div><div class="kn">{lift(camp['vol_d'], pre['vol_d'])} عن متوسط ما قبل الحملة</div></div>
+        <div class="kpi"><div class="kl">إيراد يوم الحملة</div><div class="kv">{sar(camp['rev'])}</div><div class="kn">{lift(camp['rev_d'], pre['rev_d'])} عن متوسط ما قبل الحملة</div></div>
+        <div class="kpi"><div class="kl">الأثر الباقي بعد الحملة</div><div class="kv">{lift(post['rev_d'], pre['rev_d'])}</div><div class="kn">{sar(post['rev_d'])} يوميًا في ٢٣–٣١ مقابل {sar(pre['rev_d'])} قبلها</div></div>
+      </div>
+      <div class="sec-h" style="margin-top:16px"><h2>إجمالي اللترات: قبل الحملة → خلالها → بعدها</h2><span>مجاميع كل فترة كاملة</span></div>
+      <div class="skpis" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi"><div class="kl">قبل الحملة (١٥–٢١ أغسطس · 7 أيام)</div><div class="kv">{n0(pre['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(pre['vol_d'])} لتر/يوم</div></div>
+        <div class="kpi hot"><div class="kl">يوم الحملة (السبت ٢٢ أغسطس)</div><div class="kv">{n0(camp['vol'])} <small>لتر</small></div><div class="kn">{lift(camp['vol_d'], pre['vol_d'])} عن المعدل اليومي قبله</div></div>
+        <div class="kpi"><div class="kl">بعد الحملة (٢٣–٣١ أغسطس · 9 أيام)</div><div class="kv">{n0(post['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(post['vol_d'])} لتر/يوم — {lift(post['vol_d'], pre['vol_d'])} عن قبل الحملة</div></div>
+      </div>
+      <div class="chartbox"><h3>الإيراد اليومي عبر أغسطس — أين وقعت الحملة؟</h3><div class="cs">رمادي: من الافتتاح حتى ما قبل الحملة · برتقالي غامق: يوم الحملة (٢٢) · برتقالي فاتح: ما بعد الحملة — لاحظ ثبات المستوى الأعلى بعدها</div>{_ha_daily_svg(daily)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>المقارنة: قبل الحملة → يومها → بعدها</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام · الأساس = أسبوع ما قبل الحملة</span></div>
+      <div class="ntable"><div class="tscroll"><table>
+        <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
+        <tbody>{trs}</tbody></table></div></div>
+      <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
+        <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
+          <li><b>أثناء الحملة:</b> {camp['vis']:.0f} عملية يوم ٢٢ أغسطس مقابل {n0(pre['n_d'])}/يوم في أسبوعه السابق ({lift(camp['n_d'], pre['n_d'])})، وذروة اليوم عند {hr_ar(peak22)}.</li>
+          <li><b>الأثر الأهم جاء بعد الحملة:</b> متوسط الإيراد اليومي قفز من {n0(pre['rev_d'])} ر.س قبلها إلى {n0(post['rev_d'])} ر.س في الأيام التسعة التالية ({lift(post['rev_d'], pre['rev_d'])})، والعمليات من {n0(pre['n_d'])} إلى {n0(post['n_d'])}/يوم ({lift(post['n_d'], pre['n_d'])}) — وثبت المستوى حتى نهاية الشهر، أي أن الحملة عرّفت جمهور حائل بالمحطة الجديدة وحوّلت جزءًا منه إلى عملاء دائمين.</li>
+          <li><b>إجمالي اللترات:</b> {n0(pre['vol'])} لترًا في أسبوع ما قبل الحملة، و{n0(camp['vol'])} لترًا يوم الحملة وحده، ثم {n0(post['vol'])} لترًا في ٩ أيام بعدها بمعدل {n0(post['vol_d'])} لتر/يوم.</li>
+          <li><b>الفاتورة:</b> {camp['inv']:.1f} ر.س يوم الحملة مقابل {pre['inv']:.1f} قبلها و{post['inv']:.1f} بعدها — لا أثر سلبي يُذكر.</li>
+          <li><b>آلية «أول 100 سيارة»:</b> هذا الملف مجمّع يوميًا، لذا عدّ القسائم وساعة الانطلاق بدقة يتطلبان ملف المعاملات التفصيلي — تُضاف الطبقة التفصيلية فور التزويد بنفس منهجية تقرير درب المركب NJ219.</li>
+        </ul></div>
+      <div class="dnote">المصدر: ملف مبيعات درب حائل HA052 لشهر أغسطس 2026 ({n0(sum(x['vis'] for x in daily))} عملية · ٦–٣١ أغسطس). المحطة افتُتحت في ٦ أغسطس 2026، لذا اعتُمد أسبوع ١٥–٢١ أساسًا للمقارنة بدل أيام التهيئة الأولى.</div>
+    </div>'''
+
 def camp_body(a):
     code = a['metrics']['code']
     if code == 'NJ219':
         rpt = nj219_campaign()
+        if rpt: return rpt
+    if code == 'HA052':
+        rpt = ha052_campaign()
         if rpt: return rpt
     return '''<div class="sec-h"><h2>🎁 تقرير حملة البنزين المجاني</h2><span>بانتظار بيانات حملة هذه المحطة</span></div>
     <div class="card">
@@ -1007,7 +1091,7 @@ def _mk_xtra_ha052():
                    n_total=len(ORDER))
     return dict(metrics=metrics, geo=geo, comp=None, personas=personas, swot=swot, pest=pest)
 
-XTRA = {'HA052': _mk_xtra_ha052()}
+XTRA = {}  # location-only stations (none currently — HA052 graduated to full sales data in Aug 2026)
 XCODES = list(XTRA.keys())
 ALLCODES = CODES + XCODES
 def _AM(c):
@@ -1108,7 +1192,7 @@ for idx, a in list(enumerate(ORDER)) + [(None, x) for x in XTRA.values()]:
     prv = CODES[idx-1] if idx and idx > 0 else None
     nxt = CODES[idx+1] if idx is not None and idx < len(CODES)-1 else None
     rank_txt = ('موقع جديد — بانتظار بيانات المبيعات' if code in XTRA
-                else f"المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026")
+                else f"المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · 2026")
     opts = ''.join(
         f'<option value="{c}.html"{" selected" if c==code else ""}>{esc(_AM(c)["name"])} — {c} ({esc(_AM(c)["region"])})</option>'
         for c in ALLCODES)
@@ -1169,7 +1253,7 @@ window.addEventListener('hashchange',route);route();
 # ---------------- hub page ----------------
 tot_rev = sum(a['metrics']['revenue'] for a in ORDER)
 tot_vis = sum(a['metrics']['visits'] for a in ORDER)
-avg_rt = statistics.mean(a['geo']['rating'] for a in ORDER if a['geo'])
+avg_rt = statistics.mean(a['geo']['rating'] for a in ORDER if a['geo'] and a['geo'].get('rating'))
 ncomp = COMP.get('_meta', {}).get('unique_competitors')
 
 chips = '<button class="chip on" data-r="*"><span class="nm">الكل</span><span class="code">' + str(len(ORDER) + len(XTRA)) + '</span></button>'
@@ -1188,7 +1272,7 @@ for i, a in enumerate(ORDER, 1):
     hood = hood_of(a)
     cards += f'''<a class="scard" href="#/{m['code']}" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']} {esc(hood)}">
       <div class="r1"><span class="nm">درب {esc(m['name'])}</span><span class="badge">{m['code']}</span></div>
-      <div class="r2"><span>حي {esc(hood)}</span><span>📍 {esc(m['region'])}</span><span class="cls {cls_cl}">{esc(cls)}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>
+      <div class="r2"><span>{esc(hood_lbl(a))}</span><span>📍 {esc(m['region'])}</span><span class="cls {cls_cl}">{esc(cls)}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g and g.get('rating') else ''}</div>
       <div class="r3"><span>إيراد يومي <b>{n0(m['daily_rev'])}</b> ر.س</span><span>#{i} {gh}</span></div>
     </a>'''
 
@@ -1209,7 +1293,7 @@ for i, a in enumerate(ORDER, 1):
     ov_rows += f'''<tr data-region="{esc(m['region'])}">
       <td>{i}</td><td><a class="stlink" href="#/{m['code']}">{esc(m['name'])}</a> <span class="tcode">{m['code']}</span></td><td>{esc(m['region'])}</td>
       <td>{esc(m['cls'] or '—')}</td><td>{n0(m['daily_rev'])}</td><td>{m['avg_invoice']:.0f}</td><td>{gh}</td>
-      <td>{(str(c['n']) + ('*' if c.get('thin') else '')) if c else '—'}</td><td>{g['rating'] if g else '—'}</td></tr>'''
+      <td>{(str(c['n']) + ('*' if c.get('thin') else '')) if c else '—'}</td><td>{g['rating'] if g and g.get('rating') else '—'}</td></tr>'''
 
 for x in XTRA.values():
     m = x['metrics']
@@ -1457,10 +1541,10 @@ hub = f'''<!DOCTYPE html>
     <div class="brand">
       <div class="mark">{LOGO_SVG}</div>
       <div class="hd-title"><h1>تحليل المحطات والمبيعات – صفحة مستقلة لكل محطة تشمل: تحليل PEST، العميل المستهدف (Persona)، تحليل SWOT، وتحليل المنافسين ضمن نطاق 5 كم</h1>
-      <p>النصف الأول 2026 · {len(ORDER) + len(XTRA)} محطة مشمولة ({len(ORDER)} ببيانات مبيعات) · اختر محطة لفتح صفحتها الكاملة</p></div>
+      <p>2026 · {len(ORDER) + len(XTRA)} محطة مشمولة {f'({len(ORDER)} ببيانات مبيعات) ' if XTRA else 'بالبيانات '}· اختر محطة لفتح صفحتها الكاملة</p></div>
     </div>
     <div class="netkpis">
-      <div><div class="v">{len(ORDER) + len(XTRA)}</div><div class="l">محطة مشمولة بالتحليل — {len(ORDER)} ببيانات مبيعات (من أصل {len(XL)})</div></div>
+      <div><div class="v">{len(ORDER) + len(XTRA)}</div><div class="l">محطة مشمولة بالتحليل{f' — {len(ORDER)} ببيانات مبيعات' if XTRA else ''} (من أصل {len(XL)})</div></div>
       <div><div class="v">{tot_rev/1e6:,.1f} <small>مليون ر.س</small></div><div class="l">إيراد الفترة</div></div>
       <div><div class="v">{tot_vis/1e6:,.2f} <small>مليون</small></div><div class="l">زيارة</div></div>
       <div><div class="v">{avg_rt:.2f} ★</div><div class="l">متوسط تقييم درب على جوجل</div></div>
