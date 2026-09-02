@@ -790,6 +790,9 @@ def _ha_daily_svg(daily):
     out.append(f'<text x="{x22+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
+MK_PLAN_VIEWS, MK_VIEWS = 100000, 469000   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات حملة HA052)
+MK_PLAN_ENG, MK_ENG = 5.0, 16.805          # معدل التفاعل ٪: المخطط مقابل الفعلي
+
 def ha052_campaign():
     try:
         d = json.load(open('ha052_aug.json'))
@@ -820,15 +823,26 @@ def ha052_campaign():
         trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td><b>{n0(p['vol'])}</b></td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{cv}</td><td>{cr}</td></tr>'''
     peak22 = next(x for x in daily if int(x['date'][-2:]) == 22)['peak_h']
     return f'''
-    <div class="sec-h" style="margin-top:6px"><h2>🎁 حملة البنزين المجاني — السبت ٢٢ أغسطس 2026</h2><span>بنزين مجاني لأول 100 سيارة · بعد نحو أسبوعين من الافتتاح</span></div>
+    <div class="sec-h" style="margin-top:6px"><h2>🎁 حملة البنزين المجاني — السبت ٢٢ أغسطس 2026</h2><span>بنزين مجاني بقيمة 50 ر.س لأول 100 سيارة · بعد نحو أسبوعين من الافتتاح</span></div>
     <div class="card" style="border:2px solid rgba(243,112,33,.4)">
-      <div class="cs" style="margin-bottom:12px">نفّذت المحطة — المفتتحة في ٦ أغسطس — حملة «البنزين المجاني لأول 100 سيارة» يوم السبت ٢٢ أغسطس. سجّل يوم الحملة {camp['vis']:.0f} عملية بذروة عند {hr_ar(peak22)}، والأهم أن مستوى المبيعات بعد الحملة استقر أعلى بوضوح من مستواه قبلها — الحملة كانت نقطة انعطاف منحنى نمو المحطة الجديدة.</div>
+      <div class="cs" style="margin-bottom:12px">نفّذت المحطة — المفتتحة في ٦ أغسطس — حملة «البنزين المجاني بقيمة 50 ر.س لأول 100 سيارة» يوم السبت ٢٢ أغسطس. سجّل يوم الحملة {camp['vis']:.0f} عملية بذروة عند {hr_ar(peak22)}، والأهم أن مستوى المبيعات بعد الحملة استقر أعلى بوضوح من مستواه قبلها — الحملة كانت نقطة انعطاف منحنى نمو المحطة الجديدة.</div>
       <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
         <div class="kpi hot"><div class="kl">عمليات يوم الحملة</div><div class="kv">{camp['vis']:.0f}</div><div class="kn">{lift(camp['n_d'], pre['n_d'])} عن متوسط أسبوعه السابق ({n0(pre['n_d'])}/يوم)</div></div>
         <div class="kpi"><div class="kl">لترات يوم الحملة</div><div class="kv">{n0(camp['vol'])}</div><div class="kn">{lift(camp['vol_d'], pre['vol_d'])} عن متوسط ما قبل الحملة</div></div>
         <div class="kpi"><div class="kl">إيراد يوم الحملة</div><div class="kv">{sar(camp['rev'])}</div><div class="kn">{lift(camp['rev_d'], pre['rev_d'])} عن متوسط ما قبل الحملة</div></div>
         <div class="kpi"><div class="kl">الأثر الباقي بعد الحملة</div><div class="kv">{lift(post['rev_d'], pre['rev_d'])}</div><div class="kn">{sar(post['rev_d'])} يوميًا في ٢٣–٣١ مقابل {sar(pre['rev_d'])} قبلها</div></div>
       </div>
+      <div class="sec-h" style="margin-top:16px"><h2>الأداء التسويقي للحملة: المشاهدات والتفاعل</h2><span>المخطط مقابل الفعلي — من لوحة مؤشرات الحملة</span></div>
+      <div class="skpis" style="grid-template-columns:repeat(2,1fr)">
+        <div class="kpi hot"><div class="kl">إجمالي المشاهدات / الوصول</div><div class="kv">{n0(MK_VIEWS)}</div><div class="kn">مقابل مخطط {n0(MK_PLAN_VIEWS)} — نسبة تحقيق {MK_VIEWS/MK_PLAN_VIEWS*100:.0f}٪ (+{n0(MK_VIEWS-MK_PLAN_VIEWS)})</div></div>
+        <div class="kpi"><div class="kl">إجمالي التفاعل (تقديري)</div><div class="kv">~{n0(MK_VIEWS*MK_ENG/100)}</div><div class="kn">معدل تفاعل {MK_ENG:.1f}٪ مقابل مخطط {MK_PLAN_ENG:.0f}٪ — نسبة تحقيق {MK_ENG/MK_PLAN_ENG*100:.1f}٪ · الإجمالي محسوب: المشاهدات × المعدل</div></div>
+      </div>
+      <div class="ntable"><div class="tscroll"><table>
+        <thead><tr><th>المؤشر</th><th>المخطط</th><th>الفعلي</th><th>الفجوة</th><th>نسبة التحقيق</th></tr></thead>
+        <tbody>
+          <tr><td><b>الوصول / المشاهدات</b></td><td>{n0(MK_PLAN_VIEWS)}</td><td><b>{n0(MK_VIEWS)}</b></td><td><span class="up">+{n0(MK_VIEWS-MK_PLAN_VIEWS)}</span></td><td><span class="up">{MK_VIEWS/MK_PLAN_VIEWS*100:.1f}٪</span></td></tr>
+          <tr><td><b>معدل التفاعل ٪</b></td><td>{MK_PLAN_ENG:.1f}٪</td><td><b>{MK_ENG:.1f}٪</b></td><td><span class="up">+{MK_ENG-MK_PLAN_ENG:.1f} نقطة</span></td><td><span class="up">{MK_ENG/MK_PLAN_ENG*100:.1f}٪</span></td></tr>
+        </tbody></table></div></div>
       <div class="sec-h" style="margin-top:16px"><h2>إجمالي اللترات: قبل الحملة → خلالها → بعدها</h2><span>مجاميع كل فترة كاملة</span></div>
       <div class="skpis" style="grid-template-columns:repeat(3,1fr)">
         <div class="kpi"><div class="kl">قبل الحملة (١٥–٢١ أغسطس · 7 أيام)</div><div class="kv">{n0(pre['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(pre['vol_d'])} لتر/يوم</div></div>
@@ -846,7 +860,8 @@ def ha052_campaign():
           <li><b>الأثر الأهم جاء بعد الحملة:</b> متوسط الإيراد اليومي قفز من {n0(pre['rev_d'])} ر.س قبلها إلى {n0(post['rev_d'])} ر.س في الأيام التسعة التالية ({lift(post['rev_d'], pre['rev_d'])})، والعمليات من {n0(pre['n_d'])} إلى {n0(post['n_d'])}/يوم ({lift(post['n_d'], pre['n_d'])}) — وثبت المستوى حتى نهاية الشهر، أي أن الحملة عرّفت جمهور حائل بالمحطة الجديدة وحوّلت جزءًا منه إلى عملاء دائمين.</li>
           <li><b>إجمالي اللترات:</b> {n0(pre['vol'])} لترًا في أسبوع ما قبل الحملة، و{n0(camp['vol'])} لترًا يوم الحملة وحده، ثم {n0(post['vol'])} لترًا في ٩ أيام بعدها بمعدل {n0(post['vol_d'])} لتر/يوم.</li>
           <li><b>الفاتورة:</b> {camp['inv']:.1f} ر.س يوم الحملة مقابل {pre['inv']:.1f} قبلها و{post['inv']:.1f} بعدها — لا أثر سلبي يُذكر.</li>
-          <li><b>آلية «أول 100 سيارة»:</b> هذا الملف مجمّع يوميًا، لذا عدّ القسائم وساعة الانطلاق بدقة يتطلبان ملف المعاملات التفصيلي — تُضاف الطبقة التفصيلية فور التزويد بنفس منهجية تقرير درب المركب NJ219.</li>
+          <li><b>الأداء التسويقي:</b> {n0(MK_VIEWS)} مشاهدة ({MK_VIEWS/MK_PLAN_VIEWS:.1f}× المستهدف) بمعدل تفاعل {MK_ENG:.1f}٪ ({MK_ENG/MK_PLAN_ENG:.1f}× المستهدف) أي ~{n0(MK_VIEWS*MK_ENG/100)} تفاعلًا — وصول رقمي واسع في حائل يفسّر قفزة الزيارات يوم الحملة وثبات مستواها بعده.</li>
+          <li><b>آلية «قسيمة 50 ر.س لأول 100 سيارة»:</b> هذا الملف مجمّع يوميًا، لذا عدّ القسائم وساعة الانطلاق بدقة يتطلبان ملف المعاملات التفصيلي — تُضاف الطبقة التفصيلية فور التزويد بنفس منهجية تقرير درب المركب NJ219.</li>
         </ul></div>
       <div class="dnote">المصدر: ملف مبيعات درب حائل HA052 لشهر أغسطس 2026 ({n0(sum(x['vis'] for x in daily))} عملية · ٦–٣١ أغسطس). المحطة افتُتحت في ٦ أغسطس 2026، لذا اعتُمد أسبوع ١٥–٢١ أساسًا للمقارنة بدل أيام التهيئة الأولى.</div>
     </div>'''
