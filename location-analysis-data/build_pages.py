@@ -650,6 +650,7 @@ def mini_head(a):
 
 def tabs_html(code, active, mode):
     items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية'),('camp','تقرير حملة البنزين المجاني')]
+    if code in OPENINGS: items.append(('opening','تقرير الافتتاح'))
     cc = OPS_COUNTS.get(code, {})
     for k, lab in OPS_TABS:
         n = cc.get(k)
@@ -680,7 +681,7 @@ def bars_chart(vals, labels, fmt, unit=''):
 
 CAND_CAUSES = ['ذروة موسم الحج','ارتفاع الحركة المرورية','إعلان أو تحويلة طريق','صيانة مضخات أو توقف جزئي','انقطاع منتج','منافس جديد قريب','تغيّر أسعار','حملة تسويقية','تغيّر فريق التشغيل','طقس أو أمطار','أعمال إنشائية مجاورة','موسم إجازات أو عودة مدارس']
 
-def _camp_hours_svg(vis):
+def _camp_hours_svg(vis, mark_h=18, mark_label='انطلاق الحملة 6م (المغرب)', hi_from=18):
     W, H, PB = 1100, 250, 34
     mx = max(vis) or 1
     slot = (W-24)/24; bw = slot-8
@@ -688,14 +689,85 @@ def _camp_hours_svg(vis):
     for h, v in enumerate(vis):
         x = 12 + h*slot + 4
         bh = max(2, v/mx*(H-64))
-        fill = 'url(#gC)' if h >= 18 else 'var(--bar)'
+        fill = 'url(#gC)' if h >= hi_from else 'var(--bar)'
         out.append(f'<rect x="{x:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="6" fill="{fill}"/>')
         if v: out.append(f'<text x="{x+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ink)">{v}</text>')
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
-    x18 = 12 + 18*slot + 4
-    out.append(f'<line x1="{x18-4:.1f}" y1="14" x2="{x18-4:.1f}" y2="{H-PB}" stroke="#C0503A" stroke-width="2" stroke-dasharray="5 4"/>')
-    out.append(f'<text x="{x18-10:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">انطلاق الحملة 6م (المغرب)</text>')
+    xm = 12 + mark_h*slot + 4
+    out.append(f'<line x1="{xm-4:.1f}" y1="14" x2="{xm-4:.1f}" y2="{H-PB}" stroke="#C0503A" stroke-width="2" stroke-dasharray="5 4"/>')
+    out.append(f'<text x="{xm-10:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">{mark_label}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+OPENINGS = {'MK040'}
+
+def mk040_opening():
+    try:
+        tx = json.load(open('mk040_tx.json'))
+    except FileNotFoundError:
+        return ''
+    days = sorted({t['d'] for t in tx})
+    daily = []
+    for dd in days:
+        T = [t for t in tx if t['d'] == dd]
+        daily.append({'date': dd, 'rev': sum(t['amt'] for t in T), 'vis': len(T), 'vol': sum(t['vol'] for t in T)})
+    def per(lo, hi):
+        R = [x for x in daily if lo <= int(x['date'][-2:]) <= hi]
+        nd = len(R); vis = sum(x['vis'] for x in R); rev = sum(x['rev'] for x in R); vol = sum(x['vol'] for x in R)
+        return dict(nd=nd, vis=vis, rev=rev, vol=vol, n_d=vis/nd, rev_d=rev/nd, vol_d=vol/nd, inv=(rev/vis if vis else 0))
+    soft, opn, post = per(15, 25), per(26, 26), per(27, 31)
+    C = [t for t in tx if t['d'] == '2026-08-26']
+    vis_h = [0]*24
+    for t in C: vis_h[t['h']] += 1
+    eve = sum(vis_h[16:24])
+    best = max(daily, key=lambda x: x['rev'])
+    def lift(a, b):
+        ch = (a/b-1)*100
+        return f'+{ch:.0f}٪' if ch >= 0 else f'{ch:.0f}٪'
+    def cell(a, b):
+        ch = (a/b-1)*100
+        return f'<span class="{"up" if ch>=0 else "dn"}">{"+" if ch>=0 else ""}{ch:.0f}٪</span>'
+    rowsdef = [
+        ('التشغيل التجريبي (١٥–٢٥ أغسطس)', soft, 'الأساس', 'الأساس'),
+        ('يوم الافتتاح (الأربعاء ٢٦ أغسطس) 🎉', opn, None, None),
+        ('بعد الافتتاح (٢٧–٣١ أغسطس)', post, None, None),
+    ]
+    trs = ''
+    for lab, p, cv_, cr_ in rowsdef:
+        cv_ = cv_ or cell(p['n_d'], soft['n_d']); cr_ = cr_ or cell(p['rev_d'], soft['rev_d'])
+        hl = ' style="background:rgba(243,112,33,.07)"' if '🎉' in lab else ''
+        trs += f'''<tr{hl}><td><b>{lab}</b></td><td>{p['nd']}</td><td>{n0(p['n_d'])}</td><td>{n0(p['vol_d'])}</td><td><b>{n0(p['vol'])}</b></td><td>{n0(p['rev_d'])}</td><td>{p['inv']:.1f}</td><td>{cv_}</td><td>{cr_}</td></tr>'''
+    return f'''
+    <div class="sec-h" style="margin-top:6px"><h2>🎉 تقرير الافتتاح — الأربعاء ٢٦ أغسطس 2026 · الساعة 7م</h2><span>درب الروضة — الخريجي · تشغيل تجريبي منذ ١٥ أغسطس</span></div>
+    <div class="card" style="border:2px solid rgba(243,112,33,.4)">
+      <div class="cs" style="margin-bottom:12px">بدأت المحطة تشغيلًا تجريبيًا في ١٥ أغسطس، وأقيم الافتتاح الرسمي مساء الأربعاء ٢٦ أغسطس الساعة 7م. سجّل يوم الافتتاح {opn['vis']} عملية بإيراد {n0(opn['rev'])} ر.س — أعلى مما قبله — ثم استقر التشغيل بعد الافتتاح عند مستوى أعلى بوضوح من فترة التجريب.</div>
+      <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi hot"><div class="kl">إيراد يوم الافتتاح</div><div class="kv">{n0(opn['rev'])} <small>ر.س</small></div><div class="kn">{lift(opn['rev_d'], soft['rev_d'])} عن متوسط التشغيل التجريبي ({n0(soft['rev_d'])}/يوم)</div></div>
+        <div class="kpi"><div class="kl">عمليات يوم الافتتاح</div><div class="kv">{opn['vis']}</div><div class="kn">{lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي ({n0(soft['n_d'])}/يوم) · المساء {eve} عملية ({eve/opn['vis']*100:.0f}٪)</div></div>
+        <div class="kpi"><div class="kl">لترات يوم الافتتاح</div><div class="kv">{n0(opn['vol'])}</div><div class="kn">{lift(opn['vol_d'], soft['vol_d'])} عن متوسط ما قبل الافتتاح</div></div>
+        <div class="kpi"><div class="kl">إجمالي المشاهدات (إعلان الافتتاح)</div><div class="kv"><span class="confbox" contenteditable="true" data-ph="أدخل الرقم…" style="display:inline-block;min-width:130px;min-height:0;padding:2px 10px"></span></div><div class="kn">بانتظار رقم لوحة مؤشرات الحملة — اكتبه هنا مباشرة (يُحفظ عند تنزيل النسخة) أو زوّدني به لأثبّته مع نسبة التحقيق</div></div>
+      </div>
+      <div class="chartbox"><h3>عمليات يوم الافتتاح ساعة بساعة</h3><div class="cs">الأعمدة البرتقالية = ما بعد الافتتاح الرسمي (7م حتى منتصف الليل) · ذروة المساء 8–9م</div>{_camp_hours_svg(vis_h, mark_h=19, mark_label='الافتتاح الرسمي 7م', hi_from=19)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>المقارنة: التشغيل التجريبي → يوم الافتتاح → بعده</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام · الأساس = فترة التجريب</span></div>
+      <div class="ntable"><div class="tscroll"><table>
+        <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
+        <tbody>{trs}</tbody></table></div></div>
+      <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
+        <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
+          <li><b>يوم الافتتاح:</b> {opn['vis']} عملية ({lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي) بإيراد {n0(opn['rev'])} ر.س، والمساء بعد إعلان 7م استحوذ على {eve/opn['vis']*100:.0f}٪ من عمليات اليوم بذروة 8–9م.</li>
+          <li><b>الأثر بعد الافتتاح:</b> متوسط العمليات ارتفع إلى {n0(post['n_d'])}/يوم ({lift(post['n_d'], soft['n_d'])}) والإيراد إلى {n0(post['rev_d'])} ر.س/يوم ({lift(post['rev_d'], soft['rev_d'])}) في ٢٧–٣١ أغسطس، وسجل ٣١ أغسطس أعلى يوم منذ بدء التشغيل ({n0(best['rev'])} ر.س).</li>
+          <li><b>إجمالي اللترات:</b> {n0(soft['vol'])} لترًا في فترة التجريب (١١ يومًا)، و{n0(opn['vol'])} لترًا يوم الافتتاح، ثم {n0(post['vol'])} لترًا في ٥ أيام بعده بمعدل {n0(post['vol_d'])} لتر/يوم.</li>
+          <li><b>الفاتورة:</b> {opn['inv']:.1f} ر.س يوم الافتتاح مقابل {soft['inv']:.1f} في التجريب و{post['inv']:.1f} بعده — مستوى فاتورة مرتفع مقارنة بمتوسط الشبكة.</li>
+          <li><b>إجمالي المشاهدات:</b> بانتظار رقم لوحة مؤشرات إعلان الافتتاح — يُدرج هنا مع نسبة التحقيق فور توفره.</li>
+        </ul></div>
+      <div class="dnote">المصدر: ملف معاملات درب الروضة — الخريجي MK040 لأغسطس 2026 ({n0(len(tx))} عملية بيع بعد استبعاد 60 عملية معايرة) · التشغيل التجريبي بدأ ١٥ أغسطس والافتتاح الرسمي مساء ٢٦ أغسطس.</div>
+    </div>'''
+
+def opening_body(a):
+    code = a['metrics']['code']
+    if code == 'MK040':
+        rpt = mk040_opening()
+        if rpt: return rpt
+    return '<div class="card"><div class="cs">لا يتوفر تقرير افتتاح لهذه المحطة.</div></div>'
 
 def nj219_campaign():
     try:
@@ -1210,6 +1282,7 @@ for idx, a in list(enumerate(ORDER)) + [(None, x) for x in XTRA.values()]:
     nxt = CODES[idx+1] if idx is not None and idx < len(CODES)-1 else None
     rank_txt = ('موقع جديد — بانتظار بيانات المبيعات' if code in XTRA
                 else f"المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · 2026")
+    RKEYS = "'monthly','daily','camp'" + (",'opening'" if code in OPENINGS else '') + ",'targets','cs','partners','external','plan'"
     opts = ''.join(
         f'<option value="{c}.html"{" selected" if c==code else ""}>{esc(_AM(c)["name"])} — {c} ({esc(_AM(c)["region"])})</option>'
         for c in ALLCODES)
@@ -1248,13 +1321,14 @@ for idx, a in list(enumerate(ORDER)) + [(None, x) for x in XTRA.values()]:
   <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
   <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
   <div class="pgview" id="v-camp" hidden>{mini_head(a)}{camp_body(a)}</div>
+  {f'<div class="pgview" id="v-opening" hidden>{mini_head(a)}{opening_body(a)}</div>' if code in OPENINGS else ''}
   {''.join(f'<div class="pgview" id="v-{k}" hidden>{mini_head(a)}{ops_content(code, k)}</div>' for k, lab in OPS_TABS)}
   <footer>{FOOT_METH}</footer>
 </main>
 <script>
 function route(){{
   const h=location.hash.replace('#','');
-  const k=['monthly','daily','camp','targets','cs','partners','external','plan'].includes(h)?h:'main';
+  const k=[{RKEYS}].includes(h)?h:'main';
   document.querySelectorAll('.pgview').forEach(p=>p.hidden=true);
   document.getElementById('v-'+k).hidden=false;
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('on',(t.dataset.v||'main')===k));
@@ -1356,6 +1430,8 @@ def spa_view(idx, a):
       {nav}{tabs_html(code, 'daily', 'spa')}{mini_head(a)}{daily_body(a)}{bottom}</div>'''
       f'''<div class="pgview" id="pg-{code}-camp" data-title="درب {esc(m['name'])} {code} · تقرير حملة البنزين المجاني" hidden>
       {nav}{tabs_html(code, 'camp', 'spa')}{mini_head(a)}{camp_body(a)}{bottom}</div>'''
+      + (f'''<div class="pgview" id="pg-{code}-opening" data-title="درب {esc(m['name'])} {code} · تقرير الافتتاح" hidden>
+      {nav}{tabs_html(code, 'opening', 'spa')}{mini_head(a)}{opening_body(a)}{bottom}</div>''' if code in OPENINGS else '')
       + ''.join(
         f'''<div class="pgview" id="pg-{code}-{k}" data-title="درب {esc(m['name'])} {code} · {lab}" hidden>
         {nav}{tabs_html(code, k, 'spa')}{mini_head(a)}{ops_content(code, k)}{bottom}</div>'''
