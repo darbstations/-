@@ -418,6 +418,10 @@ def hood_of(a):
         return h
     return a['metrics']['name']
 
+def hood_lbl(a):
+    h = hood_of(a)
+    return h if h.startswith(('شارع', 'طريق')) else f'حي {h}'
+
 import math as _math
 def comp_map(a):
     m, g = a['metrics'], a['geo']
@@ -598,12 +602,12 @@ def station_body(a):
     <div class="shead">
       <div class="stitle">
         <span class="badge">{code}</span><h2>درب {esc(m['name'])}</h2>
-        <span class="cls c-hd">حي {esc(hood)}</span>
+        <span class="cls c-hd">{esc(hood_lbl(a))}</span>
         <span class="cls {cls_cl}">{esc(cls)}</span><span class="cls c-st">{stt}</span>
       </div>
       <div class="smeta">
         <span>📍 {esc(m['region'])}</span>
-        {stars(g['rating']) if g else ''}
+        {stars(g['rating']) if g and g.get('rating') else ''}
         <a href="{esc(maps_url)}" target="_blank" rel="noopener">افتح في خرائط جوجل ↗</a>
       </div>
       <div class="saddr">{esc(g['address']) if g else ''}{(' — ' + esc(m['note'])) if m['note'] else ''}</div>
@@ -641,8 +645,8 @@ import datetime as _dt
 def mini_head(a):
     m, g = a['metrics'], a['geo']
     return f'''<div class="mini-head"><span class="badge">{m['code']}</span><h2>درب {esc(m['name'])}</h2>
-    <span class="cls c-hd">حي {esc(hood_of(a))}</span>
-    <span class="rg">📍 {esc(m['region'])}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g else ''}</div>'''
+    <span class="cls c-hd">{esc(hood_lbl(a))}</span>
+    <span class="rg">📍 {esc(m['region'])}</span>{f'<span class="stars">★ {g["rating"]}</span>' if g and g.get('rating') else ''}</div>'''
 
 def tabs_html(code, active, mode):
     items = [('main','التحليل الكامل'),('monthly','المبيعات الشهرية'),('daily','المبيعات اليومية'),('camp','تقرير حملة البنزين المجاني')]
@@ -831,6 +835,7 @@ def month_cards(code, mm, keys):
 
 def monthly_body(a):
     m = a['metrics']; code = m['code']
+    if code not in BYCODE: return awaiting_sales('monthly')
     st = BYCODE[code]; mm = st.get('monthly', {})
     keys = sorted(mm.keys())
     if not keys: return '<div class="card"><div class="cs">لا تتوفر بيانات شهرية.</div></div>'
@@ -910,6 +915,7 @@ def daily_line_chart(daily):
 
 def daily_body(a):
     m = a['metrics']; code = m['code']
+    if code not in BYCODE: return awaiting_sales('daily')
     daily = [d for d in BYCODE[code]['overall'].get('daily', []) if d['rev'] > 0]
     if not daily: return '<div class="card"><div class="cs">لا تتوفر بيانات يومية بعد — بانتظار التزويد.</div></div>'
     # نسبة اللترات/الإيراد لكل شهر من الفعلي الشهري (معايرة بمزيج وقود الشهر)؛ وإلا نسبة الفترة كاملة
@@ -962,14 +968,150 @@ def daily_body(a):
       <tbody>{rows}</tbody></table></div>
     <div class="dnote">{'📌 اللترات اليومية <b>فعلية</b> — محسوبة من ملفات المعاملات الشهرية (Drive «2026»، عمود ResponseVolume بعد استبعاد غير المبيعات). ' if n_act == len(daily) else ('📌 اللترات المعلَّمة بدون نجمة <b>فعلية</b> من ملفات المعاملات؛ والمعلَّمة بنجمة (*) تقديرية للأيام غير المغطاة. ' if n_act else '')}{'' if n_act == len(daily) else '(*) اللترات التقديرية:'} البيانات اليومية في لوحة المبيعات تتضمن الإيراد والزيارات فقط، فحسبنا اللترات بضرب إيراد كل يوم في نسبة اللترات/الإيراد <b>الفعلية لنفس الشهر</b> (المعايَرة بمزيج وقود الشهر{' — وبنسبة الفترة للأشهر ناقصة اللترات' if len(mratio) < len(BYCODE[code].get('monthly', {})) else ''}). اللترات الشهرية الفعلية في تبويب «المبيعات الشهرية». البيانات حتى {daily[-1]['date']} — عند تزويدنا بملف يومي يتضمن اللترات الفعلية تُستبدل التقديرات مباشرة.</div>'''
 
+# ---------------- location-only stations (no sales data yet) ----------------
+import gen_analysis as _GA
+
+def _mk_xtra_ha052():
+    code = 'HA052'
+    geo = json.load(open('coords.json'))[code]
+    base = _GA.PEST_CITY[_GA.CITY_GROUP.get('حائل', 'qassim')]
+    pest = dict(p=base['P'][:4], e=base['E'][:4], s=base['S'][:4], t=base['T'][:4])
+    personas = [
+        dict(icon='🏘️', name='ابن الحي الوفي', share='مبدئي',
+             desc='سكان الأحياء المحيطة بشارع الأمير سعود — تعبئات متكررة قصيرة على مدار الأسبوع.',
+             wants='سرعة الخدمة، ثبات الجودة، متجر صغير لاحتياجات المنزل السريعة.',
+             msg='برنامج ولاء افتتاحي مبكر يحوّل سكان النطاق الأول (0–2 كم) إلى قاعدة دائمة قبل ترسّخ عاداتهم مع المنافسين.'),
+        dict(icon='🚗', name='الموظف العابر', share='مبدئي',
+             desc='حركة ذهاب وعودة يومية على الشريان التجاري صباحًا وبعد العصر.',
+             wants='مسارات دخول وخروج سلسة، دفع سريع بالبطاقة أو التطبيق.',
+             msg='تجهيز مسار خدمة سريع وتفعيل الدفع الرقمي منذ اليوم الأول — ذروة متوقعة صباحية ومسائية.'),
+        dict(icon='🛒', name='عميل الخدمات المكملة', share='مبدئي',
+             desc='يفاضل بين محطات المدينة بحسب المتجر والمغسلة والخدمات الإضافية لا الوقود وحده.',
+             wants='مغسلة، تغيير زيت، مقهى أو متجر — تجربة متكاملة.',
+             msg='الخدمات المكملة هي أداة التمايز الأقوى في سوق موحّد الأسعار — تفعيلها مبكرًا يبني ميزة يصعب تقليدها.'),
+    ]
+    swot = dict(
+        s=['موقع على شريان تجاري رئيسي في مركز حائل (شارع الأمير سعود)',
+           'تغطية شبكية مع درب العريفي HA043 على بعد 1.2 كم فقط',
+           'هوية درب الموحدة وتجربة علامة جاهزة منذ الافتتاح'],
+        w=['الموقع لم يُفتتح بعد (فرنشايز قيد التجهيز) — لا سجل تشغيلي',
+           'لا تتوفر بيانات مبيعات بعد لضبط التشغيل والتسويق',
+           'تداخل محتمل لنطاق الخدمة مع المحطة الشقيقة القريبة يتطلب تمايزًا بالخدمات'],
+        o=['افتتاح ترويجي على غرار حملة درب المركب NJ219 (+148٪ حركة يوم الحملة وأثر باقٍ +32٪)',
+           'تكامل تشغيلي مع HA043: عروض مشتركة وتحويل الفائض وقت الذروة',
+           'خدمات مكملة (متجر/مغسلة/تغيير زيت) لالتقاط عميل الخدمات في سوق موحّد الأسعار'],
+        t=['منافسة محطات مركز حائل القائمة ذات القواعد الراسخة',
+           'توحيد أسعار الوقود يحصر التمايز في الخدمة والتجربة',
+           'أي تعثر في تجهيز الامتياز ينعكس على صورة العلامة في المدينة'])
+    metrics = dict(code=code, name='حائل', region='حائل', cls=None, note='', months=[], nmonths=0,
+                   n_total=len(ORDER))
+    return dict(metrics=metrics, geo=geo, comp=None, personas=personas, swot=swot, pest=pest)
+
+XTRA = {'HA052': _mk_xtra_ha052()}
+XCODES = list(XTRA.keys())
+ALLCODES = CODES + XCODES
+def _AM(c):
+    return (A[c] if c in A else XTRA[c])['metrics']
+
+AWAIT_TABS = {
+    'monthly': ('المبيعات الشهرية', 'جداول الإيراد والزيارات واللترات شهريًا، مزيج الوقود، وبطاقات تحليل كل شهر'),
+    'daily': ('المبيعات اليومية', 'سجل الأيام باللترات الفعلية والإيراد والزيارات مع الرسم الزمني والمتوسط المتحرك'),
+}
+def awaiting_sales(kind):
+    lab, det = AWAIT_TABS[kind]
+    return f'''<div class="sec-h"><h2>{lab}</h2><span>بانتظار بيانات المبيعات</span></div>
+    <div class="card"><div class="cs" style="margin-bottom:8px">لم تُربط بيانات مبيعات لهذا الموقع بعد — الموقع قيد التجهيز (فرنشايز).
+    فور تزويدنا بملفات المعاملات أو ربط الموقع بلوحة المبيعات، يُبنى هذا التبويب تلقائيًا بنفس منهجية بقية المحطات ويشمل: {det}.</div>
+    <div class="ckh">ملاحظات</div>
+    <div class="confbox" contenteditable="true" data-ph="سجّل هنا تاريخ الافتتاح المتوقع أو أي ملاحظات تشغيلية…"></div></div>'''
+
+def nosales_station_body(a):
+    m, g = a['metrics'], a['geo']
+    code = m['code']
+    comp = COMP.get(code)
+    x = next((r for r in XL if r['num'] == code), {})
+    stt = 'تشغيل' if x.get('status') == 'Operation' else ('فرنشايز' if x.get('status') == 'Franchises' else '—')
+    maps_url = x.get('loc', '#')
+    sis = (comp or {}).get('sisters') or []
+    sis0 = sis[0] if sis else None
+    head = f'''
+    <div class="shead">
+      <div class="stitle">
+        <span class="badge">{code}</span><h2>درب {esc(m['name'])}</h2>
+        <span class="cls c-hd">{esc(hood_lbl(a))}</span>
+        <span class="cls c-un">قيد التجهيز</span><span class="cls c-st">{stt}</span>
+      </div>
+      <div class="smeta">
+        <span>📍 {esc(m['region'])}</span>
+        <a href="{esc(maps_url)}" target="_blank" rel="noopener">افتح في خرائط جوجل ↗</a>
+      </div>
+      <div class="saddr">{esc(g['address'])} · {g['lat']:.6f}, {g['lng']:.6f}</div>
+    </div>'''
+    kpis = f'''
+    <div class="skpis">
+      <div class="kpi hot"><div class="kl">حالة الموقع</div><div class="kv">قيد التجهيز</div><div class="kn">فرنشايز — لم يُفتتح بعد</div></div>
+      <div class="kpi"><div class="kl">بيانات المبيعات</div><div class="kv">بانتظار الربط</div><div class="kn">تُضاف تلقائيًا فور توفر ملفات المعاملات</div></div>
+      <div class="kpi"><div class="kl">أقرب محطة درب</div><div class="kv">{f"{sis0['dist']/1000:.1f} <small>كم</small>" if sis0 else '—'}</div><div class="kn">{esc(sis0['title']) if sis0 else '—'}</div></div>
+      <div class="kpi"><div class="kl">رصد المنافسين</div><div class="kv">غير مكتمل</div><div class="kn">دائرة 5 كم تُستكمل لاحقًا</div></div>
+      <div class="kpi"><div class="kl">تقييم جوجل</div><div class="kv">— <small>★</small></div><div class="kn">يُرصد بعد الافتتاح</div></div>
+      <div class="kpi"><div class="kl">المدينة</div><div class="kv">{esc(m['region'])}</div><div class="kn">{esc(hood_lbl(a))}</div></div>
+    </div>'''
+    pers = ''.join(f'''
+      <div class="pcard"><div class="pico">{p['icon']}</div>
+        <div class="pbody"><div class="pname">{esc(p['name'])} <span class="pshare">{esc(p['share'])}</span></div>
+        <p>{esc(p['desc'])}</p>
+        <div class="pline"><b>يحتاج:</b> {esc(p['wants'])}</div>
+        <div class="pline act"><b>التحرك التسويقي:</b> {esc(p['msg'])}</div></div></div>''' for p in a['personas'])
+    def lis(xs): return ''.join(f'<li>{esc(i)}</li>' for i in xs)
+    sw = a['swot']
+    swot = f'''
+    <div class="swot">
+      <div class="sq s"><h4>القوة</h4><ul>{lis(sw['s'])}</ul></div>
+      <div class="sq w"><h4>الضعف</h4><ul>{lis(sw['w'])}</ul></div>
+      <div class="sq o"><h4>الفرص</h4><ul>{lis(sw['o'])}</ul></div>
+      <div class="sq t"><h4>التهديدات</h4><ul>{lis(sw['t'])}</ul></div>
+    </div>'''
+    pe = a['pest']
+    pest = f'''
+    <div class="pest">
+      <div class="pr"><span class="pk pP">P</span><div><b>سياسي/تنظيمي</b><ul>{lis(pe['p'])}</ul></div></div>
+      <div class="pr"><span class="pk pE">E</span><div><b>اقتصادي</b><ul>{lis(pe['e'])}</ul></div></div>
+      <div class="pr"><span class="pk pS">S</span><div><b>اجتماعي</b><ul>{lis(pe['s'])}</ul></div></div>
+      <div class="pr"><span class="pk pT">T</span><div><b>تقني</b><ul>{lis(pe['t'])}</ul></div></div>
+    </div>'''
+    sisters_line = ''
+    if sis:
+        ss = '، '.join(f"{esc(s['title'])} ({s['dist']:,} م)" for s in sis[:4])
+        sisters_line = f'<div class="sis">🧡 محطات درب شقيقة ضمن النطاق: {ss} — تغطية شبكية وليست منافسة.</div>'
+    compb = f'''
+    <div class="card comp"><div class="ct"><h3>المنافسون ضمن 5 كم</h3>
+      <div class="leg"><span class="dens md">رصد غير مكتمل</span></div></div>
+      <div class="cs">⚠️ لم يُستكمل المسح الآلي لهذه الدائرة بعد — تُعرض الخريطة بالنطاقات والمحطة الشقيقة فقط، ويُضاف المنافسون فور اكتمال الرصد.</div>
+      <div class="ctbl"><table><thead><tr><th>#</th><th>المحطة المنافسة</th><th>المسافة</th><th>التقييم</th><th>المراجعات</th></tr></thead>
+      <tbody><tr><td colspan="5">بانتظار استكمال رصد دائرة حائل</td></tr></tbody></table></div>{sisters_line}
+    </div>'''
+    note = '''<div class="card" style="border:2px solid rgba(243,112,33,.35)"><div class="cs">
+      📌 هذا الموقع أُضيف بالتحليل المكاني فقط — <b>البيرسونا وSWOT هنا مبدئية مشتقة من خصائص الموقع</b> وتُستكمل وتُدقّق تلقائيًا بنفس منهجية بقية المحطات فور توفر بيانات المبيعات، وكل التبويبات جاهزة كقوالب تُعبأ تباعًا.</div></div>'''
+    grid = f'''
+    {comp_map(a)}
+    <div class="agrid">
+      <div class="card"><div class="ct"><h3>بيرسونا العملاء</h3><div class="leg">مبدئية من خصائص الموقع — تُستكمل من المبيعات</div></div>{pers}</div>
+      <div class="card"><div class="ct"><h3>تحليل SWOT</h3><div class="leg">مبدئي — موقع ومنافسة وحالة تجهيز</div></div>{swot}</div>
+      <div class="card"><div class="ct"><h3>تحليل PEST</h3><div class="leg">بيئة {esc(m['region'])} الكلية</div></div>{pest}</div>
+      {compb}
+    </div>'''
+    return head + kpis + note + grid
+
 # ---------------- per-station pages ----------------
-for idx, a in enumerate(ORDER):
+for idx, a in list(enumerate(ORDER)) + [(None, x) for x in XTRA.values()]:
     m = a['metrics']; code = m['code']
-    prv = CODES[idx-1] if idx > 0 else None
-    nxt = CODES[idx+1] if idx < len(CODES)-1 else None
+    prv = CODES[idx-1] if idx and idx > 0 else None
+    nxt = CODES[idx+1] if idx is not None and idx < len(CODES)-1 else None
+    rank_txt = ('موقع جديد — بانتظار بيانات المبيعات' if code in XTRA
+                else f"المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026")
     opts = ''.join(
-        f'<option value="{c}.html"{" selected" if c==code else ""}>{esc(A[c]["metrics"]["name"])} — {c} ({esc(A[c]["metrics"]["region"])})</option>'
-        for c in CODES)
+        f'<option value="{c}.html"{" selected" if c==code else ""}>{esc(_AM(c)["name"])} — {c} ({esc(_AM(c)["region"])})</option>'
+        for c in ALLCODES)
     nav = f'''
     <div class="pgnav">
       <div class="nvl">
@@ -984,7 +1126,7 @@ for idx, a in enumerate(ORDER):
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>درب {esc(m['name'])} {code} — حي {esc(hood_of(a))} · تحليل الموقع والمبيعات</title>
+<title>درب {esc(m['name'])} {code} — {esc(hood_lbl(a))} · تحليل الموقع والمبيعات</title>
 {FONTS}
 <style>{CSS}</style>
 </head>
@@ -994,14 +1136,14 @@ for idx, a in enumerate(ORDER):
     <div class="brand">
       <div class="mark"><a href="../location-analysis.html">{LOGO_SVG}</a></div>
       <div class="hd-title"><h1>تحليل الموقع والمبيعات — درب {esc(m['name'])} <span style="color:var(--gold1);font-family:'DIN Next Arabic'">{code}</span></h1>
-      <p>حي {esc(hood_of(a))} · {esc(m['region'])} · المرتبة {m['rank_drev']} من {m['n_total']} بالإيراد اليومي · النصف الأول 2026</p></div>
+      <p>{esc(hood_lbl(a))} · {esc(m['region'])} · {rank_txt}</p></div>
     </div>
   </div>
 </header>
 <main class="wrap" style="padding-top:20px">
   {nav}
   {_re.sub(r'href="#([a-z]+)"', lambda mm: 'href="#'+mm.group(1)+'" data-v="'+mm.group(1)+'"', tabs_html(code, 'main', 'file')).replace('class="tab', 'data-v="main" class="tab', 1)}
-  <div class="pgview" id="v-main"><section class="station">{station_body(a)}</section></div>
+  <div class="pgview" id="v-main"><section class="station">{nosales_station_body(a) if code in XTRA else station_body(a)}</section></div>
   <div class="pgview" id="v-monthly" hidden>{mini_head(a)}{monthly_body(a)}</div>
   <div class="pgview" id="v-daily" hidden>{mini_head(a)}{daily_body(a)}</div>
   <div class="pgview" id="v-camp" hidden>{mini_head(a)}{camp_body(a)}</div>
@@ -1030,9 +1172,9 @@ tot_vis = sum(a['metrics']['visits'] for a in ORDER)
 avg_rt = statistics.mean(a['geo']['rating'] for a in ORDER if a['geo'])
 ncomp = COMP.get('_meta', {}).get('unique_competitors')
 
-chips = '<button class="chip on" data-r="*"><span class="nm">الكل</span><span class="code">' + str(len(ORDER)) + '</span></button>'
+chips = '<button class="chip on" data-r="*"><span class="nm">الكل</span><span class="code">' + str(len(ORDER) + len(XTRA)) + '</span></button>'
 for r in REGIONS:
-    n = sum(1 for a in ORDER if a['metrics']['region'] == r)
+    n = sum(1 for a in ORDER if a['metrics']['region'] == r) + sum(1 for x in XTRA.values() if x['metrics']['region'] == r)
     chips += f'<button class="chip" data-r="{esc(r)}"><span class="nm">{esc(r)}</span><span class="code">{n}</span></button>'
 
 cards = ''
@@ -1050,6 +1192,14 @@ for i, a in enumerate(ORDER, 1):
       <div class="r3"><span>إيراد يومي <b>{n0(m['daily_rev'])}</b> ر.س</span><span>#{i} {gh}</span></div>
     </a>'''
 
+for x in XTRA.values():
+    m = x['metrics']
+    cards += f'''<a class="scard" href="#/{m['code']}" data-region="{esc(m['region'])}" data-name="{esc(m['name'])} {m['code']} {esc(hood_of(x))}">
+      <div class="r1"><span class="nm">درب {esc(m['name'])}</span><span class="badge">{m['code']}</span></div>
+      <div class="r2"><span>{esc(hood_lbl(x))}</span><span>📍 {esc(m['region'])}</span><span class="cls c-un">قيد التجهيز</span></div>
+      <div class="r3"><span>بانتظار بيانات المبيعات</span><span>فرنشايز</span></div>
+    </a>'''
+
 ov_rows = ''
 for i, a in enumerate(ORDER, 1):
     m, g = a['metrics'], a['geo']
@@ -1061,7 +1211,13 @@ for i, a in enumerate(ORDER, 1):
       <td>{esc(m['cls'] or '—')}</td><td>{n0(m['daily_rev'])}</td><td>{m['avg_invoice']:.0f}</td><td>{gh}</td>
       <td>{(str(c['n']) + ('*' if c.get('thin') else '')) if c else '—'}</td><td>{g['rating'] if g else '—'}</td></tr>'''
 
-nosales = [r for r in XL if r['num'] not in A]
+for x in XTRA.values():
+    m = x['metrics']
+    ov_rows += f'''<tr data-region="{esc(m['region'])}">
+      <td>—</td><td><a class="stlink" href="#/{m['code']}">{esc(m['name'])}</a> <span class="tcode">{m['code']}</span></td><td>{esc(m['region'])}</td>
+      <td>قيد التجهيز</td><td>—</td><td>—</td><td>—</td><td>0*</td><td>—</td></tr>'''
+
+nosales = [r for r in XL if r['num'] not in A and r['num'] not in XTRA]
 from collections import Counter
 bycity = Counter(r['city'].strip() for r in nosales)
 app_sum = '، '.join(f"{c} ({n})" for c, n in bycity.most_common())
@@ -1071,11 +1227,11 @@ app_rows = ''.join(f"<tr><td>{esc(r['num'])}</td><td>{esc(r['city'])}</td><td>{e
 
 def spa_view(idx, a):
     m = a['metrics']; code = m['code']
-    prv = CODES[idx-1] if idx > 0 else None
-    nxt = CODES[idx+1] if idx < len(CODES)-1 else None
+    prv = CODES[idx-1] if idx and idx > 0 else None
+    nxt = CODES[idx+1] if idx is not None and idx < len(CODES)-1 else None
     opts = ''.join(
-        f'<option value="#/{c}"{" selected" if c==code else ""}>{esc(A[c]["metrics"]["name"])} — {c} ({esc(A[c]["metrics"]["region"])})</option>'
-        for c in CODES)
+        f'<option value="#/{c}"{" selected" if c==code else ""}>{esc(_AM(c)["name"])} — {c} ({esc(_AM(c)["region"])})</option>'
+        for c in ALLCODES)
     nav = f'''
     <div class="pgnav">
       <div class="nvl">
@@ -1090,9 +1246,9 @@ def spa_view(idx, a):
       {f'<a href="#/{nxt}">المحطة التالية: {esc(A[nxt]["metrics"]["name"])} ←</a>' if nxt else ''}
     </div></div>'''
     return (
-      f'''<div class="pgview" id="pg-{code}" data-title="درب {esc(m['name'])} {code} · حي {esc(hood_of(a))}" hidden>
+      f'''<div class="pgview" id="pg-{code}" data-title="درب {esc(m['name'])} {code} · {esc(hood_lbl(a))}" hidden>
       {nav}{tabs_html(code, 'main', 'spa')}
-      <section class="station">{station_body(a)}</section>{bottom}</div>'''
+      <section class="station">{nosales_station_body(a) if code in XTRA else station_body(a)}</section>{bottom}</div>'''
       f'''<div class="pgview" id="pg-{code}-monthly" data-title="درب {esc(m['name'])} {code} · المبيعات الشهرية" hidden>
       {nav}{tabs_html(code, 'monthly', 'spa')}{mini_head(a)}{monthly_body(a)}{bottom}</div>'''
       f'''<div class="pgview" id="pg-{code}-daily" data-title="درب {esc(m['name'])} {code} · المبيعات اليومية" hidden>
@@ -1105,7 +1261,7 @@ def spa_view(idx, a):
         for k, lab in OPS_TABS)
     )
 
-SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER))
+SPA_VIEWS = ''.join(spa_view(i, a) for i, a in enumerate(ORDER)) + ''.join(spa_view(None, x) for x in XTRA.values())
 
 # ---- comparison view (regions or stations, dimension filters) ----
 import gen_analysis as GA
@@ -1301,10 +1457,10 @@ hub = f'''<!DOCTYPE html>
     <div class="brand">
       <div class="mark">{LOGO_SVG}</div>
       <div class="hd-title"><h1>تحليل المحطات والمبيعات – صفحة مستقلة لكل محطة تشمل: تحليل PEST، العميل المستهدف (Persona)، تحليل SWOT، وتحليل المنافسين ضمن نطاق 5 كم</h1>
-      <p>النصف الأول 2026 · {len(ORDER)} محطة مشمولة بالبيانات · اختر محطة لفتح صفحتها الكاملة</p></div>
+      <p>النصف الأول 2026 · {len(ORDER) + len(XTRA)} محطة مشمولة ({len(ORDER)} ببيانات مبيعات) · اختر محطة لفتح صفحتها الكاملة</p></div>
     </div>
     <div class="netkpis">
-      <div><div class="v">{len(ORDER)}</div><div class="l">محطة مشمولة بالتحليل (من أصل {len(XL)})</div></div>
+      <div><div class="v">{len(ORDER) + len(XTRA)}</div><div class="l">محطة مشمولة بالتحليل — {len(ORDER)} ببيانات مبيعات (من أصل {len(XL)})</div></div>
       <div><div class="v">{tot_rev/1e6:,.1f} <small>مليون ر.س</small></div><div class="l">إيراد الفترة</div></div>
       <div><div class="v">{tot_vis/1e6:,.2f} <small>مليون</small></div><div class="l">زيارة</div></div>
       <div><div class="v">{avg_rt:.2f} ★</div><div class="l">متوسط تقييم درب على جوجل</div></div>

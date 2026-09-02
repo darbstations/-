@@ -1909,7 +1909,14 @@
   "avg_rating": null,
   "weak_share": 0,
   "strong": [],
-  "sisters": [],
+  "sisters": [
+   {
+    "title": "درب حائل HA052 (شارع الأمير سعود)",
+    "dist": 1173,
+    "lat": 27.468522358059218,
+    "lng": 41.649867941883635
+   }
+  ],
   "bands": [
    0,
    0,
@@ -4373,5 +4380,28 @@
  },
  "_meta": {
   "unique_competitors": 197
+ },
+ "HA052": {
+  "n": 0,
+  "top": [],
+  "nearest": null,
+  "avg_rating": null,
+  "weak_share": 0,
+  "strong": [],
+  "sisters": [
+   {
+    "title": "درب العريفي HA043",
+    "dist": 1173,
+    "lat": 27.4692337,
+    "lng": 41.66173
+   }
+  ],
+  "bands": [
+   0,
+   0,
+   0
+  ],
+  "dirmax": null,
+  "thin": true
  }
 }
