@@ -953,6 +953,27 @@ def _phase_daily_table(daily, phases, hi_day=None):
       <thead><tr><th>التاريخ</th><th>اليوم</th><th>العمليات</th><th>اللترات</th><th>الإيراد (ر.س)</th><th>الفاتورة (ر.س)</th></tr></thead>
       <tbody>{trs}</tbody></table></div></div>{lift}'''
 
+def _dated_daily_svg(daily, hi_day=None, month_ar='أغسطس'):
+    gid = _uid('gD')
+    W, H, PB = 1100, 320, 56
+    mx = max(x['rev'] for x in daily) or 1
+    n = len(daily); slot = (W-24)/n; bw = slot-16
+    out = [f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    for i, x in enumerate(daily):
+        day = int(x['date'][-2:])
+        wd = WD_AR[_dt.date(*map(int, x['date'].split('-'))).weekday()]
+        cx = 12 + i*slot + 8
+        bh = max(3, x['rev']/mx*(H-100))
+        fill = f'url(#{gid})' if day == hi_day else '#F5A623" opacity="0.62'
+        out.append(f'<rect x="{cx:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="7" fill="{fill}"><title>{wd} {day} {month_ar} — {n0(x["rev"])} ر.س · {x["vis"]} عملية · {n0(x["vol"])} لتر</title></rect>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-PB-bh-8:.1f}" font-size="13.5" font-weight="800" text-anchor="middle" fill="var(--ink)">{x["rev"]/1000:.1f}ألف</text>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-PB-bh-24:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{x["vis"]} عملية</text>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-32:.1f}" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--ink)">{wd}</text>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-12:.1f}" font-size="12" text-anchor="middle" fill="var(--ink2)">{day} {month_ar}</text>')
+        if day == hi_day:
+            out.append(f'<text x="{cx+bw/2:.1f}" y="16" font-size="12.5" font-weight="800" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
+    return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
 def _daily_rows_table(daily, hi_day=None):
     def wd(ds): return WD_AR[_dt.date(*map(int, ds.split('-'))).weekday()]
     trs = ''
@@ -1062,6 +1083,9 @@ def ha052_campaign():
         <div class="kpi"><div class="kl">بعد الحملة (٢٣–٣١ أغسطس · 9 أيام)</div><div class="kv">{n0(post['vol'])} <small>لتر</small></div><div class="kn">بمعدل {n0(post['vol_d'])} لتر/يوم — {lift(post['vol_d'], pre['vol_d'])} عن قبل الحملة</div></div>
       </div>
       <div class="chartbox"><h3>الإيراد اليومي عبر أغسطس — أين وقعت الحملة؟</h3><div class="cs">رمادي: من الافتتاح حتى ما قبل الحملة · برتقالي غامق: يوم الحملة (٢٢) · برتقالي فاتح: ما بعد الحملة — لاحظ ثبات المستوى الأعلى بعدها</div>{_ha_daily_svg(daily)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>📅 تفصيل المبيعات اليومية: من يوم الحملة حتى نهاية الشهر (٢٢–٣١ أغسطس)</h2><span>رسم بياني بالتاريخ واليوم — وقيمة وعمليات كل يوم فوق عموده</span></div>
+      <div class="chartbox"><h3>الإيراد اليومي بالتاريخ (٢٢–٣١ أغسطس)</h3><div class="cs">يوم الحملة بالتدرج البرتقالي الغامق · مرّر بالفأرة على أي عمود لتفاصيله (الإيراد والعمليات واللترات)</div>{_dated_daily_svg([x for x in daily if int(x['date'][-2:]) >= 22], hi_day=22)}</div>
+      {_daily_rows_table([x for x in daily if int(x['date'][-2:]) >= 22], hi_day=22)}
       <div class="sec-h" style="margin-top:16px"><h2>المقارنة: قبل الحملة → يومها → بعدها</h2><span>متوسطات يومية لتحييد اختلاف عدد الأيام · الأساس = أسبوع ما قبل الحملة</span></div>
       <div class="ntable"><div class="tscroll"><table>
         <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
