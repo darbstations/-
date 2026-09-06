@@ -779,6 +779,9 @@ def mk040_opening():
       <div class="sec-h" style="margin-top:16px"><h2>📊 المبيعات اليومية: أثناء الافتتاح ← بعد الافتتاح</h2><span>رسم بياني وجدول — متوسط كل مرحلة موضح على الرسم بخط متقطع</span></div>
       <div class="chartbox"><h3>الإيراد اليومي حسب مرحلتي الافتتاح (١٥–٣١ أغسطس)</h3><div class="cs">رمادي = أثناء الافتتاح (التشغيل التجريبي ١٥–٢٥ ويوم الافتتاح ٢٦ بالبرتقالي الغامق) · برتقالي = بعد الافتتاح (٢٧–٣١) · مرّر بالفأرة على أي عمود للتفاصيل</div>{_phase_daily_svg(daily, split_day=26, hi_day=26)}</div>
       {_phase_daily_table(daily, [('أثناء الافتتاح (١٥–٢٦ أغسطس) — التشغيل التجريبي ويوم الافتتاح الرسمي', 15, 26), ('بعد الافتتاح (٢٧–٣١ أغسطس)', 27, 31)], hi_day=26)}
+      <div class="sec-h" style="margin-top:16px"><h2>📅 تفصيل المبيعات اليومية: من يوم الافتتاح حتى نهاية الشهر (٢٦–٣١ أغسطس)</h2><span>رسم بياني بالتاريخ واليوم — وقيمة وعمليات كل يوم فوق عموده</span></div>
+      <div class="chartbox"><h3>الإيراد اليومي بالتاريخ (٢٦–٣١ أغسطس)</h3><div class="cs">يوم الافتتاح بالتدرج البرتقالي الغامق · مرّر بالفأرة على أي عمود لتفاصيله (الإيراد والعمليات واللترات)</div>{_dated_daily_svg([x for x in daily if int(x['date'][-2:]) >= 26], hi_day=26, hi_label='🎉 يوم الافتتاح')}</div>
+      {_daily_rows_table([x for x in daily if int(x['date'][-2:]) >= 26], hi_day=26)}
       <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
         <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
           <li><b>يوم الافتتاح:</b> {opn['vis']} عملية ({lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي) بإيراد {n0(opn['rev'])} ر.س، والمساء بعد إعلان 7م استحوذ على {eve/opn['vis']*100:.0f}٪ من عمليات اليوم بذروة 8–9م.</li>
@@ -953,7 +956,7 @@ def _phase_daily_table(daily, phases, hi_day=None):
       <thead><tr><th>التاريخ</th><th>اليوم</th><th>العمليات</th><th>اللترات</th><th>الإيراد (ر.س)</th><th>الفاتورة (ر.س)</th></tr></thead>
       <tbody>{trs}</tbody></table></div></div>{lift}'''
 
-def _dated_daily_svg(daily, hi_day=None, month_ar='أغسطس'):
+def _dated_daily_svg(daily, hi_day=None, month_ar='أغسطس', hi_label='🎁 يوم الحملة'):
     gid = _uid('gD')
     W, H, PB = 1100, 320, 56
     mx = max(x['rev'] for x in daily) or 1
@@ -971,7 +974,7 @@ def _dated_daily_svg(daily, hi_day=None, month_ar='أغسطس'):
         out.append(f'<text x="{cx+bw/2:.1f}" y="{H-32:.1f}" font-size="12.5" font-weight="700" text-anchor="middle" fill="var(--ink)">{wd}</text>')
         out.append(f'<text x="{cx+bw/2:.1f}" y="{H-12:.1f}" font-size="12" text-anchor="middle" fill="var(--ink2)">{day} {month_ar}</text>')
         if day == hi_day:
-            out.append(f'<text x="{cx+bw/2:.1f}" y="16" font-size="12.5" font-weight="800" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
+            out.append(f'<text x="{cx+bw/2:.1f}" y="16" font-size="12.5" font-weight="800" text-anchor="middle" fill="#C0503A">{hi_label}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
 def _daily_rows_table(daily, hi_day=None):
