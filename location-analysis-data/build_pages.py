@@ -41,6 +41,11 @@ BYCODE = {s['code']: s for s in DATA['stations']}
 os.makedirs('stations', exist_ok=True)
 
 def esc(x): return html.escape(str(x), quote=True)
+
+_SVG_UID = [0]
+def _uid(p):
+    _SVG_UID[0] += 1
+    return f'{p}{_SVG_UID[0]}'
 def n0(x): return f"{x:,.0f}"
 def sar(x):
     if x >= 1e6: return f"{x/1e6:,.1f} <small>مليون ر.س</small>"
@@ -353,6 +358,7 @@ FOOT_METH = """<b>المنهجية والمصادر:</b> بيانات المبي
     تحليلات PEST/SWOT/البيرسونا مولّدة قاعديًا من مؤشرات كل محطة وتُقرأ كمسودة عمل تسويقية لا كدراسة سوق ميدانية."""
 
 def spark_hours(code):
+    gid = _uid('gO')
     o = BYCODE[code]['overall']
     hs = {h['h']: h['vis'] for h in o['hours']}
     mx = max(hs.values()) or 1
@@ -364,7 +370,7 @@ def spark_hours(code):
         v = hs.get(h, 0)
         bh = max(4, round(v/mx*150))
         x = 15 + h*slot + 4.5
-        hot = 'url(#gO)' if v == mx else ('#F0A868' if v >= 0.75*mx else '#CFC5B4')
+        hot = f'url(#{gid})' if v == mx else ('#F0A868' if v >= 0.75*mx else '#CFC5B4')
         bars.append(f'<g><rect x="{x:.1f}" y="{H-34-bh}" width="{bw:.1f}" height="{bh}" rx="6" fill="{hot}"/>'
                     f'<title>الساعة {hr_ar(h)} — {v:,} زيارة ({v/max(1,sum(hs.values()))*100:.0f}٪)</title></g>')
         if v == mx or (v >= 0.75*mx and h % 2 == 0):
@@ -374,10 +380,11 @@ def spark_hours(code):
         if h % 2 == 0:
             bars.append(f'<text x="{x+bw/2:.1f}" y="{H-12}" font-size="14" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
     return (f'<svg viewBox="0 0 {W} {H}" class="spark" role="img" aria-label="توزيع الزيارات على الساعات">'
-            f'<defs><linearGradient id="gO" x1="0" y1="0" x2="0" y2="1">'
+            f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1">'
             f'<stop offset="0" stop-color="#F7A94B"/><stop offset="1" stop-color="#F5831F"/></linearGradient></defs>{"".join(bars)}</svg>')
 
 def spark_dow(code):
+    gid = _uid('gO')
     o = BYCODE[code]['overall']
     ds = [(d['d'], d['avg']) for d in o['dow']]
     if not ds: return ''
@@ -388,13 +395,15 @@ def spark_dow(code):
     for i, (d, v) in enumerate(ds):
         bh = max(5, round(v/mx*130))
         x = 12 + i*slot + 8
-        hot = 'url(#gO)' if v == mx else '#CFC5B4'
+        hot = f'url(#{gid})' if v == mx else '#CFC5B4'
         lab = f'{v/1000:.1f}ألف' if v >= 1000 else f'{v:,.0f}'
         bars.append(f'<g><rect x="{x:.1f}" y="{H-46-bh}" width="{bw:.1f}" height="{bh}" rx="7" fill="{hot}"/>'
                     f'<title>{d} — متوسط {v:,.0f} زيارة/يوم</title></g>'
                     f'<text x="{x+bw/2:.1f}" y="{H-54-bh}" font-size="15" font-weight="{"800" if v==mx else "600"}" text-anchor="middle" fill="{"var(--orange)" if v==mx else "var(--ink2)"}">{lab}</text>'
                     f'<text x="{x+bw/2:.1f}" y="{H-16}" font-size="14.5" text-anchor="middle" fill="var(--ink)">{d}</text>')
     return (f'<svg viewBox="0 0 {W} {H}" class="spark" role="img" aria-label="متوسط الزيارات حسب اليوم">'
+            f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1">'
+            f'<stop offset="0" stop-color="#F7A94B"/><stop offset="1" stop-color="#F5831F"/></linearGradient></defs>'
             f'{"".join(bars)}</svg>')
 
 def mixbar(parts):
@@ -666,14 +675,15 @@ def tabs_html(code, active, mode):
 
 def bars_chart(vals, labels, fmt, unit=''):
     if not vals: return ''
+    gid = _uid('gB')
     W, H = 640, 190
     n = len(vals); mx = max(vals) or 1
     bw = min(64, (W-30)/n - 14)
-    out = ['<defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    out = [f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
     for i, v in enumerate(vals):
         x = 15 + i*((W-30)/n) + ((W-30)/n - bw)/2
         bh = max(3, v/mx*(H-56))
-        fill = 'url(#gB)' if v == mx else 'var(--bar)'
+        fill = f'url(#{gid})' if v == mx else 'var(--bar)'
         out.append(f'<rect x="{x:.1f}" y="{H-30-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"/>')
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-36-bh:.1f}" font-size="11" font-weight="700" text-anchor="middle" fill="var(--ink)">{fmt(v)}</text>')
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{labels[i]}</text>')
@@ -682,14 +692,15 @@ def bars_chart(vals, labels, fmt, unit=''):
 CAND_CAUSES = ['ذروة موسم الحج','ارتفاع الحركة المرورية','إعلان أو تحويلة طريق','صيانة مضخات أو توقف جزئي','انقطاع منتج','منافس جديد قريب','تغيّر أسعار','حملة تسويقية','تغيّر فريق التشغيل','طقس أو أمطار','أعمال إنشائية مجاورة','موسم إجازات أو عودة مدارس']
 
 def _camp_hours_svg(vis, mark_h=18, mark_label='انطلاق الحملة 6م (المغرب)', hi_from=18):
+    gid = _uid('gC')
     W, H, PB = 1100, 250, 34
     mx = max(vis) or 1
     slot = (W-24)/24; bw = slot-8
-    out = ['<defs><linearGradient id="gC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    out = [f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
     for h, v in enumerate(vis):
         x = 12 + h*slot + 4
         bh = max(2, v/mx*(H-64))
-        fill = 'url(#gC)' if h >= hi_from else 'var(--bar)'
+        fill = f'url(#{gid})' if h >= hi_from else 'var(--bar)'
         out.append(f'<rect x="{x:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="6" fill="{fill}"/>')
         if v: out.append(f'<text x="{x+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="12" font-weight="700" text-anchor="middle" fill="var(--ink)">{v}</text>')
         out.append(f'<text x="{x+bw/2:.1f}" y="{H-12:.1f}" font-size="11" text-anchor="middle" fill="var(--ink2)">{hr_ar(h)}</text>')
@@ -765,9 +776,9 @@ def mk040_opening():
       <div class="ntable"><div class="tscroll"><table>
         <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
         <tbody>{trs}</tbody></table></div></div>
-      <div class="chartbox" style="margin-top:16px"><h3>المبيعات اليومية منذ بدء التشغيل (١٥–٣١ أغسطس)</h3><div class="cs">رمادي: التشغيل التجريبي · برتقالي غامق: يوم الافتتاح (٢٦) · برتقالي فاتح: ما بعد الافتتاح · مرّر بالفأرة للتفاصيل</div>{_ha_daily_svg(daily, hi_day=26, hi_label='🎉 يوم الافتتاح', shade_after=True)}</div>
-      <div class="sec-h" style="margin-top:16px"><h2>المبيعات اليومية يومًا بيوم</h2><span>العمليات واللترات والإيراد والفاتورة لكل يوم منذ بدء التشغيل</span></div>
-      {_daily_rows_table(daily, hi_day=26)}
+      <div class="sec-h" style="margin-top:16px"><h2>📊 المبيعات اليومية: أثناء الافتتاح ← بعد الافتتاح</h2><span>رسم بياني وجدول — متوسط كل مرحلة موضح على الرسم بخط متقطع</span></div>
+      <div class="chartbox"><h3>الإيراد اليومي حسب مرحلتي الافتتاح (١٥–٣١ أغسطس)</h3><div class="cs">رمادي = أثناء الافتتاح (التشغيل التجريبي ١٥–٢٥ ويوم الافتتاح ٢٦ بالبرتقالي الغامق) · برتقالي = بعد الافتتاح (٢٧–٣١) · مرّر بالفأرة على أي عمود للتفاصيل</div>{_phase_daily_svg(daily, split_day=26, hi_day=26)}</div>
+      {_phase_daily_table(daily, [('أثناء الافتتاح (١٥–٢٦ أغسطس) — التشغيل التجريبي ويوم الافتتاح الرسمي', 15, 26), ('بعد الافتتاح (٢٧–٣١ أغسطس)', 27, 31)], hi_day=26)}
       <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
         <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
           <li><b>يوم الافتتاح:</b> {opn['vis']} عملية ({lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي) بإيراد {n0(opn['rev'])} ر.س، والمساء بعد إعلان 7م استحوذ على {eve/opn['vis']*100:.0f}٪ من عمليات اليوم بذروة 8–9م.</li>
@@ -863,16 +874,17 @@ def nj219_campaign():
     </div>'''
 
 def _ha_daily_svg(daily, hi_day=22, hi_label='🎁 يوم الحملة', shade_after=True):
+    gid = _uid('gH')
     W, H, PB = 1100, 260, 34
     mx = max(x['rev'] for x in daily) or 1
     n = len(daily); slot = (W-24)/n; bw = slot-6
-    out = ['<defs><linearGradient id="gH" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    out = [f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
     imax = max(range(n), key=lambda i: daily[i]['rev'])
     for i, x in enumerate(daily):
         day = int(x['date'][-2:])
         cx = 12 + i*slot + 3
         bh = max(2, x['rev']/mx*(H-70))
-        fill = 'url(#gH)' if day == hi_day else ('#F5A623" opacity="0.55' if shade_after and day > hi_day else 'var(--bar)')
+        fill = f'url(#{gid})' if day == hi_day else ('#F5A623" opacity="0.55' if shade_after and day > hi_day else 'var(--bar)')
         out.append(f'<rect x="{cx:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"><title>{x["date"]} — {n0(x["rev"])} ر.س · {x["vis"]} عملية · {n0(x["vol"])} لتر</title></rect>')
         if day == hi_day or i == imax:
             out.append(f'<text x="{cx+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="11.5" font-weight="700" text-anchor="middle" fill="var(--ink)">{x["rev"]/1000:.1f}ألف</text>')
@@ -882,6 +894,64 @@ def _ha_daily_svg(daily, hi_day=22, hi_label='🎁 يوم الحملة', shade_a
         xhi = 12 + ihi*slot + 3
         out.append(f'<text x="{xhi+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">{hi_label}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def _phase_daily_svg(daily, split_day, hi_day=None, lab_a='أثناء الافتتاح', lab_b='بعد الافتتاح'):
+    gid = _uid('gP')
+    W, H, PB = 1100, 300, 34
+    mx = max(x['rev'] for x in daily) or 1
+    n = len(daily); slot = (W-24)/n; bw = slot-6
+    A = [x for x in daily if int(x['date'][-2:]) <= split_day]
+    B = [x for x in daily if int(x['date'][-2:]) > split_day]
+    avgA = sum(x['rev'] for x in A)/len(A) if A else 0
+    avgB = sum(x['rev'] for x in B)/len(B) if B else 0
+    def BH(v): return max(2, v/mx*(H-96))
+    out = [f'<defs><linearGradient id="{gid}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F5A623"/><stop offset="1" stop-color="#F37021"/></linearGradient></defs>']
+    for i, x in enumerate(daily):
+        day = int(x['date'][-2:])
+        cx = 12 + i*slot + 3
+        bh = BH(x['rev'])
+        fill = f'url(#{gid})' if day == hi_day else ('#F37021" opacity="0.72' if day > split_day else 'var(--bar)')
+        out.append(f'<rect x="{cx:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"><title>{x["date"]} — {n0(x["rev"])} ر.س · {x["vis"]} عملية · {n0(x["vol"])} لتر</title></rect>')
+        out.append(f'<text x="{cx+bw/2:.1f}" y="{H-12:.1f}" font-size="10" text-anchor="middle" fill="var(--ink2)">{day}</text>')
+    xa0, xa1 = 12, 12 + len(A)*slot - 3
+    xb0, xb1 = 12 + len(A)*slot + 3, W - 12
+    ya = H - PB - BH(avgA); yb = H - PB - BH(avgB)
+    out.append(f'<line x1="{xa0}" y1="{ya:.1f}" x2="{xa1:.1f}" y2="{ya:.1f}" stroke="#6E6A64" stroke-width="2" stroke-dasharray="7 5"/>')
+    out.append(f'<text x="{(xa0+xa1)/2:.1f}" y="{max(14, ya-8):.1f}" font-size="12" font-weight="700" text-anchor="middle" fill="#6E6A64">متوسط {lab_a}: {n0(avgA)} ر.س/يوم</text>')
+    ch = (avgB/avgA-1)*100 if avgA else 0
+    out.append(f'<line x1="{xb0:.1f}" y1="{yb:.1f}" x2="{xb1}" y2="{yb:.1f}" stroke="#C0503A" stroke-width="2" stroke-dasharray="7 5"/>')
+    out.append(f'<text x="{(xb0+xb1)/2:.1f}" y="{max(14, yb-8):.1f}" font-size="12" font-weight="800" text-anchor="middle" fill="#C0503A">متوسط {lab_b}: {n0(avgB)} ر.س/يوم ({"+" if ch>=0 else ""}{ch:.0f}٪)</text>')
+    return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def _phase_daily_table(daily, phases, hi_day=None):
+    def wd(ds): return WD_AR[_dt.date(*map(int, ds.split('-'))).weekday()]
+    trs = ''
+    stats = []
+    for lab, lo, hi in phases:
+        R = [x for x in daily if lo <= int(x['date'][-2:]) <= hi]
+        if not R: continue
+        trs += f'<tr style="background:var(--rowalt)"><td colspan="6" style="font-weight:800;font-size:14px">{lab}</td></tr>'
+        for x in R:
+            inv = x['rev']/x['vis'] if x['vis'] else 0
+            hl = ' style="background:rgba(243,112,33,.09);font-weight:700"' if hi_day and int(x['date'][-2:]) == hi_day else ''
+            trs += f'''<tr{hl}><td>{x['date']}</td><td>{wd(x['date'])}</td><td>{n0(x['vis'])}</td><td>{n0(x['vol'])}</td><td>{n0(x['rev'])}</td><td>{inv:.1f}</td></tr>'''
+        tr = sum(x['rev'] for x in R); tv = sum(x['vis'] for x in R); tl = sum(x['vol'] for x in R); nd = len(R)
+        stats.append(dict(lab=lab, nd=nd, vis=tv, vol=tl, rev=tr))
+        trs += f'''<tr style="font-weight:800;border-top:2px solid var(--line2)"><td colspan="2">إجمالي المرحلة ({nd} أيام)</td><td>{n0(tv)}</td><td>{n0(tl)}</td><td>{n0(tr)}</td><td>{(tr/tv if tv else 0):.1f}</td></tr>
+        <tr style="color:var(--ink2)"><td colspan="2">المتوسط اليومي للمرحلة</td><td>{n0(tv/nd)}</td><td>{n0(tl/nd)}</td><td><b>{n0(tr/nd)}</b></td><td>—</td></tr>'''
+    lift = ''
+    if len(stats) == 2:
+        a, b = stats
+        def L(x, y):
+            ch = ((y)/(x)-1)*100
+            return f'<span class="{"up" if ch>=0 else "dn"}">{"+" if ch>=0 else ""}{ch:.0f}٪</span>'
+        lift = f'''<div class="cs" style="margin-top:10px;font-size:14px">📈 <b>بعد الافتتاح مقابل أثناءه (بالمتوسط اليومي):</b>
+        العمليات {L(a['vis']/a['nd'], b['vis']/b['nd'])} ({n0(a['vis']/a['nd'])} ← {n0(b['vis']/b['nd'])}/يوم) ·
+        اللترات {L(a['vol']/a['nd'], b['vol']/b['nd'])} ({n0(a['vol']/a['nd'])} ← {n0(b['vol']/b['nd'])}/يوم) ·
+        الإيراد {L(a['rev']/a['nd'], b['rev']/b['nd'])} ({n0(a['rev']/a['nd'])} ← {n0(b['rev']/b['nd'])} ر.س/يوم)</div>'''
+    return f'''<div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>التاريخ</th><th>اليوم</th><th>العمليات</th><th>اللترات</th><th>الإيراد (ر.س)</th><th>الفاتورة (ر.س)</th></tr></thead>
+      <tbody>{trs}</tbody></table></div></div>{lift}'''
 
 def _daily_rows_table(daily, hi_day=None):
     def wd(ds): return WD_AR[_dt.date(*map(int, ds.split('-'))).weekday()]
@@ -919,9 +989,9 @@ def ha052_opening():
         <div class="kpi"><div class="kl">أول أسبوع كامل (٨–١٤)</div><div class="kv">{n0(wk1['rev_d'])} <small>ر.س/يوم</small></div><div class="kn">{n0(wk1['n_d'])} عملية/يوم · {n0(wk1['vol_d'])} لتر/يوم</div></div>
         <div class="kpi"><div class="kl">الأسبوع الأخير (٢٥–٣١)</div><div class="kv">{n0(last['rev_d'])} <small>ر.س/يوم</small></div><div class="kn">{n0(last['n_d'])} عملية/يوم — {(last['rev_d']/wk1['rev_d']-1)*100:+.0f}٪ عن الأسبوع الأول</div></div>
       </div>
-      <div class="chartbox"><h3>المبيعات اليومية منذ بدء التشغيل (٦–٣١ أغسطس)</h3><div class="cs">العمود البرتقالي الغامق = يوم البدء · مرّر بالفأرة على أي عمود للتفاصيل · ذروة الشهر ٢٧ أغسطس</div>{_ha_daily_svg(daily, hi_day=6, hi_label='🚀 بدء التشغيل', shade_after=False)}</div>
-      <div class="sec-h" style="margin-top:16px"><h2>المبيعات اليومية يومًا بيوم</h2><span>العمليات واللترات والإيراد والفاتورة لكل يوم منذ البدء</span></div>
-      {_daily_rows_table(daily, hi_day=6)}
+      <div class="sec-h" style="margin-top:16px"><h2>📊 المبيعات اليومية: أثناء الافتتاح ← بعد الافتتاح</h2><span>رسم بياني وجدول — متوسط كل مرحلة موضح على الرسم بخط متقطع</span></div>
+      <div class="chartbox"><h3>الإيراد اليومي حسب مرحلتي الافتتاح (٦–٣١ أغسطس)</h3><div class="cs">رمادي = أثناء الافتتاح (٦–١٤ أغسطس، ويوم البدء بالبرتقالي الغامق) · برتقالي = بعد الافتتاح (١٥–٣١) · مرّر بالفأرة على أي عمود للتفاصيل</div>{_phase_daily_svg(daily, split_day=14, hi_day=6)}</div>
+      {_phase_daily_table(daily, [('أثناء الافتتاح (٦–١٤ أغسطس) — الإطلاق وأول أسبوع كامل', 6, 14), ('بعد الافتتاح (١٥–٣١ أغسطس)', 15, 31)], hi_day=6)}
       <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
         <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
           <li><b>إقلاع سريع:</b> من {n0(first['rev'])} ر.س في يوم البدء إلى {n0(ramp3['rev'])} ر.س في اليوم الثالث — المحطة بلغت مستوى تشغيل ناضجًا خلال 72 ساعة.</li>
