@@ -698,7 +698,7 @@ def _camp_hours_svg(vis, mark_h=18, mark_label='انطلاق الحملة 6م (�
     out.append(f'<text x="{xm-10:.1f}" y="24" font-size="12" font-weight="700" fill="#C0503A">{mark_label}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
 
-OPENINGS = {'MK040'}
+OPENINGS = {'MK040', 'HA052'}
 
 MK40_PLAN_VIEWS, MK40_VIEWS = 100000, 269812   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات إعلان افتتاح MK040)
 MK40_PLAN_ENG, MK40_ENG = 1.0, 7.0             # معدل التفاعل ٪: المخطط مقابل الفعلي
@@ -765,6 +765,9 @@ def mk040_opening():
       <div class="ntable"><div class="tscroll"><table>
         <thead><tr><th>الفترة</th><th>الأيام</th><th>عمليات/يوم</th><th>لترات/يوم</th><th>إجمالي اللترات</th><th>إيراد/يوم (ر.س)</th><th>الفاتورة (ر.س)</th><th>تغير العمليات</th><th>تغير الإيراد</th></tr></thead>
         <tbody>{trs}</tbody></table></div></div>
+      <div class="chartbox" style="margin-top:16px"><h3>المبيعات اليومية منذ بدء التشغيل (١٥–٣١ أغسطس)</h3><div class="cs">رمادي: التشغيل التجريبي · برتقالي غامق: يوم الافتتاح (٢٦) · برتقالي فاتح: ما بعد الافتتاح · مرّر بالفأرة للتفاصيل</div>{_ha_daily_svg(daily, hi_day=26, hi_label='🎉 يوم الافتتاح', shade_after=True)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>المبيعات اليومية يومًا بيوم</h2><span>العمليات واللترات والإيراد والفاتورة لكل يوم منذ بدء التشغيل</span></div>
+      {_daily_rows_table(daily, hi_day=26)}
       <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
         <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
           <li><b>يوم الافتتاح:</b> {opn['vis']} عملية ({lift(opn['n_d'], soft['n_d'])} عن متوسط التجريبي) بإيراد {n0(opn['rev'])} ر.س، والمساء بعد إعلان 7م استحوذ على {eve/opn['vis']*100:.0f}٪ من عمليات اليوم بذروة 8–9م.</li>
@@ -780,6 +783,9 @@ def opening_body(a):
     code = a['metrics']['code']
     if code == 'MK040':
         rpt = mk040_opening()
+        if rpt: return rpt
+    if code == 'HA052':
+        rpt = ha052_opening()
         if rpt: return rpt
     return '<div class="card"><div class="cs">لا يتوفر تقرير افتتاح لهذه المحطة.</div></div>'
 
@@ -856,7 +862,7 @@ def nj219_campaign():
       <div class="dnote">المصدر: ملفا معاملات درب المركب NJ219 لشهري يونيو ويوليو 2026 (10,406 عملية بيع). المتوسطات محسوبة على الأيام المسجلة فعليًا.</div>
     </div>'''
 
-def _ha_daily_svg(daily):
+def _ha_daily_svg(daily, hi_day=22, hi_label='🎁 يوم الحملة', shade_after=True):
     W, H, PB = 1100, 260, 34
     mx = max(x['rev'] for x in daily) or 1
     n = len(daily); slot = (W-24)/n; bw = slot-6
@@ -866,15 +872,65 @@ def _ha_daily_svg(daily):
         day = int(x['date'][-2:])
         cx = 12 + i*slot + 3
         bh = max(2, x['rev']/mx*(H-70))
-        fill = 'url(#gH)' if day == 22 else ('#F5A623" opacity="0.55' if day > 22 else 'var(--bar)')
+        fill = 'url(#gH)' if day == hi_day else ('#F5A623" opacity="0.55' if shade_after and day > hi_day else 'var(--bar)')
         out.append(f'<rect x="{cx:.1f}" y="{H-PB-bh:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="5" fill="{fill}"><title>{x["date"]} — {n0(x["rev"])} ر.س · {x["vis"]} عملية · {n0(x["vol"])} لتر</title></rect>')
-        if day == 22 or i == imax:
+        if day == hi_day or i == imax:
             out.append(f'<text x="{cx+bw/2:.1f}" y="{H-PB-bh-6:.1f}" font-size="11.5" font-weight="700" text-anchor="middle" fill="var(--ink)">{x["rev"]/1000:.1f}ألف</text>')
         out.append(f'<text x="{cx+bw/2:.1f}" y="{H-12:.1f}" font-size="10" text-anchor="middle" fill="var(--ink2)">{day}</text>')
-    d22 = next(i for i, x in enumerate(daily) if int(x['date'][-2:]) == 22)
-    x22 = 12 + d22*slot + 3
-    out.append(f'<text x="{x22+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">🎁 يوم الحملة</text>')
+    ihi = next((i for i, x in enumerate(daily) if int(x['date'][-2:]) == hi_day), None)
+    if ihi is not None:
+        xhi = 12 + ihi*slot + 3
+        out.append(f'<text x="{xhi+bw/2:.1f}" y="16" font-size="12" font-weight="700" text-anchor="middle" fill="#C0503A">{hi_label}</text>')
     return f'<svg viewBox="0 0 {W} {H}" class="bigchart" role="img">{"".join(out)}</svg>'
+
+def _daily_rows_table(daily, hi_day=None):
+    def wd(ds): return WD_AR[_dt.date(*map(int, ds.split('-'))).weekday()]
+    trs = ''
+    for x in daily:
+        inv = x['rev']/x['vis'] if x['vis'] else 0
+        hl = ' style="background:rgba(243,112,33,.09);font-weight:700"' if hi_day and int(x['date'][-2:]) == hi_day else ''
+        trs += f'''<tr{hl}><td>{x['date']}</td><td>{wd(x['date'])}</td><td>{n0(x['vis'])}</td><td>{n0(x['vol'])}</td><td>{n0(x['rev'])}</td><td>{inv:.1f}</td></tr>'''
+    tot_rev = sum(x['rev'] for x in daily); tot_vis = sum(x['vis'] for x in daily); tot_vol = sum(x['vol'] for x in daily)
+    trs += f'''<tr style="font-weight:800;border-top:2px solid var(--line2)"><td colspan="2">الإجمالي ({len(daily)} يومًا)</td><td>{n0(tot_vis)}</td><td>{n0(tot_vol)}</td><td>{n0(tot_rev)}</td><td>{(tot_rev/tot_vis if tot_vis else 0):.1f}</td></tr>'''
+    return f'''<div class="ntable"><div class="tscroll"><table>
+      <thead><tr><th>التاريخ</th><th>اليوم</th><th>العمليات</th><th>اللترات</th><th>الإيراد (ر.س)</th><th>الفاتورة (ر.س)</th></tr></thead>
+      <tbody>{trs}</tbody></table></div></div>'''
+
+def ha052_opening():
+    try:
+        d = json.load(open('ha052_aug.json'))
+    except FileNotFoundError:
+        return ''
+    daily = [{'date': x['date'], 'rev': x['rev'], 'vis': x['vis'], 'vol': x['vol']} for x in d['daily']]
+    first, ramp3 = daily[0], daily[2]
+    def per(lo, hi):
+        R = [x for x in daily if lo <= int(x['date'][-2:]) <= hi]
+        nd = len(R); vis = sum(x['vis'] for x in R); rev = sum(x['rev'] for x in R); vol = sum(x['vol'] for x in R)
+        return dict(nd=nd, vis=vis, rev=rev, vol=vol, n_d=vis/nd, rev_d=rev/nd, vol_d=vol/nd)
+    wk1, last = per(8, 14), per(25, 31)
+    tot_rev = sum(x['rev'] for x in daily); tot_vol = sum(x['vol'] for x in daily); tot_vis = sum(x['vis'] for x in daily)
+    return f'''
+    <div class="sec-h" style="margin-top:6px"><h2>🎉 تقرير الافتتاح — بدء التشغيل الخميس ٦ أغسطس 2026</h2><span>درب حائل — شارع الأمير سعود · فرنشايز</span></div>
+    <div class="card" style="border:2px solid rgba(243,112,33,.4)">
+      <div class="cs" style="margin-bottom:12px">بدأت المحطة التشغيل يوم الخميس ٦ أغسطس بيوم تمهيدي رمزي ({n0(first['rev'])} ر.س · {first['vis']} عمليات)، وتسارع الصعود فورًا: تجاوز الإيراد اليومي 11 ألف ر.س في اليوم الثالث، واستقر أول أسبوع كامل عند {n0(wk1['rev_d'])} ر.س/يوم، ثم رفعت حملة البنزين المجاني (٢٢ أغسطس — لها تبويب مستقل) المستوى إلى نحو {n0(last['rev_d'])} ر.س/يوم في الأسبوع الأخير.</div>
+      <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi hot"><div class="kl">إجمالي أغسطس (منذ البدء)</div><div class="kv">{sar(tot_rev)}</div><div class="kn">{n0(tot_vis)} عملية · {n0(tot_vol)} لترًا في {len(daily)} يومًا</div></div>
+        <div class="kpi"><div class="kl">اليوم الأول (٦ أغسطس)</div><div class="kv">{n0(first['rev'])} <small>ر.س</small></div><div class="kn">{first['vis']} عمليات — تشغيل تمهيدي</div></div>
+        <div class="kpi"><div class="kl">أول أسبوع كامل (٨–١٤)</div><div class="kv">{n0(wk1['rev_d'])} <small>ر.س/يوم</small></div><div class="kn">{n0(wk1['n_d'])} عملية/يوم · {n0(wk1['vol_d'])} لتر/يوم</div></div>
+        <div class="kpi"><div class="kl">الأسبوع الأخير (٢٥–٣١)</div><div class="kv">{n0(last['rev_d'])} <small>ر.س/يوم</small></div><div class="kn">{n0(last['n_d'])} عملية/يوم — {(last['rev_d']/wk1['rev_d']-1)*100:+.0f}٪ عن الأسبوع الأول</div></div>
+      </div>
+      <div class="chartbox"><h3>المبيعات اليومية منذ بدء التشغيل (٦–٣١ أغسطس)</h3><div class="cs">العمود البرتقالي الغامق = يوم البدء · مرّر بالفأرة على أي عمود للتفاصيل · ذروة الشهر ٢٧ أغسطس</div>{_ha_daily_svg(daily, hi_day=6, hi_label='🚀 بدء التشغيل', shade_after=False)}</div>
+      <div class="sec-h" style="margin-top:16px"><h2>المبيعات اليومية يومًا بيوم</h2><span>العمليات واللترات والإيراد والفاتورة لكل يوم منذ البدء</span></div>
+      {_daily_rows_table(daily, hi_day=6)}
+      <div class="cksec" style="margin-top:14px"><div class="ckh">قراءة النتائج</div>
+        <ul style="margin:8px 18px 0 0;padding:0;line-height:2">
+          <li><b>إقلاع سريع:</b> من {n0(first['rev'])} ر.س في يوم البدء إلى {n0(ramp3['rev'])} ر.س في اليوم الثالث — المحطة بلغت مستوى تشغيل ناضجًا خلال 72 ساعة.</li>
+          <li><b>الاستقرار الأول:</b> أول أسبوع كامل (٨–١٤ أغسطس) عند {n0(wk1['rev_d'])} ر.س/يوم بمعدل {n0(wk1['n_d'])} عملية/يوم.</li>
+          <li><b>نقطة الانعطاف:</b> حملة البنزين المجاني (السبت ٢٢ أغسطس) رفعت المستوى الدائم — الأسبوع الأخير {n0(last['rev_d'])} ر.س/يوم ({(last['rev_d']/wk1['rev_d']-1)*100:+.0f}٪ عن الأسبوع الأول). تفاصيلها الكاملة في تبويب «تقرير حملة البنزين المجاني».</li>
+          <li><b>إجمالي شهر الافتتاح:</b> {sar(tot_rev)} و{n0(tot_vol)} لترًا في {len(daily)} يومًا — متوسط فاتورة {tot_rev/tot_vis:.1f} ر.س.</li>
+        </ul></div>
+      <div class="dnote">المصدر: ملف مبيعات درب حائل HA052 لأغسطس 2026 ({n0(tot_vis)} عملية بيع · ٦–٣١ أغسطس، مع استبعاد عمليات المعايرة).</div>
+    </div>'''
 
 MK_PLAN_VIEWS, MK_VIEWS = 100000, 632353   # الوصول/المشاهدات: المخطط مقابل الفعلي (لوحة مؤشرات حملة HA052)
 MK_PLAN_ENG, MK_ENG = 5.0, 16.805          # معدل التفاعل ٪: المخطط مقابل الفعلي
