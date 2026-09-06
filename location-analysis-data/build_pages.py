@@ -29,7 +29,10 @@ except FileNotFoundError:
     OPS_TPL = {}
 def ops_content(code, k):
     v = (OPS.get(code) or {}).get(k)
-    return v if v else OPS_TPL.get(k, '')
+    if v: return v
+    if k == 'cs' and code in CS_ST_HTML:
+        return CS_ST_HTML[code]
+    return OPS_TPL.get(k, '')
 try:
     ECO = json.load(open('ecosys.json'))  # {code: {rentals:[{title,dist,rating,reviews,lat,lng}], hajj:[...]}}
 except FileNotFoundError:
@@ -1442,6 +1445,118 @@ def nosales_station_body(a):
     </div>'''
     return head + kpis + note + grid
 
+# ---------------- customer-service (marketing CS log) analysis ----------------
+from collections import Counter
+APPROVED_OPS = {'MK002', 'MK007', 'MK017', 'MK019', 'MK023'}
+try:
+    _CS = json.load(open('cs_data.json'))
+except FileNotFoundError:
+    _CS = None
+
+CS_HTML = ''
+CS_ST_HTML = {}
+if _CS:
+    _rows = _CS['rows']
+    _ag = dict(_CS['agg'])
+    for _k in ('by_type', 'by_ch', 'by_city', 'by_st'):
+        _ag[_k] = dict(_ag[_k])
+    TYPE_CL = {'استفسار': '#3E6E8E', 'طلب': '#C98A1B', 'شكوى': '#C0503A', 'اقتراح': '#2E8B6F'}
+    def _tybadge(t):
+        return f'<span style="background:{TYPE_CL.get(t,"#9B968E")};color:#fff;border-radius:8px;padding:2px 9px;font-size:12px;white-space:nowrap">{t}</span>'
+    def _st_name(c):
+        return A[c]['metrics']['name'] if c in A else ''
+    _tot = _ag['total']
+    _ty = _ag['by_type']; _ch = _ag['by_ch']
+    _mlabels = [m for m, _ in _ag['by_month']]; _mvals = [n for _, n in _ag['by_month']]
+    _cities = sorted(_ag['by_city'].items(), key=lambda x: -x[1])[:8]
+    _sts = sorted(_ag['by_st'].items(), key=lambda x: -x[1])
+    _acted = _ag['acted']
+    ch_colors = {'اتصال': '#3E6E8E', 'واتساب': '#2E8B6F', 'استبيان التطبيق': '#C98A1B', 'خرائط جوجل': '#C0503A', 'منصة X': '#6E6A64', 'الموقع الإلكتروني': '#8A7F6C', 'بريد صوتي': '#B9B2A6', 'بريد إلكتروني': '#7FA7C4', 'تيك توك': '#3D3D3D', 'إنستقرام': '#A24C7E'}
+    _chparts = [(k, v/_tot, ch_colors.get(k, '#9B968E')) for k, v in sorted(_ch.items(), key=lambda x: -x[1])]
+    _typarts = [(k, v/_tot, TYPE_CL.get(k, '#9B968E')) for k, v in sorted(_ty.items(), key=lambda x: -x[1])]
+    _themes = _ag['themes']
+    _theme_chips = ''.join(f'<span class="ckchip" style="cursor:default">{t} <b style="color:var(--orange)">{n}</b></span>' for t, n in sorted(_themes, key=lambda x: -x[1]))
+    _strows = ''
+    for c, n in _sts:
+        nm = _st_name(c)
+        link = f'<a class="stlink" href="#/{c}/cs">{esc(nm)}</a> <span class="tcode">{c}</span>' if nm else f'<span class="tcode">{c}</span> <span class="cs">(غير مدرجة في التقرير)</span>'
+        tys = Counter(r['type'] for r in _rows if r['st'] == c)
+        _strows += f'''<tr><td>{link}</td><td><b>{n}</b></td><td>{'، '.join(f"{t} ({m})" for t, m in tys.most_common())}</td></tr>'''
+    _logtr = ''
+    for r in _rows:
+        stc = f'<span class="tcode">{r["st"]}</span>' if r['st'] else '—'
+        _logtr += f'''<tr data-m="{r['mar']}" data-t="{r['type']}"><td style="white-space:nowrap">{esc(r['d'])}</td><td>{_tybadge(r['type'])}</td><td>{esc(r['city'] or '—')}</td><td>{stc}</td><td style="min-width:280px">{esc(r['desc'])}</td><td style="min-width:160px;color:var(--ink2)">{esc(r['act'] or '—')}</td><td style="white-space:nowrap">{esc(r['ch'])}</td></tr>'''
+    _mopts = ''.join(f'<option value="{m}">{m}</option>' for m in _mlabels)
+    _topts = ''.join(f'<option value="{t}">{t}</option>' for t in _ty)
+    CS_HTML = f'''<div class="pgview" id="pg-cs" data-title="تحليل خدمة العملاء" hidden>
+  <div class="pgnav"><div class="nvl"><a class="hb" href="#/">⌂ جميع المحطات</a></div></div>
+  <div class="sec-h"><h2>🎧 تحليل خدمة العملاء — سجل التسويق</h2><span>يناير – أغسطس 2026 · {_tot} تواصلًا موثقًا من ورقة Marketing</span></div>
+  <div class="skpis" style="grid-template-columns:repeat(6,1fr)">
+    <div class="kpi hot"><div class="kl">إجمالي التواصلات</div><div class="kv">{_tot}</div><div class="kn">8 أشهر · من {_mvals[0]} في يناير إلى {_mvals[-1]} في أغسطس</div></div>
+    <div class="kpi"><div class="kl">استفسارات</div><div class="kv">{_ty.get('استفسار',0)}</div><div class="kn">{_ty.get('استفسار',0)/_tot*100:.0f}٪ من السجل</div></div>
+    <div class="kpi"><div class="kl">طلبات</div><div class="kv">{_ty.get('طلب',0)}</div><div class="kn">شراكات ومقترحات وتسليم جوائز</div></div>
+    <div class="kpi"><div class="kl">شكاوى</div><div class="kv">{_ty.get('شكوى',0)}</div><div class="kn">{_ty.get('شكوى',0)/_tot*100:.0f}٪ — أغلبها تنفيذ عروض</div></div>
+    <div class="kpi"><div class="kl">اقتراحات</div><div class="kv">{_ty.get('اقتراح',0)}</div><div class="kn">أبرزها برنامج الولاء والتطبيق</div></div>
+    <div class="kpi"><div class="kl">إجراء موثق</div><div class="kv">{_acted/_tot*100:.0f}٪</div><div class="kn">{_acted} من {_tot} — البقية بلا إجراء مسجل</div></div>
+  </div>
+  <div class="chartbox"><h3>التواصلات شهريًا</h3><div class="cs">القفزة من يونيو مدفوعة بحملات الافتتاحات (المدينة، جازان، حفر الباطن) ثم كفرات بلس (يوليو) ومسابقة إنستقرام (أغسطس)</div>{bars_chart(_mvals, _mlabels, lambda v: f'{v:.0f}')}</div>
+  <div class="agrid" style="grid-template-columns:1fr 1fr">
+    <div class="card"><div class="ct"><h3>مزيج الأنواع</h3><div class="leg">من إجمالي السجل</div></div>{mixbar(_typarts)}</div>
+    <div class="card"><div class="ct"><h3>قنوات التواصل</h3><div class="leg">واتساب تضاعف في يوليو وأغسطس حتى عادل الاتصال</div></div>{mixbar([p for p in _chparts if p[1] >= 0.02])}</div>
+  </div>
+  <div class="sec-h" style="margin-top:16px"><h2>المدن الأكثر تواصلًا</h2><span>حيث ذُكرت المدينة ({sum(v for _, v in _cities)} من {_tot})</span></div>
+  <div class="chartbox">{bars_chart([v for _, v in _cities], [k for k, _ in _cities], lambda v: f'{v:.0f}')}</div>
+  <div class="sec-h" style="margin-top:16px"><h2>المحطات المذكورة بالاسم</h2><span>اضغط على المحطة لفتح تبويب استفسارات عملائها</span></div>
+  <div class="ntable"><div class="tscroll"><table><thead><tr><th>المحطة</th><th>التواصلات</th><th>الأنواع</th></tr></thead><tbody>{_strows}</tbody></table></div></div>
+  <div class="sec-h" style="margin-top:16px"><h2>المواضيع المتكررة</h2><span>تصنيف آلي بالكلمات المفتاحية — قد يتقاطع الموضوعان في السجل الواحد</span></div>
+  <div class="card"><div class="ckchips">{_theme_chips}</div></div>
+  <div class="sec-h" style="margin-top:16px"><h2>محطات توقف — قراءة أخصائي خدمة العملاء</h2><span>أربع قصص تلخص الفترة</span></div>
+  <div class="agrid" style="grid-template-columns:1fr 1fr">
+    <div class="card"><div class="ct"><h3>🚧 موجة افتتاح المدينة MD009 (٧–٩ يونيو)</h3></div><div class="cs">9 شكاوى في ثلاثة أيام: طوابير تجاوزت الساعة والنصف، إخراج المنتظرين قبل وصول دورهم، وأسلوب غير لائق من بعض العمال («تبي بلاش انت»). فريق التسويق تواصل واعتذر للحالات الموثقة. الدرس: حملات «أول N سيارة» تحتاج خطة مرورية وطاقة استيعاب معلنة وتهيئة للعمال قبل الإعلان.</div></div>
+    <div class="card"><div class="ct"><h3>📱 فيضان مسابقة إنستقرام (١٢–٢٥ أغسطس)</h3></div><div class="cs">أكثر من 40 تواصلًا خلال أسبوعين من مشاركين يعتقدون أنهم فازوا («إذا ما رُدّ على تعليقك خلال 24 ساعة لك فل مجاني») — مع رد قالبي واحد مكرر وبعض التهديد بالبلاغات. الدرس: صياغة شروط المسابقة بدقة (مدة التحدي من نزول المنشور)، وإعلان الفائزين علنًا، وقناة تحقق ذاتية.</div></div>
+    <div class="card"><div class="ct"><h3>🔧 فجوة وعي العمال بالعروض (يوليو)</h3></div><div class="cs">17 تواصلًا عن جودة الخدمة أغلبها نمط واحد: عميل يطلب عرضًا معلنًا (كفرات بلس، قسائم الافتتاح) والعامل «ما يدري / مافي معلوم» — تكرر في النوارية والخمرة وفرع السلام والعوالي ونجران. المعالجة الجيدة الموثقة: إرسال باركود العرض مباشرة للعميل. الدرس: لا إطلاق عرض دون تهيئة العمال ومدراء المحطات ومادة تدريب قصيرة.</div></div>
+    <div class="card"><div class="ct"><h3>💳 أكثر طلب متكرر: الولاء والتطبيق</h3></div><div class="cs">23 تواصلًا يطلبون برنامج نقاط/تطبيق/بطاقات مسبقة الدفع («زي ساسكو والدربس») — من عملاء يصفون أنفسهم بالأوفياء، ورد الفريق الثابت: «نعمل على تطويرها وستُطلق قريبًا». هذا تأكيد ميداني مباشر لأولوية إطلاق برنامج الولاء، وقاعدة عملاء جاهزة للتفعيل المبكر.</div></div>
+  </div>
+  <div class="sec-h" style="margin-top:16px"><h2>التوصيات</h2><span>مرتبة بالأثر</span></div>
+  <div class="card"><ol style="margin:6px 20px 6px 0;padding:0;line-height:2.1">
+    <li><b>حزمة تشغيل العروض:</b> لكل حملة — تهيئة العمال والمدراء + باركود احتياطي يُرسل للعميل + سقف معلن (أول N) وخطة طوابير. (مصدرها 17 حالة «العامل ما يدري» و9 شكاوى MD009)</li>
+    <li><b>حوكمة المسابقات:</b> شروط زمنية صريحة في المنشور نفسه، إعلان فائزين علني خلال 48 ساعة، وردود متنوعة غير قالبية. (40+ حالة في أغسطس)</li>
+    <li><b>تسريع برنامج الولاء والتطبيق:</b> الطلب الأعلى تكرارًا عبر الفترة كلها (23 حالة) والوعد «قريبًا» يتقادم.</li>
+    <li><b>SLA للرد والإجراء:</b> 51٪ من السجل بلا إجراء موثق و12 حالة «لم يتم الرد» — اعتماد حقل إجراء إلزامي ومهلة رد.</li>
+    <li><b>مسار B2B موحد:</b> 40 طلب شراكة/رعاية تمر كلها عبر تحويلات فردية (أ. أمل الشمراني) — نموذج استقبال موحد وايميل شراكات معلن يقلل الفاقد.</li>
+    <li><b>لوحة أفكار العملاء:</b> اقتراحات المواقع الجديدة (14) والمستأجرين (19) مادة مجانية لفريقي التطوير والتأجير — تستحق مراجعة شهرية.</li>
+  </ol></div>
+  <div class="sec-h" style="margin-top:16px"><h2>السجل الكامل</h2><span>ابحث ورشّح — <b id="csn">{_tot}</b> نتيجة</span></div>
+  <div class="card" style="padding:12px"><div style="display:flex;gap:10px;flex-wrap:wrap">
+    <input id="csq" oninput="csF()" placeholder="بحث في الوصف والإجراء…" style="flex:1;min-width:220px;border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit;font-size:14px">
+    <select id="csm" onchange="csF()" style="border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit"><option value="">كل الأشهر</option>{_mopts}</select>
+    <select id="cst" onchange="csF()" style="border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit"><option value="">كل الأنواع</option>{_topts}</select>
+  </div></div>
+  <div class="ntable"><div class="tscroll"><table id="cslog"><thead><tr><th>التاريخ</th><th>النوع</th><th>المدينة</th><th>المحطة</th><th>الوصف</th><th>الإجراء</th><th>القناة</th></tr></thead><tbody>{_logtr}</tbody></table></div></div>
+  <div class="dnote">المصدر: جدول خدمة عملاء التسويق (Marketing — Google Sheets)، أوراق يناير حتى أغسطس 2026 · {_tot} سجلًا بعد استبعاد الصفوف الفارغة · التصنيفات الموضوعية آلية استرشادية.</div>
+  <script>
+  function csF(){{var q=(document.getElementById('csq').value||'').trim(),m=document.getElementById('csm').value,t=document.getElementById('cst').value,n=0;
+  document.querySelectorAll('#cslog tbody tr').forEach(function(r){{var ok=(!m||r.dataset.m===m)&&(!t||r.dataset.t===t)&&(!q||r.textContent.indexOf(q)>-1);r.hidden=!ok;if(ok)n++;}});
+  document.getElementById('csn').textContent=n;}}
+  </script>
+  <div class="pgnav" style="margin-top:14px"><div class="nvl"><a class="hb" href="#/">⌂ جميع المحطات</a></div></div>
+</div>'''
+    for c, n in _sts:
+        if c in APPROVED_OPS or c not in A:
+            continue
+        R = [r for r in _rows if r['st'] == c]
+        trs = ''.join(f'''<tr><td style="white-space:nowrap">{esc(r['d'])}</td><td>{_tybadge(r['type'])}</td><td style="min-width:260px">{esc(r['desc'])}</td><td style="color:var(--ink2)">{esc(r['act'] or '—')}</td><td style="white-space:nowrap">{esc(r['ch'])}</td></tr>''' for r in R)
+        tys = Counter(r['type'] for r in R)
+        chips = ' · '.join(f'{t}: <b>{m}</b>' for t, m in tys.most_common())
+        CS_ST_HTML[c] = f'''<div class="sec-h"><h2>استفسارات العملاء — سجل خدمة عملاء التسويق</h2><span>يناير – أغسطس 2026</span></div>
+        <div class="card"><div class="cs" style="margin-bottom:8px">وصل لهذه المحطة عبر قنوات التسويق <b>{n}</b> تواصلًا موثقًا ({chips}). القائمة الكاملة أدناه، والتحليل الشبكي في صفحة «تحليل خدمة العملاء» بالرئيسية.</div>
+        <div class="ntable"><div class="tscroll"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>الوصف</th><th>الإجراء</th><th>القناة</th></tr></thead><tbody>{trs}</tbody></table></div></div>
+        <div class="ckh" style="margin-top:10px">ملاحظات</div>
+        <div class="confbox" contenteditable="true" data-ph="أضف ملاحظات فريق خدمة العملاء لهذه المحطة…"></div>
+        <div class="dnote">المصدر: جدول خدمة عملاء التسويق (أوراق يناير–أغسطس 2026) — يُستكمل التبويب ببيانات قسم خدمة العملاء التفصيلية عند التزويد.</div></div>'''
+    for c in CS_ST_HTML:
+        OPS_COUNTS.setdefault(c, {})['cs'] = _ag['by_st'].get(c) if isinstance(_ag['by_st'], dict) else dict(_ag['by_st']).get(c)
+
 # ---------------- per-station pages ----------------
 for idx, a in list(enumerate(ORDER)) + [(None, x) for x in XTRA.values()]:
     m = a['metrics']; code = m['code']
@@ -1813,7 +1928,7 @@ hub = f'''<!DOCTYPE html>
   </div>
 </header>
 <div id="hub">
-<div class="stationbar"><div class="chips" id="chips"><a class="chip" href="#/compare" style="background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700">⚖️ إنشاء مقارنة</a>{chips}
+<div class="stationbar"><div class="chips" id="chips"><a class="chip" href="#/compare" style="background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700">⚖️ إنشاء مقارنة</a><a class="chip" href="#/cs" style="background:var(--bgray);border-color:var(--bgray);color:#fff;font-weight:700">🎧 تحليل خدمة العملاء</a>{chips}
   <div class="search"><input id="q" type="search" placeholder="ابحث باسم المحطة أو الكود…" aria-label="بحث"></div>
 </div></div>
 <main class="wrap">
@@ -1830,7 +1945,7 @@ hub = f'''<!DOCTYPE html>
   <footer>{FOOT_METH}</footer>
 </main>
 </div>
-<main class="wrap" id="pages">{SPA_VIEWS}{CMP_HTML}</main>
+<main class="wrap" id="pages">{SPA_VIEWS}{CMP_HTML}{CS_HTML}</main>
 <script id="cmpdata" type="application/json">{CMP_JSON}</script>
 <script>
 const hubEl=document.getElementById('hub');
