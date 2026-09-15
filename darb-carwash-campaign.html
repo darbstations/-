@@ -255,7 +255,6 @@ tr.month td[data-f]:hover{background:var(--sand)}
   <div class="tabs" role="tablist">
     <button type="button" class="tab" data-tab="sum">ملخّص الحملات</button>
     <button type="button" class="tab on" data-tab="camp">الحملات</button>
-    <button type="button" class="tab" data-tab="wash">خطة واش واي</button>
   </div>
 
   <div class="warn" id="warn" hidden=""></div>
@@ -268,45 +267,7 @@ tr.month td[data-f]:hover{background:var(--sand)}
     <div id="sumTable"></div>
   </section>
 
-  <!-- ---------------- plan ---------------- -->
-  <section class="tabpanel" id="panel-wash" hidden="">
-    <h2>خطة حملات واش واي</h2>
-    <p class="hint">ميزانية الشريك تُصرف خلال المدة المحدّدة. اكتبي ميزانية كل حملة في الجدول فتُخصم من الإجمالي، ويظهر أمام كل حملة ما تبقّى بعدها.</p>
-    <div class="grid3" style="margin-top:16px">
-      <div><label class="f" for="wBudget">إجمالي الميزانية (ريال)</label>
-        <input type="number" id="wBudget" min="0" step="500" value="150000"></div>
-      <div><label class="f" for="wMonths">المدة (أشهر)</label>
-        <input type="number" id="wMonths" min="1" max="24" value="5"></div>
-      <div><label class="f" for="wPartner">اسم الشريك</label>
-        <input type="text" id="wPartner" value="واش واي"></div>
-    </div>
-    <div class="sumkpi" id="wKpi"><div class="box"><div class="k">الميزانية</div><div class="v">١٥٠٬٠٠٠ ر.س</div></div><div class="box"><div class="k">المخصَّص</div><div class="v">١٣٢٬٠٠٠ ر.س</div></div><div class="box"><div class="k">المتبقي</div><div class="v">١٨٬٠٠٠ ر.س</div></div><div class="box"><div class="k">حملات الشريك</div><div class="v">٦</div></div><div class="box"><div class="k">المتاح شهريًا</div><div class="v">٣٠٬٠٠٠ ر.س</div></div></div>
-    <div class="bar-track"><div class="bar-fill" id="wBar" style="width: 88%;"></div></div>
-    <div id="wTable"></div>
-
-    <fieldset>
-      <legend>أضِف حملة لهذا الشريك</legend>
-      <div class="grid3">
-        <div><label class="f" for="waName">اسم الحملة *</label>
-          <input type="text" id="waName" placeholder="مثال: حملة اليوم الوطني"></div>
-        <div><label class="f" for="waStart">تاريخ البدء *</label><input type="date" id="waStart"></div>
-        <div><label class="f" for="waEnd">تاريخ الانتهاء</label><input type="date" id="waEnd"></div>
-      </div>
-      <div class="grid3" style="margin-top:13px">
-        <div><label class="f" for="waStation">المحطة</label>
-          <input type="text" id="waStation" list="waCodes" placeholder="MK007" autocomplete="off"></div>
-        <div><label class="f" for="waBudget">ميزانية الحملة (ريال)</label>
-          <input type="number" id="waBudget" min="0" step="500" placeholder="٢٨٠٠٠"></div>
-        <div><label class="f" for="waOffer">العرض</label>
-          <input type="text" id="waOffer" placeholder="مثال: غسلة بريال مع تعبئة كاملة"></div>
-      </div>
-      <datalist id="waCodes"><option value="AS081">خميس مشيط العزيزيه</option><option value="AS085">خيبر بيشة</option><option value="AS124">الصفاء</option><option value="AS141">الأمير سلطان</option><option value="AS153">مدخل محايل</option><option value="AS192">محطه الرؤيا</option><option value="AS197">سوق الاشواق</option><option value="AS271">مسارات درب عقبة شعار</option><option value="AS286">صناعية محائل</option><option value="BH050">الاطاولة</option><option value="BH065">النزهه</option><option value="BH126">محطة الحميدان</option><option value="EB102">طريق احد</option><option value="EP051">كورنيش الخبر</option><option value="EP074">حي الورود</option><option value="EP102">شارع أحد تاروت-القطيف</option><option value="EP132">الذيبة</option><option value="EP133">طريق الملك عبدالله</option><option value="EP134">حفر الباطن - الواحة</option><option value="HA043">العريفي</option><option value="HA050">مطار حائل</option><option value="HA052">الأمير سعود</option><option value="JA041">احد المسارحة - القسوم</option><option value="JA053">خبت نخلان(الملك عبد العزيز)-جيزان</option><option value="JA056">الروابي-المودة</option><option value="JA059">طريق الملك فهد جازان</option><option value="JA060">صناعية صامطه</option><option value="JA061">طريق صبيا</option><option value="JA069">كورنيش جيزان</option><option value="JA070">محطة الظبية</option><option value="JA092">احد المسارحة - البلدية</option><option value="JA094">الكربوس (محطة الزهور )</option><option value="JA155">محطة بترو بارك</option><option value="JA156">العيدابي</option><option value="JA188">محطة طريق الملك عبدالعزيز بيش</option><option value="JA227">العارضة</option><option value="JA256">الفطيحة</option><option value="JA272">الفيصلية</option><option value="JA302">جزيرة فرسان -</option><option value="MD009">طريق السلام</option><option value="MD096">الهجرة</option><option value="MD123">محطة بترو بارك - المدينة المنورة</option><option value="MD194">محطة النواة</option><option value="MD224">محطة الجمعية العربية</option><option value="MK001">جبل النور</option><option value="MK002">المعيصم</option><option value="MK003">العوالي</option><option value="MK004">عاصفة الصحراء</option><option value="MK005">الشيباني</option><option value="MK006">جنوب الطائف</option><option value="MK007">النوارية</option><option value="MK008">الحسينية</option><option value="MK012">طيبه</option><option value="MK013">بن العباس_الشوقية</option><option value="MK014">خليص</option><option value="MK015">النسيم</option><option value="MK016">الرصيفة</option><option value="MK017">عرفات الشوقية</option><option value="MK018">الرصيفة المسار</option><option value="MK019">الشرايع</option><option value="MK020">ممشى الشوقية</option><option value="MK021">الوسام</option><option value="MK022">1بطحاء قريش</option><option value="MK023">بن درويش</option><option value="MK027">الصيانة-طريق المطار</option><option value="MK028">احلى مساء</option><option value="MK029">الدائري الثالث-الذكرى</option><option value="MK031">2بطحاء قريش</option><option value="MK033">العمرة الجديدة</option><option value="MK035">الجمعية الوسام( طريق الملك فهد)</option><option value="MK037">الراشدية</option><option value="MK040">درب - الروضة</option><option value="MK044">القنفذة</option><option value="MK045">مدينة الملك عبد الله</option><option value="MK046">الحليس(طريق الجنوب)</option><option value="MK047">القادسية</option><option value="MK049">السلولي</option><option value="MK054">محطة طريق السيل</option><option value="MK063">السواط(شهار)</option><option value="MK064">جعرانه</option><option value="MK066">الأمير فواز</option><option value="MK067">تربه</option><option value="MK068">الجموم - الكنيدري</option><option value="MK071">الاجاويد</option><option value="MK072">العزيزية</option><option value="MK082">امنيتي(اسكان المدائن)</option><option value="MK084">الكر النازل</option><option value="MK091">محطة السر</option><option value="MK093">الملك خالد</option><option value="MK099">البيعه</option><option value="MK100">الكوثر</option><option value="MK103">المعلمي</option><option value="MK154">العليا</option><option value="MK160">محطة الشامل</option><option value="MK161">الحزم</option><option value="MK164">محطة ولي العهد 3</option><option value="MK191">الربوة التلاتين</option><option value="MK205">نقز - الربوة</option><option value="MK206">نقز - الاجواد</option><option value="MK210">الفلاح-فلسطين</option><option value="MK216">الواحة</option><option value="MK217">محطة المظليف</option><option value="MK222">بترولايز- طيبة</option><option value="MK223">الحمراء</option><option value="MK228">جدةالملك خالد - دلهام</option><option value="MK241">بترولايز - الياقوت</option><option value="MK260">ابحر الشمالية</option><option value="MK285">القرينية</option><option value="MK289">طريق الليث التعاون</option><option value="MK300">البغدادية</option><option value="MK310">الشاطئ</option><option value="MK311">قويزه</option><option value="MK326">محطة الحمدانية</option><option value="NB130">طريف - العقيلي -طريق الامير سلطان</option><option value="NB131">طريف -  العقيلي- طريق ابو بكر</option><option value="NJ219">المركب</option><option value="QS055">الدائري الشرقي</option><option value="RY024">غرناطة - الخرج طريق الملك عبد الله</option><option value="RY025">الحمرا - الخرج طريق الملك عبد الله</option><option value="RY042">الناصفة-الخزامى</option><option value="RY075">الدايري الشمالي</option><option value="RY083">الحوميات</option><option value="RY095">الخرج - السفير 4 ( الهدا )</option><option value="RY105">الأمير سعد</option><option value="RY106">نجم الدين الايوبي</option><option value="RY200">نبض - ثادج</option><option value="RY201">الرياض - ظهرة البديعة</option></datalist>
-      <button type="button" class="btn primary" id="btnWaAdd" style="margin-top:14px">أضِف الحملة إلى الخطة</button>
-    </fieldset>
-
-    <h3 style="font-size:15px;margin-top:24px">التوزيع على الأشهر</h3>
-    <div id="wMonthly"><div class="tablewrap"><table><thead><tr><th>الشهر</th><th>المخصَّص</th><th>حدّ الشهر</th><th>الفرق</th></tr></thead><tbody><tr><td>أغسطس ٢٠٢٦</td><td class="money">٤٧٬٠٠٠ ر.س</td><td class="money">٣٠٬٠٠٠ ر.س</td><td class="money neg">تجاوز ١٧٬٠٠٠ ر.س</td></tr><tr><td>سبتمبر ٢٠٢٦</td><td class="money">٢٨٬٠٠٠ ر.س</td><td class="money">٣٠٬٠٠٠ ر.س</td><td class="money">متاح ٢٬٠٠٠ ر.س</td></tr><tr><td>أكتوبر ٢٠٢٦</td><td class="money">١٩٬٠٠٠ ر.س</td><td class="money">٣٠٬٠٠٠ ر.س</td><td class="money">متاح ١١٬٠٠٠ ر.س</td></tr><tr><td>نوفمبر ٢٠٢٦</td><td class="money">١٩٬٠٠٠ ر.س</td><td class="money">٣٠٬٠٠٠ ر.س</td><td class="money">متاح ١١٬٠٠٠ ر.س</td></tr><tr><td>ديسمبر ٢٠٢٦</td><td class="money">١٩٬٠٠٠ ر.س</td><td class="money">٣٠٬٠٠٠ ر.س</td><td class="money">متاح ١١٬٠٠٠ ر.س</td></tr></tbody></table></div></div>
-  </section>
+  
 
   <!-- ---------------- campaigns ---------------- -->
   <section class="tabpanel" id="panel-camp">
@@ -1294,7 +1255,6 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
     $('kAll').textContent=ar(STATIONS.length);
     fillCampCodes();
     renderSummary();
-    renderWash();
   }
   $('list').addEventListener('click',function(e){
     var art=e.target.closest('.card'); if(!art) return;
@@ -1467,7 +1427,6 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
     for(var i=0;i<tabs.length;i++) tabs[i].classList.toggle('on', tabs[i].getAttribute('data-tab')===name);
     $('panel-sum').hidden = name!=='sum';
     $('panel-camp').hidden = name!=='camp';
-    $('panel-wash').hidden = name!=='wash';
     window.scrollTo(0,0);
   }
   for(var ti=0;ti<tabs.length;ti++)
@@ -1519,17 +1478,17 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
     box.addEventListener('keydown', function(e){
       var cell=e.target.closest('[data-f]'); if(!cell) return;
       if(e.key==='Enter'){ e.preventDefault(); cell.blur(); }
-      if(e.key==='Escape'){ e.preventDefault(); renderSummary(); renderWash(); }
+      if(e.key==='Escape'){ e.preventDefault(); renderSummary(); }
     });
     box.addEventListener('focusout', function(e){
       var cell=e.target.closest('[data-f]'); if(!cell) return;
       var row=cell.closest('tr'); if(!row) return;
       var c=campByCode(row.getAttribute('data-code')); if(!c) return;
       if(!applyCell(c, cell.getAttribute('data-f'), cell.textContent)){
-        renderSummary(); renderWash(); return;
+        renderSummary(); return;
       }
       stamp(c); persist();
-      render(); renderSummary(); renderWash();
+      render(); renderSummary();
       say('حُفظ.',2000);
     });
   }
@@ -1593,133 +1552,6 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
       '<p class="editnote">كل خانة في الجدول <b>قابلة للتعديل</b> — اضغط عليها واكتب، '+
       'ثم اخرج منها أو اضغط Enter فتُحفظ وتتحدّث بقية الصفحات.</p>';
   }
-
-  /* ---- the partner's budget plan ---- */
-  var WKEY='darb-carwash-plan-v1';
-  var plan={budget:150000, months:5, partner:'واش واي'};
-  try{ var wraw=localStorage.getItem(WKEY); if(wraw) plan=JSON.parse(wraw)||plan; }catch(e){}
-  function savePlan(){ try{ localStorage.setItem(WKEY, JSON.stringify(plan)); }catch(e){} }
-  function planCampaigns(){
-    var name=(plan.partner||'').trim();
-    if(!name) return [];
-    return campaigns.filter(function(c){
-      return (c.partners||[]).some(function(x){ return (x.name||'').indexOf(name)!==-1; });
-    }).sort(function(a,b){ return String(a.start||'9999').localeCompare(String(b.start||'9999')); });
-  }
-  function paintPlan(){
-    var list=planCampaigns(), total=Number(plan.budget)||0, run=0;
-    var rows=$('wTable').querySelectorAll('tr[data-code]');
-    for(var i=0;i<rows.length;i++){
-      var c=campByCode(rows[i].getAttribute('data-code'));
-      run+=c?(Number(c.budget)||0):0;
-      var left=total-run, cell=rows[i].querySelector('.w-left');
-      if(cell && document.activeElement!==cell){
-        var o=c?ovr(c,'left'):null;
-        cell.textContent=o!=null?o:money(left);
-        cell.className='money w-left'+(o==null&&left<0?' neg':'');
-      }
-    }
-    var left=total-run;
-    var perMonth=(Number(plan.months)||1);
-    $('wKpi').innerHTML=
-      '<div class="box"><div class="k">الميزانية</div><div class="v">'+money(total)+'</div></div>'+
-      '<div class="box"><div class="k">المخصَّص</div><div class="v">'+money(run)+'</div></div>'+
-      '<div class="box"><div class="k">المتبقي</div><div class="v'+(left<0?' neg':'')+'">'+money(left)+'</div></div>'+
-      '<div class="box"><div class="k">حملات الشريك</div><div class="v">'+ar(list.length)+'</div></div>'+
-      '<div class="box"><div class="k">المتاح شهريًا</div><div class="v">'+money(total/perMonth)+'</div></div>';
-    var pct=total>0?Math.min(100,Math.round(run/total*100)):0;
-    var fill=$('wBar');
-    fill.style.width=pct+'%';
-    fill.className='bar-fill'+(left<0?' over':'');
-
-    /* month by month, against the monthly allowance */
-    var per=total/perMonth, byMonth={};
-    list.forEach(function(c){
-      var k=monthKey(c.start);
-      byMonth[k]=(byMonth[k]||0)+(Number(c.budget)||0);
-    });
-    var keys=Object.keys(byMonth).sort();
-    if(!keys.length){ $('wMonthly').innerHTML='<p class="poolnote">لا حملات بميزانية بعد.</p>'; return; }
-    var mh='<div class="tablewrap"><table><thead><tr><th>الشهر</th><th>المخصَّص</th>'+
-           '<th>حدّ الشهر</th><th>الفرق</th></tr></thead><tbody>';
-    for(var m=0;m<keys.length;m++){
-      var v=byMonth[keys[m]], diff=per-v;
-      mh+='<tr><td>'+esc(monthLabel(keys[m]))+'</td><td class="money">'+money(v)+
-          '</td><td class="money">'+money(per)+'</td><td class="money'+(diff<0?' neg':'')+'">'+
-          (diff<0?'تجاوز '+money(-diff):'متاح '+money(diff))+'</td></tr>';
-    }
-    $('wMonthly').innerHTML=mh+'</tbody></table></div>';
-  }
-  function renderWash(){
-    $('wBudget').value=plan.budget;
-    $('wMonths').value=plan.months;
-    if(document.activeElement!==$('wPartner')) $('wPartner').value=plan.partner;
-    $('waCodes').innerHTML=STATIONS.map(function(x){
-      return '<option value="'+esc(x.code)+'">'+esc(x.name||'')+'</option>'; }).join('');
-    var list=planCampaigns();
-    if(!list.length){
-      $('wTable').innerHTML='<p class="empty">لا توجد حملات مسجّلة لهذا الشريك. أضِف واحدة من الحقول أدناه، '+
-        'أو أضِف الشريك «'+esc(plan.partner)+'» إلى حملة قائمة من صفحة الحملات.</p>';
-      paintPlan(); return;
-    }
-    var h='<div class="tablewrap"><table><thead><tr>'+
-      '<th>الكود</th><th>الحملة</th><th>الشهر</th><th>الفترة</th><th>المحطات</th>'+
-      '<th>ميزانية الحملة</th><th>المتبقي بعدها</th><th>الحالة</th>'+
-      '</tr></thead><tbody>';
-    for(var i=0;i<list.length;i++){
-      var c=list[i], s3=statusOf(c);
-      h+='<tr data-code="'+esc(c.code)+'">'+
-        '<td class="code" data-f="code" contenteditable="true">'+esc(c.code)+'</td>'+
-        '<td data-f="name" contenteditable="true">'+esc(c.name||'')+'</td>'+
-        '<td class="small" data-f="month" contenteditable="true">'+esc(monthTxt(c))+'</td>'+
-        '<td class="small"><span data-f="start" contenteditable="true">'+esc(c.start||'—')+'</span>'+
-            ' ← <span data-f="end" contenteditable="true">'+esc(c.end||'—')+'</span></td>'+
-        '<td class="small">'+((c.stations||[]).length?esc(c.stations.join(' · ')):'—')+'</td>'+
-        '<td><input type="number" class="w-budget" min="0" step="500" value="'+
-            (Number(c.budget)||'')+'" data-code="'+esc(c.code)+'"></td>'+
-        '<td class="money w-left" data-f="left" contenteditable="true">—</td>'+
-        '<td><span class="pill '+statusCls(c)+'" data-f="status" contenteditable="true">'+esc(statusTxt(c))+'</span></td>'+
-      '</tr>';
-    }
-    $('wTable').innerHTML=h+'</tbody></table></div>'+
-      '<p class="editnote">كل خانة هنا <b>قابلة للتعديل</b> أيضًا — والمحطات والتواريخ '+
-      'والأسماء تُحفظ على الحملة نفسها فتظهر في بقية الصفحات.</p>';
-    paintPlan();
-  }
-  $('wTable').addEventListener('input',function(e){
-    var box=e.target.closest('.w-budget'); if(!box) return;
-    var c=campByCode(box.getAttribute('data-code')); if(!c) return;
-    c.budget=Number(box.value)||0;
-    stamp(c); persist();
-    paintPlan(); renderSummary();
-  });
-  $('wBudget').addEventListener('input',function(){ plan.budget=Number(this.value)||0; savePlan(); paintPlan(); });
-  $('wMonths').addEventListener('input',function(){ plan.months=Number(this.value)||1; savePlan(); paintPlan(); });
-  $('wPartner').addEventListener('input',function(){ plan.partner=this.value; savePlan(); renderWash(); });
-  $('btnWaAdd').addEventListener('click',function(){
-    var name=$('waName').value.trim(), start=$('waStart').value;
-    if(!name){ say('اكتبي اسم الحملة.',4000); $('waName').focus(); return; }
-    if(!start){ say('حدّدي تاريخ البدء.',4000); $('waStart').focus(); return; }
-    var end=$('waEnd').value||start;
-    if(dayms(end)<dayms(start)){ say('تاريخ الانتهاء قبل تاريخ البدء.',5000); return; }
-    var stn=$('waStation').value.trim().toUpperCase();
-    var d=daysOf(start,end);
-    var rec={code:newCode(), name:name, parent:'', start:start, end:end,
-             weeks:(d&&d%7===0)?d/7:null, days:d,
-             stations:stn?[stn]:[], tools:[], goal:'حملة ضمن خطة '+plan.partner,
-             kpi:'', target:'', budget:Number($('waBudget').value)||0,
-             terms:'', offer:'', notes:'',
-             partners:[{name:plan.partner, type:'', code:stn||'',
-                        offer:$('waOffer').value.trim(), old:'', newp:'', status:'بانتظار الرد'}]};
-    stamp(rec);
-    campaigns.unshift(rec);
-    openCodes[rec.code]=1;
-    persist(); render();
-    $('waName').value=''; $('waStart').value=''; $('waEnd').value='';
-    $('waStation').value=''; $('waBudget').value=''; $('waOffer').value='';
-    say('أُضيفت «'+name+'» إلى خطة '+plan.partner+' بكود '+rec.code+
-        (rec.budget?' وميزانية '+money(rec.budget):'')+'.',9000);
-  });
 
   /* ---------------- export ---------------- */
   function saveFile(name,data,type){
@@ -1850,7 +1682,6 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
 
   /* ---------------- go ---------------- */
   wireCells($('sumTable'));
-  wireCells($('wTable'));
   load(); loadExt();
   if(SEED && SEED.length){
     if(!campaigns.length){
@@ -1879,7 +1710,7 @@ var SEED = [{"code": "CMP-2026-03", "name": "حملة خدمات السيارا�
     }];
     persist();
   }
-  render(); renderSummary(); renderWash();
+  render(); renderSummary();
   setPartners([]);
 })();
 

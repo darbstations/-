@@ -43,6 +43,19 @@ def empty_div(html, div_id):
     return html[:m.end()] + html[i:], i - m.end()
 
 
+def cut_section(html, sec_id):
+    """يحذف قسمًا كاملًا بوسومه، بعدّ <section> المتداخلة."""
+    m = re.search(r'<section [^>]*id="%s"[^>]*>' % re.escape(sec_id), html)
+    assert m, 'section not found: ' + sec_id
+    depth = 1
+    for t in re.finditer(r'</?section\b', html[m.end():]):
+        depth += 1 if t.group(0) == '<section' else -1
+        if depth == 0:
+            end = m.end() + t.start() + len('</section>')
+            return html[:m.start()] + html[end:], end - m.start()
+    raise AssertionError('unbalanced: ' + sec_id)
+
+
 # ---------------------------------------------------- ١ · الحملة وحدها
 i = s.index('var SEED = ') + len('var SEED = ')
 seed, end = json.JSONDecoder().raw_decode(s[i:])
@@ -97,6 +110,36 @@ for box in ['sumTable', 'wTable', 'list']:
     s, cut = empty_div(s, box)
     print('  emptied #%-9s %7d chars' % (box, cut))
     n += 1
+
+# ---------------------------------------------- ٧ · صفحة خطة واش واي تُحذف
+sub('    <button type="button" class="tab" data-tab="wash">خطة واش واي</button>\n',
+    '', 'wash tab')
+s, cut = cut_section(s, 'panel-wash')
+print('  cut    #panel-wash %7d chars' % cut)
+n += 1
+
+i = s.index("  /* ---- the partner's budget plan ---- */")
+j = s.index('  /* ---------------- export ---------------- */')
+assert i < j and j - i < 8000, 'plan block bounds look wrong: %d' % (j - i)
+print('  cut    plan script %7d chars' % (j - i))
+s = s[:i] + s[j:]
+n += 1
+sub('  <!-- ---------------- plan ---------------- -->\n', '', 'plan marker')
+# ملاحظة: كتلة الأنماط المعنونة «budget plan» تبقى — فيها ‎.money‎ ويستعملها جدول الملخّص
+
+# ونداءاتها المتفرّقة
+for old, new, why in [
+        ('    renderSummary();\n    renderWash();\n', '    renderSummary();\n', 'kpi refresh'),
+        ("    $('panel-wash').hidden = name!=='wash';\n", '', 'tab toggle'),
+        ("  wireCells($('wTable'));\n", '', 'cell wiring'),
+        ('  render(); renderSummary(); renderWash();', '  render(); renderSummary();', 'boot')]:
+    sub(old, new, why)
+before = s.count('renderSummary(); renderWash();')
+s = s.replace('renderSummary(); renderWash();', 'renderSummary();')
+n += before
+assert 'renderWash' not in s, 'renderWash still referenced'
+for dead in ['planCampaigns', 'paintPlan', 'WKEY', 'savePlan', 'panel-wash', "$('w"]:
+    assert dead not in s, 'leftover reference: ' + dead
 
 sub('<title>درب · إدارة الحملات التسويقية</title>',
     '<title>حملة خدمات السيارات</title>', 'title')

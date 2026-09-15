@@ -41,11 +41,11 @@ with sync_playwright() as pw:
     R['summary_partners'] = (pg.eval_on_selector(
         '#sumTable tbody tr:not(.month) td[data-f="partners"]', 'e => e.textContent') or '')[:40]
 
-    # ---- صفحة خطة واش واي
-    pg.click('.tab[data-tab="wash"]')
-    pg.wait_for_timeout(300)
-    R['wash_codes'] = pg.eval_on_selector_all(
-        '#wTable tbody tr td.code', 'ns => ns.map(n => n.textContent)')
+    # ---- صفحة واش واي محذوفة
+    R['tabs'] = pg.eval_on_selector_all('.tab', 'ns => ns.map(n => n.textContent.trim())')
+    R['wash_panel_gone'] = pg.eval_on_selector_all('#panel-wash', 'ns => ns.length') == 0
+    R['wash_refs_in_html'] = pg.evaluate(
+        '() => ["renderWash","panel-wash","wTable","waStation"].filter(k => document.documentElement.outerHTML.indexOf(k) >= 0)')
 
     # ---- التعديل يُحفظ ويسري على الصفحات
     pg.click('.tab[data-tab="sum"]')
@@ -74,6 +74,7 @@ with sync_playwright() as pw:
     i = html.index('var SEED = ') + len('var SEED = ')
     R['export_seed'] = [c['code'] for c in json.JSONDecoder().raw_decode(html[i:])[0]]
     R['export_keeps_edit'] = '٣٠٠٠ سيارة' in html
+    R['export_wash_free'] = [k for k in ['renderWash','panel-wash','wTable','خطة واش واي'] if k in html]
 
     tmp = pathlib.Path(tempfile.mkdtemp()) / 'one.html'
     tmp.write_text(html, encoding='utf-8')
@@ -85,6 +86,7 @@ with sync_playwright() as pw:
     R['reopened_cards'] = p2.eval_on_selector_all('#list article .code', 'ns => ns.map(n => n.textContent)')
     R['reopened_styled'] = p2.eval_on_selector(
         'header', 'e => getComputedStyle(e).backgroundColor')
+    R['reopened_tabs'] = p2.eval_on_selector_all('.tab', 'ns => ns.map(n => n.textContent.trim())')
     R['errors_reopened'] = e2
 
     R['errors'] = errs
