@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2000 746" role="img" aria-label="درب Darb">
+  <title>درب · Darb</title>
+  <rect x="108" y="102" width="1784" height="508" rx="254" fill="#6D6E71" stroke="#F0881F" stroke-width="60"/>
+  <g fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round">
+    <path d="M858,212 H911 A32,32 0 0 1 943,244 V256 A32,32 0 0 1 911,288 H888"/>
+    <path d="M826,212 V244 C826,278 798,306 764,306 H744"/>
+    <path d="M716,208 V258 A30,30 0 0 1 686,288 H502 A30,30 0 0 1 472,258 V234"/>
+  </g>
+  <rect x="580" y="320" width="40" height="40" rx="7" fill="#fff"/>
+  <g fill="none" stroke="#fff" stroke-width="46" stroke-linejoin="round">
+    <path d="M403,495 V368 H468 A63.5,63.5 0 0 1 468,495 Z"/>
+    <path d="M669,402 V495"/>
+    <path d="M669,430 A52,52 0 1 0 669,460"/>
+    <path d="M745,402 V495 M745,436 C745,417 762,402 786,402"/>
+    <path d="M840,358 V495"/>
+    <path d="M840,430 A52,52 0 1 1 840,460"/>
+  </g>
+  <g fill="#F0881F">
+    <path d="M1045,205 H1380 C1452,205 1510,263 1510,335 V390 H1350 V345 C1350,320 1331,300 1306,300 H1045 Z"/>
+    <path d="M1180,400 H1580 L1555,502 H1128 Z"/>
+  </g>
+</svg>
