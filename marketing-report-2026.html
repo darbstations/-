@@ -146,7 +146,10 @@ section{padding-block:clamp(40px,6vw,66px)}
 
 /* ============ GENERIC CARD / TABLE ============ */
 .card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:22px; box-shadow:var(--shadow)}
-.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surface)}
+.tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surface);
+  max-inline-size:100%}
+/* grid/flex children default to min-width:auto and would refuse to shrink under a wide table */
+.c-body>*,.m-body>*,.triple>*,.wrap>*{min-inline-size:0}
 table{border-collapse:collapse; inline-size:100%; font-size:14px; min-inline-size:640px}
 thead th{background:var(--paper-2); color:var(--ink-2); font-size:12.5px; font-weight:800; letter-spacing:.3px;
   text-align:start; padding:11px 14px; border-block-end:1px solid var(--line); white-space:nowrap}
@@ -198,7 +201,7 @@ td.num,th.num{font-variant-numeric:tabular-nums; white-space:nowrap}
 .c-title h3{font-size:18px; font-weight:800}
 .c-title .code{font-size:11.5px; font-weight:700; color:var(--ink-3); letter-spacing:1px;
   border:1px solid var(--line); padding:3px 9px; border-radius:100px; background:var(--surface)}
-.c-meta{margin-block-start:12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px}
+.c-meta{margin-block-start:12px; display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:12px 14px}
 .c-meta .mi{font-size:13px}
 .c-meta .mi b{display:block; font-size:11.5px; letter-spacing:.4px; color:var(--ink-3); font-weight:700; margin-block-end:3px}
 .c-meta .mi span{color:var(--ink)}
@@ -235,7 +238,8 @@ td.num,th.num{font-variant-numeric:tabular-nums; white-space:nowrap}
 .quarter{background:var(--paper-2)}
 .q-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:16px; margin-block-start:18px}
 .qcard{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:20px; box-shadow:var(--shadow)}
-.qcard .qh{display:flex; align-items:center; gap:10px; margin-block-end:12px}
+.qcard .qh{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-block-end:12px}
+.qcard .qh>div:first-child{flex:1 1 150px; min-inline-size:0}
 .qcard .qh b{font-size:17px}
 .qcard .qmonths{font-size:12.5px; color:var(--ink-3); margin-block-start:2px}
 .qcard .qline{display:flex; justify-content:space-between; font-size:13.5px; color:var(--ink-2);
@@ -444,7 +448,7 @@ const REPORT = {
   org: "محطات درب",
   dept: "إدارة التسويق · الحملات التسويقية",
   owner: "",            // اسم معدّ التقرير
-  updated: "",          // تاريخ آخر تحديث، مثال: "17 سبتمبر 2026"
+  updated: "21 سبتمبر 2026",
   currency: "ر.س",
 
   // المستهدفات السنوية المعتمدة على مستوى الإدارة
@@ -459,7 +463,32 @@ const REPORT = {
   quarters: {
     Q1:{ title:"الربع الأول", months:["01","02","03"], summary:"", highlights:[], challenges:[], opportunities:[] },
     Q2:{ title:"الربع الثاني", months:["04","05","06"], summary:"", highlights:[], challenges:[], opportunities:[] },
-    Q3:{ title:"الربع الثالث", months:["07","08","09"], summary:"", highlights:[], challenges:[], opportunities:[],
+    Q3:{ title:"الربع الثالث", months:["07","08","09"],
+         summary:"أربع حملات وعي بالعلامة التجارية نُفّذت في يوليو وأغسطس عبر محطات نجران وظبيا وحائل والروضة. الوصول الفعلي 4,356,512 مشاهدة مقابل مستهدف 400,000 (1,089%)، والإنفاق الفعلي 36,142 ر.س من مخصص 36,000 ر.س. بيانات سبتمبر لم تُستلم بعد.",
+         highlights:[
+           "تنفيذ أربع حملات في أربع محطات: نجران NJ219 · ظبيا JA070 · حائل HA052 · الروضة MK040.",
+           "إجمالي الوصول 4,356,512 مشاهدة مقابل مستهدف 400,000 — أي 1,089% من المستهدف.",
+           "جميع الحملات تجاوزت مستهدف الوصول الفردي، وأعلاها نجران NJ219 بـ2,626% من مستهدفها.",
+           "إجمالي التفاعلات 37,805 مقابل مستهدف 16,000 في الحملات الثلاث التي رُصد لها مستهدف تفاعل (236%).",
+           "الإنفاق الفعلي 36,142 ر.س مقابل مخصص 36,000 ر.س (100.4%)، بوفر في حملتي حائل والروضة عوّض تجاوز نجران.",
+           "نموذج «البنزين المجاني للسيارات الأولى» أثبت فاعليته كأداة افتتاح وتعريف بالمحطات الجديدة."
+         ],
+         challenges:[
+           "تجاوز ميزانية حملة نجران NJ219 بمقدار 4,000 ر.س (استهلاك 119%) دون مبرر مسجّل.",
+           "عدم تسجيل أي ميزانية — مخصصة أو فعلية — لحملة الامتياز التجاري ظبيا JA070.",
+           "المؤشرات التجارية (الفرص التجارية، العملاء المحوّلون، عائد الإنفاق، تكلفة الفرصة، نسبة التحويل) غير مُستهدفة وغير مقيسة في جميع حملات الربع، ما يجعل التقييم مقتصراً على الوصول والتفاعل.",
+           "تكرار ملاحظة «ضعف التنسيق المسبق» في ثلاث حملات من أربع (نجران، الروضة مع الشريك والمؤثرين).",
+           "غياب تصريح الفعالية والتعاقد الأمني المسبق في حملة افتتاح حائل HA052.",
+           "بيانات سبتمبر غير مستلمة حتى تاريخ إعداد هذا التقرير."
+         ],
+         opportunities:[
+           "تعميم نموذج «البنزين المجاني» على كل افتتاح محطة جديدة — كلفة منخفضة ووصول يفوق المستهدف بأضعاف.",
+           "ربط الحملات ببرنامج الولاء لتحويل الوصول المرتفع إلى تسجيلات وعملاء متكررين وقياس الأثر التجاري.",
+           "إعداد دليل تشغيلي موحّد للافتتاحات يغطي التصاريح والحراسات والتنسيق مع مدير المحطة والشريك والمؤثرين.",
+           "بناء قائمة مؤثرين معتمدة لكل منطقة لتقصير زمن التعاقد ورفع جودة التغطية.",
+           "تمديد مدة حملة الافتتاح إلى ثلاثة أيام كما في الروضة MK040 بدل يوم واحد.",
+           "إعادة تقدير مستهدف الوصول (100,000 لكل حملة) ليعكس الأداء الفعلي بدل تجاوزه بأضعاف في كل مرة."
+         ],
          flagship:true, flagNote:"تقرير شهر سبتمبر يُقدَّم شاملاً لأداء الربع الثالث كاملاً (يوليو · أغسطس · سبتمبر)." },
     Q4:{ title:"الربع الرابع", months:["10","11","12"], summary:"", highlights:[], challenges:[], opportunities:[] }
   },
@@ -471,11 +500,145 @@ const REPORT = {
     { id:"04", name:"أبريل",  q:"Q2", status:"pending", summary:"", campaigns:[], gaps:[] },
     { id:"05", name:"مايو",   q:"Q2", status:"pending", summary:"", campaigns:[], gaps:[] },
     { id:"06", name:"يونيو",  q:"Q2", status:"pending", summary:"", campaigns:[], gaps:[] },
-    { id:"07", name:"يوليو",  q:"Q3", status:"pending", summary:"", campaigns:[], gaps:[] },
-    { id:"08", name:"أغسطس",  q:"Q3", status:"pending", summary:"", campaigns:[], gaps:[] },
+    { id:"07", name:"يوليو",  q:"Q3", status:"pending",
+      summary:"حملة ميدانية واحدة ضمن مسار الوعي بالعلامة التجارية في محطة نجران NJ219. تجاوزت مستهدف الوصول بأكثر من 26 ضعفاً، مقابل تجاوز في الإنفاق بنسبة 19% عن الميزانية المخصصة.",
+      campaigns:[
+        { name:"البنزين المجاني لأول 300 سيارة — نجران", code:"NJ219", status:"completed",
+          objective:"وعي بالعلامة التجارية",
+          period:"4 يوليو 2026 (يوم واحد)",
+          owner:"مودة أمبون", unit:"الحملات التسويقية",
+          stations:["محطة نجران NJ219"],
+          channels:["ميداني","إنستقرام","تيك توك","X","مؤثرين"],
+          budget:{ plan:21000, actual:25000 },
+          targets:[
+            { metric:"الوصول / المشاهدات", unit:"مشاهدة", target:100000, actual:2626300 }
+          ],
+          results:[
+            "تجاوز مستهدف الوصول بمقدار 2,526,300 مشاهدة (2,626% من المستهدف)",
+            "رفع الوعي بالعلامة التجارية في سوق نجران",
+            "حضور ميداني قوي رافقه انتشار واسع في السوشيال ميديا"
+          ],
+          challenges:[
+            "ضعف التنسيق المسبق قبل انطلاق الحملة",
+            "تجاوز الإنفاق الفعلي للميزانية المخصصة بمقدار 4,000 ر.س (استهلاك 119%)"
+          ],
+          opportunities:[
+            "تكرار نموذج «البنزين المجاني» في محطات أخرى بنفس المزيج الإعلاني",
+            "تحويل حجم الوصول المرتفع إلى تسجيلات في برنامج الولاء"
+          ],
+          recommendations:[
+            "اعتماد التنسيق المسبق كبند إلزامي قبل انطلاق أي حملة ميدانية",
+            "تفعيل قياس الفرص التجارية والعملاء المحوّلين وعائد الإنفاق لقياس الأثر التجاري لا الوصول فقط"
+          ],
+          gaps:[
+            { item:"الالتزام بالميزانية المخصصة", target:"21,000 ر.س", actual:"25,000 ر.س",
+              reason:"تجاوز بنسبة 19% — لم يُسجَّل مبرر للتجاوز في تقرير الحملة",
+              action:"توثيق مبرر التجاوز واعتماده، وضبط تقدير ميزانية الحملات الميدانية اليومية مع طلب تعديل مسبق عند توقع التجاوز" }
+          ]
+        }
+      ],
+      gaps:[] },
+    { id:"08", name:"أغسطس",  q:"Q3", status:"pending",
+      summary:"ثلاث حملات: الامتياز التجاري ظبيا JA070، وافتتاح محطة حائل HA052، وافتتاح محطة درب الروضة MK040. جميعها تجاوزت مستهدف الوصول، وبقي الإنفاق ضمن المخصص في الحملتين اللتين رُصدت لهما ميزانية.",
+      campaigns:[
+        { name:"البنزين المجاني لأول 200 سيارة — الامتياز التجاري ظبيا", code:"JA070", status:"completed",
+          objective:"وعي بالعلامة التجارية",
+          period:"8 أغسطس 2026 (يوم واحد)",
+          owner:"مودة أمبون", unit:"الحملات التسويقية",
+          stations:["محطة ظبيا JA070 — امتياز تجاري"],
+          channels:["ميداني","إنستقرام","تيك توك","X","مؤثرين"],
+          budget:{ plan:null, actual:null },
+          targets:[
+            { metric:"الوصول / المشاهدات", unit:"مشاهدة", target:100000, actual:991400 },
+            { metric:"التفاعلات", unit:"تفاعل", target:10000, actual:14000 }
+          ],
+          results:[
+            "تجاوز مستهدف الوصول بمقدار 891,400 مشاهدة (991% من المستهدف)",
+            "تجاوز مستهدف التفاعلات بنسبة 40% (14,000 مقابل 10,000)",
+            "معدل تفاعل فعلي 1.4% من إجمالي الوصول"
+          ],
+          challenges:[
+            "لم تُسجَّل ميزانية مخصصة ولا إنفاق فعلي للحملة في النظام"
+          ],
+          opportunities:[
+            "توسيع النموذج على محطات الامتياز التجاري الأخرى",
+            "الاستفادة من شريك الامتياز في تحمّل جزء من كلفة الحملة"
+          ],
+          recommendations:[
+            "تسجيل الميزانية المخصصة والفعلية للحملة لاستكمال احتساب عائد الإنفاق",
+            "تفعيل قياس الفرص التجارية والعملاء المحوّلين"
+          ],
+          gaps:[] },
+
+        { name:"البنزين المجاني لأول 100 سيارة — افتتاح حائل", code:"HA052", status:"completed",
+          objective:"وعي بالعلامة التجارية",
+          period:"22 أغسطس 2026 (يوم واحد)",
+          owner:"مودة أمبون", unit:"الحملات التسويقية",
+          stations:["محطة حائل HA052"],
+          channels:["ميداني","إنستقرام","تيك توك","X","مؤثرين"],
+          budget:{ plan:10000, actual:7002 },
+          targets:[
+            { metric:"الوصول / المشاهدات", unit:"مشاهدة", target:100000, actual:469000 },
+            { metric:"التفاعلات", unit:"تفاعل", target:5000, actual:16805 }
+          ],
+          results:[
+            "تجاوز مستهدف الوصول بمقدار 369,000 مشاهدة (469% من المستهدف)",
+            "تجاوز مستهدف التفاعلات بأكثر من ثلاثة أضعاف (16,805 مقابل 5,000)",
+            "توفير 2,998 ر.س من الميزانية المخصصة (استهلاك 70%)"
+          ],
+          challenges:[
+            "عدم إصدار تصريح الفعالية مسبقاً",
+            "عدم التعاقد المسبق مع شركة حراسات أمنية"
+          ],
+          opportunities:[
+            "اعتماد الحملة كنموذج قياسي لافتتاحات المحطات الجديدة",
+            "توجيه الوفر في الميزانية لتوسيع التغطية بالمؤثرين"
+          ],
+          recommendations:[
+            "التنسيق والتنظيم المسبق مع مدير المحطة",
+            "إصدار تصريح الفعالية والتعاقد الأمني ضمن قائمة تحقق إلزامية قبل الافتتاح",
+            "تفعيل قياس الفرص التجارية والعملاء المحوّلين"
+          ],
+          gaps:[] },
+
+        { name:"افتتاح محطة درب — الروضة", code:"MK040", status:"completed",
+          objective:"وعي بالعلامة التجارية",
+          period:"26 – 29 أغسطس 2026 (3 أيام)",
+          owner:"مودة أمبون", unit:"الحملات التسويقية",
+          stations:["محطة الروضة MK040"],
+          channels:["ميداني","إنستقرام","تيك توك","X","مؤثرين"],
+          budget:{ plan:5000, actual:4140 },
+          targets:[
+            { metric:"الوصول / المشاهدات", unit:"مشاهدة", target:100000, actual:269812 },
+            { metric:"التفاعلات", unit:"تفاعل", target:1000, actual:7000 }
+          ],
+          results:[
+            "تجاوز مستهدف الوصول بمقدار 169,812 مشاهدة (270% من المستهدف)",
+            "تجاوز مستهدف التفاعلات بسبعة أضعاف (7,000 مقابل 1,000)",
+            "توفير 860 ر.س من الميزانية المخصصة (استهلاك 83%)"
+          ],
+          challenges:[
+            "ضعف التنسيق المسبق مع الشريك",
+            "ضعف التنسيق المسبق مع المؤثرين"
+          ],
+          opportunities:[
+            "تمديد مدة حملات الافتتاح إلى 3 أيام أثبت فاعليته — تعميمه على الافتتاحات القادمة",
+            "بناء قائمة مؤثرين معتمدة مسبقاً لكل منطقة لتسريع التعاقد"
+          ],
+          recommendations:[
+            "إقفال التنسيق مع الشريك والمؤثرين قبل أسبوعين من موعد الافتتاح",
+            "تفعيل قياس الفرص التجارية والعملاء المحوّلين"
+          ],
+          gaps:[] }
+      ],
+      gaps:[
+        { item:"تسجيل ميزانية حملة الامتياز التجاري ظبيا JA070", target:"ميزانية مخصصة معتمدة", actual:"غير مسجّلة",
+          reason:"لم تُدخل الميزانية المخصصة ولا الإنفاق الفعلي في تقرير الحملة",
+          action:"استكمال إدخال الميزانية لاحتساب عائد الإنفاق وتكلفة الوصول" }
+      ] },
     { id:"09", name:"سبتمبر", q:"Q3", status:"pending", summary:"", campaigns:[], gaps:[],
       quarterlyReport:"Q3",
-      note:"تقرير هذا الشهر شامل لأداء الربع الثالث كاملاً (يوليو · أغسطس · سبتمبر)." },
+      note:"تقرير هذا الشهر شامل لأداء الربع الثالث كاملاً (يوليو · أغسطس · سبتمبر). بيانات حملات سبتمبر نفسه لم تُستلم بعد." },
     { id:"10", name:"أكتوبر", q:"Q4", status:"pending", summary:"", campaigns:[], gaps:[] },
     { id:"11", name:"نوفمبر", q:"Q4", status:"pending", summary:"", campaigns:[], gaps:[] },
     { id:"12", name:"ديسمبر", q:"Q4", status:"pending", summary:"", campaigns:[], gaps:[],
@@ -742,13 +905,17 @@ function campaignCard(c, idx){
   const rs = (c.targets||[]).map(ratio).filter(r=>r!==null);
   const avg = rs.length ? rs.reduce((a,b)=>a+b,0)/rs.length : null;
 
-  const meta = [
+  const rows = [
     ["الهدف التسويقي", esc(c.objective||"—")],
-    ["فترة التنفيذ", esc(c.period||"—")],
-    ["الميزانية", c.budget&&has(c.budget.plan)
-        ? `مخطط ${AR(c.budget.plan)} ${REPORT.currency}${has(c.budget.actual)?` · فعلي ${AR(c.budget.actual)}`:""}` : "—"],
-    ["متوسط تحقق مستهدفات الحملة", avg===null?"—":`<b class="tnum">${Math.round(avg*100)}%</b>`]
-  ].map(([k,v])=>`<div class="mi"><b>${k}</b><span>${v}</span></div>`).join("");
+    ["فترة التنفيذ", esc(c.period||"—")]
+  ];
+  if(has(c.owner)) rows.push(["الجهة المنفذة", esc(c.owner)]);
+  if(has(c.unit))  rows.push(["التصنيف", esc(c.unit)]);
+  rows.push(["الميزانية", c.budget&&has(c.budget.plan)
+        ? `مخطط ${AR(c.budget.plan)} ${REPORT.currency}${has(c.budget.actual)?` · فعلي ${AR(c.budget.actual)}`:""}`
+        : (c.budget&&has(c.budget.actual) ? `فعلي ${AR(c.budget.actual)} ${REPORT.currency}` : "لم تُسجَّل")]);
+  rows.push(["متوسط تحقق مستهدفات الحملة", avg===null?"—":`<b class="tnum">${Math.round(avg*100)}%</b>`]);
+  const meta = rows.map(([k,v])=>`<div class="mi"><b>${k}</b><span>${v}</span></div>`).join("");
 
   const stations = (c.stations||[]).length
     ? `<div class="mi" style="grid-column:1/-1"><b>المحطات المشمولة</b>
