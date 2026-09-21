@@ -3,7 +3,7 @@
 <meta charset="utf-8">
 <title>محطات درب · التقرير الشهري للحملات التسويقية 2026</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 560"><rect x="30" y="30" width="500" height="500" rx="125" fill="%236D6E71" stroke="%23F0881F" stroke-width="56"/><g fill="%23F0881F" transform="translate(-1000 -70) scale(1.18)"><path d="M1045,205 H1380 C1452,205 1510,263 1510,335 V390 H1350 V345 C1350,320 1331,300 1306,300 H1045 Z"/><path d="M1180,400 H1580 L1555,502 H1128 Z"/></g></svg>'>
+<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" rx="56" fill="%2366686A"/><g transform="translate(-341.4 29.1) scale(0.766)"><path fill="%23F3741F" d="M881.81 456.77L849.19 386.58L849.09 386.36C832.99 352.34 780.91 328.63 744.25 328.63L627.54 328.63C627.56 331.27 628.63 376.4 667.33 376.4L744.25 376.4C754.17 376.4 769.22 378.41 781.59 384.37C794.32 390.49 802.66 399.94 805.88 406.73L814.08 424.38L664.78 424.52L674.96 450.74L683.33 472.27L872.05 472.08C875.73 472.07 879.15 470.2 881.13 467.1C883.1 463.99 883.36 460.1 881.81 456.77"/></g></svg>'>
 <meta name="description" content="تقرير شهري لأداء الحملات التسويقية في محطات درب لعام 2026 — مستهدفات، متحقق، تحديات، فرص، وملخص تنفيذي ربعي.">
 <style>
 @font-face{
@@ -12,37 +12,40 @@
   font-weight:100 900; font-style:normal; font-display:swap;
 }
 :root{
-  --paper:#FBF6EF; --paper-2:#F3E9DC; --ink:#2A1D14; --ink-2:#6E5A48; --ink-3:#9A8674;
-  --line:#E4D6C4; --surface:#FFFFFF;
-  --amber:#F0881F; --amber-2:#D46F0B; --amber-soft:#FCE6CB;
-  --grey:#6D6E71; --grey-2:#8A8B8E;
+  /* ===== ألوان هوية درب الرسمية =====
+     ORANGE  #F3741F  · PANTONE 16-1356 TPX
+     GREY    #66686A  · PANTONE 18-0000 TPX
+     SILVER  #BDBEBF  · PANTONE 14-4203 TPX                     */
+  --orange:#F3741F; --grey:#66686A; --silver:#BDBEBF;
+
+  --paper:#F6F6F7; --paper-2:#ECEDEE; --ink:#2B2E30; --ink-2:#5E6265; --ink-3:#8E9295;
+  --line:#DEDFE1; --surface:#FFFFFF;
+  --amber:#F3741F; --amber-2:#D25C0C; --amber-soft:#FCE4D3;
   --green:#1B7A4B; --green-2:#4E9E74; --green-soft:#DFF0E6;
-  --rose:#C6486B; --rose-soft:#F9E0E7; --gold:#C79A3A;
-  --hero-1:#3A2416; --hero-2:#241209; --hero-3:#120A05;
-  --shadow:0 18px 40px -22px rgba(52,28,10,.55);
+  --rose:#C6486B; --rose-soft:#F9E0E7; --gold:#9A9DA0;
+  --hero-1:#4A4E51; --hero-2:#2B2E30; --hero-3:#17191A;
+  --shadow:0 18px 40px -22px rgba(28,31,33,.45);
   --r:16px;
 }
 @media (prefers-color-scheme:dark){
   :root:not([data-theme="light"]){
-    --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
-    --line:#332417; --surface:#211710;
-    --amber:#F59A3C; --amber-2:#F0881F; --amber-soft:#3A2614;
-    --grey:#9A9B9E; --grey-2:#6D6E71;
+    --paper:#161819; --paper-2:#1D2022; --ink:#ECEDEE; --ink-2:#B4B8BB; --ink-3:#868A8D;
+    --line:#2D3133; --surface:#1F2224;
+    --amber:#F78C44; --amber-2:#F3741F; --amber-soft:#3A2314;
     --green:#4E9E74; --green-2:#5FB689; --green-soft:#14301F;
-    --rose:#E27795; --rose-soft:#3A1622; --gold:#D9B45B;
-    --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
-    --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+    --rose:#E27795; --rose-soft:#3A1622; --gold:#9A9DA0;
+    --hero-1:#333638; --hero-2:#1C1F20; --hero-3:#0E1011;
+    --shadow:0 18px 44px -20px rgba(0,0,0,.72);
   }
 }
 :root[data-theme="dark"]{
-  --paper:#17100A; --paper-2:#1F150D; --ink:#F4E9DB; --ink-2:#C7B49E; --ink-3:#9A836C;
-  --line:#332417; --surface:#211710;
-  --amber:#F59A3C; --amber-2:#F0881F; --amber-soft:#3A2614;
-    --grey:#9A9B9E; --grey-2:#6D6E71;
+  --paper:#161819; --paper-2:#1D2022; --ink:#ECEDEE; --ink-2:#B4B8BB; --ink-3:#868A8D;
+  --line:#2D3133; --surface:#1F2224;
+  --amber:#F78C44; --amber-2:#F3741F; --amber-soft:#3A2314;
   --green:#4E9E74; --green-2:#5FB689; --green-soft:#14301F;
-  --rose:#E27795; --rose-soft:#3A1622; --gold:#D9B45B;
-  --hero-1:#2A1810; --hero-2:#170C05; --hero-3:#0C0602;
-  --shadow:0 18px 44px -20px rgba(0,0,0,.7);
+  --rose:#E27795; --rose-soft:#3A1622; --gold:#9A9DA0;
+  --hero-1:#333638; --hero-2:#1C1F20; --hero-3:#0E1011;
+  --shadow:0 18px 44px -20px rgba(0,0,0,.72);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%; scroll-behavior:smooth; scroll-padding-block-start:96px}
@@ -73,12 +76,12 @@ a{color:var(--amber-2)}
 .tbtn:focus-visible{outline:2px solid var(--amber); outline-offset:2px}
 
 /* ============ HERO ============ */
-.hero{position:relative; overflow:hidden; color:#F7EEDF;
+.hero{position:relative; overflow:hidden; color:#F2F3F4;
   background:
-    radial-gradient(120% 90% at 82% -10%, rgba(232,118,12,.34), transparent 55%),
-    radial-gradient(80% 70% at 10% 120%, rgba(47,110,78,.30), transparent 60%),
+    radial-gradient(120% 90% at 82% -10%, rgba(243,116,31,.30), transparent 55%),
+    radial-gradient(80% 70% at 10% 120%, rgba(189,190,191,.16), transparent 60%),
     linear-gradient(160deg,var(--hero-1),var(--hero-2) 55%,var(--hero-3));
-  border-block-end:1px solid rgba(232,118,12,.35)}
+  border-block-end:1px solid rgba(243,116,31,.45)}
 .grain{position:absolute; inset:0; z-index:0; opacity:.06; mix-blend-mode:overlay;
   background-image:radial-gradient(rgba(255,255,255,.9) 1px, transparent 1px); background-size:4px 4px}
 .ridge{position:absolute; inset-inline:0; inset-block-end:0; height:150px; z-index:1; opacity:.9; pointer-events:none}
@@ -88,20 +91,20 @@ a{color:var(--amber-2)}
 .logo{block-size:74px; inline-size:auto; flex:none; filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
 .mark-t{display:block; border-inline-start:1px solid rgba(255,255,255,.18); padding-inline-start:14px}
 .mark-t b{display:block; font-size:19px; font-weight:400;
-  font-family:"Darb Display","Tahoma",sans-serif; color:#F7EEDF}
-.mark-t span{display:block; font-size:11px; font-weight:600; color:#E7C9A2; letter-spacing:2.4px}
+  font-family:"Darb Display","Tahoma",sans-serif; color:#F2F3F4}
+.mark-t span{display:block; font-size:11px; font-weight:600; color:var(--silver); letter-spacing:2.4px}
 @media(max-width:520px){.mark-t{display:none}}
 .brandbar .sep{flex:1}
-.brandbar .place{font-size:13px; color:#EAD3B4; border:1px solid rgba(255,255,255,.18);
+.brandbar .place{font-size:13px; color:#CFD2D4; border:1px solid rgba(255,255,255,.18);
   padding:6px 13px; border-radius:100px; background:rgba(0,0,0,.18)}
 .eyebrow{margin-block-start:clamp(28px,4.4vw,44px); display:inline-flex; align-items:center; gap:9px;
   font-size:12.5px; letter-spacing:3px; font-weight:700; color:var(--gold)}
 .eyebrow::before{content:""; inline-size:26px; block-size:2px; background:var(--gold)}
 .headline{margin-block-start:14px; font-size:clamp(28px,5.4vw,50px); font-weight:800; letter-spacing:-.5px}
 .headline .hl{color:var(--amber)}
-.sub{margin-block-start:14px; max-width:66ch; font-size:clamp(14.5px,2vw,18px); color:#EBD9C2; line-height:1.75}
+.sub{margin-block-start:14px; max-width:66ch; font-size:clamp(14.5px,2vw,18px); color:#D5D8DA; line-height:1.75}
 .metaline{margin-block-start:26px; display:flex; gap:10px; flex-wrap:wrap}
-.metaline .chip{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:#F1E2CC;
+.metaline .chip{display:inline-flex; align-items:center; gap:8px; font-size:13px; color:#E4E6E7;
   background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.14); padding:8px 14px; border-radius:100px}
 
 /* ============ STICKY NAV ============ */
@@ -167,7 +170,7 @@ td.num,th.num{font-variant-numeric:tabular-nums; white-space:nowrap}
 .m-head{display:flex; align-items:center; gap:14px; flex-wrap:wrap; background:var(--surface);
   border:1px solid var(--line); border-radius:var(--r); padding:16px 20px; box-shadow:var(--shadow)}
 .m-head .m-no{inline-size:44px; block-size:44px; flex:none; border-radius:12px; display:grid; place-items:center;
-  background:linear-gradient(150deg,var(--amber),#B44E05); color:#fff; font-weight:800; font-size:16px}
+  background:linear-gradient(150deg,var(--amber),#C9560A); color:#fff; font-weight:800; font-size:16px}
 .m-head h2{font-size:clamp(19px,2.8vw,25px); font-weight:800}
 .m-head .m-sub{font-size:13px; color:var(--ink-3); margin-block-start:2px}
 .m-head .sep{flex:1}
@@ -253,81 +256,79 @@ details.guide>summary::-webkit-details-marker{display:none}
 details.guide>summary::after{content:"▾"; margin-inline-start:auto; color:var(--ink-3)}
 details.guide[open]>summary{border-block-end:1px solid var(--line)}
 .guide-body{padding:18px 20px; display:grid; gap:16px}
-pre{margin:0; background:var(--hero-2); color:#F1E2CC; border-radius:12px; padding:16px; overflow-x:auto;
+pre{margin:0; background:var(--hero-2); color:#E4E6E7; border-radius:12px; padding:16px; overflow-x:auto;
   direction:ltr; text-align:left; font-size:12.5px; line-height:1.7; font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace}
 code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-size:12.5px;
   background:var(--paper-2); border:1px solid var(--line); border-radius:6px; padding:1px 6px}
 
 /* ============ FOOTER ============ */
-.foot{background:linear-gradient(160deg,var(--hero-1),var(--hero-3)); color:#F1E2CC; text-align:center}
+.foot{background:linear-gradient(160deg,var(--hero-1),var(--hero-3)); color:#E4E6E7; text-align:center}
 .foot .flogo{block-size:78px; margin-block-end:18px; filter:none}
 .foot h2{font-size:clamp(20px,3.4vw,28px); color:#fff; font-weight:400}
-.foot p{margin-block-start:12px; color:#E9D6BE; max-width:60ch; margin-inline:auto; font-size:15px}
-.foot .sign{margin-block-start:26px; display:flex; gap:22px; justify-content:center; flex-wrap:wrap; font-size:14px; color:#EAD3B4}
+.foot p{margin-block-start:12px; color:#D5D8DA; max-width:60ch; margin-inline:auto; font-size:15px}
+.foot .sign{margin-block-start:26px; display:flex; gap:22px; justify-content:center; flex-wrap:wrap; font-size:14px; color:#CFD2D4}
 .foot .sign b{color:#fff}
 .finmark{margin-block-start:30px; padding-block-start:18px; border-block-start:1px solid rgba(255,255,255,.12);
-  font-size:12.5px; color:#C9B090}
+  font-size:12.5px; color:#9CA0A3}
 
 @media(prefers-reduced-motion:reduce){*{transition:none!important; animation:none!important; scroll-behavior:auto}}
 
 /* ============ PRINT ============ */
 @media print{
-  :root{--paper:#fff; --paper-2:#F6F1E9; --surface:#fff; --shadow:none; --ink:#1d140d; --ink-2:#4a3a2c; --ink-3:#6f5c49}
+  :root{--paper:#fff; --paper-2:#F1F2F3; --surface:#fff; --shadow:none; --ink:#232629; --ink-2:#55595C; --ink-3:#7E8285}
   .toolbar,.nav{display:none!important}
   body{background:#fff}
-  .hero{color:#2A1D14; background:#fff; border-block-end:2px solid var(--amber)}
-  .metaline .chip{color:#4a3a2c}
-  .mark-t b{color:#2A1D14} .mark-t span{color:#6f5c49}
+  .hero{color:#2B2E30; background:#fff; border-block-end:2px solid var(--amber)}
+  .metaline .chip{color:#55595C}
+  .mark-t b{color:#2B2E30} .mark-t span{color:#7E8285}
   .mark-t{border-inline-start-color:var(--line)}
   .logo{filter:none}
-  .brandbar .place,.metaline .chip{background:#fff; border-color:var(--line); color:#4a3a2c}
+  .brandbar .place,.metaline .chip{background:#fff; border-color:var(--line); color:#55595C}
   .hero .wrap{padding-block:18px 18px}
   .ridge,.grain{display:none}
   .stats-band{margin-block-start:0}
   .month{break-before:page}
   .camp,.stat,.qcard,.tablewrap,.callout,.m-head{break-inside:avoid; box-shadow:none}
   section{padding-block:18px}
-  .foot{background:#fff; color:#2A1D14}
-  .foot h2,.foot .sign b{color:#2A1D14}
-  .foot p,.foot .sign,.finmark{color:#4a3a2c}
+  .foot{background:#fff; color:#2B2E30}
+  .foot h2,.foot .sign b{color:#2B2E30}
+  .foot p,.foot .sign,.finmark{color:#55595C}
   details.guide{display:none}
   a[href^="#"]{text-decoration:none; color:inherit}
 }
 </style>
 
 <!-- ================= HERO ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="darb-logo" viewBox="0 0 901.97 255.9">
+  <g transform="translate(-142.62 -271.27)">
+  <path fill="#F3741F" fill-rule="nonzero" d="M270.57 527.17C200.02 527.17 142.62 469.77 142.62 399.22C142.62 328.67 200.02 271.27 270.57 271.27L916.64 271.27C987.19 271.27 1044.59 328.67 1044.59 399.22C1044.59 469.77 987.19 527.17 916.64 527.17L270.57 527.17"/>
+  <path fill="#66686A" fill-rule="nonzero" d="M916.64 506.9L270.57 506.9C211.35 506.9 162.89 458.44 162.89 399.22C162.89 340 211.35 291.54 270.57 291.54L916.64 291.54C975.86 291.54 1024.32 340 1024.32 399.22C1024.32 458.44 975.86 506.9 916.64 506.9"/>
+  <path fill="#F3741F" fill-rule="nonzero" d="M881.81 456.77L849.19 386.58L849.09 386.36C832.99 352.34 780.91 328.63 744.25 328.63L627.54 328.63C627.56 331.27 628.63 376.4 667.33 376.4L744.25 376.4C754.17 376.4 769.22 378.41 781.59 384.37C794.32 390.49 802.66 399.94 805.88 406.73L814.08 424.38L664.78 424.52L674.96 450.74L683.33 472.27L872.05 472.08C875.73 472.07 879.15 470.2 881.13 467.1C883.1 463.99 883.36 460.1 881.81 456.77"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M346.22 459.55L316.69 459.55L316.69 418.63L345.29 418.63C352.53 418.63 364.68 421.07 364.68 437.4C364.68 457.96 350.55 459.55 346.22 459.55M345.29 406.33L310.54 406.33C307.15 406.33 304.4 409.08 304.4 412.48L304.4 471.85L346.22 471.85C361.53 471.85 376.97 461.2 376.97 437.4C376.97 414.47 359.91 406.33 345.29 406.33"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M554.25 425.91L547.7 425.91C541.18 425.91 536.41 430.61 536.41 437.29L554.25 437.26C561.34 437.26 564.94 440.73 564.94 447.56C564.94 458.81 557.88 460.03 554.84 460.03L530.46 460.03L530.46 406.6L519.11 406.6L519.11 471.38L554.84 471.38C565.52 471.38 576.29 464.01 576.29 447.56C576.29 431.58 564.41 425.91 554.25 425.91"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M419.2 471.38C429.06 471.38 428.45 460.03 428.45 460.03L405.6 460.03C402.56 460.03 395.5 458.81 395.5 447.56C395.5 440.73 399.1 437.26 406.19 437.26L433.29 437.26L433.29 460.03L433.29 471.38L438.96 471.38C442.1 471.38 444.64 468.84 444.64 465.71L444.64 425.91L406.19 425.91C403.17 425.91 397.36 426.44 392.36 429.99C388.62 432.64 384.15 437.85 384.15 447.56C384.15 464.01 394.92 471.38 405.6 471.38L419.2 471.38"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M466.69 471.38L466.69 437.26L490.13 437.26C497 437.26 499.31 440.74 500.08 442.81C501.17 445.75 501.54 447.59 501.54 447.59C501.54 447.59 504.19 447.92 506.98 446.96C509.95 445.95 511.97 441.52 510.28 437.77C507.17 430.9 500.02 425.91 490.13 425.91L455.34 425.91L455.34 471.38L466.69 471.38"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M503.34 374.52L503.34 362.98L564.2 362.98L564.2 350.17C564.2 344.48 560.6 339.48 550.6 339.48L513.62 339.52C504.02 339.52 504.33 328.04 504.33 328.04L550.6 328.04C553.14 328.04 559.7 328.42 565.62 331.97C572.08 335.83 575.64 342.29 575.64 350.17L575.64 365.71C575.64 370.8 572.36 374.52 567.04 374.52L503.34 374.52"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M405 388.46L405 394.4L399.07 394.4L393.53 394.4C390.27 394.4 387.59 391.73 387.59 388.46L387.59 382.53L399.07 382.53C402.33 382.53 405 385.2 405 388.46"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M475.86 376.05C475.82 377.64 475.27 383.73 468.94 383.73L459.49 383.73C459.49 383.73 458.12 394.4 468.94 394.4C476.23 394.4 487.3 391.88 487.3 375.67L487.3 327.64L475.86 327.64L475.86 376.05"/>
+  <path fill="#FFFFFF" fill-rule="nonzero" d="M446.14 327.64L446.14 362.79L376.04 362.79L363.76 362.89L363.76 349.88C363.76 345.12 366.22 339.17 375.38 339.17C376.17 339.17 379.11 339.16 380.33 339.16L380.34 339.16L381.75 339.12C391.36 339.12 391.05 327.64 391.05 327.64L379.86 327.64L379.86 327.64L379.78 327.64L379.75 327.64L379.75 327.64C378.46 327.64 375.38 327.68 374.31 327.78C360.33 329.09 351.64 337.14 351.64 349.88L351.64 374.23L374.24 374.23L457.59 374.23L457.59 327.64L446.14 327.64"/>
+  </g>
+  </symbol>
+</svg>
+
 <header class="hero">
   <div class="grain"></div>
   <svg class="ridge" viewBox="0 0 1200 150" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0,120 L120,72 L230,112 L360,56 L470,104 L600,44 L720,96 L840,60 L980,108 L1090,68 L1200,112"
-          fill="none" stroke="rgba(232,118,12,.28)" stroke-width="2" stroke-linejoin="round"/>
+          fill="none" stroke="rgba(243,116,31,.30)" stroke-width="2" stroke-linejoin="round"/>
     <path d="M0,150 L0,132 L150,96 L300,132 L430,88 L560,126 L700,80 L840,120 L980,86 L1120,122 L1200,96 L1200,150 Z"
           fill="rgba(18,10,5,.55)"/>
   </svg>
   <div class="wrap">
     <div class="brandbar">
       <span class="mark">
-        <svg class="logo" viewBox="0 0 2000 746" role="img" aria-label="محطات درب">
-          <rect x="108" y="102" width="1784" height="508" rx="254" fill="#6D6E71" stroke="#F0881F" stroke-width="60"/>
-          <g fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round">
-            <path d="M858,212 H911 A32,32 0 0 1 943,244 V256 A32,32 0 0 1 911,288 H888"/>
-            <path d="M826,212 V244 C826,278 798,306 764,306 H744"/>
-            <path d="M716,208 V258 A30,30 0 0 1 686,288 H502 A30,30 0 0 1 472,258 V234"/>
-          </g>
-          <rect x="580" y="320" width="40" height="40" rx="7" fill="#fff"/>
-          <g fill="none" stroke="#fff" stroke-width="46" stroke-linejoin="round">
-            <path d="M403,495 V368 H468 A63.5,63.5 0 0 1 468,495 Z"/>
-            <path d="M669,402 V495"/>
-            <path d="M669,430 A52,52 0 1 0 669,460"/>
-            <path d="M745,402 V495 M745,436 C745,417 762,402 786,402"/>
-            <path d="M840,358 V495"/>
-            <path d="M840,430 A52,52 0 1 1 840,460"/>
-          </g>
-          <g fill="#F0881F">
-            <path d="M1045,205 H1380 C1452,205 1510,263 1510,335 V390 H1350 V345 C1350,320 1331,300 1306,300 H1045 Z"/>
-            <path d="M1180,400 H1580 L1555,502 H1128 Z"/>
-          </g>
-        </svg>
+        <svg class="logo" viewBox="0 0 901.97 255.9" role="img" aria-label="درب Darb"><use href="#darb-logo"/></svg>
         <span class="mark-t"><b>محطات درب</b><span>DARB STATIONS</span></span>
       </span>
       <span class="sep"></span>
@@ -421,27 +422,7 @@ code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-si
 <!-- ================= FOOTER ================= -->
 <footer class="foot">
   <div class="wrap">
-    <svg class="logo flogo" viewBox="0 0 2000 746" role="img" aria-label="محطات درب">
-        <rect x="108" y="102" width="1784" height="508" rx="254" fill="#6D6E71" stroke="#F0881F" stroke-width="60"/>
-        <g fill="none" stroke="#fff" stroke-width="44" stroke-linejoin="round">
-          <path d="M858,212 H911 A32,32 0 0 1 943,244 V256 A32,32 0 0 1 911,288 H888"/>
-          <path d="M826,212 V244 C826,278 798,306 764,306 H744"/>
-          <path d="M716,208 V258 A30,30 0 0 1 686,288 H502 A30,30 0 0 1 472,258 V234"/>
-        </g>
-        <rect x="580" y="320" width="40" height="40" rx="7" fill="#fff"/>
-        <g fill="none" stroke="#fff" stroke-width="46" stroke-linejoin="round">
-          <path d="M403,495 V368 H468 A63.5,63.5 0 0 1 468,495 Z"/>
-          <path d="M669,402 V495"/>
-          <path d="M669,430 A52,52 0 1 0 669,460"/>
-          <path d="M745,402 V495 M745,436 C745,417 762,402 786,402"/>
-          <path d="M840,358 V495"/>
-          <path d="M840,430 A52,52 0 1 1 840,460"/>
-        </g>
-        <g fill="#F0881F">
-          <path d="M1045,205 H1380 C1452,205 1510,263 1510,335 V390 H1350 V345 C1350,320 1331,300 1306,300 H1045 Z"/>
-          <path d="M1180,400 H1580 L1555,502 H1128 Z"/>
-        </g>
-      </svg>
+    <svg class="logo flogo" viewBox="0 0 901.97 255.9" role="img" aria-label="درب Darb"><use href="#darb-logo"/></svg>
     <h2>تقرير الحملات التسويقية · محطات درب</h2>
     <p>يُرفع هذا التقرير شهرياً للإدارة خلال الأسبوع الأول من الشهر التالي، ويُصدر في نهاية كل ربع بنسخة شاملة لأداء الربع.</p>
     <div class="sign">
