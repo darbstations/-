@@ -300,6 +300,9 @@ code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-si
   details.guide{display:none}
   a[href^="#"]{text-decoration:none; color:inherit}
 }
+/* ---------- EMAIL: formula cells ---------- */
+.eq{direction:ltr; text-align:end; font-variant-numeric:tabular-nums; white-space:nowrap}
+
 /* ---------- CHART ---------- */
 .chart{margin:0; background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
   padding:22px; box-shadow:var(--shadow)}
@@ -477,6 +480,59 @@ code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-si
   </div>
 </section>
 
+<!-- ================= EMAIL ================= -->
+<section id="email" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">03 · حملات الإيميل التسويقية</span>
+      <h2 class="sec-title">قناة البريد الإلكتروني — الربع الثالث 2026</h2>
+      <p class="sec-note">المصدر لوحة متابعة أداء البريد للفترة 1 يوليو – 30 سبتمبر 2026، مقارنةً بالـ92 يوماً
+        السابقة. تعرض اللوحة أربعة مؤشرات فقط، وكل رقم آخر في هذا القسم محتسب منها بالمعادلة المبيّنة.</p>
+    </div>
+
+    <div class="stat-grid"><div class="stat"><div class="num tnum">235</div><div class="lbl">إجمالي الرسائل المُرسَلة</div><div class="cap">2.6 رسالة يومياً على مدى 92 يوماً · ‎‎-21.7%‎</div></div><div class="stat"><div class="num tnum">219</div><div class="lbl">الرسائل المُسلَّمة</div><div class="cap">نسبة تسليم ‎93.2%‎ · ‎‎+265%‎</div></div><div class="stat"><div class="num tnum">‎7.3%‎</div><div class="lbl">معدل الفتح</div><div class="cap">نحو 16 فتحاً فريداً من 219 رسالة · ‎‎-81.7%‎</div></div><div class="stat"><div class="num tnum">39</div><div class="lbl">إجمالي الفتحات</div><div class="cap">2.4 فتحة لكل قارئ · ‎‎+9,650%‎</div></div></div>
+
+    <div style="margin-block-start:20px">
+      <div class="subhead">📊 المؤشرات الأربعة كما وردت</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">التغير عن الـ92 يوماً السابقة</th><th>القراءة</th></tr></thead><tbody><tr><td><b>إجمالي الرسائل المُرسَلة</b></td><td class="num tnum"><b>235</b></td><td class="num tnum"><span style="color:var(--rose)"><b>‎-21.7%‎</b></span></td><td style="color:var(--ink-2)">نحو 2.6 رسالة يومياً على مدى 92 يوماً — نشاط محدود جداً لقناة كاملة.</td></tr><tr><td><b>الرسائل المُسلَّمة</b></td><td class="num tnum"><b>219</b></td><td class="num tnum"><span style="color:var(--green)"><b>‎+265%‎</b></span></td><td style="color:var(--ink-2)">نسبة تسليم ‎93.2%‎ مقابل ‎20.0%‎ في الفترة السابقة — أكبر تحسّن في القناة.</td></tr><tr><td><b>معدل الفتح</b></td><td class="num tnum"><b>‎7.3%‎</b></td><td class="num tnum"><span style="color:var(--rose)"><b>‎-81.7%‎</b></span></td><td style="color:var(--ink-2)">يُحتسب على الرسائل المُسلَّمة، أي نحو 16 فتحاً فريداً من 219 رسالة.</td></tr><tr><td><b>إجمالي الفتحات</b></td><td class="num tnum"><b>39</b></td><td class="num tnum"><span style="color:var(--green)"><b>‎+9,650%‎</b></span></td><td style="color:var(--ink-2)">نحو 2.4 فتحة لكل من فتح الرسالة — أي إعادة فتح من جمهور صغير.</td></tr></tbody></table></div>
+    </div>
+
+    <div style="margin-block-start:22px">
+      <div class="subhead">📈 مسار الرسالة</div>
+      <figure class="chart" id="ch-EMAIL" style="--lbl:175px; --val:150px; margin-block-end:18px"><figcaption><div class="chart-title">مسار الرسالة — من الإرسال إلى الفتح</div><div class="chart-sub">المراحل المقيسة الثلاث فقط. الفجوة الكبرى ليست في التسليم بل بعده: من 219 رسالة وصلت صندوق الوارد فُتح نحو 16 فقط. مرحلة النقر غير مقيسة أصلاً، فلا يمكن تتبّع المسار إلى ما بعد الفتح.</div></figcaption><div class="plot"><div class="bar-lbl">الرسائل المُرسَلة<small>235 رسالة على مدى الربع</small></div><div class="bar-wrap"><div class="bar" style="inline-size:100.00%" tabindex="0" role="img" title="الرسائل المُرسَلة — 235 (‎100%‎ نقطة البداية)"></div></div><div class="bar-val">235<small>‎100%‎ نقطة البداية</small></div><div class="bar-lbl">الرسائل المُسلَّمة<small>وصلت إلى صندوق الوارد</small></div><div class="bar-wrap"><div class="bar" style="inline-size:93.19%" tabindex="0" role="img" title="الرسائل المُسلَّمة — 219 (‎93.2%‎ من المُرسَل)"></div></div><div class="bar-val">219<small>‎93.2%‎ من المُرسَل</small></div><div class="bar-lbl">الفتحات الفريدة<small>فُتحت فعلياً — تقدير من معدل الفتح</small></div><div class="bar-wrap"><div class="bar" style="inline-size:6.81%" tabindex="0" role="img" title="الفتحات الفريدة — نحو 16 (‎6.8%‎ من المُرسَل)"></div></div><div class="bar-val">نحو 16<small>‎6.8%‎ من المُرسَل</small></div></div><div class="chart-note"><i><span class="swatch"></span> عدد الرسائل</i><i>المصدر: لوحة متابعة أداء البريد · 1 يوليو – 30 سبتمبر 2026</i></div></figure>
+    </div>
+
+    <div style="margin-block-start:4px">
+      <div class="subhead">🧮 مؤشرات محتسبة من الأربعة أعلاه</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">المعادلة</th></tr></thead><tbody><tr><td><b>الرسائل غير المُسلَّمة</b></td><td class="num tnum">16 رسالة</td><td class="num tnum eq" dir="ltr">235 − 219</td></tr><tr><td><b>نسبة التسليم</b></td><td class="num tnum eq" dir="ltr">93.2%</td><td class="num tnum eq" dir="ltr">219 ÷ 235</td></tr><tr><td><b>نسبة الارتداد</b></td><td class="num tnum eq" dir="ltr">6.8%</td><td class="num tnum eq" dir="ltr">16 ÷ 235</td></tr><tr><td><b>الفتحات الفريدة (تقديري)</b></td><td class="num tnum">نحو 16</td><td class="num tnum eq" dir="ltr">7.3% × 219</td></tr><tr><td><b>الفتحات لكل قارئ</b></td><td class="num tnum eq" dir="ltr">2.4</td><td class="num tnum eq" dir="ltr">39 ÷ 16</td></tr><tr><td><b>متوسط الإرسال اليومي</b></td><td class="num tnum">2.6 رسالة</td><td class="num tnum">235 ÷ 92 يوماً</td></tr><tr><td><b>النقرات والتحويلات</b></td><td class="num tnum">غير مُقاسة</td><td class="num tnum">لا يعرضها التقرير المرفق</td></tr></tbody></table></div>
+    </div>
+
+    <div style="margin-block-start:22px">
+      <div class="subhead">↩️ الفترة السابقة — محتسبة عكسياً من نسب المقارنة</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">المعادلة</th></tr></thead><tbody><tr><td><b>الرسائل المُرسَلة</b></td><td class="num tnum">نحو 300</td><td class="num tnum eq" dir="ltr">235 ÷ (1 − 21.7%)</td></tr><tr><td><b>الرسائل المُسلَّمة</b></td><td class="num tnum">نحو 60</td><td class="num tnum eq" dir="ltr">219 ÷ (1 + 265%)</td></tr><tr><td><b>نسبة التسليم</b></td><td class="num tnum eq" dir="ltr">20.0%</td><td class="num tnum eq" dir="ltr">60 ÷ 300</td></tr><tr><td><b>معدل الفتح</b></td><td class="num tnum">نحو ‎39.9%‎</td><td class="num tnum eq" dir="ltr">7.3% ÷ (1 − 81.7%)</td></tr><tr><td><b>الفتحات الفريدة</b></td><td class="num tnum">نحو 24</td><td class="num tnum eq" dir="ltr">39.9% × 60</td></tr><tr><td><b>إجمالي الفتحات</b></td><td class="num tnum">نحو 0.4</td><td class="num tnum eq" dir="ltr">39 ÷ (1 + 9,650%)</td></tr></tbody></table></div>
+    </div>
+
+    <div class="callout warn">
+      <h3>⚠️ تنبيه على اتساق الأرقام</h3>
+      <p>نسب المقارنة الأربع لا تجتمع حسابياً: انخفاض معدل الفتح ‎81.7%‎ مع ارتفاع التسليم ‎265%‎ يعني أن إجمالي الفتحات في الفترة السابقة كان نحو 24 فتحة على الأقل، بينما ارتفاع إجمالي الفتحات ‎9,650%‎ يعني أن الرقم السابق كان أقل من واحد. لذلك اعتُمدت في هذا القسم الأرقام المطلقة للربع الثالث (235 · 219 · ‎7.3%‎ · 39) وحدها كأساس للقراءة، وعوملت أرقام الفترة السابقة كتقدير يحتاج تحققاً.</p>
+    </div>
+
+    <div class="triple" style="margin-block-start:18px">
+      <div class="box res"><h4>✅ أبرز النتائج</h4><ul><li>نسبة التسليم قفزت من ‎20.0%‎ إلى ‎93.2%‎ — أي أن 219 رسالة وصلت فعلاً مقابل نحو 60 في الفترة السابقة</li><li>عدد الرسائل الواصلة تضاعف أكثر من ثلاث مرات (‎‎+265%‎) رغم انخفاض عدد الرسائل المُرسَلة ‎21.7%‎</li><li>من فتح الرسالة عاد إليها: 39 فتحة من نحو 16 قارئاً، أي 2.4 فتحة لكل قارئ</li></ul></div>
+      <div class="box cha"><h4>⚠️ التحديات</h4><ul><li>معدل فتح ‎7.3%‎ منخفض بوضوح، والمعتاد في قطاعات التجزئة والخدمات نحو ‎20%‎ فأعلى</li><li>حجم النشاط شبه معدوم: 235 رسالة في ربع كامل، أي 2.6 رسالة يومياً</li><li>لا مستهدف معتمد لهذه القناة — لا للإرسال ولا للفتح ولا للنقر — فتعذّر الحكم على الأداء مقابل خطة</li><li>لا تُقاس النقرات ولا التحويلات ولا الإيراد، فالقناة غير مربوطة بأي أثر تجاري</li><li>أرقام لوحة المتابعة غير متسقة فيما بينها (تفصيلها في الملحق)، ما يضعف الاعتماد على نسب المقارنة</li></ul></div>
+      <div class="box opp"><h4>💡 الفرص الممكن الاستفادة منها</h4><ul><li>قاعدة قابلة للوصول جاهزة: 219 عنواناً يصلها البريد فعلياً — الأساس موجود وينقصه المحتوى والوتيرة</li><li>ربط البريد بحملات المحطات: قوائم الوصول في الربع بلغت 4.5 مليون مشاهدة دون أي تحويل منها إلى مشتركين</li><li>الاستكرات والفواحات الـ15,000 الموزَّعة في فعالية اليوم الوطني قناة تسجيل جاهزة برمز QR</li><li>القارئ الحالي متفاعل (2.4 فتحة لكل قارئ) — شريحة صغيرة لكنها تستحق محتوى مخصصاً</li></ul></div>
+      <div class="box rec"><h4>📌 التوصيات</h4><ul><li>اعتماد مستهدفات ربعية للقناة: عدد الرسائل، ومعدل الفتح، ومعدل النقر، وعدد المشتركين الجدد</li><li>تفعيل قياس النقرات والتحويلات وربطها بمبيعات المحطات كما رُبطت الحملات الميدانية</li><li>خطة نمو للقائمة عبر رمز QR في المحطات وفي المواد الموزَّعة في الفعاليات</li><li>مراجعة أرقام لوحة المتابعة مع مزوّد الخدمة وتثبيت فترة مقارنة موحّدة قبل الربع الرابع</li><li>تنظيف القائمة دورياً للحفاظ على نسبة التسليم عند ‎93%‎ فأعلى</li></ul></div>
+    </div>
+
+    <div style="margin-block-start:18px">
+      <div class="subhead">🔻 ما لم يتحقق في هذه القناة · المبرر والإجراء التصحيحي</div>
+      <div class="tablewrap"><table><thead><tr><th>البند</th><th class="num">المستهدف</th>
+        <th class="num">المتحقق</th><th>المبرر</th><th>الإجراء التصحيحي</th></tr></thead>
+        <tbody><tr><td><b>مستهدف معتمد للقناة</b></td><td class="num tnum">مستهدفات إرسال وفتح ونقر</td><td class="num tnum">غير محدّد</td><td style="color:var(--ink-2)">لم تُعتمد مستهدفات لقناة البريد ضمن خطة الربع، فقيست النتائج دون مرجع.</td><td style="color:var(--ink-2)">اعتماد مستهدفات ربعية للقناة قبل بداية الربع الرابع.</td></tr><tr><td><b>قياس النقر والتحويل</b></td><td class="num tnum">معدل نقر وتحويلات مسجّلة</td><td class="num tnum">غير مُقاس</td><td style="color:var(--ink-2)">لا يعرض التقرير المرفق أي بيانات نقر أو تحويل، فتعذّر قياس الأثر التجاري للقناة.</td><td style="color:var(--ink-2)">تفعيل تتبّع النقرات والتحويلات وربطها بمبيعات المحطات.</td></tr><tr><td><b>اتساق أرقام المقارنة</b></td><td class="num tnum">نسب مقارنة متسقة</td><td class="num tnum">غير متسقة</td><td style="color:var(--ink-2)">معدل الفتح منخفض ‎81.7%‎ بينما إجمالي الفتحات مرتفع ‎9,650%‎ على تسليم أعلى بـ‎265%‎ — لا تجتمع هذه النسب حسابياً.</td><td style="color:var(--ink-2)">مراجعة الأرقام مع مزوّد الخدمة وتوحيد فترة المقارنة قبل اعتمادها في التقارير.</td></tr><tr><td><b>حجم النشاط</b></td><td class="num tnum">وتيرة إرسال منتظمة</td><td class="num tnum">2.6 رسالة/يوم</td><td style="color:var(--ink-2)">235 رسالة في ربع كامل لا تكفي لبناء عادة قراءة لدى الجمهور ولا لقياس أداء القناة.</td><td style="color:var(--ink-2)">اعتماد تقويم إرسال شهري بوتيرة ثابتة معلنة مسبقاً.</td></tr></tbody></table></div>
+    </div>
+  </div>
+</section>
+
 <!-- ================= MONTHS ================= -->
 <div id="months"></div>
 
@@ -484,7 +540,7 @@ code{font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace; font-si
 <section id="guide">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">04 · دليل التعبئة</span>
+      <span class="kicker">05 · دليل التعبئة</span>
       <h2 class="sec-title">كيف تُحدَّث بيانات الحملات شهرياً</h2>
       <p class="sec-note">كل محتوى التقرير مبني من كائن بيانات واحد في أعلى ملف السكربت باسم <code>REPORT</code>.
         تعبئة بيانات أي شهر لا تتطلب تعديل التصميم — فقط أضف الحملات داخل الشهر المطلوب وسيُعاد بناء الأقسام والجداول والنسب تلقائياً.</p>
@@ -869,6 +925,7 @@ function renderNav(){
   const parts = [
     '<a href="#exec" class="key">📌 الملخص التنفيذي</a>',
     '<a href="#quarters" class="key">📊 الأرباع</a>',
+    '<a href="#email" class="key">✉️ حملات الإيميل</a>',
     '<span class="qgap"></span>'
   ];
   let lastQ = null;
@@ -1205,7 +1262,7 @@ function renderMonths(){
   document.getElementById("months").innerHTML =
     `<section style="padding-block:clamp(40px,6vw,60px) 0"><div class="wrap">
        <div class="sec-head">
-         <span class="kicker">03 · الأقسام الشهرية</span>
+         <span class="kicker">04 · الأقسام الشهرية</span>
          <h2 class="sec-title">أداء الحملات شهراً بشهر · يناير ← ديسمبر ${REPORT.year}</h2>
          <p class="sec-note">كل شهر يبدأ بمؤشراته العامة ثم قسم مستقل لكل حملة: المستهدفات وما تحقق منها، والتحديات، والفرص، والتوصيات.</p>
        </div>

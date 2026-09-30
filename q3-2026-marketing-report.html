@@ -187,6 +187,9 @@ td b{font-weight:700}
 .swatch{inline-size:12px; block-size:12px; border-radius:3px; background:var(--orange)}
 .swatch.ref{position:static; inline-size:2px; block-size:14px; background:var(--ink-3); border-radius:0}
 
+/* ---------- EMAIL: formula cells ---------- */
+.eq{direction:ltr; text-align:end; font-variant-numeric:tabular-nums; white-space:nowrap}
+
 /* ---------- COLUMN CHART (per-campaign time series) ---------- */
 .cchart{margin:0 0 18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
   padding:22px; box-shadow:var(--shadow)}
@@ -359,7 +362,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
     <h1>تقرير <span class="hl">الربع الثالث 2026</span><br>يوليو · أغسطس · سبتمبر</h1>
     <p class="lede">يغطي هذا التقرير أداء الحملات التسويقية في محطات درب خلال <b>الربع الثالث من عام 2026</b>،
       ويعرض لكل حملة قسماً مستقلاً يوضّح أداءها ومستهدفاتها وما تحقق منها وما لم يتحقق مع بيان المبررات،
-      إضافة إلى <b>مستهدفات فريق العمل</b> الدورية، و<b>التحديات</b> التي واجهت التنفيذ
+      إضافة إلى <b>أداء قناة البريد الإلكتروني</b>، و<b>مستهدفات فريق العمل</b> الدورية، و<b>التحديات</b> التي واجهت التنفيذ
       و<b>الفرص الممكن الاستفادة منها</b> في الربع القادم.</p>
 
     <div class="docmeta">
@@ -408,6 +411,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
       <a href="#months">أشهر الربع</a>
       <a href="#sales">الأثر على المبيعات</a>
       <a href="#campaigns">أقسام الحملات</a>
+      <a href="#email">حملات الإيميل</a>
       <a href="#team">مستهدفات الفريق</a>
       <a href="#challenges">التحديات</a>
       <a href="#opps">الفرص</a>
@@ -524,6 +528,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
         <li><b>الأثر باقٍ حتى سبتمبر:</b> حقّقت المحطات الثلاث 1,412,617 ر.س في أول 27 يوماً من سبتمبر — حائل ‎+29.6% والروضة ‎+65.7% عن أغسطس، ونجران ‎-4.4% لكنها ما تزال أعلى بـ60% من مستواها قبل حملة يوليو (13,903 مقابل 8,670 ر.س/يوم).</li>
         <li><b>الوصول:</b> 4,519,865 مشاهدة مقابل مستهدف 400,000 — أي 1,130% من المستهدف، وبتجاوز في كل حملة على حدة.</li>
         <li><b>التفاعل:</b> نحو 263,950 تفاعلاً من الحملات الثلاث المقيسة. المستهدف مرصود كمعدل تفاعل لكل حملة (10% لظبيا · 5% لحائل · 1% للروضة)، وتحقق 14.0% و16.8% و7.0% على التوالي — أي 1.4 و3.4 و7.0 أضعاف المستهدف.</li>
+        <li><b>قناة البريد الإلكتروني:</b> 235 رسالة في الربع وصل منها 219 (نسبة تسليم 93.2% مقابل 20.0% في الفترة السابقة)، لكن معدل الفتح 7.3% فقط — نحو 16 قارئاً. القناة بلا مستهدف معتمد وبلا قياس للنقر أو التحويل.</li>
         <li><b>الانضباط المالي:</b> 36,142 ر.س من مخصص 36,000 ر.س للحملات ذات الميزانية المعتمدة — انحراف 0.4% فقط.</li>
         <li><b>كفاءة التكلفة:</b> متوسط تكلفة الألف مشاهدة للحملات المقيسة بلغ نحو <b>8.0 هللة</b> (36,142 ر.س ÷ 4,519,865 مشاهدة × 1000).</li>
         <li><b>نموذج قابل للتكرار:</b> «البنزين المجاني للسيارات الأولى» أثبت فاعليته كأداة افتتاح وتعريف بالمحطات الجديدة في أربع مناطق مختلفة.</li>
@@ -1106,11 +1111,64 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
   </div>
 </section>
 
+<!-- ======================= 06 · EMAIL ======================= -->
+<section id="email" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">06 · حملات الإيميل التسويقية</span>
+      <h2 class="sec-title">أداء قناة البريد الإلكتروني في الربع الثالث</h2>
+      <p class="sec-note">المصدر لوحة متابعة أداء البريد للفترة 1 يوليو – 30 سبتمبر 2026، مقارنةً بالـ92 يوماً
+        السابقة. تعرض اللوحة أربعة مؤشرات فقط، وكل رقم آخر في هذا القسم محتسب منها بالمعادلة المبيّنة.</p>
+    </div>
+
+    <div class="stat-grid"><div class="stat"><div class="num tnum">235</div><div class="lbl">إجمالي الرسائل المُرسَلة</div><div class="cap">2.6 رسالة يومياً على مدى 92 يوماً · ‎‎-21.7%‎</div></div><div class="stat"><div class="num tnum">219</div><div class="lbl">الرسائل المُسلَّمة</div><div class="cap">نسبة تسليم ‎93.2%‎ · ‎‎+265%‎</div></div><div class="stat"><div class="num tnum">‎7.3%‎</div><div class="lbl">معدل الفتح</div><div class="cap">نحو 16 فتحاً فريداً من 219 رسالة · ‎‎-81.7%‎</div></div><div class="stat"><div class="num tnum">39</div><div class="lbl">إجمالي الفتحات</div><div class="cap">2.4 فتحة لكل قارئ · ‎‎+9,650%‎</div></div></div>
+
+    <div style="margin-block-start:20px">
+      <div class="subhead">📊 المؤشرات الأربعة كما وردت</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">التغير عن الـ92 يوماً السابقة</th><th>القراءة</th></tr></thead><tbody><tr><td><b>إجمالي الرسائل المُرسَلة</b></td><td class="num tnum"><b>235</b></td><td class="num tnum"><span style="color:var(--rose)"><b>‎-21.7%‎</b></span></td><td style="color:var(--ink-2)">نحو 2.6 رسالة يومياً على مدى 92 يوماً — نشاط محدود جداً لقناة كاملة.</td></tr><tr><td><b>الرسائل المُسلَّمة</b></td><td class="num tnum"><b>219</b></td><td class="num tnum"><span style="color:var(--green)"><b>‎+265%‎</b></span></td><td style="color:var(--ink-2)">نسبة تسليم ‎93.2%‎ مقابل ‎20.0%‎ في الفترة السابقة — أكبر تحسّن في القناة.</td></tr><tr><td><b>معدل الفتح</b></td><td class="num tnum"><b>‎7.3%‎</b></td><td class="num tnum"><span style="color:var(--rose)"><b>‎-81.7%‎</b></span></td><td style="color:var(--ink-2)">يُحتسب على الرسائل المُسلَّمة، أي نحو 16 فتحاً فريداً من 219 رسالة.</td></tr><tr><td><b>إجمالي الفتحات</b></td><td class="num tnum"><b>39</b></td><td class="num tnum"><span style="color:var(--green)"><b>‎+9,650%‎</b></span></td><td style="color:var(--ink-2)">نحو 2.4 فتحة لكل من فتح الرسالة — أي إعادة فتح من جمهور صغير.</td></tr></tbody></table></div>
+    </div>
+
+    <div style="margin-block-start:22px">
+      <div class="subhead">📈 مسار الرسالة</div>
+      <figure class="chart" id="ch-EMAIL" style="--lbl:175px; --val:150px; margin-block-end:18px"><figcaption><div class="chart-title">مسار الرسالة — من الإرسال إلى الفتح</div><div class="chart-sub">المراحل المقيسة الثلاث فقط. الفجوة الكبرى ليست في التسليم بل بعده: من 219 رسالة وصلت صندوق الوارد فُتح نحو 16 فقط. مرحلة النقر غير مقيسة أصلاً، فلا يمكن تتبّع المسار إلى ما بعد الفتح.</div></figcaption><div class="plot"><div class="bar-lbl">الرسائل المُرسَلة<small>235 رسالة على مدى الربع</small></div><div class="bar-wrap"><div class="bar" style="inline-size:100.00%" tabindex="0" role="img" title="الرسائل المُرسَلة — 235 (‎100%‎ نقطة البداية)"></div></div><div class="bar-val">235<small>‎100%‎ نقطة البداية</small></div><div class="bar-lbl">الرسائل المُسلَّمة<small>وصلت إلى صندوق الوارد</small></div><div class="bar-wrap"><div class="bar" style="inline-size:93.19%" tabindex="0" role="img" title="الرسائل المُسلَّمة — 219 (‎93.2%‎ من المُرسَل)"></div></div><div class="bar-val">219<small>‎93.2%‎ من المُرسَل</small></div><div class="bar-lbl">الفتحات الفريدة<small>فُتحت فعلياً — تقدير من معدل الفتح</small></div><div class="bar-wrap"><div class="bar" style="inline-size:6.81%" tabindex="0" role="img" title="الفتحات الفريدة — نحو 16 (‎6.8%‎ من المُرسَل)"></div></div><div class="bar-val">نحو 16<small>‎6.8%‎ من المُرسَل</small></div></div><div class="chart-note"><i><span class="swatch"></span> عدد الرسائل</i><i>المصدر: لوحة متابعة أداء البريد · 1 يوليو – 30 سبتمبر 2026</i></div></figure>
+    </div>
+
+    <div style="margin-block-start:4px">
+      <div class="subhead">🧮 مؤشرات محتسبة من الأربعة أعلاه</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">المعادلة</th></tr></thead><tbody><tr><td><b>الرسائل غير المُسلَّمة</b></td><td class="num tnum">16 رسالة</td><td class="num tnum eq" dir="ltr">235 − 219</td></tr><tr><td><b>نسبة التسليم</b></td><td class="num tnum eq" dir="ltr">93.2%</td><td class="num tnum eq" dir="ltr">219 ÷ 235</td></tr><tr><td><b>نسبة الارتداد</b></td><td class="num tnum eq" dir="ltr">6.8%</td><td class="num tnum eq" dir="ltr">16 ÷ 235</td></tr><tr><td><b>الفتحات الفريدة (تقديري)</b></td><td class="num tnum">نحو 16</td><td class="num tnum eq" dir="ltr">7.3% × 219</td></tr><tr><td><b>الفتحات لكل قارئ</b></td><td class="num tnum eq" dir="ltr">2.4</td><td class="num tnum eq" dir="ltr">39 ÷ 16</td></tr><tr><td><b>متوسط الإرسال اليومي</b></td><td class="num tnum">2.6 رسالة</td><td class="num tnum">235 ÷ 92 يوماً</td></tr><tr><td><b>النقرات والتحويلات</b></td><td class="num tnum">غير مُقاسة</td><td class="num tnum">لا يعرضها التقرير المرفق</td></tr></tbody></table></div>
+    </div>
+
+    <div style="margin-block-start:22px">
+      <div class="subhead">↩️ الفترة السابقة — محتسبة عكسياً من نسب المقارنة</div>
+      <div class="tablewrap"><table><thead><tr><th>المؤشر</th><th class="num">القيمة</th><th class="num">المعادلة</th></tr></thead><tbody><tr><td><b>الرسائل المُرسَلة</b></td><td class="num tnum">نحو 300</td><td class="num tnum eq" dir="ltr">235 ÷ (1 − 21.7%)</td></tr><tr><td><b>الرسائل المُسلَّمة</b></td><td class="num tnum">نحو 60</td><td class="num tnum eq" dir="ltr">219 ÷ (1 + 265%)</td></tr><tr><td><b>نسبة التسليم</b></td><td class="num tnum eq" dir="ltr">20.0%</td><td class="num tnum eq" dir="ltr">60 ÷ 300</td></tr><tr><td><b>معدل الفتح</b></td><td class="num tnum">نحو ‎39.9%‎</td><td class="num tnum eq" dir="ltr">7.3% ÷ (1 − 81.7%)</td></tr><tr><td><b>الفتحات الفريدة</b></td><td class="num tnum">نحو 24</td><td class="num tnum eq" dir="ltr">39.9% × 60</td></tr><tr><td><b>إجمالي الفتحات</b></td><td class="num tnum">نحو 0.4</td><td class="num tnum eq" dir="ltr">39 ÷ (1 + 9,650%)</td></tr></tbody></table></div>
+    </div>
+
+    <div class="callout warn">
+      <h3>⚠️ تنبيه على اتساق الأرقام</h3>
+      <p>نسب المقارنة الأربع لا تجتمع حسابياً: انخفاض معدل الفتح ‎81.7%‎ مع ارتفاع التسليم ‎265%‎ يعني أن إجمالي الفتحات في الفترة السابقة كان نحو 24 فتحة على الأقل، بينما ارتفاع إجمالي الفتحات ‎9,650%‎ يعني أن الرقم السابق كان أقل من واحد. لذلك اعتُمدت في هذا القسم الأرقام المطلقة للربع الثالث (235 · 219 · ‎7.3%‎ · 39) وحدها كأساس للقراءة، وعوملت أرقام الفترة السابقة كتقدير يحتاج تحققاً.</p>
+    </div>
+
+    <div class="triple" style="margin-block-start:18px">
+      <div class="box res"><h4>✅ أبرز النتائج</h4><ul><li>نسبة التسليم قفزت من ‎20.0%‎ إلى ‎93.2%‎ — أي أن 219 رسالة وصلت فعلاً مقابل نحو 60 في الفترة السابقة</li><li>عدد الرسائل الواصلة تضاعف أكثر من ثلاث مرات (‎‎+265%‎) رغم انخفاض عدد الرسائل المُرسَلة ‎21.7%‎</li><li>من فتح الرسالة عاد إليها: 39 فتحة من نحو 16 قارئاً، أي 2.4 فتحة لكل قارئ</li></ul></div>
+      <div class="box cha"><h4>⚠️ التحديات</h4><ul><li>معدل فتح ‎7.3%‎ منخفض بوضوح، والمعتاد في قطاعات التجزئة والخدمات نحو ‎20%‎ فأعلى</li><li>حجم النشاط شبه معدوم: 235 رسالة في ربع كامل، أي 2.6 رسالة يومياً</li><li>لا مستهدف معتمد لهذه القناة — لا للإرسال ولا للفتح ولا للنقر — فتعذّر الحكم على الأداء مقابل خطة</li><li>لا تُقاس النقرات ولا التحويلات ولا الإيراد، فالقناة غير مربوطة بأي أثر تجاري</li><li>أرقام لوحة المتابعة غير متسقة فيما بينها (تفصيلها في الملحق)، ما يضعف الاعتماد على نسب المقارنة</li></ul></div>
+      <div class="box opp"><h4>💡 الفرص الممكن الاستفادة منها</h4><ul><li>قاعدة قابلة للوصول جاهزة: 219 عنواناً يصلها البريد فعلياً — الأساس موجود وينقصه المحتوى والوتيرة</li><li>ربط البريد بحملات المحطات: قوائم الوصول في الربع بلغت 4.5 مليون مشاهدة دون أي تحويل منها إلى مشتركين</li><li>الاستكرات والفواحات الـ15,000 الموزَّعة في فعالية اليوم الوطني قناة تسجيل جاهزة برمز QR</li><li>القارئ الحالي متفاعل (2.4 فتحة لكل قارئ) — شريحة صغيرة لكنها تستحق محتوى مخصصاً</li></ul></div>
+      <div class="box rec"><h4>📌 التوصيات</h4><ul><li>اعتماد مستهدفات ربعية للقناة: عدد الرسائل، ومعدل الفتح، ومعدل النقر، وعدد المشتركين الجدد</li><li>تفعيل قياس النقرات والتحويلات وربطها بمبيعات المحطات كما رُبطت الحملات الميدانية</li><li>خطة نمو للقائمة عبر رمز QR في المحطات وفي المواد الموزَّعة في الفعاليات</li><li>مراجعة أرقام لوحة المتابعة مع مزوّد الخدمة وتثبيت فترة مقارنة موحّدة قبل الربع الرابع</li><li>تنظيف القائمة دورياً للحفاظ على نسبة التسليم عند ‎93%‎ فأعلى</li></ul></div>
+    </div>
+
+    <div style="margin-block-start:18px">
+      <div class="subhead">🔻 ما لم يتحقق في هذه القناة · المبرر والإجراء التصحيحي</div>
+      <div class="tablewrap"><table><thead><tr><th>البند</th><th class="num">المستهدف</th>
+        <th class="num">المتحقق</th><th>المبرر</th><th>الإجراء التصحيحي</th></tr></thead>
+        <tbody><tr><td><b>مستهدف معتمد للقناة</b></td><td class="num tnum">مستهدفات إرسال وفتح ونقر</td><td class="num tnum">غير محدّد</td><td style="color:var(--ink-2)">لم تُعتمد مستهدفات لقناة البريد ضمن خطة الربع، فقيست النتائج دون مرجع.</td><td style="color:var(--ink-2)">اعتماد مستهدفات ربعية للقناة قبل بداية الربع الرابع.</td></tr><tr><td><b>قياس النقر والتحويل</b></td><td class="num tnum">معدل نقر وتحويلات مسجّلة</td><td class="num tnum">غير مُقاس</td><td style="color:var(--ink-2)">لا يعرض التقرير المرفق أي بيانات نقر أو تحويل، فتعذّر قياس الأثر التجاري للقناة.</td><td style="color:var(--ink-2)">تفعيل تتبّع النقرات والتحويلات وربطها بمبيعات المحطات.</td></tr><tr><td><b>اتساق أرقام المقارنة</b></td><td class="num tnum">نسب مقارنة متسقة</td><td class="num tnum">غير متسقة</td><td style="color:var(--ink-2)">معدل الفتح منخفض ‎81.7%‎ بينما إجمالي الفتحات مرتفع ‎9,650%‎ على تسليم أعلى بـ‎265%‎ — لا تجتمع هذه النسب حسابياً.</td><td style="color:var(--ink-2)">مراجعة الأرقام مع مزوّد الخدمة وتوحيد فترة المقارنة قبل اعتمادها في التقارير.</td></tr><tr><td><b>حجم النشاط</b></td><td class="num tnum">وتيرة إرسال منتظمة</td><td class="num tnum">2.6 رسالة/يوم</td><td style="color:var(--ink-2)">235 رسالة في ربع كامل لا تكفي لبناء عادة قراءة لدى الجمهور ولا لقياس أداء القناة.</td><td style="color:var(--ink-2)">اعتماد تقويم إرسال شهري بوتيرة ثابتة معلنة مسبقاً.</td></tr></tbody></table></div>
+    </div>
+  </div>
+</section>
+
 <!-- ======================= 05 · TEAM TARGETS ======================= -->
 <section id="team">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">06 · مستهدفات فريق العمل</span>
+      <span class="kicker">07 · مستهدفات فريق العمل</span>
       <h2 class="sec-title">المهام الدورية والشهرية · المستهدف مقابل الإنجاز</h2>
       <p class="sec-note">إلى جانب أداء الحملات، يلتزم فريق التسويق بتسع مهام دورية معتمدة. الأرقام أدناه هي
         الإنجاز المسجّل في لوحة متابعة المهام حتى تاريخ إعداد هذا التقرير مقابل المستهدف المعتمد لكل مهمة،
@@ -1156,7 +1214,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
 <section id="challenges">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">07 · التحديات</span>
+      <span class="kicker">08 · التحديات</span>
       <h2 class="sec-title">التحديات التي واجهت تنفيذ حملات الربع</h2>
       <p class="sec-note">مصنّفة بحسب طبيعتها، مع بيان الحملات التي ظهرت فيها وأثرها على النتيجة.</p>
     </div>
@@ -1235,7 +1293,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
 <section id="opps" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">08 · الفرص</span>
+      <span class="kicker">09 · الفرص</span>
       <h2 class="sec-title">الفرص الممكن الاستفادة منها</h2>
       <p class="sec-note">فرص مستخلصة من أداء الربع نفسه، قابلة للتفعيل خلال الربع الرابع.</p>
     </div>
@@ -1276,7 +1334,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
 <section id="recs">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">09 · التوصيات</span>
+      <span class="kicker">10 · التوصيات</span>
       <h2 class="sec-title">التوصيات والخطوات التالية للربع الرابع</h2>
       <p class="sec-note">مرتبة بحسب الأولوية — الأثر على جودة القرار أولاً، ثم جاهزية التنفيذ، ثم التوسع.</p>
     </div>
@@ -1325,7 +1383,7 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
 <section id="appendix" style="background:var(--paper-2)">
   <div class="wrap">
     <div class="sec-head">
-      <span class="kicker">10 · الملحق</span>
+      <span class="kicker">11 · الملحق</span>
       <h2 class="sec-title">المنهجية ومصادر البيانات وملاحظات الجودة</h2>
     </div>
 
@@ -1341,6 +1399,8 @@ td b small{display:block; font-weight:400; font-size:11.5px; color:var(--ink-3);
           <tr><td><b>مصدر بيانات سبتمبر</b></td><td style="color:var(--ink-2)">ملف تحليل مبيعات سبتمبر 2026 للمحطات الثلاث (HA052 · MK040 · NJ219). ملفات سبتمبر تنتهي ظهر 28 سبتمبر، لذا كل أرقام سبتمبر في هذا التقرير هي أول 27 يوماً كاملاً، ولم يُحتسب اليوم الجزئي 28 (26,310 ر.س للمحطات الثلاث). كل المقارنات على المتوسط اليومي لأن أغسطس جزئي في الروضة (16 يوماً) وحائل (25 يوماً).</td></tr>
           <tr><td><b>استبعاد حركة غير ممكنة في نجران NJ219</b></td><td style="color:var(--ink-2)">حركة بتاريخ 24 سبتمبر الساعة 13:17 على المضخة 10 بمقدار 13,834 لتراً و29,680 ر.س ومدتها صفر ثانية — وهي قراءة عدّاد خزان سُجّلت كعملية بيع. لو بقيت لرفعت إيراد سبتمبر نحو 8% وقلبت تراجع المحطة إلى نمو. كما استُبعدت حركات المعايرة (نجران 34 · الروضة 60 · حائل 82) والحركات الصفرية التي لم يُصرف فيها وقود.</td></tr>
           <tr><td><b>حدود قراءة نمو حائل والروضة في سبتمبر</b></td><td style="color:var(--ink-2)">المحطتان انضمتا للشبكة في أغسطس، فجزء من نمو سبتمبر تعافٍ من ضعف أسابيع الافتتاح لا نمو عضوي ولا أثر حملة. المقياس الأصدق هو مستوى آخر أسبوعين: حائل 19.4 – 24.5 ألف ر.س/يوم، والروضة 16.8 – 18.8، ونجران 13.3 – 13.8.</td></tr>
+          <tr><td><b>مصدر بيانات البريد الإلكتروني</b></td><td style="color:var(--ink-2)">لوحة متابعة أداء البريد للفترة 1 يوليو – 30 سبتمبر 2026 مقارنةً بالـ92 يوماً السابقة. تعرض اللوحة أربعة مؤشرات فقط (المُرسَل 235 · المُسلَّم 219 · معدل الفتح 7.3% · إجمالي الفتحات 39)، وكل رقم آخر في قسم البريد محتسب منها بالمعادلة المبيّنة داخل القسم. معدل الفتح يُحتسب على الرسائل المُسلَّمة لا المُرسَلة.</td></tr>
+          <tr><td><b>عدم اتساق نسب المقارنة في لوحة البريد</b></td><td style="color:var(--ink-2)">انخفاض معدل الفتح 81.7% مع ارتفاع التسليم 265% يوجب أن يكون إجمالي الفتحات في الفترة السابقة نحو 24 على الأقل، بينما ارتفاع إجمالي الفتحات 9,650% يوجب أن يكون أقل من واحد. لذلك اعتُمدت الأرقام المطلقة للربع الثالث وحدها أساساً للقراءة، وعوملت أرقام الفترة السابقة كتقدير يحتاج تحققاً مع مزوّد الخدمة.</td></tr>
           <tr><td><b>احتساب الإيراد الإضافي</b></td><td style="color:var(--ink-2)">= (إيراد يوم الحملة − متوسط خط الأساس اليومي) + (متوسط الإيراد اليومي بعد الحملة − متوسط خط الأساس) × عدد أيام ما بعد الحملة. الناتج إيراد إضافي وليس ربحاً، ولم تُخصم منه كلفة الوقود المُباع ولا قيمة القسائم.</td></tr>
           <tr><td><b>وحدة التفاعل</b></td><td style="color:var(--ink-2)">صُحّحت في هذه النسخة: القيم التي كانت تظهر في لوحة المؤشرات (مثل 16,805) هي معدل التفاعل مضروباً في 1000 — أي 16.8%. اعتُمدت المعدلات كما وردت في ملف تحليل المحطات، واحتُسب عدد التفاعلات = الوصول × المعدل.</td></tr>
           <tr><td><b>تصحيح وصول حائل HA052</b></td><td style="color:var(--ink-2)">كان مسجّلاً 469,000 مشاهدة في لوحة المؤشرات السابقة، وورد 632,353 في ملف تحليل المحطات المعتمد في هذه النسخة (632.4% من المستهدف).</td></tr>
