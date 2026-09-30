@@ -1221,7 +1221,7 @@ def monthly_body(a):
     <div class="ntable"><div class="tscroll"><table>
       <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
       <tbody>{fuel_rows}</tbody></table></div></div>
-    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب 2026 (حتى أغسطس).</div>
+    <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب وتقارير المبيعات الشهرية المزوّدة 2026.</div>
     {month_cards(code, mm, keys)}'''
 
 def daily_line_chart(daily):
