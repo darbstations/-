@@ -1199,6 +1199,7 @@ def monthly_body(a):
     fuel_rows = ''
     for k in keys:
         fs = {f['fuel']: f['rev'] for f in mm[k].get('fuels', [])}
+        if not fs: continue
         fr = sum(fs.values()) or 1
         fuel_rows += f'''<tr><td><b>{MONTH_AR.get(k,k)}</b></td><td>{fs.get('Gasoline 91',0)/fr*100:.0f}٪</td>
         <td>{fs.get('Gasoline 95',0)/fr*100:.0f}٪</td><td>{fs.get('Diesel',0)/fr*100:.0f}٪</td></tr>'''
@@ -1217,10 +1218,10 @@ def monthly_body(a):
     <div class="ntable"><div class="tscroll"><table>
       <thead><tr><th>الشهر</th><th>أيام مسجلة</th><th>الإيراد (ر.س)</th><th>الزيارات</th><th>اللترات</th><th>الفاتورة (ر.س)</th><th>متوسط اليوم (ر.س)</th><th>ساعة الذروة</th><th>التغير٪*</th></tr></thead>
       <tbody>{rows}</tbody></table></div></div>
-    <div class="sec-h" style="margin-top:18px"><h2>مزيج الوقود شهريًا</h2><span>نسب من إيراد الشهر</span></div>
-    <div class="ntable"><div class="tscroll"><table>
-      <thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>
-      <tbody>{fuel_rows}</tbody></table></div></div>
+    {('<div class="sec-h" style="margin-top:18px"><h2>مزيج الوقود شهريًا</h2><span>نسب من إيراد الشهر — للأشهر المتوفر تفصيلها</span></div>'
+    '<div class="ntable"><div class="tscroll"><table>'
+    '<thead><tr><th>الشهر</th><th>بنزين 91</th><th>بنزين 95</th><th>ديزل</th></tr></thead>'
+    f'<tbody>{fuel_rows}</tbody></table></div></div>') if fuel_rows else ''}
     <div class="dnote">(*) التغير محسوب على متوسط الإيراد اليومي لكل شهر لتحييد الأشهر الجزئية. المصدر: لوحة مبيعات درب وتقارير المبيعات الشهرية المزوّدة 2026.</div>
     {month_cards(code, mm, keys)}'''
 
