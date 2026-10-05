@@ -39,6 +39,10 @@ except FileNotFoundError:
     ECO = {}
 DATA = json.load(open('data.json'))
 XL = json.load(open('stations.json'))
+try:
+    ALLOC = json.load(open('alloc_stations.json'))
+except Exception:
+    ALLOC = {}
 COMP = json.load(open('competitors.json'))
 BYCODE = {s['code']: s for s in DATA['stations']}
 os.makedirs('stations', exist_ok=True)
@@ -1677,11 +1681,35 @@ for x in XTRA.values():
 
 nosales = [r for r in XL if r['num'] not in A and r['num'] not in XTRA]
 from collections import Counter
-bycity = Counter(r['city'].strip() for r in nosales)
+alloc_only = [c for c in sorted(ALLOC) if c not in A and c not in XTRA and not ALLOC[c]['in218']]
+bycity = Counter([r['city'].strip() for r in nosales] + [ALLOC[c]['city'] for c in alloc_only])
 app_sum = '، '.join(f"{c} ({n})" for c, n in bycity.most_common())
-app_rows = ''.join(f"<tr><td>{esc(r['num'])}</td><td>{esc(r['city'])}</td><td>{esc(r['name'])}</td>"
-                   f"<td>{'تشغيل' if r['status']=='Operation' else 'فرنشايز'}</td>"
-                   f"<td><a href='{esc(r['loc'])}' target='_blank' rel='noopener'>الموقع ↗</a></td></tr>" for r in nosales)
+
+def _app_type(code, xl_row=None):
+    e = ALLOC.get(code)
+    if e: return 'تشغيل ذاتي' if e['type'] == 'ذاتي' else 'امتياز تجاري'
+    return ('تشغيل' if xl_row['status'] == 'Operation' else 'فرنشايز') if xl_row else '—'
+
+def _app_alloc_cells(code):
+    e = ALLOC.get(code)
+    if not e: return '<td>—</td><td>—</td>'
+    return f"<td><b>{n0(e['total'])}</b> ✓</td><td>{esc(e['lic'])}</td>"
+
+_app = []
+for r in nosales:
+    e = ALLOC.get(r['num'])
+    _app.append(((0 if e else 1), (0 if e and e['type'] == 'ذاتي' else 1), r['city'].strip(), r['num'],
+                 f"<tr><td>{esc(r['num'])}</td><td>{esc(r['city'])}</td><td>{esc(r['name'])}</td>"
+                 f"<td>{_app_type(r['num'], r)}</td>{_app_alloc_cells(r['num'])}"
+                 f"<td><a href='{esc(r['loc'])}' target='_blank' rel='noopener'>الموقع ↗</a></td></tr>"))
+for c in alloc_only:
+    e = ALLOC[c]
+    _app.append((0, 0 if e['type'] == 'ذاتي' else 1, e['city'], c,
+                 f"<tr><td>{esc(c)}</td><td>{esc(e['city'])}</td><td>{esc(e['name'])}</td>"
+                 f"<td>{_app_type(c)}</td>{_app_alloc_cells(c)}<td>—</td></tr>"))
+_app.sort(key=lambda t: (t[0], t[1], t[2], t[3]))
+app_rows = ''.join(t[4] for t in _app)
+n_app_alloc = sum(1 for t in _app if ALLOC.get(t[3]))
 
 def spa_view(idx, a):
     m = a['metrics']; code = m['code']
@@ -1920,7 +1948,7 @@ hub = f'''<!DOCTYPE html>
       <p>2026 · {len(ORDER) + len(XTRA)} محطة مشمولة {f'({len(ORDER)} ببيانات مبيعات) ' if XTRA else 'بالبيانات '}· اختر محطة لفتح صفحتها الكاملة</p></div>
     </div>
     <div class="netkpis">
-      <div><div class="v">{len(ORDER) + len(XTRA)}</div><div class="l">محطة مشمولة بالتحليل{f' — {len(ORDER)} ببيانات مبيعات' if XTRA else ''} (من أصل {len(XL)})</div></div>
+      <div><div class="v">{len(ORDER) + len(XTRA)}</div><div class="l">محطة مشمولة بالتحليل{f' — {len(ORDER)} ببيانات مبيعات' if XTRA else ''} (من أصل {len(XL) + len(alloc_only)} موقعًا بالدليل وملف التخصيص)</div></div>
       <div><div class="v">{tot_rev/1e6:,.1f} <small>مليون ر.س</small></div><div class="l">إيراد الفترة</div></div>
       <div><div class="v">{tot_vis/1e6:,.2f} <small>مليون</small></div><div class="l">زيارة</div></div>
       <div><div class="v">{avg_rt:.2f} ★</div><div class="l">متوسط تقييم درب على جوجل</div></div>
@@ -1939,9 +1967,9 @@ hub = f'''<!DOCTYPE html>
   <div class="ntable"><div class="tscroll"><table id="ovt">
     <thead><tr><th>#</th><th>المحطة</th><th>المدينة</th><th>التصنيف</th><th>إيراد يومي (ر.س)</th><th>الفاتورة (ر.س)</th><th>نمو Q2</th><th>منافسون ≤5كم</th><th>جوجل ★</th></tr></thead>
     <tbody>{ov_rows}</tbody></table></div></div>
-  <div class="sec-h"><h2>محطات خارج نطاق هذا التحليل</h2><span>{len(nosales)} محطة لا تتوفر لها بيانات مبيعات في لوحة التحليل</span></div>
+  <div class="sec-h"><h2>محطات بدون بيانات مبيعات — الدليل وملف التخصيص</h2><span>{len(_app)} موقعًا (تحت الإنشاء أو امتياز) · منها {n_app_alloc} في ملف كميات التخصيص الثالث معلَّمة ✓ مع كميتها الشهرية المخصصة</span></div>
   <details class="apx"><summary>عرض القائمة — {esc(app_sum)}</summary>
-    <div class="tscroll"><table><thead><tr><th>الكود</th><th>المدينة</th><th>المحطة</th><th>النوع</th><th>الموقع</th></tr></thead><tbody>{app_rows}</tbody></table></div>
+    <div class="tscroll"><table><thead><tr><th>الكود</th><th>المدينة</th><th>المحطة</th><th>النوع</th><th>التخصيص الشهري (لتر)</th><th>الرخصة</th><th>الموقع</th></tr></thead><tbody>{app_rows}</tbody></table></div>
   </details>
   <footer>{FOOT_METH}</footer>
 </main>
