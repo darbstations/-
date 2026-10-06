@@ -1471,6 +1471,7 @@ if _CS:
     def _st_name(c):
         return A[c]['metrics']['name'] if c in A else ''
     _tot = _ag['total']
+    _norep = sum(1 for _r in _rows if 'لم يتم الرد' in (_r.get('act') or '') or 'لم يتم الرد' in (_r.get('desc') or ''))
     _ty = _ag['by_type']; _ch = _ag['by_ch']
     _mlabels = [m for m, _ in _ag['by_month']]; _mvals = [n for _, n in _ag['by_month']]
     _cities = sorted(_ag['by_city'].items(), key=lambda x: -x[1])[:8]
@@ -1495,16 +1496,16 @@ if _CS:
     _topts = ''.join(f'<option value="{t}">{t}</option>' for t in _ty)
     CS_HTML = f'''<div class="pgview" id="pg-cs" data-title="تحليل خدمة العملاء" hidden>
   <div class="pgnav"><div class="nvl"><a class="hb" href="#/">⌂ جميع المحطات</a></div></div>
-  <div class="sec-h"><h2>🎧 تحليل خدمة العملاء — سجل التسويق</h2><span>يناير – أغسطس 2026 · {_tot} تواصلًا موثقًا من ورقة Marketing</span></div>
+  <div class="sec-h"><h2>🎧 تحليل خدمة العملاء — سجل التسويق</h2><span>يناير – أكتوبر 2026 · {_tot} تواصلًا موثقًا من ملف Marketing</span></div>
   <div class="skpis" style="grid-template-columns:repeat(6,1fr)">
-    <div class="kpi hot"><div class="kl">إجمالي التواصلات</div><div class="kv">{_tot}</div><div class="kn">8 أشهر · من {_mvals[0]} في يناير إلى {_mvals[-1]} في أغسطس</div></div>
+    <div class="kpi hot"><div class="kl">إجمالي التواصلات</div><div class="kv">{_tot}</div><div class="kn">{len(_mvals)} أشهر · الذروة {max(_mvals)} في {_mlabels[_mvals.index(max(_mvals))]}</div></div>
     <div class="kpi"><div class="kl">استفسارات</div><div class="kv">{_ty.get('استفسار',0)}</div><div class="kn">{_ty.get('استفسار',0)/_tot*100:.0f}٪ من السجل</div></div>
     <div class="kpi"><div class="kl">طلبات</div><div class="kv">{_ty.get('طلب',0)}</div><div class="kn">شراكات ومقترحات وتسليم جوائز</div></div>
     <div class="kpi"><div class="kl">شكاوى</div><div class="kv">{_ty.get('شكوى',0)}</div><div class="kn">{_ty.get('شكوى',0)/_tot*100:.0f}٪ — أغلبها تنفيذ عروض</div></div>
     <div class="kpi"><div class="kl">اقتراحات</div><div class="kv">{_ty.get('اقتراح',0)}</div><div class="kn">أبرزها برنامج الولاء والتطبيق</div></div>
     <div class="kpi"><div class="kl">إجراء موثق</div><div class="kv">{_acted/_tot*100:.0f}٪</div><div class="kn">{_acted} من {_tot} — البقية بلا إجراء مسجل</div></div>
   </div>
-  <div class="chartbox"><h3>التواصلات شهريًا</h3><div class="cs">القفزة من يونيو مدفوعة بحملات الافتتاحات (المدينة، جازان، حفر الباطن) ثم كفرات بلس (يوليو) ومسابقة إنستقرام (أغسطس)</div>{bars_chart(_mvals, _mlabels, lambda v: f'{v:.0f}')}</div>
+  <div class="chartbox"><h3>التواصلات شهريًا</h3><div class="cs">القفزة من يونيو مدفوعة بحملات الافتتاحات (المدينة، جازان، حفر الباطن) ثم كفرات بلس (يوليو) ومسابقة إنستقرام (أغسطس) · أكتوبر جزئي حتى تاريخ التصدير (٤ أكتوبر)</div>{bars_chart(_mvals, _mlabels, lambda v: f'{v:.0f}')}</div>
   <div class="agrid" style="grid-template-columns:1fr 1fr">
     <div class="card"><div class="ct"><h3>مزيج الأنواع</h3><div class="leg">من إجمالي السجل</div></div>{mixbar(_typarts)}</div>
     <div class="card"><div class="ct"><h3>قنوات التواصل</h3><div class="leg">واتساب تضاعف في يوليو وأغسطس حتى عادل الاتصال</div></div>{mixbar([p for p in _chparts if p[1] >= 0.02])}</div>
@@ -1527,7 +1528,7 @@ if _CS:
     <li><b>حزمة تشغيل العروض:</b> لكل حملة — تهيئة العمال والمدراء + باركود احتياطي يُرسل للعميل + سقف معلن (أول N) وخطة طوابير. (مصدرها 17 حالة «العامل ما يدري» و9 شكاوى MD009)</li>
     <li><b>حوكمة المسابقات:</b> شروط زمنية صريحة في المنشور نفسه، إعلان فائزين علني خلال 48 ساعة، وردود متنوعة غير قالبية. (40+ حالة في أغسطس)</li>
     <li><b>تسريع برنامج الولاء والتطبيق:</b> الطلب الأعلى تكرارًا عبر الفترة كلها (23 حالة) والوعد «قريبًا» يتقادم.</li>
-    <li><b>SLA للرد والإجراء:</b> 51٪ من السجل بلا إجراء موثق و12 حالة «لم يتم الرد» — اعتماد حقل إجراء إلزامي ومهلة رد.</li>
+    <li><b>SLA للرد والإجراء:</b> {(_tot - _ag['acted']) / _tot * 100:.0f}٪ من السجل بلا إجراء موثق و{_norep} حالة «لم يتم الرد» — اعتماد حقل إجراء إلزامي ومهلة رد.</li>
     <li><b>مسار B2B موحد:</b> 40 طلب شراكة/رعاية تمر كلها عبر تحويلات فردية (أ. أمل الشمراني) — نموذج استقبال موحد وايميل شراكات معلن يقلل الفاقد.</li>
     <li><b>لوحة أفكار العملاء:</b> اقتراحات المواقع الجديدة (14) والمستأجرين (19) مادة مجانية لفريقي التطوير والتأجير — تستحق مراجعة شهرية.</li>
   </ol></div>
@@ -1538,7 +1539,7 @@ if _CS:
     <select id="cst" onchange="csF()" style="border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit"><option value="">كل الأنواع</option>{_topts}</select>
   </div></div>
   <div class="ntable"><div class="tscroll"><table id="cslog"><thead><tr><th>التاريخ</th><th>النوع</th><th>المدينة</th><th>المحطة</th><th>الوصف</th><th>الإجراء</th><th>القناة</th></tr></thead><tbody>{_logtr}</tbody></table></div></div>
-  <div class="dnote">المصدر: جدول خدمة عملاء التسويق (Marketing — Google Sheets)، أوراق يناير حتى أغسطس 2026 · {_tot} سجلًا بعد استبعاد الصفوف الفارغة · التصنيفات الموضوعية آلية استرشادية.</div>
+  <div class="dnote">المصدر: جدول خدمة عملاء التسويق (Marketing — Google Sheets)، أوراق يناير حتى أكتوبر 2026 (أكتوبر جزئي) · {_tot} سجلًا بعد استبعاد الصفوف الفارغة · التصنيفات الموضوعية آلية استرشادية.</div>
   <script>
   function csF(){{var q=(document.getElementById('csq').value||'').trim(),m=document.getElementById('csm').value,t=document.getElementById('cst').value,n=0;
   document.querySelectorAll('#cslog tbody tr').forEach(function(r){{var ok=(!m||r.dataset.m===m)&&(!t||r.dataset.t===t)&&(!q||r.textContent.indexOf(q)>-1);r.hidden=!ok;if(ok)n++;}});
@@ -1553,7 +1554,7 @@ if _CS:
         trs = ''.join(f'''<tr><td style="white-space:nowrap">{esc(r['d'])}</td><td>{_tybadge(r['type'])}</td><td style="min-width:260px">{esc(r['desc'])}</td><td style="color:var(--ink2)">{esc(r['act'] or '—')}</td><td style="white-space:nowrap">{esc(r['ch'])}</td></tr>''' for r in R)
         tys = Counter(r['type'] for r in R)
         chips = ' · '.join(f'{t}: <b>{m}</b>' for t, m in tys.most_common())
-        CS_ST_HTML[c] = f'''<div class="sec-h"><h2>استفسارات العملاء — سجل خدمة عملاء التسويق</h2><span>يناير – أغسطس 2026</span></div>
+        CS_ST_HTML[c] = f'''<div class="sec-h"><h2>استفسارات العملاء — سجل خدمة عملاء التسويق</h2><span>يناير – أكتوبر 2026</span></div>
         <div class="card"><div class="cs" style="margin-bottom:8px">وصل لهذه المحطة عبر قنوات التسويق <b>{n}</b> تواصلًا موثقًا ({chips}). القائمة الكاملة أدناه، والتحليل الشبكي في صفحة «تحليل خدمة العملاء» بالرئيسية.</div>
         <div class="ntable"><div class="tscroll"><table><thead><tr><th>التاريخ</th><th>النوع</th><th>الوصف</th><th>الإجراء</th><th>القناة</th></tr></thead><tbody>{trs}</tbody></table></div></div>
         <div class="ckh" style="margin-top:10px">ملاحظات</div>
