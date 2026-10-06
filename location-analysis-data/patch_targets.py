@@ -77,6 +77,31 @@ for code, tabs in oc.items():
             + (f'أعلى {MONTHS[hi]} {pcts[hi]:.0f}٪ · أدنى {MONTHS[lo]} {pcts[lo]:.0f}٪' if hi is not None else '—') + '</div></div>'
             f'<div class="kpi"><div class="kl">المتبقي من الموازنة</div><div class="kv">{fm(rem_bud)}<small> لتر</small></div><div class="kn">{k6n}</div></div></div>')
 
+
+    # year-end projection (run-rate of last up-to-3 recorded months)
+    proj = ''
+    if ex and rem_m:
+        last_i = ex[-1]
+        if last_i >= 8:
+            last3 = [act[i] for i in ex[-3:]]
+            avg3 = sum(last3) / len(last3)
+            proj_tot = act_sum + avg3 * rem_m
+            ppct = proj_tot / bud_tot * 100
+            needed = (bud_tot - act_sum) / rem_m
+            if ppct >= 100:
+                verdict, vc = 'المحطة على مسار تحقيق مستهدف السنة ✅', GREEN
+            elif ppct >= 90:
+                verdict, vc = f'قريبة من المستهدف — يلزم رفع المعدل إلى {n_(needed)} لتر/شهر ⚠️', '#C98A1B'
+            else:
+                verdict, vc = f'دون المستهدف — المطلوب {n_(needed)} لتر/شهر للأشهر المتبقية 🔴', RED
+            proj = (f'<div class="card" style="margin:10px 0 2px;padding:12px 16px">🔮 <b>توقع نهاية السنة (استرشادي):</b> '
+                    f'بإكمال الأشهر الـ{rem_m} المتبقية على متوسط آخر {len(last3)} أشهر فعلية ({n_(avg3)} لتر/شهر)، '
+                    f'تُتوقع السنة عند ~{n_(proj_tot)} لتر أي <b style="color:{vc}">{ppct:.0f}٪ من موازنة 2026</b> — '
+                    f'<span style="color:{vc};font-weight:700">{verdict}</span>'
+                    f'<div class="cs" style="margin-top:4px">توقع حسابي بمعدل الأشهر الأخيرة ولا يُحمِّل الموسمية؛ يتحدّث تلقائيًا مع كل شهر فعلي جديد.</div></div>')
+        else:
+            proj = (f'<div class="card" style="margin:10px 0 2px;padding:12px 16px">🔮 <b>توقع نهاية السنة:</b> '
+                    f'لا يُعرض توقع — آخر فعلي مسجل {MONTHS[last_i]}.</div>')
     vmax = max([x or 0 for x in bud] + [act[i] for i in ex] + [1])
     svg = []
     for i in range(12):
@@ -119,14 +144,15 @@ for code, tabs in oc.items():
     i_chart = t.find('<div class="chartbox">')
     i_sec = t.find('<div class="sec-h"><h2>جدول المستهدفات')
     assert t.startswith('<div class="skpis"') and i_chart > 0 and i_sec > i_chart, code
-    out = kpis + chart + t[i_sec:]
+    out = kpis + proj + chart + t[i_sec:]
     tb0 = out.find('<tbody>', out.find('جدول المستهدفات')); tb1 = out.find('</tbody>', tb0)
     out = out[:tb0+7] + new_tbody + out[tb1:]
     if any(lit):
         dn0 = out.find('<div class="dnote">', out.find('</tbody>', out.find('جدول المستهدفات')))
         dn1 = out.find('</div>', dn0)
         clause = ' فعلي <b>يوليو → سبتمبر</b> المعلَّم † مأخوذ من لترات مبيعات المحطة الفعلية (التقرير الشبكي يناير–سبتمبر 2026)، لا من ملف الموازنة.'
-        out = out[:dn1] + clause + out[dn1:]
+        if clause not in out:
+            out = out[:dn1] + clause + out[dn1:]
     tabs['targets'] = out
     patched.append(code)
 
