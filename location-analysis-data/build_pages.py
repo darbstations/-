@@ -1629,6 +1629,47 @@ window.addEventListener('hashchange',route);route();
 </html>'''
     open(f'stations/{code}.html', 'w', encoding='utf-8').write(page)
 
+# ---------------- network monthly sales matrix ----------------
+_ALLM = sorted({k for s in BYCODE.values() for k in (s.get('monthly') or {})})
+_mt = {k: sum((BYCODE[c].get('monthly') or {}).get(k, {}).get('revenue', 0) for c in BYCODE) for k in _ALLM}
+_grand = sum(_mt.values())
+_best_k = max(_mt, key=_mt.get)
+MS_ROWS = ''
+for _i, _a in enumerate(ORDER, 1):
+    _code = _a['metrics']['code']
+    _mm = (BYCODE.get(_code) or {}).get('monthly') or {}
+    _tot = sum(_mm[k]['revenue'] for k in _mm)
+    _cells = ''
+    for k in _ALLM:
+        _e = _mm.get(k)
+        _cells += (f'<td title="{_e.get("ndays") or "؟"} يومًا">{n0(_e["revenue"])}</td>' if _e else '<td style="color:var(--ink2)">—</td>')
+    MS_ROWS += (f'<tr data-region="{esc(_a["metrics"]["region"])}" data-name="{esc(_a["metrics"]["name"])} {_code}">'
+                f'<td>{_i}</td><td style="white-space:nowrap"><a class="stlink" href="#/{_code}/monthly">{esc(_a["metrics"]["name"])}</a> <span class="tcode">{_code}</span></td>'
+                f'<td>{esc(_a["metrics"]["region"])}</td>{_cells}<td><b>{n0(_tot)}</b></td></tr>')
+MS_HDR = ''.join(f'<th>{MONTH_AR[k]}</th>' for k in _ALLM)
+MS_TOT = ''.join(f'<td><b>{n0(_mt[k])}</b></td>' for k in _ALLM)
+_ms_ropts = ''.join(f'<option value="{esc(r)}">{esc(r)}</option>' for r in REGIONS)
+MONTHLY_ALL_HTML = f'''<div class="pgview" id="pg-monthly-all" data-title="المبيعات الشهرية — جميع المحطات" hidden>
+  <div class="pgnav"><div class="nvl"><a class="hb" href="#/">⌂ جميع المحطات</a></div></div>
+  <div class="sec-h"><h2>📅 المبيعات الشهرية — جميع المحطات</h2><span>{MONTH_AR[_ALLM[0]]} → {MONTH_AR[_ALLM[-1]]} 2026 · الوحدة ر.س · {len(ORDER)} محطة مرتبة بالإيراد اليومي</span></div>
+  <div class="skpis" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi hot"><div class="kl">إيراد الفترة</div><div class="kv">{_grand/1e6:,.1f}م<small> ر.س</small></div><div class="kn">{n0(_grand)} ر.س على {len(_ALLM)} أشهر</div></div>
+    <div class="kpi"><div class="kl">أفضل شهر للشبكة</div><div class="kv">{MONTH_AR[_best_k]}</div><div class="kn">{n0(_mt[_best_k])} ر.س</div></div>
+    <div class="kpi"><div class="kl">متوسط شهري</div><div class="kv">{_grand/len(_ALLM)/1e6:,.1f}م<small> ر.س</small></div><div class="kn">إجمالي الفترة ÷ عدد الأشهر</div></div>
+    <div class="kpi"><div class="kl">آخر شهر مسجل</div><div class="kv">{MONTH_AR[_ALLM[-1]]}</div><div class="kn">{n0(_mt[_ALLM[-1]])} ر.س</div></div>
+  </div>
+  <div class="chartbox"><h3>إيراد الشبكة شهريًا</h3><div class="cs">القفزة من يوليو تعكس انضمام محطات التقرير الشبكي ودخول مواقع جديدة الخدمة، لا نموًا متجانسًا لنفس المحطات</div>{bars_chart([_mt[k]/1e6 for k in _ALLM], [MONTH_AR[k] for k in _ALLM], lambda v: f'{v:,.0f}م')}</div>
+  <div class="card" style="margin:10px 0;padding:10px 14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+    <input id="msq" oninput="msF()" placeholder="بحث باسم المحطة أو الكود…" style="flex:1;min-width:200px;border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit;font-size:14px">
+    <select id="msr" onchange="msF()" style="border:1px solid var(--line2);border-radius:11px;padding:9px 14px;font-family:inherit"><option value="">كل المناطق</option>{_ms_ropts}</select>
+    <span class="cs"><b id="msn">{len(ORDER)}</b> محطة ظاهرة</span>
+  </div>
+  <div class="ntable"><div class="tscroll"><table id="mstbl"><thead><tr><th>#</th><th>المحطة</th><th>المنطقة</th>{MS_HDR}<th>الإجمالي</th></tr></thead>
+  <tbody>{MS_ROWS}<tr style="background:#FBF9F5;font-weight:700"><td></td><td>إجمالي الشبكة</td><td></td>{MS_TOT}<td><b>{n0(_grand)}</b></td></tr></tbody></table></div></div>
+  <script>function msF(){{var q=(document.getElementById('msq').value||'').trim(),rg=document.getElementById('msr').value,n=0;document.querySelectorAll('#mstbl tbody tr[data-region]').forEach(function(r){{var ok=(!rg||r.dataset.region===rg)&&(!q||(r.dataset.name||'').indexOf(q)>-1||r.textContent.indexOf(q)>-1);r.hidden=!ok;if(ok)n++;}});document.getElementById('msn').textContent=n;}}</script>
+  <div class="dnote">المصدر: لوحة مبيعات درب والتقرير الشبكي يناير–سبتمبر 2026 وملفات المعاملات · «—» شهر بلا بيانات (قبل الافتتاح أو لم تصل ملفاته) · مرّر فوق أي رقم لعدد الأيام المسجلة في الشهر · اضغط اسم المحطة لتفاصيل مبيعاتها الشهرية.</div>
+</div>'''
+
 # ---------------- hub page ----------------
 tot_rev = sum(a['metrics']['revenue'] for a in ORDER)
 tot_vis = sum(a['metrics']['visits'] for a in ORDER)
@@ -1958,7 +1999,7 @@ hub = f'''<!DOCTYPE html>
   </div>
 </header>
 <div id="hub">
-<div class="stationbar"><div class="chips" id="chips"><a class="chip" href="#/compare" style="background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700">⚖️ إنشاء مقارنة</a><a class="chip" href="#/cs" style="background:var(--bgray);border-color:var(--bgray);color:#fff;font-weight:700">🎧 تحليل خدمة العملاء</a>{chips}
+<div class="stationbar"><div class="chips" id="chips"><a class="chip" href="#/compare" style="background:var(--orange);border-color:var(--orange);color:#fff;font-weight:700">⚖️ إنشاء مقارنة</a><a class="chip" href="#/cs" style="background:var(--bgray);border-color:var(--bgray);color:#fff;font-weight:700">🎧 تحليل خدمة العملاء</a><a class="chip" href="#/monthly-all" style="background:#3E6E8E;border-color:#3E6E8E;color:#fff;font-weight:700">📅 المبيعات الشهرية</a>{chips}
   <div class="search"><input id="q" type="search" placeholder="ابحث باسم المحطة أو الكود…" aria-label="بحث"></div>
 </div></div>
 <main class="wrap">
@@ -1975,7 +2016,7 @@ hub = f'''<!DOCTYPE html>
   <footer>{FOOT_METH}</footer>
 </main>
 </div>
-<main class="wrap" id="pages">{SPA_VIEWS}{CMP_HTML}{CS_HTML}</main>
+<main class="wrap" id="pages">{SPA_VIEWS}{CMP_HTML}{CS_HTML}{MONTHLY_ALL_HTML}</main>
 <script id="cmpdata" type="application/json">{CMP_JSON}</script>
 <script>
 const hubEl=document.getElementById('hub');
@@ -1987,7 +2028,7 @@ function route(){{
   else{{hubEl.style.display='';document.title='درب · تحليل المحطات والمبيعات — دليل المحطات';if(h)history.replaceState(null,'','#/');}}
 }}
 window.addEventListener('hashchange',route);
-const chips=document.querySelectorAll('.chip');const q=document.getElementById('q');
+const chips=document.querySelectorAll('#chips .chip[data-r]');const q=document.getElementById('q');
 let region='*';
 function apply(){{
   const t=(q.value||'').trim();
