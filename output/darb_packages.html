@@ -1,0 +1,312 @@
+<title>باقات درب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+/* Layout: station strip on top, two package builders side by side, each with a live budget gauge */
+:root{
+  --bg:#F6F5F3; --surface:#FFFFFF; --ink:#24201C; --ink2:#6B645C; --line:#E4E0DA;
+  --accent:#E8631A; --accent-soft:#FDEBDD; --fuel:#3E6E8E; --wash:#2F9C95; --prod:#E8631A; --darb:#7A5AA8;
+  --ok:#2E7D4F; --ok-soft:#E3F2E8; --bad:#C0392B; --bad-soft:#FBE4E1;
+  --display:'Readex Pro','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --body:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
+  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0;
+  --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; --bad-soft:#3D1F1B; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
+  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0;
+  --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; --bad-soft:#3D1F1B; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14.5px;line-height:1.55;direction:rtl}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:22px 48px;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:24px} h2{font-size:18px} h3{font-size:14px;font-weight:700}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--ink2)}
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end;justify-content:space-between}
+.top p{margin:4px 0 0;color:var(--ink2);max-width:70ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px}
+label.f{display:grid;gap:4px;font-size:12.5px;color:var(--ink2);font-weight:500}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 9px;min-width:0;width:100%}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+input[type=number]{font-variant-numeric:tabular-nums;text-align:left;direction:ltr}
+button{font:inherit;cursor:pointer;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px}
+button.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.ghost{background:transparent}
+button.x{border:none;background:transparent;color:var(--ink2);padding:4px 8px;font-size:16px}
+button.x:hover{color:var(--bad)}
+.stn{display:grid;grid-template-columns:minmax(220px,320px) 1fr;gap:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{border-inline-start:3px solid var(--line);padding:2px 10px}
+.stat .k{font-size:12px;color:var(--ink2)} .stat .v{font-family:var(--display);font-size:20px;font-weight:700}
+.stat.s{border-color:var(--fuel)} .stat.fm{border-color:var(--accent)} .stat.h{border-color:var(--ink2)}
+.mix{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line);margin-top:10px}
+.mix i{display:block;height:100%}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--ink2);margin-top:6px}
+.legend b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-inline-end:5px;vertical-align:middle}
+.partners{display:grid;gap:8px;margin-top:14px}
+.pcat{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pcat .t{font-size:12px;color:var(--ink2);min-width:92px;font-weight:600}
+.chip{display:inline-block;font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin:2px 0 2px 4px}
+.nodata{font-size:13px;color:var(--ink2);background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px}
+.pkgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.pkg{display:grid;gap:14px;align-content:start}
+.pkg-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.row2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sec{display:grid;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.sec-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px}
+.gauge{display:flex;height:14px;border-radius:7px;overflow:hidden;background:var(--line)}
+.gauge i{display:block;height:100%;transition:width .25s}
+@media (prefers-reduced-motion:reduce){.gauge i{transition:none}}
+.remain{display:flex;justify-content:space-between;align-items:center;border-radius:8px;padding:10px 12px;font-weight:600}
+.remain.ok{background:var(--ok-soft);color:var(--ok)} .remain.bad{background:var(--bad-soft);color:var(--bad)}
+.remain .big{font-family:var(--display);font-size:22px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11.5px;color:var(--ink2);font-weight:600;text-align:right;padding:4px 4px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:4px;vertical-align:middle}
+td.tot{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;text-align:left}
+.prod td:nth-child(1){min-width:120px} .prod td:nth-child(2){min-width:120px}
+.prod td:nth-child(3){width:64px} .prod td:nth-child(4){width:80px}
+.sum{display:grid;gap:4px;font-size:13.5px}
+.sum div{display:flex;justify-content:space-between;gap:10px}
+.sum .hr{border-top:1px solid var(--line);margin-top:4px;padding-top:6px;font-weight:700}
+.darbbox{background:var(--bg);border-radius:8px;padding:10px 12px;display:grid;gap:4px;font-size:13px}
+.darbbox b{color:var(--darb)}
+.hint{font-size:12px;color:var(--ink2)}
+.ex{font-size:11px;color:var(--accent);font-weight:600}
+.potential{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:18px;align-items:start}
+.ptbl td,.ptbl th{padding:7px 6px;border-bottom:1px solid var(--line)}
+.ptbl td{font-variant-numeric:tabular-nums}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:900px){.pkgs,.stn,.potential{grid-template-columns:1fr}}
+@media (max-width:520px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.row3{grid-template-columns:1fr 1fr}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>باقات درب للتطبيق</h1>
+      <p>اختر المحطة، ثم وزّع قيمة كل باقة على البنزين والغسلات ومنتجات الشركاء. المتبقي يتحدث مع كل إضافة، وإعدادات كل محطة تُحفظ في متصفحك.</p>
+    </div>
+    <div class="actions">
+      <button class="ghost" id="copyBtn" type="button">نسخ الملخص لإكسل</button>
+      <button class="ghost" id="resetBtn" type="button">إعادة ضبط هذه المحطة</button>
+    </div>
+  </header>
+
+  <section class="panel stn">
+    <div style="display:grid;gap:10px;align-content:start">
+      <label class="f">ابحث عن محطة<input id="q" type="search" placeholder="الاسم أو الكود أو المنطقة"></label>
+      <label class="f">المحطة<select id="station"></select></label>
+      <div class="hint" id="stnMeta"></div>
+    </div>
+    <div style="min-width:0">
+      <div id="stnStats"></div>
+      <div class="partners" id="stnPartners"></div>
+    </div>
+  </section>
+
+  <section class="pkgs" id="pkgs"></section>
+
+  <section class="panel potential">
+    <div style="display:grid;gap:10px">
+      <h2>العائد المتوقع للمحطة</h2>
+      <p class="hint" style="margin:0">عدد المشتركين = السيارات الشهرية المستهدفة × نسبة الاشتراك. نسبة الاشتراك افتراض منك، غيّرها لتجرب.</p>
+      <div class="row2">
+        <label class="f">اشتراك الأفراد من السيارات الصغيرة ٪<input id="adS" type="number" min="0" max="100" step="0.1"></label>
+        <label class="f">اشتراك العائلات من السيارات العائلية ٪<input id="adF" type="number" min="0" max="100" step="0.1"></label>
+      </div>
+    </div>
+    <div class="tbl"><table class="ptbl" id="potTbl"></table></div>
+  </section>
+
+  <p class="hint">مصدر نسب السيارات: تقدير من ملف تحليل المحطات (الزيارات ومزيج الوقود ومتوسط التعبئة) بافتراض أن 35٪ من سيارات البنزين عائلية كبيرة في المتوسط، والديزل شاحنات وحافلات. الشركاء من ملف Darb Units. الأسعار والمنتجات المعبأة مسبقًا أمثلة فقط.</p>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const STATIONS=[{"c":"MK007","n":"العمرة الجديدة","r":"مكة","v":4348,"s":2313,"f":1378,"h":657,"p":{"car":["درب الصيانة","كار شيلد","هانكوك","واش واي","برنت","العكبري","البركة","قطب","كار ليزر","كار هب برو"],"rest":["صامولجي","ترويقة زمان","بيتزا ريتا","ماكدونالدز","قيس ايسكريم","باباسنفور","بف","اندو محموس","مدور","ضيافة البركة","عريكة عم قاسم","شاورمر","ايتر","مكبب","لمة برجر","قادري","كافتيرجي","هنش برجر","ركن مندي حضرموت","ورق عنب سوما","ناصية حلم","ركن الجمبري","رو","انسول"],"cafe":["رو","المذاق المغربي","جوينت","ريشو","بوبا بيرلز","انسول","تشاميقوس","كوف","بون","اودز","يو كوفي","٣٦٠ كافي","سكيليتون","ستار جوس"],"mkt":["بنده"],"oth":[]}},{"c":"MK003","n":"العوالي","r":"مكة","v":3524,"s":2000,"f":1524,"h":0,"p":{"car":["بترومين","مغسلة صقر"],"rest":["باباسنفور","بف","طعمية السلطان","الطازج","كازاباستا","برقر كينق","شاورمر","بوقا","لمة","حاشي باشا","مندي الدعدي","فطيرة و شاي T80","باسكن","دومينوز","فروتي الرضاء","فاير جريل","شاورما وصوص","شيفز","محطة العصائر","مذاق المنئوشة"],"cafe":["تيم هورتنز","قهوة الامراء","يو كوفي","براتو","بارنز","المذاق المغربي","بون","قهوة هيام","زيكا","بنز كوكيز","قيس ايسكريم"],"mkt":["تموينات السلطان","لوازم الرحلات"],"oth":["Redbox"]}},{"c":"MK004","n":"عاصفة الصحراء","r":"الطائف","v":2229,"s":982,"f":815,"h":433,"p":{"car":["مغسلة From","بنشر اكس ماكس"],"rest":["كرك شباتي","كنتاكي","ماكدونالدز"],"cafe":["بون","يو كوفي","كرسبي كريم","بارنز","تيم هورتنز","دانكن"],"mkt":["أسواق الحليس"],"oth":[]}},{"c":"MK289","n":"طريق الليث - الفضيلة","r":"جدة","v":1961,"s":628,"f":415,"h":918,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK046","n":"الحليس - طريق الجنوب","r":"الطائف","v":1861,"s":957,"f":632,"h":272,"p":{"car":["بنشر الشموخ","مغاسل"],"rest":["مملوح وسمسم"],"cafe":["كرز البن","Pulse","ديوانية ذوق الشيوخ"],"mkt":[],"oth":[]}},{"c":"MK072","n":"العزيزية","r":"مكة","v":2484,"s":1939,"f":394,"h":151,"p":{"car":["مغسلة سيارات ازدان","حلول كار"],"rest":[],"cafe":["عنوان القهوة"],"mkt":["راشن زون ماركت"],"oth":[]}},{"c":"MK005","n":"الشيباني","r":"الطائف","v":1735,"s":1002,"f":731,"h":2,"p":{"car":["الشموخ خدمات سيارات"],"rest":["كرك شباتي","كافتيريا باجيت","ماكدونالدز"],"cafe":["بارنز","مزاج مغربي","ايت اوز كوفي","تيم هورتنز","دانكن","كرسبي كريم","بون","يو كوفي"],"mkt":["أسواق الحليس"],"oth":[]}},{"c":"MK028","n":"أحلى مساء","r":"الطائف","v":1506,"s":800,"f":648,"h":58,"p":{"car":["اويل روز بنشر"],"rest":["الطازج","ماكدونالدز","كافتيريا باجيت"],"cafe":["مزاج مغربي","يو كوفي","كيان","بون","ايت اوز","دوز كافيه"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK047","n":"القادسية","r":"مكة","v":1697,"s":950,"f":497,"h":250,"p":{"car":["Express care","valvoline by aramco"],"rest":["ماكدونالدز"],"cafe":["اوريف كافيه","تيم هورتنز"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK015","n":"النسيم","r":"جدة","v":1990,"s":1297,"f":693,"h":0,"p":{"car":["كاراجي","بترومين"],"rest":["كنتاكي","هارديز","الطازج"],"cafe":["بارنز","كرسبي كريم","بون"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK006","n":"جنوب الطائف","r":"الطائف","v":1709,"s":1027,"f":682,"h":0,"p":{"car":["بنشر اويل روز"],"rest":[],"cafe":["جاب كوكيز","بارنز","دانكن","يو كوفي"],"mkt":["أسواق الحليس"],"oth":[]}},{"c":"MK029","n":"الدائري الثالث - الذكرى","r":"مكة","v":1607,"s":1157,"f":277,"h":173,"p":{"car":["بترومين","car shield","T3 autocarwash"],"rest":["ماكدونالدز","كرك شباتي","مشراق","بوبايز","معلوم"],"cafe":["بون","جوينت","وزنة براد"],"mkt":["أسواق درب"],"oth":[]}},{"c":"MK033","n":"أبو وافي العمرة","r":"مكة","v":1468,"s":731,"f":339,"h":398,"p":{"car":[],"rest":[],"cafe":["تكانة كافيه"],"mkt":["فريش واي"],"oth":[]}},{"c":"RY075","n":"الدائري الشمالي","r":"الرياض","v":1207,"s":704,"f":460,"h":43,"p":{"car":["واش واي","بترومين"],"rest":["الطازج","شاورما وصوص","تسالي مرصى مطروح","كودو","كنتاكي","مطعم طابور","باسكن روبنز"],"cafe":["هاف مليون","مزاج مغربي","يو كوفي"],"mkt":["Trolley - ترولي"],"oth":[]}},{"c":"JA092","n":"الصفا - أحد المسارحة","r":"جازان","v":1944,"s":1344,"f":550,"h":50,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK001","n":"جبل النور","r":"مكة","v":1835,"s":1273,"f":562,"h":0,"p":{"car":["درب الصيانة"],"rest":[],"cafe":["يو كوفي"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK008","n":"الحسينية","r":"مكة","v":1772,"s":1243,"f":529,"h":0,"p":{"car":["مغسلة درب الصيانة","بنشر درب الصيانة"],"rest":["طعمية السلطان","سندويشة وشاورما"],"cafe":["جاب كوكيز","قهوة الامراء"],"mkt":["فريش واي"],"oth":["صراف بنك الرياض"]}},{"c":"MK054","n":"طريق السيل","r":"مكة","v":795,"s":323,"f":279,"h":192,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK210","n":"الفلاح - فلسطين","r":"جدة","v":1369,"s":801,"f":314,"h":254,"p":{"car":[],"rest":[],"cafe":[],"mkt":["الواحه ماكس اكسبريس"],"oth":["صراف بنك الانماء"]}},{"c":"MK258","n":"طريق 60","r":"مكة","v":1767,"s":1283,"f":483,"h":0,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK016","n":"الرصيفة","r":"مكة","v":1565,"s":1087,"f":478,"h":0,"p":{"car":["درب الصيانة","مغسلة car wash"],"rest":["تست شطائر","طعمية السلطان"],"cafe":["قهوة الامراء","بون","عنوان القهوة","يو كوفي"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK063","n":"السواط - شهار","r":"الطائف","v":1186,"s":750,"f":404,"h":32,"p":{"car":["ناشونال ويل ستوب"],"rest":[],"cafe":["ايت اوز","جوينت","بارنز","دانكن"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK017","n":"عرفات الشوقية","r":"مكة","v":1257,"s":836,"f":421,"h":0,"p":{"car":["بنشر رواد الصيانة","بترومين","مغسلة water wash"],"rest":["بوبايز","قيس ايسكريم"],"cafe":["بارنز","بون","ريناز"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK064","n":"الجعرانة","r":"مكة","v":1142,"s":674,"f":290,"h":178,"p":{"car":["رواد الصيانة"],"rest":["طعمية السلطان","سناك تشيكن"],"cafe":[],"mkt":["أسواق ومخابز البوابة الكبرى"],"oth":[]}},{"c":"MK020","n":"ممشى الشوقية","r":"مكة","v":1372,"s":954,"f":418,"h":0,"p":{"car":["بترومين","واش واي"],"rest":["مذاق المنئوشة","هيام","مشراق","كيمس"],"cafe":["بوبا بيرلز","يو كوفي","كوف"],"mkt":["فريش واي"],"oth":[]}},{"c":"AS153","n":"مدخل محايل","r":"عسير","v":1145,"s":724,"f":352,"h":69,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK035","n":"الجمعية الوسام","r":"الطائف","v":815,"s":425,"f":271,"h":119,"p":{"car":[],"rest":[],"cafe":[],"mkt":["أسواق درب"],"oth":[]}},{"c":"JA348","n":"جنوب صبيا","r":"جازان","v":1625,"s":1201,"f":339,"h":84,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"RY338","n":"التعاون","r":"الرياض","v":769,"s":393,"f":377,"h":0,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK022","n":"بطحاء قريش 1","r":"مكة","v":828,"s":441,"f":245,"h":142,"p":{"car":["واش واي","بنشر درب الصيانة"],"rest":[],"cafe":["ديبو"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK018","n":"الرصيفة المسار","r":"مكة","v":1111,"s":715,"f":300,"h":97,"p":{"car":["درب الصيانة"],"rest":[],"cafe":["بارنز","فنو ومنو مشروبات"],"mkt":["أسواق درب"],"oth":[]}},{"c":"JA069","n":"كورنيش جيزان","r":"جازان","v":943,"s":601,"f":332,"h":10,"p":{"car":[],"rest":["مرسى مطروح"],"cafe":["كوفي لوتسو سويت آند ستوري","ماهو كافيه","المذاق المغربي","كوفي 24","مزاج المغربي"],"mkt":["فرست مارت"],"oth":[]}},{"c":"MK014","n":"خليص","r":"مكة","v":425,"s":127,"f":134,"h":164,"p":{"car":[],"rest":[],"cafe":["كافيانو كوفي"],"mkt":[],"oth":[]}},{"c":"RY025","n":"الحمرا - طريق الملك عبدالله","r":"الخرج","v":866,"s":526,"f":307,"h":34,"p":{"car":["فال كارز مغسلة سيارات","الوقت الذهبي لغيار الزيوت"],"rest":["كودو","كرك شباتي"],"cafe":["مزاج مغربي"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK084","n":"الكر النازل","r":"مكة","v":635,"s":327,"f":277,"h":31,"p":{"car":[],"rest":["كرك شباتي"],"cafe":["ديوانية جهز للقهوة","كرز البن","المذاق المغربي","كويك سيب Quick sip كوفي"],"mkt":["أسواق ومخابز سنابل العز"],"oth":[]}},{"c":"JA041","n":"القسوم - أحد المسارحة","r":"جازان","v":929,"s":616,"f":284,"h":29,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK068","n":"الجموم - الكنيدري","r":"مكة","v":894,"s":590,"f":254,"h":50,"p":{"car":[],"rest":[],"cafe":["كوفي بولس"],"mkt":["تموينات بشرى"],"oth":[]}},{"c":"MK071","n":"الأجاويد","r":"جدة","v":967,"s":645,"f":243,"h":79,"p":{"car":["ستوري لزينة السيارات"],"rest":[],"cafe":["كورس جرايند"],"mkt":["تموينات الخير"],"oth":[]}},{"c":"MK310","n":"الشاطئ-طريق الملك","r":"جدة","v":538,"s":274,"f":255,"h":9,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK002","n":"المعيصم","r":"مكة","v":801,"s":534,"f":268,"h":0,"p":{"car":["البترول الذهبي","مغسلة"],"rest":["ماكدونالدز","كرسبي كريم","باباسنفور"],"cafe":["تيم هورتنز","دانكن","ملتن","يو كوفي","بون","قيس ايسكريم","تفطيرة","بارنز","المذاق المغربي","سينابون"],"mkt":["فريش واي"],"oth":[]}},{"c":"JA061","n":"طريق صبيا","r":"جازان","v":538,"s":262,"f":164,"h":112,"p":{"car":["البترول الذهبي"],"rest":[],"cafe":["كوفي بلاك اند وايت","دوز كافيه","Cove كافيه"],"mkt":["فريش واي"],"oth":[]}},{"c":"EP051","n":"كورنيش الخبر","r":"الشرقية","v":656,"s":390,"f":243,"h":23,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK023","n":"بن درويش","r":"مكة","v":788,"s":539,"f":250,"h":0,"p":{"car":["بترومين","درب الصيانة غسيل وبنشر"],"rest":[],"cafe":["بون","زيكا","كودو","عنوان القهوة"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK093","n":"الملك خالد","r":"الطائف","v":685,"s":435,"f":225,"h":25,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"QS055","n":"الدائري الشرقي","r":"القصيم","v":446,"s":200,"f":141,"h":105,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA053","n":"خبت نخلان","r":"جازان","v":690,"s":433,"f":190,"h":67,"p":{"car":[],"rest":[],"cafe":[],"mkt":["سوبر ماركت مترو مارت"],"oth":[]}},{"c":"MK257","n":"الربوة","r":"مكة","v":584,"s":363,"f":207,"h":14,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK031","n":"بطحاء قريش 2","r":"مكة","v":590,"s":356,"f":162,"h":72,"p":{"car":["رواد الصيانة"],"rest":["الطازج"],"cafe":["بون"],"mkt":["فريش واي"],"oth":[]}},{"c":"RY042","n":"الناصفة","r":"الخرج","v":438,"s":240,"f":151,"h":47,"p":{"car":["مغسلة واش واي","ليدر اكسبريس"],"rest":["كنتاكي"],"cafe":["ريشو قهوة"],"mkt":[],"oth":[]}},{"c":"MK027","n":"الصيانة-طريق المطار","r":"الطائف","v":444,"s":251,"f":147,"h":46,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"RY024","n":"غرناطة - طريق الملك عبدالله","r":"الخرج","v":464,"s":275,"f":188,"h":0,"p":{"car":["براعة الغسيل الالي","الزيت الذهبي"],"rest":["تيكا واي","بوبايز","كودو"],"cafe":["مزاج مغربي","دوز كافيه","تيم هورتنز"],"mkt":[],"oth":[]}},{"c":"EP335","n":"النزهة الاحساء","r":"الشرقية","v":421,"s":232,"f":189,"h":0,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA070","n":"الظبية","r":"جازان","v":575,"s":396,"f":156,"h":23,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK323","n":"جبل ثور - جوهرة النسيم","r":"مكة","v":477,"s":313,"f":164,"h":0,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK019","n":"الشرايع","r":"مكة","v":430,"s":272,"f":158,"h":0,"p":{"car":["رواد الصيانة (بنشر","غسيل )"],"rest":["كنتاكي","هارديز"],"cafe":["بون","بارنز"],"mkt":["فريش واي"],"oth":[]}},{"c":"MK099","n":"البيعة","r":"الطائف","v":466,"s":312,"f":150,"h":4,"p":{"car":["ترويشة غسيل سيارات","بترومين"],"rest":[],"cafe":["مطعم سولو سالت"],"mkt":[],"oth":[]}},{"c":"EP336","n":"طيبة - الدمام","r":"الشرقية","v":332,"s":194,"f":138,"h":0,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK100","n":"الكوثر","r":"جدة","v":330,"s":188,"f":91,"h":51,"p":{"car":[],"rest":[],"cafe":["كافيه فولت"],"mkt":["تموينات جنى"],"oth":[]}},{"c":"HA052","n":"حائل","r":"حائل","v":333,"s":205,"f":114,"h":14,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MD009","n":"طريق السلام","r":"المدينة المنورة","v":307,"s":172,"f":88,"h":47,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"HA043","n":"العريفي","r":"حائل","v":326,"s":201,"f":113,"h":12,"p":{"car":["مغسلة طمس","مركز التقدم الذهبي خدمات سيارات"],"rest":[],"cafe":["DOB كافيه","بوبايز","بارنز"],"mkt":["تموينات شموع"],"oth":[]}},{"c":"JA056","n":"الروابي - المودة","r":"جازان","v":302,"s":184,"f":92,"h":27,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"AS192","n":"الرؤيا-وادي هشبل","r":"عسير","v":246,"s":134,"f":89,"h":23,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK040","n":"عبدالله الخريجي","r":"جدة","v":236,"s":126,"f":105,"h":5,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA060","n":"صناعية صامطة","r":"جازان","v":424,"s":297,"f":86,"h":41,"p":{"car":["اويل زون"],"rest":["مطعم لهب الطعام"],"cafe":[],"mkt":[],"oth":[]}},{"c":"NJ219","n":"المركب","r":"نجران","v":292,"s":188,"f":82,"h":23,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"BH050","n":"الاطاولة","r":"الباحة","v":192,"s":107,"f":65,"h":20,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA141","n":"الأمير سلطان-بيش","r":"جازان","v":145,"s":87,"f":44,"h":14,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK161","n":"أبو عهر","r":"مكة","v":71,"s":25,"f":19,"h":26,"p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK049","n":"السلولي","r":"مكة","p":{"car":["مغسلة السلام","خدمات سيارات السلام"],"rest":[],"cafe":["بون","براتو"],"mkt":["Savve Mart"],"oth":[]}},{"c":"MK067","n":"تربه","r":"الطائف","p":{"car":["بنشر ناشونال اويل ستوب","مغسلة Spot less"],"rest":[],"cafe":["كيمس","شاي خادر"],"mkt":[],"oth":[]}},{"c":"MK154","n":"العليا","r":"جدة","p":{"car":["بترومين"],"rest":["كنتاكي"],"cafe":["ايسو كافيه"],"mkt":["اليخت للتسوق"],"oth":[]}},{"c":"AS081","n":"خميس مشيط العزيزيه","r":"خميس مشيط","p":{"car":["بترومين"],"rest":[],"cafe":["KRO كافيه"],"mkt":[],"oth":[]}},{"c":"EP102","n":"شارع أحد تاروت-القطيف","r":"الشرقية ","p":{"car":[],"rest":[],"cafe":[],"mkt":["تموينات الذاهب"],"oth":["صراف بنك الجزيرة"]}},{"c":"BH065","n":"النزهه ","r":"الباحة","p":{"car":["بترومين"],"rest":["كودو"],"cafe":["دوز كافيه"],"mkt":["ودق ماركت"],"oth":["صراف بنك الاهلي"]}},{"c":"JA227","n":"العارضة","r":"جازان","p":{"car":["البترول الذهبي"],"rest":[],"cafe":[],"mkt":[],"oth":["صراف بنك البلاد"]}},{"c":"JA272","n":"الفيصلية","r":"جازان","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"AS085","n":"خيبر بيشة","r":"عسير","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"AS271","n":"مسارات درب عقبة شعار","r":"عسير","p":{"car":[],"rest":[],"cafe":["بارنز"],"mkt":[],"oth":[]}},{"c":"MK300","n":"البغدادية","r":"جدة","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK103","n":"المعلمي","r":"جدة","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK216","n":"الواحة","r":"جدة","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK223","n":"الحمراء","r":"جدة","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"RY106","n":"نجم الدين الايوبي","r":"الرياض","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA256","n":"الفطيحة","r":"جازان","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA302","n":"جزيرة فرسان -","r":"جازان","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"EP134","n":"حفر الباطن - الواحة","r":"الشرقية","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"NP131","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"NP130","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MD224","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"EP301","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"EP299","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"EP324","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"AS128","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK205","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA207","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"MK311","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}},{"c":"JA156","n":"","r":"","p":{"car":[],"rest":[],"cafe":[],"mkt":[],"oth":[]}}];
+const CATS=[['car','خدمات السيارات'],['rest','المطاعم'],['cafe','المقاهي'],['mkt','الماركت'],['oth','أخرى']];
+const PK=[
+ {id:'ind',name:'باقة الأفراد',target:'السيارات الصغيرة',seg:'s',def:{price:500,fuel:300,washN:4,washC:5,washD:3}},
+ {id:'fam',name:'باقة العائلات',target:'السيارات العائلية الكبيرة',seg:'f',def:{price:800,fuel:500,washN:4,washC:8,washD:4}}
+];
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const fmt2=n=>(Math.round(n*100)/100).toLocaleString('en-US');
+const sar=n=>fmt2(n)+' ر.س';
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const KEY='darb-pkg-v1';
+let store={};
+try{store=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){store={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
+
+function defaultsFor(st){
+  const p=st.p, rest=p.rest[0], cafe=p.cafe[0], mkt=p.mkt[0];
+  const lines=(arr)=>arr.filter(x=>x[0]).map(x=>({partner:x[0],item:x[1],qty:x[2],price:x[3],ex:true}));
+  return {
+    ind:{...PK[0].def,items:lines([[rest,'وجبة',2,30],[cafe,'قهوة',4,15],[mkt,'مشتريات',1,30]])},
+    fam:{...PK[1].def,items:lines([[rest,'وجبة عائلية',2,55],[cafe,'قهوة',6,15],[mkt,'مشتريات رحلة',1,60]])},
+    adS:2, adF:3
+  };
+}
+function cfg(st){ if(!store[st.c]) store[st.c]=defaultsFor(st); return store[st.c]; }
+
+let cur=STATIONS.find(s=>s.c==='MK007')||STATIONS[0];
+
+function fillSelect(){
+  const q=$('q').value.trim();
+  const list=STATIONS.filter(s=>!q||(s.n+' '+s.c+' '+s.r).includes(q));
+  $('station').innerHTML=list.map(s=>`<option value="${s.c}"${s.c===cur.c?' selected':''}>${esc(s.n||'بدون اسم')} — ${s.c}${s.r?' ('+esc(s.r)+')':''}${s.v?'':' · بلا بيانات حركة'}</option>`).join('');
+  if(list.length&&!list.some(s=>s.c===cur.c)){cur=list[0];renderAll();}
+}
+
+function renderStation(){
+  const s=cur, tot=s.v||0;
+  const allP=CATS.reduce((a,[k])=>a+s.p[k].length,0);
+  $('stnMeta').textContent=`${allP} شريك في المحطة`+(s.v?` · ${fmt(s.v)} زيارة يوميًا`:'');
+  if(s.v){
+    const ps=s.s/tot*100, pf=s.f/tot*100, ph=s.h/tot*100;
+    $('stnStats').innerHTML=`<div class="stats">
+      <div class="stat s"><div class="k">سيارات صغيرة / شهر</div><div class="v num">${fmt(s.s*30)}</div><div class="k num">${ps.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat fm"><div class="k">عائلية كبيرة / شهر</div><div class="v num">${fmt(s.f*30)}</div><div class="k num">${pf.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat h"><div class="k">شاحنات وحافلات / شهر</div><div class="v num">${fmt(s.h*30)}</div><div class="k num">${ph.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat"><div class="k">إجمالي الزيارات / شهر</div><div class="v num">${fmt(tot*30)}</div><div class="k">تقدير</div></div>
+    </div>
+    <div class="mix" aria-hidden="true"><i style="width:${ps}%;background:var(--fuel)"></i><i style="width:${pf}%;background:var(--accent)"></i><i style="width:${ph}%;background:var(--ink2)"></i></div>
+    <div class="legend"><span><b style="background:var(--fuel)"></b>صغيرة</span><span><b style="background:var(--accent)"></b>عائلية كبيرة (بنزين)</span><span><b style="background:var(--ink2)"></b>شاحنات وحافلات (ديزل)</span></div>`;
+  } else {
+    $('stnStats').innerHTML=`<div class="nodata">لا توجد بيانات مبيعات لهذه المحطة في ملف التحليل، لذلك لا تظهر نسب السيارات ولا العائد المتوقع. تقدر تبني الباقات عادي.</div>`;
+  }
+  $('stnPartners').innerHTML=CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t}</span><span>${s.p[k].length?s.p[k].map(x=>`<span class="chip">${esc(x)}</span>`).join(''):'<span class="muted" style="font-size:12.5px">لا يوجد</span>'}</span></div>`).join('');
+}
+
+function calc(c){
+  const washCust=c.washN*c.washC, washDarb=c.washN*c.washD;
+  const prod=c.items.reduce((a,i)=>a+(+i.qty||0)*(+i.price||0),0);
+  const used=(+c.fuel||0)+washCust+prod;
+  return {washCust,washDarb,prod,used,remain:(+c.price||0)-used};
+}
+
+function partnerOptions(){
+  return CATS.flatMap(([k,t])=>cur.p[k].map(x=>`<option value="${esc(x)}">${t}</option>`)).join('');
+}
+
+function renderPkgs(){
+  const c=cfg(cur);
+  $('pkgs').innerHTML=PK.map(pk=>{
+    const p=c[pk.id];
+    return `<article class="panel pkg" data-pk="${pk.id}">
+      <div class="pkg-h"><h2>${pk.name}</h2><span class="tag">تستهدف ${pk.target}</span></div>
+      <div class="row2">
+        <label class="f">قيمة الباقة كاملة (ر.س)<input id="${pk.id}-price" data-k="price" type="number" min="0" step="10" value="${p.price}"></label>
+        <label class="f"><span><span class="dot" style="background:var(--fuel)"></span>منها بنزين (ر.س)</span><input id="${pk.id}-fuel" data-k="fuel" type="number" min="0" step="10" value="${p.fuel}"></label>
+      </div>
+      <div class="sec">
+        <div class="sec-h"><h3><span class="dot" style="background:var(--wash)"></span>الغسلات</h3><span class="hint" id="${pk.id}-washfull"></span></div>
+        <div class="row3">
+          <label class="f">عدد الغسلات<input id="${pk.id}-washN" data-k="washN" type="number" min="0" step="1" value="${p.washN}"></label>
+          <label class="f">على العميل / غسلة<input id="${pk.id}-washC" data-k="washC" type="number" min="0" step="0.5" value="${p.washC}"></label>
+          <label class="f">على درب / غسلة<input id="${pk.id}-washD" data-k="washD" type="number" min="0" step="0.5" value="${p.washD}"></label>
+        </div>
+        <div class="hint">حصة العميل تُخصم من الباقة، وحصة درب تكلفة على درب خارج الباقة.</div>
+      </div>
+      <div class="sec">
+        <div class="sec-h"><h3><span class="dot" style="background:var(--prod)"></span>منتجات الشركاء</h3><button type="button" class="pri" data-add="${pk.id}">＋ منتج</button></div>
+        <div class="tbl"><table class="prod"><thead><tr><th>الشريك</th><th>المنتج</th><th>العدد</th><th>السعر</th><th style="text-align:left">الإجمالي</th><th></th></tr></thead>
+        <tbody id="${pk.id}-items">${p.items.map((it,i)=>`<tr data-i="${i}">
+          <td><input id="${pk.id}-p${i}" data-f="partner" list="plist" value="${esc(it.partner||'')}" placeholder="اختر أو اكتب"></td>
+          <td><input id="${pk.id}-n${i}" data-f="item" value="${esc(it.item||'')}" placeholder="مثال: وجبة"></td>
+          <td><input id="${pk.id}-q${i}" data-f="qty" type="number" min="0" step="1" value="${it.qty}"></td>
+          <td><input id="${pk.id}-r${i}" data-f="price" type="number" min="0" step="0.5" value="${it.price}"></td>
+          <td class="tot" id="${pk.id}-t${i}"></td>
+          <td><button type="button" class="x" data-del="${i}" aria-label="حذف">×</button></td></tr>`).join('')}</tbody></table></div>
+        ${p.items.length?'':'<div class="hint">ما في منتجات. اضغط «＋ منتج» وحدد الشريك من قائمة شركاء المحطة.</div>'}
+        ${p.items.some(i=>i.ex)?'<div class="ex">المنتجات المعبأة مسبقًا أمثلة، عدّلها أو احذفها.</div>':''}
+      </div>
+      <div class="sec">
+        <div class="gauge" id="${pk.id}-gauge" aria-hidden="true"></div>
+        <div class="sum" id="${pk.id}-sum"></div>
+        <div class="remain" id="${pk.id}-remain"></div>
+        <div class="darbbox" id="${pk.id}-darb"></div>
+      </div>
+    </article>`}).join('')+`<datalist id="plist">${partnerOptions()}</datalist>`;
+  PK.forEach(pk=>updatePkg(pk.id));
+}
+
+function updatePkg(id){
+  const p=cfg(cur)[id], r=calc(p), price=+p.price||0;
+  p.items.forEach((it,i)=>{const el=$(`${id}-t${i}`); if(el) el.textContent=sar((+it.qty||0)*(+it.price||0));});
+  $(`${id}-washfull`).textContent=`سعر الغسلة الكامل ${sar((+p.washC||0)+(+p.washD||0))}`;
+  const base=Math.max(price,r.used)||1, w=v=>Math.max(0,v)/base*100;
+  $(`${id}-gauge`).innerHTML=`<i style="width:${w(+p.fuel||0)}%;background:var(--fuel)"></i><i style="width:${w(r.washCust)}%;background:var(--wash)"></i><i style="width:${w(r.prod)}%;background:var(--prod)"></i>`;
+  $(`${id}-sum`).innerHTML=`
+    <div><span>قيمة الباقة</span><span class="num">${sar(price)}</span></div>
+    <div><span><span class="dot" style="background:var(--fuel)"></span>بنزين</span><span class="num">− ${sar(+p.fuel||0)}</span></div>
+    <div><span><span class="dot" style="background:var(--wash)"></span>غسلات (حصة العميل ${fmt2(p.washN)} × ${fmt2(p.washC)})</span><span class="num">− ${sar(r.washCust)}</span></div>
+    <div><span><span class="dot" style="background:var(--prod)"></span>منتجات الشركاء (${p.items.length})</span><span class="num">− ${sar(r.prod)}</span></div>`;
+  const ok=r.remain>=0, el=$(`${id}-remain`);
+  el.className='remain '+(ok?'ok':'bad');
+  el.innerHTML=ok?`<span>المتبقي للتوزيع</span><span class="big num">${sar(r.remain)}</span>`:`<span>تجاوزت قيمة الباقة بـ</span><span class="big num">${sar(-r.remain)}</span>`;
+  $(`${id}-darb`).innerHTML=`<div style="display:flex;justify-content:space-between"><span>تكلفة الغسلات على درب (${fmt2(p.washN)} × ${fmt2(p.washD)})</span><b class="num">${sar(r.washDarb)}</b></div>
+    <div class="hint">التكلفة الكاملة للباقة = ${sar(r.used+r.washDarb)} (المستخدم من الباقة + حصة درب)</div>`;
+  renderPotential();
+}
+
+function renderPotential(){
+  const c=cfg(cur), s=cur;
+  $('adS').value=c.adS; $('adF').value=c.adF;
+  if(!s.v){$('potTbl').innerHTML='<tr><td class="muted">لا توجد بيانات حركة لهذه المحطة.</td></tr>';return;}
+  const rows=PK.map(pk=>{
+    const cars=(pk.seg==='s'?s.s:s.f)*30, ad=(pk.seg==='s'?c.adS:c.adF)/100, n=cars*ad, p=c[pk.id], r=calc(p);
+    return {pk,cars,n,rev:n*(+p.price||0),fuel:n*(+p.fuel||0),prod:n*r.prod,darb:n*r.washDarb};
+  });
+  const T=k=>rows.reduce((a,r)=>a+r[k],0);
+  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>مبيعات للشركاء</th><th>تكلفة الغسلات على درب</th></tr></thead><tbody>
+  ${rows.map(r=>`<tr><td>${r.pk.name}</td><td>${fmt(r.cars)}</td><td>${fmt(r.n)}</td><td>${sar(r.rev)}</td><td>${sar(r.fuel)}</td><td>${sar(r.prod)}</td><td>${sar(r.darb)}</td></tr>`).join('')}
+  <tr style="font-weight:700"><td>الإجمالي</td><td>${fmt(T('cars'))}</td><td>${fmt(T('n'))}</td><td>${sar(T('rev'))}</td><td>${sar(T('fuel'))}</td><td>${sar(T('prod'))}</td><td>${sar(T('darb'))}</td></tr></tbody>`;
+}
+
+function renderAll(){renderStation();renderPkgs();}
+
+$('q').addEventListener('input',fillSelect);
+$('station').addEventListener('change',e=>{cur=STATIONS.find(s=>s.c===e.target.value);renderAll();});
+$('pkgs').addEventListener('input',e=>{
+  const art=e.target.closest('[data-pk]'); if(!art) return; const id=art.dataset.pk, p=cfg(cur)[id];
+  if(e.target.dataset.k){p[e.target.dataset.k]=e.target.value===''?0:+e.target.value;}
+  else if(e.target.dataset.f){const i=+e.target.closest('tr').dataset.i, f=e.target.dataset.f; p.items[i][f]=(f==='qty'||f==='price')?(+e.target.value||0):e.target.value; p.items[i].ex=false;}
+  save(); updatePkg(id);
+});
+$('pkgs').addEventListener('click',e=>{
+  const art=e.target.closest('[data-pk]'); if(!art) return; const id=art.dataset.pk, p=cfg(cur)[id];
+  if(e.target.dataset.add){p.items.push({partner:'',item:'',qty:1,price:0});save();renderPkgs();const i=p.items.length-1;const el=$(`${id}-p${i}`);if(el)el.focus();}
+  if(e.target.dataset.del!==undefined){p.items.splice(+e.target.dataset.del,1);save();renderPkgs();}
+});
+['adS','adF'].forEach(k=>$(k).addEventListener('input',e=>{cfg(cur)[k]=+e.target.value||0;save();renderPotential();}));
+$('resetBtn').addEventListener('click',()=>{store[cur.c]=defaultsFor(cur);save();renderAll();toast('رجعت إعدادات هذه المحطة للأمثلة الافتراضية');});
+$('copyBtn').addEventListener('click',()=>{
+  const c=cfg(cur), L=[];
+  L.push(['المحطة',cur.n,cur.c].join('\t'));
+  PK.forEach(pk=>{const p=c[pk.id],r=calc(p);
+    L.push('',pk.name,['قيمة الباقة',p.price].join('\t'),['بنزين',p.fuel].join('\t'),
+      ['عدد الغسلات',p.washN].join('\t'),['على العميل / غسلة',p.washC].join('\t'),['على درب / غسلة',p.washD].join('\t'),
+      ['غسلات على العميل',r.washCust].join('\t'),['غسلات على درب',r.washDarb].join('\t'),
+      ['الشريك','المنتج','العدد','السعر','الإجمالي'].join('\t'));
+    p.items.forEach(i=>L.push([i.partner,i.item,i.qty,i.price,(+i.qty||0)*(+i.price||0)].join('\t')));
+    L.push(['المتبقي',r.remain].join('\t'));});
+  const txt=L.join('\n');
+  const done=()=>toast('نُسخ الملخص، الصقه في إكسل');
+  try{navigator.clipboard.writeText(txt).then(done,()=>fallback(txt))}catch(e){fallback(txt)}
+});
+function fallback(t){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('نُسخ الملخص، الصقه في إكسل')}catch(e){toast('تعذّر النسخ')}ta.remove();}
+let tt;function toast(m){const el=$('toast');el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2200);}
+
+fillSelect(); renderAll();
+</script>
