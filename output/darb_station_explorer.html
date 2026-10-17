@@ -20,6 +20,7 @@
   --ok:#6FCF97; --ok-soft:#1E3326; --warn:#E5B454; --warn-soft:#3A2E14; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+#viewS.empty>section:not(#noSel),#viewS.empty>.grid2{display:none}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14.5px;line-height:1.55;direction:rtl}
 .wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:20px 48px;display:grid;gap:16px}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
@@ -117,7 +118,14 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
   </header>
 
   <div id="viewS" style="display:grid;gap:16px">
+    <section class="panel" id="noSel" hidden>
+      <h2>ما اخترت محطات بعد</h2>
+      <p class="muted" style="margin:6px 0 12px">صفحة المحطة تعرض بس المحطات اللي تختارها في «الخطة العامة». افتح الخطة، اختر المنطقة، وعلّم المحطات اللي تبيها.</p>
+      <button type="button" class="pri" id="goPlan">افتح الخطة العامة</button>
+      <p class="hint" id="noSelHint" style="margin-top:10px"></p>
+    </section>
     <section class="panel">
+      <div class="hint" id="selInfo" style="margin-bottom:10px"></div>
       <div class="picker">
         <label class="f">بحث<input id="q" type="search" placeholder="اسم المحطة أو الكود أو المنطقة"></label>
         <label class="f">المحطة<select id="st"></select></label>
@@ -281,11 +289,19 @@ function hideTip(){tip.hidden=true;}
 const O={items:[],min:0,start:new Date().toISOString().slice(0,10),days:30,hours:new Set([...Array(24).keys()]),wds:new Set([0,1,2,3,4,5,6]),cap:3,darb:50,name:''};
 
 /* ---------- station view ---------- */
+function selCodes(){const a=new Set();Object.values((typeof PS!=='undefined'&&PS.selSt)||{}).forEach(l=>l.forEach(c=>a.add(c)));return a;}
+function selStations(){const a=selCodes();return D.filter(s=>a.has(s.c));}
 function fillSelect(){
-  const q=$('q').value.trim();
-  const list=D.filter(s=>!q||(s.n+' '+s.c+' '+s.r).includes(q));
+  const q=$('q').value.trim(),all=selStations(),codes=selCodes(),nodata=[...codes].filter(c=>!D.some(s=>s.c===c)).length;
+  const empty=!all.length;$('viewS').classList.toggle('empty',empty);$('noSel').hidden=!empty;
+  const nd=nodata?` · ${nodata} محطة مختارة ما لها بيانات مبيعات فما تظهر هنا`:'';
+  $('noSelHint').textContent=nodata?`اخترت ${nodata} محطة ما لها بيانات مبيعات، وهذه ما تظهر في صفحة المحطة.`:'';
+  if(empty)return;
+  $('selInfo').textContent=`تعرض ${all.length} محطة مختارة في الخطة العامة${nd}`;
+  const list=all.filter(s=>!q||(s.n+' '+s.c+' '+s.r).includes(q));
   $('st').innerHTML=list.map(s=>`<option value="${s.c}"${s.c===cur.c?' selected':''}>${esc(s.n)} — ${s.c} (${esc(s.r)})</option>`).join('');
-  if(list.length&&!list.some(s=>s.c===cur.c)){cur=list[0];renderStation();}
+  if(!all.some(s=>s.c===cur.c)){cur=(list[0]||all[0]);renderStation();}
+  else if(list.length&&!list.some(s=>s.c===cur.c)){cur=list[0];renderStation();}
 }
 function renderHead(){
   const s=cur,ph=peakHour(s),pp=periodsOf(s),top=pp.reduce((a,b)=>b.v>a.v?b:a),pc=partnersAll(s).length;
@@ -456,11 +472,11 @@ function renderAll(){
   const rows=ROWS.filter(r=>(!rg||r.r===rg)&&(!q||(r.n+' '+r.s.c).includes(q))).sort((a,b)=>{const x=a[sortK],y=b[sortK];return (typeof x==='string'?x.localeCompare(y,'ar'):x-y)*sortD;});
   $('allTbl').innerHTML=`<table><thead><tr>${COLS.map(([k,t])=>`<th class="sort" data-k="${k}">${t}${sortK===k?(sortD<0?' ▼':' ▲'):''}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr class="click" data-c="${r.s.c}"><td>${esc(r.n)} <span class="hint">${r.s.c}</span></td><td>${esc(r.r)}</td><td>${f0(r.dvis)}</td><td>${sar(r.drev)}</td><td>${f0(r.inv)}</td><td>${hl(r.ph)}</td><td>${f0(r.phv)}</td><td>${r.tp} <span class="hint">${Math.round(r.tpv*100)}٪</span></td><td>${r.lp} <span class="hint">${Math.round(r.lpv*100)}٪</span></td><td>${r.pc}</td><td style="color:${r.growth<0?'var(--warn)':'var(--ok)'}">${r.growth>0?'+':''}${f1(r.growth)}</td></tr>`).join('')}</tbody></table>`;
   $('allTbl').querySelectorAll('th.sort').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.k;if(sortK===k)sortD=-sortD;else{sortK=k;sortD=typeof ROWS[0][k]==='string'?1:-1;}renderAll();}));
-  $('allTbl').querySelectorAll('tr.click').forEach(tr=>tr.addEventListener('click',()=>{cur=D.find(s=>s.c===tr.dataset.c);$('q').value='';fillSelect();renderStation();tab('S');}));
+  $('allTbl').querySelectorAll('tr.click').forEach(tr=>tr.addEventListener('click',()=>{if(!selCodes().has(tr.dataset.c)){toast('هذه المحطة غير مختارة في الخطة العامة، اخترها هناك أول');return;}cur=D.find(s=>s.c===tr.dataset.c);$('q').value='';fillSelect();renderStation();tab('S');}));
 }
 
 /* ---------- wiring ---------- */
-function tab(t){['S','A','G','P','O'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='A')renderAll();if(t==='O')renderOffers();if(t==='P')renderPlan();if(t==='G')renderSug();}
+function tab(t){['S','A','G','P','O'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='S')fillSelect();if(t==='A')renderAll();if(t==='O')renderOffers();if(t==='P')renderPlan();if(t==='G')renderSug();}
 ['S','A','G','P','O'].forEach(k=>$('tab'+k).addEventListener('click',()=>tab(k)));
 $('q').addEventListener('input',fillSelect);
 $('st').addEventListener('change',e=>{cur=D.find(s=>s.c===e.target.value);renderStation();});
@@ -644,11 +660,11 @@ function renderSug(){
   if(!$('gGoal').options.length){$('gGoal').innerHTML='<option value="">كل الأهداف</option>'+Object.entries(GOALS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
     $('gTime').innerHTML='<option value="">كل الأوقات</option>'+Object.entries(GTIME).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
     $('gNewCat').innerHTML=GCATS.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');}
-  const C=stCtx(cur),parts=catPartners(cur,GS.cat);
-  $('gCtx').innerHTML=`<div class="hint">المحطة الحالية: <b style="color:var(--ink)">${esc(cur.n)} ${cur.c}</b> · ${parts.length?`${parts.length} شريك في هذه الفئة: ${parts.map(esc).join('، ')}`:'لا يوجد شريك من هذه الفئة في المحطة'} · أضعف فترة: ${C.weakN}. غيّر المحطة من تبويب «المحطة».</div>`;
+  const C=stCtx(cur),hasSt=selCodes().has(cur.c),parts=hasSt?catPartners(cur,GS.cat):[];
+  $('gCtx').innerHTML=!hasSt?'<div class="hint">ما اخترت محطات في الخطة العامة بعد، فالمقترحات تظهر بدون ربط بمحطة.</div>':`<div class="hint">المحطة الحالية: <b style="color:var(--ink)">${esc(cur.n)} ${cur.c}</b> · ${parts.length?`${parts.length} شريك في هذه الفئة: ${parts.map(esc).join('، ')}`:'لا يوجد شريك من هذه الفئة في المحطة'} · أضعف فترة: ${C.weakN}. غيّر المحطة من تبويب «المحطة».</div>`;
   const g=$('gGoal').value,tm=$('gTime').value,q=$('gQ').value.trim();
   const list=SUG.concat(GS.mine).filter(x=>x.c===GS.cat&&(!g||x.g===g)&&(!tm||x.tm===tm)&&(!q||(x.t+' '+x.d).includes(q)));
-  $('gList').innerHTML=list.length?list.map((x,i)=>{const f=fits(x,C);const mine=GS.mine.includes(x);return `<article class="panel sug">
+  $('gList').innerHTML=list.length?list.map((x,i)=>{const f=hasSt?fits(x,C):[];const mine=GS.mine.includes(x);return `<article class="panel sug">
     <div class="shead"><h3>${esc(x.t)}</h3>${mine?'<span class="pill low">مقترحك</span>':''}</div>
     <p style="margin:6px 0 10px">${esc(x.d)}</p>
     <div class="tags">${x.g?`<span class="chip" style="cursor:default">${GOALS[x.g]||''}</span>`:''}${x.tm?`<span class="chip" style="cursor:default">${GTIME[x.tm]||''}</span>`:''}${x.a?`<span class="chip" style="cursor:default">${GAUD[x.a]||''}</span>`:''}</div>
@@ -664,5 +680,6 @@ function renderSug(){
 ['gGoal','gTime','gQ'].forEach(id=>$(id).addEventListener('input',renderSug));
 $('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),g:'',tm:'',a:''});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';renderSug();toast('أُضيف المقترح');});
 
+$('goPlan').addEventListener('click',()=>tab('P'));
 fillSelect();renderDurSeg();renderDaySeg();renderStation();renderTimeSeg();renderOffers();
 </script>
