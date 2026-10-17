@@ -190,6 +190,7 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
         <label class="f">المنطقة<select id="pReg"></select></label>
       </div>
       <div class="kpis" id="pNet" style="grid-template-columns:repeat(5,minmax(0,1fr))"></div>
+      <p class="hint" style="margin:10px 0 0">حدد سعر كل أداة (في جدول أدوات المنطقة أو في «إعدادات الأدوات» تحت)، والميزانية تنحسب = السعر × الكمية × عدد الوحدات في المنطقة × عدد الأشهر للأدوات الشهرية.</p>
     </section>
 
     <section class="panel">
@@ -199,14 +200,15 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
     <section class="panel" id="pRegPanel">
       <div id="pRegHead"></div>
-      <div class="ctitle" style="margin-top:16px"><h3>الأدوات وميزانيتها في المنطقة</h3><span class="hint">فعّل أو ألغِ أي أداة لهذه المنطقة · «موصى بها» مبنية على نوع المحطات والوقود</span></div>
+      <div class="ctitle" style="margin-top:16px"><h3>الأدوات وميزانيتها في المنطقة</h3><span class="hint">اكتب سعر كل أداة وتنحسب الميزانية تلقائيًا · فعّل أو ألغِ أي أداة لهذه المنطقة</span></div>
+      <label class="hint" style="display:flex;gap:6px;align-items:center;margin-bottom:8px"><input type="checkbox" id="pAll" style="width:auto"> السعر اللي أكتبه هنا ينطبق على كل المناطق (ألغِ التحديد لتسعير خاص بهذه المنطقة)</label>
       <div class="tbl" id="pTools"></div>
       <div class="ctitle" style="margin-top:16px"><h3>محطات المنطقة</h3><span class="hint">نوع المحطة قابل للتعديل · «مقدّر» يعني أن ملف التحليل لم يصنفها</span></div>
       <div class="tbl" id="pStations"></div>
     </section>
 
     <section class="panel">
-      <div class="ctitle"><h2>إعدادات الأدوات</h2><span class="hint">تكلفة الوحدة وطريقة الحساب تنطبق على كل المناطق · الأرقام الافتراضية تقديرات عدّلها حسب عروض الموردين</span></div>
+      <div class="ctitle"><h2>إعدادات الأدوات</h2><span class="hint">السعر هنا ينطبق على كل المناطق إلا المنطقة اللي حددت لها سعر خاص</span></div>
       <div class="tbl" id="pCat"></div>
       <div class="actions" style="margin-top:10px"><button type="button" class="pri" id="addTool">＋ أداة</button></div>
     </section>
@@ -457,22 +459,22 @@ const TYP={travel:'خط سفر',city:'وسط المدينة',mixed:'مختلط',
 const BASIS={region:'مرة لكل منطقة',station:'لكل محطة',travel:'لكل محطة خط سفر',road:'لكل محطة خط سفر أو مختلطة',city:'لكل محطة وسط المدينة',diesel:'لكل محطة ديزل'};
 const FREQ={once:'مرة واحدة',month:'شهريًا'};
 const DEF_TOOLS=[
- {id:'inf',n:'مؤثرين محليين (سناب / تيك توك)',b:'region',cost:12000,q:2,f:'once',rec:'city'},
- {id:'wa',n:'حملات واتساب للعملاء',b:'region',cost:2500,q:1,f:'month',rec:'all'},
- {id:'cards',n:'طباعة كروت وبروشورات',b:'station',cost:1200,q:1,f:'once',rec:'all'},
- {id:'stand',n:'ستاندات ورول أب داخل المحطة',b:'station',cost:600,q:1,f:'once',rec:'all'},
- {id:'ads',n:'إعلانات ممولة حسب الموقع (سناب / تيك توك)',b:'region',cost:8000,q:1,f:'month',rec:'city'},
- {id:'bill',n:'لوحات طرق (بيلبورد)',b:'travel',cost:9000,q:1,f:'month',rec:'travel'},
- {id:'give',n:'توزيعات للمسافرين (ماء / قهوة / تمر)',b:'road',cost:2500,q:1,f:'month',rec:'travel'},
- {id:'b2b',n:'زيارات أساطيل وشركات نقل (B2B)',b:'diesel',cost:1500,q:1,f:'month',rec:'diesel'},
- {id:'app',n:'عروض الوقود والنقاط في التطبيق',b:'station',cost:2000,q:1,f:'month',rec:'all'},
- {id:'sms',n:'رسائل SMS',b:'region',cost:1500,q:1,f:'month',rec:'none'},
- {id:'season',n:'حملة المواسم (رمضان / الحج / العمرة)',b:'region',cost:10000,q:1,f:'once',rec:'season'}
+ {id:'inf',n:'مؤثرين محليين (سناب / تيك توك)',b:'region',cost:0,q:2,f:'once',rec:'city'},
+ {id:'wa',n:'حملات واتساب للعملاء',b:'region',cost:0,q:1,f:'month',rec:'all'},
+ {id:'cards',n:'طباعة كروت وبروشورات',b:'station',cost:0,q:1,f:'once',rec:'all'},
+ {id:'stand',n:'ستاندات ورول أب داخل المحطة',b:'station',cost:0,q:1,f:'once',rec:'all'},
+ {id:'ads',n:'إعلانات ممولة حسب الموقع (سناب / تيك توك)',b:'region',cost:0,q:1,f:'month',rec:'city'},
+ {id:'bill',n:'لوحات طرق (بيلبورد)',b:'travel',cost:0,q:1,f:'month',rec:'travel'},
+ {id:'give',n:'توزيعات للمسافرين (ماء / قهوة / تمر)',b:'road',cost:0,q:1,f:'month',rec:'travel'},
+ {id:'b2b',n:'زيارات أساطيل وشركات نقل (B2B)',b:'diesel',cost:0,q:1,f:'month',rec:'diesel'},
+ {id:'app',n:'عروض الوقود والنقاط في التطبيق',b:'station',cost:0,q:1,f:'month',rec:'all'},
+ {id:'sms',n:'رسائل SMS',b:'region',cost:0,q:1,f:'month',rec:'none'},
+ {id:'season',n:'حملة المواسم (رمضان / الحج / العمرة)',b:'region',cost:0,q:1,f:'once',rec:'season'}
 ];
-const PS=(()=>{try{return JSON.parse(localStorage.getItem('darb-plan-v1')||'null')}catch(e){return null}})()||{};
-function pInit(){PS.months=PS.months||3;PS.dsl=PS.dsl??25;PS.inc=PS.inc??1;PS.tools=PS.tools||JSON.parse(JSON.stringify(DEF_TOOLS));PS.on=PS.on||{};PS.types=PS.types||{};PS.reg=PS.reg||'مكة';}
+const PS=(()=>{try{return JSON.parse(localStorage.getItem('darb-plan-v2')||'null')}catch(e){return null}})()||{};
+function pInit(){PS.months=PS.months||3;PS.dsl=PS.dsl??25;PS.inc=PS.inc??1;PS.tools=PS.tools||JSON.parse(JSON.stringify(DEF_TOOLS));PS.on=PS.on||{};PS.types=PS.types||{};PS.price=PS.price||{};PS.reg=PS.reg||'مكة';PS.applyAll=PS.applyAll??true;}
 pInit();
-const pSave=()=>{try{localStorage.setItem('darb-plan-v1',JSON.stringify(PS))}catch(e){}};
+const pSave=()=>{try{localStorage.setItem('darb-plan-v2',JSON.stringify(PS))}catch(e){}};
 const REGS=[...new Set(PD.map(s=>s.r))].sort((a,b)=>PD.filter(s=>s.r===b).length-PD.filter(s=>s.r===a).length);
 const stType=s=>PS.types[s.c]||s.t;
 function regStations(r){return PD.filter(s=>s.r===r&&(PS.inc||s.data));}
@@ -491,20 +493,22 @@ function recFor(t,r,P){
   return why||'';
 }
 function isOn(t,r,P){const k=r+'|'+t.id;return k in PS.on?PS.on[k]:!!recFor(t,r,P);}
-function toolBudget(t,P){const m=t.f==='month'?PS.months:1;return t.cost*t.q*units(t,P)*m;}
-function regBudget(r){const P=regProfile(r);return PS.tools.reduce((a,t)=>a+(isOn(t,r,P)?toolBudget(t,P):0),0);}
+function priceOf(t,r){const k=r+'|'+t.id;return (k in PS.price&&PS.price[k]!=='')?+PS.price[k]:(+t.cost||0);}
+function toolBudget(t,P,r){const m=t.f==='month'?PS.months:1;return priceOf(t,r)*t.q*units(t,P)*m;}
+function regBudget(r){const P=regProfile(r);return PS.tools.reduce((a,t)=>a+(isOn(t,r,P)?toolBudget(t,P,r):0),0);}
 const fuelTxt=P=>P.dd.length?(P.dsl>P.g?`ديزل ${Math.round(P.dsl*100)}٪`:`بنزين ${Math.round(P.g*100)}٪`)+` <span class="hint">(91: ${Math.round(P.g91*100)}٪ · 95: ${Math.round(P.g95*100)}٪ · ديزل: ${Math.round(P.dsl*100)}٪)</span>`:'<span class="hint">لا توجد بيانات</span>';
 function renderPlan(){
-  $('pMonths').value=PS.months;$('pDsl').value=PS.dsl;$('pInc').value=String(PS.inc);
+  $('pMonths').value=PS.months;$('pDsl').value=PS.dsl;$('pInc').value=String(PS.inc);$('pAll').checked=!!PS.applyAll;
   $('pReg').innerHTML=REGS.map(r=>`<option${r===PS.reg?' selected':''}>${esc(r)}</option>`).join('');
   const rows=REGS.map(r=>({r,P:regProfile(r),b:regBudget(r)})).filter(x=>x.P.n);
   const tot=rows.reduce((a,x)=>a+x.b,0),nst=rows.reduce((a,x)=>a+x.P.n,0),vis=rows.reduce((a,x)=>a+x.P.vis,0);
+  const miss=PS.tools.filter(t=>rows.some(x=>isOn(t,x.r,x.P)&&units(t,x.P)&&!priceOf(t,x.r))).length;
   const allTy={travel:0,city:0,mixed:0,unk:0};rows.forEach(x=>Object.keys(allTy).forEach(k=>allTy[k]+=x.P.cnt[k]));
   $('pNet').innerHTML=`<div class="kpi hot"><div class="k">ميزانية الخطة</div><div class="v num">${sar(tot)}</div><div class="s">${PS.months} أشهر · ${f0(tot/PS.months)} ر.س شهريًا</div></div>
    <div class="kpi"><div class="k">المناطق</div><div class="v num">${rows.length}</div><div class="s">${nst} محطة</div></div>
    <div class="kpi"><div class="k">خط سفر</div><div class="v num">${allTy.travel}</div><div class="s">مختلطة ${allTy.mixed}</div></div>
    <div class="kpi"><div class="k">وسط المدينة</div><div class="v num">${allTy.city}</div><div class="s">غير محدد ${allTy.unk}</div></div>
-   <div class="kpi"><div class="k">تكلفة لكل محطة</div><div class="v num">${f0(tot/(nst||1))}</div><div class="s">ر.س طوال الخطة</div></div>`;
+   <div class="kpi"><div class="k">أدوات بدون سعر</div><div class="v num" style="${miss?'color:var(--warn)':''}">${miss}</div><div class="s">${miss?'من الأدوات المفعّلة — الميزانية ناقصة':'كل الأدوات المفعّلة مسعّرة'}</div></div>`;
   const mx=Math.max(...rows.map(x=>x.b),1);
   $('pRegTbl').innerHTML=`<table><thead><tr><th>المنطقة</th><th>المحطات</th><th>خط سفر</th><th>مختلطة</th><th>وسط المدينة</th><th>غير محدد</th><th>الأكثر مبيعًا</th><th>عمليات/يوم</th><th>أدوات مفعّلة</th><th>الميزانية</th><th style="min-width:120px"></th><th>لكل محطة</th></tr></thead><tbody>${rows.map(x=>{const on=PS.tools.filter(t=>isOn(t,x.r,x.P)).length;return `<tr class="click${x.r===PS.reg?' sel':''}" data-r="${esc(x.r)}" style="${x.r===PS.reg?'background:var(--accent-soft)':''}"><td><b>${esc(x.r)}</b></td><td>${x.P.n}</td><td>${x.P.cnt.travel}</td><td>${x.P.cnt.mixed}</td><td>${x.P.cnt.city}</td><td>${x.P.cnt.unk}</td><td style="white-space:normal">${fuelTxt(x.P)}</td><td>${f0(x.P.vis)}</td><td>${on}</td><td><b>${sar(x.b)}</b></td><td><div style="height:8px;border-radius:4px;background:var(--accent);width:${x.b/mx*100}%"></div></td><td>${sar(x.b/x.P.n)}</td></tr>`}).join('')}
    <tr style="font-weight:700"><td>الإجمالي</td><td>${nst}</td><td>${allTy.travel}</td><td>${allTy.mixed}</td><td>${allTy.city}</td><td>${allTy.unk}</td><td></td><td>${f0(vis)}</td><td></td><td>${sar(tot)}</td><td></td><td>${sar(tot/(nst||1))}</td></tr></tbody></table>`;
@@ -522,27 +526,29 @@ function renderRegion(){
    <div class="kpi"><div class="k">الأكثر مبيعًا</div><div class="v" style="font-size:16px">${P.dd.length?(P.dsl>P.g?'ديزل':'بنزين'):'—'}</div><div class="s num">${P.dd.length?`بنزين ${Math.round(P.g*100)}٪ · ديزل ${Math.round(P.dsl*100)}٪ من الإيراد`:''}</div></div>
    <div class="kpi"><div class="k">عمليات يوميًا</div><div class="v num">${f0(P.vis)}</div><div class="s">${sar(P.rev)} يوميًا</div></div>
    <div class="kpi"><div class="k">محطات ديزل عالي</div><div class="v num">${P.diesel}</div><div class="s">حصة ديزل ≥ ${PS.dsl}٪</div></div></div>`;
-  $('pTools').innerHTML=`<table><thead><tr><th></th><th>الأداة</th><th>طريقة الحساب</th><th>عدد الوحدات</th><th>تكلفة الوحدة</th><th>الكمية</th><th>التكرار</th><th>الميزانية</th><th>التوصية</th></tr></thead><tbody>${PS.tools.map(t=>{const on=isOn(t,r,P),u=units(t,P),why=recFor(t,r,P),bb=toolBudget(t,P);return `<tr style="${on?'':'opacity:.55'}"><td><input type="checkbox" data-on="${t.id}" ${on?'checked':''} aria-label="تفعيل ${esc(t.n)}" style="width:auto"></td><td style="white-space:normal">${esc(t.n)}</td><td>${BASIS[t.b]}</td><td>${u}</td><td>${sar(t.cost)}</td><td>${t.q}</td><td>${FREQ[t.f]}${t.f==='month'?' × '+PS.months:''}</td><td><b>${on?sar(bb):'—'}</b></td><td>${why?`<span class="pill hot">موصى بها</span> <span class="hint">${why}</span>`:(u?'<span class="hint">اختيارية</span>':'<span class="hint">لا توجد محطات من هذا النوع</span>')}</td></tr>`}).join('')}
+  $('pTools').innerHTML=`<table><thead><tr><th></th><th>الأداة</th><th>طريقة الحساب</th><th>عدد الوحدات</th><th>سعر الوحدة (ر.س)</th><th>الكمية</th><th>التكرار</th><th>الميزانية</th><th>التوصية</th></tr></thead><tbody>${PS.tools.map(t=>{const on=isOn(t,r,P),u=units(t,P),why=recFor(t,r,P),bb=toolBudget(t,P,r),k=r+'|'+t.id,own=(k in PS.price&&PS.price[k]!==''),pr=priceOf(t,r);return `<tr style="${on?'':'opacity:.55'}"><td><input type="checkbox" data-on="${t.id}" ${on?'checked':''} aria-label="تفعيل ${esc(t.n)}" style="width:auto"></td><td style="white-space:normal">${esc(t.n)}</td><td>${BASIS[t.b]}</td><td>${u}</td><td><input type="number" min="0" step="100" id="rp-${t.id}" data-pr="${t.id}" value="${own?PS.price[k]:(t.cost||'')}" placeholder="حدد السعر" style="width:120px${own?';border-color:var(--accent)':''}">${own?'<div class="hint">سعر خاص بالمنطقة</div>':''}</td><td>${t.q}</td><td>${FREQ[t.f]}${t.f==='month'?' × '+PS.months:''}</td><td><b>${!on?'—':pr?sar(bb):'<span class="pill low">حدد السعر</span>'}</b></td><td>${why?`<span class="pill hot">موصى بها</span> <span class="hint">${why}</span>`:(u?'<span class="hint">اختيارية</span>':'<span class="hint">لا توجد محطات من هذا النوع</span>')}</td></tr>`}).join('')}
    <tr style="font-weight:700"><td></td><td>الإجمالي</td><td colspan="5"></td><td>${sar(b)}</td><td></td></tr></tbody></table>`;
+  $('pTools').querySelectorAll('[data-pr]').forEach(inp=>inp.addEventListener('change',()=>{const k=r+'|'+inp.dataset.pr;const t=PS.tools.find(x=>x.id===inp.dataset.pr);const v=inp.value;if(v===''){delete PS.price[k];}else if(PS.applyAll){t.cost=+v||0;Object.keys(PS.price).filter(x=>x.endsWith('|'+t.id)).forEach(x=>delete PS.price[x]);}else{PS.price[k]=+v||0;}pSave();setTimeout(renderPlan,0);}));
   $('pTools').querySelectorAll('[data-on]').forEach(cb=>cb.addEventListener('change',()=>{PS.on[r+'|'+cb.dataset.on]=cb.checked;pSave();setTimeout(renderPlan,0);}));
   const st=[...P.st].sort((a,b)=>b.v-a.v);
   $('pStations').innerHTML=`<table><thead><tr><th>المحطة</th><th>النوع</th><th>الأكثر مبيعًا</th><th>بنزين ٪</th><th>ديزل ٪</th><th>عمليات/يوم</th><th>الشركاء</th><th>شرائح العملاء</th></tr></thead><tbody>${st.map(s=>`<tr><td>${esc(s.n)} <span class="hint">${s.c}</span>${s.data?'':' <span class="pill low">بلا بيانات</span>'}</td><td><select data-ty="${s.c}" style="width:auto;padding:3px 6px">${Object.entries(TYP).map(([k,v])=>`<option value="${k}"${stType(s)===k?' selected':''}>${v}</option>`).join('')}</select>${s.est&&!PS.types[s.c]&&s.data?' <span class="hint">مقدّر</span>':''}</td><td>${s.data?(s.dsl>s.g91+s.g95?'<b>ديزل</b>':'بنزين'):'—'}</td><td>${s.data?Math.round((s.g91+s.g95)*100)+'٪':'—'}</td><td>${s.data?Math.round(s.dsl*100)+'٪':'—'}</td><td>${s.data?f0(s.v):'—'}</td><td>${s.pc}</td><td style="white-space:normal;font-size:12px" class="muted">${s.pers.join('، ')}</td></tr>`).join('')}</tbody></table>`;
   $('pStations').querySelectorAll('[data-ty]').forEach(sel=>sel.addEventListener('change',()=>{PS.types[sel.dataset.ty]=sel.value;pSave();setTimeout(renderPlan,0);}));
 }
 function renderCatalog(){
-  $('pCat').innerHTML=`<table><thead><tr><th>الأداة</th><th>طريقة الحساب</th><th>تكلفة الوحدة (ر.س)</th><th>الكمية</th><th>التكرار</th><th>ميزانيتها في كل المناطق</th><th></th></tr></thead><tbody>${PS.tools.map((t,i)=>{const all=REGS.reduce((a,r)=>{const P=regProfile(r);return a+(P.n&&isOn(t,r,P)?toolBudget(t,P):0)},0);return `<tr data-i="${i}"><td><input id="tn${i}" data-k="n" value="${esc(t.n)}" style="min-width:200px"></td><td><select id="tb${i}" data-k="b">${Object.entries(BASIS).map(([k,v])=>`<option value="${k}"${t.b===k?' selected':''}>${v}</option>`).join('')}</select></td><td><input id="tc${i}" data-k="cost" type="number" min="0" step="100" value="${t.cost}" style="width:110px"></td><td><input id="tq${i}" data-k="q" type="number" min="0" step="1" value="${t.q}" style="width:70px"></td><td><select id="tf${i}" data-k="f">${Object.entries(FREQ).map(([k,v])=>`<option value="${k}"${t.f===k?' selected':''}>${v}</option>`).join('')}</select></td><td>${sar(all)}</td><td><button type="button" class="xb" data-delt="${i}" aria-label="حذف">×</button></td></tr>`}).join('')}</tbody></table>`;
+  $('pCat').innerHTML=`<table><thead><tr><th>الأداة</th><th>طريقة الحساب</th><th>السعر لكل المناطق (ر.س)</th><th>الكمية</th><th>التكرار</th><th>ميزانيتها في كل المناطق</th><th></th></tr></thead><tbody>${PS.tools.map((t,i)=>{const all=REGS.reduce((a,r)=>{const P=regProfile(r);return a+(P.n&&isOn(t,r,P)?toolBudget(t,P,r):0)},0);return `<tr data-i="${i}"><td><input id="tn${i}" data-k="n" value="${esc(t.n)}" style="min-width:200px"></td><td><select id="tb${i}" data-k="b">${Object.entries(BASIS).map(([k,v])=>`<option value="${k}"${t.b===k?' selected':''}>${v}</option>`).join('')}</select></td><td><input id="tc${i}" data-k="cost" type="number" min="0" step="100" value="${t.cost||''}" placeholder="حدد السعر" style="width:120px"></td><td><input id="tq${i}" data-k="q" type="number" min="0" step="1" value="${t.q}" style="width:70px"></td><td><select id="tf${i}" data-k="f">${Object.entries(FREQ).map(([k,v])=>`<option value="${k}"${t.f===k?' selected':''}>${v}</option>`).join('')}</select></td><td>${sar(all)}</td><td><button type="button" class="xb" data-delt="${i}" aria-label="حذف">×</button></td></tr>`}).join('')}</tbody></table>`;
   $('pCat').querySelectorAll('input,select').forEach(el=>el.addEventListener('change',()=>{const i=+el.closest('tr').dataset.i,k=el.dataset.k;PS.tools[i][k]=(k==='cost'||k==='q')?(+el.value||0):el.value;pSave();setTimeout(renderPlan,0);}));
   $('pCat').querySelectorAll('[data-delt]').forEach(b=>b.addEventListener('click',()=>{PS.tools.splice(+b.dataset.delt,1);pSave();renderPlan();}));
 }
-$('addTool').addEventListener('click',()=>{PS.tools.push({id:'c'+Date.now(),n:'أداة جديدة',b:'region',cost:1000,q:1,f:'once',rec:'none'});pSave();renderPlan();const i=PS.tools.length-1;const el=$('tn'+i);if(el){el.focus();el.select();}});
+$('addTool').addEventListener('click',()=>{PS.tools.push({id:'c'+Date.now(),n:'أداة جديدة',b:'region',cost:0,q:1,f:'once',rec:'none'});pSave();renderPlan();const i=PS.tools.length-1;const el=$('tn'+i);if(el){el.focus();el.select();}});
 $('pMonths').addEventListener('change',e=>{PS.months=Math.max(1,+e.target.value||1);pSave();renderPlan();});
 $('pDsl').addEventListener('change',e=>{PS.dsl=+e.target.value||0;pSave();renderPlan();});
+$('pAll').addEventListener('change',e=>{PS.applyAll=e.target.checked;pSave();});
 $('pInc').addEventListener('change',e=>{PS.inc=+e.target.value;pSave();renderPlan();});
 $('pReg').addEventListener('change',e=>{PS.reg=e.target.value;pSave();renderPlan();});
 $('resetP').addEventListener('click',()=>{Object.keys(PS).forEach(k=>delete PS[k]);pInit();pSave();renderPlan();toast('رجعت الخطة للإعدادات الافتراضية');});
 $('copyP').addEventListener('click',()=>{
   const L=[['المنطقة','المحطات','خط سفر','مختلطة','وسط المدينة','غير محدد','بنزين٪','ديزل٪','عمليات/يوم','الأداة','طريقة الحساب','عدد الوحدات','تكلفة الوحدة','الكمية','التكرار','ميزانية الأداة'].join('\t')];
-  REGS.forEach(r=>{const P=regProfile(r);if(!P.n)return;PS.tools.forEach(t=>{if(!isOn(t,r,P))return;L.push([r,P.n,P.cnt.travel,P.cnt.mixed,P.cnt.city,P.cnt.unk,Math.round(P.g*100),Math.round(P.dsl*100),Math.round(P.vis),t.n,BASIS[t.b],units(t,P),t.cost,t.q,FREQ[t.f]+(t.f==='month'?' × '+PS.months:''),Math.round(toolBudget(t,P))].join('\t'));});});
+  REGS.forEach(r=>{const P=regProfile(r);if(!P.n)return;PS.tools.forEach(t=>{if(!isOn(t,r,P))return;L.push([r,P.n,P.cnt.travel,P.cnt.mixed,P.cnt.city,P.cnt.unk,Math.round(P.g*100),Math.round(P.dsl*100),Math.round(P.vis),t.n,BASIS[t.b],units(t,P),priceOf(t,r),t.q,FREQ[t.f]+(t.f==='month'?' × '+PS.months:''),Math.round(toolBudget(t,P,r))].join('\t'));});});
   const tx=L.join('\n');try{navigator.clipboard.writeText(tx).then(()=>toast('نُسخت الخطة، الصقها في إكسل'),()=>fb(tx))}catch(e){fb(tx)}
 });
 
