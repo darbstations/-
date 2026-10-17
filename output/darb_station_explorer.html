@@ -74,6 +74,7 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 .pcat .t{font-size:12px;color:var(--ink2);min-width:96px;font-weight:600;flex:none}
 .chip{display:inline-block;font:inherit;font-size:12.5px;padding:2px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--line);margin:2px 0 2px 4px;cursor:pointer;color:var(--ink)}
 .chip:hover,.chip.on{border-color:var(--accent);color:var(--accent)}
+.chip.pick,.chip.pick:hover{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
 .nodata{font-size:13px;color:var(--ink2);background:var(--bg);border:1px dashed var(--line);border-radius:8px;padding:10px}
 .offer{display:grid;grid-template-columns:minmax(0,3fr) minmax(0,2fr);gap:16px}
 .form{display:grid;gap:12px}
@@ -145,7 +146,7 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
     <div class="grid2">
       <section class="panel"><div class="ctitle"><h2>الأشهر</h2><span class="hint">من تقارير المبيعات الشهرية</span></div><div class="tbl" id="monthTbl"></div></section>
-      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint">من ملف Darb Units</span></div><div class="pcats" id="partners"></div></section>
+      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint" id="pSelInfo">اضغط على الشريك اللي بيدخل معانا في العرض</span></div><div class="pcats" id="partners"></div><div class="actions" style="margin-top:10px"><button type="button" id="pSelCopy">نسخ الشركاء المختارين</button><button type="button" id="pSelClear">إلغاء الاختيار</button></div></section>
     </div>
 
 
@@ -310,9 +311,13 @@ function renderMonths(){
   const m=cur.months;if(!m.length){$('monthTbl').innerHTML='<div class="nodata">لا توجد بيانات شهرية.</div>';return;}
   $('monthTbl').innerHTML=`<table><thead><tr><th>الشهر</th><th>أيام</th><th>العمليات</th><th>عمليات/يوم</th><th>الإيراد</th><th>ساعة الذروة</th></tr></thead><tbody>${m.map(x=>`<tr><td>${x.m}</td><td>${x.d}</td><td>${f0(x.vis)}</td><td>${f0(x.vis/x.d)}</td><td>${sar(x.rev)}</td><td>${x.pk}</td></tr>`).join('')}</tbody></table>`;
 }
+store.psel=store.psel||{};
+const isPS=(c,n)=>(store.psel[c]||[]).includes(n);
 function renderPartners(){
-  const s=cur;
-  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<span class="chip" style="cursor:default">${esc(n)}</span>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
+  const s=cur,sel=store.psel[s.c]||[];
+  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<button type="button" class="chip${isPS(s.c,n)?' pick':''}" data-ps="${esc(n)}" aria-pressed="${isPS(s.c,n)}">${esc(n)}</button>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
+  $('pSelInfo').textContent=sel.length?`اخترت ${sel.length} شريك للعرض`:'اضغط على الشريك اللي بيدخل معانا في العرض';
+  $('partners').querySelectorAll('[data-ps]').forEach(b=>b.addEventListener('click',()=>{const n=b.dataset.ps,a=new Set(store.psel[s.c]||[]);a.has(n)?a.delete(n):a.add(n);store.psel[s.c]=[...a];save();renderPartners();}));
 }
 function renderStation(){renderHead();renderHours();renderDaily();renderWd();renderMonths();
   renderPartners();}
@@ -473,5 +478,7 @@ $('gQ').addEventListener('input',renderSug);
 $('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),min:$('gNewM').value===''?null:+$('gNewM').value});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';$('gNewM').value='';renderSug();toast('أُضيف المقترح');});
 
 $('goPlan').addEventListener('click',()=>tab('P'));
+$('pSelClear').addEventListener('click',()=>{store.psel[cur.c]=[];save();renderPartners();});
+$('pSelCopy').addEventListener('click',()=>{const L=store.psel[cur.c]||[];if(!L.length){toast('ما اخترت شركاء بعد');return;}const t=`${cur.n} (${cur.c})\n`+L.join('\n');try{navigator.clipboard.writeText(t).then(()=>toast('نُسخت أسماء الشركاء'),()=>fb(t))}catch(e){fb(t)}});
 fillSelect();renderStation();
 </script>
