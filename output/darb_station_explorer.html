@@ -51,7 +51,7 @@ label.f{display:grid;gap:4px;font-size:12.5px;color:var(--ink2);font-weight:500}
 .hscroll .chart{min-width:640px}
 .chart text{fill:var(--ink2);font-family:var(--body)}
 .chart .gl{stroke:var(--grid);stroke-width:1}
-.hbar{cursor:pointer}
+.hbar{cursor:default}
 .hbar rect.m{fill:var(--bar)} .hbar.sel rect.m{fill:var(--accent)}
 .hbar:hover rect.m{opacity:.8}
 .hbar rect.hit{fill:transparent}
@@ -95,7 +95,7 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 .sug{display:flex;flex-direction:column}
 .sug .tags{display:flex;flex-wrap:wrap}
 .sugact{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:12px}
-.sugact select{width:auto;max-width:180px}
+.minf{margin-top:10px;max-width:220px}
 @media (max-width:980px){.sgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:560px){.sgrid{grid-template-columns:1fr}}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
@@ -107,13 +107,12 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
 <div class="wrap">
   <header class="top">
-    <div><h1>مستكشف محطات درب</h1><div class="hint">الشركاء، الترانزكشن حسب الساعة واليوم والشهر، مخطط العروض ومقترحاتها، والخطة العامة للمناطق</div></div>
+    <div><h1>مستكشف محطات درب</h1><div class="hint">الشركاء، الترانزكشن حسب الساعة واليوم والشهر، مقترحات العروض، والخطة العامة للمناطق</div></div>
     <div class="tabs" role="tablist">
       <button role="tab" id="tabS" aria-selected="true" type="button">المحطة</button>
       <button role="tab" id="tabA" aria-selected="false" type="button">كل المحطات</button>
       <button role="tab" id="tabG" aria-selected="false" type="button">مقترحات العروض</button>
       <button role="tab" id="tabP" aria-selected="false" type="button">الخطة العامة</button>
-      <button role="tab" id="tabO" aria-selected="false" type="button">العروض المحفوظة <span id="oc" class="num"></span></button>
     </div>
   </header>
 
@@ -134,7 +133,7 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
     </section>
 
     <section class="panel">
-      <div class="ctitle"><h2>عدد العمليات حسب الساعة</h2><span class="hint">متوسط العمليات في الساعة لليوم الواحد · اضغط على أي ساعة لتحديدها في العرض</span></div>
+      <div class="ctitle"><h2>عدد العمليات حسب الساعة</h2><span class="hint">متوسط العمليات في الساعة لليوم الواحد · البرتقالي = أعلى 3 ساعات</span></div>
       <div id="hourChart" class="hscroll"></div>
       <div class="periods" id="periods"></div>
     </section>
@@ -146,35 +145,10 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
     <div class="grid2">
       <section class="panel"><div class="ctitle"><h2>الأشهر</h2><span class="hint">من تقارير المبيعات الشهرية</span></div><div class="tbl" id="monthTbl"></div></section>
-      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint">اضغط على شريك لإضافته للعرض أو إزالته</span></div><div class="pcats" id="partners"></div></section>
+      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint">من ملف Darb Units</span></div><div class="pcats" id="partners"></div></section>
     </div>
 
-    <section class="panel" id="offerPanel">
-      <div class="ctitle"><h2>مخطط العرض</h2><span class="hint">اختر الشركاء واكتب عرض كل شريك، وحدد المدة والأوقات، ويحسب لك الوصول والتكلفة والمبيعات من حركة المحطة الفعلية</span></div>
-      <div class="offer">
-        <div class="form">
-          <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">الشركاء في العرض (اختر واحد أو أكثر)</span>
-            <div id="oPick" class="pcats"></div>
-            <div style="display:flex;gap:8px;max-width:420px"><input id="oCustom" type="text" placeholder="شريك آخر أو «عرض درب»"><button type="button" id="oAddCustom">إضافة</button></div>
-          </div>
-          <div class="tbl" id="oItems"></div>
-          <div class="r3">
-            <label class="f">حد أدنى للتعبئة (ر.س)<input id="oMin" type="number" min="0" step="10" placeholder="بدون"></label>
-            <label class="f">حصة درب من التكلفة ٪<input id="oDarb" type="number" min="0" max="100" step="5" value="50"></label>
-            <label class="f">اسم الحملة (اختياري)<input id="oName" type="text" placeholder="مثال: قهوة الصباح"></label>
-          </div>
-          <div class="r3">
-            <label class="f">تاريخ البداية<input id="oStart" type="date"></label>
-            <label class="f">المدة (يوم)<input id="oDays" type="number" min="1" step="1" value="30"></label>
-            <label class="f">تاريخ النهاية<input id="oEnd" type="date" disabled></label>
-          </div>
-          <div class="seg" id="durSeg"></div>
-          <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">أوقات العرض</span><div class="seg" id="timeSeg"></div><div class="hint" id="hoursSel"></div></div>
-          <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">أيام العرض</span><div class="seg" id="daySeg"></div></div>
-        </div>
-        <div class="result" id="oRes"></div>
-      </div>
-    </section>
+
   </div>
 
   <div id="viewA" hidden>
@@ -187,36 +161,25 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
   <div id="viewG" hidden class="vgrid">
     <section class="panel">
-      <div class="ctitle"><h2>مقترحات العروض</h2><span class="hint">مقترحاتك أنت، تُحفظ في متصفحك وتقدر تنقلها لمخطط العرض</span></div>
+      <div class="ctitle"><h2>مقترحات العروض</h2><span class="hint">مقترحاتك أنت، تُحفظ في متصفحك</span></div>
       <div class="r3">
         <label class="f">الفئة<select id="gNewCat"></select></label>
         <label class="f">عنوان العرض<input id="gNewT" type="text" placeholder="اكتب عنوان العرض"></label>
         <label class="f">طريقة التطبيق<input id="gNewD" type="text" placeholder="كيف يشتغل العرض (اختياري)"></label>
       </div>
+      <label class="f" style="max-width:260px;margin-top:10px">الحد الأدنى للبنزين (ر.س)<input id="gNewM" type="number" min="0" step="10" placeholder="بدون حد أدنى"></label>
       <div class="actions" style="margin-top:10px"><button type="button" class="pri" id="gAdd">إضافة المقترح</button></div>
     </section>
     <section class="panel">
       <div class="seg" id="gCat" role="tablist" style="margin-bottom:12px"></div>
       <label class="f" style="max-width:360px">بحث<input id="gQ" type="search" placeholder="كلمة من العرض"></label>
-      <div id="gCtx" style="margin-top:12px"></div>
     </section>
     <div id="gList" class="sgrid"></div>
   </div>
   <div id="viewP" hidden class="vgrid">
     <section class="panel">
-      <div class="ctitle"><h2>الخطة العامة</h2><div class="actions"><button type="button" id="copyP">نسخ الخطة لإكسل</button><button type="button" id="resetP">إعادة الضبط</button></div></div>
-      <div class="r3" style="grid-template-columns:repeat(4,minmax(0,1fr))">
-        <label class="f">مدة الخطة (شهر)<input id="pMonths" type="number" min="1" step="1"></label>
-        <label class="f">محطة ديزل إذا حصة الديزل ≥ ٪<input id="pDsl" type="number" min="0" max="100" step="5"></label>
-        <label class="f">المحطات بدون بيانات مبيعات<select id="pInc"><option value="1">تظهر في القائمة</option><option value="0">لا تظهر</option></select></label>
-        <label class="f">المنطقة<select id="pReg"></select></label>
-      </div>
-      <div class="kpis" id="pNet" style="grid-template-columns:repeat(5,minmax(0,1fr))"></div>
-      <p class="hint" style="margin:10px 0 0">الخطوات: اختر المنطقة، علّم المحطات اللي تبيها، ثم فعّل أدوات المنطقة واكتب أسعارها. الأداة «مرة للمنطقة» = السعر × الكمية، والأداة «لكل محطة مختارة» = السعر × الكمية × عدد المحطات المختارة، وتنضرب في عدد الأشهر إذا كانت شهرية.</p>
-    </section>
-
-    <section class="panel">
-      <div class="ctitle"><h2>المناطق</h2><span class="hint">اضغط على أي منطقة لفتحها</span></div>
+      <div class="ctitle"><h2>المناطق</h2><div class="actions"><button type="button" id="copyP">نسخ الخطة لإكسل</button><button type="button" id="resetP">إعادة الضبط</button></div></div>
+      <p class="hint" style="margin:0 0 10px">اضغط على أي منطقة لفتحها، علّم المحطات اللي تبيها، وفعّل أدوات المنطقة واكتب أسعارها.</p>
       <div class="tbl" id="pRegTbl"></div>
     </section>
 
@@ -227,24 +190,12 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
       <div class="ctitle" style="margin-top:18px"><h3>2) الأدوات للمنطقة</h3><span class="hint">فعّل الأدوات اللي تبيها للمنطقة واكتب سعرها</span></div>
       <label class="hint" style="display:flex;gap:6px;align-items:center;margin-bottom:8px"><input type="checkbox" id="pAll" style="width:auto"> السعر اللي أكتبه ينطبق على كل المناطق (ألغِ التحديد لتسعير خاص بهذه المنطقة)</label>
       <div class="tbl" id="pTools"></div>
+      <div class="actions" style="margin-top:10px;align-items:center"><button type="button" class="pri" id="addTool">＋ أداة</button><label class="hint" style="display:flex;gap:6px;align-items:center">مدة الخطة للأدوات الشهرية<input id="pMonths" type="number" min="1" step="1" style="width:80px"> شهر</label></div>
     </section>
 
-    <section class="panel">
-      <div class="ctitle"><h2>إعدادات الأدوات</h2><span class="hint">أضف أو احذف أداة، وحدد طريقة حسابها</span></div>
-      <div class="tbl" id="pCat"></div>
-      <div class="actions" style="margin-top:10px"><button type="button" class="pri" id="addTool">＋ أداة</button></div>
-    </section>
   </div>
 
-  <div id="viewO" hidden>
-    <section class="panel">
-      <div class="ctitle"><h2>العروض المحفوظة</h2><div class="actions"><button id="copyO" type="button">نسخ الجدول لإكسل</button></div></div>
-      <div class="tbl" id="offTbl"></div>
-      <p class="hint">العروض تُحفظ في متصفحك فقط.</p>
-    </section>
-  </div>
-
-  <p class="hint">المصدر: ملف تحليل المحطات (لوحة مبيعات درب وتقارير المبيعات الشهرية 2026) وملف Darb Units للشركاء. العمليات لكل ساعة = متوسط عمليات المحطة اليومي × حصة الساعة من إجمالي الفترة. نسبة الاستفادة ومتوسط فاتورة الشريك افتراضات تخطيطية تعدّلها أنت.</p>
+  <p class="hint">المصدر: ملف تحليل المحطات (لوحة مبيعات درب وتقارير المبيعات الشهرية 2026) وملف Darb Units للشركاء. العمليات لكل ساعة = متوسط عمليات المحطة اليومي × حصة الساعة من إجمالي الفترة.</p>
 </div>
 <div class="tip" id="tip" hidden></div>
 <div class="toast" id="toast" hidden></div>
@@ -281,7 +232,6 @@ function showTip(e,html){tip.innerHTML=html;tip.hidden=false;const x=e.clientX,y
 function hideTip(){tip.hidden=true;}
 
 /* offer state */
-const O={items:[],min:0,start:new Date().toISOString().slice(0,10),days:30,hours:new Set([...Array(24).keys()]),wds:new Set([0,1,2,3,4,5,6]),cap:3,darb:50,name:''};
 
 /* ---------- station view ---------- */
 function selCodes(){const a=new Set();Object.values((typeof PS!=='undefined'&&PS.selSt)||{}).forEach(l=>l.forEach(c=>a.add(c)));return a;}
@@ -319,13 +269,13 @@ function renderHours(){
   let g='';for(let v=0;v<=mx;v+=step){const y=T+(H-T-B)*(1-v/mx);g+=`<line class="gl" x1="${W-L}" x2="0" y1="${y}" y2="${y}"/><text x="${W-L+6}" y="${y+4}" font-size="11" text-anchor="start">${f0(v)}</text>`;}
   let bars='';
   // RTL: hour 0 on the right
-  h.forEach((v,i)=>{const x=W-L-(i+1)*bw;const bh=(H-T-B)*(v/mx);const y=H-B-bh;const sel=O.hours.has(i);
+  h.forEach((v,i)=>{const x=W-L-(i+1)*bw;const bh=(H-T-B)*(v/mx);const y=H-B-bh;const sel=top3.includes(i);
     bars+=`<g class="hbar${sel?' sel':''}" data-h="${i}"><rect class="hit" x="${x}" y="${T}" width="${bw}" height="${H-T-B}"/><rect class="m" x="${x+3}" y="${y}" width="${bw-6}" height="${bh}" rx="4"/>${top3.includes(i)?`<text x="${x+bw/2}" y="${y-5}" font-size="11" text-anchor="middle" style="fill:var(--ink);font-weight:600">${f0(v)}</text>`:''}<text x="${x+bw/2}" y="${H-10}" font-size="11" text-anchor="middle">${hl(i)}</text></g>`;});
   $('hourChart').innerHTML=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="العمليات حسب الساعة">${g}${bars}</svg>`;
   $('hourChart').querySelectorAll('.hbar').forEach(el=>{const i=+el.dataset.h;
     el.addEventListener('mousemove',e=>showTip(e,`<b>${hl(i)} – ${hr(i+1)}</b> · ${f0(h[i])} عملية/ساعة · ${f1(h[i]/cur.dvis*100)}٪ من اليوم`));
     el.addEventListener('mouseleave',hideTip);
-    el.addEventListener('click',()=>{O.hours.has(i)?O.hours.delete(i):O.hours.add(i);syncTime();});});
+});
   const pp=periodsOf(cur),mxp=pp.reduce((a,b)=>b.v>a.v?b:a),mnp=pp.reduce((a,b)=>b.v<a.v?b:a);
   $('periods').innerHTML=pp.map(p=>`<div class="per${p===mxp?' peak':''}${p===mnp?' low':''}"><span>${p.n} ${p===mxp?'<span class="pill hot">ذروة</span>':''}${p===mnp?'<span class="pill low">أضعف</span>':''}</span><span class="hint">${hl(p.a)} – ${hr(p.b)}</span><b class="num">${f0(p.v)}</b><span class="pct num">عملية/يوم · ${Math.round(p.pct*100)}٪</span></div>`).join('');
 }
@@ -362,102 +312,10 @@ function renderMonths(){
 }
 function renderPartners(){
   const s=cur;
-  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<button type="button" class="chip${hasP(n)?' on':''}" data-p="${esc(n)}">${esc(n)}</button>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
-  $('partners').querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{togP(b.dataset.p);$('offerPanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
+  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<span class="chip" style="cursor:default">${esc(n)}</span>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
 }
 function renderStation(){renderHead();renderHours();renderDaily();renderWd();renderMonths();
-  if(O.st!==cur.c){O.items=[];O.st=cur.c;}
-  renderPartners();renderPick();renderItems();calcOffer();}
-const hasP=n=>O.items.some(i=>i.p===n);
-function togP(n){if(hasP(n))O.items=O.items.filter(i=>i.p!==n);else O.items.push({p:n,txt:'',per:'',ticket:'',cap:''});renderPartners();renderPick();renderItems();calcOffer();}
-function renderPick(){
-  $('oPick').innerHTML=partnersAll(cur).length?CATS.filter(([k])=>cur.p[k].length).map(([k,t])=>`<div class="pcat"><span class="t">${t}</span><span>${cur.p[k].map(n=>`<button type="button" class="chip${hasP(n)?' on':''}" data-pp="${esc(n)}" aria-pressed="${hasP(n)}">${hasP(n)?'✓ ':''}${esc(n)}</button>`).join('')}</span></div>`).join(''):'<div class="hint">لا توجد بيانات شركاء لهذه المحطة، أضف الشريك بالاسم.</div>';
-  $('oPick').querySelectorAll('[data-pp]').forEach(b=>b.addEventListener('click',()=>togP(b.dataset.pp)));
-}
-function renderItems(){
-  if(!O.items.length){$('oItems').innerHTML='<div class="nodata">ما اخترت شركاء بعد. اختر شريك أو أكثر من فوق.</div>';return;}
-  $('oItems').innerHTML=`<table><thead><tr><th>الشريك</th><th style="min-width:220px">العرض (اكتبه)</th><th>تكلفة العرض للعملية (ر.س)</th><th>متوسط فاتورة الشريك (ر.س)</th><th>نسبة الاستفادة ٪</th><th></th></tr></thead><tbody>${O.items.map((it,i)=>`<tr data-i="${i}"><td><b>${esc(it.p)}</b></td><td><input id="oi-t${i}" data-f="txt" value="${esc(it.txt)}" placeholder="مثال: قهوة مجانية مع تعبئة 100 ريال"></td><td><input id="oi-c${i}" data-f="per" type="number" min="0" step="0.5" value="${it.per}" placeholder="0" style="width:110px"></td><td><input id="oi-k${i}" data-f="ticket" type="number" min="0" step="1" value="${it.ticket}" placeholder="0" style="width:110px"></td><td><input id="oi-r${i}" data-f="cap" type="number" min="0" step="0.5" value="${it.cap}" placeholder="مثال 2" style="width:90px"></td><td><button type="button" class="xb" data-rm="${i}" aria-label="إزالة">×</button></td></tr>`).join('')}</tbody></table>
-  <div class="hint">تكلفة العرض للعملية = كم يكلف العرض كل مرة يستفيد منه عميل (قيمة الخصم أو الهدية). نسبة الاستفادة = كم ٪ من السيارات اللي تمر وقت العرض تستفيد منه عند هذا الشريك.</div>`;
-  $('oItems').querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{const i=+el.closest('tr').dataset.i,f=el.dataset.f;O.items[i][f]=el.value;calcOffer();}));
-  $('oItems').querySelectorAll('[data-rm]').forEach(b=>b.addEventListener('click',()=>{O.items.splice(+b.dataset.rm,1);renderPartners();renderPick();renderItems();calcOffer();}));
-}
-
-/* ---------- offer ---------- */
-const DUR=[[7,'أسبوع'],[14,'أسبوعين'],[30,'شهر'],[60,'شهرين'],[90,'3 أشهر']];
-function syncTime(){renderHours();renderTimeSeg();calcOffer();}
-function renderTimeSeg(){
-  const all=O.hours.size===24;
-  const pp=periodsOf(cur),srt=[...pp].sort((a,b)=>a.v-b.v);
-  const is=(a,b)=>{for(let i=0;i<24;i++){if((i>=a&&i<b)!==O.hours.has(i))return false;}return true;};
-  $('timeSeg').innerHTML=`<button type="button" data-t="all" aria-pressed="${all}">طوال اليوم</button>`+PER.map(([n,a,b],k)=>`<button type="button" data-t="${k}" aria-pressed="${is(a,b)}">${n}</button>`).join('')+`<button type="button" data-t="low">أضعف فترتين</button><button type="button" data-t="peak">ساعات الذروة (أعلى 4)</button>`;
-  const hs=[...O.hours].sort((a,b)=>a-b);
-  $('hoursSel').textContent=hs.length===24?'كل الساعات محددة':hs.length?`${hs.length} ساعة محددة: ${hs.map(hl).join('، ')}`:'لم تحدد أي ساعة';
-  $('timeSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.t;O.hours.clear();
-    if(t==='all')for(let i=0;i<24;i++)O.hours.add(i);
-    else if(t==='low'){srt.slice(0,2).forEach(p=>{for(let i=p.a;i<p.b;i++)O.hours.add(i)});}
-    else if(t==='peak'){const h=hourly(cur);[...h.keys()].sort((a,b)=>h[b]-h[a]).slice(0,4).forEach(i=>O.hours.add(i));}
-    else{const [,a,bb]=PER[+t];for(let i=a;i<bb;i++)O.hours.add(i);}
-    syncTime();}));
-}
-function renderDaySeg(){
-  $('daySeg').innerHTML=WD.map((w,i)=>`<button type="button" data-d="${i}" aria-pressed="${O.wds.has(i)}">${w}</button>`).join('')+`<button type="button" data-d="all">كل الأيام</button><button type="button" data-d="we">الخميس والجمعة</button>`;
-  $('daySeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const d=b.dataset.d;
-    if(d==='all'){O.wds=new Set([0,1,2,3,4,5,6]);}else if(d==='we'){O.wds=new Set([5,6]);}else{const i=+d;O.wds.has(i)?O.wds.delete(i):O.wds.add(i);}
-    renderDaySeg();calcOffer();}));
-}
-function renderDurSeg(){
-  $('durSeg').innerHTML=DUR.map(([d,t])=>`<button type="button" data-v="${d}" aria-pressed="${O.days===d}">${t}</button>`).join('');
-  $('durSeg').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{O.days=+b.dataset.v;$('oDays').value=O.days;renderDurSeg();calcOffer();}));
-}
-function offerCalc(s,o){
-  const h=hourly(s),hShare=[...o.hours].reduce((a,i)=>a+h[i],0)/(s.dvis||1),wf=wdFactor(s);
-  const st=new Date(o.start+'T12:00:00');let cars=0,days=0;
-  for(let k=0;k<o.days;k++){const dt=new Date(st);dt.setDate(st.getDate()+k);const wi=JSWD.indexOf(dt.getDay());if(o.wds.has(wi)){days++;cars+=s.dvis*wf[wi]*hShare;}}
-  const end=new Date(st);end.setDate(st.getDate()+Math.max(0,o.days-1));
-  const items=o.items.map(it=>{const red=cars*(+it.cap||0)/100,cost=red*(+it.per||0);return {...it,red,cost,sales:red*(+it.ticket||0)};});
-  const red=items.reduce((a,x)=>a+x.red,0),cost=items.reduce((a,x)=>a+x.cost,0),sales=items.reduce((a,x)=>a+x.sales,0);
-  return {hShare,days,cars,items,red,cost,darbCost:cost*o.darb/100,partnerCost:cost*(1-o.darb/100),sales,end:end.toISOString().slice(0,10)};
-}
-function calcOffer(){
-  const r=offerCalc(cur,O);$('oEnd').value=r.end;
-  const pp=periodsOf(cur),low=pp.reduce((a,b)=>b.v<a.v?b:a);
-  const lowSel=[...O.hours].filter(i=>i>=low.a&&i<low.b).length;
-  const note=O.hours.size===0||O.wds.size===0?'<div class="note w">حدد ساعة ويومًا واحدًا على الأقل.</div>':
-    lowSel===low.b-low.a&&O.hours.size<24?`<div class="note">العرض يغطي أضعف فترة (${low.n})، وهذا مناسب لرفع الحركة فيها.</div>`:
-    r.hShare>0.5?`<div class="note">العرض يغطي ${Math.round(r.hShare*100)}٪ من عمليات اليوم.</div>`:`<div class="note w">العرض يغطي ${Math.round(r.hShare*100)}٪ فقط من عمليات اليوم. أضعف فترة هنا: ${low.n}.</div>`;
-  $('oRes').innerHTML=`<div class="hint">${O.items.length} شريك · ${O.start} ← ${r.end}</div>
-    <div><div class="hint">سيارات تمر وقت العرض</div><div class="big num">${f0(r.cars)}</div><div class="hint num">${r.days} يوم فعلي من ${O.days} · ${f0(r.cars/(r.days||1))} سيارة يوميًا</div></div>
-    ${r.items.map(x=>`<div class="rrow"><span>${esc(x.p)}${x.txt?` <span class="hint">· ${esc(x.txt)}</span>`:''}</span><span class="num" style="white-space:nowrap">${f0(x.red)} استفادة · ${sar(x.cost)}</span></div>`).join('')||'<div class="hint">اختر شريك وحدد نسبة الاستفادة وتكلفة العرض ليظهر الحساب.</div>'}
-    <div class="rrow hr"><span>إجمالي الاستفادة</span><b class="num">${f0(r.red)}</b></div>
-    <div class="rrow"><span>استفادة يوميًا</span><span class="num">${f1(r.red/(r.days||1))}</span></div>
-    <div class="rrow hr"><span>تكلفة العرض الإجمالية</span><span class="num">${sar(r.cost)}</span></div>
-    <div class="rrow"><span style="color:var(--darb)">على درب (${O.darb}٪)</span><span class="num">${sar(r.darbCost)}</span></div>
-    <div class="rrow"><span>على الشريك (${100-O.darb}٪)</span><span class="num">${sar(r.partnerCost)}</span></div>
-    <div class="rrow hr"><span>مبيعات متوقعة للشركاء</span><span class="num">${sar(r.sales)}</span></div>
-    ${O.min>0?`<div class="hint">شرط: تعبئة ${f0(O.min)} ر.س أو أكثر. متوسط فاتورة المحطة ${f0(cur.inv)} ر.س${O.min>cur.inv?'، والشرط أعلى من المتوسط فتوقع استفادة أقل.':'.'}</div>`:''}
-    ${note}
-    <button class="pri" type="button" id="saveO">حفظ العرض</button>`;
-  $('saveO').addEventListener('click',saveOffer);
-}
-function readForm(){
-  O.min=+$('oMin').value||0;
-  O.start=$('oStart').value||O.start;O.days=Math.max(1,+$('oDays').value||1);O.darb=Math.min(100,Math.max(0,+$('oDarb').value||0));O.name=$('oName').value;
-}
-function saveOffer(){
-  if(!O.items.length){toast('اختر شريك واحد على الأقل');return;}
-  const r=offerCalc(cur,O);
-  store.offers.push({id:Date.now(),v:2,c:cur.c,n:cur.n,items:r.items.map(x=>({p:x.p,txt:x.txt,per:+x.per||0,ticket:+x.ticket||0,cap:+x.cap||0,red:x.red,cost:x.cost,sales:x.sales})),min:O.min,start:O.start,end:r.end,days:O.days,hours:[...O.hours].sort((a,b)=>a-b),wds:[...O.wds].sort(),darb:O.darb,name:O.name,cars:r.cars,red:r.red,cost:r.cost,darbCost:r.darbCost,sales:r.sales});
-  save();renderOffers();toast('حُفظ العرض في «العروض المحفوظة»');
-}
-function hoursTxt(h){if(h.length===24)return 'طوال اليوم';const p=PER.find(([n,a,b])=>h.length===b-a&&h[0]===a&&h[h.length-1]===b-1);return p?p[0]:h.map(hl).join('، ');}
-function renderOffers(){
-  $('oc').textContent=store.offers.length?'('+store.offers.length+')':'';
-  if(!store.offers.length){$('offTbl').innerHTML='<div class="nodata">ما في عروض محفوظة. افتح محطة، صمّم العرض من «مخطط العرض» واضغط «حفظ العرض».</div>';return;}
-  const its=o=>o.items||[{p:o.partner,txt:TYPES[o.type]||'',per:0,ticket:o.ticket,cap:o.cap,red:o.red,cost:o.cost,sales:o.sales}];
-  $('offTbl').innerHTML=`<table><thead><tr><th>المحطة</th><th>الحملة</th><th>الشريك</th><th>العرض</th><th>تكلفة/عملية</th><th>استفادة ٪</th><th>من</th><th>إلى</th><th>الأوقات</th><th>الأيام</th><th>سيارات وقت العرض</th><th>استفادة</th><th>التكلفة</th><th>على درب</th><th>مبيعات الشريك</th><th></th></tr></thead><tbody>${store.offers.map(o=>{const L=its(o),n=L.length;return L.map((x,j)=>`<tr>${j===0?`<td rowspan="${n}">${esc(o.n)} <span class="hint">${o.c}</span></td><td rowspan="${n}">${esc(o.name||'—')}</td>`:''}<td>${esc(x.p)}</td><td style="white-space:normal;max-width:220px">${esc(x.txt||'—')}</td><td>${f1(x.per)}</td><td>${f1(x.cap)}</td>${j===0?`<td rowspan="${n}">${o.start}</td><td rowspan="${n}">${o.end}</td><td rowspan="${n}" style="white-space:normal;max-width:180px">${hoursTxt(o.hours)}</td><td rowspan="${n}">${o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، ')}</td><td rowspan="${n}">${f0(o.cars)}</td>`:''}<td>${f0(x.red)}</td><td>${sar(x.cost)}</td><td>${sar(x.cost*o.darb/100)}</td><td>${sar(x.sales)}</td>${j===0?`<td rowspan="${n}"><button class="xb" type="button" data-del="${o.id}" aria-label="حذف">×</button></td>`:''}</tr>`).join('')}).join('')}</tbody></table>`;
-  $('offTbl').querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{store.offers=store.offers.filter(o=>o.id!=b.dataset.del);save();renderOffers();}));
-}
-
+  renderPartners();}
 /* ---------- all stations ---------- */
 let sortK='dvis',sortD=-1;
 const COLS=[['n','المحطة'],['r','المنطقة'],['dvis','عمليات/يوم'],['drev','إيراد/يوم'],['inv','الفاتورة'],['ph','ساعة الذروة'],['phv','عمليات ساعة الذروة'],['tp','أقوى فترة'],['lp','أضعف فترة'],['pc','الشركاء'],['growth','النمو ٪']];
@@ -471,23 +329,12 @@ function renderAll(){
 }
 
 /* ---------- wiring ---------- */
-function tab(t){['S','A','G','P','O'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='S')fillSelect();if(t==='A')renderAll();if(t==='O')renderOffers();if(t==='P')renderPlan();if(t==='G')renderSug();}
-['S','A','G','P','O'].forEach(k=>$('tab'+k).addEventListener('click',()=>tab(k)));
+function tab(t){['S','A','G','P'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='S')fillSelect();if(t==='A')renderAll();if(t==='P')renderPlan();if(t==='G')renderSug();}
+['S','A','G','P'].forEach(k=>$('tab'+k).addEventListener('click',()=>tab(k)));
 $('q').addEventListener('input',fillSelect);
 $('st').addEventListener('change',e=>{cur=D.find(s=>s.c===e.target.value);renderStation();});
 $('regF').innerHTML='<option value="">كل المناطق</option>'+[...new Set(D.map(s=>s.r))].map(r=>`<option>${esc(r)}</option>`).join('');
 $('regF').addEventListener('change',renderAll);$('qa').addEventListener('input',renderAll);
-['oMin','oStart','oDays','oDarb','oName'].forEach(id=>$(id).addEventListener('input',()=>{readForm();if(id==='oDays')renderDurSeg();calcOffer();}));
-$('oAddCustom').addEventListener('click',()=>{const v=$('oCustom').value.trim();if(!v)return;if(!hasP(v))togP(v);$('oCustom').value='';});
-$('oCustom').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('oAddCustom').click();}});
-$('oStart').value=O.start;
-$('copyO').addEventListener('click',()=>{
-  const H=['المحطة','الكود','الحملة','الشريك','العرض','تكلفة العرض للعملية','متوسط فاتورة الشريك','نسبة الاستفادة٪','حد أدنى للتعبئة','من','إلى','الأوقات','الأيام','حصة درب٪','سيارات وقت العرض','استفادة','التكلفة','على درب','مبيعات الشريك'];
-  const its=o=>o.items||[{p:o.partner,txt:TYPES[o.type]||'',per:0,ticket:o.ticket,cap:o.cap,red:o.red,cost:o.cost,sales:o.sales}];
-  const L=[H.join('\t')];store.offers.forEach(o=>its(o).forEach(x=>L.push([o.n,o.c,o.name,x.p,x.txt,x.per,x.ticket,x.cap,o.min,o.start,o.end,hoursTxt(o.hours),o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، '),o.darb,Math.round(o.cars),Math.round(x.red),Math.round(x.cost),Math.round(x.cost*o.darb/100),Math.round(x.sales)].join('\t'))));
-  const t=L.join('\n');const ok=()=>toast('نُسخ الجدول، الصقه في إكسل');
-  try{navigator.clipboard.writeText(t).then(ok,()=>fb(t))}catch(e){fb(t)}
-});
 function fb(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('نُسخ الجدول، الصقه في إكسل')}catch(e){toast('تعذّر النسخ')}a.remove();}
 let tt;function toast(m){const el=$('toast');el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2200);}
 
@@ -532,22 +379,16 @@ function toolBudget(t,P,r){if(!toolOn(r,t))return 0;const m=t.f==='month'?PS.mon
 function regBudget(r){const P=regProfile(r);return PS.tools.reduce((a,t)=>a+toolBudget(t,P,r),0);}
 const fuelTxt=P=>P.dd.length?(P.dsl>P.g?`ديزل ${Math.round(P.dsl*100)}٪`:`بنزين ${Math.round(P.g*100)}٪`)+` <span class="hint">(91: ${Math.round(P.g91*100)}٪ · 95: ${Math.round(P.g95*100)}٪ · ديزل: ${Math.round(P.dsl*100)}٪)</span>`:'<span class="hint">لا توجد بيانات</span>';
 function renderPlan(){
-  $('pMonths').value=PS.months;$('pDsl').value=PS.dsl;$('pInc').value=String(PS.inc);$('pAll').checked=!!PS.applyAll;
-  $('pReg').innerHTML=REGS.map(r=>`<option${r===PS.reg?' selected':''}>${esc(r)}</option>`).join('');
+  $('pMonths').value=PS.months;$('pAll').checked=!!PS.applyAll;
   const rows=REGS.map(r=>{const P=regProfile(r);return {r,P,b:regBudget(r),sel:nSelR(P),on:PS.tools.filter(t=>toolOn(r,t)).length};}).filter(x=>x.P.n);
   const tot=rows.reduce((a,x)=>a+x.b,0),nst=rows.reduce((a,x)=>a+x.P.n,0),nsel=rows.reduce((a,x)=>a+x.sel,0),vis=rows.reduce((a,x)=>a+x.P.vis,0);
   const miss=PS.tools.filter(t=>rows.some(x=>toolOn(x.r,t)&&!priceOf(t,x.r))).length;
   const allTy={travel:0,city:0,mixed:0,unk:0};rows.forEach(x=>Object.keys(allTy).forEach(k=>allTy[k]+=x.P.cnt[k]));
-  $('pNet').innerHTML=`<div class="kpi hot"><div class="k">ميزانية الخطة</div><div class="v num">${sar(tot)}</div><div class="s">${PS.months} أشهر · ${f0(tot/PS.months)} ر.س شهريًا</div></div>
-   <div class="kpi"><div class="k">محطات مختارة</div><div class="v num">${nsel}</div><div class="s">من ${nst} محطة في ${rows.length} منطقة</div></div>
-   <div class="kpi"><div class="k">خط سفر</div><div class="v num">${allTy.travel}</div><div class="s">مختلطة ${allTy.mixed}</div></div>
-   <div class="kpi"><div class="k">وسط المدينة</div><div class="v num">${allTy.city}</div><div class="s">غير محدد ${allTy.unk}</div></div>
-   <div class="kpi"><div class="k">أدوات مفعّلة بدون سعر</div><div class="v num" style="${miss?'color:var(--warn)':''}">${miss}</div><div class="s">${miss?'الميزانية ناقصة':'كل الأدوات المفعّلة مسعّرة'}</div></div>`;
   const mx=Math.max(...rows.map(x=>x.b),1);
   $('pRegTbl').innerHTML=`<table><thead><tr><th>المنطقة</th><th>المحطات</th><th>خط سفر</th><th>مختلطة</th><th>وسط المدينة</th><th>غير محدد</th><th>الأكثر مبيعًا</th><th>عمليات/يوم</th><th>محطات مختارة</th><th>أدوات مفعّلة</th><th>الميزانية</th><th style="min-width:110px"></th></tr></thead><tbody>${rows.map(x=>`<tr class="click" data-r="${esc(x.r)}" style="${x.r===PS.reg?'background:var(--accent-soft)':''}"><td><b>${esc(x.r)}</b></td><td>${x.P.n}</td><td>${x.P.cnt.travel}</td><td>${x.P.cnt.mixed}</td><td>${x.P.cnt.city}</td><td>${x.P.cnt.unk}</td><td style="white-space:normal">${fuelTxt(x.P)}</td><td>${f0(x.P.vis)}</td><td>${x.sel}</td><td>${x.on}</td><td><b>${sar(x.b)}</b></td><td><div style="height:8px;border-radius:4px;background:var(--accent);width:${x.b/mx*100}%"></div></td></tr>`).join('')}
    <tr style="font-weight:700"><td>الإجمالي</td><td>${nst}</td><td>${allTy.travel}</td><td>${allTy.mixed}</td><td>${allTy.city}</td><td>${allTy.unk}</td><td></td><td>${f0(vis)}</td><td>${nsel}</td><td></td><td>${sar(tot)}</td><td></td></tr></tbody></table>`;
   $('pRegTbl').querySelectorAll('tr[data-r]').forEach(tr=>tr.addEventListener('click',()=>{PS.reg=tr.dataset.r;pSave();renderPlan();$('pRegPanel').scrollIntoView({block:'start'});}));
-  renderRegion();renderCatalog();
+  renderRegion();
 }
 function renderRegion(){
   const r=PS.reg,P=regProfile(r),b=regBudget(r),ns=nSelR(P);
@@ -565,22 +406,16 @@ function renderRegion(){
   $('pStations').querySelectorAll('[data-ty]').forEach(sel=>sel.addEventListener('change',()=>{PS.types[sel.dataset.ty]=sel.value;pSave();setTimeout(renderPlan,0);}));
   $('selAll').addEventListener('click',()=>{PS.selSt[r]=P.st.map(s=>s.c);pSave();renderPlan();});
   $('selNone').addEventListener('click',()=>{PS.selSt[r]=[];pSave();renderPlan();});
-  $('pTools').innerHTML=`<table><thead><tr><th></th><th>الأداة</th><th>طريقة الحساب</th><th>سعر الوحدة (ر.س)</th><th>الكمية</th><th>التكرار</th><th>عدد الوحدات</th><th>الميزانية</th></tr></thead><tbody>${PS.tools.map(t=>{const on=toolOn(r,t),u=unitsR(t,P),bb=toolBudget(t,P,r),k=r+'|'+t.id,own=(k in PS.price&&PS.price[k]!==''),pr=priceOf(t,r);return `<tr style="${on?'':'opacity:.6'}"><td><input type="checkbox" data-to="${t.id}" ${on?'checked':''} aria-label="تفعيل ${esc(t.n)}" style="width:auto"></td><td style="white-space:normal">${esc(t.n)}</td><td>${BASIS[t.b]}</td><td><input type="number" min="0" step="100" id="rp-${t.id}" data-pr="${t.id}" value="${own?PS.price[k]:(t.cost||'')}" placeholder="حدد السعر" style="width:120px${own?';border-color:var(--accent)':''}">${own?'<div class="hint">سعر خاص بالمنطقة</div>':''}</td><td>${t.q}</td><td>${FREQ[t.f]}${t.f==='month'?' × '+PS.months:''}</td><td>${u}${t.b==='station'?' محطة':''}</td><td><b>${!on?'—':pr?sar(bb):'<span class="pill low">حدد السعر</span>'}</b></td></tr>`}).join('')}
-   <tr style="font-weight:700"><td></td><td>الإجمالي</td><td colspan="5"></td><td>${sar(b)}</td></tr></tbody></table>`;
+  $('pTools').innerHTML=`<table><thead><tr><th></th><th>الأداة</th><th>طريقة الحساب</th><th>سعر الوحدة (ر.س)</th><th>الكمية</th><th>التكرار</th><th>عدد الوحدات</th><th>الميزانية</th><th></th></tr></thead><tbody>${PS.tools.map(t=>{const on=toolOn(r,t),u=unitsR(t,P),bb=toolBudget(t,P,r),k=r+'|'+t.id,own=(k in PS.price&&PS.price[k]!==''),pr=priceOf(t,r);return `<tr style="${on?'':'opacity:.6'}"><td><input type="checkbox" data-to="${t.id}" ${on?'checked':''} aria-label="تفعيل ${esc(t.n)}" style="width:auto"></td><td><input data-tk="n" data-tid="${t.id}" value="${esc(t.n)}" style="min-width:190px" aria-label="اسم الأداة"></td><td><select data-tk="b" data-tid="${t.id}" aria-label="طريقة الحساب">${Object.entries(BASIS).map(([k,v])=>`<option value="${k}"${t.b===k?' selected':''}>${v}</option>`).join('')}</select></td><td><input type="number" min="0" step="100" id="rp-${t.id}" data-pr="${t.id}" value="${own?PS.price[k]:(t.cost||'')}" placeholder="حدد السعر" style="width:120px${own?';border-color:var(--accent)':''}">${own?'<div class="hint">سعر خاص بالمنطقة</div>':''}</td><td><input type="number" min="0" step="1" data-tk="q" data-tid="${t.id}" value="${t.q}" style="width:70px" aria-label="الكمية"></td><td><select data-tk="f" data-tid="${t.id}" aria-label="التكرار">${Object.entries(FREQ).map(([k,v])=>`<option value="${k}"${t.f===k?' selected':''}>${v}</option>`).join('')}</select>${t.f==='month'?`<div class="hint">× ${PS.months} شهر</div>`:''}</td><td>${u}${t.b==='station'?' محطة':''}</td><td><b>${!on?'—':pr?sar(bb):'<span class="pill low">حدد السعر</span>'}</b></td><td><button type="button" class="xb" data-tdel="${t.id}" aria-label="حذف الأداة">×</button></td></tr>`}).join('')}
+   <tr style="font-weight:700"><td></td><td>الإجمالي</td><td colspan="5"></td><td>${sar(b)}</td><td></td></tr></tbody></table>`;
+  $('pTools').querySelectorAll('[data-tk]').forEach(el=>el.addEventListener('change',()=>{const t=PS.tools.find(x=>x.id===el.dataset.tid),k=el.dataset.tk;t[k]=k==='q'?(+el.value||0):el.value;pSave();setTimeout(renderPlan,0);}));
+  $('pTools').querySelectorAll('[data-tdel]').forEach(bt=>bt.addEventListener('click',()=>{PS.tools=PS.tools.filter(x=>x.id!==bt.dataset.tdel);pSave();renderPlan();}));
   $('pTools').querySelectorAll('[data-to]').forEach(cb=>cb.addEventListener('change',()=>{PS.on[r+'|'+cb.dataset.to]=cb.checked;pSave();setTimeout(renderPlan,0);}));
   $('pTools').querySelectorAll('[data-pr]').forEach(inp=>inp.addEventListener('change',()=>{const k=r+'|'+inp.dataset.pr;const t=PS.tools.find(x=>x.id===inp.dataset.pr);const v=inp.value;if(v===''){delete PS.price[k];}else if(PS.applyAll){t.cost=+v||0;Object.keys(PS.price).filter(x=>x.endsWith('|'+t.id)).forEach(x=>delete PS.price[x]);}else{PS.price[k]=+v||0;}pSave();setTimeout(renderPlan,0);}));
 }
-function renderCatalog(){
-  $('pCat').innerHTML=`<table><thead><tr><th>الأداة</th><th>طريقة الحساب</th><th>السعر لكل المناطق (ر.س)</th><th>الكمية</th><th>التكرار</th><th>مفعّلة في مناطق</th><th>ميزانيتها في كل المناطق</th><th></th></tr></thead><tbody>${PS.tools.map((t,i)=>{let all=0,n=0;REGS.forEach(r=>{const P=regProfile(r);all+=toolBudget(t,P,r);if(toolOn(r,t))n++;});return `<tr data-i="${i}"><td><input id="tn${i}" data-k="n" value="${esc(t.n)}" style="min-width:200px"></td><td><select id="tb${i}" data-k="b">${Object.entries(BASIS).map(([k,v])=>`<option value="${k}"${t.b===k?' selected':''}>${v}</option>`).join('')}</select></td><td><input id="tc${i}" data-k="cost" type="number" min="0" step="100" value="${t.cost||''}" placeholder="حدد السعر" style="width:120px"></td><td><input id="tq${i}" data-k="q" type="number" min="0" step="1" value="${t.q}" style="width:70px"></td><td><select id="tf${i}" data-k="f">${Object.entries(FREQ).map(([k,v])=>`<option value="${k}"${t.f===k?' selected':''}>${v}</option>`).join('')}</select></td><td>${n}</td><td>${sar(all)}</td><td><button type="button" class="xb" data-delt="${i}" aria-label="حذف">×</button></td></tr>`}).join('')}</tbody></table>`;
-  $('pCat').querySelectorAll('input,select').forEach(el=>el.addEventListener('change',()=>{const i=+el.closest('tr').dataset.i,k=el.dataset.k;PS.tools[i][k]=(k==='cost'||k==='q')?(+el.value||0):el.value;pSave();setTimeout(renderPlan,0);}));
-  $('pCat').querySelectorAll('[data-delt]').forEach(b=>b.addEventListener('click',()=>{PS.tools.splice(+b.dataset.delt,1);pSave();renderPlan();}));
-}
-$('addTool').addEventListener('click',()=>{PS.tools.push({id:'c'+Date.now(),n:'أداة جديدة',b:'station',cost:0,q:1,f:'once'});pSave();renderPlan();const i=PS.tools.length-1;const el=$('tn'+i);if(el){el.focus();el.select();}});
+$('addTool').addEventListener('click',()=>{const id='c'+Date.now();PS.tools.push({id,n:'أداة جديدة',b:'region',cost:0,q:1,f:'once'});pSave();renderPlan();const el=document.querySelector(`[data-tk="n"][data-tid="${id}"]`);if(el){el.focus();el.select();}});
 $('pMonths').addEventListener('change',e=>{PS.months=Math.max(1,+e.target.value||1);pSave();renderPlan();});
-$('pDsl').addEventListener('change',e=>{PS.dsl=+e.target.value||0;pSave();renderPlan();});
-$('pInc').addEventListener('change',e=>{PS.inc=+e.target.value;pSave();renderPlan();});
 $('pAll').addEventListener('change',e=>{PS.applyAll=e.target.checked;pSave();});
-$('pReg').addEventListener('change',e=>{PS.reg=e.target.value;pSave();renderPlan();});
 $('resetP').addEventListener('click',()=>{Object.keys(PS).forEach(k=>delete PS[k]);pInit();pSave();renderPlan();toast('رجعت الخطة للإعدادات الافتراضية');});
 $('copyP').addEventListener('click',()=>{
   const L=[];
@@ -620,8 +455,6 @@ function renderSug(){
   $('gCat').innerHTML=GCATS.map(([k,t])=>`<button type="button" data-gc="${k}" aria-pressed="${GS.cat===k}">${t} <span class="num">(${GS.mine.filter(x=>x.c===k).length})</span></button>`).join('');
   $('gCat').querySelectorAll('[data-gc]').forEach(b=>b.addEventListener('click',()=>{GS.cat=b.dataset.gc;gSave();renderSug();}));
   if(!$('gNewCat').options.length){$('gNewCat').innerHTML=GCATS.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');}
-  const C=stCtx(cur),hasSt=selCodes().has(cur.c),parts=hasSt?catPartners(cur,GS.cat):[];
-  $('gCtx').innerHTML=!hasSt?'<div class="hint">ما اخترت محطات في الخطة العامة بعد، فالمقترحات تظهر بدون ربط بمحطة.</div>':`<div class="hint">المحطة الحالية: <b style="color:var(--ink)">${esc(cur.n)} ${cur.c}</b> · ${parts.length?`${parts.length} شريك في هذه الفئة: ${parts.map(esc).join('، ')}`:'لا يوجد شريك من هذه الفئة في المحطة'} · أضعف فترة: ${C.weakN}. غيّر المحطة من تبويب «المحطة».</div>`;
   const q=$('gQ').value.trim();
   const list=GS.mine.filter(x=>x.c===GS.cat&&(!q||(x.t+' '+x.d).includes(q)));
   $('gList').innerHTML=list.length?list.map((x,i)=>{const f=[];const mine=false;return `<article class="panel sug">
@@ -629,17 +462,16 @@ function renderSug(){
     ${x.d?`<p style="margin:6px 0 10px">${esc(x.d)}</p>`:''}
     <div class="tags">${x.g?`<span class="chip" style="cursor:default">${GOALS[x.g]||''}</span>`:''}${x.tm?`<span class="chip" style="cursor:default">${GTIME[x.tm]||''}</span>`:''}${x.a?`<span class="chip" style="cursor:default">${GAUD[x.a]||''}</span>`:''}</div>
     ${f.length?`<div class="note" style="margin-top:8px">يناسب هذه المحطة: ${f.join('، ')}</div>`:''}
-    <div class="sugact"><select id="gp${i}" aria-label="الشريك">${parts.map(n=>`<option>${esc(n)}</option>`).join('')}<option value="عرض درب">عرض درب</option></select><button type="button" class="pri" data-gi="${i}">أضف لمخطط العرض</button><button type="button" data-gcopy="${i}">نسخ</button><button type="button" class="xb" data-gdel="${GS.mine.indexOf(x)}" aria-label="حذف">×</button></div>
+    <label class="f minf">الحد الأدنى للبنزين (ر.س)<input type="number" min="0" step="10" data-gmin="${GS.mine.indexOf(x)}" value="${x.min??''}" placeholder="بدون حد أدنى"></label>
+    <div class="sugact"><button type="button" data-gcopy="${i}">نسخ</button><button type="button" class="xb" data-gdel="${GS.mine.indexOf(x)}" aria-label="حذف">×</button></div>
   </article>`}).join(''):`<div class="panel nodata">${GS.mine.some(x=>x.c===GS.cat)?'لا توجد مقترحات تطابق البحث.':'ما أضفت مقترحات في هذه الفئة بعد. اكتبها من فوق واضغط «إضافة المقترح».'}</div>`;
-  $('gList').querySelectorAll('[data-gi]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gi],p=$('gp'+b.dataset.gi).value;
-    if(hasP(p)){const it=O.items.find(i=>i.p===p);it.txt=x.t;}else O.items.push({p,txt:x.t,per:'',ticket:'',cap:''});
-    tab('S');renderPartners();renderPick();renderItems();calcOffer();$('offerPanel').scrollIntoView({block:'start'});toast('أُضيف العرض لـ'+p+'، اكتب تكلفته ونسبة الاستفادة');}));
-  $('gList').querySelectorAll('[data-gcopy]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gcopy],t=x.d?x.t+' — '+x.d:x.t;try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ المقترح'),()=>fb(t))}catch(e){fb(t)}}));
+  $('gList').querySelectorAll('[data-gmin]').forEach(inp=>inp.addEventListener('change',()=>{const x=GS.mine[+inp.dataset.gmin];x.min=inp.value===''?null:+inp.value;gSave();}));
+  $('gList').querySelectorAll('[data-gcopy]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gcopy],t=x.t+(x.d?' — '+x.d:'')+(x.min?` — الحد الأدنى للبنزين ${x.min} ر.س`:'');try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ المقترح'),()=>fb(t))}catch(e){fb(t)}}));
   $('gList').querySelectorAll('[data-gdel]').forEach(b=>b.addEventListener('click',()=>{GS.mine.splice(+b.dataset.gdel,1);gSave();renderSug();}));
 }
 $('gQ').addEventListener('input',renderSug);
-$('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),g:'',tm:'',a:''});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';renderSug();toast('أُضيف المقترح');});
+$('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),min:$('gNewM').value===''?null:+$('gNewM').value});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';$('gNewM').value='';renderSug();toast('أُضيف المقترح');});
 
 $('goPlan').addEventListener('click',()=>tab('P'));
-fillSelect();renderDurSeg();renderDaySeg();renderStation();renderTimeSeg();renderOffers();
+fillSelect();renderStation();
 </script>
