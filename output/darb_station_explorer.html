@@ -90,6 +90,13 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 .tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);font-size:12.5px;padding:6px 9px;border-radius:7px;z-index:9;white-space:nowrap}
 .toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px;z-index:10}
 .vgrid{display:grid;gap:16px}
+.sgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sug{display:flex;flex-direction:column}
+.sug .tags{display:flex;flex-wrap:wrap}
+.sugact{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto;padding-top:12px}
+.sugact select{width:auto;max-width:180px}
+@media (max-width:980px){.sgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.sgrid{grid-template-columns:1fr}}
 .actions{display:flex;gap:8px;flex-wrap:wrap}
 .xb{border:none;background:transparent;color:var(--ink2);padding:2px 8px;font-size:16px}
 .ctitle{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline;margin-bottom:8px}
@@ -99,10 +106,11 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
 <div class="wrap">
   <header class="top">
-    <div><h1>مستكشف محطات درب</h1><div class="hint">الشركاء، الترانزكشن حسب الساعة واليوم والشهر، مخطط العروض، والخطة العامة للمناطق</div></div>
+    <div><h1>مستكشف محطات درب</h1><div class="hint">الشركاء، الترانزكشن حسب الساعة واليوم والشهر، مخطط العروض ومقترحاتها، والخطة العامة للمناطق</div></div>
     <div class="tabs" role="tablist">
       <button role="tab" id="tabS" aria-selected="true" type="button">المحطة</button>
       <button role="tab" id="tabA" aria-selected="false" type="button">كل المحطات</button>
+      <button role="tab" id="tabG" aria-selected="false" type="button">مقترحات العروض</button>
       <button role="tab" id="tabP" aria-selected="false" type="button">الخطة العامة</button>
       <button role="tab" id="tabO" aria-selected="false" type="button">العروض المحفوظة <span id="oc" class="num"></span></button>
     </div>
@@ -169,6 +177,28 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
     </section>
   </div>
 
+  <div id="viewG" hidden class="vgrid">
+    <section class="panel">
+      <div class="ctitle"><h2>مقترحات العروض</h2><span class="hint">أفكار جاهزة تكتب أسعارها وتفاصيلها أنت في مخطط العرض</span></div>
+      <div class="seg" id="gCat" role="tablist" style="margin-bottom:12px"></div>
+      <div class="r3" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+        <label class="f">الهدف<select id="gGoal"></select></label>
+        <label class="f">الوقت<select id="gTime"></select></label>
+        <label class="f">بحث<input id="gQ" type="search" placeholder="كلمة من العرض"></label>
+      </div>
+      <div id="gCtx" style="margin-top:12px"></div>
+    </section>
+    <div id="gList" class="sgrid"></div>
+    <section class="panel">
+      <div class="ctitle"><h3>أضف مقترح خاص فيك</h3><span class="hint">يُحفظ في متصفحك ويظهر مع المقترحات</span></div>
+      <div class="r3">
+        <label class="f">الفئة<select id="gNewCat"></select></label>
+        <label class="f">عنوان العرض<input id="gNewT" type="text" placeholder="مثال: كرك مجاني مع كل غسلة"></label>
+        <label class="f">طريقة التطبيق<input id="gNewD" type="text" placeholder="كيف يشتغل العرض"></label>
+      </div>
+      <div class="actions" style="margin-top:10px"><button type="button" class="pri" id="gAdd">إضافة المقترح</button></div>
+    </section>
+  </div>
   <div id="viewP" hidden class="vgrid">
     <section class="panel">
       <div class="ctitle"><h2>الخطة العامة</h2><div class="actions"><button type="button" id="copyP">نسخ الخطة لإكسل</button><button type="button" id="resetP">إعادة الضبط</button></div></div>
@@ -430,8 +460,8 @@ function renderAll(){
 }
 
 /* ---------- wiring ---------- */
-function tab(t){['S','A','P','O'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='A')renderAll();if(t==='O')renderOffers();if(t==='P')renderPlan();}
-['S','A','P','O'].forEach(k=>$('tab'+k).addEventListener('click',()=>tab(k)));
+function tab(t){['S','A','G','P','O'].forEach(k=>{$('view'+k).hidden=k!==t;$('tab'+k).setAttribute('aria-selected',k===t);});if(t==='A')renderAll();if(t==='O')renderOffers();if(t==='P')renderPlan();if(t==='G')renderSug();}
+['S','A','G','P','O'].forEach(k=>$('tab'+k).addEventListener('click',()=>tab(k)));
 $('q').addEventListener('input',fillSelect);
 $('st').addEventListener('change',e=>{cur=D.find(s=>s.c===e.target.value);renderStation();});
 $('regF').innerHTML='<option value="">كل المناطق</option>'+[...new Set(D.map(s=>s.r))].map(r=>`<option>${esc(r)}</option>`).join('');
@@ -552,6 +582,87 @@ $('copyP').addEventListener('click',()=>{
   if(!L.length){toast('ما في مناطق فيها اختيارات بعد');return;}
   const tx=L.join('\n');try{navigator.clipboard.writeText(tx).then(()=>toast('نُسخت الخطة، الصقها في إكسل'),()=>fb(tx))}catch(e){fb(tx)}
 });
+
+/* ---------- offer suggestions ---------- */
+const GCATS=[['cafe','الكافيهات'],['wash','المغاسل'],['car','خدمات السيارات'],['rest','المطاعم']];
+const GOALS={weak:'رفع الحركة في الأوقات الضعيفة',ticket:'زيادة الفاتورة',loyal:'ولاء وتكرار الزيارة',fuel:'ربط بالتعبئة',new:'جذب عملاء جدد',b2b:'شركات وأساطيل'};
+const GTIME={any:'أي وقت',morning:'الصباح',midday:'الظهر',evening:'العصر والمساء',night:'الليل',weekend:'نهاية الأسبوع',season:'المواسم'};
+const GAUD={all:'الكل',travel:'المسافرين',city:'سكان المدينة',family:'العائلات',trucks:'الشاحنات والأساطيل',staff:'الموظفين'};
+const SUG=[
+ {c:'cafe',t:'قهوة الصباح مع التعبئة',d:'كوب قهوة مجاني أو بسعر رمزي مع تعبئة بحد أدنى تحدده، من الفجر حتى 11 الصبح.',g:'weak',tm:'morning',a:'staff'},
+ {c:'cafe',t:'المشروب الثاني مجانًا وقت الظهر',d:'اشترِ مشروب والثاني مجانًا من 11 الصبح إلى 3 العصر، لرفع فترة الظهر الهادئة.',g:'weak',tm:'midday',a:'all'},
+ {c:'cafe',t:'بطاقة أختام في التطبيق',d:'كل 5 أكواب يشتريها العميل ويسجلها في تطبيق درب، السادس مجانًا.',g:'loyal',tm:'any',a:'city'},
+ {c:'cafe',t:'دلّة المسافر',d:'دلّة قهوة عربية مع تمر بسعر خاص للمسافرين، تُجهّز بسرعة عند المضخة أو الدرايف.',g:'ticket',tm:'any',a:'travel'},
+ {c:'cafe',t:'كوب درب الدائم',d:'العميل يشتري كوب درب مرة وحدة، وكل مرة يجيبه يحصل خصم ثابت على مشروبه.',g:'loyal',tm:'any',a:'city'},
+ {c:'cafe',t:'كومبو قهوة وحلى',d:'مشروب مع قطعة حلى بسعر ثابت أقل من مجموعهم.',g:'ticket',tm:'evening',a:'all'},
+ {c:'cafe',t:'مشروب السائق الليلي',d:'مشروب ساخن أو بارد مجاني لسائقي الشاحنات مع تعبئة ديزل بعد 12 الليل.',g:'weak',tm:'night',a:'trucks'},
+ {c:'cafe',t:'4 مشروبات بسعر 3 للعائلة',d:'في الخميس والجمعة، طلب 4 مشروبات يُحسب بسعر 3.',g:'ticket',tm:'weekend',a:'family'},
+ {c:'wash',t:'غسلة مع التعبئة',d:'غسلة مجانية أو مخفّضة مع تعبئة فوق حد أدنى تحدده.',g:'fuel',tm:'any',a:'all'},
+ {c:'wash',t:'اشتراك غسيل شهري في التطبيق',d:'باقة 4 غسلات شهريًا بسعر 3، يشتريها العميل من التطبيق ويستخدمها بالـQR.',g:'loyal',tm:'any',a:'city'},
+ {c:'wash',t:'غسيل الصباح',d:'خصم على الغسيل قبل 11 الصبح لتوزيع الضغط على أوقات اليوم.',g:'weak',tm:'morning',a:'staff'},
+ {c:'wash',t:'غسيل السيارات العائلية',d:'سعر خاص لغسيل السيارات الكبيرة (جمس، تاهو، فانات) بدل السعر الأعلى المعتاد.',g:'new',tm:'weekend',a:'family'},
+ {c:'wash',t:'تعطير وتلميع مع الغسيل الشامل',d:'إضافة تعطير أو تلميع إطارات مجانًا عند اختيار الغسيل الشامل.',g:'ticket',tm:'any',a:'all'},
+ {c:'wash',t:'غسلة بعد السفر',d:'غسيل خارجي سريع بسعر خاص للقادمين من السفر، مع إعلان على مدخل المحطة.',g:'new',tm:'any',a:'travel'},
+ {c:'wash',t:'عقد غسيل للأساطيل',d:'عقد شهري للشركات بسعر ثابت لكل سيارة وفاتورة وحدة آخر الشهر.',g:'b2b',tm:'any',a:'trucks'},
+ {c:'wash',t:'أحضر صديق',d:'العميل يرسل كود من التطبيق لصديقه، وكل واحد منهم يحصل خصم على الغسلة الجاية.',g:'new',tm:'any',a:'city'},
+ {c:'car',t:'فحص السفر المجاني',d:'فحص ضغط الإطارات ومستوى السوائل مجانًا مع التعبئة قبل السفر.',g:'fuel',tm:'any',a:'travel'},
+ {c:'car',t:'خصم الزيت مع تعبئة الخزان',d:'خصم على تغيير الزيت لمن يعبّي الخزان كامل في نفس الزيارة.',g:'fuel',tm:'any',a:'all'},
+ {c:'car',t:'باقة صيانة السفر',d:'تغيير زيت مع فحص إطارات وتعبئة ماء الرديتر بسعر ثابت قبل الإجازات.',g:'ticket',tm:'season',a:'travel'},
+ {c:'car',t:'تذكير الزيت في التطبيق',d:'التطبيق يذكّر العميل بموعد تغيير الزيت، والحجز من التطبيق عليه خصم.',g:'loyal',tm:'any',a:'city'},
+ {c:'car',t:'خصم الإطارات للأساطيل',d:'أسعار خاصة للإطارات والبنشر لشركات النقل والشاحنات بعقد شهري.',g:'b2b',tm:'any',a:'trucks'},
+ {c:'car',t:'ساعات الهدوء',d:'خصم على الخدمات في أضعف فترة بالمحطة، يظهر في التطبيق بعداد تنازلي.',g:'weak',tm:'midday',a:'all'},
+ {c:'car',t:'ترقية مجانية مع الزيت الممتاز',d:'فلتر هواء أو فلتر مكيف مجاني عند اختيار الزيت الممتاز.',g:'ticket',tm:'any',a:'all'},
+ {c:'car',t:'فحص البطارية والمكيف قبل الصيف',d:'فحص مجاني للبطارية والمكيف مع خصم على الاستبدال إذا احتاج.',g:'new',tm:'season',a:'family'},
+ {c:'rest',t:'وجبة أطفال مجانية للعائلة',d:'وجبة أطفال مجانية مع كل وجبة عائلية في الخميس والجمعة.',g:'ticket',tm:'weekend',a:'family'},
+ {c:'rest',t:'وجبة السائق',d:'وجبة كاملة بسعر خاص لسائقي الشاحنات والأساطيل مع تعبئة ديزل.',g:'b2b',tm:'night',a:'trucks'},
+ {c:'rest',t:'اطلب من التطبيق واستلم عند المضخة',d:'الطلب المسبق من تطبيق درب عليه خصم، والوجبة توصل للسيارة وقت التعبئة.',g:'new',tm:'evening',a:'travel'},
+ {c:'rest',t:'فطور الطريق',d:'سندويتش مع قهوة بسعر ثابت من الفجر حتى 11 الصبح.',g:'weak',tm:'morning',a:'travel'},
+ {c:'rest',t:'غداء الموظفين',d:'خصم على الوجبات من 11 الصبح إلى 3 العصر للموظفين القريبين من المحطة.',g:'weak',tm:'midday',a:'staff'},
+ {c:'rest',t:'نقاط مضاعفة مع التعبئة',d:'نقاط مضاعفة في التطبيق إذا اشترى العميل من المطعم وعبّى في نفس اليوم.',g:'fuel',tm:'any',a:'all'},
+ {c:'rest',t:'الوجبة السادسة مجانًا',d:'بعد 5 وجبات مسجلة في التطبيق، السادسة مجانًا.',g:'loyal',tm:'any',a:'city'},
+ {c:'rest',t:'صندوق إفطار صائم',d:'صندوق إفطار جاهز للمسافرين في رمضان قبل المغرب، يُحجز من التطبيق.',g:'new',tm:'season',a:'travel'}
+];
+const GS=(()=>{try{return JSON.parse(localStorage.getItem('darb-sug-v1')||'null')}catch(e){return null}})()||{};
+GS.cat=GS.cat||'cafe';GS.mine=GS.mine||[];
+const gSave=()=>{try{localStorage.setItem('darb-sug-v1',JSON.stringify(GS))}catch(e){}};
+const isWash=n=>/مغسل|مغاسل|غسيل|غسل|wash|واش|ترويشة|spot ?less/i.test(n);
+function catPartners(s,c){if(c==='cafe')return s.p.cafe;if(c==='rest')return s.p.rest;if(c==='wash')return s.p.car.filter(isWash);return s.p.car.filter(n=>!isWash(n));}
+const PERKEY=['night','morning','morning','midday','evening','night'];
+function stCtx(s){
+  const pp=periodsOf(s),low=pp.indexOf(pp.reduce((a,b)=>b.v<a.v?b:a));
+  const pd=(typeof PD!=='undefined')?PD.find(x=>x.c===s.c):null,ty=pd?(PS.types?.[s.c]||pd.t):'unk';
+  return {weak:PERKEY[low],weakN:pp[low].n,ty,trucks:s.dsl>=0.25,fam:(s.veh[1]||0)/(s.dvis||1)>=0.3};
+}
+function fits(x,C){const r=[];if(x.g==='weak'&&x.tm===C.weak)r.push('أضعف فترة بالمحطة ('+C.weakN+')');
+  if(x.a==='travel'&&(C.ty==='travel'||C.ty==='mixed'))r.push('محطة على خط سفر');
+  if(x.a==='trucks'&&C.trucks)r.push('حصة ديزل عالية');
+  if(x.a==='family'&&C.fam)r.push('نسبة سيارات عائلية عالية');
+  if((x.a==='city'||x.a==='staff')&&C.ty==='city')r.push('محطة وسط المدينة');return r;}
+function renderSug(){
+  $('gCat').innerHTML=GCATS.map(([k,t])=>`<button type="button" data-gc="${k}" aria-pressed="${GS.cat===k}">${t} <span class="num">(${SUG.concat(GS.mine).filter(x=>x.c===k).length})</span></button>`).join('');
+  $('gCat').querySelectorAll('[data-gc]').forEach(b=>b.addEventListener('click',()=>{GS.cat=b.dataset.gc;gSave();renderSug();}));
+  if(!$('gGoal').options.length){$('gGoal').innerHTML='<option value="">كل الأهداف</option>'+Object.entries(GOALS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+    $('gTime').innerHTML='<option value="">كل الأوقات</option>'+Object.entries(GTIME).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+    $('gNewCat').innerHTML=GCATS.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');}
+  const C=stCtx(cur),parts=catPartners(cur,GS.cat);
+  $('gCtx').innerHTML=`<div class="hint">المحطة الحالية: <b style="color:var(--ink)">${esc(cur.n)} ${cur.c}</b> · ${parts.length?`${parts.length} شريك في هذه الفئة: ${parts.map(esc).join('، ')}`:'لا يوجد شريك من هذه الفئة في المحطة'} · أضعف فترة: ${C.weakN}. غيّر المحطة من تبويب «المحطة».</div>`;
+  const g=$('gGoal').value,tm=$('gTime').value,q=$('gQ').value.trim();
+  const list=SUG.concat(GS.mine).filter(x=>x.c===GS.cat&&(!g||x.g===g)&&(!tm||x.tm===tm)&&(!q||(x.t+' '+x.d).includes(q)));
+  $('gList').innerHTML=list.length?list.map((x,i)=>{const f=fits(x,C);const mine=GS.mine.includes(x);return `<article class="panel sug">
+    <div class="shead"><h3>${esc(x.t)}</h3>${mine?'<span class="pill low">مقترحك</span>':''}</div>
+    <p style="margin:6px 0 10px">${esc(x.d)}</p>
+    <div class="tags">${x.g?`<span class="chip" style="cursor:default">${GOALS[x.g]||''}</span>`:''}${x.tm?`<span class="chip" style="cursor:default">${GTIME[x.tm]||''}</span>`:''}${x.a?`<span class="chip" style="cursor:default">${GAUD[x.a]||''}</span>`:''}</div>
+    ${f.length?`<div class="note" style="margin-top:8px">يناسب هذه المحطة: ${f.join('، ')}</div>`:''}
+    <div class="sugact"><select id="gp${i}" aria-label="الشريك">${parts.map(n=>`<option>${esc(n)}</option>`).join('')}<option value="عرض درب">عرض درب</option></select><button type="button" class="pri" data-gi="${i}">أضف لمخطط العرض</button><button type="button" data-gcopy="${i}">نسخ</button>${mine?`<button type="button" class="xb" data-gdel="${GS.mine.indexOf(x)}" aria-label="حذف">×</button>`:''}</div>
+  </article>`}).join(''):'<div class="panel nodata">لا توجد مقترحات بهذه الفلاتر.</div>';
+  $('gList').querySelectorAll('[data-gi]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gi],p=$('gp'+b.dataset.gi).value;
+    if(hasP(p)){const it=O.items.find(i=>i.p===p);it.txt=x.t;}else O.items.push({p,txt:x.t,per:'',ticket:'',cap:''});
+    tab('S');renderPartners();renderPick();renderItems();calcOffer();$('offerPanel').scrollIntoView({block:'start'});toast('أُضيف العرض لـ'+p+'، اكتب تكلفته ونسبة الاستفادة');}));
+  $('gList').querySelectorAll('[data-gcopy]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gcopy],t=x.t+' — '+x.d;try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ المقترح'),()=>fb(t))}catch(e){fb(t)}}));
+  $('gList').querySelectorAll('[data-gdel]').forEach(b=>b.addEventListener('click',()=>{GS.mine.splice(+b.dataset.gdel,1);gSave();renderSug();}));
+}
+['gGoal','gTime','gQ'].forEach(id=>$(id).addEventListener('input',renderSug));
+$('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),g:'',tm:'',a:''});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';renderSug();toast('أُضيف المقترح');});
 
 fillSelect();renderDurSeg();renderDaySeg();renderStation();renderTimeSeg();renderOffers();
 </script>
