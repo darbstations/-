@@ -130,28 +130,22 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
     <div class="grid2">
       <section class="panel"><div class="ctitle"><h2>الأشهر</h2><span class="hint">من تقارير المبيعات الشهرية</span></div><div class="tbl" id="monthTbl"></div></section>
-      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint">اضغط على شريك لاختياره في العرض</span></div><div class="pcats" id="partners"></div></section>
+      <section class="panel"><div class="ctitle"><h2>الشركاء في المحطة</h2><span class="hint">اضغط على شريك لإضافته للعرض أو إزالته</span></div><div class="pcats" id="partners"></div></section>
     </div>
 
     <section class="panel" id="offerPanel">
-      <div class="ctitle"><h2>مخطط العرض</h2><span class="hint">حدد الشريك ونوع العرض والمدة والأوقات، ويحسب لك الوصول والاستفادة والتكلفة من حركة المحطة الفعلية</span></div>
+      <div class="ctitle"><h2>مخطط العرض</h2><span class="hint">اختر الشركاء واكتب عرض كل شريك، وحدد المدة والأوقات، ويحسب لك الوصول والتكلفة والمبيعات من حركة المحطة الفعلية</span></div>
       <div class="offer">
         <div class="form">
-          <div class="r2">
-            <label class="f">الشريك<select id="oPartner"></select></label>
-            <label class="f">نوع العرض<select id="oType">
-              <option value="pct">خصم نسبة ٪</option>
-              <option value="fix">خصم مبلغ ثابت</option>
-              <option value="bogo">اشترِ واحد واحصل على الثاني مجانًا</option>
-              <option value="free">منتج مجاني مع التعبئة</option>
-              <option value="combo">كومبو بسعر خاص</option>
-              <option value="points">نقاط مضاعفة في التطبيق</option>
-            </select></label>
+          <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">الشركاء في العرض (اختر واحد أو أكثر)</span>
+            <div id="oPick" class="pcats"></div>
+            <div style="display:flex;gap:8px;max-width:420px"><input id="oCustom" type="text" placeholder="شريك آخر أو «عرض درب»"><button type="button" id="oAddCustom">إضافة</button></div>
           </div>
+          <div class="tbl" id="oItems"></div>
           <div class="r3">
-            <label class="f" id="oValL">نسبة الخصم ٪<input id="oVal" type="number" min="0" step="1" value="20"></label>
-            <label class="f">متوسط فاتورة الشريك (ر.س)<input id="oTicket" type="number" min="0" step="1" value="25"></label>
-            <label class="f">حد أدنى للتعبئة (ر.س)<input id="oMin" type="number" min="0" step="10" value="0"></label>
+            <label class="f">حد أدنى للتعبئة (ر.س)<input id="oMin" type="number" min="0" step="10" placeholder="بدون"></label>
+            <label class="f">حصة درب من التكلفة ٪<input id="oDarb" type="number" min="0" max="100" step="5" value="50"></label>
+            <label class="f">اسم الحملة (اختياري)<input id="oName" type="text" placeholder="مثال: قهوة الصباح"></label>
           </div>
           <div class="r3">
             <label class="f">تاريخ البداية<input id="oStart" type="date"></label>
@@ -161,11 +155,6 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
           <div class="seg" id="durSeg"></div>
           <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">أوقات العرض</span><div class="seg" id="timeSeg"></div><div class="hint" id="hoursSel"></div></div>
           <div class="f" style="display:grid;gap:6px"><span class="hint" style="font-weight:600">أيام العرض</span><div class="seg" id="daySeg"></div></div>
-          <div class="r3">
-            <label class="f">نسبة الاستفادة من السيارات ٪<input id="oCap" type="number" min="0" step="0.5" value="3"></label>
-            <label class="f">حصة درب من التكلفة ٪<input id="oDarb" type="number" min="0" max="100" step="5" value="50"></label>
-            <label class="f">اسم العرض (اختياري)<input id="oName" type="text" placeholder="مثال: قهوة الصباح"></label>
-          </div>
         </div>
         <div class="result" id="oRes"></div>
       </div>
@@ -259,7 +248,7 @@ function showTip(e,html){tip.innerHTML=html;tip.hidden=false;const x=e.clientX,y
 function hideTip(){tip.hidden=true;}
 
 /* offer state */
-const O={partner:'',type:'pct',val:20,ticket:25,min:0,start:new Date().toISOString().slice(0,10),days:30,hours:new Set([...Array(24).keys()]),wds:new Set([0,1,2,3,4,5,6]),cap:3,darb:50,name:''};
+const O={items:[],min:0,start:new Date().toISOString().slice(0,10),days:30,hours:new Set([...Array(24).keys()]),wds:new Set([0,1,2,3,4,5,6]),cap:3,darb:50,name:''};
 
 /* ---------- station view ---------- */
 function fillSelect(){
@@ -332,13 +321,25 @@ function renderMonths(){
 }
 function renderPartners(){
   const s=cur;
-  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<button type="button" class="chip${O.partner===n?' on':''}" data-p="${esc(n)}">${esc(n)}</button>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
-  $('partners').querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{O.partner=b.dataset.p;$('oPartner').value=O.partner;renderPartners();calcOffer();$('offerPanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
+  $('partners').innerHTML=partnersAll(s).length?CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t} <span class="num">(${s.p[k].length})</span></span><span>${s.p[k].length?s.p[k].map(n=>`<button type="button" class="chip${hasP(n)?' on':''}" data-p="${esc(n)}">${esc(n)}</button>`).join(''):'<span class="hint">لا يوجد</span>'}</span></div>`).join(''):'<div class="nodata">لا توجد بيانات شركاء لهذه المحطة في ملف الوحدات.</div>';
+  $('partners').querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{togP(b.dataset.p);$('offerPanel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}));
 }
 function renderStation(){renderHead();renderHours();renderDaily();renderWd();renderMonths();
-  const ps=partnersAll(cur);if(!ps.some(p=>p.n===O.partner))O.partner=ps[0]?ps[0].n:'عرض درب (بدون شريك)';
-  $('oPartner').innerHTML=CATS.filter(([k])=>cur.p[k].length).map(([k,t])=>`<optgroup label="${t}">${cur.p[k].map(n=>`<option value="${esc(n)}">${esc(n)}</option>`).join('')}</optgroup>`).join('')+`<option value="عرض درب (بدون شريك)">عرض درب (بدون شريك)</option>`;
-  $('oPartner').value=O.partner;renderPartners();calcOffer();}
+  if(O.st!==cur.c){O.items=[];O.st=cur.c;}
+  renderPartners();renderPick();renderItems();calcOffer();}
+const hasP=n=>O.items.some(i=>i.p===n);
+function togP(n){if(hasP(n))O.items=O.items.filter(i=>i.p!==n);else O.items.push({p:n,txt:'',per:'',ticket:'',cap:''});renderPartners();renderPick();renderItems();calcOffer();}
+function renderPick(){
+  $('oPick').innerHTML=partnersAll(cur).length?CATS.filter(([k])=>cur.p[k].length).map(([k,t])=>`<div class="pcat"><span class="t">${t}</span><span>${cur.p[k].map(n=>`<button type="button" class="chip${hasP(n)?' on':''}" data-pp="${esc(n)}" aria-pressed="${hasP(n)}">${hasP(n)?'✓ ':''}${esc(n)}</button>`).join('')}</span></div>`).join(''):'<div class="hint">لا توجد بيانات شركاء لهذه المحطة، أضف الشريك بالاسم.</div>';
+  $('oPick').querySelectorAll('[data-pp]').forEach(b=>b.addEventListener('click',()=>togP(b.dataset.pp)));
+}
+function renderItems(){
+  if(!O.items.length){$('oItems').innerHTML='<div class="nodata">ما اخترت شركاء بعد. اختر شريك أو أكثر من فوق.</div>';return;}
+  $('oItems').innerHTML=`<table><thead><tr><th>الشريك</th><th style="min-width:220px">العرض (اكتبه)</th><th>تكلفة العرض للعملية (ر.س)</th><th>متوسط فاتورة الشريك (ر.س)</th><th>نسبة الاستفادة ٪</th><th></th></tr></thead><tbody>${O.items.map((it,i)=>`<tr data-i="${i}"><td><b>${esc(it.p)}</b></td><td><input id="oi-t${i}" data-f="txt" value="${esc(it.txt)}" placeholder="مثال: قهوة مجانية مع تعبئة 100 ريال"></td><td><input id="oi-c${i}" data-f="per" type="number" min="0" step="0.5" value="${it.per}" placeholder="0" style="width:110px"></td><td><input id="oi-k${i}" data-f="ticket" type="number" min="0" step="1" value="${it.ticket}" placeholder="0" style="width:110px"></td><td><input id="oi-r${i}" data-f="cap" type="number" min="0" step="0.5" value="${it.cap}" placeholder="مثال 2" style="width:90px"></td><td><button type="button" class="xb" data-rm="${i}" aria-label="إزالة">×</button></td></tr>`).join('')}</tbody></table>
+  <div class="hint">تكلفة العرض للعملية = كم يكلف العرض كل مرة يستفيد منه عميل (قيمة الخصم أو الهدية). نسبة الاستفادة = كم ٪ من السيارات اللي تمر وقت العرض تستفيد منه عند هذا الشريك.</div>`;
+  $('oItems').querySelectorAll('input').forEach(el=>el.addEventListener('input',()=>{const i=+el.closest('tr').dataset.i,f=el.dataset.f;O.items[i][f]=el.value;calcOffer();}));
+  $('oItems').querySelectorAll('[data-rm]').forEach(b=>b.addEventListener('click',()=>{O.items.splice(+b.dataset.rm,1);renderPartners();renderPick();renderItems();calcOffer();}));
+}
 
 /* ---------- offer ---------- */
 const DUR=[[7,'أسبوع'],[14,'أسبوعين'],[30,'شهر'],[60,'شهرين'],[90,'3 أشهر']];
@@ -372,18 +373,10 @@ function offerCalc(s,o){
   const st=new Date(o.start+'T12:00:00');let cars=0,days=0;
   for(let k=0;k<o.days;k++){const dt=new Date(st);dt.setDate(st.getDate()+k);const wi=JSWD.indexOf(dt.getDay());if(o.wds.has(wi)){days++;cars+=s.dvis*wf[wi]*hShare;}}
   const end=new Date(st);end.setDate(st.getDate()+Math.max(0,o.days-1));
-  const red=cars*o.cap/100;
-  let per=0,sales=0;const t=o.ticket;
-  if(o.type==='pct'){per=t*o.val/100;sales=t;}
-  else if(o.type==='fix'){per=Math.min(o.val,t);sales=t;}
-  else if(o.type==='bogo'){per=o.val;sales=o.val*2;}
-  else if(o.type==='free'){per=o.val;sales=0;}
-  else if(o.type==='combo'){per=Math.max(0,t-o.val);sales=o.val;}
-  else if(o.type==='points'){per=t*o.val/100;sales=t;}
-  const cost=red*per;
-  return {hShare,days,cars,red,per,cost,darbCost:cost*o.darb/100,partnerCost:cost*(1-o.darb/100),sales:red*sales,gross:red*(o.type==='free'||o.type==='bogo'?sales:t),end:end.toISOString().slice(0,10)};
+  const items=o.items.map(it=>{const red=cars*(+it.cap||0)/100,cost=red*(+it.per||0);return {...it,red,cost,sales:red*(+it.ticket||0)};});
+  const red=items.reduce((a,x)=>a+x.red,0),cost=items.reduce((a,x)=>a+x.cost,0),sales=items.reduce((a,x)=>a+x.sales,0);
+  return {hShare,days,cars,items,red,cost,darbCost:cost*o.darb/100,partnerCost:cost*(1-o.darb/100),sales,end:end.toISOString().slice(0,10)};
 }
-const VAL={pct:['نسبة الخصم ٪',20,1],fix:['قيمة الخصم (ر.س)',5,1],bogo:['سعر المنتج (ر.س)',15,1],free:['تكلفة المنتج المجاني (ر.س)',8,1],combo:['سعر الكومبو (ر.س)',20,1],points:['قيمة النقاط الإضافية ٪ من الفاتورة',5,1]};
 function calcOffer(){
   const r=offerCalc(cur,O);$('oEnd').value=r.end;
   const pp=periodsOf(cur),low=pp.reduce((a,b)=>b.v<a.v?b:a);
@@ -391,34 +384,36 @@ function calcOffer(){
   const note=O.hours.size===0||O.wds.size===0?'<div class="note w">حدد ساعة ويومًا واحدًا على الأقل.</div>':
     lowSel===low.b-low.a&&O.hours.size<24?`<div class="note">العرض يغطي أضعف فترة (${low.n})، وهذا مناسب لرفع الحركة فيها.</div>`:
     r.hShare>0.5?`<div class="note">العرض يغطي ${Math.round(r.hShare*100)}٪ من عمليات اليوم.</div>`:`<div class="note w">العرض يغطي ${Math.round(r.hShare*100)}٪ فقط من عمليات اليوم. أضعف فترة هنا: ${low.n}.</div>`;
-  $('oRes').innerHTML=`<div class="hint">${esc(O.partner)} · ${TYPES[O.type]} · ${O.start} ← ${r.end}</div>
+  $('oRes').innerHTML=`<div class="hint">${O.items.length} شريك · ${O.start} ← ${r.end}</div>
     <div><div class="hint">سيارات تمر وقت العرض</div><div class="big num">${f0(r.cars)}</div><div class="hint num">${r.days} يوم فعلي من ${O.days} · ${f0(r.cars/(r.days||1))} سيارة يوميًا</div></div>
-    <div class="rrow"><span>استفادة متوقعة (${f1(O.cap)}٪)</span><b class="num">${f0(r.red)}</b></div>
+    ${r.items.map(x=>`<div class="rrow"><span>${esc(x.p)}${x.txt?` <span class="hint">· ${esc(x.txt)}</span>`:''}</span><span class="num" style="white-space:nowrap">${f0(x.red)} استفادة · ${sar(x.cost)}</span></div>`).join('')||'<div class="hint">اختر شريك وحدد نسبة الاستفادة وتكلفة العرض ليظهر الحساب.</div>'}
+    <div class="rrow hr"><span>إجمالي الاستفادة</span><b class="num">${f0(r.red)}</b></div>
     <div class="rrow"><span>استفادة يوميًا</span><span class="num">${f1(r.red/(r.days||1))}</span></div>
-    <div class="rrow"><span>قيمة الخصم/الهدية للعملية</span><span class="num">${f1(r.per)} ر.س</span></div>
     <div class="rrow hr"><span>تكلفة العرض الإجمالية</span><span class="num">${sar(r.cost)}</span></div>
     <div class="rrow"><span style="color:var(--darb)">على درب (${O.darb}٪)</span><span class="num">${sar(r.darbCost)}</span></div>
     <div class="rrow"><span>على الشريك (${100-O.darb}٪)</span><span class="num">${sar(r.partnerCost)}</span></div>
-    <div class="rrow hr"><span>مبيعات متوقعة للشريك</span><span class="num">${sar(r.sales)}</span></div>
+    <div class="rrow hr"><span>مبيعات متوقعة للشركاء</span><span class="num">${sar(r.sales)}</span></div>
     ${O.min>0?`<div class="hint">شرط: تعبئة ${f0(O.min)} ر.س أو أكثر. متوسط فاتورة المحطة ${f0(cur.inv)} ر.س${O.min>cur.inv?'، والشرط أعلى من المتوسط فتوقع استفادة أقل.':'.'}</div>`:''}
     ${note}
     <button class="pri" type="button" id="saveO">حفظ العرض</button>`;
   $('saveO').addEventListener('click',saveOffer);
 }
 function readForm(){
-  O.partner=$('oPartner').value;O.type=$('oType').value;O.val=+$('oVal').value||0;O.ticket=+$('oTicket').value||0;O.min=+$('oMin').value||0;
-  O.start=$('oStart').value||O.start;O.days=Math.max(1,+$('oDays').value||1);O.cap=+$('oCap').value||0;O.darb=Math.min(100,Math.max(0,+$('oDarb').value||0));O.name=$('oName').value;
+  O.min=+$('oMin').value||0;
+  O.start=$('oStart').value||O.start;O.days=Math.max(1,+$('oDays').value||1);O.darb=Math.min(100,Math.max(0,+$('oDarb').value||0));O.name=$('oName').value;
 }
 function saveOffer(){
+  if(!O.items.length){toast('اختر شريك واحد على الأقل');return;}
   const r=offerCalc(cur,O);
-  store.offers.push({id:Date.now(),c:cur.c,n:cur.n,partner:O.partner,type:O.type,val:O.val,ticket:O.ticket,min:O.min,start:O.start,end:r.end,days:O.days,hours:[...O.hours].sort((a,b)=>a-b),wds:[...O.wds].sort(),cap:O.cap,darb:O.darb,name:O.name,cars:r.cars,red:r.red,cost:r.cost,darbCost:r.darbCost,sales:r.sales});
+  store.offers.push({id:Date.now(),v:2,c:cur.c,n:cur.n,items:r.items.map(x=>({p:x.p,txt:x.txt,per:+x.per||0,ticket:+x.ticket||0,cap:+x.cap||0,red:x.red,cost:x.cost,sales:x.sales})),min:O.min,start:O.start,end:r.end,days:O.days,hours:[...O.hours].sort((a,b)=>a-b),wds:[...O.wds].sort(),darb:O.darb,name:O.name,cars:r.cars,red:r.red,cost:r.cost,darbCost:r.darbCost,sales:r.sales});
   save();renderOffers();toast('حُفظ العرض في «العروض المحفوظة»');
 }
 function hoursTxt(h){if(h.length===24)return 'طوال اليوم';const p=PER.find(([n,a,b])=>h.length===b-a&&h[0]===a&&h[h.length-1]===b-1);return p?p[0]:h.map(hl).join('، ');}
 function renderOffers(){
   $('oc').textContent=store.offers.length?'('+store.offers.length+')':'';
   if(!store.offers.length){$('offTbl').innerHTML='<div class="nodata">ما في عروض محفوظة. افتح محطة، صمّم العرض من «مخطط العرض» واضغط «حفظ العرض».</div>';return;}
-  $('offTbl').innerHTML=`<table><thead><tr><th>المحطة</th><th>العرض</th><th>الشريك</th><th>النوع</th><th>القيمة</th><th>من</th><th>إلى</th><th>الأوقات</th><th>الأيام</th><th>سيارات وقت العرض</th><th>استفادة</th><th>التكلفة</th><th>على درب</th><th>مبيعات الشريك</th><th></th></tr></thead><tbody>${store.offers.map(o=>`<tr><td>${esc(o.n)} <span class="hint">${o.c}</span></td><td>${esc(o.name||'—')}</td><td>${esc(o.partner)}</td><td>${TYPES[o.type]}</td><td>${f1(o.val)}</td><td>${o.start}</td><td>${o.end}</td><td style="white-space:normal;max-width:180px">${hoursTxt(o.hours)}</td><td>${o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، ')}</td><td>${f0(o.cars)}</td><td>${f0(o.red)}</td><td>${sar(o.cost)}</td><td>${sar(o.darbCost)}</td><td>${sar(o.sales)}</td><td><button class="xb" type="button" data-del="${o.id}" aria-label="حذف">×</button></td></tr>`).join('')}</tbody></table>`;
+  const its=o=>o.items||[{p:o.partner,txt:TYPES[o.type]||'',per:0,ticket:o.ticket,cap:o.cap,red:o.red,cost:o.cost,sales:o.sales}];
+  $('offTbl').innerHTML=`<table><thead><tr><th>المحطة</th><th>الحملة</th><th>الشريك</th><th>العرض</th><th>تكلفة/عملية</th><th>استفادة ٪</th><th>من</th><th>إلى</th><th>الأوقات</th><th>الأيام</th><th>سيارات وقت العرض</th><th>استفادة</th><th>التكلفة</th><th>على درب</th><th>مبيعات الشريك</th><th></th></tr></thead><tbody>${store.offers.map(o=>{const L=its(o),n=L.length;return L.map((x,j)=>`<tr>${j===0?`<td rowspan="${n}">${esc(o.n)} <span class="hint">${o.c}</span></td><td rowspan="${n}">${esc(o.name||'—')}</td>`:''}<td>${esc(x.p)}</td><td style="white-space:normal;max-width:220px">${esc(x.txt||'—')}</td><td>${f1(x.per)}</td><td>${f1(x.cap)}</td>${j===0?`<td rowspan="${n}">${o.start}</td><td rowspan="${n}">${o.end}</td><td rowspan="${n}" style="white-space:normal;max-width:180px">${hoursTxt(o.hours)}</td><td rowspan="${n}">${o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، ')}</td><td rowspan="${n}">${f0(o.cars)}</td>`:''}<td>${f0(x.red)}</td><td>${sar(x.cost)}</td><td>${sar(x.cost*o.darb/100)}</td><td>${sar(x.sales)}</td>${j===0?`<td rowspan="${n}"><button class="xb" type="button" data-del="${o.id}" aria-label="حذف">×</button></td>`:''}</tr>`).join('')}).join('')}</tbody></table>`;
   $('offTbl').querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{store.offers=store.offers.filter(o=>o.id!=b.dataset.del);save();renderOffers();}));
 }
 
@@ -441,12 +436,14 @@ $('q').addEventListener('input',fillSelect);
 $('st').addEventListener('change',e=>{cur=D.find(s=>s.c===e.target.value);renderStation();});
 $('regF').innerHTML='<option value="">كل المناطق</option>'+[...new Set(D.map(s=>s.r))].map(r=>`<option>${esc(r)}</option>`).join('');
 $('regF').addEventListener('change',renderAll);$('qa').addEventListener('input',renderAll);
-$('oType').addEventListener('change',()=>{const [l,v]=VAL[$('oType').value];$('oValL').firstChild.textContent=l;$('oVal').value=v;readForm();calcOffer();});
-['oPartner','oVal','oTicket','oMin','oStart','oDays','oCap','oDarb','oName'].forEach(id=>$(id).addEventListener('input',()=>{readForm();if(id==='oDays')renderDurSeg();if(id==='oPartner')renderPartners();calcOffer();}));
+['oMin','oStart','oDays','oDarb','oName'].forEach(id=>$(id).addEventListener('input',()=>{readForm();if(id==='oDays')renderDurSeg();calcOffer();}));
+$('oAddCustom').addEventListener('click',()=>{const v=$('oCustom').value.trim();if(!v)return;if(!hasP(v))togP(v);$('oCustom').value='';});
+$('oCustom').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('oAddCustom').click();}});
 $('oStart').value=O.start;
 $('copyO').addEventListener('click',()=>{
-  const H=['المحطة','الكود','العرض','الشريك','النوع','القيمة','متوسط فاتورة الشريك','حد أدنى للتعبئة','من','إلى','الأوقات','الأيام','نسبة الاستفادة٪','حصة درب٪','سيارات وقت العرض','استفادة','التكلفة','على درب','مبيعات الشريك'];
-  const L=[H.join('\t')].concat(store.offers.map(o=>[o.n,o.c,o.name,o.partner,TYPES[o.type],o.val,o.ticket,o.min,o.start,o.end,hoursTxt(o.hours),o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، '),o.cap,o.darb,Math.round(o.cars),Math.round(o.red),Math.round(o.cost),Math.round(o.darbCost),Math.round(o.sales)].join('\t')));
+  const H=['المحطة','الكود','الحملة','الشريك','العرض','تكلفة العرض للعملية','متوسط فاتورة الشريك','نسبة الاستفادة٪','حد أدنى للتعبئة','من','إلى','الأوقات','الأيام','حصة درب٪','سيارات وقت العرض','استفادة','التكلفة','على درب','مبيعات الشريك'];
+  const its=o=>o.items||[{p:o.partner,txt:TYPES[o.type]||'',per:0,ticket:o.ticket,cap:o.cap,red:o.red,cost:o.cost,sales:o.sales}];
+  const L=[H.join('\t')];store.offers.forEach(o=>its(o).forEach(x=>L.push([o.n,o.c,o.name,x.p,x.txt,x.per,x.ticket,x.cap,o.min,o.start,o.end,hoursTxt(o.hours),o.wds.length===7?'كل الأيام':o.wds.map(i=>WD[i]).join('، '),o.darb,Math.round(o.cars),Math.round(x.red),Math.round(x.cost),Math.round(x.cost*o.darb/100),Math.round(x.sales)].join('\t'))));
   const t=L.join('\n');const ok=()=>toast('نُسخ الجدول، الصقه في إكسل');
   try{navigator.clipboard.writeText(t).then(ok,()=>fb(t))}catch(e){fb(t)}
 });
