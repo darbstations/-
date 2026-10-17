@@ -187,25 +187,20 @@ th.sort{cursor:pointer} th.sort:hover{color:var(--ink)}
 
   <div id="viewG" hidden class="vgrid">
     <section class="panel">
-      <div class="ctitle"><h2>مقترحات العروض</h2><span class="hint">أفكار جاهزة تكتب أسعارها وتفاصيلها أنت في مخطط العرض</span></div>
-      <div class="seg" id="gCat" role="tablist" style="margin-bottom:12px"></div>
-      <div class="r3" style="grid-template-columns:repeat(3,minmax(0,1fr))">
-        <label class="f">الهدف<select id="gGoal"></select></label>
-        <label class="f">الوقت<select id="gTime"></select></label>
-        <label class="f">بحث<input id="gQ" type="search" placeholder="كلمة من العرض"></label>
-      </div>
-      <div id="gCtx" style="margin-top:12px"></div>
-    </section>
-    <div id="gList" class="sgrid"></div>
-    <section class="panel">
-      <div class="ctitle"><h3>أضف مقترح خاص فيك</h3><span class="hint">يُحفظ في متصفحك ويظهر مع المقترحات</span></div>
+      <div class="ctitle"><h2>مقترحات العروض</h2><span class="hint">مقترحاتك أنت، تُحفظ في متصفحك وتقدر تنقلها لمخطط العرض</span></div>
       <div class="r3">
         <label class="f">الفئة<select id="gNewCat"></select></label>
-        <label class="f">عنوان العرض<input id="gNewT" type="text" placeholder="مثال: كرك مجاني مع كل غسلة"></label>
-        <label class="f">طريقة التطبيق<input id="gNewD" type="text" placeholder="كيف يشتغل العرض"></label>
+        <label class="f">عنوان العرض<input id="gNewT" type="text" placeholder="اكتب عنوان العرض"></label>
+        <label class="f">طريقة التطبيق<input id="gNewD" type="text" placeholder="كيف يشتغل العرض (اختياري)"></label>
       </div>
       <div class="actions" style="margin-top:10px"><button type="button" class="pri" id="gAdd">إضافة المقترح</button></div>
     </section>
+    <section class="panel">
+      <div class="seg" id="gCat" role="tablist" style="margin-bottom:12px"></div>
+      <label class="f" style="max-width:360px">بحث<input id="gQ" type="search" placeholder="كلمة من العرض"></label>
+      <div id="gCtx" style="margin-top:12px"></div>
+    </section>
+    <div id="gList" class="sgrid"></div>
   </div>
   <div id="viewP" hidden class="vgrid">
     <section class="panel">
@@ -604,40 +599,7 @@ const GCATS=[['cafe','الكافيهات'],['wash','المغاسل'],['car','خ�
 const GOALS={weak:'رفع الحركة في الأوقات الضعيفة',ticket:'زيادة الفاتورة',loyal:'ولاء وتكرار الزيارة',fuel:'ربط بالتعبئة',new:'جذب عملاء جدد',b2b:'شركات وأساطيل'};
 const GTIME={any:'أي وقت',morning:'الصباح',midday:'الظهر',evening:'العصر والمساء',night:'الليل',weekend:'نهاية الأسبوع',season:'المواسم'};
 const GAUD={all:'الكل',travel:'المسافرين',city:'سكان المدينة',family:'العائلات',trucks:'الشاحنات والأساطيل',staff:'الموظفين'};
-const SUG=[
- {c:'cafe',t:'قهوة الصباح مع التعبئة',d:'كوب قهوة مجاني أو بسعر رمزي مع تعبئة بحد أدنى تحدده، من الفجر حتى 11 الصبح.',g:'weak',tm:'morning',a:'staff'},
- {c:'cafe',t:'المشروب الثاني مجانًا وقت الظهر',d:'اشترِ مشروب والثاني مجانًا من 11 الصبح إلى 3 العصر، لرفع فترة الظهر الهادئة.',g:'weak',tm:'midday',a:'all'},
- {c:'cafe',t:'بطاقة أختام في التطبيق',d:'كل 5 أكواب يشتريها العميل ويسجلها في تطبيق درب، السادس مجانًا.',g:'loyal',tm:'any',a:'city'},
- {c:'cafe',t:'دلّة المسافر',d:'دلّة قهوة عربية مع تمر بسعر خاص للمسافرين، تُجهّز بسرعة عند المضخة أو الدرايف.',g:'ticket',tm:'any',a:'travel'},
- {c:'cafe',t:'كوب درب الدائم',d:'العميل يشتري كوب درب مرة وحدة، وكل مرة يجيبه يحصل خصم ثابت على مشروبه.',g:'loyal',tm:'any',a:'city'},
- {c:'cafe',t:'كومبو قهوة وحلى',d:'مشروب مع قطعة حلى بسعر ثابت أقل من مجموعهم.',g:'ticket',tm:'evening',a:'all'},
- {c:'cafe',t:'مشروب السائق الليلي',d:'مشروب ساخن أو بارد مجاني لسائقي الشاحنات مع تعبئة ديزل بعد 12 الليل.',g:'weak',tm:'night',a:'trucks'},
- {c:'cafe',t:'4 مشروبات بسعر 3 للعائلة',d:'في الخميس والجمعة، طلب 4 مشروبات يُحسب بسعر 3.',g:'ticket',tm:'weekend',a:'family'},
- {c:'wash',t:'غسلة مع التعبئة',d:'غسلة مجانية أو مخفّضة مع تعبئة فوق حد أدنى تحدده.',g:'fuel',tm:'any',a:'all'},
- {c:'wash',t:'اشتراك غسيل شهري في التطبيق',d:'باقة 4 غسلات شهريًا بسعر 3، يشتريها العميل من التطبيق ويستخدمها بالـQR.',g:'loyal',tm:'any',a:'city'},
- {c:'wash',t:'غسيل الصباح',d:'خصم على الغسيل قبل 11 الصبح لتوزيع الضغط على أوقات اليوم.',g:'weak',tm:'morning',a:'staff'},
- {c:'wash',t:'غسيل السيارات العائلية',d:'سعر خاص لغسيل السيارات الكبيرة (جمس، تاهو، فانات) بدل السعر الأعلى المعتاد.',g:'new',tm:'weekend',a:'family'},
- {c:'wash',t:'تعطير وتلميع مع الغسيل الشامل',d:'إضافة تعطير أو تلميع إطارات مجانًا عند اختيار الغسيل الشامل.',g:'ticket',tm:'any',a:'all'},
- {c:'wash',t:'غسلة بعد السفر',d:'غسيل خارجي سريع بسعر خاص للقادمين من السفر، مع إعلان على مدخل المحطة.',g:'new',tm:'any',a:'travel'},
- {c:'wash',t:'عقد غسيل للأساطيل',d:'عقد شهري للشركات بسعر ثابت لكل سيارة وفاتورة وحدة آخر الشهر.',g:'b2b',tm:'any',a:'trucks'},
- {c:'wash',t:'أحضر صديق',d:'العميل يرسل كود من التطبيق لصديقه، وكل واحد منهم يحصل خصم على الغسلة الجاية.',g:'new',tm:'any',a:'city'},
- {c:'car',t:'فحص السفر المجاني',d:'فحص ضغط الإطارات ومستوى السوائل مجانًا مع التعبئة قبل السفر.',g:'fuel',tm:'any',a:'travel'},
- {c:'car',t:'خصم الزيت مع تعبئة الخزان',d:'خصم على تغيير الزيت لمن يعبّي الخزان كامل في نفس الزيارة.',g:'fuel',tm:'any',a:'all'},
- {c:'car',t:'باقة صيانة السفر',d:'تغيير زيت مع فحص إطارات وتعبئة ماء الرديتر بسعر ثابت قبل الإجازات.',g:'ticket',tm:'season',a:'travel'},
- {c:'car',t:'تذكير الزيت في التطبيق',d:'التطبيق يذكّر العميل بموعد تغيير الزيت، والحجز من التطبيق عليه خصم.',g:'loyal',tm:'any',a:'city'},
- {c:'car',t:'خصم الإطارات للأساطيل',d:'أسعار خاصة للإطارات والبنشر لشركات النقل والشاحنات بعقد شهري.',g:'b2b',tm:'any',a:'trucks'},
- {c:'car',t:'ساعات الهدوء',d:'خصم على الخدمات في أضعف فترة بالمحطة، يظهر في التطبيق بعداد تنازلي.',g:'weak',tm:'midday',a:'all'},
- {c:'car',t:'ترقية مجانية مع الزيت الممتاز',d:'فلتر هواء أو فلتر مكيف مجاني عند اختيار الزيت الممتاز.',g:'ticket',tm:'any',a:'all'},
- {c:'car',t:'فحص البطارية والمكيف قبل الصيف',d:'فحص مجاني للبطارية والمكيف مع خصم على الاستبدال إذا احتاج.',g:'new',tm:'season',a:'family'},
- {c:'rest',t:'وجبة أطفال مجانية للعائلة',d:'وجبة أطفال مجانية مع كل وجبة عائلية في الخميس والجمعة.',g:'ticket',tm:'weekend',a:'family'},
- {c:'rest',t:'وجبة السائق',d:'وجبة كاملة بسعر خاص لسائقي الشاحنات والأساطيل مع تعبئة ديزل.',g:'b2b',tm:'night',a:'trucks'},
- {c:'rest',t:'اطلب من التطبيق واستلم عند المضخة',d:'الطلب المسبق من تطبيق درب عليه خصم، والوجبة توصل للسيارة وقت التعبئة.',g:'new',tm:'evening',a:'travel'},
- {c:'rest',t:'فطور الطريق',d:'سندويتش مع قهوة بسعر ثابت من الفجر حتى 11 الصبح.',g:'weak',tm:'morning',a:'travel'},
- {c:'rest',t:'غداء الموظفين',d:'خصم على الوجبات من 11 الصبح إلى 3 العصر للموظفين القريبين من المحطة.',g:'weak',tm:'midday',a:'staff'},
- {c:'rest',t:'نقاط مضاعفة مع التعبئة',d:'نقاط مضاعفة في التطبيق إذا اشترى العميل من المطعم وعبّى في نفس اليوم.',g:'fuel',tm:'any',a:'all'},
- {c:'rest',t:'الوجبة السادسة مجانًا',d:'بعد 5 وجبات مسجلة في التطبيق، السادسة مجانًا.',g:'loyal',tm:'any',a:'city'},
- {c:'rest',t:'صندوق إفطار صائم',d:'صندوق إفطار جاهز للمسافرين في رمضان قبل المغرب، يُحجز من التطبيق.',g:'new',tm:'season',a:'travel'}
-];
+const SUG=[];
 const GS=(()=>{try{return JSON.parse(localStorage.getItem('darb-sug-v1')||'null')}catch(e){return null}})()||{};
 GS.cat=GS.cat||'cafe';GS.mine=GS.mine||[];
 const gSave=()=>{try{localStorage.setItem('darb-sug-v1',JSON.stringify(GS))}catch(e){}};
@@ -655,29 +617,27 @@ function fits(x,C){const r=[];if(x.g==='weak'&&x.tm===C.weak)r.push('أضعف ف
   if(x.a==='family'&&C.fam)r.push('نسبة سيارات عائلية عالية');
   if((x.a==='city'||x.a==='staff')&&C.ty==='city')r.push('محطة وسط المدينة');return r;}
 function renderSug(){
-  $('gCat').innerHTML=GCATS.map(([k,t])=>`<button type="button" data-gc="${k}" aria-pressed="${GS.cat===k}">${t} <span class="num">(${SUG.concat(GS.mine).filter(x=>x.c===k).length})</span></button>`).join('');
+  $('gCat').innerHTML=GCATS.map(([k,t])=>`<button type="button" data-gc="${k}" aria-pressed="${GS.cat===k}">${t} <span class="num">(${GS.mine.filter(x=>x.c===k).length})</span></button>`).join('');
   $('gCat').querySelectorAll('[data-gc]').forEach(b=>b.addEventListener('click',()=>{GS.cat=b.dataset.gc;gSave();renderSug();}));
-  if(!$('gGoal').options.length){$('gGoal').innerHTML='<option value="">كل الأهداف</option>'+Object.entries(GOALS).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
-    $('gTime').innerHTML='<option value="">كل الأوقات</option>'+Object.entries(GTIME).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
-    $('gNewCat').innerHTML=GCATS.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');}
+  if(!$('gNewCat').options.length){$('gNewCat').innerHTML=GCATS.map(([k,t])=>`<option value="${k}">${t}</option>`).join('');}
   const C=stCtx(cur),hasSt=selCodes().has(cur.c),parts=hasSt?catPartners(cur,GS.cat):[];
   $('gCtx').innerHTML=!hasSt?'<div class="hint">ما اخترت محطات في الخطة العامة بعد، فالمقترحات تظهر بدون ربط بمحطة.</div>':`<div class="hint">المحطة الحالية: <b style="color:var(--ink)">${esc(cur.n)} ${cur.c}</b> · ${parts.length?`${parts.length} شريك في هذه الفئة: ${parts.map(esc).join('، ')}`:'لا يوجد شريك من هذه الفئة في المحطة'} · أضعف فترة: ${C.weakN}. غيّر المحطة من تبويب «المحطة».</div>`;
-  const g=$('gGoal').value,tm=$('gTime').value,q=$('gQ').value.trim();
-  const list=SUG.concat(GS.mine).filter(x=>x.c===GS.cat&&(!g||x.g===g)&&(!tm||x.tm===tm)&&(!q||(x.t+' '+x.d).includes(q)));
-  $('gList').innerHTML=list.length?list.map((x,i)=>{const f=hasSt?fits(x,C):[];const mine=GS.mine.includes(x);return `<article class="panel sug">
+  const q=$('gQ').value.trim();
+  const list=GS.mine.filter(x=>x.c===GS.cat&&(!q||(x.t+' '+x.d).includes(q)));
+  $('gList').innerHTML=list.length?list.map((x,i)=>{const f=[];const mine=false;return `<article class="panel sug">
     <div class="shead"><h3>${esc(x.t)}</h3>${mine?'<span class="pill low">مقترحك</span>':''}</div>
-    <p style="margin:6px 0 10px">${esc(x.d)}</p>
+    ${x.d?`<p style="margin:6px 0 10px">${esc(x.d)}</p>`:''}
     <div class="tags">${x.g?`<span class="chip" style="cursor:default">${GOALS[x.g]||''}</span>`:''}${x.tm?`<span class="chip" style="cursor:default">${GTIME[x.tm]||''}</span>`:''}${x.a?`<span class="chip" style="cursor:default">${GAUD[x.a]||''}</span>`:''}</div>
     ${f.length?`<div class="note" style="margin-top:8px">يناسب هذه المحطة: ${f.join('، ')}</div>`:''}
-    <div class="sugact"><select id="gp${i}" aria-label="الشريك">${parts.map(n=>`<option>${esc(n)}</option>`).join('')}<option value="عرض درب">عرض درب</option></select><button type="button" class="pri" data-gi="${i}">أضف لمخطط العرض</button><button type="button" data-gcopy="${i}">نسخ</button>${mine?`<button type="button" class="xb" data-gdel="${GS.mine.indexOf(x)}" aria-label="حذف">×</button>`:''}</div>
-  </article>`}).join(''):'<div class="panel nodata">لا توجد مقترحات بهذه الفلاتر.</div>';
+    <div class="sugact"><select id="gp${i}" aria-label="الشريك">${parts.map(n=>`<option>${esc(n)}</option>`).join('')}<option value="عرض درب">عرض درب</option></select><button type="button" class="pri" data-gi="${i}">أضف لمخطط العرض</button><button type="button" data-gcopy="${i}">نسخ</button><button type="button" class="xb" data-gdel="${GS.mine.indexOf(x)}" aria-label="حذف">×</button></div>
+  </article>`}).join(''):`<div class="panel nodata">${GS.mine.some(x=>x.c===GS.cat)?'لا توجد مقترحات تطابق البحث.':'ما أضفت مقترحات في هذه الفئة بعد. اكتبها من فوق واضغط «إضافة المقترح».'}</div>`;
   $('gList').querySelectorAll('[data-gi]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gi],p=$('gp'+b.dataset.gi).value;
     if(hasP(p)){const it=O.items.find(i=>i.p===p);it.txt=x.t;}else O.items.push({p,txt:x.t,per:'',ticket:'',cap:''});
     tab('S');renderPartners();renderPick();renderItems();calcOffer();$('offerPanel').scrollIntoView({block:'start'});toast('أُضيف العرض لـ'+p+'، اكتب تكلفته ونسبة الاستفادة');}));
-  $('gList').querySelectorAll('[data-gcopy]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gcopy],t=x.t+' — '+x.d;try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ المقترح'),()=>fb(t))}catch(e){fb(t)}}));
+  $('gList').querySelectorAll('[data-gcopy]').forEach(b=>b.addEventListener('click',()=>{const x=list[+b.dataset.gcopy],t=x.d?x.t+' — '+x.d:x.t;try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ المقترح'),()=>fb(t))}catch(e){fb(t)}}));
   $('gList').querySelectorAll('[data-gdel]').forEach(b=>b.addEventListener('click',()=>{GS.mine.splice(+b.dataset.gdel,1);gSave();renderSug();}));
 }
-['gGoal','gTime','gQ'].forEach(id=>$(id).addEventListener('input',renderSug));
+$('gQ').addEventListener('input',renderSug);
 $('gAdd').addEventListener('click',()=>{const t=$('gNewT').value.trim();if(!t){toast('اكتب عنوان العرض');return;}GS.mine.push({c:$('gNewCat').value,t,d:$('gNewD').value.trim(),g:'',tm:'',a:''});GS.cat=$('gNewCat').value;gSave();$('gNewT').value='';$('gNewD').value='';renderSug();toast('أُضيف المقترح');});
 
 $('goPlan').addEventListener('click',()=>tab('P'));
