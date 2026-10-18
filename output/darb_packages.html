@@ -71,8 +71,11 @@ table{width:100%;border-collapse:collapse;font-size:13px}
 th{font-size:11.5px;color:var(--ink2);font-weight:600;text-align:right;padding:4px 4px;border-bottom:1px solid var(--line);white-space:nowrap}
 td{padding:4px;vertical-align:middle}
 td.tot{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap;text-align:left}
-.prod td:nth-child(1){min-width:120px} .prod td:nth-child(2){min-width:120px}
-.prod td:nth-child(3){width:64px} .prod td:nth-child(4){width:80px}
+table.prod{min-width:540px}
+.prod td,.prod th{padding:4px 3px}
+.prod td:nth-child(1),.prod td:nth-child(2){min-width:88px} .prod td:nth-child(3){min-width:48px;width:48px} .prod td:nth-child(4),.prod td:nth-child(5){min-width:66px;width:66px}
+.prod input{padding:6px 6px}
+.prod th{white-space:normal;font-size:11px;line-height:1.3}
 .sum{display:grid;gap:4px;font-size:13.5px}
 .sum div{display:flex;justify-content:space-between;gap:10px}
 .sum .hr{border-top:1px solid var(--line);margin-top:4px;padding-top:6px;font-weight:700}
@@ -184,9 +187,9 @@ function renderStation(){
 
 function calc(c){
   const washCust=c.washN*c.washC, washDarb=c.washN*c.washD, washMargin=washCust-washDarb;
-  const prod=c.items.reduce((a,i)=>a+(+i.qty||0)*(+i.price||0),0);
+  const prod=c.items.reduce((a,i)=>a+(+i.qty||0)*(+i.price||0),0), prodDarb=c.items.reduce((a,i)=>a+(+i.qty||0)*(+i.cost||0),0), prodMargin=prod-prodDarb;
   const used=(+c.fuel||0)+washCust+prod;
-  return {washCust,washDarb,washMargin,prod,used,remain:(+c.price||0)-used};
+  return {washCust,washDarb,washMargin,prod,prodDarb,prodMargin,darbAll:washDarb+prodDarb,marginAll:washMargin+prodMargin,used,remain:(+c.price||0)-used};
 }
 
 function partnerOptions(){
@@ -214,13 +217,15 @@ function renderPkgs(){
       </div>
       <div class="sec">
         <div class="sec-h"><h3><span class="dot" style="background:var(--prod)"></span>منتجات الشركاء</h3><button type="button" class="pri" data-add="${pk.id}">＋ منتج</button></div>
-        <div class="tbl"><table class="prod"><thead><tr><th>الشريك</th><th>المنتج</th><th>العدد</th><th>السعر</th><th style="text-align:left">الإجمالي</th><th></th></tr></thead>
+        <div class="tbl"><table class="prod"><thead><tr><th>الشريك</th><th>المنتج</th><th>العدد</th><th>السعر على العميل</th><th>منها تكلفة درب</th><th style="text-align:left">الإجمالي</th><th style="text-align:left">ربح درب</th><th></th></tr></thead>
         <tbody id="${pk.id}-items">${p.items.map((it,i)=>`<tr data-i="${i}">
           <td><input id="${pk.id}-p${i}" data-f="partner" list="plist" value="${esc(it.partner||'')}" placeholder="اختر أو اكتب"></td>
           <td><input id="${pk.id}-n${i}" data-f="item" value="${esc(it.item||'')}" placeholder="مثال: وجبة"></td>
           <td><input id="${pk.id}-q${i}" data-f="qty" type="number" min="0" step="1" value="${it.qty}"></td>
           <td><input id="${pk.id}-r${i}" data-f="price" type="number" min="0" step="0.5" value="${it.price}"></td>
+          <td><input id="${pk.id}-c${i}" data-f="cost" type="number" min="0" step="0.5" value="${it.cost??''}" placeholder="0"></td>
           <td class="tot" id="${pk.id}-t${i}"></td>
+          <td class="tot" id="${pk.id}-m${i}"></td>
           <td><button type="button" class="x" data-del="${i}" aria-label="حذف">×</button></td></tr>`).join('')}</tbody></table></div>
         ${p.items.length?'':'<div class="hint">ما في منتجات. اضغط «＋ منتج» وحدد الشريك من قائمة شركاء المحطة.</div>'}
         ${p.items.some(i=>i.ex)?'<div class="ex">المنتجات المعبأة مسبقًا أمثلة، عدّلها أو احذفها.</div>':''}
@@ -237,7 +242,7 @@ function renderPkgs(){
 
 function updatePkg(id){
   const p=cfg(cur)[id], r=calc(p), price=+p.price||0;
-  p.items.forEach((it,i)=>{const el=$(`${id}-t${i}`); if(el) el.textContent=sar((+it.qty||0)*(+it.price||0));});
+  p.items.forEach((it,i)=>{const el=$(`${id}-t${i}`); if(el) el.textContent=sar((+it.qty||0)*(+it.price||0)); const m=$(`${id}-m${i}`); if(m){const v=(+it.qty||0)*((+it.price||0)-(+it.cost||0)); m.textContent=sar(v); m.style.color=v<0?'var(--bad)':'';}});
   $(`${id}-washfull`).textContent=(+p.washD||0)>(+p.washC||0)?'تكلفة درب أعلى من سعر الغسلة على العميل':`ربح درب من الغسلة ${sar((+p.washC||0)-(+p.washD||0))}`;
   const base=Math.max(price,r.used)||1, w=v=>Math.max(0,v)/base*100;
   $(`${id}-gauge`).innerHTML=`<i style="width:${w(+p.fuel||0)}%;background:var(--fuel)"></i><i style="width:${w(r.washCust)}%;background:var(--wash)"></i><i style="width:${w(r.prod)}%;background:var(--prod)"></i>`;
@@ -251,7 +256,11 @@ function updatePkg(id){
   el.innerHTML=ok?`<span>المتبقي للتوزيع</span><span class="big num">${sar(r.remain)}</span>`:`<span>تجاوزت قيمة الباقة بـ</span><span class="big num">${sar(-r.remain)}</span>`;
   $(`${id}-darb`).innerHTML=`<div style="display:flex;justify-content:space-between"><span>تكلفة الغسلات على درب (${fmt2(p.washN)} × ${fmt2(p.washD)})</span><b class="num">${sar(r.washDarb)}</b></div>
     <div style="display:flex;justify-content:space-between"><span>ربح درب من الغسلات</span><b class="num" style="${r.washMargin<0?'color:var(--bad)':''}">${sar(r.washMargin)}</b></div>
-    <div class="hint">تكلفة درب وربحها جزء من قيمة الغسلات المخصومة من الباقة، مو مبلغ إضافي.</div>`;
+    <div style="display:flex;justify-content:space-between"><span>تكلفة منتجات الشركاء على درب</span><b class="num">${sar(r.prodDarb)}</b></div>
+    <div style="display:flex;justify-content:space-between"><span>ربح درب من المنتجات</span><b class="num" style="${r.prodMargin<0?'color:var(--bad)':''}">${sar(r.prodMargin)}</b></div>
+    <div style="display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px"><span>إجمالي تكلفة درب</span><b class="num">${sar(r.darbAll)}</b></div>
+    <div style="display:flex;justify-content:space-between"><span>إجمالي ربح درب من الغسلات والمنتجات</span><b class="num" style="${r.marginAll<0?'color:var(--bad)':''}">${sar(r.marginAll)}</b></div>
+    <div class="hint">تكلفة درب وربحها جزء من الأسعار المخصومة من الباقة، مو مبلغ إضافي.</div>`;
   renderPotential();
 }
 
@@ -261,10 +270,10 @@ function renderPotential(){
   if(!s.v){$('potTbl').innerHTML='<tr><td class="muted">لا توجد بيانات حركة لهذه المحطة.</td></tr>';return;}
   const rows=PK.map(pk=>{
     const cars=(pk.seg==='s'?s.s:s.f)*30, ad=(pk.seg==='s'?c.adS:c.adF)/100, n=cars*ad, p=c[pk.id], r=calc(p);
-    return {pk,cars,n,rev:n*(+p.price||0),fuel:n*(+p.fuel||0),prod:n*r.prod,darb:n*r.washDarb,margin:n*r.washMargin};
+    return {pk,cars,n,rev:n*(+p.price||0),fuel:n*(+p.fuel||0),prod:n*r.prod,darb:n*r.darbAll,margin:n*r.marginAll};
   });
   const T=k=>rows.reduce((a,r)=>a+r[k],0);
-  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>مبيعات للشركاء</th><th>تكلفة الغسلات على درب</th><th>ربح درب من الغسلات</th></tr></thead><tbody>
+  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>مبيعات للشركاء</th><th>تكلفة درب (غسلات ومنتجات)</th><th>ربح درب (غسلات ومنتجات)</th></tr></thead><tbody>
   ${rows.map(r=>`<tr><td>${r.pk.name}</td><td>${fmt(r.cars)}</td><td>${fmt(r.n)}</td><td>${sar(r.rev)}</td><td>${sar(r.fuel)}</td><td>${sar(r.prod)}</td><td>${sar(r.darb)}</td><td>${sar(r.margin)}</td></tr>`).join('')}
   <tr style="font-weight:700"><td>الإجمالي</td><td>${fmt(T('cars'))}</td><td>${fmt(T('n'))}</td><td>${sar(T('rev'))}</td><td>${sar(T('fuel'))}</td><td>${sar(T('prod'))}</td><td>${sar(T('darb'))}</td><td>${sar(T('margin'))}</td></tr></tbody>`;
 }
@@ -276,12 +285,12 @@ $('station').addEventListener('change',e=>{cur=STATIONS.find(s=>s.c===e.target.v
 $('pkgs').addEventListener('input',e=>{
   const art=e.target.closest('[data-pk]'); if(!art) return; const id=art.dataset.pk, p=cfg(cur)[id];
   if(e.target.dataset.k){p[e.target.dataset.k]=e.target.value===''?0:+e.target.value;}
-  else if(e.target.dataset.f){const i=+e.target.closest('tr').dataset.i, f=e.target.dataset.f; p.items[i][f]=(f==='qty'||f==='price')?(+e.target.value||0):e.target.value; p.items[i].ex=false;}
+  else if(e.target.dataset.f){const i=+e.target.closest('tr').dataset.i, f=e.target.dataset.f; p.items[i][f]=(f==='qty'||f==='price'||f==='cost')?(+e.target.value||0):e.target.value; p.items[i].ex=false;}
   save(); updatePkg(id);
 });
 $('pkgs').addEventListener('click',e=>{
   const art=e.target.closest('[data-pk]'); if(!art) return; const id=art.dataset.pk, p=cfg(cur)[id];
-  if(e.target.dataset.add){p.items.push({partner:'',item:'',qty:1,price:0});save();renderPkgs();const i=p.items.length-1;const el=$(`${id}-p${i}`);if(el)el.focus();}
+  if(e.target.dataset.add){p.items.push({partner:'',item:'',qty:1,price:0,cost:0});save();renderPkgs();const i=p.items.length-1;const el=$(`${id}-p${i}`);if(el)el.focus();}
   if(e.target.dataset.del!==undefined){p.items.splice(+e.target.dataset.del,1);save();renderPkgs();}
 });
 ['adS','adF'].forEach(k=>$(k).addEventListener('input',e=>{cfg(cur)[k]=+e.target.value||0;save();renderPotential();}));
@@ -293,8 +302,8 @@ $('copyBtn').addEventListener('click',()=>{
     L.push('',pk.name,['قيمة الباقة',p.price].join('\t'),['بنزين',p.fuel].join('\t'),
       ['عدد الغسلات',p.washN].join('\t'),['سعر الغسلة على العميل',p.washC].join('\t'),['منها تكلفة درب / غسلة',p.washD].join('\t'),
       ['قيمة الغسلات من الباقة',r.washCust].join('\t'),['تكلفة الغسلات على درب',r.washDarb].join('\t'),['ربح درب من الغسلات',r.washMargin].join('\t'),
-      ['الشريك','المنتج','العدد','السعر','الإجمالي'].join('\t'));
-    p.items.forEach(i=>L.push([i.partner,i.item,i.qty,i.price,(+i.qty||0)*(+i.price||0)].join('\t')));
+      ['الشريك','المنتج','العدد','السعر على العميل','منها تكلفة درب','الإجمالي','ربح درب'].join('\t'));
+    p.items.forEach(i=>L.push([i.partner,i.item,i.qty,i.price,i.cost||0,(+i.qty||0)*(+i.price||0),(+i.qty||0)*((+i.price||0)-(+i.cost||0))].join('\t')));
     L.push(['المتبقي',r.remain].join('\t'));});
   const txt=L.join('\n');
   const done=()=>toast('نُسخ الملخص، الصقه في إكسل');
