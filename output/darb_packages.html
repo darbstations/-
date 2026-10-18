@@ -216,7 +216,7 @@ function renderPkgs(){
       </div>
       <div class="sec">
         <div class="sec-h"><h3><span class="dot" style="background:var(--prod)"></span>منتجات الشركاء والغسلات</h3><div style="display:flex;gap:6px"><button type="button" class="pri" data-add="${pk.id}" data-kind="prod">＋ منتج</button><button type="button" class="pri" data-add="${pk.id}" data-kind="wash" style="background:var(--wash);border-color:var(--wash)">＋ غسلة</button></div></div>
-        <div class="tbl"><table class="prod"><thead><tr><th>النوع</th><th>الشريك</th><th>المنتج / نوع الغسيل</th><th>العدد</th><th>السعر على العميل</th><th>منها تكلفة درب</th><th style="text-align:left">الإجمالي</th><th style="text-align:left">ربح درب</th><th></th></tr></thead>
+        <div class="tbl"><table class="prod"><thead><tr><th>النوع</th><th>الشريك</th><th>المنتج / نوع الغسيل</th><th>العدد</th><th>السعر على العميل</th><th>منها تكلفة درب</th><th style="text-align:left">الإجمالي</th><th style="text-align:left">التعويض لدرب</th><th></th></tr></thead>
         <tbody id="${pk.id}-items">${p.items.map((it,i)=>{const w=(it.kind||'prod')==='wash';return `<tr data-i="${i}">
           <td><select id="${pk.id}-k${i}" data-f="kind" aria-label="النوع" style="border-color:${w?'var(--wash)':'var(--line)'}"><option value="prod"${w?'':' selected'}>منتج</option><option value="wash"${w?' selected':''}>غسلة</option></select></td>
           <td><input id="${pk.id}-p${i}" data-f="partner" list="plist" value="${esc(it.partner||'')}" placeholder="اختر أو اكتب"></td>
@@ -228,7 +228,7 @@ function renderPkgs(){
           <td class="tot" id="${pk.id}-m${i}"></td>
           <td><button type="button" class="x" data-del="${i}" aria-label="حذف">×</button></td></tr>`}).join('')}</tbody></table></div>
         ${p.items.length?'':'<div class="hint">ما في منتجات ولا غسلات. اضغط «＋ منتج» أو «＋ غسلة» وحدد الشريك من قائمة شركاء المحطة.</div>'}
-        <div class="hint">السعر على العميل يُخصم من الباقة، وتكلفة درب جزء منه، والفرق ربح لدرب.</div>
+        <div class="hint">السعر على العميل يُخصم من الباقة، وتكلفة درب جزء منه، والفرق تعويض لدرب.</div>
         ${p.items.some(i=>i.ex)?'<div class="ex">المنتجات المعبأة مسبقًا أمثلة، عدّلها أو احذفها.</div>':''}
       </div>
       <div class="sec">
@@ -255,12 +255,12 @@ function updatePkg(id){
   el.className='remain '+(ok?'ok':'bad');
   el.innerHTML=ok?`<span>المتبقي للتوزيع</span><span class="big num">${sar(r.remain)}</span>`:`<span>تجاوزت قيمة الباقة بـ</span><span class="big num">${sar(-r.remain)}</span>`;
   $(`${id}-darb`).innerHTML=`<div style="display:flex;justify-content:space-between"><span>تكلفة الغسلات على درب</span><b class="num">${sar(r.washDarb)}</b></div>
-    <div style="display:flex;justify-content:space-between"><span>ربح درب من الغسلات</span><b class="num" style="${r.washMargin<0?'color:var(--bad)':''}">${sar(r.washMargin)}</b></div>
+    <div style="display:flex;justify-content:space-between"><span>التعويض لدرب من الغسلات</span><b class="num" style="${r.washMargin<0?'color:var(--bad)':''}">${sar(r.washMargin)}</b></div>
     <div style="display:flex;justify-content:space-between"><span>تكلفة منتجات الشركاء على درب</span><b class="num">${sar(r.prodDarb)}</b></div>
-    <div style="display:flex;justify-content:space-between"><span>ربح درب من المنتجات</span><b class="num" style="${r.prodMargin<0?'color:var(--bad)':''}">${sar(r.prodMargin)}</b></div>
+    <div style="display:flex;justify-content:space-between"><span>التعويض لدرب من المنتجات</span><b class="num" style="${r.prodMargin<0?'color:var(--bad)':''}">${sar(r.prodMargin)}</b></div>
     <div style="display:flex;justify-content:space-between;border-top:1px solid var(--line);padding-top:4px"><span>إجمالي تكلفة درب</span><b class="num">${sar(r.darbAll)}</b></div>
-    <div style="display:flex;justify-content:space-between"><span>إجمالي ربح درب من الغسلات والمنتجات</span><b class="num" style="${r.marginAll<0?'color:var(--bad)':''}">${sar(r.marginAll)}</b></div>
-    <div class="hint">تكلفة درب وربحها جزء من الأسعار المخصومة من الباقة، مو مبلغ إضافي.</div>`;
+    <div style="display:flex;justify-content:space-between"><span>إجمالي التعويض لدرب من الغسلات والمنتجات</span><b class="num" style="${r.marginAll<0?'color:var(--bad)':''}">${sar(r.marginAll)}</b></div>
+    <div class="hint">تكلفة درب والتعويض لدرب جزء من الأسعار المخصومة من الباقة، مو مبلغ إضافي.</div>`;
   renderPotential();
 }
 
@@ -273,7 +273,7 @@ function renderPotential(){
     return {pk,cars,n,rev:n*(+p.price||0),fuel:n*(+p.fuel||0),prod:n*r.partners,darb:n*r.darbAll,margin:n*r.marginAll};
   });
   const T=k=>rows.reduce((a,r)=>a+r[k],0);
-  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>مبيعات الشركاء (منتجات وغسلات)</th><th>تكلفة درب (غسلات ومنتجات)</th><th>ربح درب (غسلات ومنتجات)</th></tr></thead><tbody>
+  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>مبيعات الشركاء (منتجات وغسلات)</th><th>تكلفة درب (غسلات ومنتجات)</th><th>التعويض لدرب (غسلات ومنتجات)</th></tr></thead><tbody>
   ${rows.map(r=>`<tr><td>${r.pk.name}</td><td>${fmt(r.cars)}</td><td>${fmt(r.n)}</td><td>${sar(r.rev)}</td><td>${sar(r.fuel)}</td><td>${sar(r.prod)}</td><td>${sar(r.darb)}</td><td>${sar(r.margin)}</td></tr>`).join('')}
   <tr style="font-weight:700"><td>الإجمالي</td><td>${fmt(T('cars'))}</td><td>${fmt(T('n'))}</td><td>${sar(T('rev'))}</td><td>${sar(T('fuel'))}</td><td>${sar(T('prod'))}</td><td>${sar(T('darb'))}</td><td>${sar(T('margin'))}</td></tr></tbody>`;
 }
@@ -304,9 +304,9 @@ $('copyBtn').addEventListener('click',()=>{
   L.push(['المحطة',cur.n,cur.c].join('\t'));
   PK.forEach(pk=>{const p=c[pk.id],r=calc(p);
     L.push('',pk.name,['نبذة',(p.desc||'').replace(/\s+/g,' ')].join('\t'),['قيمة الباقة',p.price].join('\t'),['بنزين',p.fuel].join('\t'),
-      ['قيمة الغسلات من الباقة',r.washCust].join('\t'),['تكلفة الغسلات على درب',r.washDarb].join('\t'),['ربح درب من الغسلات',r.washMargin].join('\t'),
-      ['قيمة المنتجات من الباقة',r.prod].join('\t'),['تكلفة المنتجات على درب',r.prodDarb].join('\t'),['ربح درب من المنتجات',r.prodMargin].join('\t'),
-      ['النوع','الشريك','المنتج / نوع الغسيل','العدد','السعر على العميل','منها تكلفة درب','الإجمالي','ربح درب'].join('\t'));
+      ['قيمة الغسلات من الباقة',r.washCust].join('\t'),['تكلفة الغسلات على درب',r.washDarb].join('\t'),['التعويض لدرب من الغسلات',r.washMargin].join('\t'),
+      ['قيمة المنتجات من الباقة',r.prod].join('\t'),['تكلفة المنتجات على درب',r.prodDarb].join('\t'),['التعويض لدرب من المنتجات',r.prodMargin].join('\t'),
+      ['النوع','الشريك','المنتج / نوع الغسيل','العدد','السعر على العميل','منها تكلفة درب','الإجمالي','التعويض لدرب'].join('\t'));
     p.items.forEach(i=>L.push([i.kind==='wash'?'غسلة':'منتج',i.partner,i.item,i.qty,i.price,i.cost||0,(+i.qty||0)*(+i.price||0),(+i.qty||0)*((+i.price||0)-(+i.cost||0))].join('\t')));
     L.push(['المتبقي',r.remain].join('\t'));});
   const txt=L.join('\n');
