@@ -43,6 +43,9 @@ HERO = webp('hero.webp')            # الكولاج مقصوصًا
 SCENE = webp('scene.webp')          # الكولاج داخل المحطة — غلاف العرض
 CUT_STATION = webp('cut-station.webp')
 CUT_FOLDER = webp('cut-folder.webp')
+SCENE_CAR = webp('scene-car.webp')          # المشهد الخاص بخدمات السيارات
+CUT_CAR_FOLDER = webp('cut-car-folder.webp')
+CUT_CAR_STATION = webp('cut-car-station.webp')
 LOGO_DARB = img('image-1-1.png')
 STATION = img('image-1-2.jpeg')
 CLOSE_ART = img('image-15-1.jpeg')
@@ -341,8 +344,12 @@ p{margin:0}
 .close .art{position:absolute;inset:0;overflow:hidden}
 .close .art img{width:100%;height:100%;object-fit:cover;display:block;
   filter:blur(5px);transform:scale(1.05)}   /* التكبير يمنع ظهور حواف الضباب */
-.close .art::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.9)}
-.close h2{font-size:52px;max-width:17ch;color:#fff}
+.close .art::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.2)}
+/* تدرّج أسفل الشريحة وحده، ليُقرأ الكلام والصورة فوقه ظاهرة */
+.close .art::before{content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 38%,
+    rgba(0,0,0,0) 66%)}
+.close h2{font-size:46px;max-width:none;white-space:nowrap;color:#fff}
 .close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
 .close .when span{background:#fff;color:var(--ink);border:3px solid var(--ink);
   border-radius:8px;padding:9px 18px;font-size:12.5px;font-weight:800;
@@ -369,7 +376,7 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <img class="scene" src="%s" alt="الجمعة البرتقالية في محطات درب">
+  <img class="scene" src="%s" alt="الجمعة البرتقالية — خدمات السيارات في محطات درب">
   <div class="veil"></div>
   <div class="in">
     <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
@@ -377,7 +384,7 @@ SLIDES.append("""
     <div class="foot2"><img src="%s" alt="درب">
       <span>محطات درب × شركاء خدمات السيارات</span></div>
   </div>
-</section>""" % (SCENE, LOGO_DARB))
+</section>""" % (SCENE_CAR, LOGO_DARB))
 
 # ١ · المستهدفات
 SLIDES.append("""
@@ -577,8 +584,8 @@ SLIDES.append("""
                  FOOT))
 
 DECK = ''.join(SLIDES)
-for mark, val in [('@@FOLDER@@', CUT_FOLDER), ('@@STATION@@', CUT_STATION),
-                  ('@@STATION2@@', CUT_STATION), ('@@SCENE@@', SCENE)]:
+for mark, val in [('@@FOLDER@@', CUT_CAR_FOLDER), ('@@STATION@@', CUT_STATION),
+                  ('@@STATION2@@', CUT_CAR_STATION), ('@@SCENE@@', SCENE_CAR)]:
     assert mark in DECK, 'snap marker missing: ' + mark
     DECK = DECK.replace(mark, val)
 _c = [0]
