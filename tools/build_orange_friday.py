@@ -209,8 +209,8 @@ p{margin:0}
 FOOT = '<div class="foot"><span>الجمعة البرتقالية ٢٠٢٦ — محطات درب</span><span>%s</span></div>'
 
 
-def foot(t):
-    return FOOT % t
+def foot(_=None):
+    return FOOT % '@@n@@'
 
 
 SLIDES = []
@@ -483,7 +483,24 @@ SLIDES.append("""
   </div>
 </section>""" % (CLOSE_ART, LOGO))
 
+# حذف بطلبها: الغلاف، والحقيقة البسيطة، وخطة النشر
+DROP = [('الغلاف', 'class="pg orange cover"'),
+        ('الحقيقة البسيطة', '<p class="eyebrow">الحقيقة البسيطة</p>'),
+        ('خطة النشر', '<p class="eyebrow">خطة النشر</p>')]
+for label, mark in DROP:
+    hit = [i for i, sl in enumerate(SLIDES) if mark in sl]
+    assert len(hit) == 1, 'drop %s matched %d slides' % (label, len(hit))
+    SLIDES.pop(hit[0])
+    print('  dropped: %s' % label)
+
 DECK = ''.join(SLIDES)
+AR10 = '٠١٢٣٤٥٦٧٨٩'
+_c = [0]
+def _num(m):
+    _c[0] += 1
+    return ''.join(AR10[int(d)] for d in str(_c[0]))
+DECK = re.sub(r'@@n@@', _num, DECK)
+assert '@@n@@' not in DECK
 
 # ------------------------------------------------------- المحرّر من ملفاتها
 src = open(CHROME_SRC, encoding='utf-8').read()
@@ -491,6 +508,22 @@ i = src.index('function darbEditor(opts){')
 j = src.index('\n(function(){', i)
 EDITOR = src[i:j]
 assert 'function darbEditor' in EDITOR and len(EDITOR) > 6000, 'editor extract failed'
+SAY_OLD = """  function say(m,ms){ if(!toast) return; toast.textContent=m; toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }"""
+SAY_NEW = """  function say(m,ms,actLabel,actFn){
+    if(!toast) return;
+    var msg=document.getElementById('toastmsg'), act=document.getElementById('toastact');
+    if(msg) msg.textContent=m; else toast.textContent=m;
+    if(act){
+      if(actLabel){ act.hidden=false; act.textContent=actLabel;
+        act.onclick=function(){ act.hidden=true; toast.classList.remove('show');
+                                if(actFn) actFn(); }; }
+      else { act.hidden=true; act.onclick=null; }
+    }
+    toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }"""
+assert SAY_OLD in EDITOR, 'say() not found in the borrowed editor'
+EDITOR = EDITOR.replace(SAY_OLD, SAY_NEW, 1)
 chrome_css = src.split('<style id="darbcss">', 1)[1].split('</style>', 1)[0]
 k = chrome_css.index('/* ---------- picker ----------')
 CHROME = chrome_css[k:]
@@ -519,7 +552,7 @@ BODY = """
   <button type="button" data-a="dup">تكرار</button>
   <button type="button" data-a="del" class="del">حذف</button>
 </div>
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast"><span id="toastmsg"></span><button type="button" id="toastact" hidden></button></div>
 <input type="file" id="pickimg" accept="image/*" hidden>"""
 
 APP = """<script>
@@ -559,16 +592,40 @@ var CSSTEXT=(function(){
     }
   });
   document.title='الجمعة البرتقالية ٢٠٢٦ — محطات درب';
+  /* نسخة محفوظة ما زالت تحمل الشرائح المحذوفة: نعرض التحديث ولا نفرضه */
+  (function(){
+    var old=null; try{ old=localStorage.getItem('darb-orange-friday-v1'); }catch(e){}
+    if(!old) return;
+    if(old.indexOf('pg orange cover')<0 && old.indexOf('خطة النشر')<0) return;
+    ed.say('نسختك المحفوظة ما زالت تحمل الشرائح الثلاث المحذوفة. '+
+           '«حدّث» يجيب النسخة الجديدة، و«تراجع» بعده يرجّع نسختك.',
+      20000, 'حدّث', function(){
+        ed.snap();
+        ed.box.innerHTML=DECK;
+        ed.mark(); ed.snap(); ed.keep(); ed.place(null);
+        window.scrollTo(0,0);
+        ed.say('حُدّثت الشرائح. «تراجع» يرجّع نسختك السابقة.',9000);
+      });
+  })();
 })();
 </script>"""
 
 import json
 APP = APP % (json.dumps(DECK, ensure_ascii=False), EDITOR)
 
+TOASTCSS = """
+.toast{display:flex;align-items:center;gap:12px;line-height:1.75}
+.toast.show{pointer-events:auto}
+#toastmsg{max-width:62ch}
+#toastact{background:var(--orange);color:#fff;border:0;border-radius:6px;padding:7px 15px;
+  font:inherit;font-size:12.5px;font-weight:800;cursor:pointer;white-space:nowrap}
+#toastact:hover{background:var(--orange-dk)}
+"""
+
 HTML = ('<!doctype html>\n<html lang="ar" dir="rtl">\n<head>\n<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
         '<title>الجمعة البرتقالية ٢٠٢٦ — محطات درب</title>\n<style id="darbcss">\n'
-        + CSS + '\n' + CHROME + '</style>\n</head>\n<body>\n' + BODY + '\n' + APP
+        + CSS + '\n' + CHROME + '\n' + TOASTCSS + '</style>\n</head>\n<body>\n' + BODY + '\n' + APP
         + '\n</body>\n</html>\n')
 open(OUT, 'w', encoding='utf-8').write(HTML)
 
