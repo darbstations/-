@@ -268,7 +268,7 @@ SLIDES.append("""
 # ٤ · ما نستهدفه لك
 SLIDES.append("""
 <section class="pg dark">
-  <p class="eyebrow">ما نستهدفه لك</p>
+  <p class="eyebrow">المستهدفات</p>
   <h2>ثلاثة أرقام، وكل رقم من وين</h2>
   <div class="stats">
     <div class="stat2 card o"><div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
@@ -351,7 +351,7 @@ SLIDES.append("""
 # ٨ · العرض المقترح
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">العرض المقترح</p>
+  <p class="eyebrow">العروض المقترحة</p>
   <h2>غسلة بعشرة، مقابل تعبئة بثلاثين</h2>
   <p class="lede">نفس عرض السنة الماضية، وقد نجح. وإن عندك فكرة ثانية نسمعها.</p>
   <div class="offer">
@@ -400,7 +400,7 @@ steps = ''.join('<div class="step"><span class="n">%s</span><h3>%s</h3><p>%s</p>
                 % (ard(i + 1), t, d, w) for i, (t, d, w) in enumerate(STEPS))
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">كيف تشتغل</p>
+  <p class="eyebrow">الآلية</p>
   <h2>من المضخة إلى مغسلتك في أربع خطوات</h2>
   <div class="steps">%s</div>
   %s
@@ -437,30 +437,28 @@ SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">شركاء ٢٠٢٥</p>
   <h2>شركاء كانوا معنا، وراجعين هذه السنة</h2>
-  <p class="lede" style="margin-top:4px;font-weight:800;color:var(--orange)">محتوى المؤثّرين</p>
-  <div class="grid6" style="margin-top:10px">%s</div>
-  <p class="lede" style="margin-top:auto;font-weight:800;color:var(--orange)">شركاء الحملة</p>
+  <p class="lede" style="margin-top:4px;font-weight:800;color:var(--orange)">شركاء الحملة</p>
   <div class="logos" style="margin-top:10px">%s</div>
-</section>""" % (''.join('<img src="%s" alt="" style="height:230px">' % c for c in INFL),
-                 ''.join('<img src="%s" alt="">' % c for c in LOGOS)))
+  <p class="lede" style="margin-top:auto;font-weight:800;color:var(--orange)">محتوى المؤثّرين</p>
+  <div class="grid6" style="margin-top:10px">%s</div>
+</section>""" % (''.join('<img src="%s" alt="">' % c for c in LOGOS),
+                 ''.join('<img src="%s" alt="" style="height:210px">' % c for c in INFL)))
 
 # ١٤ · المسؤوليات
 DARB = ['التصوير والتصميم والمونتاج', 'إطلاق الحملة والنشر على المنصات',
         'طريقة التنفيذ والباركود وتدريب عمال المحطة',
         'التنسيق مع المؤثّرين وإدارة المحتوى', 'توزيع الكوبونات والتقرير الأسبوعي']
-YOU = ['قيمة العرض أو الخصم', 'تكلفة الاتفاق مع المؤثّرين',
+YOU = ['قيمة العرض أو الخصم',
        'الالتزام بالعرض طول ساعات العمل وتدريب موظفيك']
 SLIDES.append("""
 <section class="pg">
   <div class="split">
     <div class="half orange">
-      <p class="eyebrow">درب تسوي</p>
-      <h2 style="font-size:34px">كل الشغل الثقيل علينا.</h2>
+      <h2 style="font-size:34px">مسؤوليات درب</h2>
       <div class="rows">%s</div>
     </div>
     <div class="half dark">
-      <p class="eyebrow">أنت تسوي</p>
-      <h2 style="font-size:34px">ثلاثة أشياء بس.</h2>
+      <h2 style="font-size:34px">مسؤوليات الشريك</h2>
       <div class="rows">%s</div>
     </div>
   </div>
@@ -491,12 +489,20 @@ SLIDES.append("""
 # حذف بطلبها: الغلاف، والحقيقة البسيطة، وخطة النشر
 DROP = [('الغلاف', 'class="pg orange cover"'),
         ('الحقيقة البسيطة', '<p class="eyebrow">الحقيقة البسيطة</p>'),
-        ('خطة النشر', '<p class="eyebrow">خطة النشر</p>')]
+        ('خطة النشر', '<p class="eyebrow">خطة النشر</p>'),
+        ('الفكرة', '<p class="eyebrow">الفكرة</p>')]
 for label, mark in DROP:
     hit = [i for i, sl in enumerate(SLIDES) if mark in sl]
     assert len(hit) == 1, 'drop %s matched %d slides' % (label, len(hit))
     SLIDES.pop(hit[0])
     print('  dropped: %s' % label)
+
+# العروض المقترحة تختم العرض بطلبها
+MOVE = '<p class="eyebrow">العروض المقترحة</p>'
+hit = [i for i, sl in enumerate(SLIDES) if MOVE in sl]
+assert len(hit) == 1, 'offer slide matched %d slides' % len(hit)
+SLIDES.append(SLIDES.pop(hit[0]))
+print('  moved to last: العروض المقترحة')
 
 DECK = ''.join(SLIDES)
 AR10 = '٠١٢٣٤٥٦٧٨٩'
