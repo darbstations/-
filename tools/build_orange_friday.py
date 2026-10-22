@@ -252,14 +252,14 @@ SLIDES.append("""
     <div>
       <p class="eyebrow">الفكرة</p>
       <h2><span class="hl">شراكة تسويقية</span><br>لا عقد إيجار.</h2>
-      <p class="lede" style="margin-top:18px">أنت تقدّم العرض. ودرب تصوّر وتنتج وتنشر وتوزّع وتقيس —
-        ونتيجة واحدة: سيارات تدخل مغسلتك.</p>
+      <p class="lede" style="margin-top:18px">أنت تقدّم العرض، ودرب تصوّر وتجهّز وتنشر وتوزّع وتحسب —
+        والنتيجة واحدة: سيارات تدخل مغسلتك.</p>
     </div>
     <div class="half orange">
       <p class="eyebrow">الأهداف العامة</p>
       <div class="cards">
-        <div class="card w row"><span class="n">١</span><span>صورة أقوى لعلامتك عند السائق</span></div>
-        <div class="card d row"><span class="n">٢</span><span>حضور أوسع رقميًا وداخل المحطة</span></div>
+        <div class="card w row"><span class="n">١</span><span>اسمك يوصل لسائقين أكثر</span></div>
+        <div class="card d row"><span class="n">٢</span><span>ظهور أكثر على الجوال وداخل المحطة</span></div>
       </div>
     </div>
   </div>
@@ -269,15 +269,15 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg dark">
   <p class="eyebrow">ما نستهدفه لك</p>
-  <h2>ثلاثة أرقام، ولكل رقم نطاقه</h2>
+  <h2>ثلاثة أرقام، وكل رقم من وين</h2>
   <div class="stats">
     <div class="stat2 card o"><div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
-      <div class="u">رسالة عرض محدّدة المدة برابط تفعيل مباشر</div></div>
+      <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
     <div class="stat2 card d" style="border:1px solid #3A352F"><div class="v">+١٠٠٠</div>
       <div class="k">عميل مباشر</div>
-      <div class="u">للشريك الواحد، عبر الكوبونات ورمز الاستجابة السريعة</div></div>
+      <div class="u">لكل شريك، من الكوبونات والباركود</div></div>
     <div class="stat2 card o"><div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
-      <div class="u">مجموع مشاهدات الحملة على منصات درب</div></div>
+      <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
   </div>
   %s
 </section>""" % foot('٢'))
@@ -294,14 +294,14 @@ bars = ''.join(
     '<span class="v">%s</span></div>' % (t, v / 5824.0 * 100, n0(v)) for t, v in REG)
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">أرقام الشبكة</p>
+  <p class="eyebrow">أرقام محطاتنا</p>
   <h2 class="segs"><span>١١ محطة</span><span>٦ مناطق</span><span>+١١ ألف سيارة يوميًا</span></h2>
-  <div class="bignum"><b>٣٤٩ ألف</b><span>عملية تعبئة في الشهر</span></div>
+  <div class="bignum"><b>٣٤٩ ألف</b><span>تعبئة في الشهر</span></div>
   <div class="bars" style="margin-top:26px">%s</div>
   <div class="pills" style="margin-top:auto">
     <div class="pill">متوسط الفاتورة <b>٥٠٫٧ ر.س</b></div>
     <div class="pill"><b>٤٤٪</b> من الحركة بعد ٥ مساءً</div>
-    <div class="pill">العرض يعمل من الفتح إلى الإغلاق</div>
+    <div class="pill">العرض يشتغل من الفتح للإغلاق</div>
   </div>
   %s
 </section>""" % (bars, foot('٣')))
@@ -325,13 +325,14 @@ SLIDES.append("""
 </section>""" % foot('٤'))
 
 # ٧ · مراحل الحملة
-PHASES = [('فيديوهات تشويقية قبل الانطلاق', 'رقمي'), ('فيديو خاص بعرضك وسعره ومدته', 'رقمي'),
-          ('مؤثّرون يوصلون العرض لجمهور الطريق', 'رقمي'),
-          ('واتساب برابط تفعيل لأكثر من ٥٬٠٠٠ عميل', 'رقمي'),
-          ('١٠٠٠ كوبون باسمك يُسلَّم عند المضخة', 'ميداني'),
-          ('لوحات ومطبوعات بعرضك داخل المحطة', 'ميداني')]
+PHASES = [('فيديوهات قبل البداية تشوّق الناس', 'إعلان'),
+          ('فيديو خاص بعرضك وسعره ومدته', 'إعلان'),
+          ('مؤثّرون يوصلون عرضك للسائقين', 'إعلان'),
+          ('رسالة واتساب لأكثر من ٥٬٠٠٠ عميل، فيها رابط التفعيل', 'إعلان'),
+          ('١٠٠٠ كوبون باسمك يتسلّمه العميل عند المضخة', 'في المحطة'),
+          ('لوحات ومطبوعات بعرضك داخل المحطة', 'في المحطة')]
 rows = ''.join('<div class="rowi"><span>%s</span><span class="tagx%s">%s</span></div>'
-               % (t, '' if k == 'رقمي' else ' f', k) for t, k in PHASES)
+               % (t, '' if k == 'إعلان' else ' f', k) for t, k in PHASES)
 SLIDES.append("""
 <section class="pg dark">
   <div class="split">
@@ -341,7 +342,7 @@ SLIDES.append("""
     </div>
     <div>
       <p class="eyebrow">مراحل الحملة</p>
-      <h2 style="font-size:34px">رقمي يصنع الترقّب،<br>وميداني يحوّله إلى زيارة.</h2>
+      <h2 style="font-size:34px">نشر يخلّي الناس تنتظر العرض،<br>وتوزيع داخل المحطة يجيب العميل.</h2>
       <div class="rows">%s</div>
     </div>
   </div>
@@ -352,7 +353,7 @@ SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">العرض المقترح</p>
   <h2>غسلة بعشرة، مقابل تعبئة بثلاثين</h2>
-  <p class="lede">العرض نفسه الذي نجح في ٢٠٢٥ — ونرحّب بأفكار أخرى.</p>
+  <p class="lede">نفس عرض السنة الماضية، وقد نجح. وإن عندك فكرة ثانية نسمعها.</p>
   <div class="offer">
     <div class="box o"><b>١٠</b><span>ريال غسلة</span></div>
     <div class="swap">⇄</div>
@@ -377,25 +378,29 @@ SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">العائد</p>
   <h2>لو دخل ١٪ فقط من السيارات مغسلتك</h2>
-  <p class="lede">١١٬٦٣٦ سيارة تدخل محطات درب يوميًا. الحسبة على ستة أيام من أسبوعك،
-    عند غسلة بعشرة ريالات وعند متوسط طلب ٢٥ ريالًا مع الخدمات الإضافية.</p>
+  <p class="lede">١١٬٦٣٦ سيارة تدخل محطات درب يوميًا. الحسبة على ستة أيام من أسبوعك:
+    مرة بغسلة بعشرة ريالات، ومرة بمتوسط طلب ٢٥ ريالًا مع الخدمات الزيادة.</p>
   <div class="stats">%s</div>
   <p class="lede" style="margin-top:18px;font-weight:700;color:var(--orange)">
-    اضبط عدد الكوبونات على طاقتك اليومية — ردّ عميل جاءك بالعرض أسوأ من عرض أصغر.</p>
+    خلّ عدد الكوبونات على قدر ما تقدر تغسله في اليوم — ردّ عميل جاك بالعرض أسوأ من عرض أصغر.</p>
   %s
 </section>""" % (caps, foot('٦')))
 
 # ١٠ · أربع خطوات
-STEPS = [('كوبون ورمز عند المضخة', 'عامل المحطة يسلّمه بعد التعبئة ويشير إلى موقعك.', 'طوال اليوم'),
-         ('العميل يمسح ويفعّل', 'يختارك ويُدخل جواله، فتصله رسالة توجّهه إليك.', 'أقل من دقيقة'),
-         ('موظفك يطبّق العرض', 'يعرض العميل الرسالة فيُطبَّق مباشرة بلا إجراء إضافي.', 'عند الطلب'),
-         ('نقيس ونرسل لك التقرير', 'كل مسح يُسجَّل تلقائيًا، وتعرف كم سيارة وصلتك بالضبط.', 'تقرير أسبوعي')]
+STEPS = [('كوبون وباركود عند المضخة',
+          'عامل المحطة يعطيه للعميل بعد التعبئة ويدلّه على مكانك.', 'طول اليوم'),
+         ('العميل يمسح ويفعّل',
+          'يختارك ويكتب رقم جواله، فتوصله رسالة تدلّه عليك.', 'أقل من دقيقة'),
+         ('موظفك يطبّق العرض',
+          'العميل يوريه الرسالة، ويطبّق العرض على طول بلا أي إجراء.', 'عند الطلب'),
+         ('نحسب ونرسل لك التقرير',
+          'كل مسح ينحفظ، وتعرف بالضبط كم سيارة وصلتك.', 'تقرير كل أسبوع')]
 steps = ''.join('<div class="step"><span class="n">%s</span><h3>%s</h3><p>%s</p>'
                 '<span class="when">%s</span></div>'
                 % (ard(i + 1), t, d, w) for i, (t, d, w) in enumerate(STEPS))
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">آلية التنفيذ</p>
+  <p class="eyebrow">كيف تشتغل</p>
   <h2>من المضخة إلى مغسلتك في أربع خطوات</h2>
   <div class="steps">%s</div>
   %s
@@ -406,9 +411,9 @@ SLIDES.append("""
 <section class="pg orange" style="justify-content:center">
   <div class="year">٢٠٢٥</div>
   <div style="position:relative">
-    <h2 style="font-size:56px">ليست وعودًا.<br>هذه نتائج ٢٠٢٥.</h2>
-    <p class="lede" style="margin-top:18px;font-size:17px">شركاء حقيقيون، ومؤثّرون حقيقيون،
-      ومشاهدات موثّقة على كل مقطع.</p>
+    <h2 style="font-size:56px">مو وعود.<br>هذي نتائج ٢٠٢٥.</h2>
+    <p class="lede" style="margin-top:18px;font-size:17px">شركاء ومؤثّرون حقيقيون،
+      وعدد المشاهدات ظاهر على كل مقطع.</p>
   </div>
   %s
 </section>""" % foot('٨'))
@@ -417,13 +422,13 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg dark">
   <p class="eyebrow">نتائج ٢٠٢٥</p>
-  <h2 style="font-size:34px">وصلنا إلى عملائك عبر المؤثّرين</h2>
+  <h2 style="font-size:34px">وصلنا لعملائك عن طريق المؤثّرين</h2>
   <div class="chips" style="margin-top:16px">
     <div class="chip"><b>+١٠٠ ألف</b><span>مشاهدة في أسبوع</span></div>
     <div class="chip"><b>١١</b><span>محطة</span></div>
     <div class="chip"><b>١٠٠٠</b><span>كوبون لكل شريك</span></div>
   </div>
-  <p class="lede">نفكّر ونكتب ونصوّر وننتج مقطعًا خاصًا لكل شريك. نماذج حقيقية من منصات درب:</p>
+  <p class="lede">نفكّر ونكتب ونصوّر ونجهّز مقطعًا خاصًا لكل شريك. أمثلة حقيقية من حسابات درب:</p>
   <div class="grid6">%s</div>
 </section>""" % ''.join('<img src="%s" alt="">' % c for c in CLIPS))
 
@@ -431,7 +436,7 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">شركاء ٢٠٢٥</p>
-  <h2>شركاء كانوا معنا، وعائدون هذا العام</h2>
+  <h2>شركاء كانوا معنا، وراجعين هذه السنة</h2>
   <p class="lede" style="margin-top:4px;font-weight:800;color:var(--orange)">محتوى المؤثّرين</p>
   <div class="grid6" style="margin-top:10px">%s</div>
   <p class="lede" style="margin-top:auto;font-weight:800;color:var(--orange)">شركاء الحملة</p>
@@ -441,21 +446,21 @@ SLIDES.append("""
 
 # ١٤ · المسؤوليات
 DARB = ['التصوير والتصميم والمونتاج', 'إطلاق الحملة والنشر على المنصات',
-        'آلية التنفيذ ورمز الاستجابة السريعة وتدريب عمال المحطة',
+        'طريقة التنفيذ والباركود وتدريب عمال المحطة',
         'التنسيق مع المؤثّرين وإدارة المحتوى', 'توزيع الكوبونات والتقرير الأسبوعي']
-YOU = ['قيمة العرض أو الخصم', 'تكلفة التعاقد مع المؤثّرين',
-       'الالتزام بالعرض طوال ساعات العمل وتدريب الطاقم']
+YOU = ['قيمة العرض أو الخصم', 'تكلفة الاتفاق مع المؤثّرين',
+       'الالتزام بالعرض طول ساعات العمل وتدريب موظفيك']
 SLIDES.append("""
 <section class="pg">
   <div class="split">
     <div class="half orange">
-      <p class="eyebrow">درب تنفّذ</p>
-      <h2 style="font-size:34px">كل العمل الثقيل علينا.</h2>
+      <p class="eyebrow">درب تسوي</p>
+      <h2 style="font-size:34px">كل الشغل الثقيل علينا.</h2>
       <div class="rows">%s</div>
     </div>
     <div class="half dark">
-      <p class="eyebrow">أنت تقدّم</p>
-      <h2 style="font-size:34px">ثلاثة أمور فقط.</h2>
+      <p class="eyebrow">أنت تسوي</p>
+      <h2 style="font-size:34px">ثلاثة أشياء بس.</h2>
       <div class="rows">%s</div>
     </div>
   </div>
@@ -474,7 +479,7 @@ SLIDES.append("""
     <p class="eyebrow">الجمعة البرتقالية ٢٠٢٦</p>
     <h2>كن شريكًا لنا وشاركنا النجاح.</h2>
     <div class="when">
-      <span>نؤكّد الشراكة قبل ٣٠ أكتوبر</span>
+      <span>نتفق قبل ٣٠ أكتوبر</span>
       <span>التصوير أول نوفمبر</span>
       <span>عرضك على كل مضخة ١٠ نوفمبر</span>
     </div>
@@ -539,7 +544,7 @@ BODY = """
     <button type="button" id="dl">تنزيل الملف للشريك</button>
     <button type="button" class="ghost" id="pr">طباعة / PDF</button>
     <span class="savedot" id="savedot">جاهز</span>
-    <span class="hint">اضغط «تحرير» لتعديل أي نص أو حذفه أو إضافة شريحة، واضغط أي صورة لاستبدالها — والملف الذي ينزل للشريك يخرج بلا أزرار.</span>
+    <span class="hint">اضغط «تحرير» عشان تعدّل أي كلام أو تحذفه أو تضيف شريحة، واضغط أي صورة عشان تبدّلها — والملف اللي ينزل للشريك يطلع بلا أزرار.</span>
   </div>
 </div>
 <div class="wrap"><div id="deck"></div></div>
