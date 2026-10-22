@@ -236,7 +236,7 @@ p{margin:0}
 .cover .veil{position:absolute;inset:0;background:linear-gradient(to top,
   rgba(20,18,16,.93) 0%,rgba(20,18,16,.78) 30%,rgba(20,18,16,.25) 58%,rgba(20,18,16,0) 78%)}
 .cover .in{position:relative;padding:0 56px 34px;display:flex;flex-direction:column;
-  align-items:flex-start;text-align:right}
+  align-items:flex-start;text-align:start}
 .cover h1{font-family:var(--head);font-weight:900;font-size:38px;line-height:1.24;
   color:#fff;max-width:22ch;margin:0 0 var(--s3)}
 .cover .when{margin-top:var(--s3);background:var(--orange);color:#fff;
@@ -357,7 +357,8 @@ p{margin:0}
 h2.withic{display:flex;align-items:center;gap:var(--s2)}
 h2.withic .ric{width:46px;height:46px;flex:0 0 46px}
 h2.withic .ric svg{width:25px;height:25px}
-.ofmark{height:52px;width:auto;margin-inline-start:auto;display:block}
+.ofhead{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--s4)}
+.ofmark{height:74px;width:auto;display:block;flex:0 0 auto}
 
 /* ---------------- جدول العروض ---------------- */
 .otab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px;
@@ -371,7 +372,8 @@ h2.withic .ric svg{width:25px;height:25px}
 .otab td.fill{color:var(--g400);background:var(--paper)}
 
 /* ---------------- الختام ---------------- */
-.close{justify-content:flex-end;background:var(--ink);color:#fff}
+.close{justify-content:center;align-items:center;text-align:center;
+  background:var(--ink);color:#fff}
 .close .art{position:absolute;inset:0;overflow:hidden}
 .close .art img{width:100%;height:100%;object-fit:cover;display:block;
   filter:blur(5px);transform:scale(1.05)}   /* التكبير يمنع ظهور حواف الضباب */
@@ -380,14 +382,16 @@ h2.withic .ric svg{width:25px;height:25px}
 .close .art::before{content:"";position:absolute;inset:0;z-index:1;
   background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 38%,
     rgba(0,0,0,0) 66%)}
-.close h2{font-size:46px;max-width:none;white-space:nowrap;color:#fff}
-.close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
+.close h2{font-size:48px;max-width:none;white-space:nowrap;color:#fff}
+.close .eyebrow{align-self:center}
+.close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:var(--s4);
+  justify-content:center}
 .close .when span{background:#fff;color:var(--ink);border:3px solid var(--ink);
   border-radius:8px;padding:9px 18px;font-size:12.5px;font-weight:800;
   box-shadow:-4px 4px 0 var(--ink)}
 .close > div{position:relative;z-index:2}
-.close .sig{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:13px;
-  font-weight:800;color:#fff}
+.close .sig{display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:var(--s4);font-size:13px;font-weight:800;color:#fff}
 .close .sig img{height:30px}
 
 .foot{position:absolute;inset-inline:54px;bottom:14px;display:flex;align-items:center;
@@ -420,7 +424,7 @@ SLIDES.append("""
   <div class="veil"></div>
   <div class="in">
     <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
-    <h1>عرضك على كل مضخة، ودرب تسوّق له.</h1>
+    <h1>عرضك على كل مضخة، ودرب تسوّق له</h1>
     <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
     <div class="foot2"><img src="%s" alt="درب">
       <span>محطات درب × شركاء خدمات السيارات</span></div>
@@ -495,7 +499,7 @@ rows = ''.join('<div class="rowi">%s<span>%s</span><span class="tagx%s">%s</span
 SLIDES.append("""
 <section class="pg grey">
   <p class="eyebrow">مراحل الحملة</p>
-  <h2>نشر يخلّي الناس تنتظر العرض، وتوزيع داخل المحطة يجيب العميل.</h2>
+  <h2>نشر يخلّي الناس تنتظر العرض، وتوزيع داخل المحطة يجيب العميل</h2>
   <div class="withpic">
     <div class="rows" style="margin-top:0;gap:var(--s2)">%s</div>
     <img class="picside tilt1" src="@@STATION2@@" alt="محطة درب">
@@ -530,7 +534,7 @@ SLIDES.append("""
 <section class="pg sheet">
   <div>
     <p class="eyebrow">نتائج الحملة الماضية</p>
-    <h2 style="font-size:50px">مو وعود.<br>هذي نتائج ٢٠٢٥.</h2>
+    <h2 style="font-size:50px">مو وعود<br>هذي نتائج ٢٠٢٥</h2>
     <p class="lede" style="margin-top:var(--s3);font-size:16.5px">شركاء ومؤثّرون حقيقيون،
       وعدد المشاهدات ظاهر على كل مقطع — تشوفها بنفسك في الصفحات التالية.</p>
     <div class="pills" style="margin-top:var(--s5)">
@@ -603,9 +607,9 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg close">
   <div class="art"><img src="@@SCENE@@" alt=""></div>
-  <div>
+  <div style="display:flex;flex-direction:column;align-items:center">
     <p class="eyebrow">الجمعة البرتقالية ٢٠٢٦</p>
-    <h2>كن شريكًا لنا وشاركنا النجاح.</h2>
+    <h2>كن شريكًا لنا وشاركنا النجاح</h2>
     <div class="when">
       <span>نتفق قبل ٣٠ أكتوبر</span>
       <span>التصوير أول نوفمبر</span>
@@ -619,8 +623,13 @@ SLIDES.append("""
 # ١٠ · العروض المقترحة
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">العروض المقترحة</p>
-  <h2 class="withic">%s<span>اكتب عرضك هنا</span></h2>
+  <div class="ofhead">
+    <div>
+      <p class="eyebrow">العروض المقترحة</p>
+      <h2 class="withic">%s<span>اكتب عرضك هنا</span></h2>
+    </div>
+    <img class="ofmark" src="@@MARK@@" alt="الجمعة البرتقالية">
+  </div>
   <p class="lede">السنة الماضية كان العرض: غسلة بعشرة ريالات مقابل تعبئة بثلاثين ريالًا أو أكثر.
     وأنت أدرى بما يناسبك — اكتب ما تقترحه.</p>
   <table class="otab">
@@ -628,9 +637,8 @@ SLIDES.append("""
       <th>مقابل تعبئة بـ</th><th>عدد الكوبونات</th></tr></thead>
     <tbody>%s</tbody>
   </table>
-  <div class="pills" style="align-items:center">
+  <div class="pills">
     <div class="pill"><b>المواقع:</b> داخل محطات درب، وفي فروعك</div>
-    <img class="ofmark" src="@@MARK@@" alt="الجمعة البرتقالية">
   </div>
   %s
 </section>""" % (icon('burst', tone='c1'),
