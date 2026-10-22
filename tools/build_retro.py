@@ -35,6 +35,8 @@ def img(name, folder=None):
 
 
 LOGO_OF = img('logo.png', BRAND)          # شعار الجمعة البرتقالية
+HERO = ('data:image/webp;base64,%s'
+        % b64(os.path.join(BRAND, 'hero.webp')))   # الكولاج المفتاحي
 LOGO_DARB = img('image-1-1.png')
 STATION = img('image-1-2.jpeg')
 CLOSE_ART = img('image-15-1.jpeg')
@@ -88,208 +90,240 @@ CSS = FACES + """
 :root{
   /* من الشعار نفسه */
   --orange:#FC6C05; --orange-dk:#C9500A; --orange-lt:#FFA24D;
-  --cream:#FDF5DE;  --paper:#F7F0DE;     --ink:#141210;
+  --cream:#FDF5DE;  --paper:#F4ECD9;  --card:#FBF4E2;  --ink:#141210;
   /* السلّم الرمادي */
-  --g900:#2A2724; --g800:#39342F; --g700:#4A4540; --g500:#7D7greyA;
+  --g900:#2A2724; --g800:#39342F; --g700:#4A4540; --g500:#7D776A;
   --g400:#9B948A; --g300:#C2BBAE; --g200:#DED8C9; --g100:#EDE8DA;
   --head:"Araboto","Araboto Normal","Araboto Medium","OFHead",system-ui,sans-serif;
   --body:"DIN Next LT Arabic","DIN Next Arabic","DIN Next W23","OFBody",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:#1B1916;color:var(--ink);font-family:var(--body)}
-h1,h2,h3{margin:0;font-family:var(--head);font-weight:900;line-height:1.14;
-  letter-spacing:-.015em}
+h1,h2,h3{margin:0;font-family:var(--head);font-weight:900;letter-spacing:-.015em}
+h2{font-size:38px;line-height:1.2;margin-bottom:12px}
+h3{font-size:15px;line-height:1.35}
 p{margin:0}
 .wrap{padding:26px 18px 60px}
 
 /* ---------------- الورقة ---------------- */
-.pg{width:1120px;height:630px;margin:0 auto 22px;background:var(--cream);
+.pg{width:1120px;height:630px;margin:0 auto 22px;background:var(--paper);
   border-radius:12px;overflow:hidden;position:relative;display:flex;
-  flex-direction:column;padding:50px 58px;
+  flex-direction:column;padding:48px 56px;
   box-shadow:0 20px 48px rgba(0,0,0,.45)}
 .pg.grey{background:var(--g900);color:var(--cream)}
-.pg.orange{background:var(--orange);color:var(--ink)}
-
-/* تنقيط الهاف‑تون: نسيج الريترو */
-.pg::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(var(--ink) 1.3px,transparent 1.4px);
-  background-size:9px 9px;opacity:.055}
-.pg.grey::before{background-image:radial-gradient(var(--cream) 1.3px,transparent 1.4px);
-  opacity:.07}
+.pg.orange{background:var(--orange);color:#fff}
 .pg > *{position:relative}
 
-.eyebrow{font-family:var(--head);font-size:12px;font-weight:900;letter-spacing:.2em;
-  color:var(--orange-dk);margin-bottom:12px;display:flex;align-items:center;gap:9px}
-.eyebrow::before{content:"";width:22px;height:4px;background:var(--orange);
-  border:2px solid var(--ink);border-radius:2px}
-.pg.grey .eyebrow{color:var(--orange-lt)}
-.pg.grey .eyebrow::before{border-color:var(--cream)}
-.pg.orange .eyebrow{color:var(--ink)}
-h2{font-size:40px;margin-bottom:12px}
-.lede{font-size:15.5px;line-height:1.9;font-weight:500;color:var(--g700);max-width:74ch}
+/* حبيبات ورق خفيفة — لا خطوط ولا أشعّة */
+.pg::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:
+    radial-gradient(circle at 18% 22%,rgba(20,18,16,.035) 0 2px,transparent 2px),
+    radial-gradient(circle at 73% 61%,rgba(20,18,16,.03) 0 2px,transparent 2px),
+    radial-gradient(circle at 44% 86%,rgba(20,18,16,.03) 0 2px,transparent 2px);
+  background-size:53px 61px,67px 49px,41px 73px}
+.pg.grey::before,.pg.orange::before{opacity:.28}
+
+/* ---------------- عنوان القسم: استكر مائل ---------------- */
+.eyebrow{display:inline-block;align-self:flex-start;font-family:var(--head);font-size:12px;
+  font-weight:900;letter-spacing:.1em;background:var(--orange);color:#fff;
+  border:2.5px solid var(--ink);border-radius:8px;padding:6px 15px;margin-bottom:16px;
+  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-1.6deg)}
+.pg.orange .eyebrow{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pg.grey .eyebrow{box-shadow:-3px 3px 0 var(--cream)}
+
+.lede{font-size:15.5px;line-height:1.9;font-weight:500;color:var(--g700);max-width:72ch}
 .pg.grey .lede{color:var(--g300)}
-.pg.orange .lede{color:#4A2A05}
+.pg.orange .lede{color:rgba(255,255,255,.92)}
+.hl{background:var(--ink);color:#fff;padding:1px 10px;border-radius:7px;
+  display:inline-block;transform:rotate(-1deg)}
 
-/* علامة مميّزة داخل العنوان */
-.hl{background:var(--orange);color:var(--ink);padding:1px 10px;border:3px solid var(--ink);
-  border-radius:8px;box-shadow:-4px 4px 0 var(--ink);display:inline-block}
-.pg.grey .hl{box-shadow:-4px 4px 0 var(--cream)}
+/* ---------------- الملف: بطاقة بلسان ---------------- */
+.rcard{position:relative;background:var(--card);color:var(--ink);
+  border-radius:3px 14px 14px 14px;padding:20px 22px;
+  box-shadow:0 4px 0 rgba(20,18,16,.12), 0 14px 26px rgba(20,18,16,.16)}
+.rcard .tab{position:absolute;top:-22px;inset-inline-end:22px;background:inherit;
+  padding:6px 20px 7px;border-radius:11px 11px 0 0;font-family:var(--head);
+  font-weight:900;font-size:12px;letter-spacing:.04em;color:inherit;white-space:nowrap}
+.rcard.o{background:var(--orange);color:#fff}
+.rcard.d{background:var(--g900);color:var(--cream)}
+.pg.orange .rcard{box-shadow:0 4px 0 rgba(20,18,16,.22), 0 14px 26px rgba(20,18,16,.26)}
 
-/* ---------------- بطاقات الريترو: حدّ سميك وظلّ مصمت ---------------- */
-.rcard{background:var(--cream);color:var(--ink);border:3px solid var(--ink);
-  border-radius:14px;box-shadow:-6px 6px 0 var(--ink);padding:20px 22px}
-.rcard.o{background:var(--orange);color:var(--ink)}
-.rcard.d{background:var(--g900);color:var(--cream);box-shadow:-6px 6px 0 var(--orange)}
-.pg.grey .rcard{box-shadow:-6px 6px 0 var(--orange)}
-.pg.orange .rcard{box-shadow:-6px 6px 0 var(--ink)}
+/* ميلان خفيف يعطي إحساس القصاصات */
+.tilt-2{transform:rotate(-2deg)} .tilt-1{transform:rotate(-1deg)}
+.tilt1{transform:rotate(1deg)}   .tilt2{transform:rotate(2deg)}
+
+/* شريط لاصق */
+.tape{position:absolute;width:118px;height:29px;z-index:2;
+  background:rgba(255,255,255,.5);box-shadow:0 2px 7px rgba(20,18,16,.14);
+  clip-path:polygon(3% 0,97% 3%,100% 100%,0 97%)}
+.pg.grey .tape{background:rgba(253,245,222,.17)}
+
+/* حافّة ممزّقة أسفل القصاصة */
+.torn::after{content:"";position:absolute;inset-inline:0;bottom:-9px;height:10px;
+  background:inherit;
+  clip-path:polygon(0 0,5% 72%,10% 8%,15% 80%,20% 18%,25% 74%,30% 12%,35% 84%,
+    40% 22%,45% 70%,50% 8%,55% 80%,60% 18%,65% 76%,70% 10%,75% 82%,80% 20%,
+    85% 72%,90% 12%,95% 78%,100% 16%,100% 0)}
+
+/* استكر */
+.sticker{display:inline-block;background:var(--orange);color:#fff;
+  border:3px solid var(--ink);border-radius:10px;padding:7px 16px;
+  font-family:var(--head);font-weight:900;box-shadow:-4px 4px 0 var(--ink)}
+
+/* مشبك ورق */
+.clip{position:absolute;top:-16px;inset-inline-start:22px;width:20px;height:44px;
+  border:3px solid var(--g400);border-radius:11px;border-bottom-color:transparent;z-index:3}
 
 /* ---------------- الأيقونات ---------------- */
-.ric{width:42px;height:42px;flex:0 0 42px;border:3px solid var(--ink);border-radius:50%;
+.ric{width:42px;height:42px;flex:0 0 42px;border:3px solid var(--ink);border-radius:11px;
   background:var(--cream);display:flex;align-items:center;justify-content:center;
-  box-shadow:-3px 3px 0 var(--ink)}
+  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-2deg)}
 .ric.on{background:var(--orange)}
-.ric svg{width:23px;height:23px;fill:none;stroke:var(--ink);stroke-width:2.6;
+.ric svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:2.6;
   stroke-linecap:round;stroke-linejoin:round}
-.pg.grey .ric{box-shadow:-3px 3px 0 var(--orange)}
-
-/* ---------------- الأشعّة: من الشعار ---------------- */
-.rays{position:absolute;width:760px;height:760px;pointer-events:none;opacity:.16;
-  background:repeating-conic-gradient(from 8deg,var(--orange) 0deg 5deg,transparent 5deg 13deg)}
-.pg.orange .rays{background:repeating-conic-gradient(from 8deg,var(--ink) 0deg 5deg,
-  transparent 5deg 13deg);opacity:.10}
+.pg.grey .ric{box-shadow:-3px 3px 0 var(--cream)}
+.pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-.cover{align-items:center;justify-content:center;text-align:center;background:var(--g900)}
-.cover .rays{inset-inline-start:50%;top:-240px;transform:translateX(50%)}
-.cover .mark{width:560px;max-width:86%;height:auto;display:block;
-  filter:drop-shadow(-8px 10px 0 rgba(0,0,0,.45))}
-.cover .when{margin-top:26px;display:inline-flex;align-items:center;gap:10px;
-  background:var(--orange);border:3px solid var(--cream);border-radius:99px;
-  padding:11px 24px;font-weight:800;font-size:14px;color:var(--ink);
-  box-shadow:-5px 5px 0 var(--ink)}
-.cover .tag{margin-top:20px;font-family:var(--head);font-weight:900;font-size:25px;
-  color:var(--cream)}
-.cover .foot2{position:absolute;inset-inline:40px;bottom:26px;display:flex;
-  align-items:center;justify-content:space-between;font-size:12px;color:var(--g400)}
-.cover .foot2 img{height:26px}
+.cover{align-items:center;justify-content:center;text-align:center;
+  background:var(--paper);padding:30px 56px 44px}
+.cover .hero{max-height:420px;width:auto;max-width:72%;display:block;
+  filter:drop-shadow(0 18px 26px rgba(20,18,16,.3))}
+.cover .when{margin-top:18px;background:var(--orange);color:#fff;
+  border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
+  font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
+  transform:rotate(-1.2deg)}
+.cover .tag{margin-top:16px;font-family:var(--head);font-weight:900;font-size:23px;
+  color:var(--ink)}
+.cover .foot2{position:absolute;inset-inline:40px;bottom:20px;display:flex;
+  align-items:center;justify-content:space-between;font-size:12px;color:var(--g500);
+  font-weight:700}
+.cover .foot2 img{height:25px}
 
 /* ---------------- الأرقام ---------------- */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:auto}
-.stat2 .v{font-family:var(--head);font-size:50px;font-weight:900;line-height:1;
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:auto}
+.stat2 .v{font-family:var(--head);font-size:48px;font-weight:900;line-height:1;
   font-variant-numeric:tabular-nums}
-.stat2 .k{font-size:15px;font-weight:800;margin-top:9px}
+.stat2 .k{font-size:14.5px;font-weight:800;margin-top:9px}
 .stat2 .u{font-size:12.5px;line-height:1.7;margin-top:7px;color:var(--g700)}
-.rcard.d .u,.rcard.o .u{color:inherit;opacity:.85}
+.rcard.d .u,.rcard.o .u{color:inherit;opacity:.88}
 
-.goals{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:auto;
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:auto;
   margin-bottom:auto}
-.goal{display:flex;align-items:center;gap:15px;font-size:16px;font-weight:700;
-  background:var(--g800);border:3px solid var(--cream);border-radius:14px;
-  padding:20px 22px;box-shadow:-6px 6px 0 var(--orange)}
+.goal{display:flex;align-items:center;gap:15px;font-size:15.5px;font-weight:700}
 
-.bignum{display:flex;align-items:baseline;gap:12px;margin-top:8px}
-.bignum b{font-family:var(--head);font-size:56px;font-weight:900;color:var(--orange-dk);
-  line-height:1;font-variant-numeric:tabular-nums;
-  text-shadow:-3px 3px 0 var(--ink)}
+.bignum{display:flex;align-items:baseline;gap:12px;margin-top:6px}
+.bignum b{font-family:var(--head);font-size:54px;font-weight:900;color:var(--orange-dk);
+  line-height:1;font-variant-numeric:tabular-nums}
 .bignum span{font-size:14px;color:var(--g700);font-weight:700}
 .segs{display:flex;flex-wrap:wrap;align-items:baseline}
 .segs > span + span::before{content:"";display:inline-block;width:7px;height:7px;
-  margin:0 13px;background:var(--orange);border:2px solid var(--ink);border-radius:50%;
-  vertical-align:middle}
+  margin:0 13px;background:var(--orange);border:2px solid var(--ink);border-radius:2px;
+  vertical-align:middle;transform:rotate(45deg)}
 
-.bars{display:flex;flex-direction:column;gap:12px;margin-top:24px}
+.bars{display:flex;flex-direction:column;gap:11px;margin-top:22px}
 .barrow{display:grid;grid-template-columns:150px 1fr 82px;align-items:center;gap:14px;
   font-size:13.5px}
 .barrow .t{font-weight:700}
-.barrow .track{display:block;height:20px;background:var(--g100);border:2.5px solid var(--ink);
-  border-radius:99px;overflow:hidden}
+.barrow .track{display:block;height:19px;background:var(--g100);
+  border:2.5px solid var(--ink);border-radius:4px;overflow:hidden}
 .barrow .fill{display:block;height:100%;background:var(--orange)}
 .barrow .v{text-align:left;font-weight:900;font-variant-numeric:tabular-nums;
   font-family:var(--head)}
 
 .pills{display:flex;flex-wrap:wrap;gap:11px;margin-top:auto}
-.pill{background:var(--cream);border:3px solid var(--ink);border-radius:99px;
-  padding:9px 18px;font-size:13px;font-weight:700;box-shadow:-4px 4px 0 var(--ink)}
+.pill{background:var(--card);border:2.5px solid var(--ink);border-radius:8px;
+  padding:9px 17px;font-size:13px;font-weight:700;box-shadow:-3px 3px 0 var(--ink)}
 .pill b{font-weight:900;font-family:var(--head)}
-.pg.grey .pill{background:var(--g800);color:var(--cream);box-shadow:-4px 4px 0 var(--orange)}
-.pg.orange .pill{background:var(--cream)}
+.pg.grey .pill{background:var(--g800);color:var(--cream);box-shadow:-3px 3px 0 var(--cream)}
+.pg.orange .pill{background:#fff}
 
 /* ---------------- صفوف ---------------- */
-.rows{display:flex;flex-direction:column;gap:11px;margin-top:20px}
+.rows{display:flex;flex-direction:column;gap:11px;margin-top:18px}
 .rowi{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600}
 .rowi .tagx{margin-inline-start:auto;font-size:11px;font-weight:900;font-family:var(--head);
-  border:2.5px solid var(--ink);border-radius:99px;padding:4px 13px;background:var(--orange);
-  color:var(--ink);white-space:nowrap;box-shadow:-3px 3px 0 var(--ink)}
-.rowi .tagx.f{background:var(--g200)}
+  border:2.5px solid var(--ink);border-radius:7px;padding:4px 13px;background:var(--orange);
+  color:#fff;white-space:nowrap;box-shadow:-3px 3px 0 var(--ink)}
+.rowi .tagx.f{background:var(--card);color:var(--ink)}
+.rowi.slip{background:var(--card);color:var(--ink);border-radius:3px 11px 11px 11px;
+  padding:13px 17px;box-shadow:0 3px 0 rgba(20,18,16,.16),0 10px 20px rgba(20,18,16,.2)}
+.rowi.slip .num{width:30px;height:30px;flex:0 0 30px;border:2.5px solid var(--ink);
+  border-radius:8px;background:var(--orange);color:#fff;display:flex;align-items:center;
+  justify-content:center;font-family:var(--head);font-weight:900;font-size:13px}
 .pg.grey .rowi .tagx{box-shadow:-3px 3px 0 var(--cream)}
 
 /* ---------------- خطوات ---------------- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:auto}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:auto}
 .step{display:flex;flex-direction:column;gap:11px}
-.step h3{font-size:15px}
 .step p{font-size:12.5px;line-height:1.7;color:var(--g700);font-weight:500}
+.step.o p,.step.d p{color:inherit;opacity:.88}
 .step .when{font-size:11px;font-weight:900;font-family:var(--head);color:var(--orange-dk);
   margin-top:auto}
+.step.o .when{color:#fff}
 
 /* ---------------- نصفان ---------------- */
-.split{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:-50px -58px;
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:-48px -56px;
   align-items:stretch}
-.half{padding:50px 54px;display:flex;flex-direction:column;position:relative}
-.half.orange{background:var(--orange)}
+.half{padding:48px 52px;display:flex;flex-direction:column;position:relative}
+.half.orange{background:var(--orange);color:#fff}
 .half.grey{background:var(--g900);color:var(--cream)}
-.half.grey .eyebrow{color:var(--orange-lt)}
+.half.orange .eyebrow{background:var(--ink)}
 .half.grey .rowi .tagx{box-shadow:-3px 3px 0 var(--cream)}
+.half.orange .ric{background:#fff}
 
-/* ---------------- صور ---------------- */
-.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:auto}
-.grid6 img{width:100%;height:200px;object-fit:cover;border:3px solid var(--ink);
-  border-radius:10px;box-shadow:-4px 4px 0 var(--ink);display:block}
-.pg.grey .grid6 img{box-shadow:-4px 4px 0 var(--orange)}
-.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-top:12px}
-.logos img{width:100%;height:96px;object-fit:contain;background:var(--cream);
-  border:3px solid var(--ink);border-radius:10px;padding:9px;display:block;
-  box-shadow:-4px 4px 0 var(--ink)}
-.chips{display:flex;gap:13px;margin-bottom:16px}
-.chip{border:3px solid var(--ink);border-radius:12px;padding:12px 20px;text-align:center;
-  background:var(--cream);color:var(--ink);box-shadow:-4px 4px 0 var(--orange)}
-.chip b{display:block;font-family:var(--head);font-size:25px;font-weight:900;
+/* ---------------- صور: قصاصات بشريط لاصق ---------------- */
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:auto}
+.grid6 img{width:100%;height:198px;object-fit:cover;border:5px solid var(--cream);
+  border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
+.grid6 > *:nth-child(odd) img{transform:rotate(-1.4deg)}
+.grid6 > *:nth-child(even) img{transform:rotate(1.2deg)}
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:12px}
+.logos img{width:100%;height:94px;object-fit:contain;background:#fff;
+  border:5px solid var(--cream);border-radius:3px;padding:8px;display:block;
+  box-shadow:0 5px 14px rgba(20,18,16,.22)}
+.logos > *:nth-child(odd) img{transform:rotate(1.2deg)}
+.logos > *:nth-child(even) img{transform:rotate(-1.5deg)}
+.chips{display:flex;gap:14px;margin-bottom:16px}
+.chip{border:3px solid var(--ink);border-radius:10px;padding:12px 20px;text-align:center;
+  background:var(--card);color:var(--ink);box-shadow:-4px 4px 0 var(--orange)}
+.chip b{display:block;font-family:var(--head);font-size:24px;font-weight:900;
   font-variant-numeric:tabular-nums}
 .chip span{font-size:11.5px;color:var(--g700);font-weight:700}
 
 /* ---------------- السنة العملاقة ---------------- */
 .year{position:absolute;inset-inline-start:46px;top:40px;font-family:var(--head);
-  font-size:210px;font-weight:900;line-height:1;color:transparent;
-  -webkit-text-stroke:4px rgba(20,18,16,.22);pointer-events:none}
+  font-size:200px;font-weight:900;line-height:1;color:transparent;
+  -webkit-text-stroke:4px rgba(255,255,255,.3);pointer-events:none}
 
 /* ---------------- جدول العروض ---------------- */
 .otab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px;
-  background:var(--cream);border:3px solid var(--ink);border-radius:12px;
-  overflow:hidden;margin-top:20px;box-shadow:-6px 6px 0 var(--ink)}
-.otab th,.otab td{padding:14px 16px;text-align:right;border-bottom:2px solid var(--ink)}
+  background:var(--card);border:3px solid var(--ink);border-radius:3px 14px 14px 14px;
+  overflow:hidden;margin-top:18px;box-shadow:0 5px 0 rgba(20,18,16,.12),
+  0 14px 26px rgba(20,18,16,.16)}
+.otab th,.otab td{padding:13px 16px;text-align:right;border-bottom:2px solid var(--ink)}
 .otab thead th{background:var(--orange);font-family:var(--head);font-size:12px;
-  font-weight:900;letter-spacing:.05em;color:var(--ink)}
+  font-weight:900;letter-spacing:.04em;color:#fff}
 .otab tbody tr:last-child td{border-bottom:0}
 .otab td.fill{color:var(--g400);background:var(--paper)}
 
 /* ---------------- الختام ---------------- */
-.close{justify-content:flex-end;background:var(--orange)}
+.close{justify-content:flex-end;background:var(--orange);color:#fff}
 .close .art{position:absolute;inset:0}
-.close .art img{width:100%;height:100%;object-fit:cover;opacity:.26;display:block}
-.close h2{font-size:54px;max-width:17ch}
+.close .art img{width:100%;height:100%;object-fit:cover;opacity:.2;display:block}
+.close h2{font-size:52px;max-width:17ch;color:#fff}
 .close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
-.close .when span{background:var(--g900);color:var(--cream);border:3px solid var(--ink);
-  border-radius:99px;padding:9px 18px;font-size:12.5px;font-weight:800;
-  box-shadow:-4px 4px 0 var(--cream)}
+.close .when span{background:#fff;color:var(--ink);border:3px solid var(--ink);
+  border-radius:8px;padding:9px 18px;font-size:12.5px;font-weight:800;
+  box-shadow:-4px 4px 0 var(--ink)}
 .close .sig{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:13px;
-  font-weight:800;color:#4A2A05}
+  font-weight:800;color:#fff}
 .close .sig img{height:30px}
 
-.foot{position:absolute;inset-inline:58px;bottom:18px;display:flex;
+.foot{position:absolute;inset-inline:56px;bottom:16px;display:flex;
   justify-content:space-between;font-size:11.5px;color:var(--g500);font-weight:600}
 .pg.grey .foot{color:var(--g400)}
-.pg.orange .foot{color:#6B4409}
+.pg.orange .foot{color:rgba(255,255,255,.72)}
 """
-CSS = CSS.replace('--g500:#7D7greyA;', '--g500:#7D776A;')
 
 # ---------------------------------------------------------------- الشرائح
 FOOT = ('<div class="foot"><span>الجمعة البرتقالية ٢٠٢٦ — محطات درب</span>'
@@ -303,13 +337,12 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <div class="rays"></div>
-  <img class="mark" src="%s" alt="الجمعة البرتقالية">
+  <img class="hero" src="%s" alt="الجمعة البرتقالية">
   <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
   <p class="tag">عرضك على كل مضخة، ودرب تسوّق له.</p>
   <div class="foot2"><span>محطات درب × شركاء خدمات السيارات</span>
     <img src="%s" alt="درب"></div>
-</section>""" % (LOGO_OF, LOGO_DARB))
+</section>""" % (HERO, LOGO_DARB))
 
 # ١ · المستهدفات
 SLIDES.append("""
@@ -317,15 +350,20 @@ SLIDES.append("""
   <p class="eyebrow">المستهدفات</p>
   <h2>هدفان، وثلاثة أرقام نقيسها</h2>
   <div class="goals">
-    <div class="goal">%s<span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
-    <div class="goal">%s<span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
+    <div class="goal rcard tilt-1"><span class="tab">هدف ١</span>%s
+      <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
+    <div class="goal rcard tilt1"><span class="tab">هدف ٢</span>%s
+      <span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
   </div>
   <div class="stats">
-    <div class="stat2 rcard o"><div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
+    <div class="stat2 rcard o tilt-1"><span class="tab">واتساب</span>
+      <div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
       <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
-    <div class="stat2 rcard"><div class="v">+١٠٠٠</div><div class="k">عميل مباشر</div>
+    <div class="stat2 rcard tilt1"><span class="tab">مباشر</span>
+      <div class="v">+١٠٠٠</div><div class="k">عميل مباشر</div>
       <div class="u">لكل شريك، من الكوبونات والباركود</div></div>
-    <div class="stat2 rcard o"><div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
+    <div class="stat2 rcard o tilt-2"><span class="tab">مشاهدات</span>
+      <div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
       <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
   </div>
   %s
@@ -381,9 +419,10 @@ STEPS = [('كوبون وباركود عند المضخة',
           'العميل يوريه الرسالة، ويطبّق العرض على طول بلا أي إجراء.', 'عند الطلب', 'check'),
          ('نحسب ونرسل لك التقرير',
           'كل مسح ينحفظ، وتعرف بالضبط كم سيارة وصلتك.', 'تقرير كل أسبوع', 'chart')]
-steps = ''.join('<div class="step rcard%s">%s<h3>%s</h3><p>%s</p>'
-                '<span class="when">%s</span></div>'
-                % (' o' if i == 0 else '', icon(g, i != 0), t, d, w)
+steps = ''.join('<div class="step rcard%s %s"><span class="tab">%s</span>%s'
+                '<h3>%s</h3><p>%s</p><span class="when">%s</span></div>'
+                % (' o' if i == 0 else '', ['tilt-1','tilt1','tilt-2','tilt1'][i],
+                   ard(i + 1), icon(g, i != 0), t, d, w)
                 for i, (t, d, w, g) in enumerate(STEPS))
 SLIDES.append("""
 <section class="pg">
@@ -396,7 +435,6 @@ SLIDES.append("""
 # ٥ · نتائج ٢٠٢٥
 SLIDES.append("""
 <section class="pg orange" style="justify-content:center">
-  <div class="rays" style="inset-inline-end:-300px;top:-300px"></div>
   <div class="year">٢٠٢٥</div>
   <div>
     <h2 style="font-size:56px">مو وعود.<br>هذي نتائج ٢٠٢٥.</h2>
@@ -451,9 +489,10 @@ SLIDES.append("""
     </div>
   </div>
 </section>""" % (
-    ''.join('<div class="rowi">%s<span>%s</span></div>' % (icon('check'), t) for t in DARB),
-    ''.join('<div class="rowi"><span class="tagx" style="margin:0">%s</span>'
-            '<span>%s</span></div>' % (ard(i + 1), t) for i, t in enumerate(YOU))))
+    ''.join('<div class="rowi slip %s">%s<span>%s</span></div>'
+            % (['tilt-1','tilt1'][i % 2], icon('check'), t) for i, t in enumerate(DARB)),
+    ''.join('<div class="rowi slip %s"><span class="num">%s</span><span>%s</span></div>'
+            % (['tilt1','tilt-1'][i % 2], ard(i + 1), t) for i, t in enumerate(YOU))))
 
 # ٩ · الختام
 SLIDES.append("""
