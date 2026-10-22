@@ -35,8 +35,14 @@ def img(name, folder=None):
 
 
 LOGO_OF = img('logo.png', BRAND)          # شعار الجمعة البرتقالية
-HERO = ('data:image/webp;base64,%s'
-        % b64(os.path.join(BRAND, 'hero.webp')))   # الكولاج المفتاحي
+def webp(name):
+    return 'data:image/webp;base64,%s' % b64(os.path.join(BRAND, name))
+
+
+HERO = webp('hero.webp')            # الكولاج مقصوصًا
+SCENE = webp('scene.webp')          # الكولاج داخل المحطة — غلاف العرض
+CUT_STATION = webp('cut-station.webp')
+CUT_FOLDER = webp('cut-folder.webp')
 LOGO_DARB = img('image-1-1.png')
 STATION = img('image-1-2.jpeg')
 CLOSE_ART = img('image-15-1.jpeg')
@@ -79,9 +85,9 @@ GLYPH = {
 }
 
 
-def icon(kind, fill=False):
+def icon(kind, fill=False, tone=None):
     g = GLYPH[kind]
-    cls = 'ric' + (' on' if fill else '')
+    cls = 'ric' + (' ' + tone if tone else (' on' if fill else ''))
     return ('<span class="%s"><svg viewBox="0 0 32 32" aria-hidden="true">%s</svg></span>'
             % (cls, g))
 
@@ -96,11 +102,16 @@ CSS = FACES + """
   --g400:#9B948A; --g300:#C2BBAE; --g200:#DED8C9; --g100:#EDE8DA;
   --head:"Araboto","Araboto Normal","Araboto Medium","OFHead",system-ui,sans-serif;
   --body:"DIN Next LT Arabic","DIN Next Arabic","DIN Next W23","OFBody",system-ui,sans-serif;
+  /* ألوان ريترو مساندة للأيقونات */
+  --teal:#2F6F69; --mustard:#E8A32C; --clay:#C4522E;
+  /* سلّم المسافات — كل فراغ في العرض من هذه القيم لا من التخمين */
+  --s1:8px; --s2:12px; --s3:16px; --s4:22px; --s5:30px; --s6:44px;
+  --pad:46px 54px;
 }
 *{box-sizing:border-box}
 html,body{margin:0;background:#1B1916;color:var(--ink);font-family:var(--body)}
 h1,h2,h3{margin:0;font-family:var(--head);font-weight:900;letter-spacing:-.015em}
-h2{font-size:38px;line-height:1.2;margin-bottom:12px}
+h2{font-size:38px;line-height:1.22;margin-bottom:var(--s2)}
 h3{font-size:15px;line-height:1.35}
 p{margin:0}
 .wrap{padding:26px 18px 60px}
@@ -108,7 +119,7 @@ p{margin:0}
 /* ---------------- الورقة ---------------- */
 .pg{width:1120px;height:630px;margin:0 auto 22px;background:var(--paper);
   border-radius:12px;overflow:hidden;position:relative;display:flex;
-  flex-direction:column;padding:48px 56px;
+  flex-direction:column;padding:var(--pad);
   box-shadow:0 20px 48px rgba(0,0,0,.45)}
 .pg.grey{background:var(--g900);color:var(--cream)}
 .pg.orange{background:var(--orange);color:#fff}
@@ -126,8 +137,8 @@ p{margin:0}
 /* ---------------- عنوان القسم: استكر مائل ---------------- */
 .eyebrow{display:inline-block;align-self:flex-start;font-family:var(--head);font-size:12px;
   font-weight:900;letter-spacing:.1em;background:var(--orange);color:#fff;
-  border:2.5px solid var(--ink);border-radius:8px;padding:6px 15px;margin-bottom:16px;
-  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-1.6deg)}
+  border:2.5px solid var(--ink);border-radius:8px;padding:6px 15px;
+  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-1.6deg);margin-bottom:var(--s3)}
 .pg.orange .eyebrow{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pg.grey .eyebrow{box-shadow:-3px 3px 0 var(--cream)}
 
@@ -139,7 +150,7 @@ p{margin:0}
 
 /* ---------------- الملف: بطاقة بلسان ---------------- */
 .rcard{position:relative;background:var(--card);color:var(--ink);
-  border-radius:3px 14px 14px 14px;padding:20px 22px;
+  border-radius:3px 14px 14px 14px;padding:var(--s4);
   box-shadow:0 4px 0 rgba(20,18,16,.12), 0 14px 26px rgba(20,18,16,.16)}
 .rcard .tab{position:absolute;top:-22px;inset-inline-end:22px;background:inherit;
   padding:6px 20px 7px;border-radius:11px 11px 0 0;font-family:var(--head);
@@ -174,41 +185,60 @@ p{margin:0}
 .clip{position:absolute;top:-16px;inset-inline-start:22px;width:20px;height:44px;
   border:3px solid var(--g400);border-radius:11px;border-bottom-color:transparent;z-index:3}
 
+/* قصاصة مصوّرة ملصقة على الشريحة — خلف النص دائمًا */
+.snap{position:absolute;border:7px solid var(--cream);border-radius:3px;
+  box-shadow:0 10px 26px rgba(20,18,16,.4);object-fit:cover;z-index:0}
+
+/* صفّ بعمود صورة مخصّص: لا يتقاطع مع الكلام أبدًا */
+.withpic{display:grid;grid-template-columns:1fr 296px;gap:var(--s5);flex:1;
+  align-items:center;margin-top:var(--s4)}
+.withpic > div{display:flex;flex-direction:column;justify-content:center;gap:var(--s4)}
+.withpic .rows{margin-top:0}
+.withpic .pills{margin-top:0}
+.picside{width:100%;height:auto;max-height:340px;object-fit:cover;
+  border:7px solid var(--cream);border-radius:3px;
+  box-shadow:0 10px 26px rgba(20,18,16,.38);transform:rotate(-1.6deg)}
+
 /* ---------------- الأيقونات ---------------- */
 .ric{width:42px;height:42px;flex:0 0 42px;border:3px solid var(--ink);border-radius:11px;
   background:var(--cream);display:flex;align-items:center;justify-content:center;
   box-shadow:-3px 3px 0 var(--ink);transform:rotate(-2deg)}
 .ric.on{background:var(--orange)}
+.ric.c1{background:var(--orange)} .ric.c2{background:var(--mustard)}
+.ric.c3{background:var(--teal)}   .ric.c4{background:var(--clay)}
+.ric.c3 svg,.ric.c4 svg{stroke:#fff}
 .ric svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:2.6;
   stroke-linecap:round;stroke-linejoin:round}
 .pg.grey .ric{box-shadow:-3px 3px 0 var(--cream)}
 .pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-.cover{align-items:center;justify-content:center;text-align:center;
-  background:var(--paper);padding:30px 56px 44px}
-.cover .hero{max-height:420px;width:auto;max-width:72%;display:block;
-  filter:drop-shadow(0 18px 26px rgba(20,18,16,.3))}
-.cover .when{margin-top:18px;background:var(--orange);color:#fff;
+.cover{justify-content:flex-end;padding:0;background:var(--g900)}
+.cover .scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cover .veil{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(20,18,16,.88) 0%,rgba(20,18,16,.5) 34%,
+    rgba(20,18,16,0) 62%)}
+.cover .in{position:relative;padding:0 54px 44px;display:flex;flex-direction:column;
+  align-items:flex-start;text-align:right}
+.cover .when{margin-top:var(--s3);background:var(--orange);color:#fff;
   border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
   font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
-  transform:rotate(-1.2deg)}
-.cover .tag{margin-top:16px;font-family:var(--head);font-weight:900;font-size:23px;
-  color:var(--ink)}
-.cover .foot2{position:absolute;inset-inline:40px;bottom:20px;display:flex;
-  align-items:center;justify-content:space-between;font-size:12px;color:var(--g500);
-  font-weight:700}
+  transform:rotate(-1.2deg);align-self:flex-start}
+.cover .tag{margin-top:var(--s3);font-family:var(--head);font-weight:900;font-size:30px;
+  color:#fff;line-height:1.25;max-width:20ch}
+.cover .foot2{display:flex;align-items:center;gap:14px;margin-top:var(--s4);
+  font-size:12.5px;color:var(--g300);font-weight:700}
 .cover .foot2 img{height:25px}
 
 /* ---------------- الأرقام ---------------- */
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:auto}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:auto}
 .stat2 .v{font-family:var(--head);font-size:48px;font-weight:900;line-height:1;
   font-variant-numeric:tabular-nums}
 .stat2 .k{font-size:14.5px;font-weight:800;margin-top:9px}
 .stat2 .u{font-size:12.5px;line-height:1.7;margin-top:7px;color:var(--g700)}
 .rcard.d .u,.rcard.o .u{color:inherit;opacity:.88}
 
-.goals{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:auto;
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:auto;
   margin-bottom:auto}
 .goal{display:flex;align-items:center;gap:15px;font-size:15.5px;font-weight:700}
 
@@ -221,7 +251,7 @@ p{margin:0}
   margin:0 13px;background:var(--orange);border:2px solid var(--ink);border-radius:2px;
   vertical-align:middle;transform:rotate(45deg)}
 
-.bars{display:flex;flex-direction:column;gap:11px;margin-top:22px}
+.bars{display:flex;flex-direction:column;gap:var(--s2);margin-top:var(--s4)}
 .barrow{display:grid;grid-template-columns:150px 1fr 82px;align-items:center;gap:14px;
   font-size:13.5px}
 .barrow .t{font-weight:700}
@@ -231,7 +261,7 @@ p{margin:0}
 .barrow .v{text-align:left;font-weight:900;font-variant-numeric:tabular-nums;
   font-family:var(--head)}
 
-.pills{display:flex;flex-wrap:wrap;gap:11px;margin-top:auto}
+.pills{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:auto}
 .pill{background:var(--card);border:2.5px solid var(--ink);border-radius:8px;
   padding:9px 17px;font-size:13px;font-weight:700;box-shadow:-3px 3px 0 var(--ink)}
 .pill b{font-weight:900;font-family:var(--head)}
@@ -239,7 +269,7 @@ p{margin:0}
 .pg.orange .pill{background:#fff}
 
 /* ---------------- صفوف ---------------- */
-.rows{display:flex;flex-direction:column;gap:11px;margin-top:18px}
+.rows{display:flex;flex-direction:column;gap:var(--s2);margin-top:var(--s3)}
 .rowi{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600}
 .rowi .tagx{margin-inline-start:auto;font-size:11px;font-weight:900;font-family:var(--head);
   border:2.5px solid var(--ink);border-radius:7px;padding:4px 13px;background:var(--orange);
@@ -253,7 +283,7 @@ p{margin:0}
 .pg.grey .rowi .tagx{box-shadow:-3px 3px 0 var(--cream)}
 
 /* ---------------- خطوات ---------------- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:auto}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s3);margin-top:auto}
 .step{display:flex;flex-direction:column;gap:11px}
 .step p{font-size:12.5px;line-height:1.7;color:var(--g700);font-weight:500}
 .step.o p,.step.d p{color:inherit;opacity:.88}
@@ -262,9 +292,9 @@ p{margin:0}
 .step.o .when{color:#fff}
 
 /* ---------------- نصفان ---------------- */
-.split{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:-48px -56px;
+.split{display:grid;grid-template-columns:1fr 1fr;flex:1;margin:-46px -54px;
   align-items:stretch}
-.half{padding:48px 52px;display:flex;flex-direction:column;position:relative}
+.half{padding:var(--pad);display:flex;flex-direction:column;position:relative}
 .half.orange{background:var(--orange);color:#fff}
 .half.grey{background:var(--g900);color:var(--cream)}
 .half.orange .eyebrow{background:var(--ink)}
@@ -272,18 +302,18 @@ p{margin:0}
 .half.orange .ric{background:#fff}
 
 /* ---------------- صور: قصاصات بشريط لاصق ---------------- */
-.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:auto}
+.grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:auto}
 .grid6 img{width:100%;height:198px;object-fit:cover;border:5px solid var(--cream);
   border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
 .grid6 > *:nth-child(odd) img{transform:rotate(-1.4deg)}
 .grid6 > *:nth-child(even) img{transform:rotate(1.2deg)}
-.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:12px}
+.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:var(--s2)}
 .logos img{width:100%;height:94px;object-fit:contain;background:#fff;
   border:5px solid var(--cream);border-radius:3px;padding:8px;display:block;
   box-shadow:0 5px 14px rgba(20,18,16,.22)}
 .logos > *:nth-child(odd) img{transform:rotate(1.2deg)}
 .logos > *:nth-child(even) img{transform:rotate(-1.5deg)}
-.chips{display:flex;gap:14px;margin-bottom:16px}
+.chips{display:flex;gap:var(--s3);margin-bottom:var(--s3)}
 .chip{border:3px solid var(--ink);border-radius:10px;padding:12px 20px;text-align:center;
   background:var(--card);color:var(--ink);box-shadow:-4px 4px 0 var(--orange)}
 .chip b{display:block;font-family:var(--head);font-size:24px;font-weight:900;
@@ -319,7 +349,7 @@ p{margin:0}
   font-weight:800;color:#fff}
 .close .sig img{height:30px}
 
-.foot{position:absolute;inset-inline:56px;bottom:16px;display:flex;
+.foot{position:absolute;inset-inline:54px;bottom:15px;display:flex;
   justify-content:space-between;font-size:11.5px;color:var(--g500);font-weight:600}
 .pg.grey .foot{color:var(--g400)}
 .pg.orange .foot{color:rgba(255,255,255,.72)}
@@ -337,18 +367,23 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <img class="hero" src="%s" alt="الجمعة البرتقالية">
-  <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
-  <p class="tag">عرضك على كل مضخة، ودرب تسوّق له.</p>
-  <div class="foot2"><span>محطات درب × شركاء خدمات السيارات</span>
-    <img src="%s" alt="درب"></div>
-</section>""" % (HERO, LOGO_DARB))
+  <img class="scene" src="%s" alt="الجمعة البرتقالية في محطات درب">
+  <div class="veil"></div>
+  <div class="in">
+    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
+    <p class="tag">عرضك على كل مضخة،<br>ودرب تسوّق له.</p>
+    <div class="foot2"><img src="%s" alt="درب">
+      <span>محطات درب × شركاء خدمات السيارات</span></div>
+  </div>
+</section>""" % (SCENE, LOGO_DARB))
 
 # ١ · المستهدفات
 SLIDES.append("""
 <section class="pg grey">
+  <img class="snap tilt2" src="@@FOLDER@@" alt=""
+       style="inset-inline-start:-34px;top:-26px;width:212px;height:222px">
   <p class="eyebrow">المستهدفات</p>
-  <h2>هدفان، وثلاثة أرقام نقيسها</h2>
+  <h2 style="max-width:62%%;margin-inline-start:auto">هدفان، وثلاثة أرقام نقيسها</h2>
   <div class="goals">
     <div class="goal rcard tilt-1"><span class="tab">هدف ١</span>%s
       <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
@@ -367,7 +402,7 @@ SLIDES.append("""
       <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
   </div>
   %s
-</section>""" % (icon('user', True), icon('eye', True), FOOT))
+</section>""" % (icon('user', tone='c1'), icon('eye', tone='c3'), FOOT))
 
 # ٢ · أرقام محطاتنا
 REG = [('مكة · ٢٦ محطة', 34270), ('الطائف · ١٠ محطات', 12637),
@@ -383,11 +418,15 @@ SLIDES.append("""
   <p class="eyebrow">أرقام محطاتنا</p>
   <h2 class="segs"><span>٦٩ محطة</span><span>١٣ منطقة</span><span>+٧٠ ألف سيارة يوميًا</span></h2>
   <div class="bignum"><b>٢٫١ مليون</b><span>تعبئة في الشهر</span></div>
-  <div class="bars">%s</div>
-  <div class="pills">
-    <div class="pill">متوسط الفاتورة <b>٥٦٫٥ ر.س</b></div>
-    <div class="pill"><b>٤٦٪</b> من الحركة بعد ٥ مساءً</div>
-    <div class="pill">العرض يشتغل من الفتح للإغلاق</div>
+  <div class="withpic">
+    <div>
+      <div class="bars" style="margin-top:0">%s</div>
+      <div class="pills">
+        <div class="pill">متوسط الفاتورة <b>٥٦٫٥ ر.س</b></div>
+        <div class="pill"><b>٤٦٪</b> من الحركة بعد ٥ مساءً</div>
+      </div>
+    </div>
+    <img class="picside" src="@@STATION@@" alt="محطة درب">
   </div>
   %s
 </section>""" % (bars, FOOT))
@@ -399,14 +438,18 @@ PHASES = [('فيديوهات قبل البداية تشوّق الناس', 'إع
           ('رسالة واتساب لأكثر من ٥٬٠٠٠ عميل، فيها رابط التفعيل', 'إعلان', 'chat'),
           ('١٠٠٠ كوبون باسمك يتسلّمه العميل عند المضخة', 'في المحطة', 'ticket'),
           ('لوحات ومطبوعات بعرضك داخل المحطة', 'في المحطة', 'sign')]
+TONES = ['c1', 'c2', 'c3', 'c1', 'c4', 'c2']
 rows = ''.join('<div class="rowi">%s<span>%s</span><span class="tagx%s">%s</span></div>'
-               % (icon(g, k == 'إعلان'), t, '' if k == 'إعلان' else ' f', k)
-               for t, k, g in PHASES)
+               % (icon(g, tone=TONES[i]), t, '' if k == 'إعلان' else ' f', k)
+               for i, (t, k, g) in enumerate(PHASES))
 SLIDES.append("""
 <section class="pg grey">
   <p class="eyebrow">مراحل الحملة</p>
   <h2>نشر يخلّي الناس تنتظر العرض، وتوزيع داخل المحطة يجيب العميل.</h2>
-  <div class="rows" style="flex:1;justify-content:space-evenly">%s</div>
+  <div class="withpic">
+    <div class="rows" style="margin-top:0;gap:var(--s2)">%s</div>
+    <img class="picside tilt1" src="@@STATION2@@" alt="محطة درب">
+  </div>
   %s
 </section>""" % (rows, FOOT))
 
@@ -422,7 +465,7 @@ STEPS = [('كوبون وباركود عند المضخة',
 steps = ''.join('<div class="step rcard%s %s"><span class="tab">%s</span>%s'
                 '<h3>%s</h3><p>%s</p><span class="when">%s</span></div>'
                 % (' o' if i == 0 else '', ['tilt-1','tilt1','tilt-2','tilt1'][i],
-                   ard(i + 1), icon(g, i != 0), t, d, w)
+                   ard(i + 1), icon(g, tone=['c2','c3','c1','c4'][i]), t, d, w)
                 for i, (t, d, w, g) in enumerate(STEPS))
 SLIDES.append("""
 <section class="pg">
@@ -490,7 +533,8 @@ SLIDES.append("""
   </div>
 </section>""" % (
     ''.join('<div class="rowi slip %s">%s<span>%s</span></div>'
-            % (['tilt-1','tilt1'][i % 2], icon('check'), t) for i, t in enumerate(DARB)),
+            % (['tilt-1','tilt1'][i % 2], icon('check', tone='c3'), t)
+            for i, t in enumerate(DARB)),
     ''.join('<div class="rowi slip %s"><span class="num">%s</span><span>%s</span></div>'
             % (['tilt1','tilt-1'][i % 2], ard(i + 1), t) for i, t in enumerate(YOU))))
 
@@ -531,6 +575,10 @@ SLIDES.append("""
                  FOOT))
 
 DECK = ''.join(SLIDES)
+for mark, val in [('@@FOLDER@@', CUT_FOLDER), ('@@STATION@@', CUT_STATION),
+                  ('@@STATION2@@', CUT_STATION)]:
+    assert mark in DECK, 'snap marker missing: ' + mark
+    DECK = DECK.replace(mark, val)
 _c = [0]
 
 
