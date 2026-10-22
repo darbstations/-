@@ -337,9 +337,11 @@ p{margin:0}
 .otab td.fill{color:var(--g400);background:var(--paper)}
 
 /* ---------------- الختام ---------------- */
-.close{justify-content:flex-end;background:var(--orange);color:#fff}
-.close .art{position:absolute;inset:0}
-.close .art img{width:100%;height:100%;object-fit:cover;opacity:.2;display:block}
+.close{justify-content:flex-end;background:var(--ink);color:#fff}
+.close .art{position:absolute;inset:0;overflow:hidden}
+.close .art img{width:100%;height:100%;object-fit:cover;display:block;
+  filter:blur(5px);transform:scale(1.05)}   /* التكبير يمنع ظهور حواف الضباب */
+.close .art::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.9)}
 .close h2{font-size:52px;max-width:17ch;color:#fff}
 .close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
 .close .when span{background:#fff;color:var(--ink);border:3px solid var(--ink);
@@ -541,7 +543,7 @@ SLIDES.append("""
 # ٩ · الختام
 SLIDES.append("""
 <section class="pg close">
-  <div class="art"><img src="%s" alt=""></div>
+  <div class="art"><img src="@@SCENE@@" alt=""></div>
   <div>
     <p class="eyebrow">الجمعة البرتقالية ٢٠٢٦</p>
     <h2>كن شريكًا لنا وشاركنا النجاح.</h2>
@@ -553,7 +555,7 @@ SLIDES.append("""
     <div class="sig"><img src="%s" alt="درب">
       <span>فريق التسويق — محطات درب · marketing@darb.sa</span></div>
   </div>
-</section>""" % (CLOSE_ART, LOGO_DARB))
+</section>""" % LOGO_DARB)
 
 # ١٠ · العروض المقترحة
 SLIDES.append("""
@@ -576,7 +578,7 @@ SLIDES.append("""
 
 DECK = ''.join(SLIDES)
 for mark, val in [('@@FOLDER@@', CUT_FOLDER), ('@@STATION@@', CUT_STATION),
-                  ('@@STATION2@@', CUT_STATION)]:
+                  ('@@STATION2@@', CUT_STATION), ('@@SCENE@@', SCENE)]:
     assert mark in DECK, 'snap marker missing: ' + mark
     DECK = DECK.replace(mark, val)
 _c = [0]
