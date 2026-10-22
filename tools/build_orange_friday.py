@@ -177,6 +177,15 @@ p{margin:0}
 .offer .box span{display:block;font-size:14px;margin-top:12px;font-weight:700}
 .offer .swap{font-size:34px;text-align:center;color:var(--ink-2)}
 
+/* ---------- جدول العروض الفارغ ---------- */
+.otab{border-collapse:collapse;width:100%;font-size:14px;background:#fff;
+  border:1px solid var(--line);border-radius:9px;overflow:hidden;margin-top:22px}
+.otab th,.otab td{padding:14px 16px;text-align:right;border-bottom:1px solid var(--line)}
+.otab thead th{background:var(--sand);font-size:11.5px;letter-spacing:.06em;
+  color:var(--ink-2);font-weight:800}
+.otab tbody tr:last-child td{border-bottom:0}
+.otab td.fill{color:var(--ink-3);background:var(--cream)}
+
 /* ---------- media grids ---------- */
 .grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;margin-top:auto}
 .grid6 img{width:100%;height:190px;object-fit:cover;border-radius:8px;display:block}
@@ -294,24 +303,26 @@ SLIDES.append("""
 </section>""" % foot('٢'))
 
 # ٥ · الأرقام
-REG = [('مكة · ٥ محطات', 5824), ('جدة', 2041), ('الطائف · محطتان', 1278),
-       ('الرياض', 1169), ('جازان', 922), ('الخرج', 402)]
+REG = [('مكة · ٢٦ محطة', 34270), ('الطائف · ١٠ محطات', 12637),
+       ('جازان · ١٠ محطات', 8114), ('جدة · ٧ محطات', 7391),
+       ('الرياض · محطتان', 1976), ('الخرج · ٣ محطات', 1767),
+       ('٧ مناطق أخرى', 4696)]
 AR = '٠١٢٣٤٥٦٧٨٩'
 ard = lambda t: ''.join(AR[int(c)] if c.isdigit() else c for c in str(t))
 n0 = lambda v: ard('{:,}'.format(int(v)).replace(',', '٬'))
 bars = ''.join(
     '<div class="barrow"><span class="t">%s</span>'
     '<span class="track"><span class="fill" style="width:%.1f%%"></span></span>'
-    '<span class="v">%s</span></div>' % (t, v / 5824.0 * 100, n0(v)) for t, v in REG)
+    '<span class="v">%s</span></div>' % (t, v / 34270.0 * 100, n0(v)) for t, v in REG)
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">أرقام محطاتنا</p>
-  <h2 class="segs"><span>١١ محطة</span><span>٦ مناطق</span><span>+١١ ألف سيارة يوميًا</span></h2>
-  <div class="bignum"><b>٣٤٩ ألف</b><span>تعبئة في الشهر</span></div>
+  <h2 class="segs"><span>٦٩ محطة</span><span>١٣ منطقة</span><span>+٧٠ ألف سيارة يوميًا</span></h2>
+  <div class="bignum"><b>٢٫١ مليون</b><span>تعبئة في الشهر</span></div>
   <div class="bars" style="margin-top:26px">%s</div>
   <div class="pills" style="margin-top:auto">
-    <div class="pill">متوسط الفاتورة <b>٥٠٫٧ ر.س</b></div>
-    <div class="pill"><b>٤٤٪</b> من الحركة بعد ٥ مساءً</div>
+    <div class="pill">متوسط الفاتورة <b>٥٦٫٥ ر.س</b></div>
+    <div class="pill"><b>٤٦٪</b> من الحركة بعد ٥ مساءً</div>
     <div class="pill">العرض يشتغل من الفتح للإغلاق</div>
   </div>
   %s
@@ -356,18 +367,20 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">العروض المقترحة</p>
-  <h2>غسلة بعشرة، مقابل تعبئة بثلاثين</h2>
-  <p class="lede">نفس عرض السنة الماضية، وقد نجح. وإن عندك فكرة ثانية نسمعها.</p>
-  <div class="offer">
-    <div class="box o"><b>١٠</b><span>ريال غسلة</span></div>
-    <div class="swap">⇄</div>
-    <div class="box d"><b>٣٠</b><span>ريال فاتورة بنزين أو أكثر</span></div>
-  </div>
-  <div class="pills" style="margin-top:20px">
+  <h2>اكتب عرضك هنا</h2>
+  <p class="lede">السنة الماضية كان العرض: غسلة بعشرة ريالات مقابل تعبئة بثلاثين ريالًا أو أكثر.
+    وأنت أدرى بما يناسبك — اكتب ما تقترحه.</p>
+  <table class="otab">
+    <thead><tr><th>العرض</th><th>السعر الاعتيادي</th><th>سعر الجمعة البرتقالية</th>
+      <th>مقابل تعبئة بـ</th><th>عدد الكوبونات</th></tr></thead>
+    <tbody>%s</tbody>
+  </table>
+  <div class="pills" style="margin-top:auto">
     <div class="pill"><b>المواقع:</b> داخل محطات درب، وفي فروعك</div>
   </div>
   %s
-</section>""" % foot('٥'))
+</section>""" % (''.join('<tr>' + '<td class="fill">…</td>' * 5 + '</tr>'
+                           for _ in range(4)), foot('٥')))
 
 # ٩ · العائد
 CAP = [('١٪', '٦٩٨', '٦٬٩٨٢', '١٧٬٤٥٤', False),
