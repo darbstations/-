@@ -494,7 +494,8 @@ SLIDES.append("""
 DROP = [('الغلاف', 'class="pg orange cover"'),
         ('الحقيقة البسيطة', '<p class="eyebrow">الحقيقة البسيطة</p>'),
         ('خطة النشر', '<p class="eyebrow">خطة النشر</p>'),
-        ('الفكرة', '<p class="eyebrow">الفكرة</p>')]
+        ('الفكرة', '<p class="eyebrow">الفكرة</p>'),
+        ('العائد', '<p class="eyebrow">العائد</p>')]
 for label, mark in DROP:
     hit = [i for i, sl in enumerate(SLIDES) if mark in sl]
     assert len(hit) == 1, 'drop %s matched %d slides' % (label, len(hit))
@@ -607,20 +608,44 @@ var CSSTEXT=(function(){
     }
   });
   document.title='الجمعة البرتقالية ٢٠٢٦ — محطات درب';
-  /* نسخة محفوظة ما زالت تحمل الشرائح المحذوفة: نعرض التحديث ولا نفرضه */
+  /* ------------------------------------------------------------------
+     شريحة تُحذف من البناء يجب أن تُحذف من نسختها المحفوظة أيضًا، وإلا
+     ظلّت تظهر عندها. ننزع الشريحة وحدها من نصّها المحفوظ ولا نستبدله،
+     فيبقى كل ما كتبته في الشرائح الأخرى كما هو. و«تراجع» يرجّع الشريحة.
+     ------------------------------------------------------------------ */
   (function(){
-    var old=null; try{ old=localStorage.getItem('darb-orange-friday-v1'); }catch(e){}
+    var KEY='darb-orange-friday-v1';
+    var GONE=['الحقيقة البسيطة','خطة النشر','الفكرة','العائد'];
+    var old=null; try{ old=localStorage.getItem(KEY); }catch(e){}
     if(!old) return;
-    if(old.indexOf('pg orange cover')<0 && old.indexOf('خطة النشر')<0) return;
-    ed.say('نسختك المحفوظة ما زالت تحمل الشرائح الثلاث المحذوفة. '+
-           '«حدّث» يجيب النسخة الجديدة، و«تراجع» بعده يرجّع نسختك.',
-      20000, 'حدّث', function(){
-        ed.snap();
-        ed.box.innerHTML=DECK;
-        ed.mark(); ed.snap(); ed.keep(); ed.place(null);
-        window.scrollTo(0,0);
-        ed.say('حُدّثت الشرائح. «تراجع» يرجّع نسختك السابقة.',9000);
-      });
+    var t=document.createElement('div'); t.innerHTML=old;
+    var cut=[], i, j;
+    var secs=t.querySelectorAll('section.pg');
+    for(i=secs.length-1;i>=0;i--){
+      var name=null;
+      if(secs[i].classList.contains('cover')) name='الغلاف';
+      else {
+        var eb=secs[i].querySelector('.eyebrow');
+        var txt=eb?eb.textContent.replace(/\s+/g,' ').trim():'';
+        for(j=0;j<GONE.length;j++) if(txt===GONE[j]) name=GONE[j];
+      }
+      if(name){ secs[i].parentNode.removeChild(secs[i]); cut.unshift(name); }
+    }
+    if(!cut.length) return;
+    /* أرقام التذييل تُعاد بعد النزع حتى لا تترك فجوة */
+    var AR='٠١٢٣٤٥٦٧٨٩';
+    var feet=t.querySelectorAll('.foot span:last-child');
+    for(i=0;i<feet.length;i++){
+      var d=String(i+1), out='';
+      for(j=0;j<d.length;j++) out+=AR.charAt(Number(d.charAt(j)));
+      feet[i].textContent=out;
+    }
+    ed.snap();
+    ed.box.innerHTML=t.innerHTML;
+    ed.mark(); ed.snap(); ed.keep(); ed.place(null);
+    window.scrollTo(0,0);
+    ed.say('حذفنا من نسختك: '+cut.join('، ')+'. بقية تعديلاتك كما هي، و«تراجع» يرجّعها.',
+           14000);
   })();
 })();
 </script>"""
