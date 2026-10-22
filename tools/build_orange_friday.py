@@ -116,6 +116,13 @@ p{margin:0}
 .card.row{display:flex;align-items:center;gap:14px;font-size:15.5px;font-weight:700}
 
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:auto}
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:auto}
+.goal{display:flex;align-items:center;gap:13px;font-size:15.5px;font-weight:700;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  border-radius:10px;padding:16px 20px}
+.goal .n{width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:var(--orange);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;
+  font-size:13px}
 .stat2{border-radius:10px;padding:26px 24px}
 .stat2 .v{font-size:52px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
 .stat2 .k{font-size:15px;font-weight:800;margin-top:10px}
@@ -269,7 +276,11 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg dark">
   <p class="eyebrow">المستهدفات</p>
-  <h2>ثلاثة أرقام، وكل رقم من وين</h2>
+  <h2>هدفان، وثلاثة أرقام نقيسها</h2>
+  <div class="goals">
+    <div class="goal"><span class="n">١</span><span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
+    <div class="goal"><span class="n">٢</span><span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
+  </div>
   <div class="stats">
     <div class="stat2 card o"><div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
       <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
@@ -335,18 +346,11 @@ rows = ''.join('<div class="rowi"><span>%s</span><span class="tagx%s">%s</span><
                % (t, '' if k == 'إعلان' else ' f', k) for t, k in PHASES)
 SLIDES.append("""
 <section class="pg dark">
-  <div class="split">
-    <div style="justify-content:center">
-      <img src="%s" alt="حملة واتساب" style="width:100%%;max-height:430px;object-fit:contain;
-        border-radius:10px;border:8px solid var(--orange)">
-    </div>
-    <div>
-      <p class="eyebrow">مراحل الحملة</p>
-      <h2 style="font-size:34px">نشر يخلّي الناس تنتظر العرض،<br>وتوزيع داخل المحطة يجيب العميل.</h2>
-      <div class="rows">%s</div>
-    </div>
-  </div>
-</section>""" % (PHONE, rows))
+  <p class="eyebrow">مراحل الحملة</p>
+  <h2>نشر يخلّي الناس تنتظر العرض، وتوزيع داخل المحطة يجيب العميل.</h2>
+  <div class="rows" style="margin-top:26px;flex:1;justify-content:space-evenly">%s</div>
+  %s
+</section>""" % (rows, foot('٣')))
 
 # ٨ · العرض المقترح
 SLIDES.append("""
