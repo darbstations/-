@@ -553,7 +553,34 @@ function darbEditor(opts){
       }
       if(name){ secs[i].parentNode.removeChild(secs[i]); cut.unshift(name); }
     }
-    if(!cut.length) return;
+    /* ------------------------------------------------------------
+       شريحة أرقام تتغيّر بياناتها تُزامَن وحدها من البناء الجديد.
+       بقية الشرائح تبقى بنصّها كما كتبته. تُنفَّذ مرّة واحدة بختم.
+       ------------------------------------------------------------ */
+    var SYNC_STAMP='numbers-69-stations';
+    var SYNC_NAMES=['أرقام محطاتنا'];
+    var synced=[];
+    var stamped=null; try{ stamped=localStorage.getItem(KEY+'-sync'); }catch(e){}
+    if(stamped!==SYNC_STAMP){
+      var fresh=document.createElement('div'); fresh.innerHTML=DECK;
+      function pick(root, want){
+        var ss=root.querySelectorAll('section.pg');
+        for(var q=0;q<ss.length;q++){
+          var eb2=ss[q].querySelector('.eyebrow');
+          if(eb2 && eb2.textContent.replace(/\s+/g,' ').trim()===want) return ss[q];
+        }
+        return null;
+      }
+      for(i=0;i<SYNC_NAMES.length;i++){
+        var src=pick(fresh, SYNC_NAMES[i]), tgt=pick(t, SYNC_NAMES[i]);
+        if(src && tgt && tgt.innerHTML!==src.innerHTML){
+          tgt.parentNode.replaceChild(src.cloneNode(true), tgt);
+          synced.push(SYNC_NAMES[i]);
+        }
+      }
+      try{ localStorage.setItem(KEY+'-sync', SYNC_STAMP); }catch(e){}
+    }
+    if(!cut.length && !synced.length) return;
     /* أرقام التذييل تُعاد بعد النزع حتى لا تترك فجوة */
     var AR='٠١٢٣٤٥٦٧٨٩';
     var feet=t.querySelectorAll('.foot span:last-child');
@@ -566,8 +593,10 @@ function darbEditor(opts){
     ed.box.innerHTML=t.innerHTML;
     ed.mark(); ed.snap(); ed.keep(); ed.place(null);
     window.scrollTo(0,0);
-    ed.say('حذفنا من نسختك: '+cut.join('، ')+'. بقية تعديلاتك كما هي، و«تراجع» يرجّعها.',
-           14000);
+    var msg=[];
+    if(cut.length) msg.push('حذفنا: '+cut.join('، '));
+    if(synced.length) msg.push('حدّثنا أرقام: '+synced.join('، '));
+    ed.say(msg.join(' · ')+'. بقية تعديلاتك كما هي، و«تراجع» يرجّعها.', 15000);
   })();
 })();
 </script>
