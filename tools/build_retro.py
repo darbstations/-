@@ -43,6 +43,11 @@ HERO = webp('hero.webp')            # الكولاج مقصوصًا
 SCENE = webp('scene.webp')          # الكولاج داخل المحطة — غلاف العرض
 CUT_STATION = webp('cut-station.webp')
 CUT_FOLDER = webp('cut-folder.webp')
+POSTER = webp('poster.webp')                # الملصق الكامل — غلاف العرض
+FOLDER_TABS = webp('folder-tabs.webp')      # الملف بألسنة الأقسام
+MARK = webp('mark.webp')                    # شعار الجمعة البرتقالية وحده
+SCENE_FUEL = webp('scene-fuel.webp')
+CUT_FUEL_FOLDER = webp('cut-fuel-folder.webp')
 SCENE_CAR = webp('scene-car.webp')          # المشهد الخاص بخدمات السيارات
 CUT_CAR_FOLDER = webp('cut-car-folder.webp')
 CUT_CAR_STATION = webp('cut-car-station.webp')
@@ -141,7 +146,7 @@ p{margin:0}
 .eyebrow{display:inline-block;align-self:flex-start;font-family:var(--head);font-size:12px;
   font-weight:900;letter-spacing:.1em;background:var(--orange);color:#fff;
   border:2.5px solid var(--ink);border-radius:8px;padding:6px 15px;
-  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-1.6deg);margin-bottom:var(--s3)}
+  box-shadow:-3px 3px 0 var(--ink);margin-bottom:var(--s3)}
 .pg.orange .eyebrow{background:var(--ink);color:#fff;border-color:var(--ink)}
 .pg.grey .eyebrow{box-shadow:-3px 3px 0 var(--cream)}
 
@@ -149,7 +154,7 @@ p{margin:0}
 .pg.grey .lede{color:var(--g300)}
 .pg.orange .lede{color:rgba(255,255,255,.92)}
 .hl{background:var(--ink);color:#fff;padding:1px 10px;border-radius:7px;
-  display:inline-block;transform:rotate(-1deg)}
+  display:inline-block}
 
 /* ---------------- الملف: بطاقة بلسان ---------------- */
 .rcard{position:relative;background:var(--card);color:var(--ink);
@@ -205,7 +210,7 @@ p{margin:0}
 /* ---------------- الأيقونات ---------------- */
 .ric{width:42px;height:42px;flex:0 0 42px;border:3px solid var(--ink);border-radius:11px;
   background:var(--cream);display:flex;align-items:center;justify-content:center;
-  box-shadow:-3px 3px 0 var(--ink);transform:rotate(-2deg)}
+  box-shadow:-3px 3px 0 var(--ink)}
 .ric.on{background:var(--orange)}
 .ric.c1{background:var(--orange)} .ric.c2{background:var(--mustard)}
 .ric.c3{background:var(--teal)}   .ric.c4{background:var(--clay)}
@@ -216,22 +221,21 @@ p{margin:0}
 .pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-.cover{justify-content:flex-end;padding:0;background:var(--g900)}
-.cover .scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.cover .veil{position:absolute;inset:0;
-  background:linear-gradient(to top,rgba(20,18,16,.88) 0%,rgba(20,18,16,.5) 34%,
-    rgba(20,18,16,0) 62%)}
-.cover .in{position:relative;padding:0 54px 44px;display:flex;flex-direction:column;
-  align-items:flex-start;text-align:right}
+.cover{padding:0;background:var(--paper);display:grid;
+  grid-template-columns:1fr 470px;align-items:center}
+.cover .poster{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.cover .in{padding:0 56px;display:flex;flex-direction:column;align-items:flex-start;
+  text-align:right}
 .cover .when{margin-top:var(--s3);background:var(--orange);color:#fff;
   border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
   font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
-  transform:rotate(-1.2deg);align-self:flex-start}
-.cover .tag{margin-top:var(--s3);font-family:var(--head);font-weight:900;font-size:30px;
-  color:#fff;line-height:1.25;max-width:20ch}
-.cover .foot2{display:flex;align-items:center;gap:14px;margin-top:var(--s4);
-  font-size:12.5px;color:var(--g300);font-weight:700}
-.cover .foot2 img{height:25px}
+  align-self:flex-start}
+.cover .mark{width:300px;max-width:100%;height:auto;display:block;margin-bottom:var(--s4)}
+.cover .tag{margin-top:var(--s3);font-family:var(--head);font-weight:900;font-size:27px;
+  color:var(--ink);line-height:1.3;max-width:17ch}
+.cover .foot2{display:flex;align-items:center;gap:13px;margin-top:var(--s5);
+  font-size:12.5px;color:var(--g500);font-weight:700}
+.cover .foot2 img{height:24px}
 
 /* ---------------- الأرقام ---------------- */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:auto}
@@ -358,14 +362,22 @@ p{margin:0}
   font-weight:800;color:#fff}
 .close .sig img{height:30px}
 
-.foot{position:absolute;inset-inline:54px;bottom:15px;display:flex;
-  justify-content:space-between;font-size:11.5px;color:var(--g500);font-weight:600}
+.foot{position:absolute;inset-inline:54px;bottom:14px;display:flex;align-items:center;
+  gap:10px;font-size:11.5px;color:var(--g500);font-weight:600}
+.foot .fmark{display:block;width:38px;height:23px;background-size:contain;
+  background-repeat:no-repeat;background-position:center;
+  background-image:url("@@MARKCSS@@")}
+.foot span:last-child{margin-inline-start:auto}
 .pg.grey .foot{color:var(--g400)}
 .pg.orange .foot{color:rgba(255,255,255,.72)}
 """
 
+CSS = CSS.replace('@@MARKCSS@@', MARK)
+assert '@@MARKCSS@@' not in CSS
+
 # ---------------------------------------------------------------- الشرائح
-FOOT = ('<div class="foot"><span>الجمعة البرتقالية ٢٠٢٦ — محطات درب</span>'
+FOOT = ('<div class="foot"><span class="fmark"></span>'
+        '<span>الجمعة البرتقالية ٢٠٢٦ — محطات درب</span>'
         '<span>@@n@@</span></div>')
 AR = '٠١٢٣٤٥٦٧٨٩'
 ard = lambda t: ''.join(AR[int(c)] if c.isdigit() else c for c in str(t))
@@ -376,15 +388,15 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <img class="scene" src="%s" alt="الجمعة البرتقالية — خدمات السيارات في محطات درب">
-  <div class="veil"></div>
   <div class="in">
+    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
     <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
     <p class="tag">عرضك على كل مضخة،<br>ودرب تسوّق له.</p>
     <div class="foot2"><img src="%s" alt="درب">
       <span>محطات درب × شركاء خدمات السيارات</span></div>
   </div>
-</section>""" % (SCENE_CAR, LOGO_DARB))
+  <img class="poster" src="@@POSTER@@" alt="الجمعة البرتقالية في محطات درب">
+</section>""" % LOGO_DARB)
 
 # ١ · المستهدفات
 SLIDES.append("""
@@ -542,10 +554,10 @@ SLIDES.append("""
   </div>
 </section>""" % (
     ''.join('<div class="rowi slip %s">%s<span>%s</span></div>'
-            % (['tilt-1','tilt1'][i % 2], icon('check', tone='c3'), t)
+            % ('', icon('check', tone='c3'), t)
             for i, t in enumerate(DARB)),
     ''.join('<div class="rowi slip %s"><span class="num">%s</span><span>%s</span></div>'
-            % (['tilt1','tilt-1'][i % 2], ard(i + 1), t) for i, t in enumerate(YOU))))
+            % ('', ard(i + 1), t) for i, t in enumerate(YOU))))
 
 # ٩ · الختام
 SLIDES.append("""
@@ -584,8 +596,9 @@ SLIDES.append("""
                  FOOT))
 
 DECK = ''.join(SLIDES)
-for mark, val in [('@@FOLDER@@', CUT_CAR_FOLDER), ('@@STATION@@', CUT_STATION),
-                  ('@@STATION2@@', CUT_CAR_STATION), ('@@SCENE@@', SCENE_CAR)]:
+for mark, val in [('@@FOLDER@@', FOLDER_TABS), ('@@STATION@@', CUT_CAR_STATION),
+                  ('@@STATION2@@', CUT_FUEL_FOLDER), ('@@SCENE@@', SCENE_CAR),
+                  ('@@POSTER@@', POSTER), ('@@MARK@@', MARK)]:
     assert mark in DECK, 'snap marker missing: ' + mark
     DECK = DECK.replace(mark, val)
 _c = [0]
