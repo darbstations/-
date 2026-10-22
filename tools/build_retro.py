@@ -43,7 +43,10 @@ HERO = webp('hero.webp')            # الكولاج مقصوصًا
 SCENE = webp('scene.webp')          # الكولاج داخل المحطة — غلاف العرض
 CUT_STATION = webp('cut-station.webp')
 CUT_FOLDER = webp('cut-folder.webp')
-POSTER = webp('poster.webp')                # الملصق الكامل — غلاف العرض
+COVER_SCENE = webp('cover-scene.webp')      # مشهد الغلاف
+PHONE_FOLDER = webp('phone-folder.webp')    # ملف الجوال والرسائل
+MAP = webp('map.webp')                      # خريطة محطات درب
+POSTER = webp('poster.webp')
 FOLDER_TABS = webp('folder-tabs.webp')      # الملف بألسنة الأقسام
 MARK = webp('mark.webp')                    # شعار الجمعة البرتقالية وحده
 SCENE_FUEL = webp('scene-fuel.webp')
@@ -90,6 +93,13 @@ GLYPH = {
              '<path d="M19 12h4a3 3 0 013 3v7a2 2 0 004 0v-9l-4-4"/>',
     'user':  '<circle cx="16" cy="11" r="6"/><path d="M5 28c0-6 5-10 11-10s11 4 11 10"/>',
     'eye':   '<path d="M2 16s5-8 14-8 14 8 14 8-5 8-14 8-14-8-14-8z"/><circle cx="16" cy="16" r="4"/>',
+    'wa':    '<path d="M16 4a12 12 0 00-10.4 18L4 28l6.2-1.6A12 12 0 1016 4z"/>'
+             '<path d="M11.5 12.5c0 4 4 8 8 8l1.6-2-3-1.6-1.4 1.4a9 9 0 01-3-3l1.4-1.4-1.6-3z"/>',
+    'star':  '<path d="M16 3.5l3.6 7.6 8.4 1.1-6.1 5.8 1.5 8.2L16 22.3 8.6 26.2l1.5-8.2L4 12.2l8.4-1.1z"/>',
+    'camera':'<path d="M3 10h6l2-3h10l2 3h6v16H3z"/><circle cx="16" cy="17" r="5"/>',
+    'send':  '<path d="M29 3L3 14l10 4 4 10z"/><path d="M29 3L13 18"/>',
+    'burst': '<path d="M16 2v6M16 24v6M2 16h6M24 16h6M6.2 6.2l4.3 4.3M21.5 21.5l4.3 4.3'
+             'M25.8 6.2l-4.3 4.3M10.5 21.5l-4.3 4.3"/><circle cx="16" cy="16" r="5"/>',
 }
 
 
@@ -221,20 +231,21 @@ p{margin:0}
 .pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-.cover{padding:0;background:var(--paper);display:grid;
-  grid-template-columns:1fr 470px;align-items:center}
-.cover .poster{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
-.cover .in{padding:0 56px;display:flex;flex-direction:column;align-items:flex-start;
-  text-align:right}
+.cover{padding:0;background:var(--g900);justify-content:flex-end}
+.cover .scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.cover .veil{position:absolute;inset:0;background:linear-gradient(to top,
+  rgba(20,18,16,.93) 0%,rgba(20,18,16,.78) 30%,rgba(20,18,16,.25) 58%,rgba(20,18,16,0) 78%)}
+.cover .in{position:relative;padding:0 56px 34px;display:flex;flex-direction:column;
+  align-items:flex-start;text-align:right}
+.cover h1{font-family:var(--head);font-weight:900;font-size:38px;line-height:1.24;
+  color:#fff;max-width:22ch;margin:0 0 var(--s3)}
 .cover .when{margin-top:var(--s3);background:var(--orange);color:#fff;
   border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
   font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
   align-self:flex-start}
-.cover .mark{width:300px;max-width:100%;height:auto;display:block;margin-bottom:var(--s4)}
-.cover .tag{margin-top:var(--s3);font-family:var(--head);font-weight:900;font-size:27px;
-  color:var(--ink);line-height:1.3;max-width:17ch}
-.cover .foot2{display:flex;align-items:center;gap:13px;margin-top:var(--s5);
-  font-size:12.5px;color:var(--g500);font-weight:700}
+.cover .mark{width:186px;height:auto;display:block;margin-bottom:var(--s3)}
+.cover .foot2{display:flex;align-items:center;gap:13px;margin-top:var(--s4);
+  font-size:12.5px;color:var(--g300);font-weight:700}
 .cover .foot2 img{height:24px}
 
 /* ---------------- الأرقام ---------------- */
@@ -245,9 +256,9 @@ p{margin:0}
 .stat2 .u{font-size:12.5px;line-height:1.7;margin-top:7px;color:var(--g700)}
 .rcard.d .u,.rcard.o .u{color:inherit;opacity:.88}
 
-.goals{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:auto;
-  margin-bottom:auto}
+.goals{display:grid;grid-template-columns:1fr 1fr;gap:var(--s4);margin-top:var(--s4)}
 .goal{display:flex;align-items:center;gap:15px;font-size:15.5px;font-weight:700}
+.stat2 .ric{margin-bottom:var(--s2)}
 
 .bignum{display:flex;align-items:baseline;gap:12px;margin-top:6px}
 .bignum b{font-family:var(--head);font-size:54px;font-weight:900;color:var(--orange-dk);
@@ -327,10 +338,26 @@ p{margin:0}
   font-variant-numeric:tabular-nums}
 .chip span{font-size:11.5px;color:var(--g700);font-weight:700}
 
-/* ---------------- السنة العملاقة ---------------- */
-.year{position:absolute;inset-inline-start:46px;top:40px;font-family:var(--head);
-  font-size:200px;font-weight:900;line-height:1;color:transparent;
-  -webkit-text-stroke:4px rgba(255,255,255,.3);pointer-events:none}
+/* ---------------- شريحة النتائج: ورق، والسنة إلى اليسار ---------------- */
+.pg.sheet{background:var(--paper);color:var(--ink);
+  display:grid;grid-template-columns:1fr 360px;align-items:center;gap:var(--s6)}
+.pg.sheet .year{font-family:var(--head);font-size:150px;font-weight:900;line-height:.92;
+  color:var(--orange);text-align:center;
+  text-shadow:-5px 5px 0 var(--ink);letter-spacing:-.03em}
+.pg.sheet .yearbox{border:3px solid var(--ink);border-radius:3px 16px 16px 16px;
+  background:var(--cream);padding:var(--s5) var(--s3);
+  box-shadow:0 5px 0 rgba(20,18,16,.14), 0 16px 30px rgba(20,18,16,.18);position:relative}
+.pg.sheet .yearbox .tab{position:absolute;top:-22px;inset-inline-end:24px;
+  background:var(--cream);border:3px solid var(--ink);border-bottom:0;
+  padding:5px 18px 7px;border-radius:11px 11px 0 0;font-family:var(--head);
+  font-weight:900;font-size:12px}
+.pg.sheet .yearbox .sub{text-align:center;font-size:13px;font-weight:800;
+  color:var(--g700);margin-top:var(--s2)}
+
+h2.withic{display:flex;align-items:center;gap:var(--s2)}
+h2.withic .ric{width:46px;height:46px;flex:0 0 46px}
+h2.withic .ric svg{width:25px;height:25px}
+.ofmark{height:52px;width:auto;margin-inline-start:auto;display:block}
 
 /* ---------------- جدول العروض ---------------- */
 .otab{border-collapse:separate;border-spacing:0;width:100%;font-size:14px;
@@ -358,6 +385,7 @@ p{margin:0}
 .close .when span{background:#fff;color:var(--ink);border:3px solid var(--ink);
   border-radius:8px;padding:9px 18px;font-size:12.5px;font-weight:800;
   box-shadow:-4px 4px 0 var(--ink)}
+.close > div{position:relative;z-index:2}
 .close .sig{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:13px;
   font-weight:800;color:#fff}
 .close .sig img{height:30px}
@@ -388,42 +416,43 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
+  <img class="scene" src="@@COVER@@" alt="الجمعة البرتقالية في محطات درب">
+  <div class="veil"></div>
   <div class="in">
     <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
+    <h1>عرضك على كل مضخة، ودرب تسوّق له.</h1>
     <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
-    <p class="tag">عرضك على كل مضخة،<br>ودرب تسوّق له.</p>
     <div class="foot2"><img src="%s" alt="درب">
       <span>محطات درب × شركاء خدمات السيارات</span></div>
   </div>
-  <img class="poster" src="@@POSTER@@" alt="الجمعة البرتقالية في محطات درب">
 </section>""" % LOGO_DARB)
 
 # ١ · المستهدفات
 SLIDES.append("""
 <section class="pg grey">
-  <img class="snap tilt2" src="@@FOLDER@@" alt=""
-       style="inset-inline-start:-34px;top:-26px;width:212px;height:222px">
   <p class="eyebrow">المستهدفات</p>
-  <h2 style="max-width:62%%;margin-inline-start:auto">هدفان، وثلاثة أرقام نقيسها</h2>
+  <h2>أهداف الحملة وأرقامها</h2>
+  <p class="lede">هدفان نعمل عليهما، وثلاثة أرقام نقيسها لك في نهاية الأسبوع.</p>
   <div class="goals">
-    <div class="goal rcard tilt-1"><span class="tab">هدف ١</span>%s
+    <div class="goal rcard"><span class="tab">الهدف الأول</span>%s
       <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
-    <div class="goal rcard tilt1"><span class="tab">هدف ٢</span>%s
+    <div class="goal rcard"><span class="tab">الهدف الثاني</span>%s
       <span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
   </div>
   <div class="stats">
-    <div class="stat2 rcard o tilt-1"><span class="tab">واتساب</span>
+    <div class="stat2 rcard o"><span class="tab">واتساب</span>%s
       <div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
       <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
-    <div class="stat2 rcard tilt1"><span class="tab">مباشر</span>
+    <div class="stat2 rcard"><span class="tab">مباشر</span>%s
       <div class="v">+١٠٠٠</div><div class="k">عميل مباشر</div>
       <div class="u">لكل شريك، من الكوبونات والباركود</div></div>
-    <div class="stat2 rcard o tilt-2"><span class="tab">مشاهدات</span>
+    <div class="stat2 rcard o"><span class="tab">مشاهدات</span>%s
       <div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
       <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
   </div>
   %s
-</section>""" % (icon('user', tone='c1'), icon('eye', tone='c3'), FOOT))
+</section>""" % (icon('star', tone='c2'), icon('mic', tone='c3'),
+                icon('wa', tone='c1'), icon('user', tone='c2'), icon('eye', tone='c3'), FOOT))
 
 # ٢ · أرقام محطاتنا
 REG = [('مكة · ٢٦ محطة', 34270), ('الطائف · ١٠ محطات', 12637),
@@ -498,13 +527,21 @@ SLIDES.append("""
 
 # ٥ · نتائج ٢٠٢٥
 SLIDES.append("""
-<section class="pg orange" style="justify-content:center">
-  <div class="year">٢٠٢٥</div>
+<section class="pg sheet">
   <div>
-    <h2 style="font-size:56px">مو وعود.<br>هذي نتائج ٢٠٢٥.</h2>
-    <p class="lede" style="margin-top:16px;font-size:17px">شركاء ومؤثّرون حقيقيون،
-      وعدد المشاهدات ظاهر على كل مقطع.</p>
+    <p class="eyebrow">نتائج الحملة الماضية</p>
+    <h2 style="font-size:50px">مو وعود.<br>هذي نتائج ٢٠٢٥.</h2>
+    <p class="lede" style="margin-top:var(--s3);font-size:16.5px">شركاء ومؤثّرون حقيقيون،
+      وعدد المشاهدات ظاهر على كل مقطع — تشوفها بنفسك في الصفحات التالية.</p>
+    <div class="pills" style="margin-top:var(--s5)">
+      <div class="pill"><b>+١٠٠ ألف</b> مشاهدة في أسبوع</div>
+      <div class="pill"><b>١١</b> محطة</div>
+      <div class="pill"><b>١٠٠٠</b> كوبون لكل شريك</div>
+    </div>
   </div>
+  <div class="yearbox"><span class="tab">الحملة الماضية</span>
+    <div class="year">٢٠٢٥</div>
+    <div class="sub">الجمعة البرتقالية</div></div>
   %s
 </section>""" % FOOT)
 
@@ -535,9 +572,12 @@ SLIDES.append("""
                  ''.join('<img src="%s" alt="" style="height:188px">' % c for c in INFL)))
 
 # ٨ · المسؤوليات
-DARB = ['التصوير والتصميم والمونتاج', 'إطلاق الحملة والنشر على المنصات',
-        'طريقة التنفيذ والباركود وتدريب عمال المحطة',
-        'التنسيق مع المؤثّرين وإدارة المحتوى', 'توزيع الكوبونات والتقرير الأسبوعي']
+DARB = [('التصوير والتصميم والمونتاج', 'camera'),
+        ('إطلاق الحملة والنشر على المنصات', 'send'),
+        ('طريقة التنفيذ والباركود وتدريب عمال المحطة', 'scan'),
+        ('التنسيق مع المؤثّرين وإدارة المحتوى', 'mic'),
+        ('توزيع الكوبونات والتقرير الأسبوعي', 'ticket')]
+DARB_TONES = ['c1', 'c2', 'c3', 'c4', 'c1']
 YOU = ['قيمة العرض أو الخصم',
        'الالتزام بالعرض طول ساعات العمل وتدريب موظفيك']
 SLIDES.append("""
@@ -553,9 +593,9 @@ SLIDES.append("""
     </div>
   </div>
 </section>""" % (
-    ''.join('<div class="rowi slip %s">%s<span>%s</span></div>'
-            % ('', icon('check', tone='c3'), t)
-            for i, t in enumerate(DARB)),
+    ''.join('<div class="rowi slip">%s<span>%s</span></div>'
+            % (icon(g, tone=DARB_TONES[i]), t)
+            for i, (t, g) in enumerate(DARB)),
     ''.join('<div class="rowi slip %s"><span class="num">%s</span><span>%s</span></div>'
             % ('', ard(i + 1), t) for i, t in enumerate(YOU))))
 
@@ -580,7 +620,7 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">العروض المقترحة</p>
-  <h2>اكتب عرضك هنا</h2>
+  <h2 class="withic">%s<span>اكتب عرضك هنا</span></h2>
   <p class="lede">السنة الماضية كان العرض: غسلة بعشرة ريالات مقابل تعبئة بثلاثين ريالًا أو أكثر.
     وأنت أدرى بما يناسبك — اكتب ما تقترحه.</p>
   <table class="otab">
@@ -588,17 +628,19 @@ SLIDES.append("""
       <th>مقابل تعبئة بـ</th><th>عدد الكوبونات</th></tr></thead>
     <tbody>%s</tbody>
   </table>
-  <div class="pills">
+  <div class="pills" style="align-items:center">
     <div class="pill"><b>المواقع:</b> داخل محطات درب، وفي فروعك</div>
+    <img class="ofmark" src="@@MARK@@" alt="الجمعة البرتقالية">
   </div>
   %s
-</section>""" % (''.join('<tr>' + '<td class="fill">…</td>' * 5 + '</tr>' for _ in range(4)),
+</section>""" % (icon('burst', tone='c1'),
+                 ''.join('<tr>' + '<td class="fill">…</td>' * 5 + '</tr>' for _ in range(4)),
                  FOOT))
 
 DECK = ''.join(SLIDES)
-for mark, val in [('@@FOLDER@@', FOLDER_TABS), ('@@STATION@@', CUT_CAR_STATION),
-                  ('@@STATION2@@', CUT_FUEL_FOLDER), ('@@SCENE@@', SCENE_CAR),
-                  ('@@POSTER@@', POSTER), ('@@MARK@@', MARK)]:
+for mark, val in [('@@STATION@@', MAP), ('@@STATION2@@', PHONE_FOLDER),
+                  ('@@SCENE@@', SCENE_CAR), ('@@COVER@@', COVER_SCENE),
+                  ('@@MARK@@', MARK)]:
     assert mark in DECK, 'snap marker missing: ' + mark
     DECK = DECK.replace(mark, val)
 _c = [0]
