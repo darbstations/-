@@ -104,10 +104,17 @@ table.prod{min-width:540px}
     </div>
     <div class="actions">
       <button class="ghost" id="copyBtn" type="button">نسخ الملخص لإكسل</button>
+      <button class="ghost" id="xferOut" type="button">نقل بياناتي</button><button class="ghost" id="xferIn" type="button">استيراد بيانات</button>
       <button class="ghost" id="resetBtn" type="button">إعادة ضبط هذه المحطة</button>
     </div>
   </header>
 
+  <section class="panel" id="xfer" hidden style="display:grid;gap:10px">
+    <h2 id="xferTitle"></h2>
+    <p class="hint" id="xferHint" style="margin:0"></p>
+    <textarea id="xferTxt" rows="5" style="direction:ltr;text-align:left;font-family:ui-monospace,monospace;font-size:12px"></textarea>
+    <div class="actions"><button class="pri" type="button" id="xferGo"></button><button class="ghost" type="button" id="xferClose">إغلاق</button></div>
+  </section>
   <section class="panel stn">
     <div style="display:grid;gap:10px;align-content:start">
       <label class="f">ابحث عن محطة<input id="q" type="search" placeholder="الاسم أو الكود أو المنطقة"></label>
@@ -156,6 +163,8 @@ const KEY='darb-pkg-disc-v1';
 const WASH_TYPES=['غسيل خارجي','غسيل داخلي','غسيل داخلي وخارجي','غسيل شامل','غسيل بالبخار','تلميع','غسيل محرك'];
 let store={};
 try{store=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){store={}}
+/* same-origin copy from the plain packages tab, once, when this tab has no data yet */
+try{if(!localStorage.getItem(KEY)){const o=JSON.parse(localStorage.getItem('darb-pkg-v2')||'null');if(o&&typeof o==='object'){store=JSON.parse(JSON.stringify(o));localStorage.setItem(KEY,JSON.stringify(store));}}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(store))}catch(e){}}
 
 function defaultsFor(st){
@@ -338,6 +347,24 @@ $('copyBtn').addEventListener('click',()=>{
   try{navigator.clipboard.writeText(txt).then(done,()=>fallback(txt))}catch(e){fallback(txt)}
 });
 function fallback(t){const ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('نُسخ الملخص، الصقه في إكسل')}catch(e){toast('تعذّر النسخ')}ta.remove();}
+
+let xferMode='';
+function openXfer(mode){xferMode=mode;$('xfer').hidden=false;
+  if(mode==='out'){$('xferTitle').textContent='نقل بياناتي';$('xferHint').textContent='هذه كل باقاتك في كل المحطات. انسخ النص وافتح تبويب «الباقات مع خصومات المطاعم» واضغط «استيراد بيانات» والصقه هناك.';$('xferTxt').value=JSON.stringify({darbPkg:1,data:store});$('xferTxt').readOnly=true;$('xferGo').textContent='نسخ النص';}
+  else{$('xferTitle').textContent='استيراد بيانات';$('xferHint').textContent='الصق هنا النص اللي نسخته من زر «نقل بياناتي» في صفحة الباقات القديمة، واضغط «استيراد». المحطات اللي في النص تتحدث، وخصومات المطاعم اللي سويتها هنا تبقى.';$('xferTxt').value='';$('xferTxt').readOnly=false;$('xferGo').textContent='استيراد';}
+  $('xferTxt').focus();$('xfer').scrollIntoView({block:'start'});}
+function importData(obj){const d=obj&&obj.data?obj.data:obj;if(!d||typeof d!=='object')throw new Error('bad');let n=0;
+  Object.entries(d).forEach(([code,cfgIn])=>{if(!cfgIn||typeof cfgIn!=='object'||!STATIONS.some(s=>s.c===code))return;const old=store[code]||{};const nc=JSON.parse(JSON.stringify(cfgIn));
+    PK.forEach(pk=>{if(nc[pk.id]){nc[pk.id].items=nc[pk.id].items||[];nc[pk.id].disc=(nc[pk.id].disc&&nc[pk.id].disc.length)?nc[pk.id].disc:((old[pk.id]&&old[pk.id].disc)||[]);}});
+    store[code]=nc;n++;});
+  return n;}
+$('xferOut').addEventListener('click',()=>openXfer('out'));
+if($('xferIn'))$('xferIn').addEventListener('click',()=>openXfer('in'));
+$('xferClose').addEventListener('click',()=>{$('xfer').hidden=true;});
+$('xferGo').addEventListener('click',()=>{const t=$('xferTxt').value;
+  if(xferMode==='out'){try{navigator.clipboard.writeText(t).then(()=>toast('نُسخ النص'),()=>{$('xferTxt').select();toast('حدد النص وانسخه يدويًا');})}catch(e){$('xferTxt').select();toast('حدد النص وانسخه يدويًا');}return;}
+  try{const n=importData(JSON.parse(t));save();renderAll();toast(n?`استُوردت بيانات ${n} محطة`:'ما لقيت محطات في النص');if(n)$('xfer').hidden=true;}catch(e){toast('النص غير صحيح، انسخه كامل من زر «نقل بياناتي»');}
+});
 let tt;function toast(m){const el=$('toast');el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2200);}
 
 fillSelect(); renderAll();
