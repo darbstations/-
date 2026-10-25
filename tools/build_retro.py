@@ -47,6 +47,12 @@ COVER_SCENE = webp('cover-scene.webp')      # مشهد الغلاف
 PHONE_FOLDER = webp('phone-folder.webp')    # ملف الجوال والرسائل
 MAP = webp('map.webp')                      # خريطة محطات درب
 POSTER = webp('poster.webp')
+PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
+            ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
+            ('قهوة الأمراء', 'princes')]
+PARTNER_LOGOS = [(t, 'data:image/webp;base64,%s'
+                  % b64(os.path.join(BRAND, 'partners', f + '.webp')))
+                 for t, f in PARTNERS]
 FOLDER_TABS = webp('folder-tabs.webp')      # الملف بألسنة الأقسام
 MARK = webp('mark.webp')                    # شعار الجمعة البرتقالية وحده
 SCENE_FUEL = webp('scene-fuel.webp')
@@ -243,7 +249,8 @@ p{margin:0}
   border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
   font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
   align-self:flex-start}
-.cover .mark{width:186px;height:auto;display:block;margin-bottom:var(--s3)}
+.cover .mark{position:absolute;top:30px;inset-inline-end:40px;width:128px;height:auto;
+  display:block;z-index:2;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
 .cover .foot2{display:flex;align-items:center;gap:13px;margin-top:var(--s4);
   font-size:12.5px;color:var(--g300);font-weight:700}
 .cover .foot2 img{height:24px}
@@ -321,16 +328,20 @@ p{margin:0}
 
 /* ---------------- صور: قصاصات بشريط لاصق ---------------- */
 .grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:auto}
-.grid6 img{width:100%;height:198px;object-fit:cover;border:5px solid var(--cream);
+.grid6 img{width:100%;height:150px;object-fit:cover;border:5px solid var(--cream);
   border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
 .grid6 > *:nth-child(odd) img{transform:rotate(-1.4deg)}
 .grid6 > *:nth-child(even) img{transform:rotate(1.2deg)}
-.logos{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:var(--s2)}
-.logos img{width:100%;height:94px;object-fit:contain;background:#fff;
-  border:5px solid var(--cream);border-radius:3px;padding:8px;display:block;
+.logos{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3) var(--s3);
+  margin-top:var(--s4)}
+.logos figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:7px}
+.logos img{width:100%;height:84px;object-fit:contain;background:#fff;
+  border:5px solid var(--cream);border-radius:3px;padding:9px;display:block;
   box-shadow:0 5px 14px rgba(20,18,16,.22)}
-.logos > *:nth-child(odd) img{transform:rotate(1.2deg)}
-.logos > *:nth-child(even) img{transform:rotate(-1.5deg)}
+.logos figcaption{font-size:11px;font-weight:800;color:var(--g700);text-align:center;
+  line-height:1.35}
+.logos figure:nth-child(odd) img{transform:rotate(1deg)}
+.logos figure:nth-child(even) img{transform:rotate(-1.2deg)}
 .chips{display:flex;gap:var(--s3);margin-bottom:var(--s3)}
 .chip{border:3px solid var(--ink);border-radius:10px;padding:12px 20px;text-align:center;
   background:var(--card);color:var(--ink);box-shadow:-4px 4px 0 var(--orange)}
@@ -422,8 +433,8 @@ SLIDES.append("""
 <section class="pg cover">
   <img class="scene" src="@@COVER@@" alt="الجمعة البرتقالية في محطات درب">
   <div class="veil"></div>
+  <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
   <div class="in">
-    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
     <h1>عرضك على كل مضخة، ودرب تسوّق له</h1>
     <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
     <div class="foot2"><img src="%s" alt="درب">
@@ -566,14 +577,15 @@ SLIDES.append("""
 # ٧ · الشركاء
 SLIDES.append("""
 <section class="pg">
-  <p class="eyebrow">شركاء ٢٠٢٥</p>
-  <h2>شركاء كانوا معنا، وراجعين هذه السنة</h2>
-  <p class="lede" style="margin-top:4px;font-weight:900;color:var(--orange-dk)">شركاء الحملة</p>
-  <div class="logos" style="margin-top:10px">%s</div>
+  <p class="eyebrow">شركاؤنا</p>
+  <h2>أبرز الشركاء معنا</h2>
+  <p class="lede">شركاء كانوا معنا في الجمعة البرتقالية، وراجعين هذه السنة.</p>
+  <div class="logos">%s</div>
   <p class="lede" style="margin-top:auto;font-weight:900;color:var(--orange-dk)">محتوى المؤثّرين</p>
-  <div class="grid6" style="margin-top:10px">%s</div>
-</section>""" % (''.join('<img src="%s" alt="">' % c for c in LOGOS),
-                 ''.join('<img src="%s" alt="" style="height:188px">' % c for c in INFL)))
+  <div class="grid6" style="margin-top:var(--s2)">%s</div>
+</section>""" % (''.join('<figure><img src="%s" alt="%s"><figcaption>%s</figcaption></figure>'
+                        % (u, t, t) for t, u in PARTNER_LOGOS),
+                 ''.join('<img src="%s" alt="">' % c for c in INFL)))
 
 # ٨ · المسؤوليات
 DARB = [('التصوير والتصميم والمونتاج', 'camera'),
