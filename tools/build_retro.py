@@ -237,23 +237,36 @@ p{margin:0}
 .pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-.cover{padding:0;background:var(--g900);justify-content:flex-end}
-.cover .scene{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.cover .veil{position:absolute;inset:0;background:linear-gradient(to top,
-  rgba(20,18,16,.93) 0%,rgba(20,18,16,.78) 30%,rgba(20,18,16,.25) 58%,rgba(20,18,16,0) 78%)}
-.cover .in{position:relative;padding:0 56px 34px;display:flex;flex-direction:column;
-  align-items:flex-start;text-align:start}
-.cover h1{font-family:var(--head);font-weight:900;font-size:38px;line-height:1.24;
-  color:#fff;max-width:22ch;margin:0 0 var(--s3)}
-.cover .when{margin-top:var(--s3);background:var(--orange);color:#fff;
+/* عمودان: الكلام على اليمين، الصورة على اليسار، وبينهما حدّ برتقالي */
+.cover{padding:0;background:var(--g900);color:var(--cream);
+  display:grid;grid-template-columns:1.06fr 1fr;align-items:stretch}
+.cover::before{opacity:.2}
+.cover .in{position:relative;z-index:1;display:flex;flex-direction:column;
+  justify-content:center;align-items:flex-start;text-align:start;
+  padding:52px 56px 108px}
+.cover .in::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(135% 100% at 0% 64%,rgba(252,108,5,.22),rgba(252,108,5,0) 58%)}
+.cover .in > *{position:relative}
+.cover .mark{width:136px;height:auto;display:block;margin:0 0 var(--s5)}
+.cover h1{font-family:var(--head);font-weight:900;font-size:40px;line-height:1.28;
+  color:#fff;margin:0}
+.cover .when{margin-top:var(--s4);background:var(--orange);color:#fff;
   border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
-  font-family:var(--head);font-size:14px;box-shadow:-4px 4px 0 var(--ink);
+  font-family:var(--head);font-size:14.5px;box-shadow:-4px 4px 0 var(--ink);
   align-self:flex-start}
-.cover .mark{position:absolute;top:30px;inset-inline-end:40px;width:128px;height:auto;
-  display:block;z-index:2;filter:drop-shadow(0 6px 14px rgba(0,0,0,.45))}
-.cover .foot2{display:flex;align-items:center;gap:13px;margin-top:var(--s4);
-  font-size:12.5px;color:var(--g300);font-weight:700}
+.cover .sub{margin:var(--s3) 0 0;font-size:14.5px;line-height:1.8;font-weight:600;
+  color:var(--g300)}
+.cover .foot2{position:absolute;inset-inline-start:56px;inset-inline-end:56px;
+  bottom:34px;display:flex;align-items:center;gap:13px;padding-top:var(--s3);
+  border-top:2px solid var(--g700);font-size:12.5px;color:var(--g400);font-weight:700}
 .cover .foot2 img{height:24px}
+.cover .art{position:relative;overflow:hidden;
+  border-inline-start:5px solid var(--orange)}
+.cover .scene{width:100%;height:100%;object-fit:cover;object-position:14% 50%;
+  display:block}
+.cover .veil{position:absolute;inset:0;background:linear-gradient(to right,
+  rgba(20,18,16,.5) 0%,rgba(20,18,16,0) 32%,rgba(20,18,16,0) 68%,
+  rgba(20,18,16,.44) 100%)}
 
 /* ---------------- الأرقام ---------------- */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:auto}
@@ -431,14 +444,17 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <img class="scene" src="@@COVER@@" alt="الجمعة البرتقالية في محطات درب">
-  <div class="veil"></div>
-  <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
   <div class="in">
-    <h1>عرضك على كل مضخة، ودرب تسوّق له</h1>
-    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦ · أسبوعك في كل محطات درب</div>
+    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
+    <h1>عرضك على كل مضخة<br>ودرب تسوّق له</h1>
+    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦</div>
+    <p class="sub">أسبوع كامل، وعرضك في كل محطات درب</p>
     <div class="foot2"><img src="%s" alt="درب">
       <span>محطات درب × شركاء خدمات السيارات</span></div>
+  </div>
+  <div class="art">
+    <img class="scene" src="@@COVER@@" alt="الجمعة البرتقالية في محطات درب">
+    <div class="veil"></div>
   </div>
 </section>""" % LOGO_DARB)
 
@@ -771,6 +787,31 @@ var CSSTEXT=(function(){
     if(!prev) return;
     ed.say('هذا تصميم جديد بهوية الجمعة البرتقالية. نسختك من التصميم السابق محفوظة '+
            'ولم تُحذف — قولي لي إن أردتِ نصًّا منها.', 13000);
+  })();
+  /* الغلاف وحده أُعيد ترتيبه. إن كان عندها نسخة محفوظة نستبدل شريحة الغلاف فقط،
+     وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع يرجّع غلافها القديم. */
+  (function(){
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover-split-v1';
+    var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
+    if(done===ST) return;
+    try{ localStorage.setItem(SK,ST); }catch(e){}
+    var saved=null; try{ saved=localStorage.getItem(K); }catch(e){}
+    if(!saved) return;                      /* لا تعديلات محفوظة: الغلاف جديد أصلًا */
+    var cur=ed.box.querySelector('section.pg.cover');
+    if(!cur || cur.querySelector('.art')) return;   /* الشكل الجديد موجود */
+    var tmp=document.createElement('div'); tmp.innerHTML=DECK;
+    var fresh=tmp.querySelector('section.pg.cover');
+    if(!fresh) return;
+    var old=cur.outerHTML;
+    cur.outerHTML=fresh.outerHTML;
+    ed.mark(); ed.snap(); ed.keep();
+    ed.say('رتّبنا الغلاف من جديد — الصورة في جهة والكلام في جهة. بقية تعديلاتك كما هي.',
+      14000, 'رجّعي غلافي القديم', function(){
+        var c=ed.box.querySelector('section.pg.cover');
+        if(!c) return;
+        c.outerHTML=old; ed.mark(); ed.snap(); ed.keep();
+        ed.say('رجّعنا غلافك القديم.',5000);
+      });
   })();
 })();
 </script>"""
