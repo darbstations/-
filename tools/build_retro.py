@@ -49,7 +49,9 @@ MAP = webp('map.webp')                      # خريطة محطات درب
 POSTER = webp('poster.webp')
 PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
             ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
-            ('قهوة الأمراء', 'princes')]
+            ('قهوة الأمراء', 'princes'), ('لمة برجر', 'lamma'),
+            ('بابا سنفور', 'baba'), ('dose', 'dose'),
+            ('المذاق المغربي', 'mataq'), ('مزاج مغربي', 'mezaj')]
 PARTNER_LOGOS = [(t, 'data:image/webp;base64,%s'
                   % b64(os.path.join(BRAND, 'partners', f + '.webp')))
                  for t, f in PARTNERS]
@@ -343,12 +345,13 @@ p{margin:0}
 .grid6{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s3);margin-top:auto}
 .grid6 img{width:100%;height:150px;object-fit:cover;border:5px solid var(--cream);
   border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
+.grid6.sm img{height:108px}
 .grid6 > *:nth-child(odd) img{transform:rotate(-1.4deg)}
 .grid6 > *:nth-child(even) img{transform:rotate(1.2deg)}
 .logos{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3) var(--s3);
   margin-top:var(--s4)}
 .logos figure{margin:0;display:flex;flex-direction:column;align-items:center;gap:7px}
-.logos img{width:100%;height:84px;object-fit:contain;background:#fff;
+.logos img{width:100%;height:74px;object-fit:contain;background:#fff;
   border:5px solid var(--cream);border-radius:3px;padding:9px;display:block;
   box-shadow:0 5px 14px rgba(20,18,16,.22)}
 .logos figcaption{font-size:11px;font-weight:800;color:var(--g700);text-align:center;
@@ -598,7 +601,7 @@ SLIDES.append("""
   <p class="lede">شركاء كانوا معنا في الجمعة البرتقالية، وراجعين هذه السنة.</p>
   <div class="logos">%s</div>
   <p class="lede" style="margin-top:auto;font-weight:900;color:var(--orange-dk)">محتوى المؤثّرين</p>
-  <div class="grid6" style="margin-top:var(--s2)">%s</div>
+  <div class="grid6 sm" style="margin-top:var(--s2)">%s</div>
 </section>""" % (''.join('<figure><img src="%s" alt="%s"><figcaption>%s</figcaption></figure>'
                         % (u, t, t) for t, u in PARTNER_LOGOS),
                  ''.join('<img src="%s" alt="">' % c for c in INFL)))
@@ -697,6 +700,25 @@ i = src.index('function darbEditor(opts){')
 j = src.index('\n(function(){', i)
 EDITOR = src[i:j]
 assert 'function darbEditor' in EDITOR and len(EDITOR) > 6000, 'editor extract failed'
+
+# say() الأصلية تمسح محتوى الشريط كلّه. نوسّعها لتكتب في #toastmsg وتعرض زر إجراء.
+SAY_OLD = """  function say(m,ms){ if(!toast) return; toast.textContent=m; toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }"""
+SAY_NEW = """  function say(m,ms,actLabel,actFn){
+    if(!toast) return;
+    var msg=document.getElementById('toastmsg'), act=document.getElementById('toastact');
+    if(msg) msg.textContent=m; else toast.textContent=m;
+    if(act){
+      if(actLabel){ act.hidden=false; act.textContent=actLabel;
+        act.onclick=function(){ act.hidden=true; toast.classList.remove('show');
+                                if(actFn) actFn(); }; }
+      else { act.hidden=true; act.onclick=null; }
+    }
+    toast.classList.add('show');
+    clearTimeout(tT); tT=setTimeout(function(){ toast.classList.remove('show'); }, ms||4500); }"""
+assert SAY_OLD in EDITOR, 'say() not found in the borrowed editor'
+EDITOR = EDITOR.replace(SAY_OLD, SAY_NEW, 1)
+
 chrome_css = src.split('<style id="darbcss">', 1)[1].split('</style>', 1)[0]
 CHROME = chrome_css[chrome_css.index('/* ---------- picker ----------'):]
 
@@ -788,29 +810,36 @@ var CSSTEXT=(function(){
     ed.say('هذا تصميم جديد بهوية الجمعة البرتقالية. نسختك من التصميم السابق محفوظة '+
            'ولم تُحذف — قولي لي إن أردتِ نصًّا منها.', 13000);
   })();
-  /* الغلاف وحده أُعيد ترتيبه. إن كان عندها نسخة محفوظة نستبدل شريحة الغلاف فقط،
-     وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع يرجّع غلافها القديم. */
+  /* شريحتان تغيّرتا: الغلاف وشريحة الشركاء. إن كان عندها نسخة محفوظة نستبدل
+     هاتين الشريحتين فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
   (function(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover-split-v1';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+logos-v1';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
     var saved=null; try{ saved=localStorage.getItem(K); }catch(e){}
-    if(!saved) return;                      /* لا تعديلات محفوظة: الغلاف جديد أصلًا */
-    var cur=ed.box.querySelector('section.pg.cover');
-    if(!cur || cur.querySelector('.art')) return;   /* الشكل الجديد موجود */
+    if(!saved) return;                   /* لا تعديلات محفوظة: الشرائح جديدة أصلًا */
     var tmp=document.createElement('div'); tmp.innerHTML=DECK;
-    var fresh=tmp.querySelector('section.pg.cover');
-    if(!fresh) return;
-    var old=cur.outerHTML;
-    cur.outerHTML=fresh.outerHTML;
+    var at=[], old=[], i;
+    var pgs=ed.box.querySelectorAll('section.pg');
+    var fresh=tmp.querySelectorAll('section.pg');
+    if(pgs.length!==fresh.length) return;        /* حذفت أو أضافت شريحة: لا نلمس شيئًا */
+    for(i=0;i<pgs.length;i++){
+      var isCover=pgs[i].classList.contains('cover');
+      var isLogos=!!pgs[i].querySelector('.logos');
+      if(!isCover && !isLogos) continue;
+      if(pgs[i].outerHTML===fresh[i].outerHTML) continue;
+      at.push(i); old.push(pgs[i].outerHTML);
+      pgs[i].outerHTML=fresh[i].outerHTML;
+    }
+    if(!at.length) return;
     ed.mark(); ed.snap(); ed.keep();
-    ed.say('رتّبنا الغلاف من جديد — الصورة في جهة والكلام في جهة. بقية تعديلاتك كما هي.',
-      14000, 'رجّعي غلافي القديم', function(){
-        var c=ed.box.querySelector('section.pg.cover');
-        if(!c) return;
-        c.outerHTML=old; ed.mark(); ed.snap(); ed.keep();
-        ed.say('رجّعنا غلافك القديم.',5000);
+    ed.say('حدّثنا الغلاف وشريحة الشركاء فقط. بقية تعديلاتك كما هي.',
+      14000, 'رجّعي شرائحي القديمة', function(){
+        var p=ed.box.querySelectorAll('section.pg'), j;
+        for(j=0;j<at.length;j++) if(p[at[j]]) p[at[j]].outerHTML=old[j];
+        ed.mark(); ed.snap(); ed.keep();
+        ed.say('رجّعنا شرائحك القديمة.',5000);
       });
   })();
 })();

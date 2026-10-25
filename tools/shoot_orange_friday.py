@@ -34,7 +34,7 @@ CHECKS = r"""
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
       let r = el.getBoundingClientRect();
       if (!r.width || !r.height) return;
-      for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+      for (let n = el.parentElement; n && n !== pg; n = n.parentElement) {
         const o = getComputedStyle(n);
         if (o.overflow !== 'visible' || o.overflowX !== 'visible') {
           const c = n.getBoundingClientRect();
