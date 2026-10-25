@@ -1,6 +1,6 @@
 import json
 O='/home/user/-/output/'
-pages=[('explorer','مستكشف المحطات','darb_station_explorer.html'),('packages','الباقات','darb_packages.html'),('restaurants','الباقات مع خصومات المطاعم','darb_packages_restaurants.html')]
+pages=[('explorer','مستكشف المحطات','darb_station_explorer.html'),('packages','الباقات','darb_packages_plain.html'),('restaurants','الباقات مع خصومات المطاعم','darb_packages_restaurants.html')]
 HEAD='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>'
 docs={k:HEAD+open(O+f).read()+'</body></html>' for k,_,f in pages}
 js_docs=json.dumps(docs,ensure_ascii=False).replace('</','<\\/')
