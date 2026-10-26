@@ -490,9 +490,11 @@ var darbStore=(function(){
   return {
     pack:pack, unpack:unpack, norm:norm, deckNorm:deckNorm,
     set:function(k,h){
-      try{ localStorage.setItem(k, MARK+pack(h)); return true; }catch(e){}
-      try{ localStorage.setItem(k, h); return true; }catch(e){}
-      return false;
+      var ok=false;
+      try{ localStorage.setItem(k, MARK+pack(h)); ok=true; }catch(e){}
+      if(!ok) try{ localStorage.setItem(k, h); ok=true; }catch(e){}
+      if(ok) try{ localStorage.setItem(k+'-at', String(Date.now())); }catch(e){}
+      return ok;
     },
     get:function(k){
       var v=null; try{ v=localStorage.getItem(k); }catch(e){}
@@ -551,6 +553,7 @@ function darbEditor(opts){
   function keep(){
     try{
       if(!darbStore.set(opts.key, box.innerHTML)) throw new Error('store');
+      if(window.darbRemoteSave) window.darbRemoteSave(box.innerHTML);
       var d=new Date();
       if(dot){ dot.textContent='محفوظ '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
                dot.className='savedot ok'; }
@@ -756,6 +759,7 @@ function darbEditor(opts){
         var had=null; try{ had=localStorage.getItem('darb-orange-friday-v2'); }catch(e){}
         if(!had && darbStore.norm(ed.box.innerHTML)===darbStore.deckNorm()) return;
         ed.keep();
+        if(window.darbRemoteFlush) window.darbRemoteFlush();
       }catch(e){}
     });
   });
@@ -770,9 +774,33 @@ function darbEditor(opts){
     };
     window.darbBackupRead=function(){ return darbStore.get(BK); };
   })();
+  /* زرّ دائم: يبدّل بين نسختك قبل آخر تحديث والنسخة الحالية. لا يضيع أيّ منهما،
+     لأنّ كل ضغطة تحفظ الحالية مكان المحفوظة. */
+  (function(){
+    var K='darb-orange-friday-v2', BK=K+'-backup', BT=K+'-backup-at';
+    var btn=document.getElementById('restore');
+    function refresh(){
+      if(!btn) return;
+      var bk=null, at='';
+      try{ bk=localStorage.getItem(BK); at=localStorage.getItem(BT)||''; }catch(e){}
+      btn.hidden=!bk;
+      btn.title = bk ? ('نسختك المحفوظة'+(at?(' — '+at):'')) : '';
+    }
+    window.darbRestoreBtn=refresh;
+    if(btn) btn.addEventListener('click',function(){
+      var bk=window.darbBackupRead();
+      if(!bk){ ed.say('ما فيه نسخة محفوظة.',4000); return; }
+      var now=ed.box.innerHTML;
+      if(!window.darbBackup(now)){ ed.say('ما قدرنا نحفظ الحالية، فما بدّلنا شيئًا.',9000); return; }
+      ed.show(bk); ed.keep(); refresh();
+      ed.say('رجّعنا نسختك. نفس الزرّ يبدّل بين النسختين، وما تضيع ولا وحدة.',10000);
+    });
+    refresh();
+  })();
+
   /* الشرائح التي تغيّر شكلها: الغلاف، والشركاء، ومقاطع المؤثّرين. إن كان عندها
      نسخة محفوظة نستبدل هذه الشرائح فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
-  (function(){
+  function runSync(){
     var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+logos+clips-v1';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
@@ -791,7 +819,7 @@ function darbEditor(opts){
       if(hit && darbStore.norm(pgs[i].outerHTML)!==darbStore.norm(f.outerHTML)) at.push(i);
     }
     if(!at.length) return;                       /* ما فيه فرق: لا نلمس شيئًا */
-    if(!window.darbBackup(saved)){
+    if(!window.darbBackup(ed.box.innerHTML)){
       ed.say('ما قدرنا نحفظ نسخة احتياطية (مساحة المتصفّح ممتلئة)، فما غيّرنا شيئًا. '+
              'نزّلي الملف أولًا ثم افتحي الصفحة من جديد.', 20000);
       try{ localStorage.removeItem(SK); }catch(e){}
@@ -802,6 +830,7 @@ function darbEditor(opts){
       pgs[at[i]].outerHTML=fresh[at[i]].outerHTML;
     }
     ed.mark(); ed.snap(); ed.keep();
+    if(window.darbRestoreBtn) window.darbRestoreBtn();
     ed.say('حدّثنا الغلاف وشريحة الشركاء وشريحة المقاطع فقط. بقية تعديلاتك كما هي.',
       14000, 'رجّعي شرائحي القديمة', function(){
         var p=ed.box.querySelectorAll('section.pg'), j;
@@ -809,30 +838,62 @@ function darbEditor(opts){
         ed.mark(); ed.snap(); ed.keep();
         ed.say('رجّعنا شرائحك القديمة.',5000);
       });
-    if(window.darbRestoreBtn) window.darbRestoreBtn();
-  })();
-  /* زرّ دائم: يبدّل بين نسختك قبل آخر تحديث والنسخة الحالية. لا يضيع أيّ منهما،
-     لأنّ كل ضغطة تحفظ الحالية مكان المحفوظة. */
+  }
+
+  /* حفظ على الخادم: المتصفّح وحده ما يكفي — تخزينه يضيع مع أي نسخة جديدة من
+     الرابط أو مع جهاز آخر. فنحفظ نسخة مضغوطة في قاعدة بيانات الملف نفسه،
+     ونقرأها أول ما تُفتح الصفحة، فترجع تعديلاتك أينما فتحتِ الرابط. */
   (function(){
-    var K='darb-orange-friday-v2', BK=K+'-backup', BT=K+'-backup-at';
-    var btn=document.getElementById('restore');
-    function refresh(){
-      if(!btn) return;
-      var bk=null, at=''; 
-      try{ bk=localStorage.getItem(BK); at=localStorage.getItem(BT)||''; }catch(e){}
-      btn.hidden=!bk;
-      btn.title = bk ? ('نسختك المحفوظة'+(at?(' — '+at):'')) : '';
+    var K='darb-orange-friday-v2';
+    var doc=null, pend=null, pendT=null, writing=false, warned=false, started=false;
+
+    function flush(){
+      if(!doc || writing || pend===null) return;
+      var h=pend; pend=null; writing=true;
+      var body;
+      try{ body={html:darbStore.pack(h), at:Date.now()}; }
+      catch(e){ writing=false; return; }
+      doc.set(body).then(function(){
+        writing=false; if(pend!==null) flush();
+      },function(err){
+        writing=false;
+        var c=err&&err.code;
+        if(!warned && (c==='invalid_argument'||c==='quota_exceeded')){
+          warned=true;
+          ed.say('تعديلاتك محفوظة في المتصفّح، لكن ما قدرنا نحفظها على الخادم '+
+                 '(الملف صار كبيرًا). نزّلي الملف للاحتياط.', 18000, 'نزّلي الملف',
+                 function(){ var b=document.getElementById('dl'); if(b) b.click(); });
+        }
+      });
     }
-    window.darbRestoreBtn=refresh;
-    if(btn) btn.addEventListener('click',function(){
-      var bk=window.darbBackupRead();
-      if(!bk){ ed.say('ما فيه نسخة محفوظة.',4000); return; }
-      var now=ed.box.innerHTML;
-      if(!window.darbBackup(now)){ ed.say('ما قدرنا نحفظ الحالية، فما بدّلنا شيئًا.',9000); return; }
-      ed.show(bk); ed.keep(); refresh();
-      ed.say('رجّعنا نسختك. نفس الزرّ يبدّل بين النسختين، وما تضيع ولا وحدة.',10000);
-    });
-    refresh();
+    window.darbRemoteSave=function(html){
+      if(!doc) return;
+      pend=html; clearTimeout(pendT); pendT=setTimeout(flush, 2500);
+    };
+    window.darbRemoteFlush=function(){ clearTimeout(pendT); flush(); };
+
+    function go(){ if(started) return; started=true; try{ runSync(); }catch(e){} }
+
+    if(!(window.claude && window.claude.use)){ go(); return; }
+    var t=setTimeout(go, 11000);
+    window.claude.use('db').then(function(db){
+      if(!db) return;
+      doc=db.doc('deck/current');
+      return doc.get().then(function(snap){
+        if(!snap || !snap.exists) return;
+        var d=snap.data()||{};
+        if(!d.html) return;
+        var html=darbStore.unpack(String(d.html));
+        var had=null, localAt=0;
+        try{ had=localStorage.getItem(K); localAt=Number(localStorage.getItem(K+'-at')||0); }catch(e){}
+        if(had && Number(d.at||0)<=localAt) return;      /* المحفوظ هنا أحدث */
+        if(darbStore.norm(html)===darbStore.norm(ed.box.innerHTML)) return;
+        window.darbBackup(ed.box.innerHTML);
+        ed.show(html); ed.keep();
+        if(window.darbRestoreBtn) window.darbRestoreBtn();
+        ed.say('رجّعنا آخر نسخة حفظتِها. لو تبين اللي كان قبلها، زرّ «رجّعي نسختي».',11000);
+      });
+    }).catch(function(){}).then(function(){ clearTimeout(t); go(); });
   })();
 })();
 </script>
