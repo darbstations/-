@@ -218,7 +218,7 @@ function calc(c){
   const aff=sum('aff',i=>i.price), affDarb=sum('aff',i=>i.cost), affMargin=aff-affDarb;
   const D=c.disc||[], discVal=D.reduce((a,d)=>a+(+d.uses||0)*(+d.val||0),0);
   const vch=sum('vch',i=>i.price), vchDarb=sum('vch',i=>i.cost);
-  const price=+c.price||0, cust=washCust+prod+aff+vch, darb=washDarb+prodDarb+affDarb+vchDarb, fuel=+c.fuel||0, custAll=fuel+cust, net=custAll-darb, costPrice=fuel+darb+discVal;
+  const price=+c.price||0, cust=washCust+prod+aff+vch, darb=washDarb+prodDarb+affDarb+vchDarb, fuel=+c.fuel||0, custAll=fuel+cust, net=custAll-darb, costPrice=fuel+darb;
   return {fuel,custAll,net,washCust,washDarb,prod,prodDarb,aff,affDarb,vch,vchDarb,discVal,cust,darb,price,costPrice,profit:price-costPrice};
 }
 
@@ -265,7 +265,7 @@ function renderPkgs(){
           <td><input id="${pk.id}-dv${i}" data-g="val" type="number" min="0" step="0.5" value="${d.val}"></td>
           <td class="tot" id="${pk.id}-dt${i}"></td>
           <td><button type="button" class="x" data-deldisc="${i}" aria-label="حذف">×</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="hint">ما في خصومات مطاعم. اضغط «＋ خصم مطعم».</div>'}
-        <div class="hint">قيمة الخصم كاملة تنخصم من الباقة وتنقص ربحك.</div>
+        <div class="hint">خصومات المطاعم للمعلومة فقط، وما تدخل في حساب التكلفة والربح.</div>
       </div>
       <div class="sec">
         <div class="sum" id="${pk.id}-sum"></div>
@@ -292,7 +292,6 @@ function updatePkg(id){
     `<div class="hint" style="margin-top:8px;font-weight:600">تكلفة الباقة</div>`+
     row('<span class="dot" style="background:var(--fuel)"></span>بنزين',sar(r.fuel))+
     row('ما تدفعه درب','+ '+sar(r.darb))+
-    (r.discVal?row('<span class="dot" style="background:var(--disc)"></span>خصومات المطاعم','+ '+sar(r.discVal)):'')+
     row('سعر التكلفة',sar(r.costPrice),'border-top:1px solid var(--line);margin-top:4px;padding-top:6px;font-weight:700');
   const ok=r.profit>=0, el=$(`${id}-remain`);
   el.className='remain '+(ok?'ok':'bad');
@@ -303,9 +302,9 @@ function updatePkg(id){
     line(`<span class="dot" style="background:var(--wash)"></span>الغسلات (${nW}): ما يدفعه العميل`,r.washCust)+line('الغسلات: ما تدفعه درب',r.washDarb)+
     line(`<span class="dot" style="background:var(--prod)"></span>منتجات الشركاء (${nP}): ما يدفعه العميل`,r.prod)+line('منتجات الشركاء: ما تدفعه درب',r.prodDarb)+
     line(`<span class="dot" style="background:var(--vch)"></span>قسائم السوبرماركت (${p.items.filter(i=>i.kind==='vch').length}): ما يدفعه العميل`,r.vch)+line('قسائم السوبرماركت: ما تدفعه درب',r.vchDarb)+
-    line(`<span class="dot" style="background:var(--disc)"></span>خصومات المطاعم (${(p.disc||[]).length}): قيمة الخصم (تنخصم من الباقة)`,r.discVal)+
+    line(`<span class="dot" style="background:var(--disc)"></span>خصومات المطاعم (${(p.disc||[]).length}): قيمة الخصم (للمعلومة)`,r.discVal)+
     (showA?line(`<span class="dot" style="background:var(--aff)"></span>منتجات خارجية - أفلييت (${nA}): ما يدفعه العميل`,r.aff)+line('منتجات خارجية: ما تدفعه درب',r.affDarb):'')+
-    `<div class="hint">كل ما يدفعه العميل = البنزين + المنتجات والغسلات والقسائم (بدون خصم المطعم) · الناتج = كل ما يدفعه العميل − ما تدفعه درب · سعر التكلفة = البنزين + ما تدفعه درب + خصومات المطاعم · الربح = قيمة الباقة − سعر التكلفة</div>`;
+    `<div class="hint">كل ما يدفعه العميل = البنزين + المنتجات والغسلات والقسائم (بدون خصم المطعم) · الناتج = كل ما يدفعه العميل − ما تدفعه درب · سعر التكلفة = البنزين + ما تدفعه درب · الربح = قيمة الباقة − سعر التكلفة</div>`;
   renderPotential();
 }
 
@@ -315,10 +314,10 @@ function renderPotential(){
   if(!s.v){$('potTbl').innerHTML='<tr><td class="muted">لا توجد بيانات حركة لهذه المحطة.</td></tr>';return;}
   const rows=PK.map(pk=>{
     const cars=(pk.seg==='s'?s.s:s.f)*30, ad=(+c[pk.ad]||0)/100, n=cars*ad, p=c[pk.id], r=calc(p);
-    return {pk,cars,n,rev:n*r.price,fuel:n*(+p.fuel||0),cust:n*r.cust,darb:n*(r.darb+r.discVal),cost:n*r.costPrice,profit:n*r.profit};
+    return {pk,cars,n,rev:n*r.price,fuel:n*(+p.fuel||0),cust:n*r.cust,darb:n*r.darb,cost:n*r.costPrice,profit:n*r.profit};
   });
   const T=k=>rows.reduce((a,r)=>a+r[k],0);
-  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>ما يدفعه العملاء</th><th>ما تدفعه درب مع الخصومات</th><th>سعر التكلفة</th><th>ربحك</th></tr></thead><tbody>
+  $('potTbl').innerHTML=`<thead><tr><th>الباقة</th><th>سيارات مستهدفة / شهر</th><th>مشتركون / شهر</th><th>إيراد الباقات</th><th>منها بنزين</th><th>ما يدفعه العملاء</th><th>ما تدفعه درب</th><th>سعر التكلفة</th><th>ربحك</th></tr></thead><tbody>
   ${rows.map(r=>`<tr><td>${r.pk.name}</td><td>${fmt(r.cars)}</td><td>${fmt(r.n)}</td><td>${sar(r.rev)}</td><td>${sar(r.fuel)}</td><td>${sar(r.cust)}</td><td>${sar(r.darb)}</td><td>${sar(r.cost)}</td><td style="${r.profit<0?'color:var(--bad)':''}">${sar(r.profit)}</td></tr>`).join('')}
   <tr style="font-weight:700"><td>الإجمالي</td><td>${fmt((s.s+s.f)*30)}</td><td>${fmt(T('n'))}</td><td>${sar(T('rev'))}</td><td>${sar(T('fuel'))}</td><td>${sar(T('cust'))}</td><td>${sar(T('darb'))}</td><td>${sar(T('cost'))}</td><td>${sar(T('profit'))}</td></tr></tbody><caption class="hint" style="caption-side:bottom;text-align:right;padding-top:6px">باقة الأفراد للسيارة الكبيرة وباقة العائلات تستهدفان نفس السيارات الكبيرة، فالإجمالي يحسبها مرة وحدة.</caption>`;
 }
