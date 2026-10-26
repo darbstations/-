@@ -884,14 +884,19 @@ function darbEditor(opts){
         var d=snap.data()||{};
         if(!d.html) return;
         var html=darbStore.unpack(String(d.html));
-        var had=null, localAt=0;
-        try{ had=localStorage.getItem(K); localAt=Number(localStorage.getItem(K+'-at')||0); }catch(e){}
-        if(had && Number(d.at||0)<=localAt) return;      /* المحفوظ هنا أحدث */
+        var had=null;
+        try{ had=localStorage.getItem(K); }catch(e){}
         if(darbStore.norm(html)===darbStore.norm(ed.box.innerHTML)) return;
-        window.darbBackup(ed.box.innerHTML);
-        ed.show(html); ed.keep();
-        if(window.darbRestoreBtn) window.darbRestoreBtn();
-        ed.say('رجّعنا آخر نسخة حفظتِها. لو تبين اللي كان قبلها، زرّ «رجّعي نسختي».',11000);
+        function take(){
+          window.darbBackup(ed.box.innerHTML);
+          ed.show(html); ed.keep();
+          if(window.darbRestoreBtn) window.darbRestoreBtn();
+          ed.say('رجّعنا نسخة الخادم. زرّ «رجّعي نسختي» يبدّل بين الاثنتين.',10000);
+        }
+        if(!had){ take(); return; }     /* ما عندها شيء هنا: نرجّع نسخة الخادم */
+        /* عندها نسخة في هذا المتصفّح: لا نلمسها أبدًا بدون إذنها */
+        ed.say('فيه نسخة محفوظة على الخادم تختلف عن اللي عندك هنا.',
+               16000, 'افتحي نسخة الخادم', take);
       });
     }).catch(function(){}).then(function(){ clearTimeout(t); go(); });
   })();
