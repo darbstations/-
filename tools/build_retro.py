@@ -65,7 +65,7 @@ CUT_CAR_STATION = webp('cut-car-station.webp')
 LOGO_DARB = img('image-1-1.png')
 STATION = img('image-1-2.jpeg')
 CLOSE_ART = img('image-15-1.jpeg')
-CLIPS = [img('image-12-%d.jpeg' % i) for i in range(1, 7)]
+CLIPS = [webp('clips/c%d.webp' % i) for i in range(1, 9)]   # مقاطع المؤثّرين بالمشاهدات
 LOGOS = [img('image-13-%d.jpeg' % i) for i in range(1, 7)]
 INFL = [img('image-13-%d.jpeg' % i) for i in range(7, 13)]
 
@@ -346,6 +346,17 @@ p{margin:0}
 .grid6 img{width:100%;height:150px;object-fit:cover;border:5px solid var(--cream);
   border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
 .grid6.sm img{height:108px}
+
+/* شريط المقاطع: ثمانية إطارات في سطر واحد، ممتدّ على عرض الشريحة */
+.strip8{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;
+  margin:auto -54px 0;padding:14px 20px 16px;
+  background:rgba(253,245,222,.06);
+  border-top:3px solid var(--orange);border-bottom:3px solid var(--orange)}
+.strip8 img{width:100%;aspect-ratio:252/357;object-fit:cover;display:block;
+  border:4px solid var(--cream);border-radius:3px;
+  box-shadow:0 6px 16px rgba(20,18,16,.38)}
+.strip8 img:nth-child(odd){transform:rotate(-1.2deg)}
+.strip8 img:nth-child(even){transform:rotate(1deg)}
 .grid6 > *:nth-child(odd) img{transform:rotate(-1.4deg)}
 .grid6 > *:nth-child(even) img{transform:rotate(1.2deg)}
 .logos{display:grid;grid-template-columns:repeat(5,1fr);gap:var(--s3) var(--s3);
@@ -589,8 +600,9 @@ SLIDES.append("""
     <div class="chip"><b>١١</b><span>محطة</span></div>
     <div class="chip"><b>١٠٠٠</b><span>كوبون لكل شريك</span></div>
   </div>
-  <p class="lede">نفكّر ونكتب ونصوّر ونجهّز مقطعًا خاصًا لكل شريك. أمثلة حقيقية من حسابات درب:</p>
-  <div class="grid6">%s</div>
+  <p class="lede">نفكّر ونكتب ونصوّر ونجهّز مقطعًا خاصًا لكل شريك. أمثلة حقيقية من حسابات درب،
+    وعدد المشاهدات ظاهر على كل مقطع:</p>
+  <div class="strip8">%s</div>
 </section>""" % ''.join('<img src="%s" alt="">' % c for c in CLIPS))
 
 # ٧ · الشركاء
@@ -810,10 +822,10 @@ var CSSTEXT=(function(){
     ed.say('هذا تصميم جديد بهوية الجمعة البرتقالية. نسختك من التصميم السابق محفوظة '+
            'ولم تُحذف — قولي لي إن أردتِ نصًّا منها.', 13000);
   })();
-  /* شريحتان تغيّرتا: الغلاف وشريحة الشركاء. إن كان عندها نسخة محفوظة نستبدل
-     هاتين الشريحتين فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
+  /* الشرائح التي تغيّر شكلها: الغلاف، والشركاء، ومقاطع المؤثّرين. إن كان عندها
+     نسخة محفوظة نستبدل هذه الشرائح فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
   (function(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+logos-v1';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+logos+clips-v1';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
@@ -825,16 +837,17 @@ var CSSTEXT=(function(){
     var fresh=tmp.querySelectorAll('section.pg');
     if(pgs.length!==fresh.length) return;        /* حذفت أو أضافت شريحة: لا نلمس شيئًا */
     for(i=0;i<pgs.length;i++){
-      var isCover=pgs[i].classList.contains('cover');
-      var isLogos=!!pgs[i].querySelector('.logos');
-      if(!isCover && !isLogos) continue;
+      var f=fresh[i];
+      var hit=f.classList.contains('cover') || f.querySelector('.logos')
+              || f.querySelector('.strip8');
+      if(!hit) continue;
       if(pgs[i].outerHTML===fresh[i].outerHTML) continue;
       at.push(i); old.push(pgs[i].outerHTML);
       pgs[i].outerHTML=fresh[i].outerHTML;
     }
     if(!at.length) return;
     ed.mark(); ed.snap(); ed.keep();
-    ed.say('حدّثنا الغلاف وشريحة الشركاء فقط. بقية تعديلاتك كما هي.',
+    ed.say('حدّثنا الغلاف وشريحة الشركاء وشريحة المقاطع فقط. بقية تعديلاتك كما هي.',
       14000, 'رجّعي شرائحي القديمة', function(){
         var p=ed.box.querySelectorAll('section.pg'), j;
         for(j=0;j<at.length;j++) if(p[at[j]]) p[at[j]].outerHTML=old[j];
