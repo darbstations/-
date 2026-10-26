@@ -124,6 +124,7 @@ table.prod{min-width:540px}
       <div id="savedList"></div>
     </div>
     <div style="min-width:0">
+      <div id="stnStats"></div>
       <div class="partners" id="stnPartners"></div>
     </div>
   </section>
@@ -131,6 +132,7 @@ table.prod{min-width:540px}
   <section class="pkgs" id="pkgs"></section>
 
 
+  <p class="hint">مصدر نسب السيارات: تقدير من ملف تحليل المحطات (الزيارات ومزيج الوقود ومتوسط التعبئة) بافتراض أن 35٪ من سيارات البنزين عائلية كبيرة في المتوسط، والديزل شاحنات وحافلات. الشركاء من ملف Darb Units.</p>
 </div>
 <div class="toast" id="toast" hidden></div>
 
@@ -181,6 +183,19 @@ function renderStation(){
   const s=cur, tot=s.v||0;
   const allP=CATS.reduce((a,[k])=>a+s.p[k].length,0);
   $('stnMeta').textContent=`${allP} شريك في المحطة`+(s.v?` · ${fmt(s.v)} زيارة يوميًا`:'');
+  if(s.v){
+    const ps=s.s/tot*100, pf=s.f/tot*100, ph=s.h/tot*100;
+    $('stnStats').innerHTML=`<div class="stats">
+      <div class="stat s"><div class="k">سيارات صغيرة / شهر</div><div class="v num">${fmt(s.s*30)}</div><div class="k num">${ps.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat fm"><div class="k">عائلية كبيرة / شهر</div><div class="v num">${fmt(s.f*30)}</div><div class="k num">${pf.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat h"><div class="k">شاحنات وحافلات / شهر</div><div class="v num">${fmt(s.h*30)}</div><div class="k num">${ph.toFixed(0)}٪ من الحركة</div></div>
+      <div class="stat"><div class="k">إجمالي الزيارات / شهر</div><div class="v num">${fmt(tot*30)}</div><div class="k">تقدير</div></div>
+    </div>
+    <div class="mix" aria-hidden="true"><i style="width:${ps}%;background:var(--fuel)"></i><i style="width:${pf}%;background:var(--accent)"></i><i style="width:${ph}%;background:var(--ink2)"></i></div>
+    <div class="legend"><span><b style="background:var(--fuel)"></b>صغيرة</span><span><b style="background:var(--accent)"></b>عائلية كبيرة (بنزين)</span><span><b style="background:var(--ink2)"></b>شاحنات وحافلات (ديزل)</span></div>`;
+  } else {
+    $('stnStats').innerHTML=`<div class="nodata">لا توجد بيانات مبيعات لهذه المحطة في ملف التحليل، لذلك لا تظهر نسب السيارات. تقدر تبني الباقات عادي.</div>`;
+  }
   $('stnPartners').innerHTML=CATS.map(([k,t])=>`<div class="pcat"><span class="t">${t}</span><span>${s.p[k].length?s.p[k].map(x=>`<span class="chip">${esc(x)}</span>`).join(''):'<span class="muted" style="font-size:12.5px">لا يوجد</span>'}</span></div>`).join('');
 }
 
