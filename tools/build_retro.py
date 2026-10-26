@@ -731,6 +731,36 @@ SAY_NEW = """  function say(m,ms,actLabel,actFn){
 assert SAY_OLD in EDITOR, 'say() not found in the borrowed editor'
 EDITOR = EDITOR.replace(SAY_OLD, SAY_NEW, 1)
 
+# الملف ٣ ميجابايت تقريبًا بصوره، وقد لا يسعه تخزين المتصفّح. نمرّر الحفظ
+# والقراءة عبر darbStore: يضغط الصور إلى رموز قصيرة، ويصرخ إن فشل الحفظ.
+KEEP_OLD = """  function keep(){
+    try{
+      localStorage.setItem(opts.key, box.innerHTML);
+      var d=new Date();
+      if(dot){ dot.textContent='محفوظ '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+               dot.className='savedot ok'; }
+    }catch(e){ if(dot){ dot.textContent='تعذّر الحفظ'; dot.className='savedot'; } }
+  }"""
+KEEP_NEW = """  function keep(){
+    try{
+      if(!darbStore.set(opts.key, box.innerHTML)) throw new Error('store');
+      var d=new Date();
+      if(dot){ dot.textContent='محفوظ '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+               dot.className='savedot ok'; }
+    }catch(e){
+      if(dot){ dot.textContent='تعذّر الحفظ'; dot.className='savedot'; }
+      say('ما قدرنا نحفظ تعديلاتك في المتصفّح. نزّلي الملف الآن عشان ما تضيع.',20000,
+          'نزّلي الملف', function(){ opts.download(api); });
+    }
+  }"""
+assert KEEP_OLD in EDITOR, 'keep() not found in the borrowed editor'
+EDITOR = EDITOR.replace(KEEP_OLD, KEEP_NEW, 1)
+
+LOAD_OLD = "  var saved=null; try{ saved=localStorage.getItem(opts.key); }catch(e){}"
+LOAD_NEW = "  var saved=null; try{ saved=darbStore.get(opts.key); }catch(e){}"
+assert LOAD_OLD in EDITOR, 'load line not found in the borrowed editor'
+EDITOR = EDITOR.replace(LOAD_OLD, LOAD_NEW, 1)
+
 chrome_css = src.split('<style id="darbcss">', 1)[1].split('</style>', 1)[0]
 CHROME = chrome_css[chrome_css.index('/* ---------- picker ----------'):]
 
@@ -742,6 +772,7 @@ BODY = """
     <button type="button" id="undo" class="ghost" hidden disabled>↶ تراجع</button>
     <button type="button" id="redo" class="ghost" hidden disabled>↷ إعادة</button>
     <button type="button" id="reset" class="ghost" hidden>استعادة الأصل</button>
+    <button type="button" id="restore" class="ghost" hidden>↩ رجّعي نسختي</button>
     <button type="button" id="dl">تنزيل الملف للشريك</button>
     <button type="button" class="ghost" id="pr">طباعة / PDF</button>
     <span class="savedot" id="savedot">جاهز</span>
@@ -785,6 +816,55 @@ var CSSTEXT=(function(){
     if(all[i].textContent.indexOf('.pg{')>=0) out+=all[i].outerHTML;
   return out || (all.length?all[all.length-1].outerHTML:'');
 })();
+
+/* تخزين مضغوط: كل صورة من الأصل تصير رمزًا قصيرًا، فينحفظ الملف كلّه
+   في أقلّ من ٢٠ كيلوبايت بدل ٣ ميجابايت، ولا تمتلئ مساحة المتصفّح. */
+var darbStore=(function(){
+  var IMG=null, MARK='\u0002';
+  function imgs(){
+    if(IMG) return IMG;
+    IMG=[]; var re=/data:image\/[a-z]+;base64,[A-Za-z0-9+\/=]+/g, x;
+    while((x=re.exec(DECK))!==null) if(IMG.indexOf(x[0])<0) IMG.push(x[0]);
+    return IMG;
+  }
+  function pack(h){ var m=imgs(), i;
+    for(i=0;i<m.length;i++) h=h.split(m[i]).join('\u0001'+i+'\u0001'); return h; }
+  function unpack(h){ var m=imgs(), i;
+    for(i=0;i<m.length;i++) h=h.split('\u0001'+i+'\u0001').join(m[i]); return h; }
+  var DNORM=null;
+  /* الأصل بعد تمريره على المتصفّح، عشان المقارنة تكون بنفس الصياغة
+     (المتصفّح يكتب <path></path> بينما المصدر يكتب <path/>). */
+  function deckNorm(){
+    if(DNORM===null){
+      var d=document.createElement('div');
+      d.innerHTML=DECK; DNORM=norm(d.innerHTML); d.innerHTML='';
+    }
+    return DNORM;
+  }
+  function norm(h){
+    return String(h)
+      .replace(/ data-block="[^"]*"/g,'')
+      .replace(/ contenteditable="[^"]*"/g,'')
+      .replace(/ class="([^"]*)"/g,function(m,c){
+        var out=[], parts=c.split(/\s+/), i;
+        for(i=0;i<parts.length;i++) if(parts[i] && parts[i]!=='hot') out.push(parts[i]);
+        return out.length ? (' class="'+out.join(' ')+'"') : '';
+      });
+  }
+  return {
+    pack:pack, unpack:unpack, norm:norm, deckNorm:deckNorm,
+    set:function(k,h){
+      try{ localStorage.setItem(k, MARK+pack(h)); return true; }catch(e){}
+      try{ localStorage.setItem(k, h); return true; }catch(e){}
+      return false;
+    },
+    get:function(k){
+      var v=null; try{ v=localStorage.getItem(k); }catch(e){}
+      if(v===null||v===undefined) return null;
+      return v.charAt(0)===MARK ? unpack(v.slice(1)) : v;
+    }
+  };
+})();
 %s
 (function(){
   function clean(h){
@@ -822,6 +902,29 @@ var CSSTEXT=(function(){
     ed.say('هذا تصميم جديد بهوية الجمعة البرتقالية. نسختك من التصميم السابق محفوظة '+
            'ولم تُحذف — قولي لي إن أردتِ نصًّا منها.', 13000);
   })();
+  /* حفظ إضافي عند إغلاق الصفحة أو الانتقال عنها، لو ما لحق الحفظ التلقائي.
+     لا نحفظ شيئًا لو ما فيه تعديل فعلي، حتى تصلها تحديثات الملف لاحقًا. */
+  ['pagehide','visibilitychange'].forEach(function(ev){
+    window.addEventListener(ev, function(){
+      if(ev==='visibilitychange' && document.visibilityState!=='hidden') return;
+      try{
+        var had=null; try{ had=localStorage.getItem('darb-orange-friday-v2'); }catch(e){}
+        if(!had && darbStore.norm(ed.box.innerHTML)===darbStore.deckNorm()) return;
+        ed.keep();
+      }catch(e){}
+    });
+  });
+  setTimeout(function(){ try{ darbStore.deckNorm(); }catch(e){} }, 1500);
+  /* النسخة الاحتياطية تُخزَّن مضغوطة أيضًا، فما تزاحم المحفوظ الأساسي. */
+  (function(){
+    var K='darb-orange-friday-v2', BK=K+'-backup', BT=K+'-backup-at';
+    window.darbBackup=function(html){
+      if(!darbStore.set(BK, html)) return false;
+      try{ localStorage.setItem(BT, new Date().toLocaleString('ar')); }catch(e){}
+      return true;
+    };
+    window.darbBackupRead=function(){ return darbStore.get(BK); };
+  })();
   /* الشرائح التي تغيّر شكلها: الغلاف، والشركاء، ومقاطع المؤثّرين. إن كان عندها
      نسخة محفوظة نستبدل هذه الشرائح فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
   (function(){
@@ -840,12 +943,19 @@ var CSSTEXT=(function(){
       var f=fresh[i];
       var hit=f.classList.contains('cover') || f.querySelector('.logos')
               || f.querySelector('.strip8');
-      if(!hit) continue;
-      if(pgs[i].outerHTML===fresh[i].outerHTML) continue;
-      at.push(i); old.push(pgs[i].outerHTML);
-      pgs[i].outerHTML=fresh[i].outerHTML;
+      if(hit && darbStore.norm(pgs[i].outerHTML)!==darbStore.norm(f.outerHTML)) at.push(i);
     }
-    if(!at.length) return;
+    if(!at.length) return;                       /* ما فيه فرق: لا نلمس شيئًا */
+    if(!window.darbBackup(saved)){
+      ed.say('ما قدرنا نحفظ نسخة احتياطية (مساحة المتصفّح ممتلئة)، فما غيّرنا شيئًا. '+
+             'نزّلي الملف أولًا ثم افتحي الصفحة من جديد.', 20000);
+      try{ localStorage.removeItem(SK); }catch(e){}
+      return;
+    }
+    for(i=0;i<at.length;i++){
+      old.push(pgs[at[i]].outerHTML);
+      pgs[at[i]].outerHTML=fresh[at[i]].outerHTML;
+    }
     ed.mark(); ed.snap(); ed.keep();
     ed.say('حدّثنا الغلاف وشريحة الشركاء وشريحة المقاطع فقط. بقية تعديلاتك كما هي.',
       14000, 'رجّعي شرائحي القديمة', function(){
@@ -854,6 +964,30 @@ var CSSTEXT=(function(){
         ed.mark(); ed.snap(); ed.keep();
         ed.say('رجّعنا شرائحك القديمة.',5000);
       });
+    if(window.darbRestoreBtn) window.darbRestoreBtn();
+  })();
+  /* زرّ دائم: يبدّل بين نسختك قبل آخر تحديث والنسخة الحالية. لا يضيع أيّ منهما،
+     لأنّ كل ضغطة تحفظ الحالية مكان المحفوظة. */
+  (function(){
+    var K='darb-orange-friday-v2', BK=K+'-backup', BT=K+'-backup-at';
+    var btn=document.getElementById('restore');
+    function refresh(){
+      if(!btn) return;
+      var bk=null, at=''; 
+      try{ bk=localStorage.getItem(BK); at=localStorage.getItem(BT)||''; }catch(e){}
+      btn.hidden=!bk;
+      btn.title = bk ? ('نسختك المحفوظة'+(at?(' — '+at):'')) : '';
+    }
+    window.darbRestoreBtn=refresh;
+    if(btn) btn.addEventListener('click',function(){
+      var bk=window.darbBackupRead();
+      if(!bk){ ed.say('ما فيه نسخة محفوظة.',4000); return; }
+      var now=ed.box.innerHTML;
+      if(!window.darbBackup(now)){ ed.say('ما قدرنا نحفظ الحالية، فما بدّلنا شيئًا.',9000); return; }
+      ed.show(bk); ed.keep(); refresh();
+      ed.say('رجّعنا نسختك. نفس الزرّ يبدّل بين النسختين، وما تضيع ولا وحدة.',10000);
+    });
+    refresh();
   })();
 })();
 </script>"""
