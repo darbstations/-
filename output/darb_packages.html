@@ -5,18 +5,18 @@
 /* Layout: station strip on top, two package builders side by side, each with a live budget gauge */
 :root{
   --bg:#F6F5F3; --surface:#FFFFFF; --ink:#24201C; --ink2:#6B645C; --line:#E4E0DA;
-  --accent:#E8631A; --accent-soft:#FDEBDD; --fuel:#3E6E8E; --wash:#2F9C95; --prod:#E8631A; --darb:#7A5AA8; --aff:#B0457B; --disc:#8A6D1F;
+  --accent:#E8631A; --accent-soft:#FDEBDD; --fuel:#3E6E8E; --wash:#2F9C95; --prod:#E8631A; --darb:#7A5AA8; --aff:#B0457B; --disc:#8A6D1F; --vch:#4F7A28;
   --ok:#2E7D4F; --ok-soft:#E3F2E8; --bad:#C0392B; --bad-soft:#FBE4E1;
   --display:'Readex Pro','IBM Plex Sans Arabic',Tahoma,sans-serif;
   --body:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
-  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0; --aff:#E58AB8; --disc:#D9B44A;
+  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0; --aff:#E58AB8; --disc:#D9B44A; --vch:#9CCB6B;
   --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; --bad-soft:#3D1F1B; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
-  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0; --aff:#E58AB8; --disc:#D9B44A;
+  --accent:#F38A4A; --accent-soft:#3D2717; --fuel:#7FAED0; --wash:#5CC6BE; --prod:#F38A4A; --darb:#B49AE0; --aff:#E58AB8; --disc:#D9B44A; --vch:#9CCB6B;
   --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; --bad-soft:#3D1F1B; color-scheme:dark}
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -217,10 +217,12 @@ function calc(c){
   const prod=sum('prod',i=>i.price), prodDarb=sum('prod',i=>i.cost), prodMargin=prod-prodDarb;
   const aff=sum('aff',i=>i.price), affDarb=sum('aff',i=>i.cost), affMargin=aff-affDarb;
   const D=c.disc||[], discVal=D.reduce((a,d)=>a+(+d.uses||0)*(+d.val||0),0), discDarb=D.reduce((a,d)=>a+(+d.uses||0)*(+d.darb||0),0);
-  const price=+c.price||0, cust=washCust+prod+aff, darb=washDarb+prodDarb+affDarb+discDarb, costPrice=price-cust+darb;
-  return {washCust,washDarb,prod,prodDarb,aff,affDarb,discVal,discDarb,discRest:discVal-discDarb,cust,darb,price,costPrice,profit:price-costPrice};
+  const vch=sum('vch',i=>i.price), vchDarb=sum('vch',i=>i.cost);
+  const price=+c.price||0, cust=washCust+prod+aff+vch+discVal, darb=washDarb+prodDarb+affDarb+vchDarb+discDarb, costPrice=price-cust+darb;
+  return {washCust,washDarb,prod,prodDarb,aff,affDarb,vch,vchDarb,discVal,discDarb,discRest:discVal-discDarb,cust,darb,price,costPrice,profit:price-costPrice};
 }
 
+function mktOptions(){return cur.p.mkt.map(x=>`<option value="${esc(x)}"></option>`).join('');}
 function restOptions(){return cur.p.rest.map(x=>`<option value="${esc(x)}"></option>`).join('');}
 function partnerOptions(){
   return CATS.flatMap(([k,t])=>cur.p[k].map(x=>`<option value="${esc(x)}">${t}</option>`)).join('');
@@ -238,12 +240,12 @@ function renderPkgs(){
         <label class="f"><span><span class="dot" style="background:var(--fuel)"></span>منها بنزين (ر.س)</span><input id="${pk.id}-fuel" data-k="fuel" type="number" min="0" step="10" value="${p.fuel}"></label>
       </div>
       <div class="sec">
-        <div class="sec-h"><h3><span class="dot" style="background:var(--prod)"></span>${pk.id==='fam'?'منتجات الشركاء والغسلات والأفلييت':'منتجات الشركاء والغسلات'}</h3><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button type="button" class="pri" data-add="${pk.id}" data-kind="prod">＋ منتج</button><button type="button" class="pri" data-add="${pk.id}" data-kind="wash" style="background:var(--wash);border-color:var(--wash)">＋ غسلة</button>${pk.id==='fam'?'<button type="button" class="pri" data-add="fam" data-kind="aff" style="background:var(--aff);border-color:var(--aff)">＋ منتج خارجي (أفلييت)</button>':''}</div></div>
+        <div class="sec-h"><h3><span class="dot" style="background:var(--prod)"></span>${pk.id==='fam'?'منتجات الشركاء والغسلات والقسائم والأفلييت':'منتجات الشركاء والغسلات والقسائم'}</h3><div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end"><button type="button" class="pri" data-add="${pk.id}" data-kind="prod">＋ منتج</button><button type="button" class="pri" data-add="${pk.id}" data-kind="wash" style="background:var(--wash);border-color:var(--wash)">＋ غسلة</button><button type="button" class="pri" data-add="${pk.id}" data-kind="vch" style="background:var(--vch);border-color:var(--vch)">＋ قسيمة سوبرماركت</button>${pk.id==='fam'?'<button type="button" class="pri" data-add="fam" data-kind="aff" style="background:var(--aff);border-color:var(--aff)">＋ منتج خارجي (أفلييت)</button>':''}</div></div>
         <div class="tbl"><table class="prod"><thead><tr><th>النوع</th><th>الشريك</th><th>المنتج / نوع الغسيل</th><th>العدد</th><th>ما يدفعه العميل</th><th>ما تدفعه درب</th><th style="text-align:left">إجمالي العميل</th><th style="text-align:left">إجمالي درب</th><th></th></tr></thead>
-        <tbody id="${pk.id}-items">${p.items.map((it,i)=>{const kd=it.kind||'prod',w=kd==='wash',af=kd==='aff';return `<tr data-i="${i}">
-          <td><select id="${pk.id}-k${i}" data-f="kind" aria-label="النوع" style="border-color:${w?'var(--wash)':af?'var(--aff)':'var(--line)'}"><option value="prod"${kd==='prod'?' selected':''}>منتج</option><option value="wash"${w?' selected':''}>غسلة</option>${pk.id==='fam'||af?`<option value="aff"${af?' selected':''}>خارجي (أفلييت)</option>`:''}</select></td>
-          <td><input id="${pk.id}-p${i}" data-f="partner" ${af?'':'list="plist"'} value="${esc(it.partner||'')}" placeholder="${af?'اسم الجهة الخارجية':'اختر أو اكتب'}"></td>
-          <td>${w?`<select id="${pk.id}-n${i}" data-f="item" aria-label="نوع الغسيل">${(WASH_TYPES.includes(it.item)||!it.item?WASH_TYPES:[it.item,...WASH_TYPES]).map(t=>`<option${t===it.item?' selected':''}>${esc(t)}</option>`).join('')}<option value="__other">نوع آخر…</option></select>`:`<input id="${pk.id}-n${i}" data-f="item" value="${esc(it.item||'')}" placeholder="${af?'المنتج الخارجي':'مثال: وجبة'}">`}</td>
+        <tbody id="${pk.id}-items">${p.items.map((it,i)=>{const kd=it.kind||'prod',w=kd==='wash',af=kd==='aff',vc=kd==='vch';return `<tr data-i="${i}">
+          <td><select id="${pk.id}-k${i}" data-f="kind" aria-label="النوع" style="border-color:${w?'var(--wash)':af?'var(--aff)':vc?'var(--vch)':'var(--line)'}"><option value="prod"${kd==='prod'?' selected':''}>منتج</option><option value="wash"${w?' selected':''}>غسلة</option><option value="vch"${vc?' selected':''}>قسيمة سوبرماركت</option>${pk.id==='fam'||af?`<option value="aff"${af?' selected':''}>خارجي (أفلييت)</option>`:''}</select></td>
+          <td><input id="${pk.id}-p${i}" data-f="partner" ${af?'':vc?'list="mlist"':'list="plist"'} value="${esc(it.partner||'')}" placeholder="${af?'اسم الجهة الخارجية':vc?'السوبرماركت':'اختر أو اكتب'}"></td>
+          <td>${w?`<select id="${pk.id}-n${i}" data-f="item" aria-label="نوع الغسيل">${(WASH_TYPES.includes(it.item)||!it.item?WASH_TYPES:[it.item,...WASH_TYPES]).map(t=>`<option${t===it.item?' selected':''}>${esc(t)}</option>`).join('')}<option value="__other">نوع آخر…</option></select>`:`<input id="${pk.id}-n${i}" data-f="item" value="${esc(it.item||'')}" placeholder="${af?'المنتج الخارجي':vc?'مثال: قسيمة 50 ريال':'مثال: وجبة'}">`}</td>
           <td><input id="${pk.id}-q${i}" data-f="qty" type="number" min="0" step="1" value="${it.qty}"></td>
           <td><input id="${pk.id}-r${i}" data-f="price" type="number" min="0" step="0.5" value="${it.price}"></td>
           <td><input id="${pk.id}-c${i}" data-f="cost" type="number" min="0" step="0.5" value="${it.cost??''}" placeholder="0"></td>
@@ -256,7 +258,7 @@ function renderPkgs(){
       </div>
       <div class="sec">
         <div class="sec-h"><h3><span class="dot" style="background:var(--disc)"></span>خصومات المطاعم</h3><button type="button" class="pri" data-adddisc="${pk.id}" style="background:var(--disc);border-color:var(--disc)">＋ خصم مطعم</button></div>
-        ${(p.disc||[]).length?`<div class="tbl"><table class="prod disc"><thead><tr><th>المطعم</th><th>الخصم</th><th>مرات الاستخدام</th><th>قيمة الخصم للمرة</th><th>ما تدفعه درب للمرة</th><th style="text-align:left">إجمالي الخصم</th><th style="text-align:left">إجمالي درب</th><th></th></tr></thead><tbody>${p.disc.map((d,i)=>`<tr data-j="${i}">
+        ${(p.disc||[]).length?`<div class="tbl"><table class="prod disc"><thead><tr><th>المطعم</th><th>الخصم</th><th>مرات الاستخدام</th><th>قيمة الخصم على العميل للمرة</th><th>ما تدفعه درب للمرة</th><th style="text-align:left">إجمالي الخصم</th><th style="text-align:left">إجمالي درب</th><th></th></tr></thead><tbody>${p.disc.map((d,i)=>`<tr data-j="${i}">
           <td><input id="${pk.id}-dr${i}" data-g="rest" list="rlist" value="${esc(d.rest||'')}" placeholder="اختر أو اكتب"></td>
           <td><input id="${pk.id}-dd${i}" data-g="desc" value="${esc(d.desc||'')}" placeholder="مثال: 20٪ على الوجبات"></td>
           <td><input id="${pk.id}-du${i}" data-g="uses" type="number" min="0" step="1" value="${d.uses}"></td>
@@ -265,14 +267,14 @@ function renderPkgs(){
           <td class="tot" id="${pk.id}-dt${i}"></td>
           <td class="tot" id="${pk.id}-dm${i}"></td>
           <td><button type="button" class="x" data-deldisc="${i}" aria-label="حذف">×</button></td></tr>`).join('')}</tbody></table></div>`:'<div class="hint">ما في خصومات مطاعم. اضغط «＋ خصم مطعم».</div>'}
-        <div class="hint">قيمة الخصم يستفيد منها العميل عند المطعم، وما تدفعه درب منها يُضاف على سعر التكلفة، والباقي على المطعم.</div>
+        <div class="hint">قيمة الخصم على العميل تُطرح من الباقة مثل ما يدفعه العميل، وما تدفعه درب منها يُضاف على سعر التكلفة.</div>
       </div>
       <div class="sec">
         <div class="sum" id="${pk.id}-sum"></div>
         <div class="remain" id="${pk.id}-remain"></div>
         <div class="darbbox" id="${pk.id}-darb"></div>
       </div>
-    </article>`}).join('')+`<datalist id="plist">${partnerOptions()}</datalist><datalist id="rlist">${restOptions()}</datalist>`;
+    </article>`}).join('')+`<datalist id="plist">${partnerOptions()}</datalist><datalist id="rlist">${restOptions()}</datalist><datalist id="mlist">${mktOptions()}</datalist>`;
   PK.forEach(pk=>updatePkg(pk.id));
 }
 
@@ -285,7 +287,7 @@ function updatePkg(id){
   $(`${id}-sum`).innerHTML=
     row('قيمة الباقة',sar(r.price))+
     row('<span class="dot" style="background:var(--fuel)"></span>منها بنزين',sar(+p.fuel||0))+
-    row('ما يدفعه العميل للغسلات والمنتجات','− '+sar(r.cust))+
+    row('ما يدفعه العميل (منتجات وغسلات وقسائم وخصومات)','− '+sar(r.cust))+
     row('ما تدفعه درب','+ '+sar(r.darb))+
     row('سعر التكلفة',sar(r.costPrice),'border-top:1px solid var(--line);margin-top:4px;padding-top:6px;font-weight:700');
   const ok=r.profit>=0, el=$(`${id}-remain`);
@@ -296,7 +298,8 @@ function updatePkg(id){
     `<div class="hint" style="font-weight:600">التفصيل</div>`+
     line(`<span class="dot" style="background:var(--wash)"></span>الغسلات (${nW}): ما يدفعه العميل`,r.washCust)+line('الغسلات: ما تدفعه درب',r.washDarb)+
     line(`<span class="dot" style="background:var(--prod)"></span>منتجات الشركاء (${nP}): ما يدفعه العميل`,r.prod)+line('منتجات الشركاء: ما تدفعه درب',r.prodDarb)+
-    line(`<span class="dot" style="background:var(--disc)"></span>خصومات المطاعم (${(p.disc||[]).length}): قيمة الخصم للعميل`,r.discVal)+line('خصومات المطاعم: ما تدفعه درب',r.discDarb)+line('خصومات المطاعم: على المطعم',r.discRest)+
+    line(`<span class="dot" style="background:var(--vch)"></span>قسائم السوبرماركت (${p.items.filter(i=>i.kind==='vch').length}): ما يدفعه العميل`,r.vch)+line('قسائم السوبرماركت: ما تدفعه درب',r.vchDarb)+
+    line(`<span class="dot" style="background:var(--disc)"></span>خصومات المطاعم (${(p.disc||[]).length}): قيمة الخصم على العميل`,r.discVal)+line('خصومات المطاعم: ما تدفعه درب',r.discDarb)+
     (showA?line(`<span class="dot" style="background:var(--aff)"></span>منتجات خارجية - أفلييت (${nA}): ما يدفعه العميل`,r.aff)+line('منتجات خارجية: ما تدفعه درب',r.affDarb):'')+
     `<div class="hint">سعر التكلفة = قيمة الباقة − ما يدفعه العميل + ما تدفعه درب · الربح = قيمة الباقة − سعر التكلفة</div>`;
   renderPotential();
@@ -347,8 +350,8 @@ $('copyBtn').addEventListener('click',()=>{
     L.push('',pk.name,['نبذة',(p.desc||'').replace(/\s+/g,' ')].join('\t'),['قيمة الباقة',p.price].join('\t'),['بنزين',p.fuel].join('\t'),
       ['ما يدفعه العميل',r.cust].join('\t'),['ما تدفعه درب',r.darb].join('\t'),['سعر التكلفة',r.costPrice].join('\t'),['ربحك من الباقة',r.profit].join('\t'),
       ['النوع','الشريك','المنتج / نوع الغسيل','العدد','ما يدفعه العميل','ما تدفعه درب','إجمالي العميل','إجمالي درب'].join('\t'));
-    if((p.disc||[]).length){L.push(['خصومات المطاعم'].join('\t'),['المطعم','الخصم','مرات الاستخدام','قيمة الخصم للمرة','ما تدفعه درب للمرة','إجمالي الخصم','إجمالي درب'].join('\t'));p.disc.forEach(d=>L.push([d.rest,d.desc,d.uses,d.val,d.darb,(+d.uses||0)*(+d.val||0),(+d.uses||0)*(+d.darb||0)].join('\t')));L.push(['النوع','الشريك','المنتج / نوع الغسيل','العدد','ما يدفعه العميل','ما تدفعه درب','إجمالي العميل','إجمالي درب'].join('\t'));}
-    p.items.forEach(i=>L.push([i.kind==='wash'?'غسلة':i.kind==='aff'?'منتج خارجي (أفلييت)':'منتج',i.partner,i.item,i.qty,i.price,i.cost||0,(+i.qty||0)*(+i.price||0),(+i.qty||0)*(+i.cost||0)].join('\t')));});
+    if((p.disc||[]).length){L.push(['خصومات المطاعم'].join('\t'),['المطعم','الخصم','مرات الاستخدام','قيمة الخصم على العميل للمرة','ما تدفعه درب للمرة','إجمالي الخصم','إجمالي درب'].join('\t'));p.disc.forEach(d=>L.push([d.rest,d.desc,d.uses,d.val,d.darb,(+d.uses||0)*(+d.val||0),(+d.uses||0)*(+d.darb||0)].join('\t')));L.push(['النوع','الشريك','المنتج / نوع الغسيل','العدد','ما يدفعه العميل','ما تدفعه درب','إجمالي العميل','إجمالي درب'].join('\t'));}
+    p.items.forEach(i=>L.push([i.kind==='wash'?'غسلة':i.kind==='aff'?'منتج خارجي (أفلييت)':i.kind==='vch'?'قسيمة سوبرماركت':'منتج',i.partner,i.item,i.qty,i.price,i.cost||0,(+i.qty||0)*(+i.price||0),(+i.qty||0)*(+i.cost||0)].join('\t')));});
   const txt=L.join('\n');
   const done=()=>toast('نُسخ الملخص، الصقه في إكسل');
   try{navigator.clipboard.writeText(txt).then(done,()=>fallback(txt))}catch(e){fallback(txt)}
