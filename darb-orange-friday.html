@@ -141,7 +141,7 @@ p{margin:0}
 .cover::before{opacity:.2}
 .cover .in{position:relative;z-index:1;display:flex;flex-direction:column;
   justify-content:center;align-items:flex-start;text-align:start;
-  padding:52px 56px 108px}
+  padding:48px 56px 44px}
 .cover .in::before{content:"";position:absolute;inset:0;pointer-events:none;
   background:radial-gradient(135% 100% at 0% 64%,rgba(252,108,5,.22),rgba(252,108,5,0) 58%)}
 .cover .in > *{position:relative}
@@ -154,9 +154,10 @@ p{margin:0}
   align-self:flex-start}
 .cover .sub{margin:var(--s3) 0 0;font-size:14.5px;line-height:1.8;font-weight:600;
   color:var(--g300)}
-.cover .foot2{position:absolute;inset-inline-start:56px;inset-inline-end:56px;
-  bottom:34px;display:flex;align-items:center;gap:13px;padding-top:var(--s3);
-  border-top:2px solid var(--g700);font-size:12.5px;color:var(--g400);font-weight:700}
+/* في مجرى النص لا فوقه: مهما طال الكلام ما يركب أحدهما على الآخر */
+.cover .foot2{align-self:stretch;margin-top:var(--s5);display:flex;align-items:center;
+  gap:13px;padding-top:var(--s3);border-top:2px solid var(--g700);
+  font-size:12.5px;color:var(--g400);font-weight:700}
 .cover .foot2 img{height:24px}
 .cover .art{position:relative;overflow:hidden;
   border-inline-start:5px solid var(--orange)}
