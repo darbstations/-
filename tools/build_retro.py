@@ -49,6 +49,7 @@ MAP = webp('map.webp')                      # خريطة محطات درب
 POSTER = webp('poster.webp')
 FOLDER_SOCIAL = webp('folder-social.webp')   # ملف المحتوى والرسائل
 FOLDER_QR = webp('folder-qr.webp')           # ملف الباركود والكوبونات
+PUMP_COLLAGE = webp('pump-collage.webp')     # المضخة وكولاج الحملة
 PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
             ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
             ('قهوة الأمراء', 'princes'), ('لمة برجر', 'lamma'),
@@ -226,6 +227,19 @@ p{margin:0}
 /* صورة مقصوصة بلا إطار: ظلّ فقط، مثل بقية الفايلات */
 .cutpic{max-width:100%;max-height:100%;width:auto;height:auto;display:block;
   margin-inline:auto;filter:drop-shadow(0 18px 34px rgba(0,0,0,.55))}
+.numpic{grid-template-columns:1fr 290px}
+.numpic .cutpic{max-height:300px}
+.phasepic{grid-template-columns:1fr 310px}
+.phasepic .cutpic{max-height:300px}
+/* الرقم الكبير عنوانًا: هوك أول الشريحة */
+.hook{font-size:68px;line-height:1.05;color:var(--orange-dk);margin-bottom:var(--s2);
+  font-variant-numeric:tabular-nums}
+.hook small{display:block;font-family:var(--body);font-size:15px;font-weight:700;
+  color:var(--g700);letter-spacing:0;margin-top:9px}
+.pg.grey .hook{color:var(--orange)}
+.pg.grey .hook small{color:var(--g300)}
+.subsegs{font-size:17px;font-weight:800;color:var(--g700);margin-bottom:var(--s3)}
+.subsegs > span + span::before{width:6px;height:6px;margin:0 11px}
 .goalpic{grid-template-columns:1fr 330px}
 .goalpic .cutpic{max-height:324px}
 .goalpic .goal{flex-direction:column;align-items:flex-start;gap:var(--s3);
@@ -303,7 +317,11 @@ p{margin:0}
 .bars{display:flex;flex-direction:column;gap:var(--s2);margin-top:var(--s4)}
 .barrow{display:grid;grid-template-columns:150px 1fr 82px;align-items:center;gap:14px;
   font-size:13.5px}
-.barrow .t{font-weight:700}
+.barrow .t{font-weight:700;display:flex;align-items:baseline;gap:0}
+.barrow .t > span + span::before{content:"";display:inline-block;width:5px;height:5px;
+  margin:0 9px;background:var(--orange);border-radius:1px;vertical-align:middle;
+  transform:rotate(45deg)}
+.barrow .t > span + span{color:var(--g500);font-weight:600}
 .barrow .track{display:block;height:19px;background:var(--g100);
   border:2.5px solid var(--ink);border-radius:4px;overflow:hidden}
 .barrow .fill{display:block;height:100%;background:var(--orange)}
@@ -489,7 +507,7 @@ SLIDES.append("""
     <div>
       <div class="goals">
         <div class="goal rcard"><span class="tab">الهدف الأول</span>%s
-          <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
+          <span>تعاون تسويقي لتحقيق أهداف مشتركة</span></div>
         <div class="goal rcard"><span class="tab">الهدف الثاني</span>%s
           <span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
       </div>
@@ -526,20 +544,23 @@ SLIDES.append("""
                 FOLDER_QR, FOOT))
 
 # ٢ · أرقام محطاتنا
-REG = [('مكة · ٢٦ محطة', 34270), ('الطائف · ١٠ محطات', 12637),
-       ('جازان · ١٠ محطات', 8114), ('جدة · ٧ محطات', 7391),
-       ('الرياض · محطتان', 1976), ('الخرج · ٣ محطات', 1767),
-       ('٧ مناطق أخرى', 4696)]
-bars = ''.join('<div class="barrow"><span class="t">%s</span>'
+REG = [('مكة', '٢٦ محطة', 34270), ('الطائف', '١٠ محطات', 12637),
+       ('جازان', '١٠ محطات', 8114), ('جدة', '٧ محطات', 7391),
+       ('الرياض', 'محطتان', 1976), ('الخرج', '٣ محطات', 1767),
+       ('٧ مناطق أخرى', '', 4696)]
+# الاسم والعدد في عنصرين منفصلين: الفاصلة بينهما من CSS، وإلا التصق
+# الفاصل بالرقم فقُرئ «٢٦٠ محطة».
+bars = ''.join('<div class="barrow"><span class="t"><span>%s</span>%s</span>'
                '<span class="track"><span class="fill" style="width:%.1f%%"></span></span>'
-               '<span class="v">%s</span></div>' % (t, v / 34270.0 * 100, n0(v))
-               for t, v in REG)
+               '<span class="v">%s</span></div>'
+               % (t, ('<span>%s</span>' % c) if c else '', v / 34270.0 * 100, n0(v))
+               for t, c, v in REG)
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">أرقام محطاتنا</p>
-  <h2 class="segs"><span>٦٩ محطة</span><span>١٣ منطقة</span><span>+٧٠ ألف سيارة يوميًا</span></h2>
-  <div class="bignum"><b>٢٫١ مليون</b><span>تعبئة في الشهر</span></div>
-  <div class="withpic">
+  <h2 class="hook">٢٫١ مليون <small>تعبئة في الشهر</small></h2>
+  <p class="segs subsegs"><span>٦٩ محطة</span><span>١٣ منطقة</span><span>+٧٠ ألف سيارة يوميًا</span></p>
+  <div class="withpic numpic">
     <div>
       <div class="bars" style="margin-top:0">%s</div>
       <div class="pills">
@@ -547,18 +568,18 @@ SLIDES.append("""
         <div class="pill"><b>٤٦٪</b> من الحركة بعد ٥ مساءً</div>
       </div>
     </div>
-    <img class="picside" src="@@STATION@@" alt="محطة درب">
+    <img class="cutpic" src="@@PHONE@@" alt="محتوى الحملة على الجوال">
   </div>
   %s
 </section>""" % (bars, FOOT))
 
 # ٣ · مراحل الحملة
-PHASES = [('فيديوهات قبل البداية تشوّق الناس', 'إعلان', 'spark'),
-          ('فيديو خاص بعرضك وسعره ومدته', 'إعلان', 'play'),
-          ('مؤثّرون يوصلون عرضك للسائقين', 'إعلان', 'mic'),
-          ('رسالة واتساب لأكثر من ٥٬٠٠٠ عميل، فيها رابط التفعيل', 'إعلان', 'chat'),
-          ('١٠٠٠ كوبون باسمك يتسلّمه العميل عند المضخة', 'في المحطة', 'ticket'),
-          ('لوحات ومطبوعات بعرضك داخل المحطة', 'في المحطة', 'sign')]
+PHASES = [('نقدّم العروض على طبق تشويقي', 'إعلان', 'spark'),
+          ('فيديو تفصيلي عن العرض', 'إعلان', 'play'),
+          ('نبرة عرضك مسموعة وتوصل للفئة المستهدفة', 'إعلان', 'mic'),
+          ('٥٠٠٠ عميل بيوصلهم الخبر برسالة واتساب', 'إعلان', 'wa'),
+          ('١٠٠٠ عميل بيستلم كوبون يتكلّم عنك', 'في المحطة', 'ticket'),
+          ('تسويق ميداني بلوحات ومطبوعات', 'في المحطة', 'sign')]
 TONES = ['c1', 'c2', 'c3', 'c1', 'c4', 'c2']
 rows = ''.join('<div class="rowi">%s<span>%s</span><span class="tagx%s">%s</span></div>'
                % (icon(g, tone=TONES[i]), t, '' if k == 'إعلان' else ' f', k)
@@ -567,21 +588,21 @@ SLIDES.append("""
 <section class="pg grey">
   <p class="eyebrow">مراحل الحملة</p>
   <h2>نشر يخلّي الناس تنتظر العرض، وتوزيع داخل المحطة يجيب العميل</h2>
-  <div class="withpic">
+  <div class="withpic phasepic">
     <div class="rows" style="margin-top:0;gap:var(--s2)">%s</div>
-    <img class="picside tilt1" src="@@STATION2@@" alt="محطة درب">
+    <img class="cutpic" src="@@PUMP@@" alt="المضخة وكولاج الحملة">
   </div>
   %s
 </section>""" % (rows, FOOT))
 
 # ٤ · الآلية
-STEPS = [('كوبون وباركود عند المضخة',
-          'عامل المحطة يعطيه للعميل بعد التعبئة ويدلّه على مكانك.', 'طول اليوم', 'ticket'),
+STEPS = [('عامل محطتنا مسوّق للعرض',
+          'يوزّع الكوبونات بعد التعبئة ويدلّ العميل على مكانك.', 'طول اليوم', 'pump'),
          ('العميل يمسح ويفعّل',
-          'يختارك ويكتب رقم جواله، فتوصله رسالة تدلّه عليك.', 'أقل من دقيقة', 'scan'),
-         ('موظفك يطبّق العرض',
+          'يسجّل بياناته، وتوصله رسالة تدلّ عليك.', 'أقل من دقيقة', 'scan'),
+         ('الكورة بملعبك وموظفك يطبّق العرض',
           'العميل يوريه الرسالة، ويطبّق العرض على طول بلا أي إجراء.', 'عند الطلب', 'check'),
-         ('نحسب ونرسل لك التقرير',
+         ('نحلّل الحاصل ونحطّك بالصورة',
           'كل مسح ينحفظ، وتعرف بالضبط كم سيارة وصلتك.', 'تقرير كل أسبوع', 'chart')]
 steps = ''.join('<div class="step rcard%s %s"><span class="tab">%s</span>%s'
                 '<h3>%s</h3><p>%s</p><span class="when">%s</span></div>'
@@ -591,7 +612,7 @@ steps = ''.join('<div class="step rcard%s %s"><span class="tab">%s</span>%s'
 SLIDES.append("""
 <section class="pg">
   <p class="eyebrow">الآلية</p>
-  <h2>من المضخة إلى مغسلتك في أربع خطوات</h2>
+  <h2>ما بين التعبئة والغسلة أربع خطوات ونفلّل ساحتك</h2>
   <div class="steps">%s</div>
   %s
 </section>""" % (steps, FOOT))
@@ -715,7 +736,7 @@ SLIDES.append("""
                  FOOT))
 
 DECK = ''.join(SLIDES)
-for mark, val in [('@@STATION@@', MAP), ('@@STATION2@@', PHONE_FOLDER),
+for mark, val in [('@@PHONE@@', FOLDER_SOCIAL), ('@@PUMP@@', PUMP_COLLAGE),
                   ('@@SCENE@@', SCENE_CAR), ('@@COVER@@', COVER_SCENE),
                   ('@@MARK@@', MARK)]:
     assert mark in DECK, 'snap marker missing: ' + mark
@@ -983,7 +1004,7 @@ var darbStore=(function(){
   /* الشرائح التي تغيّر شكلها نستبدلها وحدها في نسختها المحفوظة، ولو تغيّر
      عددها (شريحة صارت شريحتين) نطابق بالمحتوى لا بالترتيب. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+goals-v3';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v4';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
@@ -995,16 +1016,19 @@ var darbStore=(function(){
       for(i=0;i<p.length;i++) if(test(p[i])) out.push(p[i]);
       return out;
     }
+    var has=function(sel){ return function(s){ return !!s.querySelector(sel); }; };
     var isCover=function(s){ return s.classList.contains('cover'); };
-    var isGoals=function(s){ return !!s.querySelector('.goals'); };
-    var isStats=function(s){ return !!s.querySelector('.stats'); };
-    var isClips=function(s){ return !!s.querySelector('.strip8'); };
-    var isLogos=function(s){ return !!s.querySelector('.logos'); };
+    var isGoals=has('.goals'), isStats=has('.stats'), isBars=has('.bars');
+    var isPhases=has('.tagx'), isSteps=has('.steps');
+    var isClips=has('.strip8'), isLogos=has('.logos');
     var rules=[
-      {mine:isCover, fresh:[isCover]},
-      {mine:isGoals, also:isStats, fresh:[isGoals, isStats]},
-      {mine:isClips, fresh:[isClips]},
-      {mine:isLogos, fresh:[isLogos]}
+      {mine:isCover,  fresh:[isCover]},
+      {mine:isGoals,  also:isStats, fresh:[isGoals, isStats]},
+      {mine:isBars,   fresh:[isBars]},
+      {mine:isPhases, fresh:[isPhases]},
+      {mine:isSteps,  fresh:[isSteps]},
+      {mine:isClips,  fresh:[isClips]},
+      {mine:isLogos,  fresh:[isLogos]}
     ];
     var plan=[], r, i;
     for(r=0;r<rules.length;r++){
