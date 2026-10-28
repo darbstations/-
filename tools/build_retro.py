@@ -374,6 +374,37 @@ p{margin:0}
   border-radius:3px;display:block;box-shadow:0 5px 14px rgba(20,18,16,.3)}
 .grid6.sm img{height:108px}
 
+/* موكاب جوال: كل مقطع داخل جهاز بحافّة وسمّاعة */
+.phones{display:grid;grid-template-columns:repeat(8,1fr);gap:12px;
+  margin:auto -54px 0;padding:20px 20px 24px;background:rgba(253,245,222,.06);
+  border-top:3px solid var(--orange);border-bottom:3px solid var(--orange)}
+.phone{position:relative;background:#15171b;border:4px solid #0d0f12;border-radius:15px;
+  padding:5px;box-shadow:0 10px 22px rgba(0,0,0,.5)}
+.phone::before{content:"";position:absolute;top:9px;inset-inline:0;margin-inline:auto;
+  width:38%;height:4px;background:#3a3f47;border-radius:3px;z-index:2}
+.phone img{width:100%;aspect-ratio:252/357;object-fit:cover;display:block;
+  border-radius:10px}
+.phone:nth-child(odd){transform:rotate(-1deg)}
+.phone:nth-child(even){transform:rotate(.8deg)}
+
+/* أرقام النتائج: بطاقات كبيرة بأيقونة */
+.wins{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3);margin-top:var(--s5)}
+.win{padding:var(--s4) var(--s3);text-align:center;display:flex;flex-direction:column;
+  align-items:center;gap:var(--s1)}
+.win .ric{margin-bottom:var(--s1)}
+.win b{font-family:var(--head);font-size:34px;font-weight:900;line-height:1.05;
+  font-variant-numeric:tabular-nums;display:block}
+.win span{font-size:12.5px;font-weight:800;color:var(--g700)}
+.win.o span{color:rgba(255,255,255,.9)}
+
+/* شعارات الشركاء: بطاقات أكبر، سطر الاسم تحتها */
+.logos.big{grid-template-columns:repeat(5,1fr);gap:var(--s4) var(--s3);margin:auto 0}
+.logos.big figure{padding:var(--s3) var(--s2) var(--s2);border-radius:3px 14px 14px 14px;
+  gap:var(--s2)}
+.logos.big img{height:96px;border:0;background:#fff;border-radius:8px;padding:10px;
+  box-shadow:none;transform:none}
+.logos.big figcaption{font-size:12px;color:var(--ink);font-weight:800}
+
 /* شريط المقاطع: ثمانية إطارات في سطر واحد، ممتدّ على عرض الشريحة */
 .strip8{display:grid;grid-template-columns:repeat(8,1fr);gap:10px;
   margin:auto -54px 0;padding:14px 20px 16px;
@@ -437,17 +468,19 @@ h2.withic .ric svg{width:25px;height:25px}
 .otab td.fill{color:var(--g400);background:var(--paper)}
 
 /* ---------------- الختام ---------------- */
-.close{justify-content:center;align-items:center;text-align:center;
-  background:var(--ink);color:#fff}
+/* الختام: الصورة كاملة، وسواد من تحت وحده تحته العبارة */
+.close{padding:0;justify-content:flex-end;align-items:stretch;text-align:center;
+  background:#07090d;color:#fff}
 .close .art{position:absolute;inset:0;overflow:hidden}
-.close .art img{width:100%;height:100%;object-fit:cover;display:block;
-  filter:blur(5px);transform:scale(1.05)}   /* التكبير يمنع ظهور حواف الضباب */
-.close .art::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.2)}
+.close .art img{width:100%;height:100%;object-fit:cover;display:block}   /* التكبير يمنع ظهور حواف الضباب */
+
 /* تدرّج أسفل الشريحة وحده، ليُقرأ الكلام والصورة فوقه ظاهرة */
 .close .art::before{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 38%,
-    rgba(0,0,0,0) 66%)}
-.close h2{font-size:48px;max-width:none;white-space:nowrap;color:#fff}
+  background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.9) 15%,
+    rgba(0,0,0,.72) 27%,rgba(0,0,0,.42) 40%,rgba(0,0,0,.14) 54%,rgba(0,0,0,0) 66%)}
+.close .say{padding:0 60px 52px;position:relative;z-index:2}
+.close h2{font-size:46px;max-width:none;white-space:nowrap;color:#fff;margin:0;
+  text-shadow:0 4px 24px rgba(0,0,0,.6)}
 .close .eyebrow{align-self:center}
 .close .when{display:flex;gap:11px;flex-wrap:wrap;margin-top:var(--s4);
   justify-content:center}
@@ -625,17 +658,17 @@ SLIDES.append("""
     <h2 style="font-size:50px">مو وعود<br>هذي نتائج ٢٠٢٥</h2>
     <p class="lede" style="margin-top:var(--s3);font-size:16.5px">شركاء ومؤثّرون حقيقيون،
       وعدد المشاهدات ظاهر على كل مقطع — تشوفها بنفسك في الصفحات التالية.</p>
-    <div class="pills" style="margin-top:var(--s5)">
-      <div class="pill"><b>+١٠٠ ألف</b> مشاهدة في أسبوع</div>
-      <div class="pill"><b>١١</b> محطة</div>
-      <div class="pill"><b>١٠٠٠</b> كوبون لكل شريك</div>
+    <div class="wins">
+      <div class="win rcard">%s<b>+١٠٠ ألف</b><span>مشاهدة في أسبوع</span></div>
+      <div class="win rcard o">%s<b>١١</b><span>محطة</span></div>
+      <div class="win rcard">%s<b>١٠٠٠</b><span>كوبون لكل شريك</span></div>
     </div>
   </div>
   <div class="yearbox"><span class="tab">الحملة الماضية</span>
     <div class="year">٢٠٢٥</div>
     <div class="sub">الجمعة البرتقالية</div></div>
   %s
-</section>""" % FOOT)
+</section>""" % (icon('eye', tone='c3'), icon('pump', tone='c1'), icon('ticket', tone='c2'), FOOT))
 
 # ٦ · المؤثّرون
 SLIDES.append("""
@@ -649,8 +682,8 @@ SLIDES.append("""
   </div>
   <p class="lede">نفكّر ونكتب ونصوّر ونجهّز مقطعًا خاصًا لكل شريك. أمثلة حقيقية من حسابات درب،
     وعدد المشاهدات ظاهر على كل مقطع:</p>
-  <div class="strip8">%s</div>
-</section>""" % ''.join('<img src="%s" alt="">' % c for c in CLIPS))
+  <div class="phones">%s</div>
+</section>""" % ''.join('<div class="phone"><img src="%s" alt=""></div>' % c for c in CLIPS))
 
 # ٧ · الشركاء
 SLIDES.append("""
@@ -658,12 +691,10 @@ SLIDES.append("""
   <p class="eyebrow">شركاؤنا</p>
   <h2>أبرز الشركاء معنا</h2>
   <p class="lede">شركاء كانوا معنا في الجمعة البرتقالية، وراجعين هذه السنة.</p>
-  <div class="logos">%s</div>
-  <p class="lede" style="margin-top:auto;font-weight:900;color:var(--orange-dk)">محتوى المؤثّرين</p>
-  <div class="grid6 sm" style="margin-top:var(--s2)">%s</div>
-</section>""" % (''.join('<figure><img src="%s" alt="%s"><figcaption>%s</figcaption></figure>'
-                        % (u, t, t) for t, u in PARTNER_LOGOS),
-                 ''.join('<img src="%s" alt="">' % c for c in INFL)))
+  <div class="logos big">%s</div>
+</section>""" % ''.join('<figure class="rcard"><img src="%s" alt="%s">'
+                        '<figcaption>%s</figcaption></figure>'
+                        % (u, t, t) for t, u in PARTNER_LOGOS))
 
 # ٨ · المسؤوليات
 DARB = [('التصوير والتصميم والمونتاج', 'camera'),
@@ -697,18 +728,8 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg close">
   <div class="art"><img src="@@SCENE@@" alt=""></div>
-  <div style="display:flex;flex-direction:column;align-items:center">
-    <p class="eyebrow">الجمعة البرتقالية ٢٠٢٦</p>
-    <h2>كن شريكًا لنا وشاركنا النجاح</h2>
-    <div class="when">
-      <span>نتفق قبل ٣٠ أكتوبر</span>
-      <span>التصوير أول نوفمبر</span>
-      <span>عرضك على كل مضخة ١٠ نوفمبر</span>
-    </div>
-    <div class="sig"><img src="%s" alt="درب">
-      <span>فريق التسويق — محطات درب · marketing@darb.sa</span></div>
-  </div>
-</section>""" % LOGO_DARB)
+  <div class="say"><h2>كن شريكًا لنا وشاركنا النجاح</h2></div>
+</section>""")
 
 # ١٠ · العروض المقترحة
 SLIDES.append("""
@@ -811,6 +832,10 @@ EDITOR = EDITOR.replace(LOAD_OLD, LOAD_NEW, 1)
 
 chrome_css = src.split('<style id="darbcss">', 1)[1].split('</style>', 1)[0]
 CHROME = chrome_css[chrome_css.index('/* ---------- picker ----------'):]
+# قواعد ختام العرض القديم تأتي بعد قواعدنا فتغلبها — نحذفها من المستعار.
+for _dead in ['.pg.close{align-items:center;justify-content:center;text-align:center}\n',
+              '.pg.close h2{font-size:44px}\n']:
+    CHROME = CHROME.replace(_dead, '')
 
 BODY = """
 <div class="bar">
@@ -1004,7 +1029,7 @@ var darbStore=(function(){
   /* الشرائح التي تغيّر شكلها نستبدلها وحدها في نسختها المحفوظة، ولو تغيّر
      عددها (شريحة صارت شريحتين) نطابق بالمحتوى لا بالترتيب. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v4';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v5';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
@@ -1018,17 +1043,21 @@ var darbStore=(function(){
     }
     var has=function(sel){ return function(s){ return !!s.querySelector(sel); }; };
     var isCover=function(s){ return s.classList.contains('cover'); };
+    var isClose=function(s){ return s.classList.contains('close'); };
     var isGoals=has('.goals'), isStats=has('.stats'), isBars=has('.bars');
-    var isPhases=has('.tagx'), isSteps=has('.steps');
-    var isClips=has('.strip8'), isLogos=has('.logos');
+    var isPhases=has('.tagx'), isSteps=has('.steps'), isYear=has('.yearbox');
+    var isClips=function(s){ return !!s.querySelector('.strip8')||!!s.querySelector('.phones'); };
+    var isLogos=has('.logos');
     var rules=[
       {mine:isCover,  fresh:[isCover]},
       {mine:isGoals,  also:isStats, fresh:[isGoals, isStats]},
       {mine:isBars,   fresh:[isBars]},
       {mine:isPhases, fresh:[isPhases]},
       {mine:isSteps,  fresh:[isSteps]},
+      {mine:isYear,   fresh:[isYear]},
       {mine:isClips,  fresh:[isClips]},
-      {mine:isLogos,  fresh:[isLogos]}
+      {mine:isLogos,  fresh:[isLogos]},
+      {mine:isClose,  fresh:[isClose]}
     ];
     var plan=[], r, i;
     for(r=0;r<rules.length;r++){
