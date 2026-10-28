@@ -47,6 +47,8 @@ COVER_SCENE = webp('cover-scene.webp')      # مشهد الغلاف
 PHONE_FOLDER = webp('phone-folder.webp')    # ملف الجوال والرسائل
 MAP = webp('map.webp')                      # خريطة محطات درب
 POSTER = webp('poster.webp')
+FOLDER_SOCIAL = webp('folder-social.webp')   # ملف المحتوى والرسائل
+FOLDER_QR = webp('folder-qr.webp')           # ملف الباركود والكوبونات
 PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
             ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
             ('قهوة الأمراء', 'princes'), ('لمة برجر', 'lamma'),
@@ -221,6 +223,18 @@ p{margin:0}
 .withpic > div{display:flex;flex-direction:column;justify-content:center;gap:var(--s4)}
 .withpic .rows{margin-top:0}
 .withpic .pills{margin-top:0}
+/* صورة مقصوصة بلا إطار: ظلّ فقط، مثل بقية الفايلات */
+.cutpic{max-width:100%;max-height:100%;width:auto;height:auto;display:block;
+  margin-inline:auto;filter:drop-shadow(0 18px 34px rgba(0,0,0,.55))}
+.goalpic{grid-template-columns:1fr 330px}
+.goalpic .cutpic{max-height:324px}
+.goalpic .goal{flex-direction:column;align-items:flex-start;gap:var(--s3);
+  padding:var(--s5) var(--s4) var(--s4);font-size:17px;line-height:1.75}
+.statpic{grid-template-columns:1fr 266px}
+.statpic .cutpic{max-height:320px}
+.statpic .stats{margin-top:0}
+.stats.sm .v{font-size:38px}
+.stats.sm .u{font-size:12px;line-height:1.6}
 .picside{width:100%;height:auto;max-height:340px;object-fit:cover;
   border:7px solid var(--cream);border-radius:3px;
   box-shadow:0 10px 26px rgba(20,18,16,.38);transform:rotate(-1.6deg)}
@@ -250,8 +264,14 @@ p{margin:0}
   rgba(0,0,0,.3) 52%,rgba(0,0,0,.08) 64%,rgba(0,0,0,0) 74%)}
 .cover .in{position:absolute;inset-inline:60px;bottom:44px;z-index:2;
   display:flex;flex-direction:column;align-items:flex-start;text-align:start}
-.cover .mark{width:166px;height:auto;display:block;margin:0 0 var(--s4);
-  filter:drop-shadow(0 8px 20px rgba(0,0,0,.6))}
+.cover .kick{margin:0 0 var(--s3);font-family:var(--head);font-weight:900;
+  font-size:14px;letter-spacing:.16em;color:var(--orange);
+  text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.cover .kick::after{content:"";display:block;width:62px;height:4px;margin-top:11px;
+  background:var(--orange);border-radius:3px}
+.cover .tease{margin:var(--s3) 0 0;font-size:16px;font-weight:700;color:#fff;
+  opacity:.92;text-shadow:0 2px 14px rgba(0,0,0,.6)}
+.cover .tease > span + span::before{background:var(--orange)}
 .cover h1{font-family:var(--head);font-weight:900;font-size:50px;line-height:1.24;
   color:#fff;margin:0;letter-spacing:-.01em;text-shadow:0 4px 22px rgba(0,0,0,.5)}
 .cover .when{margin-top:var(--s4);background:var(--orange);color:#fff;
@@ -452,38 +472,58 @@ SLIDES.append("""
     <div class="veil"></div>
   </div>
   <div class="in">
-    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
+    <p class="kick">الجمعة البرتقالية ٢٠٢٦</p>
     <h1>جاهز تخلّي عرضك<br>حديث المحطات؟</h1>
-    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦</div>
+    <p class="tease segs"><span>ستة أيام</span><span>٦٩ محطة</span><span>وعرضك قدّام كل سيارة تعبّي</span></p>
+    <div class="when">١٠ – ١٥ نوفمبر</div>
   </div>
 </section>""")
 
-# ١ · المستهدفات
+# ١ · المستهدفات — الهدفان
 SLIDES.append("""
 <section class="pg grey">
   <p class="eyebrow">المستهدفات</p>
-  <h2>أهداف الحملة وأرقامها</h2>
-  <p class="lede">هدفان نعمل عليهما، وثلاثة أرقام نقيسها لك في نهاية الأسبوع.</p>
-  <div class="goals">
-    <div class="goal rcard"><span class="tab">الهدف الأول</span>%s
-      <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
-    <div class="goal rcard"><span class="tab">الهدف الثاني</span>%s
-      <span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
-  </div>
-  <div class="stats">
-    <div class="stat2 rcard o"><span class="tab">واتساب</span>%s
-      <div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
-      <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
-    <div class="stat2 rcard"><span class="tab">مباشر</span>%s
-      <div class="v">+١٠٠٠</div><div class="k">عميل مباشر</div>
-      <div class="u">لكل شريك، من الكوبونات والباركود</div></div>
-    <div class="stat2 rcard o"><span class="tab">مشاهدات</span>%s
-      <div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
-      <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
+  <h2>هدفان نشتغل عليهما</h2>
+  <p class="lede">كل شغل الحملة يصبّ في هذين الهدفين.</p>
+  <div class="withpic goalpic">
+    <div>
+      <div class="goals">
+        <div class="goal rcard"><span class="tab">الهدف الأول</span>%s
+          <span>بناء صورة ذهنية إيجابية عن الشريك</span></div>
+        <div class="goal rcard"><span class="tab">الهدف الثاني</span>%s
+          <span>زيادة التفاعل والحضور الرقمي والميداني</span></div>
+      </div>
+    </div>
+    <img class="cutpic" src="%s" alt="محتوى الحملة">
   </div>
   %s
-</section>""" % (icon('star', tone='c2'), icon('mic', tone='c3'),
-                icon('wa', tone='c1'), icon('user', tone='c2'), icon('eye', tone='c3'), FOOT))
+</section>""" % (icon('star', tone='c2'), icon('mic', tone='c3'), FOLDER_SOCIAL, FOOT))
+
+# ٢ · المستهدفات — الأرقام
+SLIDES.append("""
+<section class="pg grey">
+  <p class="eyebrow">المستهدفات</p>
+  <h2>ثلاثة أرقام نقيسها لك</h2>
+  <p class="lede">في نهاية الأسبوع تجيك مكتوبة، مو كلام.</p>
+  <div class="withpic statpic">
+    <div>
+      <div class="stats sm">
+        <div class="stat2 rcard o"><span class="tab">واتساب</span>%s
+          <div class="v">+٥٠٠٠</div><div class="k">عميل واتساب</div>
+          <div class="u">رسالة فيها عرضك ومدته، ورابط يفعّله على طول</div></div>
+        <div class="stat2 rcard"><span class="tab">مباشر</span>%s
+          <div class="v">+١٠٠٠</div><div class="k">عميل مباشر</div>
+          <div class="u">لكل شريك، من الكوبونات والباركود</div></div>
+        <div class="stat2 rcard o"><span class="tab">مشاهدات</span>%s
+          <div class="v">+٥ مليون</div><div class="k">مشاهدة</div>
+          <div class="u">كل مشاهدات الحملة على حسابات درب</div></div>
+      </div>
+    </div>
+    <img class="cutpic" src="%s" alt="الباركود والكوبونات">
+  </div>
+  %s
+</section>""" % (icon('wa', tone='c1'), icon('user', tone='c2'), icon('eye', tone='c3'),
+                FOLDER_QR, FOOT))
 
 # ٢ · أرقام محطاتنا
 REG = [('مكة · ٢٦ محطة', 34270), ('الطائف · ١٠ محطات', 12637),
@@ -928,57 +968,81 @@ var darbStore=(function(){
       btn.title = bk ? ('نسختك المحفوظة'+(at?(' — '+at):'')) : '';
     }
     window.darbRestoreBtn=refresh;
-    if(btn) btn.addEventListener('click',function(){
+    window.darbSwap=function(){
       var bk=window.darbBackupRead();
       if(!bk){ ed.say('ما فيه نسخة محفوظة.',4000); return; }
       var now=ed.box.innerHTML;
       if(!window.darbBackup(now)){ ed.say('ما قدرنا نحفظ الحالية، فما بدّلنا شيئًا.',9000); return; }
       ed.show(bk); ed.keep(); refresh();
       ed.say('رجّعنا نسختك. نفس الزرّ يبدّل بين النسختين، وما تضيع ولا وحدة.',10000);
-    });
+    };
+    if(btn) btn.addEventListener('click', function(){ window.darbSwap(); });
     refresh();
   })();
 
-  /* الشرائح التي تغيّر شكلها: الغلاف، والشركاء، ومقاطع المؤثّرين. إن كان عندها
-     نسخة محفوظة نستبدل هذه الشرائح فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
+  /* الشرائح التي تغيّر شكلها نستبدلها وحدها في نسختها المحفوظة، ولو تغيّر
+     عددها (شريحة صارت شريحتين) نطابق بالمحتوى لا بالترتيب. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover-full-v2';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+goals-v3';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
     var saved=null; try{ saved=localStorage.getItem(K); }catch(e){}
     if(!saved) return;                   /* لا تعديلات محفوظة: الشرائح جديدة أصلًا */
     var tmp=document.createElement('div'); tmp.innerHTML=DECK;
-    var at=[], old=[], i;
-    var pgs=ed.box.querySelectorAll('section.pg');
-    var fresh=tmp.querySelectorAll('section.pg');
-    if(pgs.length!==fresh.length) return;        /* حذفت أو أضافت شريحة: لا نلمس شيئًا */
-    for(i=0;i<pgs.length;i++){
-      var f=fresh[i];
-      var hit=f.classList.contains('cover') || f.querySelector('.logos')
-              || f.querySelector('.strip8');
-      if(hit && darbStore.norm(pgs[i].outerHTML)!==darbStore.norm(f.outerHTML)) at.push(i);
+    function pick(root, test){
+      var p=root.querySelectorAll('section.pg'), out=[], i;
+      for(i=0;i<p.length;i++) if(test(p[i])) out.push(p[i]);
+      return out;
     }
-    if(!at.length) return;                       /* ما فيه فرق: لا نلمس شيئًا */
+    var isCover=function(s){ return s.classList.contains('cover'); };
+    var isGoals=function(s){ return !!s.querySelector('.goals'); };
+    var isStats=function(s){ return !!s.querySelector('.stats'); };
+    var isClips=function(s){ return !!s.querySelector('.strip8'); };
+    var isLogos=function(s){ return !!s.querySelector('.logos'); };
+    var rules=[
+      {mine:isCover, fresh:[isCover]},
+      {mine:isGoals, also:isStats, fresh:[isGoals, isStats]},
+      {mine:isClips, fresh:[isClips]},
+      {mine:isLogos, fresh:[isLogos]}
+    ];
+    var plan=[], r, i;
+    for(r=0;r<rules.length;r++){
+      var ru=rules[r];
+      var mine=pick(ed.box, ru.mine);
+      if(!mine.length) continue;
+      var want=[];
+      for(i=0;i<ru.fresh.length;i++){
+        var g=pick(tmp, ru.fresh[i]);
+        if(g.length) want.push(g[0].outerHTML);
+      }
+      if(!want.length) continue;
+      var extra=[];
+      if(ru.also){
+        var ex=pick(ed.box, ru.also);
+        for(i=0;i<ex.length;i++) if(ex[i]!==mine[0]) extra.push(ex[i]);
+      }
+      var cur=[mine[0].outerHTML];
+      for(i=0;i<extra.length;i++) cur.push(extra[i].outerHTML);
+      if(darbStore.norm(cur.join(' '))===darbStore.norm(want.join(' '))) continue;
+      plan.push({node:mine[0], extra:extra, html:want.join(' ')});
+    }
+    if(!plan.length) return;                     /* ما فيه فرق: لا نلمس شيئًا */
     if(!window.darbBackup(ed.box.innerHTML)){
       ed.say('ما قدرنا نحفظ نسخة احتياطية (مساحة المتصفّح ممتلئة)، فما غيّرنا شيئًا. '+
              'نزّلي الملف أولًا ثم افتحي الصفحة من جديد.', 20000);
       try{ localStorage.removeItem(SK); }catch(e){}
       return;
     }
-    for(i=0;i<at.length;i++){
-      old.push(pgs[at[i]].outerHTML);
-      pgs[at[i]].outerHTML=fresh[at[i]].outerHTML;
+    for(r=0;r<plan.length;r++){
+      for(i=0;i<plan[r].extra.length;i++)
+        plan[r].extra[i].parentNode.removeChild(plan[r].extra[i]);
+      plan[r].node.outerHTML=plan[r].html;
     }
     ed.mark(); ed.snap(); ed.keep();
     if(window.darbRestoreBtn) window.darbRestoreBtn();
-    ed.say('حدّثنا الغلاف وشريحة الشركاء وشريحة المقاطع فقط. بقية تعديلاتك كما هي.',
-      14000, 'رجّعي شرائحي القديمة', function(){
-        var p=ed.box.querySelectorAll('section.pg'), j;
-        for(j=0;j<at.length;j++) if(p[at[j]]) p[at[j]].outerHTML=old[j];
-        ed.mark(); ed.snap(); ed.keep();
-        ed.say('رجّعنا شرائحك القديمة.',5000);
-      });
+    ed.say('حدّثنا الشرائح اللي تغيّر شكلها فقط. بقية تعديلاتك كما هي.',
+      14000, 'رجّعي نسختي القديمة', function(){ if(window.darbSwap) window.darbSwap(); });
   }
 
   /* حفظ على الخادم: المتصفّح وحده ما يكفي — تخزينه يضيع مع أي نسخة جديدة من
