@@ -51,6 +51,7 @@ FOLDER_SOCIAL = webp('folder-social.webp')   # ملف المحتوى والرس�
 FOLDER_QR = webp('folder-qr.webp')           # ملف الباركود والكوبونات
 PUMP_COLLAGE = webp('pump-collage.webp')     # المضخة وكولاج الحملة
 ARCHIVE = webp('archive.webp')               # أرشيف حملة ٢٠٢٥
+CLOSE_SCENE = webp('close-scene.webp')       # مشهد الختام
 PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
             ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
             ('قهوة الأمراء', 'princes'), ('لمة برجر', 'lamma'),
@@ -480,8 +481,8 @@ h2.withic .ric svg{width:25px;height:25px}
 
 /* تدرّج أسفل الشريحة وحده، ليُقرأ الكلام والصورة فوقه ظاهرة */
 .close .art::before{content:"";position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.9) 15%,
-    rgba(0,0,0,.72) 27%,rgba(0,0,0,.42) 40%,rgba(0,0,0,.14) 54%,rgba(0,0,0,0) 66%)}
+  background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.78) 9%,
+    rgba(0,0,0,.5) 20%,rgba(0,0,0,.22) 32%,rgba(0,0,0,.06) 44%,rgba(0,0,0,0) 56%)}
 .close .say{padding:0 60px 52px;position:relative;z-index:2}
 .close h2{font-size:46px;max-width:none;white-space:nowrap;color:#fff;margin:0;
   text-shadow:0 4px 24px rgba(0,0,0,.6)}
@@ -761,7 +762,7 @@ SLIDES.append("""
 DECK = ''.join(SLIDES)
 for mark, val in [('@@PHONE@@', FOLDER_SOCIAL), ('@@PUMP@@', PUMP_COLLAGE),
                   ('@@ARCHIVE@@', ARCHIVE),
-                  ('@@SCENE@@', SCENE_CAR), ('@@COVER@@', COVER_SCENE),
+                  ('@@SCENE@@', CLOSE_SCENE), ('@@COVER@@', COVER_SCENE),
                   ('@@MARK@@', MARK)]:
     assert mark in DECK, 'snap marker missing: ' + mark
     DECK = DECK.replace(mark, val)
@@ -1032,7 +1033,7 @@ var darbStore=(function(){
   /* الشرائح التي تغيّر شكلها نستبدلها وحدها في نسختها المحفوظة، ولو تغيّر
      عددها (شريحة صارت شريحتين) نطابق بالمحتوى لا بالترتيب. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v6';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v7';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
