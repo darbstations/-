@@ -50,6 +50,7 @@ POSTER = webp('poster.webp')
 FOLDER_SOCIAL = webp('folder-social.webp')   # ملف المحتوى والرسائل
 FOLDER_QR = webp('folder-qr.webp')           # ملف الباركود والكوبونات
 PUMP_COLLAGE = webp('pump-collage.webp')     # المضخة وكولاج الحملة
+ARCHIVE = webp('archive.webp')               # أرشيف حملة ٢٠٢٥
 PARTNERS = [('واش واي', 'washway'), ('ليدر اكسبريس', 'leader'),
             ('كاراجي العالمية', 'karaji'), ('مركز أويل روز', 'oilrose'),
             ('قهوة الأمراء', 'princes'), ('لمة برجر', 'lamma'),
@@ -436,7 +437,10 @@ p{margin:0}
 
 /* ---------------- شريحة النتائج: ورق، والسنة إلى اليسار ---------------- */
 .pg.sheet{background:var(--paper);color:var(--ink);
-  display:grid;grid-template-columns:1fr 360px;align-items:center;gap:var(--s6)}
+  display:grid;grid-template-columns:1fr 468px;align-items:center;gap:var(--s5)}
+/* أرشيف الحملة الماضية بدل رقم السنة */
+.archive{width:100%;height:auto;display:block;border:8px solid var(--cream);
+  border-radius:3px;box-shadow:0 14px 32px rgba(20,18,16,.32);transform:rotate(-1.2deg)}
 .pg.sheet .year{font-family:var(--head);font-size:150px;font-weight:900;line-height:.92;
   color:var(--orange);text-align:center;
   text-shadow:-5px 5px 0 var(--ink);letter-spacing:-.03em}
@@ -534,7 +538,7 @@ SLIDES.append("""
 SLIDES.append("""
 <section class="pg grey">
   <p class="eyebrow">المستهدفات</p>
-  <h2>هدفان نشتغل عليهما</h2>
+  <h2>أهداف واضحة = حملة ناجحة</h2>
   <p class="lede">كل شغل الحملة يصبّ في هذين الهدفين.</p>
   <div class="withpic goalpic">
     <div>
@@ -664,9 +668,7 @@ SLIDES.append("""
       <div class="win rcard">%s<b>١٠٠٠</b><span>كوبون لكل شريك</span></div>
     </div>
   </div>
-  <div class="yearbox"><span class="tab">الحملة الماضية</span>
-    <div class="year">٢٠٢٥</div>
-    <div class="sub">الجمعة البرتقالية</div></div>
+  <img class="archive" src="@@ARCHIVE@@" alt="أرشيف الجمعة البرتقالية ٢٠٢٥">
   %s
 </section>""" % (icon('eye', tone='c3'), icon('pump', tone='c1'), icon('ticket', tone='c2'), FOOT))
 
@@ -758,6 +760,7 @@ SLIDES.append("""
 
 DECK = ''.join(SLIDES)
 for mark, val in [('@@PHONE@@', FOLDER_SOCIAL), ('@@PUMP@@', PUMP_COLLAGE),
+                  ('@@ARCHIVE@@', ARCHIVE),
                   ('@@SCENE@@', SCENE_CAR), ('@@COVER@@', COVER_SCENE),
                   ('@@MARK@@', MARK)]:
     assert mark in DECK, 'snap marker missing: ' + mark
@@ -1029,7 +1032,7 @@ var darbStore=(function(){
   /* الشرائح التي تغيّر شكلها نستبدلها وحدها في نسختها المحفوظة، ولو تغيّر
      عددها (شريحة صارت شريحتين) نطابق بالمحتوى لا بالترتيب. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v5';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='content-v6';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
@@ -1045,7 +1048,12 @@ var darbStore=(function(){
     var isCover=function(s){ return s.classList.contains('cover'); };
     var isClose=function(s){ return s.classList.contains('close'); };
     var isGoals=has('.goals'), isStats=has('.stats'), isBars=has('.bars');
-    var isPhases=has('.tagx'), isSteps=has('.steps'), isYear=has('.yearbox');
+    var isPhases=has('.tagx'), isSteps=has('.steps');
+    /* شريحة النتائج: نسختها القديمة فيها .yearbox والجديدة فيها .archive،
+       فلا بدّ أن يعرف طرف «عندها» العلامتين معًا وإلا لم يجد ما يستبدله. */
+    var isYearMine=function(s){ return !!(s.querySelector('.yearbox')||
+      s.querySelector('.archive')||s.querySelector('.wins')); };
+    var isYearFresh=has('.archive');
     var isClips=function(s){ return !!s.querySelector('.strip8')||!!s.querySelector('.phones'); };
     var isLogos=has('.logos');
     var rules=[
@@ -1054,7 +1062,7 @@ var darbStore=(function(){
       {mine:isBars,   fresh:[isBars]},
       {mine:isPhases, fresh:[isPhases]},
       {mine:isSteps,  fresh:[isSteps]},
-      {mine:isYear,   fresh:[isYear]},
+      {mine:isYearMine, fresh:[isYearFresh]},
       {mine:isClips,  fresh:[isClips]},
       {mine:isLogos,  fresh:[isLogos]},
       {mine:isClose,  fresh:[isClose]}
