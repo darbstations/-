@@ -58,7 +58,8 @@ CHECKS = r"""
         if (col === bg) res.invisible_text.push({slide: i + 1, t: txt(el).slice(0, 30), col});
       }
     });
-    const pics = [...pg.querySelectorAll('.snap, .picside, .ofmark, .mark, .scene')];
+    // .scene مستثناة: الغلاف صورة كاملة وفوقها تعتيم مقصود
+    const pics = [...pg.querySelectorAll('.snap, .picside, .ofmark, .mark')];
     pics.forEach(p => {
       const pr = p.getBoundingClientRect();
       [...pg.querySelectorAll('h1,h2,h3,p,span,div,li,td')].forEach(t => {

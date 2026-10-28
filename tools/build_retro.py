@@ -239,37 +239,25 @@ p{margin:0}
 .pg.orange .ric{background:#fff}
 
 /* ---------------- الغلاف ---------------- */
-/* عمودان: الكلام على اليمين، الصورة على اليسار، وبينهما حدّ برتقالي */
-.cover{padding:0;background:var(--g900);color:var(--cream);
-  display:grid;grid-template-columns:1.06fr 1fr;align-items:stretch}
-.cover::before{opacity:.2}
-.cover .in{position:relative;z-index:1;display:flex;flex-direction:column;
-  justify-content:center;align-items:flex-start;text-align:start;
-  padding:48px 56px 44px}
-.cover .in::before{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(135% 100% at 0% 64%,rgba(252,108,5,.22),rgba(252,108,5,0) 58%)}
-.cover .in > *{position:relative}
-.cover .mark{width:136px;height:auto;display:block;margin:0 0 var(--s5)}
-.cover h1{font-family:var(--head);font-weight:900;font-size:40px;line-height:1.28;
-  color:#fff;margin:0}
-.cover .when{margin-top:var(--s4);background:var(--orange);color:#fff;
-  border:3px solid var(--ink);border-radius:10px;padding:10px 22px;font-weight:900;
-  font-family:var(--head);font-size:14.5px;box-shadow:-4px 4px 0 var(--ink);
-  align-self:flex-start}
-.cover .sub{margin:var(--s3) 0 0;font-size:14.5px;line-height:1.8;font-weight:600;
-  color:var(--g300)}
-/* في مجرى النص لا فوقه: مهما طال الكلام ما يركب أحدهما على الآخر */
-.cover .foot2{align-self:stretch;margin-top:var(--s5);display:flex;align-items:center;
-  gap:13px;padding-top:var(--s3);border-top:2px solid var(--g700);
-  font-size:12.5px;color:var(--g400);font-weight:700}
-.cover .foot2 img{height:24px}
-.cover .art{position:relative;overflow:hidden;
-  border-inline-start:5px solid var(--orange)}
-.cover .scene{width:100%;height:100%;object-fit:cover;object-position:14% 50%;
+/* الغلاف: الصورة كاملة، وسواد من تحت فقط ليتّضح الكلام */
+.cover{padding:0;background:#07090d;color:#fff;display:block}
+.cover::before{display:none}
+.cover .art{position:absolute;inset:0}
+.cover .scene{width:100%;height:100%;object-fit:cover;object-position:50% 50%;
   display:block}
-.cover .veil{position:absolute;inset:0;background:linear-gradient(to right,
-  rgba(20,18,16,.5) 0%,rgba(20,18,16,0) 32%,rgba(20,18,16,0) 68%,
-  rgba(20,18,16,.44) 100%)}
+.cover .veil{position:absolute;inset:0;background:linear-gradient(to top,
+  rgba(0,0,0,.96) 0%,rgba(0,0,0,.93) 16%,rgba(0,0,0,.84) 28%,rgba(0,0,0,.6) 40%,
+  rgba(0,0,0,.3) 52%,rgba(0,0,0,.08) 64%,rgba(0,0,0,0) 74%)}
+.cover .in{position:absolute;inset-inline:60px;bottom:44px;z-index:2;
+  display:flex;flex-direction:column;align-items:flex-start;text-align:start}
+.cover .mark{width:166px;height:auto;display:block;margin:0 0 var(--s4);
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.6))}
+.cover h1{font-family:var(--head);font-weight:900;font-size:50px;line-height:1.24;
+  color:#fff;margin:0;letter-spacing:-.01em;text-shadow:0 4px 22px rgba(0,0,0,.5)}
+.cover .when{margin-top:var(--s4);background:var(--orange);color:#fff;
+  border:3px solid var(--ink);border-radius:10px;padding:11px 24px;font-weight:900;
+  font-family:var(--head);font-size:15px;box-shadow:-4px 4px 0 var(--ink);
+  align-self:flex-start}
 
 /* ---------------- الأرقام ---------------- */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4);margin-top:auto}
@@ -459,19 +447,16 @@ SLIDES = []
 # ٠ · الغلاف
 SLIDES.append("""
 <section class="pg cover">
-  <div class="in">
-    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
-    <h1>عرضك على كل مضخة<br>ودرب تسوّق له</h1>
-    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦</div>
-    <p class="sub">أسبوع كامل، وعرضك في كل محطات درب</p>
-    <div class="foot2"><img src="%s" alt="درب">
-      <span>محطات درب × شركاء خدمات السيارات</span></div>
-  </div>
   <div class="art">
     <img class="scene" src="@@COVER@@" alt="الجمعة البرتقالية في محطات درب">
     <div class="veil"></div>
   </div>
-</section>""" % LOGO_DARB)
+  <div class="in">
+    <img class="mark" src="@@MARK@@" alt="الجمعة البرتقالية">
+    <h1>جاهز تخلّي عرضك<br>حديث المحطات؟</h1>
+    <div class="when">١٠ – ١٥ نوفمبر ٢٠٢٦</div>
+  </div>
+</section>""")
 
 # ١ · المستهدفات
 SLIDES.append("""
@@ -957,7 +942,7 @@ var darbStore=(function(){
   /* الشرائح التي تغيّر شكلها: الغلاف، والشركاء، ومقاطع المؤثّرين. إن كان عندها
      نسخة محفوظة نستبدل هذه الشرائح فقط، وبقية تعديلاتها تبقى كما هي، مع زرّ تراجع. */
   function runSync(){
-    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover+logos+clips-v1';
+    var K='darb-orange-friday-v2', SK=K+'-sync', ST='cover-full-v2';
     var done=null; try{ done=localStorage.getItem(SK); }catch(e){}
     if(done===ST) return;
     try{ localStorage.setItem(SK,ST); }catch(e){}
