@@ -1,0 +1,536 @@
+<title>سيو يوتيوب لمحطات درب</title>
+<style>
+  :root{
+    --ground:#FBF6EF;
+    --surface:#FFFFFF;
+    --surface-2:#F4E9DB;
+    --ink:#332417;
+    --ink-2:#6B5744;
+    --ink-3:#9A8674;
+    --line:#E4D6C4;
+    --line-strong:#C7B49E;
+    --accent:#B44E05;
+    --accent-2:#E8760C;
+    --accent-wash:#FBE3C6;
+    --ok:#4A6B3A;
+    --ok-wash:#E5EEDF;
+    --est:#9A6B12;
+    --est-wash:#F7EBD2;
+    --gap:#8A5A52;
+    --gap-wash:#F3E0DC;
+    --shadow:0 1px 2px rgba(51,36,23,.06),0 8px 24px -12px rgba(51,36,23,.18);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#191310;
+      --surface:#221A15;
+      --surface-2:#2C221B;
+      --ink:#F4E9DB;
+      --ink-2:#C7B49E;
+      --ink-3:#9A8674;
+      --line:#3A2D24;
+      --line-strong:#4E3D31;
+      --accent:#F59A2E;
+      --accent-2:#E8760C;
+      --accent-wash:#3A2A18;
+      --ok:#9DBE86;
+      --ok-wash:#25301E;
+      --est:#DCA83F;
+      --est-wash:#332714;
+      --gap:#D69C91;
+      --gap-wash:#332020;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#191310;
+    --surface:#221A15;
+    --surface-2:#2C221B;
+    --ink:#F4E9DB;
+    --ink-2:#C7B49E;
+    --ink-3:#9A8674;
+    --line:#3A2D24;
+    --line-strong:#4E3D31;
+    --accent:#F59A2E;
+    --accent-2:#E8760C;
+    --accent-wash:#3A2A18;
+    --ok:#9DBE86;
+    --ok-wash:#25301E;
+    --est:#DCA83F;
+    --est-wash:#332714;
+    --gap:#D69C91;
+    --gap-wash:#332020;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -12px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Tahoma","Segoe UI","Noto Sans Arabic",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.75;
+    direction:rtl;
+    text-align:right;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 24px 96px;display:flex;flex-direction:column;gap:56px}
+  h1,h2,h3,h4{margin:0;text-wrap:balance;line-height:1.3;font-weight:800}
+  p{margin:0}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:focus-visible,summary:focus-visible{outline:2px solid var(--accent-2);outline-offset:3px;border-radius:4px}
+
+  /* ---------- masthead ---------- */
+  .mast{display:flex;flex-direction:column;gap:20px;border-bottom:3px solid var(--accent);padding-bottom:28px}
+  .eyebrow{
+    font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--accent);font-weight:700;
+  }
+  .mast h1{font-size:clamp(1.9rem,4.6vw,3rem);letter-spacing:-.01em}
+  .mast .lede{font-size:1.075rem;color:var(--ink-2);max-width:62ch}
+  .mast-meta{
+    display:flex;flex-wrap:wrap;gap:8px 28px;font-size:.82rem;color:var(--ink-3);
+    padding-top:6px;font-variant-numeric:tabular-nums;
+  }
+  .mast-meta b{color:var(--ink-2);font-weight:700}
+
+  /* ---------- answer callout ---------- */
+  .finding{
+    background:var(--ok-wash);
+    border:1px solid var(--ok);
+    border-radius:2px;
+    padding:20px 24px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .finding h3{font-size:1rem;color:var(--ok);letter-spacing:.01em}
+  .finding p{color:var(--ink);font-size:.95rem}
+  .finding code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.85em;background:var(--surface);padding:1px 6px;border-radius:3px;
+    border:1px solid var(--line);direction:ltr;display:inline-block;
+  }
+
+  /* ---------- section heads ---------- */
+  .sec{display:flex;flex-direction:column;gap:24px}
+  .sec-head{display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--line-strong);padding-bottom:12px}
+  .sec-head h2{font-size:1.5rem}
+  .sec-head p{font-size:.9rem;color:var(--ink-3);max-width:66ch}
+
+  /* ---------- confidence chips ---------- */
+  .chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:.7rem;font-weight:700;letter-spacing:.04em;
+    padding:3px 9px;border-radius:2px;white-space:nowrap;
+    border:1px solid currentColor;
+  }
+  .chip::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+  .chip-file{color:var(--ok);background:var(--ok-wash)}
+  .chip-est{color:var(--est);background:var(--est-wash)}
+  .chip-gap{color:var(--gap);background:var(--gap-wash)}
+
+  .legend{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center}
+  .legend span.txt{font-size:.82rem;color:var(--ink-3)}
+
+  /* ---------- comparison table ---------- */
+  .tscroll{overflow-x:auto;border:1px solid var(--line);border-radius:2px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:840px;font-size:.86rem}
+  thead th{
+    background:var(--surface-2);color:var(--ink);text-align:right;
+    font-size:.74rem;letter-spacing:.06em;font-weight:800;
+    padding:12px 14px;border-bottom:2px solid var(--line-strong);white-space:nowrap;
+  }
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:nth-child(even){background:color-mix(in srgb,var(--surface-2) 45%,transparent)}
+  .code{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-weight:700;color:var(--accent);direction:ltr;display:inline-block;font-size:.9em;
+  }
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  /* ---------- station cards ---------- */
+  .cards{display:flex;flex-direction:column;gap:28px}
+  .card{
+    background:var(--surface);border:1px solid var(--line);border-radius:2px;
+    box-shadow:var(--shadow);overflow:hidden;
+  }
+  .card-head{
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;
+    padding:18px 24px;background:var(--surface-2);border-bottom:1px solid var(--line-strong);
+  }
+  .card-head .c{
+    font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:1.15rem;font-weight:800;color:var(--accent);direction:ltr;
+  }
+  .card-head h3{font-size:1.15rem;flex:1;min-width:200px}
+  .card-head .where{font-size:.85rem;color:var(--ink-2)}
+  .card-body{padding:8px 24px 22px;display:flex;flex-direction:column}
+
+  .row{display:grid;grid-template-columns:150px 1fr;gap:4px 20px;padding:16px 0;border-bottom:1px dashed var(--line)}
+  .row:last-child{border-bottom:none}
+  .row-label{display:flex;flex-direction:column;gap:7px;align-items:flex-start}
+  .row-label b{font-size:.83rem;font-weight:800;color:var(--ink-2);letter-spacing:.01em}
+  .row-body{font-size:.93rem;display:flex;flex-direction:column;gap:9px;min-width:0}
+  .row-body p{color:var(--ink)}
+  .muted{color:var(--ink-3);font-size:.87rem}
+
+  ul.brands{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+  ul.brands li{
+    font-size:.8rem;background:var(--accent-wash);color:var(--accent);
+    border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);
+    padding:3px 9px;border-radius:2px;
+  }
+  ul.brands li.k{background:transparent;color:var(--ink-2);border-color:var(--line-strong)}
+
+  .metrics{display:flex;flex-wrap:wrap;gap:10px}
+  .metric{
+    border:1px solid var(--line-strong);border-radius:2px;padding:9px 14px;
+    display:flex;flex-direction:column;gap:1px;min-width:120px;background:var(--ground);
+  }
+  .metric .k{font-size:.68rem;letter-spacing:.07em;color:var(--ink-3);font-weight:700}
+  .metric .v{font-size:1.05rem;font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+  .metric.hi .v{color:var(--accent)}
+
+  ul.plain{margin:0;padding:0 18px 0 0;display:flex;flex-direction:column;gap:5px;font-size:.92rem}
+  ul.plain li::marker{color:var(--accent-2)}
+
+  /* ---------- method ---------- */
+  .method{background:var(--surface);border:1px solid var(--line);border-radius:2px;padding:24px 26px;display:flex;flex-direction:column;gap:20px}
+  .steps{display:flex;flex-direction:column;gap:16px;counter-reset:s;margin:0;padding:0;list-style:none}
+  .steps li{display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start}
+  .steps li::before{
+    counter-increment:s;content:counter(s);
+    font-family:ui-monospace,monospace;font-size:.78rem;font-weight:800;
+    color:var(--accent);border:1px solid var(--accent);border-radius:50%;
+    width:26px;height:26px;display:grid;place-items:center;margin-top:2px;
+  }
+  .steps b{display:block;font-size:.93rem;margin-bottom:2px}
+  .steps p{font-size:.88rem;color:var(--ink-2)}
+  .formula{
+    background:var(--ground);border:1px solid var(--line-strong);border-right:3px solid var(--accent);
+    padding:12px 16px;font-family:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    font-size:.83rem;direction:ltr;text-align:left;overflow-x:auto;color:var(--ink);
+    border-radius:2px;line-height:1.9;
+  }
+  .caveat{
+    background:var(--gap-wash);border:1px solid var(--gap);border-radius:2px;
+    padding:18px 22px;display:flex;flex-direction:column;gap:8px;
+  }
+  .caveat h4{font-size:.95rem;color:var(--gap)}
+  .caveat p,.caveat li{font-size:.89rem;color:var(--ink)}
+
+
+  /* --- whatsapp bubble --- */
+  .msg{
+    background:var(--surface-2);color:var(--ink);border-radius:14px 14px 14px 4px;
+    padding:16px 18px;font-size:.95rem;line-height:1.85;white-space:pre-wrap;
+    position:relative;box-shadow:0 1px 2px rgba(0,0,0,.10);
+  }
+    .msg{border:1px solid var(--line)}
+  .msg-wrap{display:flex;flex-direction:column;gap:8px}
+  .msg-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
+  .msg-kind{font-size:.72rem;font-weight:800;letter-spacing:.06em;color:var(--ink-3)}
+  .copy{
+    font:inherit;font-size:.78rem;font-weight:700;cursor:pointer;
+    background:var(--accent);color:#fff;border:1px solid var(--accent);
+    padding:5px 14px;border-radius:2px;transition:opacity .15s;
+  }
+  .copy:hover{opacity:.88}
+  .copy.done{background:var(--ok);border-color:var(--ok)}
+  .target{
+    font-size:.8rem;color:var(--ink-2);background:var(--surface-2);
+    border:1px solid var(--line);border-radius:2px;padding:8px 12px;
+  }
+  .target b{color:var(--accent)}
+  .safe{font-size:.83rem;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+  .safe li{margin:0}
+  .chars{font-size:.72rem;color:var(--ink-3);font-variant-numeric:tabular-nums}
+  .titleopt{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-bottom:1px dashed var(--line)}
+  .titleopt:last-child{border-bottom:none}
+  .tagbox{font-size:.85rem;line-height:2}
+  footer{border-top:1px solid var(--line-strong);padding-top:20px;font-size:.8rem;color:var(--ink-3);display:flex;flex-direction:column;gap:6px}
+
+  @media (max-width:640px){
+    .wrap{padding:32px 16px 64px;gap:44px}
+    .row{grid-template-columns:1fr;gap:10px}
+    .row-label{flex-direction:row;align-items:center;gap:10px;flex-wrap:wrap}
+    .card-body{padding:8px 18px 18px}
+    .card-head{padding:16px 18px}
+  }
+</style>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow">درب · محتوى رقمي</div>
+    <h1>سيو يوتيوب لمحطات درب</h1>
+    <p class="lede">حزمة نشر جاهزة لمحطتين: عناوين، ووصف، وكلمات مفتاحية، وفصول، وتعليق مثبّت، ونسخة Shorts — مبنية على حقائق مقيسة من خرائط جوجل لا على صياغات عامة.</p>
+    <div class="mast-meta">
+      <span>المحطات: <b>MK064 الجعرانة</b> · <b>RY042 الخرج</b></span>
+      <span>تاريخ المسح: <b>١ نوفمبر ٢٠٢٦</b></span>
+    </div>
+  </header>
+
+  <section class="finding">
+    <h3>المبدأ الذي بنيت عليه المحتوى</h3>
+    <p>يوتيوب يكافئ <strong>مدة المشاهدة</strong> قبل الكلمات المفتاحية. لذلك لم أحشُ النصوص بكلمات مكررة، بل بنيت كل عنوان ووصف على <strong>ميزة حقيقية قابلة للتحقق</strong> — لأنها وحدها ما يجعل المشاهد يكمل الفيديو.</p>
+    <p>وأهم ما كشفه المسح: ميزة المحطتين ليست الوقود ولا الموقع، بل <strong>الناس</strong>. تقييمات الخرج تذكر «موسى» ١٢٣ مرة بالاسم، وتقييمات الجعرانة تمدح «العامل» ٤٢ مرة. هذه زاوية لا يستطيع أي منافس نسخها.</p>
+  </section>
+
+  <div class="cards">
+      <article class="card">
+        <div class="card-head">
+          <span class="c">MK064</span>
+          <h3>محطة درب — الجعرانة</h3>
+          <span class="where">مكة المكرمة · الجعرانة</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الحقائق المؤكَّدة</b><span class="chip chip-map">مقيس من الخرائط</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">تقييم جوجل</span><span class="v">٤٫٩</span></div>
+                <div class="metric"><span class="k">عدد المراجعات</span><span class="v">٧٤٣</span></div>
+                <div class="metric"><span class="k">ساعات العمل</span><span class="v">٢٤ ساعة</span></div>
+              </div>
+<p><strong>مسجد الجعرانة (الميقات) على ٢٫٢٢ كم</strong> — وتقييمه ٤٫٨ بـ <strong>١١٬٠٣١ مراجعة</strong>، أي أنه مولّد حركة ضخم في النطاق.</p>
+  <p><strong>الميزة الحقيقية هي التقييم:</strong> درب ٤٫٩ بـ ٧٤٣ مراجعة، مقابل محطة القمة ٤٫٠ (٩٨) ومحطة طيبة ٣٫٥ (٩٠) و Liter ٣٫٥ (٤٨). <strong>درب الأعلى تقييمًا في الجعرانة بفارق واسع، وعدد مراجعاتها يفوق أقرب منافس بسبعة أضعاف.</strong></p>
+  <p><strong>الجوار:</strong> حنيذ أبو سيف ٠٫٧٣ كم • استراحة القمة الخضراء ١٫٥٣ كم • مدي الشام ١٫٩٩ كم • صيدلية التاج ٢٫٢١ كم.</p>
+  <p><strong>المنافسون:</strong> محطة القمة ٠٫٧٧ كم • Liter ١٫٠١ كم • محطة طيبة ٢٫٠٢ كم.</p>
+  <p><strong>ما يمدحه الزوار:</strong> «عامل» تكررت ٤٢ مرة، «محترم» ١٠، «موظفين» ٨، و«نظافة» — أي أن سمعة المحطة مبنية على <strong>الخدمة والنظافة</strong>.</p>              <p class="muted">الإحداثيات: <span dir="ltr" style="font-family:ui-monospace,monospace">21.548496, 39.948013</span></p>
+            </div>
+          </div>
+          <div class="caveat" style="margin:4px 0 14px">
+            <h4>ملاحظة قبل النشر</h4><p><strong>لا تستخدموا عبارة «أقرب محطة للميقات».</strong> محطة طيبة تبعد نحو ٢٨٠ مترًا فقط عن مسجد الجعرانة، بينما درب تبعد ٢٫٢٢ كم. الادعاء غير صحيح وسيضرّ المصداقية إن تحقّق منه أحد. الصياغة الدقيقة البديلة: «على طريق الجعرانة» أو «قبل الميقات» — وهي صحيحة وتخدم نفس نية البحث.</p>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>العناوين</b></div>
+            <div class="row-body"><p class="muted">مرتّبة من الأقوى بحثيًا. يوتيوب يقطع العنوان بعد نحو ٦٠ حرفًا، وكلها ضمن الحد.</p><div class="titleopt"><div class="msg-bar"><span class="chars">54 حرفًا</span><button class="copy" data-t="t0_0">نسخ</button></div><div class="msg" id="t0_0" style="padding:10px 14px">محطة درب الجعرانة | أعلى محطة تقييمًا على طريق الجعرانة 🕌</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">53 حرفًا</span><button class="copy" data-t="t0_1">نسخ</button></div><div class="msg" id="t0_1" style="padding:10px 14px">جولة في محطة درب – الجعرانة | وقود وخدمات ٢٤ ساعة بمكة</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">46 حرفًا</span><button class="copy" data-t="t0_2">نسخ</button></div><div class="msg" id="t0_2" style="padding:10px 14px">قبل ما تكمل طريقك للجعرانة… وقفة في محطة درب ⛽</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">33 حرفًا</span><button class="copy" data-t="t0_3">نسخ</button></div><div class="msg" id="t0_3" style="padding:10px 14px">محطة درب الجعرانة: ٤٫٩ ⭐ وش السر؟</div></div></div>
+          </div>
+<div class="row">
+  <div class="row-label"><b>الوصف</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">يُلصق كما هو في خانة الوصف</span>
+      <button class="copy" data-t="d0">نسخ</button></div>
+    <div class="msg" id="d0">محطة درب – الجعرانة | وقود وخدمات على مدار ٢٤ ساعة على طريق الجعرانة بمكة المكرمة.
+
+أعلى محطة تقييمًا في الجعرانة على خرائط جوجل: ٤٫٩ من ٥ بأكثر من ٧٤٠ تقييم — وهذا ما يقوله الزوار أنفسهم، لا ما نقوله نحن.
+
+📍 الموقع: الجعرانة، مكة المكرمة ٢٤٤٤٣
+🕐 تعمل ٢٤ ساعة طوال أيام الأسبوع
+🗺️ الموقع على الخرائط: https://maps.app.goo.gl/7bKLuzouMWks5XFEA
+
+ماذا تجد في المحطة؟
+• وقود بجميع الأنواع وخدمة تعبئة
+• دورات مياه نظيفة ومصلّى
+• متجر ومستلزمات الرحلات
+• خدمات سيارات
+
+لماذا محطة درب الجعرانة؟
+الطريق إلى الجعرانة يمرّ به يوميًا المعتمرون المتوجهون إلى الميقات، وأهالي المنطقة، ومرتادو الاستراحات. ومحطة درب نقطة توقف مريحة على هذا الطريق — نظافة، وخدمة سريعة، وفريق عمل يذكره الزوار بالاسم في تقييماتهم.
+
+الفصول:
+0:00 مقدمة
+0:20 موقع المحطة على طريق الجعرانة
+0:50 جولة في المحطة
+1:30 الخدمات المتوفرة
+2:10 آراء الزوار
+2:40 كيف تصل إلينا
+
+تابعونا لمعرفة مواقع محطات درب الجديدة في مكة المكرمة والمملكة.
+
+#محطة_درب #الجعرانة #مكة_المكرمة</div>
+  </div>
+</div>
+          <div class="row">
+            <div class="row-label"><b>الكلمات المفتاحية</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">Tags — تُلصق مفصولة بفواصل</span>
+                <button class="copy" data-t="g0">نسخ</button></div>
+              <div class="msg tagbox" id="g0">محطة درب, محطة درب الجعرانة, الجعرانة, ميقات الجعرانة, طريق الجعرانة, محطات وقود مكة, محطة وقود الجعرانة, مكة المكرمة, محطة وقود قريبة, محطة 24 ساعة, استراحة طريق الجعرانة, درب, Darb station, محطات درب, خدمات سيارات مكة, الشرائع, وقود مكة</div>
+            </div>
+          </div>
+<div class="row">
+  <div class="row-label"><b>التعليق المثبّت</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">ثبّتوه فور النشر</span>
+      <button class="copy" data-t="p0">نسخ</button></div>
+    <div class="msg" id="p0">📍 محطة درب – الجعرانة على الخرائط: https://maps.app.goo.gl/7bKLuzouMWks5XFEA
+
+مفتوحة ٢٤ ساعة ⏰ — وش الخدمة اللي تحبون نضيفها في المحطة؟ اكتبوها بالتعليقات 👇</div>
+  </div>
+</div>
+<div class="row">
+  <div class="row-label"><b>نسخة Shorts</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">فيديو قصير ٣٠–٥٠ ثانية</span>
+      <button class="copy" data-t="s0">نسخ</button></div>
+    <div class="msg" id="s0">أعلى محطة تقييمًا في الجعرانة ⭐ ٤٫٩
+
+على طريق الجعرانة… وقود وخدمات ٢٤ ساعة، ونظافة يشهد لها الزوار.
+
+📍 محطة درب – الجعرانة
+🗺️ الموقع بالوصف
+
+#محطة_درب #الجعرانة #مكة</div>
+  </div>
+</div>
+          <div class="row">
+            <div class="row-label"><b>المصغّرة</b></div>
+            <div class="row-body"><p>«٤٫٩ ⭐ في الجعرانة» فوق صورة واجهة المحطة ليلًا، بخط كبير أعلى اليمين</p>
+              <p class="muted">٣–٥ كلمات كحد أقصى، بخط سميك عالي التباين، ولا تكرّروا نص العنوان حرفيًا.</p></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="card-head">
+          <span class="c">RY042</span>
+          <h3>محطة درب — الناصفة — الخرج</h3>
+          <span class="where">الخرج · طريق الرياض</span>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="row-label"><b>الحقائق المؤكَّدة</b><span class="chip chip-map">مقيس من الخرائط</span></div>
+            <div class="row-body">
+              <div class="metrics">
+                <div class="metric hi"><span class="k">تقييم جوجل</span><span class="v">٥٫٠</span></div>
+                <div class="metric"><span class="k">عدد المراجعات</span><span class="v">٩٧٩</span></div>
+                <div class="metric"><span class="k">ساعات العمل</span><span class="v">٢٤ ساعة</span></div>
+              </div>
+<p><strong>تقييم كامل ٥٫٠ من ٥ بـ ٩٧٩ مراجعة</strong> — ارتفعت من ٨٩١ في أغسطس، أي نمو مستمر. وهو أعلى تقييم في المحفظة كلها.</p>
+  <p><strong>أهم اكتشاف في التقييمات:</strong> الزوار يذكرون الموظفين <strong>بالاسم</strong>: «موسى» تكرر <strong>١٢٣ مرة</strong>، و«شاهين» ١٦، و«العامل» ١٠٦، و«محترم» ٢٢، و«ابتسامة» ٦، و«محطة متكاملة» ٣.</p>
+  <p><strong>داخل المحطة:</strong> ٤ وحدات درايف ثرو (الأعلى في المحفظة) • كنتاكي • ريشو قهوة • مغسلة واش واي • ليدر اكسبريس. ورصد المسح أيضًا ريزينج كينز على ٦٠ م و Wooden Coffee على ٤٠ م.</p>
+  <p><strong>الجوار:</strong> مركز شبنان التجاري ٠٫٢١ كم • بنده ٤٫٥٤ كم • هايبر الوفاء ٤٫٧٩ كم • ذا زون الخرج ٤٫٨٩ كم.</p>
+  <p><strong>المنافسون:</strong> الدريس ٠٫٣٤ كم • المها ٠٫٨٠ كم • السالمية ٠٫٩٨ كم.</p>              <p class="muted">الإحداثيات: <span dir="ltr" style="font-family:ui-monospace,monospace">24.192563, 47.276688</span></p>
+            </div>
+          </div>
+          <div class="caveat" style="margin:4px 0 14px">
+            <h4>ملاحظة قبل النشر</h4><p><strong>أقوى زاوية محتوى في المحفظة كلها: اصنعوا فيديو عن «موسى».</strong> أن يُذكر موظف باسمه في ١٢٣ تقييمًا أمر نادر، وهو محتوى إنساني أصيل يتفوّق على أي إعلان مدفوع. استأذنوه أولًا، واجعلوه بطل الفيديو — هذا النوع يُشاهَد حتى النهاية ويُعاد نشره، وكلاهما إشارتا ترتيب قويتان في يوتيوب.<br><br>وتحققوا من استمرار ريزينج كينز و Wooden Coffee قبل ذكرهما بالاسم، فقياسهما تم في أغسطس. لذلك تركت الوصف يذكر «مطاعم ومقاهٍ متنوعة» بدل أسماء قد تتغير.</p>
+          </div>
+          <div class="row">
+            <div class="row-label"><b>العناوين</b></div>
+            <div class="row-body"><p class="muted">مرتّبة من الأقوى بحثيًا. يوتيوب يقطع العنوان بعد نحو ٦٠ حرفًا، وكلها ضمن الحد.</p><div class="titleopt"><div class="msg-bar"><span class="chars">52 حرفًا</span><button class="copy" data-t="t1_0">نسخ</button></div><div class="msg" id="t1_0" style="padding:10px 14px">محطة درب الخرج | ٤ درايف ثرو على طريق الرياض ٢٤ ساعة</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">52 حرفًا</span><button class="copy" data-t="t1_1">نسخ</button></div><div class="msg" id="t1_1" style="padding:10px 14px">٩٧٩ تقييم و ٥٫٠ من ٥ ⭐ | جولة في محطة درب – الناصفة</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">54 حرفًا</span><button class="copy" data-t="t1_2">نسخ</button></div><div class="msg" id="t1_2" style="padding:10px 14px">موسى… الموظف اللي ذكره ١٢٣ عميل بالاسم | محطة درب الخرج</div></div><div class="titleopt"><div class="msg-bar"><span class="chars">44 حرفًا</span><button class="copy" data-t="t1_3">نسخ</button></div><div class="msg" id="t1_3" style="padding:10px 14px">أسرع وقفة على طريق الرياض – الخرج ⛽ محطة درب</div></div></div>
+          </div>
+<div class="row">
+  <div class="row-label"><b>الوصف</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">يُلصق كما هو في خانة الوصف</span>
+      <button class="copy" data-t="d1">نسخ</button></div>
+    <div class="msg" id="d1">محطة درب – الناصفة بالخرج | محطة متكاملة على طريق الرياض تعمل ٢٤ ساعة.
+
+تقييم ٥٫٠ من ٥ على خرائط جوجل بأكثر من ٩٧٠ تقييم — وأكثر ما يتكرر في التقييمات ليس الوقود، بل أسماء موظفي المحطة.
+
+📍 الموقع: حي الناصفة، الخرج ١٦٢٨٢
+🕐 تعمل ٢٤ ساعة طوال أيام الأسبوع
+🗺️ الموقع على الخرائط: https://maps.app.goo.gl/Fe8EWjcMV9zZaWLX9
+
+ماذا تجد في المحطة؟
+• ٤ وحدات درايف ثرو — اطلب وأنت في سيارتك
+• مطاعم ومقاهٍ متنوعة
+• مغسلة سيارات وخدمات صيانة
+• دورات مياه ومصلّى ومتجر
+
+لماذا محطة درب الناصفة؟
+المحطة على طريق الرياض – الخرج، وتخدم المسافرين بين المدينتين وأهالي الخرج معًا. أربع وحدات درايف ثرو تعني خدمة سريعة دون نزول من السيارة، وتشكيلة مطاعم ومقاهٍ تجعل التوقف وجبة لا تعبئة وقود فقط.
+
+الفصول:
+0:00 مقدمة
+0:20 الموقع على طريق الرياض
+0:50 جولة في المحطة
+1:30 الدرايف ثرو والمطاعم
+2:10 خدمات السيارات
+2:40 كيف تصل إلينا
+
+تابعونا لمعرفة مواقع محطات درب الجديدة في المملكة.
+
+#محطة_درب #الخرج #طريق_الرياض</div>
+  </div>
+</div>
+          <div class="row">
+            <div class="row-label"><b>الكلمات المفتاحية</b></div>
+            <div class="row-body msg-wrap">
+              <div class="msg-bar"><span class="msg-kind">Tags — تُلصق مفصولة بفواصل</span>
+                <button class="copy" data-t="g1">نسخ</button></div>
+              <div class="msg tagbox" id="g1">محطة درب, محطة درب الخرج, الخرج, طريق الرياض الخرج, الناصفة, محطات وقود الخرج, درايف ثرو الخرج, محطة 24 ساعة, استراحة طريق الخرج, محطة وقود قريبة, Darb station, محطات درب, مغسلة سيارات الخرج, مقاهي الخرج, وقود الرياض, مطاعم الخرج</div>
+            </div>
+          </div>
+<div class="row">
+  <div class="row-label"><b>التعليق المثبّت</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">ثبّتوه فور النشر</span>
+      <button class="copy" data-t="p1">نسخ</button></div>
+    <div class="msg" id="p1">📍 محطة درب – الناصفة على الخرائط: https://maps.app.goo.gl/Fe8EWjcMV9zZaWLX9
+
+٤ وحدات درايف ثرو ومفتوحة ٢٤ ساعة ⏰
+وش طلبك المفضل من المحطة؟ اكتبه بالتعليقات 👇</div>
+  </div>
+</div>
+<div class="row">
+  <div class="row-label"><b>نسخة Shorts</b></div>
+  <div class="row-body msg-wrap">
+    <div class="msg-bar"><span class="msg-kind">فيديو قصير ٣٠–٥٠ ثانية</span>
+      <button class="copy" data-t="s1">نسخ</button></div>
+    <div class="msg" id="s1">٩٧٠+ تقييم… ومعدل ٥٫٠ من ٥ ⭐
+
+٤ درايف ثرو على طريق الرياض – الخرج. اطلب وأنت بسيارتك.
+
+📍 محطة درب – الناصفة، الخرج
+🗺️ الموقع بالوصف
+
+#محطة_درب #الخرج #طريق_الرياض</div>
+  </div>
+</div>
+          <div class="row">
+            <div class="row-label"><b>المصغّرة</b></div>
+            <div class="row-body"><p>صورة موسى مبتسمًا + نص «ذكروه ١٢٣ مرة بالاسم» — أو «٤ درايف ثرو» إن فضّلتم زاوية الخدمات</p>
+              <p class="muted">٣–٥ كلمات كحد أقصى، بخط سميك عالي التباين، ولا تكرّروا نص العنوان حرفيًا.</p></div>
+          </div>
+        </div>
+      </article>
+  </div>
+
+  <section class="sec">
+    <div class="sec-head"><h2>قواعد النشر</h2><p>تنطبق على الفيديوهين.</p></div>
+    <div class="method">
+      <ul class="plain" style="gap:12px">
+        <li><strong>أول سطرين من الوصف هما الأهم.</strong> يوتيوب يعرضهما فوق زر «المزيد»، وفيهما وضعت اسم المحطة والموقع — لا تحذفوهما ولا تبدؤوا بتحية.</li>
+        <li><strong>الفصول مكتوبة بصيغة يوتيوب الصحيحة</strong> (<span dir="ltr" style="font-family:ui-monospace,monospace">0:00</span> لا ٠٠:٠٠) لأن الأرقام العربية لا يتعرف عليها. عدّلوا التوقيتات على الفيديو الفعلي؛ ويلزم ٣ فصول على الأقل وأن يبدأ أولها من الصفر.</li>
+        <li><strong>رابط الخرائط داخل الوصف ضروري</strong> — يربط الفيديو بالموقع ويخدم البحث المحلي، وهو أكثر ما يطلبه المشاهد فعلًا.</li>
+        <li><strong>٣ هاشتاقات فقط.</strong> أول ثلاثة تظهر فوق العنوان، والزيادة تُضعف الظهور ولا تزيده.</li>
+        <li><strong>١٥–٢٠ كلمة مفتاحية تكفي.</strong> الحشو لا يرفع الترتيب، والدقة أفضل من الكثرة.</li>
+        <li><strong>أول ١٥ ثانية تحدد المصير.</strong> ابدؤوا بالمحطة نفسها لا بشعار متحرك — معظم الانسحاب يحدث هنا.</li>
+        <li><strong>انشروا الـ Shorts قبل الفيديو الطويل بيوم</strong> وضعوا رابط الطويل في تعليق مثبّت على القصير.</li>
+        <li><strong>حدّثوا الأرقام قبل النشر.</strong> التقييمات تتغير: مراجعات الخرج ارتفعت من ٨٩١ إلى ٩٧٩ خلال شهرين.</li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>
+    <p>الحقائق (التقييمات، وعدد المراجعات، والمسافات، وساعات العمل، والكلمات المتكررة في التقييمات) مستخرجة من خرائط جوجل عبر Apify بتاريخ ١ نوفمبر ٢٠٢٦، والمسافات محسوبة بمعادلة Haversine. لا يحتوي أي نص هنا على رقم حركة مرورية تقديري.</p>
+  </footer>
+</div>
+
+<script>
+document.querySelectorAll(".copy").forEach(function(b){
+  b.addEventListener("click", function(){
+    var el = document.getElementById(b.dataset.t);
+    if(!el) return;
+    var txt = el.innerText;
+    var done = function(){
+      var o = b.textContent; b.textContent = "تم النسخ \u2713"; b.classList.add("done");
+      setTimeout(function(){ b.textContent = o; b.classList.remove("done"); }, 1800);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, function(){ fb(txt, done); });
+    } else { fb(txt, done); }
+  });
+});
+function fb(txt, cb){
+  var t = document.createElement("textarea");
+  t.value = txt; t.setAttribute("readonly","");
+  t.style.position = "fixed"; t.style.top = "-1000px";
+  document.body.appendChild(t); t.select();
+  try { document.execCommand("copy"); cb(); } catch(e){}
+  document.body.removeChild(t);
+}
+</script>
