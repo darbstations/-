@@ -99,6 +99,13 @@ td.n b{font-weight:700}
     <div class="tbl" id="calcTbl"></div>
   </section>
 
+  <section class="panel">
+    <div class="sec-h"><h2>ما يجمعه العميل كل شهر</h2><span class="hint">من كل عملية، ورصيده المتراكم نهاية كل شهر</span></div>
+    <div class="tbl" id="monTbl"></div>
+    <div class="sec-h" style="margin-top:16px"><h3>الرصيد نهاية كل شهر</h3><label class="f" style="display:flex;gap:6px;align-items:center">عدد الأشهر<input id="months" type="number" min="1" max="36" step="1" style="width:80px"></label></div>
+    <div class="tbl" id="balTbl"></div>
+  </section>
+
 
 
 
@@ -120,7 +127,7 @@ const fmt=n=>(Math.round(n*100)/100).toLocaleString('en-US');
 const fmt0=n=>Math.round(n).toLocaleString('en-US');
 const sar=n=>fmt(n)+' ر.س';
 const KEY='darb-points-v1';
-const DEF=()=>({calc:[{},{},{}],halala:0.5,tiers:[{name:'الفئة الأولى',cond:'',min:0,mult:1},{name:'الفئة الثانية',cond:'',min:'',mult:1},{name:'الفئة الثالثة',cond:'',min:'',mult:1}],pkgs:[],refFrom:'',refTo:'',refMult:true,cmps:[]});
+const DEF=()=>({months:12,calc:[{},{},{}],halala:0.5,tiers:[{name:'الفئة الأولى',cond:'',min:0,mult:1},{name:'الفئة الثانية',cond:'',min:'',mult:1},{name:'الفئة الثالثة',cond:'',min:'',mult:1}],pkgs:[],refFrom:'',refTo:'',refMult:true,cmps:[]});
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||typeof S!=='object')S=DEF();
 if(!Array.isArray(S.calc))S.calc=[{},{},{}];
@@ -201,10 +208,10 @@ function renderSum(){
 }
 
 const CROWS=[
- {k:'base',l:'نقاط الفئة الأساسية',h:'تنضاف مرة وحدة',src:'base'},
- {k:'pkg',l:'نقاط شراء الباقة (لكل باقة)',src:'pkg'},{k:'nPkg',l:'عدد الباقات',cnt:'pkg'},
- {k:'cmp',l:'نقاط المشاركة في الحملة (لكل مشاركة)',src:'cmp'},{k:'nCmp',l:'عدد المشاركات',cnt:'cmp'},
- {k:'ref',l:'نقاط الإحالة (لكل إحالة)',src:'ref'},{k:'nRef',l:'عدد الإحالات',cnt:'ref'}];
+ {k:'base',l:'نقاط الفئة الأساسية',h:'تنضاف مرة وحدة في أول شهر',src:'base'},
+ {k:'pkg',l:'نقاط شراء الباقة (لكل باقة)',src:'pkg'},{k:'nPkg',l:'عدد الباقات في الشهر',cnt:'pkg'},
+ {k:'cmp',l:'نقاط المشاركة في الحملة (لكل مشاركة)',src:'cmp'},{k:'nCmp',l:'عدد المشاركات في الشهر',cnt:'cmp'},
+ {k:'ref',l:'نقاط الإحالة (لكل إحالة)',src:'ref'},{k:'nRef',l:'عدد الإحالات في الشهر',cnt:'ref'}];
 const cv=(t,k)=>+((S.calc[t]||{})[k])||0;
 function ctot(t){const base=cv(t,'base'),pkg=cv(t,'pkg')*cv(t,'nPkg'),cmp=cv(t,'cmp')*cv(t,'nCmp'),ref=cv(t,'ref')*cv(t,'nRef');return {base,pkg,cmp,ref,all:base+pkg+cmp+ref};}
 function renderCalc(){
@@ -214,11 +221,11 @@ function renderCalc(){
     return `<td><div class="pair"><label><span>نقاط</span><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="10" value="${v??''}" placeholder="0"></label><label><span>ريال</span><input id="cs${r.k}${t}" data-cs="${r.k}" data-t="${t}" type="number" min="0" step="0.5" value="${sv}" placeholder="0"></label></div><div class="hint num" id="clh${r.k}${t}"></div></td>`;};
   $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${S.tiers.map((t,i)=>`<th><span class="dot" style="background:${tcol(i)}"></span><input id="tn${i}" data-tn="${i}" value="${esc(tname(i))}" aria-label="اسم الفئة" style="max-width:150px;font-weight:600"></th>`).join('')}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>cell(r,t)).join('')}</tr>`).join('')}
    <tr class="tot"><td>المجموع</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr></tbody></table>`;
-  $('calcTbl').querySelectorAll('[data-tn]').forEach(el=>el.addEventListener('input',()=>{S.tiers[+el.dataset.tn].name=el.value;save();}));
+  $('calcTbl').querySelectorAll('[data-tn]').forEach(el=>el.addEventListener('input',()=>{S.tiers[+el.dataset.tn].name=el.value;save();updMonthly();}));
   $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cl;S.calc[t]=S.calc[t]||{};S.calc[t][k]=el.value===''?'':+el.value;
-    const sEl=$(`cs${k}${t}`);if(sEl)sEl.value=(el.value===''||!pv())?'':+(+el.value*pv()).toFixed(4);save();updCalc();}));
+    const sEl=$(`cs${k}${t}`);if(sEl)sEl.value=(el.value===''||!pv())?'':+(+el.value*pv()).toFixed(4);save();calc();}));
   $('calcTbl').querySelectorAll('[data-cs]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cs;S.calc[t]=S.calc[t]||{};
-    const pts=(el.value===''||!pv())?'':Math.round(+el.value/pv());S.calc[t][k]=pts;const pEl=$(`cl${k}${t}`);if(pEl)pEl.value=pts;save();updCalc();}));
+    const pts=(el.value===''||!pv())?'':Math.round(+el.value/pv());S.calc[t][k]=pts;const pEl=$(`cl${k}${t}`);if(pEl)pEl.value=pts;save();calc();}));
 }
 function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
   CROWS.forEach(r=>{const h=$(`clh${r.k}${t}`);if(!h)return;
@@ -226,10 +233,25 @@ function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
     else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة × نص هللة = ${hh(cv(t,r.k))} = ${sar(cv(t,r.k)*pv())}`:'';
     else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${hh(T[r.cnt])} = ${sar(T[r.cnt]*pv())}`:'';});
   const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${hh(T.all)} = ${sar(T.all*pv())}</div>`;});}
-function calc(){updCalc();renderValue();}
+
+function pr(p){return `<b>${fmt0(p)}</b> نقطة<div class="hint">${sar(p*pv())}</div>`;}
+function updMonthly(){
+  const T=S.tiers.map((_,t)=>ctot(t));
+  const ops=[['شراء الباقة','pkg','nPkg'],['المشاركة في الحملة','cmp','nCmp'],['الإحالة','ref','nRef']];
+  const head=`<tr><th>العملية</th>${S.tiers.map((_,t)=>`<th class="tcol"><span class="dot" style="background:${tcol(t)}"></span>${esc(tname(t))}</th>`).join('')}</tr>`;
+  $('monTbl').innerHTML=`<table class="sumtbl"><thead>${head}</thead><tbody>
+    ${ops.map(([l,k,n])=>`<tr><td>${l}<div class="hint">${S.tiers.map((_,t)=>cv(t,n)).some(Boolean)?'كل شهر':''}</div></td>${S.tiers.map((_,t)=>`<td class="n">${pr(T[t][k])}<div class="hint">${cv(t,n)} × ${fmt0(cv(t,k))} نقطة</div></td>`).join('')}</tr>`).join('')}
+    <tr class="tot"><td>يجمع كل شهر</td>${T.map(x=>`<td class="n">${fmt0(x.pkg+x.cmp+x.ref)} نقطة<div>${sar((x.pkg+x.cmp+x.ref)*pv())}</div></td>`).join('')}</tr>
+    <tr><td>النقاط الأساسية<div class="hint">أول شهر بس</div></td>${T.map(x=>`<td class="n">${pr(x.base)}</td>`).join('')}</tr></tbody></table>`;
+  const M=Math.max(1,Math.min(36,+S.months||12));
+  $('balTbl').innerHTML=`<table class="sumtbl"><thead><tr><th>نهاية الشهر</th>${S.tiers.map((_,t)=>`<th class="tcol"><span class="dot" style="background:${tcol(t)}"></span>${esc(tname(t))}</th>`).join('')}</tr></thead><tbody>${
+    Array.from({length:M},(_,m)=>`<tr><td>الشهر ${m+1}</td>${T.map(x=>{const bal=x.base+(x.pkg+x.cmp+x.ref)*(m+1);return `<td class="n">${pr(bal)}</td>`}).join('')}</tr>`).join('')}</tbody></table>`;
+}
+function calc(){updCalc();renderValue();updMonthly();}
 function renderAllCalc(){renderCalc();calc();}
 function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
-function renderAll(){renderAllCalc();}
+function renderAll(){$('months').value=S.months||12;renderAllCalc();}
+$('months').addEventListener('input',e=>{S.months=+e.target.value||12;save();updMonthly();});
 
 $('resetBtn').addEventListener('click',()=>{S=DEF();save();renderAll();toast('رجعت الصفحة للبداية');});
 function convFromP(){const p=$('cvP').value;if(p==='')return;$('cvS').value=fmt(+p*pv()).replace(/,/g,'');}
@@ -240,6 +262,7 @@ $('copyBtn').addEventListener('click',()=>{
   L.push(['الخطوة',...tn.flatMap(x=>[x+' نقاط',x+' ريال'])].join('\t'));
   CROWS.forEach(r=>L.push([r.l,...S.tiers.flatMap((_,t)=>{const v=cv(t,r.k);return r.cnt?[v,'']:[v,v*pv()];})].join('\t')));
   L.push(['المجموع',...S.tiers.flatMap((_,t)=>{const a=ctot(t).all;return [a,a*pv()];})].join('\t'));
+  L.push('',['نهاية الشهر',...tn.flatMap(x=>[x+' نقاط',x+' ريال'])].join('\t'));{const T=S.tiers.map((_,t)=>ctot(t));const M=Math.max(1,Math.min(36,+S.months||12));for(let m=0;m<M;m++)L.push(['الشهر '+(m+1),...T.flatMap(x=>{const b=x.base+(x.pkg+x.cmp+x.ref)*(m+1);return [b,b*pv()];})].join('\t'));}
   const txt=L.join('\n');
   try{navigator.clipboard.writeText(txt).then(()=>toast('نُسخ الملخص، الصقه في إكسل'),()=>fb(txt))}catch(e){fb(txt)}
 });
