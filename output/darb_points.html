@@ -86,7 +86,7 @@ td.n b{font-weight:700}
   <section class="panel">
     <div class="sec-h"><h2>قيمة النقطة</h2></div>
     <div class="value">
-      <label class="f">قيمة النقطة (هللة)<input id="halala" type="number" min="0" step="0.1"></label>
+      <div><div class="hint">قيمة النقطة</div><div class="out num">نص هللة</div></div>
       <div><div class="hint">قيمة النقطة بالريال</div><div class="out num" id="sarPer"></div></div>
       <div><div class="hint">كم نقطة = ريال واحد</div><div class="out num" id="perSar"></div></div>
       <div class="check" id="check"></div>
@@ -151,7 +151,9 @@ let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||typeof S!=='object')S=DEF();
 if(!Array.isArray(S.calc))S.calc=[{},{},{}];
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
-const pv=()=>(+S.halala||0)/100;               // SAR per point
+const HALALA=0.5;                               // fixed: one point = half a halala
+const pv=()=>HALALA/100;                         // SAR per point
+const hh=p=>fmt(p*HALALA)+' هللة';
 const mult=t=>(+S.tiers[t].mult||0);
 const tname=t=>S.tiers[t].name||('الفئة '+(t+1));
 const tcol=t=>['var(--t1)','var(--t2)','var(--t3)'][t];
@@ -159,7 +161,6 @@ const tierHead=()=>S.tiers.map((t,i)=>`<th class="tcol"><span class="dot" style=
 function updHeads(){S.tiers.forEach((_,i)=>document.querySelectorAll('.th-t'+i).forEach(e=>e.textContent=tname(i)));}
 
 function renderValue(){
-  $('halala').value=S.halala;
   const v=pv();
   $('sarPer').textContent=v?(Math.round(v*10000)/10000).toLocaleString('en-US',{maximumFractionDigits:4})+' ر.س':'—';
   $('perSar').textContent=v?fmt0(1/v)+' نقطة':'—';
@@ -246,16 +247,15 @@ function renderCalc(){
 }
 function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
   CROWS.forEach(r=>{const h=$(`clh${r.k}${t}`);if(!h)return;
-    if(r.src==='base')h.textContent=T.base?`${fmt0(T.base)} نقطة = ${sar(T.base*pv())}`:'';
-    else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة = ${sar(cv(t,r.k)*pv())}`:'';
-    else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${sar(T[r.cnt]*pv())}`:'';});
-  const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${sar(T.all*pv())}</div>`;});}
+    if(r.src==='base')h.textContent=T.base?`${fmt0(T.base)} نقطة × نص هللة = ${hh(T.base)} = ${sar(T.base*pv())}`:'';
+    else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة × نص هللة = ${hh(cv(t,r.k))} = ${sar(cv(t,r.k)*pv())}`:'';
+    else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${hh(T[r.cnt])} = ${sar(T[r.cnt]*pv())}`:'';});
+  const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${hh(T.all)} = ${sar(T.all*pv())}</div>`;});}
 function calc(){updCalc();renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
 function renderAllCalc(){renderCalc();renderPkgs();renderCmp();calc();}
 function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
 function renderAll(){renderTiers();renderAllCalc();}
 
-$('halala').addEventListener('input',e=>{S.halala=e.target.value===''?'':+e.target.value;save();renderCalc();calc();convFromP();});
 $('refFrom').addEventListener('input',e=>{S.refFrom=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
 $('refTo').addEventListener('input',e=>{S.refTo=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
 $('refMult').addEventListener('change',e=>{S.refMult=e.target.checked;save();renderRef();renderSum();});
@@ -267,7 +267,7 @@ $('cvP').addEventListener('input',convFromP);
 $('cvS').addEventListener('input',()=>{const s=$('cvS').value;if(s===''||!pv())return;$('cvP').value=Math.round(+s/pv());});
 $('copyBtn').addEventListener('click',()=>{
   const L=[];const tn=S.tiers.map((_,t)=>tname(t));
-  L.push(['قيمة النقطة (هللة)',S.halala].join('\t'),['نقطة = ريال',pv()?Math.round(1/pv()):''].join('\t'),'');
+  L.push(['قيمة النقطة (هللة)',HALALA].join('\t'),['نقطة = ريال',pv()?Math.round(1/pv()):''].join('\t'),'');
   L.push(['حاسبة الفئات',...tn].join('\t'));CROWS.forEach(r=>L.push([r.l,...S.tiers.map((_,t)=>(S.calc[t]||{})[r.k]??'')].join('\t')));L.push(['المجموع (نقاط)',...S.tiers.map((_,t)=>ctot(t).all)].join('\t'),['المجموع (ر.س)',...S.tiers.map((_,t)=>ctot(t).all*pv())].join('\t'),'');
   L.push(['الفئة','شرط الدخول','الحد الأدنى','المضاعف'].join('\t'));S.tiers.forEach((t,i)=>L.push([tn[i],t.cond,t.min,t.mult].join('\t')));L.push('');
   L.push(['الباقة','السعر','النقاط الأساسية',...tn.map(x=>x+' نقاط'),...tn.map(x=>x+' ر.س')].join('\t'));
