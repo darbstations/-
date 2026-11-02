@@ -1,0 +1,249 @@
+<title>نقاط درب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&display=swap">
+<style>
+/* Layout: point value strip, three tier cards, then one section per points source, then a per-tier summary */
+:root{
+  --bg:#F6F5F3; --surface:#FFFFFF; --ink:#24201C; --ink2:#6B645C; --line:#E4E0DA;
+  --accent:#E8631A; --accent-soft:#FDEBDD; --pkg:#3E6E8E; --ref:#2F9C95; --cmp:#8A6D1F;
+  --t1:#8C6A4A; --t2:#7C8794; --t3:#B8902A;
+  --ok:#2E7D4F; --ok-soft:#E3F2E8; --bad:#C0392B;
+  --display:'Readex Pro','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --body:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
+  --accent:#F38A4A; --accent-soft:#3D2717; --pkg:#7FAED0; --ref:#5CC6BE; --cmp:#D9B44A;
+  --t1:#C9A07A; --t2:#AEB8C4; --t3:#E3C15A;
+  --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#181614; --surface:#221F1C; --ink:#F1ECE6; --ink2:#A89F95; --line:#3A3530;
+  --accent:#F38A4A; --accent-soft:#3D2717; --pkg:#7FAED0; --ref:#5CC6BE; --cmp:#D9B44A;
+  --t1:#C9A07A; --t2:#AEB8C4; --t3:#E3C15A;
+  --ok:#6FCF97; --ok-soft:#1E3326; --bad:#F08A7E; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:14.5px;line-height:1.55;direction:rtl}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:16px;padding-block:22px 48px;display:grid;gap:18px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0}
+h1{font-size:24px} h2{font-size:18px} h3{font-size:15px}
+.num{font-variant-numeric:tabular-nums}
+.hint{font-size:12px;color:var(--ink2)}
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:end;justify-content:space-between}
+.top p{margin:4px 0 0;color:var(--ink2);max-width:70ch}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+label.f{display:grid;gap:4px;font-size:12.5px;color:var(--ink2);font-weight:500}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:7px 9px;min-width:0;width:100%}
+input[type=number]{font-variant-numeric:tabular-nums;text-align:left;direction:ltr}
+input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+button{font:inherit;cursor:pointer;border-radius:7px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px}
+button.pri{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+button.ghost{background:transparent}
+button.x{border:none;background:transparent;color:var(--ink2);padding:4px 8px;font-size:16px}
+button.x:hover{color:var(--bad)}
+.actions{display:flex;gap:8px;flex-wrap:wrap}
+.sec-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-inline-end:6px;vertical-align:middle}
+.value{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:end}
+.check{border-radius:8px;padding:10px 12px;font-weight:600;background:var(--ok-soft);color:var(--ok)}
+.check.bad{background:#FBE4E1;color:var(--bad)}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.tier{border-top:4px solid var(--line);display:grid;gap:10px;align-content:start}
+.tier[data-t="0"]{border-top-color:var(--t1)} .tier[data-t="1"]{border-top-color:var(--t2)} .tier[data-t="2"]{border-top-color:var(--t3)}
+.r2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11.5px;color:var(--ink2);font-weight:600;text-align:right;padding:6px 4px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:middle}
+td.n{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:left}
+td.n b{font-weight:700}
+.tcol{text-align:left}
+.tname{font-weight:600}
+.sumtbl td,.sumtbl th{padding:8px 6px}
+.sumtbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
+.conv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.out{font-family:var(--display);font-size:20px;font-weight:700}
+.toast{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 14px;border-radius:8px;font-size:13px}
+@media (max-width:900px){.tiers{grid-template-columns:1fr}.value{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.value,.conv,.r2{grid-template-columns:1fr}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>نقاط درب</h1>
+      <p>حدد قيمة النقطة والفئات الثلاث ومصادر النقاط، والصفحة تحسب كم نقطة يحصل عليها العميل في كل فئة وكم تكلف درب بالريال.</p>
+    </div>
+    <div class="actions">
+      <button class="ghost" id="copyBtn" type="button">نسخ الملخص لإكسل</button>
+      <button class="ghost" id="resetBtn" type="button">إعادة الضبط</button>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="sec-h"><h2>قيمة النقطة</h2></div>
+    <div class="value">
+      <label class="f">قيمة النقطة (هللة)<input id="halala" type="number" min="0" step="0.1"></label>
+      <div><div class="hint">قيمة النقطة بالريال</div><div class="out num" id="sarPer"></div></div>
+      <div><div class="hint">كم نقطة = ريال واحد</div><div class="out num" id="perSar"></div></div>
+      <div class="check" id="check"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2>الفئات الثلاث</h2><span class="hint">اسم كل فئة، وشرط الدخول لها، ومضاعف النقاط فيها</span></div>
+    <div class="tiers" id="tiers"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2><span class="dot" style="background:var(--pkg)"></span>شراء الباقة</h2><button type="button" class="pri" id="addPkg">＋ باقة</button></div>
+    <div class="tbl" id="pkgTbl"></div>
+    <p class="hint">النقاط الأساسية لكل باقة تنضرب في مضاعف الفئة. التكلفة = النقاط × قيمة النقطة.</p>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2><span class="dot" style="background:var(--ref)"></span>الإحالات</h2></div>
+    <div class="r2" style="max-width:560px">
+      <label class="f">نقاط للعميل اللي يحيل (لكل إحالة)<input id="refFrom" type="number" min="0" step="1"></label>
+      <label class="f">نقاط للعميل الجديد<input id="refTo" type="number" min="0" step="1"></label>
+    </div>
+    <label class="f" style="margin-top:10px;flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="refMult" style="width:auto"> نقاط الإحالة تتضاعف حسب فئة العميل اللي يحيل</label>
+    <div class="tbl" id="refTbl" style="margin-top:10px"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2><span class="dot" style="background:var(--cmp)"></span>الحملات</h2><button type="button" class="pri" id="addCmp">＋ حملة</button></div>
+    <div class="tbl" id="cmpTbl"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2>الملخص حسب الفئة</h2><span class="hint">لعميل واحد: يشتري كل باقة مرة، ويحيل عميلًا واحدًا، ويشارك في كل حملة مرة</span></div>
+    <div class="tbl" id="sumTbl"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2>تحويل سريع</h2></div>
+    <div class="conv">
+      <label class="f">نقاط<input id="cvP" type="number" min="0" step="1" placeholder="مثال 1000"></label>
+      <label class="f">ريال<input id="cvS" type="number" min="0" step="0.5" placeholder="مثال 5"></label>
+    </div>
+  </section>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>(Math.round(n*100)/100).toLocaleString('en-US');
+const fmt0=n=>Math.round(n).toLocaleString('en-US');
+const sar=n=>fmt(n)+' ر.س';
+const KEY='darb-points-v1';
+const DEF=()=>({halala:0.5,tiers:[{name:'الفئة الأولى',cond:'',min:0,mult:1},{name:'الفئة الثانية',cond:'',min:'',mult:1},{name:'الفئة الثالثة',cond:'',min:'',mult:1}],pkgs:[],refFrom:'',refTo:'',refMult:true,cmps:[]});
+let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
+if(!S||typeof S!=='object')S=DEF();
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const pv=()=>(+S.halala||0)/100;               // SAR per point
+const mult=t=>(+S.tiers[t].mult||0);
+const tname=t=>S.tiers[t].name||('الفئة '+(t+1));
+const tcol=t=>['var(--t1)','var(--t2)','var(--t3)'][t];
+const tierHead=()=>S.tiers.map((t,i)=>`<th class="tcol"><span class="dot" style="background:${tcol(i)}"></span><span class="th-t${i}">${esc(tname(i))}</span></th>`).join('');
+function updHeads(){S.tiers.forEach((_,i)=>document.querySelectorAll('.th-t'+i).forEach(e=>e.textContent=tname(i)));}
+
+function renderValue(){
+  $('halala').value=S.halala;
+  const v=pv();
+  $('sarPer').textContent=v?(Math.round(v*10000)/10000).toLocaleString('en-US',{maximumFractionDigits:4})+' ر.س':'—';
+  $('perSar').textContent=v?fmt0(1/v)+' نقطة':'—';
+  const ok=Math.abs(v-0.005)<1e-9;
+  $('check').className='check'+(ok?'':' bad');
+  $('check').textContent=ok?'صح: نصف هللة = 0.005 ريال، و200 نقطة = ريال':(v?`بهذي القيمة كل ${fmt(1/v)} نقطة = ريال`:'حدد قيمة النقطة');
+}
+function renderTiers(){
+  $('tiers').innerHTML=S.tiers.map((t,i)=>`<div class="panel tier" data-t="${i}">
+    <label class="f">اسم الفئة<input id="tn${i}" data-tk="name" value="${esc(t.name)}"></label>
+    <label class="f">شرط الدخول (وصف)<input id="tc${i}" data-tk="cond" value="${esc(t.cond)}" placeholder="مثال: من 5,000 نقطة"></label>
+    <div class="r2">
+      <label class="f">الحد الأدنى من النقاط<input id="tm${i}" data-tk="min" type="number" min="0" step="100" value="${t.min}" placeholder="0"></label>
+      <label class="f">مضاعف النقاط (×)<input id="tx${i}" data-tk="mult" type="number" min="0" step="0.1" value="${t.mult}"></label>
+    </div>
+    <div class="hint num">${t.min!==''&&t.min!=null&&pv()?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:''}</div>
+  </div>`).join('');
+  $('tiers').querySelectorAll('[data-tk]').forEach(el=>el.addEventListener('input',()=>{const i=+el.closest('[data-t]').dataset.t,k=el.dataset.tk;S.tiers[i][k]=(k==='min'||k==='mult')?(el.value===''?'':+el.value):el.value;save();calc();}));
+}
+function cellPts(p,t){const pts=p*mult(t);return `<td class="n"><b>${fmt0(pts)}</b> نقطة<div class="hint">${sar(pts*pv())}</div></td>`;}
+function pkgCell(p,t){const pts=(+p.pts||0)*mult(t),c=pts*pv(),pr=+p.price||0;return `<b>${fmt0(pts)}</b> نقطة<div class="hint">${sar(c)}${pr?` · ${fmt(c/pr*100)}٪ من سعر الباقة`:''}</div>`;}
+function renderPkgs(){
+  $('pkgTbl').innerHTML=`<table><thead><tr><th>الباقة</th><th>سعر الباقة (ر.س)</th><th>النقاط الأساسية</th>${tierHead()}<th></th></tr></thead><tbody>${
+    S.pkgs.length?S.pkgs.map((p,i)=>`<tr data-i="${i}"><td><input id="pn${i}" data-pk="name" value="${esc(p.name)}" placeholder="اسم الباقة"></td><td style="width:120px"><input id="pp${i}" data-pk="price" type="number" min="0" step="1" value="${p.price}"></td><td style="width:120px"><input id="pb${i}" data-pk="pts" type="number" min="0" step="10" value="${p.pts}"></td>${
+      S.tiers.map((_,t)=>`<td class="n" id="pc${i}_${t}"></td>`).join('')
+    }<td><button type="button" class="x" data-delp="${i}" aria-label="حذف">×</button></td></tr>`).join('')
+    :`<tr><td colspan="${4+S.tiers.length}" class="hint">ما في باقات. اضغط «＋ باقة» واكتب اسمها وسعرها ونقاطها.</td></tr>`}</tbody></table>`;
+  $('pkgTbl').querySelectorAll('[data-pk]').forEach(el=>el.addEventListener('input',()=>{const i=+el.closest('tr').dataset.i,k=el.dataset.pk;S.pkgs[i][k]=k==='name'?el.value:(el.value===''?'':+el.value);save();calc();}));
+  $('pkgTbl').querySelectorAll('[data-delp]').forEach(b=>b.addEventListener('click',()=>{S.pkgs.splice(+b.dataset.delp,1);save();renderAll();}));
+}
+function updPkgs(){S.pkgs.forEach((p,i)=>S.tiers.forEach((_,t)=>{const c=$(`pc${i}_${t}`);if(c)c.innerHTML=pkgCell(p,t);}));}
+function refPts(t){const m=S.refMult?mult(t):1;return {from:(+S.refFrom||0)*m,to:+S.refTo||0};}
+function renderRef(){
+  $('refFrom').value=S.refFrom;$('refTo').value=S.refTo;$('refMult').checked=!!S.refMult;
+  $('refTbl').innerHTML=`<table><thead><tr><th>لكل إحالة</th>${tierHead()}</tr></thead><tbody>
+    <tr><td>العميل اللي يحيل</td>${S.tiers.map((_,t)=>{const p=refPts(t).from;return `<td class="n"><b>${fmt0(p)}</b> نقطة<div class="hint">${sar(p*pv())}</div></td>`}).join('')}</tr>
+    <tr><td>العميل الجديد</td>${S.tiers.map(()=>{const p=+S.refTo||0;return `<td class="n"><b>${fmt0(p)}</b> نقطة<div class="hint">${sar(p*pv())}</div></td>`}).join('')}</tr>
+    <tr><td><b>تكلفة الإحالة على درب</b></td>${S.tiers.map((_,t)=>{const r=refPts(t);return `<td class="n"><b>${sar((r.from+r.to)*pv())}</b></td>`}).join('')}</tr></tbody></table>`;
+}
+function renderCmp(){
+  $('cmpTbl').innerHTML=`<table><thead><tr><th>الحملة</th><th>النقاط لكل مشاركة</th><th>المشاركون المتوقعون</th><th>تتضاعف حسب الفئة</th>${tierHead()}<th>تكلفة الحملة</th><th></th></tr></thead><tbody>${
+    S.cmps.length?S.cmps.map((c,i)=>`<tr data-i="${i}"><td><input id="cn${i}" data-ck="name" value="${esc(c.name)}" placeholder="اسم الحملة"></td><td style="width:110px"><input id="cp${i}" data-ck="pts" type="number" min="0" step="10" value="${c.pts}"></td><td style="width:110px"><input id="cc${i}" data-ck="n" type="number" min="0" step="10" value="${c.n}"></td><td style="text-align:center"><input id="cm${i}" data-ck="mult" type="checkbox" ${c.mult?'checked':''} style="width:auto" aria-label="تتضاعف حسب الفئة"></td>${
+      S.tiers.map((_,t)=>`<td class="n" id="cx${i}_${t}"></td>`).join('')
+    }<td class="n" id="ct${i}"></td><td><button type="button" class="x" data-delc="${i}" aria-label="حذف">×</button></td></tr>`).join('')
+    :`<tr><td colspan="${6+S.tiers.length}" class="hint">ما في حملات. اضغط «＋ حملة» واكتب اسمها ونقاطها وعدد المشاركين.</td></tr>`}</tbody></table>`;
+  $('cmpTbl').querySelectorAll('[data-ck]').forEach(el=>el.addEventListener(el.type==='checkbox'?'change':'input',()=>{const i=+el.closest('tr').dataset.i,k=el.dataset.ck;S.cmps[i][k]=k==='mult'?el.checked:k==='name'?el.value:(el.value===''?'':+el.value);save();calc();}));
+  $('cmpTbl').querySelectorAll('[data-delc]').forEach(b=>b.addEventListener('click',()=>{S.cmps.splice(+b.dataset.delc,1);save();renderAll();}));
+}
+function updCmp(){S.cmps.forEach((c,i)=>{const base=+c.pts||0,n=+c.n||0,avgMult=c.mult?(S.tiers.reduce((a,_,t)=>a+mult(t),0)/S.tiers.length):1;
+  S.tiers.forEach((_,t)=>{const p=base*(c.mult?mult(t):1),el=$(`cx${i}_${t}`);if(el)el.innerHTML=`<b>${fmt0(p)}</b> نقطة<div class="hint">${sar(p*pv())}</div>`;});
+  const el=$('ct'+i);if(el)el.innerHTML=`<b>${sar(base*avgMult*n*pv())}</b><div class="hint">${fmt0(base*avgMult*n)} نقطة${c.mult?' · بمتوسط مضاعف الفئات':''}</div>`;});}
+function tierTotals(t){
+  const pkg=S.pkgs.reduce((a,p)=>a+(+p.pts||0)*mult(t),0);
+  const r=refPts(t),ref=r.from+r.to;
+  const cmp=S.cmps.reduce((a,c)=>a+(+c.pts||0)*(c.mult?mult(t):1),0);
+  return {pkg,ref,cmp,all:pkg+ref+cmp};
+}
+function renderSum(){
+  const T=S.tiers.map((_,t)=>tierTotals(t));
+  const row=(label,k,color)=>`<tr><td>${color?`<span class="dot" style="background:${color}"></span>`:''}${label}</td>${T.map(x=>`<td class="n"><b>${fmt0(x[k])}</b> نقطة<div class="hint">${sar(x[k]*pv())}</div></td>`).join('')}</tr>`;
+  $('sumTbl').innerHTML=`<table class="sumtbl"><thead><tr><th>المصدر</th>${tierHead()}</tr></thead><tbody>
+    ${row('شراء الباقات','pkg','var(--pkg)')}${row('الإحالات (العميلين)','ref','var(--ref)')}${row('الحملات','cmp','var(--cmp)')}
+    <tr class="tot"><td>الإجمالي</td>${T.map(x=>`<td class="n">${fmt0(x.all)} نقطة<div>${sar(x.all*pv())}</div></td>`).join('')}</tr></tbody></table>`;
+}
+function calc(){renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
+function renderAllCalc(){renderPkgs();renderCmp();calc();}
+function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
+function renderAll(){renderTiers();renderAllCalc();}
+
+$('halala').addEventListener('input',e=>{S.halala=e.target.value===''?'':+e.target.value;save();calc();convFromP();});
+$('refFrom').addEventListener('input',e=>{S.refFrom=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
+$('refTo').addEventListener('input',e=>{S.refTo=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
+$('refMult').addEventListener('change',e=>{S.refMult=e.target.checked;save();renderRef();renderSum();});
+$('addPkg').addEventListener('click',()=>{S.pkgs.push({name:'',price:'',pts:''});save();renderAllCalc();const el=$('pn'+(S.pkgs.length-1));if(el)el.focus();});
+$('addCmp').addEventListener('click',()=>{S.cmps.push({name:'',pts:'',n:'',mult:false});save();renderAllCalc();const el=$('cn'+(S.cmps.length-1));if(el)el.focus();});
+$('resetBtn').addEventListener('click',()=>{S=DEF();save();renderAll();toast('رجعت الصفحة للبداية');});
+function convFromP(){const p=$('cvP').value;if(p==='')return;$('cvS').value=fmt(+p*pv()).replace(/,/g,'');}
+$('cvP').addEventListener('input',convFromP);
+$('cvS').addEventListener('input',()=>{const s=$('cvS').value;if(s===''||!pv())return;$('cvP').value=Math.round(+s/pv());});
+$('copyBtn').addEventListener('click',()=>{
+  const L=[];const tn=S.tiers.map((_,t)=>tname(t));
+  L.push(['قيمة النقطة (هللة)',S.halala].join('\t'),['نقطة = ريال',pv()?Math.round(1/pv()):''].join('\t'),'');
+  L.push(['الفئة','شرط الدخول','الحد الأدنى','المضاعف'].join('\t'));S.tiers.forEach((t,i)=>L.push([tn[i],t.cond,t.min,t.mult].join('\t')));L.push('');
+  L.push(['الباقة','السعر','النقاط الأساسية',...tn.map(x=>x+' نقاط'),...tn.map(x=>x+' ر.س')].join('\t'));
+  S.pkgs.forEach(p=>L.push([p.name,p.price,p.pts,...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)),...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)*pv())].join('\t')));L.push('');
+  L.push(['الإحالة',...tn].join('\t'),['العميل اللي يحيل',...S.tiers.map((_,t)=>refPts(t).from)].join('\t'),['العميل الجديد',...S.tiers.map(()=>+S.refTo||0)].join('\t'),'');
+  L.push(['الحملة','النقاط','المشاركون','تتضاعف',...tn].join('\t'));S.cmps.forEach(c=>L.push([c.name,c.pts,c.n,c.mult?'نعم':'لا',...S.tiers.map((_,t)=>(+c.pts||0)*(c.mult?mult(t):1))].join('\t')));L.push('');
+  L.push(['الملخص',...tn].join('\t'));['pkg','ref','cmp','all'].forEach((k,j)=>L.push([['شراء الباقات','الإحالات','الحملات','الإجمالي (نقاط)'][j],...S.tiers.map((_,t)=>tierTotals(t)[k])].join('\t')));
+  L.push(['الإجمالي (ر.س)',...S.tiers.map((_,t)=>tierTotals(t).all*pv())].join('\t'));
+  const txt=L.join('\n');
+  try{navigator.clipboard.writeText(txt).then(()=>toast('نُسخ الملخص، الصقه في إكسل'),()=>fb(txt))}catch(e){fb(txt)}
+});
+function fb(t){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');toast('نُسخ الملخص، الصقه في إكسل')}catch(e){toast('تعذّر النسخ')}a.remove();}
+let tt;function toast(m){const el=$('toast');el.textContent=m;el.hidden=false;clearTimeout(tt);tt=setTimeout(()=>el.hidden=true,2200);}
+renderAll();
+</script>
