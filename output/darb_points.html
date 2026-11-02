@@ -213,6 +213,7 @@ const CROWS=[
  {k:'cmp',l:'نقاط المشاركة في الحملة (لكل مشاركة)',src:'cmp'},{k:'nCmp',l:'عدد المشاركات في الشهر',cnt:'cmp'},
  {k:'ref',l:'نقاط الإحالة (لكل إحالة)',src:'ref'},{k:'nRef',l:'عدد الإحالات في الشهر',cnt:'ref'}];
 const cv=(t,k)=>+((S.calc[t]||{})[k])||0;
+const users=t=>{const u=(S.users||[])[t];return u==null||u===''?8333:+u||0;};
 function ctot(t){const base=cv(t,'base'),pkg=cv(t,'pkg')*cv(t,'nPkg'),cmp=cv(t,'cmp')*cv(t,'nCmp'),ref=cv(t,'ref')*cv(t,'nRef');return {base,pkg,cmp,ref,all:base+pkg+cmp+ref};}
 function renderCalc(){
   const cell=(r,t)=>{const v=(S.calc[t]||{})[r.k];
@@ -220,18 +221,27 @@ function renderCalc(){
     const sv=(v===''||v==null||!pv())?'':+(+v*pv()).toFixed(4);
     return `<td><div class="pair"><label><span>نقاط</span><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="10" value="${v??''}" placeholder="0"></label><label><span>ريال</span><input id="cs${r.k}${t}" data-cs="${r.k}" data-t="${t}" type="number" min="0" step="0.5" value="${sv}" placeholder="0"></label></div><div class="hint num" id="clh${r.k}${t}"></div></td>`;};
   $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${S.tiers.map((t,i)=>`<th><span class="dot" style="background:${tcol(i)}"></span><input id="tn${i}" data-tn="${i}" value="${esc(tname(i))}" aria-label="اسم الفئة" style="max-width:150px;font-weight:600"></th>`).join('')}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>cell(r,t)).join('')}</tr>`).join('')}
-   <tr class="tot"><td>المجموع</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr></tbody></table>`;
+   <tr class="tot"><td>المجموع (للعميل الواحد)</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr>
+   <tr><td>عدد التنزيلات (العملاء) في الفئة</td>${S.tiers.map((_,t)=>`<td><input id="clu${t}" data-users="${t}" type="number" min="0" step="1" value="${users(t)}" style="max-width:150px"></td>`).join('')}</tr>
+   <tr class="tot"><td>المجموع على درب للفئة كاملة<div class="hint">مجموع العميل × عدد التنزيلات</div></td>${S.tiers.map((_,t)=>`<td class="n" id="clg${t}" style="text-align:right"></td>`).join('')}</tr>
+   <tr><td>بعدها كل شهر على درب<div class="hint">بدون النقاط الأساسية</div></td>${S.tiers.map((_,t)=>`<td class="n" id="clgm${t}" style="text-align:right"></td>`).join('')}</tr>
+   <tr class="tot"><td>الإجمالي على درب لكل الفئات</td><td colspan="${S.tiers.length}" class="n" id="clgall" style="text-align:right"></td></tr></tbody></table>`;
+  $('calcTbl').querySelectorAll('[data-users]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.users;S.users=S.users||[];S.users[t]=el.value===''?'':+el.value;save();calc();}));
   $('calcTbl').querySelectorAll('[data-tn]').forEach(el=>el.addEventListener('input',()=>{S.tiers[+el.dataset.tn].name=el.value;save();updMonthly();}));
   $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cl;S.calc[t]=S.calc[t]||{};S.calc[t][k]=el.value===''?'':+el.value;
     const sEl=$(`cs${k}${t}`);if(sEl)sEl.value=(el.value===''||!pv())?'':+(+el.value*pv()).toFixed(4);save();calc();}));
   $('calcTbl').querySelectorAll('[data-cs]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cs;S.calc[t]=S.calc[t]||{};
     const pts=(el.value===''||!pv())?'':Math.round(+el.value/pv());S.calc[t][k]=pts;const pEl=$(`cl${k}${t}`);if(pEl)pEl.value=pts;save();calc();}));
 }
-function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
+function updCalc(){const ga=$('clgall');if(ga){const all=S.tiers.reduce((a,_,t)=>a+ctot(t).all*users(t),0),mo=S.tiers.reduce((a,_,t)=>{const x=ctot(t);return a+(x.pkg+x.cmp+x.ref)*users(t)},0),uu=S.tiers.reduce((a,_,t)=>a+users(t),0);ga.innerHTML=`<div class="out num">${sar(all*pv())}</div><div class="hint num">${fmt0(all)} نقطة · ${fmt0(uu)} عميل · بعدها كل شهر ${sar(mo*pv())}</div>`;}
+  S.tiers.forEach((_,t)=>{const T=ctot(t);
   CROWS.forEach(r=>{const h=$(`clh${r.k}${t}`);if(!h)return;
     if(r.src==='base')h.textContent=T.base?`${fmt0(T.base)} نقطة × نص هللة = ${hh(T.base)} = ${sar(T.base*pv())}`:'';
     else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة × نص هللة = ${hh(cv(t,r.k))} = ${sar(cv(t,r.k)*pv())}`:'';
     else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${hh(T[r.cnt])} = ${sar(T[r.cnt]*pv())}`:'';});
+  const u=users(t),g=$('clg'+t),gm=$('clgm'+t),mo=T.pkg+T.cmp+T.ref;
+  if(g)g.innerHTML=`<div class="out num">${sar(T.all*u*pv())}</div><div class="hint num">${fmt0(T.all*u)} نقطة · ${fmt0(u)} عميل</div>`;
+  if(gm)gm.innerHTML=`<b class="num">${sar(mo*u*pv())}</b><div class="hint num">${fmt0(mo*u)} نقطة</div>`;
   const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${hh(T.all)} = ${sar(T.all*pv())}</div>`;});}
 
 function pr(p){return `<b>${fmt0(p)}</b> نقطة<div class="hint">${sar(p*pv())}</div>`;}
@@ -262,6 +272,7 @@ $('copyBtn').addEventListener('click',()=>{
   L.push(['الخطوة',...tn.flatMap(x=>[x+' نقاط',x+' ريال'])].join('\t'));
   CROWS.forEach(r=>L.push([r.l,...S.tiers.flatMap((_,t)=>{const v=cv(t,r.k);return r.cnt?[v,'']:[v,v*pv()];})].join('\t')));
   L.push(['المجموع',...S.tiers.flatMap((_,t)=>{const a=ctot(t).all;return [a,a*pv()];})].join('\t'));
+  L.push(['عدد التنزيلات',...S.tiers.flatMap((_,t)=>[users(t),''])].join('\t'),['المجموع على درب للفئة',...S.tiers.flatMap((_,t)=>{const a=ctot(t).all*users(t);return [a,a*pv()];})].join('\t'));
   L.push('',['نهاية الشهر',...tn.flatMap(x=>[x+' نقاط',x+' ريال'])].join('\t'));{const T=S.tiers.map((_,t)=>ctot(t));const M=Math.max(1,Math.min(36,+S.months||12));for(let m=0;m<M;m++)L.push(['الشهر '+(m+1),...T.flatMap(x=>{const b=x.base+(x.pkg+x.cmp+x.ref)*(m+1);return [b,b*pv()];})].join('\t'));}
   const txt=L.join('\n');
   try{navigator.clipboard.writeText(txt).then(()=>toast('نُسخ الملخص، الصقه في إكسل'),()=>fb(txt))}catch(e){fb(txt)}
