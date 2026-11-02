@@ -60,6 +60,7 @@ td.n b{font-weight:700}
 .tcol{text-align:left}
 .tname{font-weight:600}
 .sumtbl td,.sumtbl th{padding:8px 6px}
+.sumtbl tr.cnt td{border-bottom-style:dashed}
 .sumtbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
 .conv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .out{font-family:var(--display);font-size:20px;font-weight:700}
@@ -93,6 +94,11 @@ td.n b{font-weight:700}
   <section class="panel">
     <div class="sec-h"><h2>الفئات الثلاث</h2><span class="hint">اسم كل فئة، وشرط الدخول لها، ومضاعف النقاط فيها</span></div>
     <div class="tiers" id="tiers"></div>
+  </section>
+
+  <section class="panel">
+    <div class="sec-h"><h2>حاسبة الفئات</h2><span class="hint">لكل فئة: نقاطها الأساسية، ونقاط كل مصدر، وكم مرة يتكرر، والحاسبة تجمعها</span></div>
+    <div class="tbl" id="calcTbl"></div>
   </section>
 
   <section class="panel">
@@ -138,9 +144,10 @@ const fmt=n=>(Math.round(n*100)/100).toLocaleString('en-US');
 const fmt0=n=>Math.round(n).toLocaleString('en-US');
 const sar=n=>fmt(n)+' ر.س';
 const KEY='darb-points-v1';
-const DEF=()=>({halala:0.5,tiers:[{name:'الفئة الأولى',cond:'',min:0,mult:1},{name:'الفئة الثانية',cond:'',min:'',mult:1},{name:'الفئة الثالثة',cond:'',min:'',mult:1}],pkgs:[],refFrom:'',refTo:'',refMult:true,cmps:[]});
+const DEF=()=>({calc:[{},{},{}],halala:0.5,tiers:[{name:'الفئة الأولى',cond:'',min:0,mult:1},{name:'الفئة الثانية',cond:'',min:'',mult:1},{name:'الفئة الثالثة',cond:'',min:'',mult:1}],pkgs:[],refFrom:'',refTo:'',refMult:true,cmps:[]});
 let S;try{S=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){S=null}
 if(!S||typeof S!=='object')S=DEF();
+if(!Array.isArray(S.calc))S.calc=[{},{},{}];
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const pv=()=>(+S.halala||0)/100;               // SAR per point
 const mult=t=>(+S.tiers[t].mult||0);
@@ -215,8 +222,27 @@ function renderSum(){
     ${row('شراء الباقات','pkg','var(--pkg)')}${row('الإحالات (العميلين)','ref','var(--ref)')}${row('الحملات','cmp','var(--cmp)')}
     <tr class="tot"><td>الإجمالي</td>${T.map(x=>`<td class="n">${fmt0(x.all)} نقطة<div>${sar(x.all*pv())}</div></td>`).join('')}</tr></tbody></table>`;
 }
-function calc(){renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
-function renderAllCalc(){renderPkgs();renderCmp();calc();}
+
+const CROWS=[
+ {k:'base',l:'نقاط الفئة الأساسية',h:'تنضاف مرة وحدة',src:'base'},
+ {k:'pkg',l:'نقاط شراء الباقة (لكل باقة)',src:'pkg'},{k:'nPkg',l:'عدد الباقات',cnt:'pkg'},
+ {k:'cmp',l:'نقاط المشاركة في الحملة (لكل مشاركة)',src:'cmp'},{k:'nCmp',l:'عدد المشاركات',cnt:'cmp'},
+ {k:'ref',l:'نقاط الإحالة (لكل إحالة)',src:'ref'},{k:'nRef',l:'عدد الإحالات',cnt:'ref'}];
+const cv=(t,k)=>+((S.calc[t]||{})[k])||0;
+function ctot(t){const base=cv(t,'base'),pkg=cv(t,'pkg')*cv(t,'nPkg'),cmp=cv(t,'cmp')*cv(t,'nCmp'),ref=cv(t,'ref')*cv(t,'nRef');return {base,pkg,cmp,ref,all:base+pkg+cmp+ref};}
+function renderCalc(){
+  $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${tierHead()}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>`<td><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="${r.cnt?1:10}" value="${(S.calc[t]||{})[r.k]??''}" placeholder="${r.cnt?'0':'نقاط'}" style="max-width:150px"><div class="hint num" id="clh${r.k}${t}"></div></td>`).join('')}</tr>`).join('')}
+   <tr class="tot"><td>المجموع</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr></tbody></table>`;
+  $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t;S.calc[t]=S.calc[t]||{};S.calc[t][el.dataset.cl]=el.value===''?'':+el.value;save();updCalc();}));
+}
+function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
+  CROWS.forEach(r=>{const h=$(`clh${r.k}${t}`);if(!h)return;
+    if(r.src==='base')h.textContent=T.base?sar(T.base*pv()):'';
+    else if(r.src)h.textContent=cv(t,r.k)?sar(cv(t,r.k)*pv())+' للمرة':'';
+    else h.textContent=T[r.cnt]?`= ${fmt0(T[r.cnt])} نقطة · ${sar(T[r.cnt]*pv())}`:'';});
+  const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">${sar(T.all*pv())}</div>`;});}
+function calc(){updCalc();renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
+function renderAllCalc(){renderCalc();renderPkgs();renderCmp();calc();}
 function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
 function renderAll(){renderTiers();renderAllCalc();}
 
@@ -233,6 +259,7 @@ $('cvS').addEventListener('input',()=>{const s=$('cvS').value;if(s===''||!pv())r
 $('copyBtn').addEventListener('click',()=>{
   const L=[];const tn=S.tiers.map((_,t)=>tname(t));
   L.push(['قيمة النقطة (هللة)',S.halala].join('\t'),['نقطة = ريال',pv()?Math.round(1/pv()):''].join('\t'),'');
+  L.push(['حاسبة الفئات',...tn].join('\t'));CROWS.forEach(r=>L.push([r.l,...S.tiers.map((_,t)=>(S.calc[t]||{})[r.k]??'')].join('\t')));L.push(['المجموع (نقاط)',...S.tiers.map((_,t)=>ctot(t).all)].join('\t'),['المجموع (ر.س)',...S.tiers.map((_,t)=>ctot(t).all*pv())].join('\t'),'');
   L.push(['الفئة','شرط الدخول','الحد الأدنى','المضاعف'].join('\t'));S.tiers.forEach((t,i)=>L.push([tn[i],t.cond,t.min,t.mult].join('\t')));L.push('');
   L.push(['الباقة','السعر','النقاط الأساسية',...tn.map(x=>x+' نقاط'),...tn.map(x=>x+' ر.س')].join('\t'));
   S.pkgs.forEach(p=>L.push([p.name,p.price,p.pts,...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)),...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)*pv())].join('\t')));L.push('');
