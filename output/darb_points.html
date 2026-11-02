@@ -1,4 +1,4 @@
-<title>نقاط درب</title>
+<title>حاسبة نقاط درب</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Readex+Pro:wght@500;700&display=swap">
 <style>
@@ -74,8 +74,8 @@ td.n b{font-weight:700}
 <div class="wrap">
   <header class="top">
     <div>
-      <h1>نقاط درب</h1>
-      <p>حدد قيمة النقطة والفئات الثلاث ومصادر النقاط، والصفحة تحسب كم نقطة يحصل عليها العميل في كل فئة وكم تكلف درب بالريال.</p>
+      <h1>حاسبة نقاط درب</h1>
+      <p>اكتب نقاط كل خطوة أو قيمتها بالريال لكل فئة، والحاسبة تجمعها. كل نقطة = نص هللة، و200 نقطة = ريال.</p>
     </div>
     <div class="actions">
       <button class="ghost" id="copyBtn" type="button">نسخ الملخص لإكسل</button>
@@ -93,41 +93,15 @@ td.n b{font-weight:700}
     </div>
   </section>
 
-  <section class="panel">
-    <div class="sec-h"><h2>الفئات الثلاث</h2><span class="hint">اسم كل فئة، وشرط الدخول لها، ومضاعف النقاط فيها</span></div>
-    <div class="tiers" id="tiers"></div>
-  </section>
 
   <section class="panel">
     <div class="sec-h"><h2>حاسبة الفئات</h2><span class="hint">لكل فئة: نقاطها الأساسية، ونقاط كل مصدر، وكم مرة يتكرر، والحاسبة تجمعها</span></div>
     <div class="tbl" id="calcTbl"></div>
   </section>
 
-  <section class="panel">
-    <div class="sec-h"><h2><span class="dot" style="background:var(--pkg)"></span>شراء الباقة</h2><button type="button" class="pri" id="addPkg">＋ باقة</button></div>
-    <div class="tbl" id="pkgTbl"></div>
-    <p class="hint">النقاط الأساسية لكل باقة تنضرب في مضاعف الفئة. التكلفة = النقاط × قيمة النقطة.</p>
-  </section>
 
-  <section class="panel">
-    <div class="sec-h"><h2><span class="dot" style="background:var(--ref)"></span>الإحالات</h2></div>
-    <div class="r2" style="max-width:560px">
-      <label class="f">نقاط للعميل اللي يحيل (لكل إحالة)<input id="refFrom" type="number" min="0" step="1"></label>
-      <label class="f">نقاط للعميل الجديد<input id="refTo" type="number" min="0" step="1"></label>
-    </div>
-    <label class="f" style="margin-top:10px;flex-direction:row;display:flex;gap:6px;align-items:center"><input type="checkbox" id="refMult" style="width:auto"> نقاط الإحالة تتضاعف حسب فئة العميل اللي يحيل</label>
-    <div class="tbl" id="refTbl" style="margin-top:10px"></div>
-  </section>
 
-  <section class="panel">
-    <div class="sec-h"><h2><span class="dot" style="background:var(--cmp)"></span>الحملات</h2><button type="button" class="pri" id="addCmp">＋ حملة</button></div>
-    <div class="tbl" id="cmpTbl"></div>
-  </section>
 
-  <section class="panel">
-    <div class="sec-h"><h2>الملخص حسب الفئة</h2><span class="hint">لعميل واحد: يشتري كل باقة مرة، ويحيل عميلًا واحدًا، ويشارك في كل حملة مرة</span></div>
-    <div class="tbl" id="sumTbl"></div>
-  </section>
 
   <section class="panel">
     <div class="sec-h"><h2>تحويل سريع</h2></div>
@@ -238,8 +212,9 @@ function renderCalc(){
     if(r.cnt)return `<td><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="1" value="${v??''}" placeholder="0" style="max-width:150px"><div class="hint num" id="clh${r.k}${t}"></div></td>`;
     const sv=(v===''||v==null||!pv())?'':+(+v*pv()).toFixed(4);
     return `<td><div class="pair"><label><span>نقاط</span><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="10" value="${v??''}" placeholder="0"></label><label><span>ريال</span><input id="cs${r.k}${t}" data-cs="${r.k}" data-t="${t}" type="number" min="0" step="0.5" value="${sv}" placeholder="0"></label></div><div class="hint num" id="clh${r.k}${t}"></div></td>`;};
-  $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${tierHead()}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>cell(r,t)).join('')}</tr>`).join('')}
+  $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${S.tiers.map((t,i)=>`<th><span class="dot" style="background:${tcol(i)}"></span><input id="tn${i}" data-tn="${i}" value="${esc(tname(i))}" aria-label="اسم الفئة" style="max-width:150px;font-weight:600"></th>`).join('')}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>cell(r,t)).join('')}</tr>`).join('')}
    <tr class="tot"><td>المجموع</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr></tbody></table>`;
+  $('calcTbl').querySelectorAll('[data-tn]').forEach(el=>el.addEventListener('input',()=>{S.tiers[+el.dataset.tn].name=el.value;save();}));
   $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cl;S.calc[t]=S.calc[t]||{};S.calc[t][k]=el.value===''?'':+el.value;
     const sEl=$(`cs${k}${t}`);if(sEl)sEl.value=(el.value===''||!pv())?'':+(+el.value*pv()).toFixed(4);save();updCalc();}));
   $('calcTbl').querySelectorAll('[data-cs]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cs;S.calc[t]=S.calc[t]||{};
@@ -251,31 +226,20 @@ function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
     else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة × نص هللة = ${hh(cv(t,r.k))} = ${sar(cv(t,r.k)*pv())}`:'';
     else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${hh(T[r.cnt])} = ${sar(T[r.cnt]*pv())}`:'';});
   const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${hh(T.all)} = ${sar(T.all*pv())}</div>`;});}
-function calc(){updCalc();renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
-function renderAllCalc(){renderCalc();renderPkgs();renderCmp();calc();}
+function calc(){updCalc();renderValue();}
+function renderAllCalc(){renderCalc();calc();}
 function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
-function renderAll(){renderTiers();renderAllCalc();}
+function renderAll(){renderAllCalc();}
 
-$('refFrom').addEventListener('input',e=>{S.refFrom=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
-$('refTo').addEventListener('input',e=>{S.refTo=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
-$('refMult').addEventListener('change',e=>{S.refMult=e.target.checked;save();renderRef();renderSum();});
-$('addPkg').addEventListener('click',()=>{S.pkgs.push({name:'',price:'',pts:''});save();renderAllCalc();const el=$('pn'+(S.pkgs.length-1));if(el)el.focus();});
-$('addCmp').addEventListener('click',()=>{S.cmps.push({name:'',pts:'',n:'',mult:false});save();renderAllCalc();const el=$('cn'+(S.cmps.length-1));if(el)el.focus();});
 $('resetBtn').addEventListener('click',()=>{S=DEF();save();renderAll();toast('رجعت الصفحة للبداية');});
 function convFromP(){const p=$('cvP').value;if(p==='')return;$('cvS').value=fmt(+p*pv()).replace(/,/g,'');}
 $('cvP').addEventListener('input',convFromP);
 $('cvS').addEventListener('input',()=>{const s=$('cvS').value;if(s===''||!pv())return;$('cvP').value=Math.round(+s/pv());});
 $('copyBtn').addEventListener('click',()=>{
-  const L=[];const tn=S.tiers.map((_,t)=>tname(t));
-  L.push(['قيمة النقطة (هللة)',HALALA].join('\t'),['نقطة = ريال',pv()?Math.round(1/pv()):''].join('\t'),'');
-  L.push(['حاسبة الفئات',...tn].join('\t'));CROWS.forEach(r=>L.push([r.l,...S.tiers.map((_,t)=>(S.calc[t]||{})[r.k]??'')].join('\t')));L.push(['المجموع (نقاط)',...S.tiers.map((_,t)=>ctot(t).all)].join('\t'),['المجموع (ر.س)',...S.tiers.map((_,t)=>ctot(t).all*pv())].join('\t'),'');
-  L.push(['الفئة','شرط الدخول','الحد الأدنى','المضاعف'].join('\t'));S.tiers.forEach((t,i)=>L.push([tn[i],t.cond,t.min,t.mult].join('\t')));L.push('');
-  L.push(['الباقة','السعر','النقاط الأساسية',...tn.map(x=>x+' نقاط'),...tn.map(x=>x+' ر.س')].join('\t'));
-  S.pkgs.forEach(p=>L.push([p.name,p.price,p.pts,...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)),...S.tiers.map((_,t)=>(+p.pts||0)*mult(t)*pv())].join('\t')));L.push('');
-  L.push(['الإحالة',...tn].join('\t'),['العميل اللي يحيل',...S.tiers.map((_,t)=>refPts(t).from)].join('\t'),['العميل الجديد',...S.tiers.map(()=>+S.refTo||0)].join('\t'),'');
-  L.push(['الحملة','النقاط','المشاركون','تتضاعف',...tn].join('\t'));S.cmps.forEach(c=>L.push([c.name,c.pts,c.n,c.mult?'نعم':'لا',...S.tiers.map((_,t)=>(+c.pts||0)*(c.mult?mult(t):1))].join('\t')));L.push('');
-  L.push(['الملخص',...tn].join('\t'));['pkg','ref','cmp','all'].forEach((k,j)=>L.push([['شراء الباقات','الإحالات','الحملات','الإجمالي (نقاط)'][j],...S.tiers.map((_,t)=>tierTotals(t)[k])].join('\t')));
-  L.push(['الإجمالي (ر.س)',...S.tiers.map((_,t)=>tierTotals(t).all*pv())].join('\t'));
+  const tn=S.tiers.map((_,t)=>tname(t)),L=[['قيمة النقطة','نص هللة','200 نقطة = ريال'].join('\t'),''];
+  L.push(['الخطوة',...tn.flatMap(x=>[x+' نقاط',x+' ريال'])].join('\t'));
+  CROWS.forEach(r=>L.push([r.l,...S.tiers.flatMap((_,t)=>{const v=cv(t,r.k);return r.cnt?[v,'']:[v,v*pv()];})].join('\t')));
+  L.push(['المجموع',...S.tiers.flatMap((_,t)=>{const a=ctot(t).all;return [a,a*pv()];})].join('\t'));
   const txt=L.join('\n');
   try{navigator.clipboard.writeText(txt).then(()=>toast('نُسخ الملخص، الصقه في إكسل'),()=>fb(txt))}catch(e){fb(txt)}
 });
