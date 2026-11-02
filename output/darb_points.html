@@ -60,6 +60,8 @@ td.n b{font-weight:700}
 .tcol{text-align:left}
 .tname{font-weight:600}
 .sumtbl td,.sumtbl th{padding:8px 6px}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(70px,1fr));gap:6px;max-width:240px}
+.pair label{display:grid;gap:2px;font-size:11px;color:var(--ink2)}
 .sumtbl tr.cnt td{border-bottom-style:dashed}
 .sumtbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
 .conv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
@@ -231,22 +233,29 @@ const CROWS=[
 const cv=(t,k)=>+((S.calc[t]||{})[k])||0;
 function ctot(t){const base=cv(t,'base'),pkg=cv(t,'pkg')*cv(t,'nPkg'),cmp=cv(t,'cmp')*cv(t,'nCmp'),ref=cv(t,'ref')*cv(t,'nRef');return {base,pkg,cmp,ref,all:base+pkg+cmp+ref};}
 function renderCalc(){
-  $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${tierHead()}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>`<td><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="${r.cnt?1:10}" value="${(S.calc[t]||{})[r.k]??''}" placeholder="${r.cnt?'0':'نقاط'}" style="max-width:150px"><div class="hint num" id="clh${r.k}${t}"></div></td>`).join('')}</tr>`).join('')}
+  const cell=(r,t)=>{const v=(S.calc[t]||{})[r.k];
+    if(r.cnt)return `<td><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="1" value="${v??''}" placeholder="0" style="max-width:150px"><div class="hint num" id="clh${r.k}${t}"></div></td>`;
+    const sv=(v===''||v==null||!pv())?'':+(+v*pv()).toFixed(4);
+    return `<td><div class="pair"><label><span>نقاط</span><input id="cl${r.k}${t}" data-cl="${r.k}" data-t="${t}" type="number" min="0" step="10" value="${v??''}" placeholder="0"></label><label><span>ريال</span><input id="cs${r.k}${t}" data-cs="${r.k}" data-t="${t}" type="number" min="0" step="0.5" value="${sv}" placeholder="0"></label></div><div class="hint num" id="clh${r.k}${t}"></div></td>`;};
+  $('calcTbl').innerHTML=`<table class="sumtbl"><thead><tr><th></th>${tierHead()}</tr></thead><tbody>${CROWS.map(r=>`<tr${r.cnt?' class="cnt"':''}><td>${r.cnt?'<span class="hint">'+r.l+'</span>':r.l}${r.h?`<div class="hint">${r.h}</div>`:''}</td>${S.tiers.map((_,t)=>cell(r,t)).join('')}</tr>`).join('')}
    <tr class="tot"><td>المجموع</td>${S.tiers.map((_,t)=>`<td class="n" id="clt${t}" style="text-align:right"></td>`).join('')}</tr></tbody></table>`;
-  $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t;S.calc[t]=S.calc[t]||{};S.calc[t][el.dataset.cl]=el.value===''?'':+el.value;save();updCalc();}));
+  $('calcTbl').querySelectorAll('[data-cl]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cl;S.calc[t]=S.calc[t]||{};S.calc[t][k]=el.value===''?'':+el.value;
+    const sEl=$(`cs${k}${t}`);if(sEl)sEl.value=(el.value===''||!pv())?'':+(+el.value*pv()).toFixed(4);save();updCalc();}));
+  $('calcTbl').querySelectorAll('[data-cs]').forEach(el=>el.addEventListener('input',()=>{const t=+el.dataset.t,k=el.dataset.cs;S.calc[t]=S.calc[t]||{};
+    const pts=(el.value===''||!pv())?'':Math.round(+el.value/pv());S.calc[t][k]=pts;const pEl=$(`cl${k}${t}`);if(pEl)pEl.value=pts;save();updCalc();}));
 }
 function updCalc(){S.tiers.forEach((_,t)=>{const T=ctot(t);
   CROWS.forEach(r=>{const h=$(`clh${r.k}${t}`);if(!h)return;
-    if(r.src==='base')h.textContent=T.base?sar(T.base*pv()):'';
-    else if(r.src)h.textContent=cv(t,r.k)?sar(cv(t,r.k)*pv())+' للمرة':'';
-    else h.textContent=T[r.cnt]?`= ${fmt0(T[r.cnt])} نقطة · ${sar(T[r.cnt]*pv())}`:'';});
-  const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">${sar(T.all*pv())}</div>`;});}
+    if(r.src==='base')h.textContent=T.base?`${fmt0(T.base)} نقطة = ${sar(T.base*pv())}`:'';
+    else if(r.src)h.textContent=cv(t,r.k)?`للمرة: ${fmt0(cv(t,r.k))} نقطة = ${sar(cv(t,r.k)*pv())}`:'';
+    else h.textContent=T[r.cnt]?`المجموع: ${fmt0(T[r.cnt])} نقطة = ${sar(T[r.cnt]*pv())}`:'';});
+  const el=$('clt'+t);if(el)el.innerHTML=`<div class="out num">${fmt0(T.all)} نقطة</div><div class="num" style="font-weight:600">= ${sar(T.all*pv())}</div>`;});}
 function calc(){updCalc();renderValue();renderTiersHints();updHeads();updPkgs();renderRef();updCmp();renderSum();}
 function renderAllCalc(){renderCalc();renderPkgs();renderCmp();calc();}
 function renderTiersHints(){S.tiers.forEach((t,i)=>{const h=document.querySelector(`.tier[data-t="${i}"] .hint`);if(h)h.textContent=(t.min!==''&&t.min!=null&&pv())?`الحد الأدنى يساوي ${sar((+t.min||0)*pv())}`:'';});}
 function renderAll(){renderTiers();renderAllCalc();}
 
-$('halala').addEventListener('input',e=>{S.halala=e.target.value===''?'':+e.target.value;save();calc();convFromP();});
+$('halala').addEventListener('input',e=>{S.halala=e.target.value===''?'':+e.target.value;save();renderCalc();calc();convFromP();});
 $('refFrom').addEventListener('input',e=>{S.refFrom=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
 $('refTo').addEventListener('input',e=>{S.refTo=e.target.value===''?'':+e.target.value;save();renderRef();renderSum();});
 $('refMult').addEventListener('change',e=>{S.refMult=e.target.checked;save();renderRef();renderSum();});
